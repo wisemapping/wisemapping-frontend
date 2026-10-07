@@ -33,8 +33,14 @@ import DeleteMultiselectDialog from '../../../../src/components/maps-page/action
 import CreateDialog from '../../../../src/components/maps-page/action-dispatcher/create-dialog';
 import InfoDialog from '../../../../src/components/maps-page/action-dispatcher/info-dialog';
 import HistoryDialog from '../../../../src/components/maps-page/action-dispatcher/history-dialog';
-import Client, { ChangeHistory, MapInfo } from '../../../../src/classes/client';
+import Client, {
+  ChangeHistory,
+  MAP_DESCRIPTION_MAX_LENGTH,
+  MAP_TITLE_MAX_LENGTH,
+  MapInfo,
+} from '../../../../src/classes/client';
 import { renderWithProviders } from '../../helpers/render';
+import { BURST_TEXT, typeInBurst } from '../../burst-typing';
 
 const map: MapInfo = {
   id: 7,
@@ -77,6 +83,18 @@ describe('RenameDialog', () => {
     expect(screen.getByText('Please, fill the new map name and description.')).toBeTruthy();
   });
 
+  test('the name takes as many characters as the backend stores', async () => {
+    setup();
+    await screen.findByDisplayValue('Travel plans');
+    expect(textbox(/Name/).maxLength).toBe(MAP_TITLE_MAX_LENGTH);
+  });
+
+  test('the description takes as many characters as the backend accepts', async () => {
+    setup();
+    await screen.findByDisplayValue('Summer trip');
+    expect(textbox(/Description/).maxLength).toBe(MAP_DESCRIPTION_MAX_LENGTH);
+  });
+
   test('renames the map with what the user typed and closes', async () => {
     const { renameMap, onClose } = setup();
     await screen.findByDisplayValue('Travel plans');
@@ -89,6 +107,23 @@ describe('RenameDialog', () => {
       expect(renameMap).toHaveBeenCalledWith(7, { title: 'Winter plans', description: 'Ski trip' }),
     );
     await waitFor(() => expect(onClose).toHaveBeenCalledTimes(1));
+  });
+
+  test('takes 200 characters typed in one burst, as Cypress types them', async () => {
+    const { renameMap } = setup();
+    await screen.findByDisplayValue('Travel plans');
+    fireEvent.change(textbox(/Name/), { target: { value: '' } });
+
+    expect(await typeInBurst(textbox(/Name/))).toEqual([]);
+    expect(await typeInBurst(textbox(/Description/))).toEqual([]);
+    fireEvent.click(button('Rename'));
+
+    await waitFor(() =>
+      expect(renameMap).toHaveBeenCalledWith(7, {
+        title: BURST_TEXT,
+        description: `Summer trip${BURST_TEXT}`,
+      }),
+    );
   });
 
   test('shows a server error next to the name and keeps the dialog open', async () => {
@@ -242,6 +277,59 @@ describe('CreateDialog', () => {
     );
     // On success the browser goes to the new map's editor, it is not just closed.
     expect(onClose).not.toHaveBeenCalled();
+  });
+
+  test('takes 200 characters typed in one burst, as Cypress types them', async () => {
+    const { createMap } = setup();
+
+    expect(await typeInBurst(textbox(/Name/))).toEqual([]);
+    expect(await typeInBurst(textbox(/Description/))).toEqual([]);
+    fireEvent.click(button('Create'));
+
+    await waitFor(() =>
+      expect(createMap).toHaveBeenCalledWith({
+        title: BURST_TEXT,
+        description: BURST_TEXT,
+      }),
+    );
+  });
+
+  test('the name takes as many characters as the backend stores, as rename and duplicate do', async () => {
+    const { createMap } = setup();
+    // The mindmap.title column is a VARCHAR(255).
+    expect(MAP_TITLE_MAX_LENGTH).toBe(255);
+    expect(textbox(/Name/).maxLength).toBe(MAP_TITLE_MAX_LENGTH);
+
+    expect(await typeInBurst(textbox(/Name/), 'x'.repeat(MAP_TITLE_MAX_LENGTH + 5))).toEqual([]);
+    fireEvent.click(button('Create'));
+
+    await waitFor(() =>
+      expect(createMap).toHaveBeenCalledWith({
+        title: 'x'.repeat(MAP_TITLE_MAX_LENGTH),
+        description: '',
+      }),
+    );
+  });
+
+  test('the description takes as many characters as the backend accepts', async () => {
+    const { createMap } = setup();
+    // The backend's MapInfoValidator rejects a description longer than 512 characters.
+    expect(MAP_DESCRIPTION_MAX_LENGTH).toBe(512);
+    expect(textbox(/Description/).maxLength).toBe(MAP_DESCRIPTION_MAX_LENGTH);
+
+    fireEvent.change(textbox(/Name/), { target: { value: 'Roadmap' } });
+    const description = textbox(/Description/);
+    fireEvent.change(description, {
+      target: { value: 'x'.repeat(MAP_DESCRIPTION_MAX_LENGTH) },
+    });
+    fireEvent.click(button('Create'));
+
+    await waitFor(() =>
+      expect(createMap).toHaveBeenCalledWith({
+        title: 'Roadmap',
+        description: 'x'.repeat(MAP_DESCRIPTION_MAX_LENGTH),
+      }),
+    );
   });
 
   test('shows the server validation errors', async () => {

@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import VersionNumber from './importer/VersionNumber';
+import VersionNumber from './VersionNumber';
 
 export default {
   LAST_SUPPORTED_FREEMIND_VERSION: '1.0.1',

@@ -95,17 +95,12 @@ const LayoutSelector = ({ closeModal, layoutModel, model }: LayoutSelectorProps)
 
   const handleLayoutSelect = (layout: LayoutType) => {
     setSelectedLayout(layout);
-    console.log(`[LayoutSelector] User selected layout: ${layout}`);
   };
 
   const handleAccept = async () => {
     const setValue = layoutModel.setValue;
     if (setValue) {
       const previousLayout = layoutModel.getValue();
-      console.log(
-        `[LayoutSelector] Applying layout change: ${previousLayout} -> ${selectedLayout}`,
-      );
-
       setValue(selectedLayout);
 
       // Trigger a full page refresh if the layout changed
@@ -115,9 +110,7 @@ const LayoutSelector = ({ closeModal, layoutModel, model }: LayoutSelectorProps)
 
         // Force save with the new layout before refreshing
         // Use saveHistory=true to bypass saveRequired check and ensure save happens
-        console.log('[LayoutSelector] Saving map with new layout before refresh');
         await model.save(true);
-        console.log('[LayoutSelector] Save complete, refreshing page');
         window.location.reload();
       }
     }

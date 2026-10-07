@@ -1,97 +1,115 @@
-import { defineConfig, globalIgnores } from "eslint/config";
-import react from "eslint-plugin-react";
-import typescriptEslint from "@typescript-eslint/eslint-plugin";
-import reactHooks from "eslint-plugin-react-hooks";
-import { fixupPluginRules } from "@eslint/compat";
-import globals from "globals";
-import tsParser from "@typescript-eslint/parser";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-import js from "@eslint/js";
-import { FlatCompat } from "@eslint/eslintrc";
+import { defineConfig, globalIgnores } from 'eslint/config';
+import react from 'eslint-plugin-react';
+import typescriptEslint from '@typescript-eslint/eslint-plugin';
+import reactHooks from 'eslint-plugin-react-hooks';
+import { fixupPluginRules } from '@eslint/compat';
+import globals from 'globals';
+import tsParser from '@typescript-eslint/parser';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import js from '@eslint/js';
+import { FlatCompat } from '@eslint/eslintrc';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const compat = new FlatCompat({
-    baseDirectory: __dirname,
-    recommendedConfig: js.configs.recommended,
-    allConfig: js.configs.all
+  baseDirectory: __dirname,
+  recommendedConfig: js.configs.recommended,
+  allConfig: js.configs.all,
 });
 
-export default defineConfig([globalIgnores(["**/packages/mindplot/**/*", "**/dist/**/*"]), {
+export default defineConfig([
+  globalIgnores(['**/packages/mindplot/**/*', '**/dist/**/*']),
+  {
     extends: compat.extends(
-        "eslint:recommended",
-        "prettier",
-        "plugin:react/recommended",
-        "plugin:@typescript-eslint/recommended",
+      'eslint:recommended',
+      'prettier',
+      'plugin:react/recommended',
+      'plugin:@typescript-eslint/recommended',
     ),
 
     plugins: {
-        react,
-        "@typescript-eslint": typescriptEslint,
-        "react-hooks": fixupPluginRules(reactHooks),
+      react,
+      '@typescript-eslint': typescriptEslint,
+      'react-hooks': fixupPluginRules(reactHooks),
     },
 
     languageOptions: {
-        globals: {
-            ...globals.browser,
-        },
+      globals: {
+        ...globals.browser,
+      },
 
-        parser: tsParser,
-        ecmaVersion: 12,
-        sourceType: "module",
+      parser: tsParser,
+      ecmaVersion: 12,
+      sourceType: 'module',
 
-        parserOptions: {
-            ecmaFeatures: {
-                jsx: true,
-            },
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true,
         },
+      },
     },
 
     settings: {
-        react: {
-            version: "19.0.0",
+      react: {
+        version: '19.0.0',
+      },
+
+      'import/resolver': {
+        node: {
+          extensions: ['.js', '.ts'],
         },
 
-        "import/resolver": {
-            node: {
-                extensions: [".js", ".ts"],
-            },
-
-            webpack: {
-                config: "./webpack.common.js",
-            },
+        webpack: {
+          config: './webpack.common.js',
         },
+      },
     },
 
     rules: {
-        "@typescript-eslint/no-explicit-any": "error",
-        "@typescript-eslint/explicit-module-boundary-types": "error",
-        "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
-        "react-hooks/rules-of-hooks": "error",
-        "react-hooks/exhaustive-deps": "error",
+      '@typescript-eslint/no-explicit-any': 'error',
+      '@typescript-eslint/explicit-module-boundary-types': 'error',
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'error',
 
-        "no-restricted-imports": ["error", {
-            patterns: ["@mui/*/*/*", "!@mui/material/test-utils/*"],
-        }],
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: ['@mui/*/*/*', '!@mui/material/test-utils/*'],
+        },
+      ],
 
-        "react/no-unknown-property": ["error", {
-            ignore: ["css"],
-        }],
+      'react/no-unknown-property': [
+        'error',
+        {
+          ignore: ['css'],
+        },
+      ],
     },
-}, {
+  },
+  {
+    // Chai property assertions (`expect(x).to.be.null`) are expressions that assert when read.
+    files: ['cypress/e2e/**/*.cy.ts'],
+
+    rules: {
+      '@typescript-eslint/no-unused-expressions': 'off',
+    },
+  },
+  {
     // The Jest environment and the CommonJS module mocks run in Node, not through the bundler.
-    files: ["test/**/*.js"],
+    files: ['test/**/*.js'],
 
     languageOptions: {
-        globals: {
-            ...globals.node,
-        },
+      globals: {
+        ...globals.node,
+      },
 
-        sourceType: "commonjs",
+      sourceType: 'commonjs',
     },
 
     rules: {
-        "@typescript-eslint/no-require-imports": "off",
+      '@typescript-eslint/no-require-imports': 'off',
     },
-}]);
+  },
+]);

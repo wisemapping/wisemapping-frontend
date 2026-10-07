@@ -65,6 +65,7 @@ import AppConfig from '../../../classes/app-config';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import UserMapsDialog from '../shared/UserMapsDialog';
 import SpamStatusChip from '../shared/SpamStatusChip';
+import EditMapDialog, { MapFormData } from './EditMapDialog';
 
 // XML formatting utility
 const formatXml = (xml: string): string => {
@@ -139,23 +140,117 @@ interface AdminMap {
   collaboratorCount: number;
 }
 
-interface MapFormData {
-  title: string;
-  description: string;
-  public: boolean;
-  isLocked: boolean;
-}
-
 type SortField =
   'title' | 'id' | 'createdBy' | 'createdById' | 'creationTime' | 'lastModificationTime' | 'public';
 type SortDirection = 'asc' | 'desc';
+
+// Detect search type
+const getSearchType = (term: string): 'id' | 'email' | 'text' | null => {
+  if (!term || term.trim() === '') return null;
+  const trimmed = term.trim();
+
+  // Check for ID search (starts with #)
+  if (trimmed.startsWith('#')) {
+    const idStr = trimmed.substring(1);
+    if (/^\d+$/.test(idStr)) {
+      return 'id';
+    }
+  }
+
+  // Check for email search (contains @ and .)
+  if (trimmed.includes('@') && trimmed.includes('.')) {
+    return 'email';
+  }
+
+  return 'text';
+};
+
+/**
+ * The search box. It keeps what is typed and reports it, debounced, through `onSearch`: a key
+ * re-renders only this field, not the page and its filter selects (in development a re-rendered
+ * MUI FormControl updates itself from an effect, and characters typed in one burst, as Cypress
+ * types them, add up to React's nested-update limit).
+ *
+ * It stays enabled while its search loads, so the user can keep typing (a disabled field loses
+ * the focus): the load shows as a spinner at its end. Each search term is its own query, so a late
+ * response to an older term never replaces the results of a newer one.
+ */
+const MapSearchField = React.memo(function MapSearchField({
+  onSearch,
+  isFetching,
+}: {
+  onSearch: (term: string) => void;
+  isFetching: boolean;
+}): ReactElement {
+  const intl = useIntl();
+  const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onSearch(searchTerm);
+    }, 500); // 500ms debounce
+
+    return () => clearTimeout(timer);
+  }, [searchTerm, onSearch]);
+
+  const searchType = getSearchType(searchTerm);
+
+  return (
+    <TextField
+      placeholder={intl.formatMessage({
+        id: 'admin.maps.search',
+        defaultMessage: 'Search maps... (#123 for ID, email for creator)',
+      })}
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+      helperText={
+        searchType === 'id'
+          ? intl.formatMessage({
+              id: 'admin.maps.search-by-id',
+              defaultMessage: '🔍 Searching by Map ID',
+            })
+          : searchType === 'email'
+            ? intl.formatMessage({
+                id: 'admin.maps.search-by-email',
+                defaultMessage: '🔍 Searching by Creator Email',
+              })
+            : searchType === 'text'
+              ? intl.formatMessage({
+                  id: 'admin.maps.search-by-text',
+                  defaultMessage: '🔍 Searching in titles and descriptions',
+                })
+              : ' '
+      }
+      sx={{ minWidth: 300 }}
+      slotProps={{
+        input: {
+          startAdornment: (
+            <InputAdornment position="start">
+              {searchType === 'id' ? (
+                <TagIcon color="primary" />
+              ) : searchType === 'email' ? (
+                <EmailIcon color="primary" />
+              ) : (
+                <SearchIcon />
+              )}
+            </InputAdornment>
+          ),
+          endAdornment: isFetching ? (
+            <InputAdornment position="end">
+              <CircularProgress size={20} />
+            </InputAdornment>
+          ) : null,
+        },
+      }}
+    />
+  );
+});
 
 const MapsManagement = (): ReactElement => {
   const intl = useIntl();
   const client = AppConfig.getAdminClient();
   const queryClient = useQueryClient();
 
-  const [searchTerm, setSearchTerm] = useState('');
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
   const [sortField, setSortField] = useState<SortField>('title');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
@@ -167,22 +262,9 @@ const MapsManagement = (): ReactElement => {
   const [dateFilter, setDateFilter] = useState<string>('1');
   const [editingMap, setEditingMap] = useState<AdminMap | null>(null);
 
-  // Debounce search term
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedSearchTerm(searchTerm);
-    }, 500); // 500ms debounce
-
-    return () => clearTimeout(timer);
-  }, [searchTerm]);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
-  const [formData, setFormData] = useState<MapFormData>({
-    title: '',
-    description: '',
-    public: false,
-    isLocked: false,
-  });
-  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  // A new key opens the edit dialog with a fresh form.
+  const [editDialogKey, setEditDialogKey] = useState(0);
 
   // XML Viewer state
   const [viewingMap, setViewingMap] = useState<AdminMap | null>(null);
@@ -204,29 +286,6 @@ const MapsManagement = (): ReactElement => {
   const [ownerMaps, setOwnerMaps] = useState<AdminMap[]>([]);
   const [isPendingOwnerMaps, setIsLoadingOwnerMaps] = useState(false);
   const [isPendingOwnerInfo, setIsLoadingOwnerInfo] = useState(false);
-
-  // Detect search type
-  const getSearchType = (term: string): 'id' | 'email' | 'text' | null => {
-    if (!term || term.trim() === '') return null;
-    const trimmed = term.trim();
-
-    // Check for ID search (starts with #)
-    if (trimmed.startsWith('#')) {
-      const idStr = trimmed.substring(1);
-      if (/^\d+$/.test(idStr)) {
-        return 'id';
-      }
-    }
-
-    // Check for email search (contains @ and .)
-    if (trimmed.includes('@') && trimmed.includes('.')) {
-      return 'email';
-    }
-
-    return 'text';
-  };
-
-  const searchType = getSearchType(searchTerm);
 
   // Fetch maps with pagination and filters
   const {
@@ -277,22 +336,9 @@ const MapsManagement = (): ReactElement => {
       queryClient.invalidateQueries({ queryKey: ['adminMaps'] });
       setIsEditDialogOpen(false);
       setEditingMap(null);
-      setFormData({
-        title: '',
-        description: '',
-        public: false,
-        isLocked: false,
-      });
-      setFormErrors({});
     },
     onError: (error: Error) => {
       console.error('Failed to update map:', error);
-      setFormErrors({
-        general: intl.formatMessage({
-          id: 'admin.error.update-map-failed',
-          defaultMessage: 'Failed to update map. Please try again.',
-        }),
-      });
     },
   });
 
@@ -360,31 +406,20 @@ const MapsManagement = (): ReactElement => {
 
   const handleEditMap = (map: AdminMap) => {
     setEditingMap(map);
-    setFormData({
-      title: map.title,
-      description: map.description,
-      public: map.public,
-      isLocked: map.isLocked,
-    });
-    setFormErrors({});
+    setEditDialogKey((key) => key + 1);
     setIsEditDialogOpen(true);
   };
 
-  const handleSaveMap = () => {
-    if (!editingMap) return;
-
-    // Basic validation
-    const errors: Record<string, string> = {};
-    if (!formData.title.trim()) {
-      errors.title = 'Title is required';
-    }
-
-    if (Object.keys(errors).length > 0) {
-      setFormErrors(errors);
-      return;
-    }
-
-    updateMapMutation.mutate({ ...formData, id: editingMap.id });
+  const handleSaveMap = (mapData: MapFormData): Promise<string | undefined> => {
+    if (!editingMap) return Promise.resolve(undefined);
+    return updateMapMutation.mutateAsync({ ...mapData, id: editingMap.id }).then(
+      () => undefined,
+      () =>
+        intl.formatMessage({
+          id: 'admin.error.update-map-failed',
+          defaultMessage: 'Failed to update map. Please try again.',
+        }),
+    );
   };
 
   const handleDeleteMap = (mapId: number, mapTitle: string) => {
@@ -647,54 +682,7 @@ const MapsManagement = (): ReactElement => {
           flexWrap: 'wrap',
         }}
       >
-        <TextField
-          placeholder={intl.formatMessage({
-            id: 'admin.maps.search',
-            defaultMessage: 'Search maps... (#123 for ID, email for creator)',
-          })}
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          disabled={isFetching}
-          helperText={
-            searchType === 'id'
-              ? intl.formatMessage({
-                  id: 'admin.maps.search-by-id',
-                  defaultMessage: '🔍 Searching by Map ID',
-                })
-              : searchType === 'email'
-                ? intl.formatMessage({
-                    id: 'admin.maps.search-by-email',
-                    defaultMessage: '🔍 Searching by Creator Email',
-                  })
-                : searchType === 'text'
-                  ? intl.formatMessage({
-                      id: 'admin.maps.search-by-text',
-                      defaultMessage: '🔍 Searching in titles and descriptions',
-                    })
-                  : ' '
-          }
-          sx={{ minWidth: 300 }}
-          slotProps={{
-            input: {
-              startAdornment: (
-                <InputAdornment position="start">
-                  {searchType === 'id' ? (
-                    <TagIcon color="primary" />
-                  ) : searchType === 'email' ? (
-                    <EmailIcon color="primary" />
-                  ) : (
-                    <SearchIcon />
-                  )}
-                </InputAdornment>
-              ),
-              endAdornment: isFetching ? (
-                <InputAdornment position="end">
-                  <CircularProgress size={20} />
-                </InputAdornment>
-              ) : null,
-            },
-          }}
-        />
+        <MapSearchField onSearch={setDebouncedSearchTerm} isFetching={isFetching} />
 
         <FormControl sx={{ minWidth: 120 }}>
           <InputLabel>Public</InputLabel>
@@ -1094,118 +1082,23 @@ const MapsManagement = (): ReactElement => {
         </Box>
       )}
       {/* Edit Map Dialog */}
-      <Dialog
+      <EditMapDialog
+        key={editDialogKey}
         open={isEditDialogOpen}
+        initialData={
+          editingMap
+            ? {
+                title: editingMap.title,
+                description: editingMap.description,
+                public: editingMap.public,
+                isLocked: editingMap.isLocked,
+              }
+            : { title: '', description: '', public: false, isLocked: false }
+        }
+        isPending={updateMapMutation.isPending}
         onClose={() => setIsEditDialogOpen(false)}
-        maxWidth="sm"
-        fullWidth
-      >
-        <DialogTitle>
-          {intl.formatMessage({
-            id: 'admin.maps.edit-title',
-            defaultMessage: 'Edit Map',
-          })}
-        </DialogTitle>
-        <DialogContent>
-          {formErrors.general && (
-            <Alert severity="error" sx={{ mb: 2 }}>
-              {formErrors.general}
-            </Alert>
-          )}
-
-          <TextField
-            autoFocus
-            margin="dense"
-            label={intl.formatMessage({
-              id: 'admin.maps.title',
-              defaultMessage: 'Title',
-            })}
-            fullWidth
-            variant="outlined"
-            value={formData.title}
-            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-            error={!!formErrors.title}
-            helperText={formErrors.title}
-            sx={{ mb: 2 }}
-          />
-
-          <TextField
-            margin="dense"
-            label={intl.formatMessage({
-              id: 'admin.maps.description',
-              defaultMessage: 'Description',
-            })}
-            fullWidth
-            multiline
-            rows={3}
-            variant="outlined"
-            value={formData.description}
-            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-            sx={{ mb: 2 }}
-          />
-
-          <Box
-            sx={{
-              display: 'flex',
-              gap: 2,
-            }}
-          >
-            <FormControl fullWidth>
-              <InputLabel>Public Access</InputLabel>
-              <Select
-                value={formData.public ? 'public' : 'private'}
-                label={intl.formatMessage({
-                  id: 'admin.public-access',
-                  defaultMessage: 'Public Access',
-                })}
-                onChange={(e) => setFormData({ ...formData, public: e.target.value === 'public' })}
-              >
-                <MenuItem value="private">Private</MenuItem>
-                <MenuItem value="public">Public</MenuItem>
-              </Select>
-            </FormControl>
-
-            <FormControl fullWidth>
-              <InputLabel>Lock Status</InputLabel>
-              <Select
-                value={formData.isLocked ? 'locked' : 'unlocked'}
-                label={intl.formatMessage({
-                  id: 'admin.lock-status',
-                  defaultMessage: 'Lock Status',
-                })}
-                onChange={(e) =>
-                  setFormData({ ...formData, isLocked: e.target.value === 'locked' })
-                }
-              >
-                <MenuItem value="unlocked">Unlocked</MenuItem>
-                <MenuItem value="locked">Locked</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setIsEditDialogOpen(false)}>
-            {intl.formatMessage({
-              id: 'common.cancel',
-              defaultMessage: 'Cancel',
-            })}
-          </Button>
-          <Button
-            onClick={handleSaveMap}
-            variant="contained"
-            disabled={updateMapMutation.isPending}
-          >
-            {updateMapMutation.isPending ? (
-              <CircularProgress size={20} />
-            ) : (
-              intl.formatMessage({
-                id: 'common.save',
-                defaultMessage: 'Save',
-              })
-            )}
-          </Button>
-        </DialogActions>
-      </Dialog>
+        onSubmit={handleSaveMap}
+      />
       {/* XML Viewer Dialog */}
       <Dialog
         open={isXmlViewerOpen}

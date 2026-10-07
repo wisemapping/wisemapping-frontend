@@ -27,17 +27,17 @@ describe('Registration Success Page', () => {
   it('should display registration success page with email confirmation message', () => {
     // Check title
     cy.contains('Registration Successful!').should('be.visible');
-    
+
     // Check activation email message
     cy.contains("We've sent an activation email to your inbox").should('be.visible');
     cy.contains('Please check your email and click on the activation link').should('be.visible');
-    
+
     // Check spam folder reminder
     cy.contains("If you don't see the email, please check your spam folder").should('be.visible');
-    
+
     // Check already activated message
     cy.contains('Already activated your account?').should('be.visible');
-    
+
     // Check Sign In button exists (it's a Button component with RouterLink)
     cy.contains('button', 'Sign In').should('be.visible');
   });
@@ -58,4 +58,3 @@ describe('Registration Success Page', () => {
     cy.url().should('include', '/c/login');
   });
 });
-

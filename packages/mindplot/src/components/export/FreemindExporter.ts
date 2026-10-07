@@ -25,7 +25,7 @@ import ContentType from '../ContentType';
 import type PositionNodeType from '../PositionType';
 import Exporter from './Exporter';
 import FreemindConstant from './freemind/FreemindConstant';
-import type VersionNumber from './freemind/importer/VersionNumber';
+import type VersionNumber from './freemind/VersionNumber';
 import type {
   FreemindArrowlink,
   FreemindFont,
@@ -103,17 +103,14 @@ class FreemindExporter extends Exporter {
     const main: FreemindNode = createFreemindNode();
     const freemainMap: FreemindMap = { version: this.getVersionNumber(), node: main };
 
-    const centralTopic = this.mindmap.getCentralTopic();
-
-    if (centralTopic) {
-      this.nodeMap.set(centralTopic.getId(), main);
-      this.setTopicPropertiesToNode({
-        freemindNode: main,
-        mindmapTopic: centralTopic,
-        isRoot: true,
-      });
-      this.addNodeFromTopic(centralTopic, main);
-    }
+    const centralTopic = Exporter.centralTopicOf(this.mindmap);
+    this.nodeMap.set(centralTopic.getId(), main);
+    this.setTopicPropertiesToNode({
+      freemindNode: main,
+      mindmapTopic: centralTopic,
+      isRoot: true,
+    });
+    this.addNodeFromTopic(centralTopic, main);
 
     const relationships: Array<RelationshipModel> = this.mindmap.getRelationships();
     relationships.forEach((relationship: RelationshipModel) => {

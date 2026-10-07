@@ -32,12 +32,12 @@ class PaletteTheme extends DefaultTheme {
   }
 
   override getConnectionColor(topic: Topic): string {
-    let result: string | null = null;
+    let result: string | undefined;
 
     // Color of the node is the connection is the color of the parent ...
     const parent = topic.getParent();
     if (parent && !parent.isCentralTopic()) {
-      result = this.resolve('connectionColor', parent, false) as string;
+      result = this.resolve('connectionColor', parent, false);
     }
 
     if (!result) {

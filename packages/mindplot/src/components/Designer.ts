@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 import { $assert } from './util/assert';
-import DOMUtils from './util/DOMUtils';
 import getCollapsedAncestorIds from './util/topicVisibility';
 import type { TopicMove } from './util/topicReorder';
 import resolveTopicMove from './util/topicReorder';
@@ -74,6 +73,7 @@ import type Theme from './theme/Theme';
 import type ChangeEvent from './layout/ChangeEvent';
 import type { ModelUpdateEvent } from './DesignerUndoManager';
 import HTMLTopicSelected from './HTMLTopicSelected';
+import { hasShortcutModifier } from './util/platform';
 
 /**
  * The zoom range, in workspace units per screen pixel, shared by setZoom(), zoomIn() (down to
@@ -129,9 +129,9 @@ class Designer extends EventDispispatcher<DesignerEvents> {
 
   private _topicEventDispatcher: TopicEventDispatcher;
 
-  // Set while selectAll or deselectAll changes the selection of every entity: the designer fires
-  // its 'onfocus' or 'onblur' event, and pans to the last topic selected, once at the end.
-  private _selectionBatch: { panTo?: Topic } | null = null;
+  // Set while one change of the selection runs (a click, select-all, a keyboard move): the designer
+  // fires its 'onfocus' or 'onblur' event, and pans to the last topic selected, once at the end.
+  private _selectionBatch: { changed: boolean; panTo?: Topic } | null = null;
 
   private _selectionShadows: Map<Topic, HTMLTopicSelected> = new Map();
 
@@ -169,8 +169,8 @@ class Designer extends EventDispispatcher<DesignerEvents> {
 
     // Set full div elem render area.The component must fill container size
     // container is responsible for location and size
-    DOMUtils.css(divElem, 'width', '100%');
-    DOMUtils.css(divElem, 'height', '100%');
+    divElem.style.width = '100%';
+    divElem.style.height = '100%';
 
     // Dispatcher manager ...
     const commandContext = new CommandContext(this);
@@ -321,9 +321,10 @@ class Designer extends EventDispispatcher<DesignerEvents> {
       if (me._cleanScreen) me._cleanScreen();
     });
 
-    // Deselect on click ...
+    // Deselect on a click on the background, unless the shortcut modifier is held, as on a topic:
+    // a Ctrl or Cmd click that misses a topic must not lose the selection being built ...
     screenManager.addEvent('click', (event: Event) => {
-      // ScreenManager always dispatches 'click' as a synthetic MouseEvent.
+      // ScreenManager always dispatches 'click' as a synthetic MouseEvent, with the press' modifiers.
       me.onObjectFocusEvent(undefined, event as MouseEvent);
     });
 
@@ -355,8 +356,9 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     });
 
     dragManager.addEvent('dragging', (event: MouseEvent, dragTopic: DragTopic) => {
-      // The node is being drag. Is the connection still valid ?
-      dragConnector.checkConnection(dragTopic, event.metaKey || event.ctrlKey);
+      // The node is being drag. Is the connection still valid ? Held, the shortcut modifier (Cmd
+      // on a Mac, Ctrl elsewhere, as the help shows) drags it disconnected ...
+      dragConnector.checkConnection(dragTopic, hasShortcutModifier(event));
 
       if (!dragTopic.isVisible() && dragTopic.isConnected()) {
         dragTopic.setVisibility(true);
@@ -387,10 +389,8 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     const me = this;
     // Add Topic events ...
     if (!readOnly) {
-      // If a node had gained focus, clean the rest of the nodes ...
-      topic.addEvent('mousedown', (event: MouseEvent) => {
-        me.onObjectFocusEvent(topic, event);
-      });
+      // A click on the topic selects it through selectOnClick, called by the topic's own mousedown
+      // handler: a listener here would run after that handler, as a second change.
 
       // Register node listeners (the drag manager skips the central topic) ...
       this._dragManager.add(topic);
@@ -417,49 +417,39 @@ class Designer extends EventDispispatcher<DesignerEvents> {
       }
     }
 
-    topic.addEvent('ontblur', () => {
-      if (me._selectionBatch) return;
-      const topics = me.getModel().filterSelectedTopics();
-      const rels = me.getModel().filterSelectedRelationships();
+    // HTMLTopicSelected handles its own hiding via ontblur event
+    // Shadow will be kept but hidden - only disposed on topicRemoved
+    topic.addEvent('ontblur', () => me._onSelectionChange());
 
-      if (isSelectionEmpty(topics.length, rels.length)) {
-        me.fireEvent('onblur');
-      }
-
-      // HTMLTopicSelected handles its own hiding via ontblur event
-      // Shadow will be kept but hidden - only disposed on topicRemoved
-    });
-
-    topic.addEvent('ontfocus', () => {
-      if (me._selectionBatch) return;
-      const topics = me.getModel().filterSelectedTopics();
-      const rels = me.getModel().filterSelectedRelationships();
-
-      if (!isSelectionEmpty(topics.length, rels.length)) {
-        me.fireEvent('onfocus');
-      }
-
-      // HTMLTopicSelected creation is now handled via LayoutEventBus 'topicSelected' event
-      // which fires from Topic.setOnFocus() and includes the topic model/ID
-    });
+    // HTMLTopicSelected creation is now handled via LayoutEventBus 'topicSelected' event
+    // which fires from Topic.setOnFocus() and includes the topic model/ID
+    topic.addEvent('ontfocus', () => me._onSelectionChange());
 
     return topic;
   }
 
-  onObjectFocusEvent(currentObject?: Topic, event?: MouseEvent): void {
+  /**
+   * Changes the selection for a mousedown on a topic or a relationship, as one change: the entity
+   * is selected, or toggled by a Cmd click on a Mac or a Ctrl click elsewhere (`focus`), and a
+   * plain click unselects every other entity. The editor gets one event, with the selection the
+   * click leaves. Called by the entity's mousedown handler.
+   */
+  selectOnClick(entity: Topic | Relationship, focus: boolean, event: MouseEvent): void {
+    this._batchSelection(() => {
+      entity.setOnFocus(focus);
+      this.onObjectFocusEvent(entity, event);
+    });
+  }
+
+  onObjectFocusEvent(currentObject?: Topic | Relationship, event?: MouseEvent): void {
     // Close node editors ..
     this.closeNodeEditors();
 
-    const model = this.getModel();
-    const objects = model.getEntities();
-    objects.forEach((object) => {
-      // Disable all nodes on focus but not the current if Ctrl key isn't being pressed
-      if (event == null || (!event.ctrlKey && !event.metaKey)) {
-        if (object.isOnFocus() && object !== currentObject) {
-          object.setOnFocus(false);
-        }
-      }
-    });
+    // Unselect every other entity, unless the shortcut modifier (Cmd on a Mac, Ctrl elsewhere)
+    // is held: the same key the topic toggles its selection on ...
+    if (event == null || !hasShortcutModifier(event)) {
+      this._setFocusOfAll(false, currentObject);
+    }
   }
 
   /** Closes the text editor, saving it: there is one per designer, whatever its topic. */
@@ -478,21 +468,36 @@ class Designer extends EventDispispatcher<DesignerEvents> {
   }
 
   /**
-   * Sets the focus of every entity in one pass. Each entity still fires its own events, and
-   * each topic its 'topicSelected' or 'topicUnselected' on the LayoutEventBus; the designer fires
-   * 'onfocus' or 'onblur' once, and pans to the last topic selected once, at the end.
+   * Sets the focus of every entity but `except` in one pass, as one change (see _batchSelection).
+   * Each entity still fires its own events, and each topic its 'topicSelected' or
+   * 'topicUnselected' on the LayoutEventBus.
    */
-  private _setFocusOfAll(focus: boolean): void {
-    const batch: { panTo?: Topic } = {};
-    let changed = false;
-    this._selectionBatch = batch;
-    try {
+  private _setFocusOfAll(focus: boolean, except?: Topic | Relationship): void {
+    this._batchSelection(() => {
       this.getModel()
         .getEntities()
         .forEach((object) => {
-          changed = changed || object.isOnFocus() !== focus;
-          object.setOnFocus(focus);
+          if (object !== except) {
+            object.setOnFocus(focus);
+          }
         });
+    });
+  }
+
+  /**
+   * Runs `change` as one change of the selection: the designer pans to the last topic selected
+   * once, at the end, and fires one event if anything was selected or unselected: 'onblur' if the
+   * selection became empty, 'onfocus' otherwise. A batch started while another runs joins it.
+   */
+  private _batchSelection(change: () => void): void {
+    if (this._selectionBatch) {
+      change();
+      return;
+    }
+    const batch: { changed: boolean; panTo?: Topic } = { changed: false };
+    this._selectionBatch = batch;
+    try {
+      change();
     } finally {
       this._selectionBatch = null;
     }
@@ -500,14 +505,32 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     if (batch.panTo) {
       this.ensureNodeVisible(batch.panTo);
     }
-    if (changed) {
-      const model = this.getModel();
-      const empty = isSelectionEmpty(
-        model.filterSelectedTopics().length,
-        model.filterSelectedRelationships().length,
-      );
-      this.fireEvent(empty ? 'onblur' : 'onfocus');
+    if (batch.changed) {
+      this._fireSelectionEvent();
     }
+  }
+
+  /**
+   * Tells the editor that an entity was selected or unselected, or, while a batch runs, records
+   * it: the batch tells the editor once, at its end.
+   */
+  private _onSelectionChange(): void {
+    if (this._selectionBatch) {
+      this._selectionBatch.changed = true;
+      return;
+    }
+    this._fireSelectionEvent();
+  }
+
+  /**
+   * Fires 'onblur' if the selection is empty, 'onfocus' otherwise: the editor reads the selection
+   * again on either. A change that leaves something selected, such as a Ctrl or Cmd click that
+   * unselects one topic of several, or a click that keeps one topic of several, is an 'onfocus'.
+   */
+  private _fireSelectionEvent(): void {
+    const model = this.getModel();
+    const empty = isSelectionEmpty(model.countSelectedTopics(), model.countSelectedRelationships());
+    this.fireEvent(empty ? 'onblur' : 'onfocus');
   }
 
   setZoom(zoom: number): void {
@@ -1060,6 +1083,10 @@ class Designer extends EventDispispatcher<DesignerEvents> {
   }
 
   loadMap(mindmap: Mindmap): Promise<void> {
+    // A late caller (a React effect after unmount) can reach a disposed designer: ignore it.
+    if (this._disposed) {
+      return Promise.resolve();
+    }
     this._mindmap = mindmap;
 
     // Update background style...
@@ -1260,6 +1287,9 @@ class Designer extends EventDispispatcher<DesignerEvents> {
    * This should be called when the Designer is created to sync with editor theme
    */
   initializeThemeVariant(editorThemeMode: 'light' | 'dark'): void {
+    if (this._disposed) {
+      return;
+    }
     const variant = editorThemeMode === 'dark' ? 'dark' : 'light';
     this._themeVariant = variant;
 
@@ -1284,6 +1314,9 @@ class Designer extends EventDispispatcher<DesignerEvents> {
    * ```
    */
   setThemeVariant(variant: ThemeVariant): void {
+    if (this._disposed) {
+      return;
+    }
     if (this._themeVariant !== variant) {
       this._themeVariant = variant;
 
@@ -1383,6 +1416,9 @@ class Designer extends EventDispispatcher<DesignerEvents> {
    * @internal
    */
   applyCanvasStyle(): void {
+    if (this._disposed) {
+      return;
+    }
     const mindmap = this.getMindmap();
     const customStyle = mindmap.getCanvasStyle();
 
@@ -1545,25 +1581,8 @@ class Designer extends EventDispispatcher<DesignerEvents> {
 
     // Build relationship line (sourceTopic and targetTopic are guaranteed non-null by asserts above)
     const result = new Relationship(sourceTopic, targetTopic, model);
-    result.addEvent('ontblur', () => {
-      if (this._selectionBatch) return;
-      const topics = this.getModel().filterSelectedTopics();
-      const rels = this.getModel().filterSelectedRelationships();
-
-      if (isSelectionEmpty(topics.length, rels.length)) {
-        this.fireEvent('onblur');
-      }
-    });
-
-    result.addEvent('ontfocus', () => {
-      if (this._selectionBatch) return;
-      const topics = this.getModel().filterSelectedTopics();
-      const rels = this.getModel().filterSelectedRelationships();
-
-      if (!isSelectionEmpty(topics.length, rels.length)) {
-        this.fireEvent('onfocus');
-      }
-    });
+    result.addEvent('ontblur', () => this._onSelectionChange());
+    result.addEvent('ontfocus', () => this._onSelectionChange());
 
     // Append it to the workspace ...
     dmodel.addRelationship(result);
@@ -1836,8 +1855,17 @@ class Designer extends EventDispispatcher<DesignerEvents> {
    * where there is no previous viewport worth preserving.
    */
   goToNode(node: Topic, center = false): void {
+    this._batchSelection(() => this._selectOnly(node));
+    this._panToNode(node, center);
+  }
+
+  /** Selects the node and unselects every other entity. */
+  private _selectOnly(node: Topic): void {
     node.setOnFocus(true);
     this.onObjectFocusEvent(node);
+  }
+
+  private _panToNode(node: Topic, center: boolean): void {
     if (center) {
       this.centerNode(node);
     } else {
@@ -1866,8 +1894,12 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     if (collapsedAncestorIds.length > 0) {
       this.getActionDispatcher().shrinkBranch(collapsedAncestorIds, false);
     }
-    this.deselectAll();
-    this.goToNode(node, center);
+    // One change of the selection, then the pan: as goToNode, once the selection is cleared.
+    this._batchSelection(() => {
+      this.deselectAll();
+      this._selectOnly(node);
+    });
+    this._panToNode(node, center);
   }
 
   /**

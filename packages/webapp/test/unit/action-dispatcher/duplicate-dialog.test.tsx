@@ -28,8 +28,13 @@ jest.mock('../../../src/classes/middleware', () => ({
 }));
 
 import DuplicateDialog from '../../../src/components/maps-page/action-dispatcher/duplicate-dialog';
-import Client, { MapInfo } from '../../../src/classes/client';
+import Client, {
+  MAP_DESCRIPTION_MAX_LENGTH,
+  MAP_TITLE_MAX_LENGTH,
+  MapInfo,
+} from '../../../src/classes/client';
 import { renderWithProviders } from '../helpers/render';
+import { typeInBurst } from '../burst-typing';
 
 const map: MapInfo = {
   id: 101,
@@ -68,6 +73,22 @@ describe('DuplicateDialog', () => {
     expect(screen.getByDisplayValue('Original Description')).toBeDefined();
   });
 
+  test('the title takes as many characters as the backend stores', async () => {
+    renderDialog();
+
+    const title = (await screen.findByDisplayValue('Copy of Original Mindmap')) as HTMLInputElement;
+    expect(title.maxLength).toBe(MAP_TITLE_MAX_LENGTH);
+  });
+
+  test('the description takes as many characters as the backend accepts', async () => {
+    renderDialog();
+
+    const description = (await screen.findByDisplayValue(
+      'Original Description',
+    )) as HTMLInputElement;
+    expect(description.maxLength).toBe(MAP_DESCRIPTION_MAX_LENGTH);
+  });
+
   test('submits the edited title and description to duplicateMap', async () => {
     renderDialog(101);
 
@@ -83,6 +104,24 @@ describe('DuplicateDialog', () => {
       expect(mockDuplicateMap).toHaveBeenCalledWith(101, {
         title: 'New Copy Map',
         description: 'New Copy Description',
+      }),
+    );
+  });
+
+  test('takes 200 characters typed in one burst, as Cypress types them', async () => {
+    renderDialog(101);
+    const title = (await screen.findByDisplayValue('Copy of Original Mindmap')) as HTMLInputElement;
+    const description = screen.getByDisplayValue('Original Description') as HTMLInputElement;
+    fireEvent.change(title, { target: { value: '' } });
+
+    expect(await typeInBurst(title)).toEqual([]);
+    expect(await typeInBurst(description)).toEqual([]);
+    fireEvent.click(submitButton());
+
+    await waitFor(() =>
+      expect(mockDuplicateMap).toHaveBeenCalledWith(101, {
+        title: title.value,
+        description: description.value,
       }),
     );
   });

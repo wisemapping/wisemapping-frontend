@@ -54,7 +54,7 @@ describe('NodeModel typed property bag (T4)', () => {
     // The types are read-only: cast them away to check a caller changing them does no harm.
     const position = topic.getPositionOrThrow() as { x: number; y: number };
     position.x = 99;
-    const size = topic.getImageSize() as { width: number; height: number } | undefined;
+    const size: { width: number; height: number } | undefined = topic.getImageSize();
     if (size) size.width = 99;
     expect(topic.getPosition()).toEqual({ x: 1, y: 2 });
     expect(topic.getImageSize()).toEqual({ width: 30, height: 40 });

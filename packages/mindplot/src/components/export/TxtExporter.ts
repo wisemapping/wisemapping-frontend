@@ -19,6 +19,7 @@ import type Mindmap from '../model/Mindmap';
 import type INodeModel from '../model/INodeModel';
 import Exporter from './Exporter';
 import ContentType from '../ContentType';
+import { htmlToPlainText } from '../import/support/HtmlText';
 
 class TxtExporter extends Exporter {
   private mindmap: Mindmap;
@@ -31,6 +32,8 @@ class TxtExporter extends Exporter {
   export(): Promise<string> {
     const { mindmap } = this;
 
+    // The central topic first, then the isolated topics.
+    Exporter.centralTopicOf(mindmap);
     const branches = mindmap.getBranches();
     const txtStr = this.traverseBranch('', '', branches);
     return Promise.resolve(txtStr);
@@ -48,8 +51,9 @@ class TxtExporter extends Exporter {
 
       let nodeText = '';
       if (node.getText() !== undefined) {
+        // The paragraphs and the lines of an html text are lines of the text.
         if (node.getContentType() === ContentType.HTML) {
-          nodeText = node.getPlainText();
+          nodeText = htmlToPlainText(node.getText() || '');
         } else {
           nodeText = node.getText() || '';
         }
@@ -63,7 +67,7 @@ class TxtExporter extends Exporter {
           const noteModel = f;
           const noteText =
             noteModel.getContentType() === ContentType.HTML
-              ? noteModel.getPlainText()
+              ? htmlToPlainText(noteModel.getText())
               : noteModel.getText();
           result = `${result}\n${indent}  [Note: ${noteText}]`;
         }

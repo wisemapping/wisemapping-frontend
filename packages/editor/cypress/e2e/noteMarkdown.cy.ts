@@ -29,10 +29,6 @@ describe('Note Markdown and nested lists', () => {
   const pressTab = (shiftKey = false) =>
     note().trigger('keydown', { key: 'Tab', code: 'Tab', keyCode: 9, shiftKey });
 
-  // Cypress types a long text faster than React can follow (more than about 50 characters in one
-  // type() reach React's nested update limit, with or without Markdown): type in short runs.
-  const typeRuns = (...runs: string[]) => runs.forEach((run) => note().type(run));
-
   beforeEach(() => {
     cy.visit('/map-render/html/editor.html');
     cy.waitEditorLoaded();
@@ -81,7 +77,7 @@ describe('Note Markdown and nested lists', () => {
   });
 
   it('converts inline Markdown, with the text after it plain', () => {
-    typeRuns('**bold** and *it* ', 'and ~~old~~ and ', '`code` end');
+    note().type('**bold** and *it* and ~~old~~ and `code` end');
     note().find('strong').should('have.text', 'bold');
     note().find('em').should('have.text', 'it');
     note().find('s').should('have.text', 'old');
@@ -98,7 +94,7 @@ describe('Note Markdown and nested lists', () => {
   });
 
   it('makes links of safe addresses only', () => {
-    typeRuns('[site](https://example.org) ', 'and [bad](javascript:void0) ');
+    note().type('[site](https://example.org) and [bad](javascript:void0) ');
     note().find('a').should('have.length', 1).and('have.attr', 'href', 'https://example.org');
     note().should('contain.text', '[bad](javascript:void0)');
   });
@@ -120,7 +116,7 @@ describe('Note Markdown and nested lists', () => {
   });
 
   it('saves nested lists and shows them, with links opening in a new tab, in the tooltip', () => {
-    typeRuns('- parent{enter}child ', '[site](https://example.org) ');
+    note().type('- parent{enter}child [site](https://example.org) ');
     pressTab();
     cy.contains('Accept').click();
 
@@ -163,7 +159,7 @@ describe('Note Markdown and nested lists', () => {
   });
 
   it('shows nested lists indented', () => {
-    typeRuns('- one{enter}two{enter}three');
+    note().type('- one{enter}two{enter}three');
     pressTab();
     note().find('ul ul ul').should('not.exist');
     note().type('{enter}four');

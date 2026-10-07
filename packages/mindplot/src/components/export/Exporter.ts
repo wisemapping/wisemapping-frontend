@@ -15,6 +15,10 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import type Mindmap from '../model/Mindmap';
+import type INodeModel from '../model/INodeModel';
+import { $assert } from '../util/assert';
+
 abstract class Exporter {
   private _extension: string;
 
@@ -39,6 +43,17 @@ abstract class Exporter {
 
   getContentType(): string {
     return this._contentType;
+  }
+
+  /**
+   * The central topic of the map that an exporter of the topic tree writes. A map without one
+   * can not be loaded in the editor (Designer.loadMap asserts it either), so it is rejected with
+   * a clear error rather than written as an empty file.
+   */
+  protected static centralTopicOf(mindmap: Mindmap): INodeModel {
+    const centralTopic = mindmap.getCentralTopic();
+    $assert(centralTopic, 'The map to export has no central topic');
+    return centralTopic;
   }
 }
 

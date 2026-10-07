@@ -97,6 +97,21 @@ describe('LanguageMenu', () => {
     await waitFor(() => expect(client.fetchAccountInfo).toHaveBeenCalledTimes(2));
   });
 
+  // BL5-217: the locale was read from the clicked element's id, so a click on anything inside the
+  // item (an icon, a styled label) saved '' and fell back to English.
+  test('a click on an element inside the item still picks its language', async () => {
+    const client = setup();
+    const menu = await openMenu();
+    const label = document.createElement('span');
+    label.textContent = 'Français';
+    const item = within(menu).getByRole('menuitem', { name: 'Français' });
+    item.replaceChildren(label);
+
+    fireEvent.click(label);
+
+    await waitFor(() => expect(client.updateAccountLanguage).toHaveBeenCalledWith('fr'));
+  });
+
   test('a failed language change is logged', async () => {
     const consoleError = jest.spyOn(console, 'error').mockImplementation(() => undefined);
     const client = setup();
@@ -116,11 +131,10 @@ describe('LanguageMenu', () => {
     fireEvent.click(within(menu).getByRole('menuitem', { name: 'Help to Translate' }));
 
     const dialog = await screen.findByRole('dialog');
-    expect(within(dialog).getByText('Help us to support more languages !')).toBeTruthy();
+    expect(within(dialog).getByText('Help us support more languages!')).toBeTruthy();
+    expect(within(dialog).getByText(/team@wisemapping\.com/)).toBeTruthy();
     fireEvent.click(within(dialog).getByRole('button', { name: 'Close' }));
-    await waitFor(() =>
-      expect(screen.queryByText('Help us to support more languages !')).toBeNull(),
-    );
+    await waitFor(() => expect(screen.queryByText('Help us support more languages!')).toBeNull());
   });
 });
 

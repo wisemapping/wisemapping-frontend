@@ -52,9 +52,7 @@ describe('ToolbarSubmenu open state', () => {
 
     it('closes when the rendered panel calls its close callback', () => {
       const config = baseConfig({
-        options: [
-          { render: (close) => <button onClick={close} data-testid="close-me" /> },
-        ],
+        options: [{ render: (close) => <button onClick={close} data-testid="close-me" /> }],
       });
       render(<ToolbarSubmenu configuration={config} />);
       fireEvent.click(screen.getByTestId('trigger'));

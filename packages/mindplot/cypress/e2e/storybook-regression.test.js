@@ -111,11 +111,9 @@ context('Storybook Regression Tests', () => {
       }
     });
 
-    // Wait a bit to ensure focus and selection are applied
-    cy.wait(100);
-
-    // Verify state one more time before triggering the event
-    cy.get('@multilineEditor').then(($textarea) => {
+    // Verify state one more time before triggering the event, retrying until focus and selection
+    // are applied
+    cy.get('@multilineEditor').should(($textarea) => {
       const textarea = $textarea.get(0);
       if (textarea instanceof HTMLTextAreaElement) {
         // Ensure textarea still has the value and selection
@@ -159,10 +157,7 @@ context('Storybook Regression Tests', () => {
       }
     });
 
-    // Wait for the event handler to process and update the textarea
-    cy.wait(100);
-
-    // Verify the textarea has the expected value with newline
+    // Verify the textarea has the expected value with newline (retries until the handler ran)
     cy.get('@multilineEditor').should('have.value', 'B\norder Style');
 
     cy.get('@multilineEditor').should(($textarea) => {

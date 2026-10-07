@@ -54,7 +54,7 @@ describe('ScreenManager.getWorkspaceMousePosition', () => {
       x: 100,
       y: 50,
       toJSON: () => ({}),
-    } as DOMRect);
+    });
     screenManager = new ScreenManager(container);
   });
 

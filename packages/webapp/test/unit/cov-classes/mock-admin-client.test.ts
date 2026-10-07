@@ -19,6 +19,7 @@
 import MockAdminClient from '../../../src/classes/client/mock-admin-client';
 import { AdminUser } from '../../../src/classes/client/admin-client';
 import { AuthenticationType } from '../../../src/classes/client';
+import { appLogger } from '../../../src/utils/logger';
 
 let client: MockAdminClient;
 
@@ -39,6 +40,17 @@ afterEach(() => {
 });
 
 describe('MockAdminClient users listing', () => {
+  it('traces its calls through the app logger, not straight to the console', async () => {
+    const debug = jest.spyOn(appLogger, 'debug').mockImplementation(() => undefined);
+    await settle(client.getAdminUsers());
+
+    expect(console.log).not.toHaveBeenCalled();
+    expect(debug).toHaveBeenCalledWith(
+      'MockAdminClient: Returning paginated admin users',
+      undefined,
+    );
+  });
+
   it('returns the first page of ten users by default', async () => {
     const page = await client.getAdminUsers();
 

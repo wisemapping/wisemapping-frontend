@@ -114,7 +114,7 @@
     "defaultMessage": "Action"
   },
   "shortcut-help-pane.add-child": {
-    "defaultMessage": "Ajouter un noeud enfant"
+    "defaultMessage": "Ajouter un nœud enfant"
   },
   "shortcut-help-pane.add-link": {
     "defaultMessage": "Ajouter un lien"
@@ -123,7 +123,7 @@
     "defaultMessage": "Ajouter une note"
   },
   "shortcut-help-pane.add-sibling": {
-    "defaultMessage": "Ajouter un noeud frère"
+    "defaultMessage": "Ajouter un nœud frère"
   },
   "shortcut-help-pane.cancel-text-changes": {
     "defaultMessage": "Annuler les modifications du texte"
@@ -147,31 +147,31 @@
     "defaultMessage": "Passer le texte en italique"
   },
   "shortcut-help-pane.collapse-children": {
-    "defaultMessage": "Masquer les noeuds enfants"
+    "defaultMessage": "Masquer les nœuds enfants"
   },
   "shortcut-help-pane.indent-topic": {
-    "defaultMessage": "Abaisser le noeud d'un niveau (rattacher au frère précédent)"
+    "defaultMessage": "Abaisser le nœud d'un niveau (rattacher au frère précédent)"
   },
   "shortcut-help-pane.move-topic-down": {
-    "defaultMessage": "Déplacer le noeud vers le bas parmi ses frères"
+    "defaultMessage": "Déplacer le nœud vers le bas parmi ses frères"
   },
   "shortcut-help-pane.move-topic-up": {
-    "defaultMessage": "Déplacer le noeud vers le haut parmi ses frères"
+    "defaultMessage": "Déplacer le nœud vers le haut parmi ses frères"
   },
   "shortcut-help-pane.outdent-topic": {
-    "defaultMessage": "Remonter le noeud d'un niveau (rattacher au grand-parent)"
+    "defaultMessage": "Remonter le nœud d'un niveau (rattacher au grand-parent)"
   },
   "shortcut-help-pane.copy-and-text": {
-    "defaultMessage": "Copier et coller des noeuds"
+    "defaultMessage": "Copier et coller des nœuds/Copier l'image de la carte mentale dans le presse-papiers"
   },
   "shortcut-help-pane.delete-topic": {
-    "defaultMessage": "Supprimer le noeud"
+    "defaultMessage": "Supprimer le nœud"
   },
   "shortcut-help-pane.deselect-all-topics": {
-    "defaultMessage": "Désélectionner tous les noeuds"
+    "defaultMessage": "Désélectionner tous les nœuds"
   },
   "shortcut-help-pane.diagram-aria": {
-    "defaultMessage": "La flèche gauche va au noeud parent, la flèche droite à un enfant, haut et bas entre les noeuds frères."
+    "defaultMessage": "La flèche gauche va au nœud parent, la flèche droite à un enfant, haut et bas entre les nœuds frères."
   },
   "shortcut-help-pane.diagram-caption": {
     "defaultMessage": "Sur la moitié gauche de la carte, ← et → inversent leurs rôles."
@@ -189,13 +189,13 @@
     "defaultMessage": "Frère"
   },
   "shortcut-help-pane.edit-multiline": {
-    "defaultMessage": "Ajouter une ligne au noeud"
+    "defaultMessage": "Ajouter une ligne au nœud"
   },
   "shortcut-help-pane.edit-topic": {
-    "defaultMessage": "Modifier le texte du noeud"
+    "defaultMessage": "Modifier le texte du nœud"
   },
   "shortcut-help-pane.edit-topic-key": {
-    "defaultMessage": "Double-clic"
+    "defaultMessage": "F2 ou double-clic"
   },
   "shortcut-help-pane.navigation": {
     "defaultMessage": "Naviguer"
@@ -204,40 +204,40 @@
     "defaultMessage": "Touches directionnelles"
   },
   "shortcut-help-pane.redo": {
-    "defaultMessage": "Réduire l'édition"
+    "defaultMessage": "Rétablir la modification"
   },
   "shortcut-help-pane.save-changes": {
     "defaultMessage": "Sauvegarder les modifications"
   },
   "shortcut-help-pane.select-all-topics": {
-    "defaultMessage": "Sélectionner tous les noeuds"
+    "defaultMessage": "Sélectionner tous les nœuds"
   },
   "shortcut-help-pane.select-topics": {
-    "defaultMessage": "Sélectionner plusieurs noeuds"
+    "defaultMessage": "Sélectionner plusieurs nœuds"
   },
   "shortcut-help-pane.select-topics-keys": {
     "defaultMessage": "Clic de souris"
   },
   "shortcut-help-pane.undo": {
-    "defaultMessage": "Annuler l'édition"
+    "defaultMessage": "Annuler la modification"
   },
   "icon-picker.show-images": {
     "defaultMessage": "Afficher les images"
   },
   "shortcut-help-pane.overwrite-edit-topic": {
-    "defaultMessage": "Remplacer le texte du noeud"
+    "defaultMessage": "Remplacer le texte du nœud"
   },
   "shortcut-help-pane.overwrite-edit-topic-key": {
-    "defaultMessage": "Ecrire dans le noeud sélectionné"
+    "defaultMessage": "Écrire dans le nœud sélectionné"
   },
   "action.delete": {
     "defaultMessage": "Supprimer"
   },
   "shortcut-help-pane.drag-disconnect": {
-    "defaultMessage": "Déconnecter le noeud"
+    "defaultMessage": "Déconnecter le nœud"
   },
   "shortcut-help-pane.drag-disconnect-key": {
-    "defaultMessage": "faire glisser le noeud"
+    "defaultMessage": "faire glisser le nœud"
   },
   "creator-info-pane.description": {
     "defaultMessage": "Description"
@@ -264,7 +264,7 @@
     "defaultMessage": "Taille de la grille"
   },
   "canvas-style.grid-size-xs": {
-    "defaultMessage": "Très Petit"
+    "defaultMessage": "Très petit"
   },
   "canvas-style.grid-size-s": {
     "defaultMessage": "Petit"
@@ -276,7 +276,7 @@
     "defaultMessage": "Grand"
   },
   "canvas-style.grid-size-xl": {
-    "defaultMessage": "Très Grand"
+    "defaultMessage": "Très grand"
   },
   "canvas-style.grid-color": {
     "defaultMessage": "Couleur de grille"
@@ -288,10 +288,10 @@
     "defaultMessage": "Clair"
   },
   "rich-text-editor.insert-link": {
-    "defaultMessage": "Insérer un Lien"
+    "defaultMessage": "Insérer un lien"
   },
   "rich-text-editor.insert-icon": {
-    "defaultMessage": "Insérer une Icône"
+    "defaultMessage": "Insérer une icône"
   },
   "rich-text-editor.bold": {
     "defaultMessage": "Gras"
@@ -306,10 +306,10 @@
     "defaultMessage": "Barré"
   },
   "rich-text-editor.bullet-list": {
-    "defaultMessage": "Liste à Puces"
+    "defaultMessage": "Liste à puces"
   },
   "rich-text-editor.numbered-list": {
-    "defaultMessage": "Liste Numérotée"
+    "defaultMessage": "Liste numérotée"
   },
   "common.close": {
     "defaultMessage": "Fermer"
@@ -333,7 +333,7 @@
     "defaultMessage": "Aucune icône trouvée"
   },
   "editor-panel.tooltip-add-topic-image": {
-    "defaultMessage": "Ajouter une image de sujet"
+    "defaultMessage": "Ajouter une image au nœud"
   },
   "appbar.error-saving-title": {
     "defaultMessage": "Erreur lors de la sauvegarde"
@@ -354,7 +354,7 @@
     "defaultMessage": "Style de relation"
   },
   "editor-panel.tooltip-unified-styling": {
-    "defaultMessage": "Style du thème et des connexions"
+    "defaultMessage": "Style des nœuds et des connexions"
   },
   "color-picker.color": {
     "defaultMessage": "Couleur"
@@ -498,7 +498,7 @@
     "defaultMessage": "{remaining} restants"
   },
   "note.character.limit.warning": {
-    "defaultMessage": "(Limite approchée)"
+    "defaultMessage": "(Limite bientôt atteinte)"
   },
   "theme-editor.accept": {
     "defaultMessage": "Appliquer le thème"
@@ -612,13 +612,13 @@
     "defaultMessage": "Neurone"
   },
   "icon-collection.connection.neuron-tooltip": {
-    "defaultMessage": "Ligne d'impulsion organique avec des pulses ramifiés - idéale pour la science, les réseaux neuronaux ou tout ce qui est futuriste"
+    "defaultMessage": "Ligne d'impulsion organique avec des impulsions ramifiées - idéale pour la science, les réseaux neuronaux ou tout ce qui est futuriste"
   },
   "icon-collection.connection.thick-curved-tooltip": {
-    "defaultMessage": "Ligne courbe épaisse avec des courbes bezier lisses - Idéale pour mettre en valeur les branches principales"
+    "defaultMessage": "Ligne courbe épaisse avec des courbes de Bézier lisses - Idéale pour mettre en valeur les branches principales"
   },
   "icon-collection.connection.thin-curved-tooltip": {
-    "defaultMessage": "Ligne courbe fine avec des courbes bezier élégantes - Idéale pour les cartes mentales détaillées ou denses"
+    "defaultMessage": "Ligne courbe fine avec d'élégantes courbes de Bézier - Idéale pour les cartes mentales détaillées ou denses"
   },
   "layout-selector.accept": {
     "defaultMessage": "Accepter"
@@ -645,10 +645,10 @@
     "defaultMessage": "Arbre"
   },
   "shortcut-help-pane.expand-by-level": {
-    "defaultMessage": "Développer les sujets par niveau"
+    "defaultMessage": "Développer les nœuds par niveau"
   },
   "shortcut-help-pane.expand-collapse-all": {
-    "defaultMessage": "Développer/Réduire tous les sujets"
+    "defaultMessage": "Développer/Réduire tous les nœuds"
   },
   "shortcut-help-pane.outline-view": {
     "defaultMessage": "Ouvrir la vue plan"
@@ -720,16 +720,16 @@
     "defaultMessage": "Ajuster le zoom"
   },
   "editor-panel.deeplink-copied": {
-    "defaultMessage": "Lien vers le noeud copié dans le presse-papiers"
+    "defaultMessage": "Lien vers le nœud copié dans le presse-papiers"
   },
   "editor-panel.deeplink-copy-failed": {
     "defaultMessage": "Impossible de copier le lien dans le presse-papiers"
   },
   "editor-panel.tooltip-copy-node-link": {
-    "defaultMessage": "Copier le lien vers le noeud"
+    "defaultMessage": "Copier le lien vers le nœud"
   },
   "shortcut-help-pane.find-in-map": {
-    "defaultMessage": "Rechercher un noeud dans la carte"
+    "defaultMessage": "Rechercher un nœud dans la carte"
   },
   "shortcut-help-pane.pan-canvas": {
     "defaultMessage": "Déplacer le canevas"
@@ -738,7 +738,7 @@
     "defaultMessage": "Balayage à deux doigts ou molette de la souris"
   },
   "shortcut-help-pane.paste-as-child": {
-    "defaultMessage": "Coller comme enfant du noeud sélectionné"
+    "defaultMessage": "Coller comme enfant du nœud sélectionné"
   },
   "shortcut-help-pane.zoom-wheel": {
     "defaultMessage": "Zoomer ou dézoomer avec la molette"
@@ -747,7 +747,7 @@
     "defaultMessage": "Rechercher dans la carte"
   },
   "find-in-map.placeholder": {
-    "defaultMessage": "Rechercher un noeud..."
+    "defaultMessage": "Rechercher un nœud..."
   },
   "find-in-map.clear": {
     "defaultMessage": "Effacer la recherche"
@@ -765,7 +765,7 @@
     "defaultMessage": "Aucune correspondance"
   },
   "find-in-map.empty-state": {
-    "defaultMessage": "Aucun noeud ne correspond à « {query} »."
+    "defaultMessage": "Aucun nœud ne correspond à « {query} »."
   },
   "rich-text-editor.indent": {
     "defaultMessage": "Augmenter le retrait (Tab)"

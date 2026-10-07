@@ -38,6 +38,8 @@ describe('LayoutSelector', () => {
   });
 
   afterEach(() => {
+    // Picking and applying a layout leaves no debug output behind.
+    expect(console.log).not.toHaveBeenCalled();
     jest.restoreAllMocks();
   });
 

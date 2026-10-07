@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 
+import { waitFor } from '@testing-library/react';
 import ReactGA from 'react-ga4';
 import RestClient from '../../../src/classes/client/rest-client';
 import JwtTokenConfig from '../../../src/classes/jwt-token-config';
@@ -481,7 +482,10 @@ describe('RestClient login and logout', () => {
     expect(JwtTokenConfig.retreiveToken()).toBe('jwt-123');
     // The account info request already carries the new token.
     expect(calls[1].header('Authorization')).toBe('Bearer jwt-123');
-    expect(set).toHaveBeenCalledWith({ userId: expect.stringMatching(/^[0-9a-f]{64}$/) });
+    // The digest resolves on Node's thread pool, not in a microtask: wait for the call itself.
+    await waitFor(() =>
+      expect(set).toHaveBeenCalledWith({ userId: expect.stringMatching(/^[0-9a-f]{64}$/) }),
+    );
   });
 
   it('login still succeeds when the account info can not be fetched', async () => {

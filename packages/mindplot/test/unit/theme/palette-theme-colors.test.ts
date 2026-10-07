@@ -44,13 +44,18 @@ type Json = {
 };
 
 // The JSON a variant reads a key from: the variant file, else light, else default.
-const pick = <T>(files: Json[], read: (json: Json) => T | undefined): T =>
-  files.map(read).find((value) => value !== undefined) as T;
+const pick = <T>(files: Json[], read: (json: Json) => T | undefined): T => {
+  const value = files.map(read).find((found): found is T => found !== undefined);
+  if (value === undefined) {
+    throw new Error('No theme file sets the key');
+  }
+  return value;
+};
 
 const themes: Array<[string, (variant: ThemeVariant) => PaletteTheme, Json, Json, Json]> = [
   ['ocean', (v) => new OceanTheme(v), oceanDefault, oceanLight, oceanDark],
   ['sunrise', (v) => new SunriseTheme(v), sunriseDefault, sunriseLight, sunriseDark],
-  ['robot', (v) => new RobotTheme(v), robotDefault, robotLight as Json, robotDark as Json],
+  ['robot', (v) => new RobotTheme(v), robotDefault, robotLight, robotDark],
 ];
 const variants: ThemeVariant[] = ['light', 'dark'];
 
@@ -60,10 +65,10 @@ describe.each(themes)('%s theme', (_name, create, defaults, light, dark) => {
     const files = variant === 'dark' ? [dark, light, defaults] : [light, defaults];
     const central = fakeTopic({}, undefined, { central: true });
     const palette = ([] as string[]).concat(
-      pick(files, (json) => json.MainTopic?.backgroundColor) as string | string[],
+      pick<string | string[]>(files, (json) => json.MainTopic?.backgroundColor),
     );
     const connections = ([] as string[]).concat(
-      pick(files, (json) => json.MainTopic?.connectionColor) as string | string[],
+      pick<string | string[]>(files, (json) => json.MainTopic?.connectionColor),
     );
 
     describe('background colour', () => {
@@ -104,7 +109,7 @@ describe.each(themes)('%s theme', (_name, create, defaults, light, dark) => {
       });
 
       it('uses the central topic font colour of the theme, or black or white when unreadable', () => {
-        const color = pick(files, (json) => json.CentralTopic?.fontColor) as string;
+        const color = pick<string>(files, (json) => json.CentralTopic?.fontColor);
         const result = theme.getFontColor(central);
         if (result !== color) {
           // Every theme text colour must stay readable on what is behind it.

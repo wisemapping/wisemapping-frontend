@@ -1,9 +1,9 @@
 {
   "common.terms-notice": {
-    "defaultMessage": "By continuing, you agree to our <termsLink>Terms of Service</termsLink> and <privacyLink>Privacy Policy</privacyLink>."
+    "defaultMessage": "続行すると、<termsLink>利用規約</termsLink>および<privacyLink>プライバシーポリシー</privacyLink>に同意したものとみなされます。"
   },
   "accountinfo.button": {
-    "defaultMessage": "受け入れる"
+    "defaultMessage": "変更を保存"
   },
   "accountinfo.deleteaccount": {
     "defaultMessage": "アカウントを削除"
@@ -94,6 +94,15 @@
   },
   "changepwd.password-match": {
     "defaultMessage": "パスワードが一致しません。もう一度お試しください。"
+  },
+  "changepwd.password-max-length": {
+    "defaultMessage": "パスワードは39文字以内にしてください。"
+  },
+  "changepwd.password-min-length": {
+    "defaultMessage": "パスワードは8文字以上である必要があります。"
+  },
+  "changepwd.password-required": {
+    "defaultMessage": "パスワードを入力してください。"
   },
   "changepwd.title": {
     "defaultMessage": "パスワードを変更"
@@ -207,10 +216,10 @@
     "defaultMessage": "復旧リンクを送信"
   },
   "forgot.success.desc": {
-    "defaultMessage": "パスワードをリセットできるメールをお送りしました。数分以内に受信されるはずです。"
+    "defaultMessage": "パスワード再設定用のリンクをメールでお送りしました。リンクの有効期限は1時間です。リンクを使用するまで、現在のパスワードは変更されません。"
   },
   "forgot.success.title": {
-    "defaultMessage": "一時パスワードが送信されました。"
+    "defaultMessage": "メールをご確認ください。"
   },
   "forgot.title": {
     "defaultMessage": "パスワードをリセット"
@@ -231,10 +240,10 @@
     "defaultMessage": "利用可能な変更はありません"
   },
   "import.button": {
-    "defaultMessage": "作成"
+    "defaultMessage": "インポート"
   },
   "import.description": {
-    "defaultMessage": "WiseMappingとFreemindのマップをマップリストにインポートできます。インポートするファイルを選択してください。"
+    "defaultMessage": "WiseMapping、FreeMind、Freeplane、XMind、MindManager、OPMLのマップをマップリストにインポートできます。インポートするファイルを選択してください。"
   },
   "import.error-file": {
     "defaultMessage": "インポートエラー {error}"
@@ -317,6 +326,12 @@
   "language.help": {
     "defaultMessage": "翻訳を支援"
   },
+  "language.help-dialog.title": {
+    "defaultMessage": "より多くの言語への対応にご協力ください！"
+  },
+  "language.help-dialog.description": {
+    "defaultMessage": "皆さんのご協力が必要です！ご興味のある方は {email} までメールでご連絡ください。"
+  },
   "login.desc": {
     "defaultMessage": "アカウントにログイン"
   },
@@ -384,7 +399,7 @@
     "defaultMessage": "ChatGPT 搭載マインドマップコパイロット"
   },
   "maps.copilot-dialog.description": {
-    "defaultMessage": "Mind Map Copilot は、あなたのプロンプトを構造化されたマインドマップに変換する ChatGPT 搭載のブレーンストーミング支援ツールです。新しいタブで開きますので、アイデアを膨らませ、トピックを生成し、ベストな内容を WiseMapping に持ち帰ってください。"
+    "defaultMessage": "AIコパイロットは、あなたのプロンプトを構造化されたマインドマップに変換する ChatGPT 搭載のブレーンストーミング支援ツールです。新しいタブで開きますので、アイデアを膨らませ、トピックを生成し、ベストな内容を WiseMapping に持ち帰ってください。"
   },
   "maps.copilot-dialog.continue": {
     "defaultMessage": "コパイロットを開く"
@@ -411,7 +426,7 @@
     "defaultMessage": "すべて"
   },
   "maps.nav-onwned": {
-    "defaultMessage": "所有"
+    "defaultMessage": "マイマップ"
   },
   "maps.nav-public": {
     "defaultMessage": "公開"
@@ -453,22 +468,22 @@
     "defaultMessage": "公開共有を有効にする"
   },
   "publish.copied": {
-    "defaultMessage": "Copied to clipboard!"
+    "defaultMessage": "クリップボードにコピーしました！"
   },
   "publish.description": {
-    "defaultMessage": "マップを公開することで、インターネット上のすべての人に表示されます。"
+    "defaultMessage": "マップを公開します。リンクを知っている人は誰でも閲覧できます。"
   },
   "publish.embedded": {
     "defaultMessage": "埋め込み"
   },
   "publish.embedded-msg": {
-    "defaultMessage": "このコードスニペットをコピーして、ブログやページに埋め込みます："
+    "defaultMessage": "コードをクリックするとクリップボードにコピーされます："
   },
   "publish.public-url": {
     "defaultMessage": "公開URL"
   },
   "publish.public-url-msg": {
-    "defaultMessage": "以下のリンクをコピーして貼り付け、同僚とマップを共有します："
+    "defaultMessage": "リンクをクリックするとクリップボードにコピーされます："
   },
   "publish.title": {
     "defaultMessage": "公開"
@@ -549,7 +564,7 @@
     "defaultMessage": "共有"
   },
   "share.adding-button": {
-    "defaultMessage": "Sharing..."
+    "defaultMessage": "共有中..."
   },
   "share.add-message": {
     "defaultMessage": "メッセージを追加"
@@ -584,11 +599,29 @@
   "common.maps-list": {
     "defaultMessage": "マップ一覧"
   },
+  "common.na": {
+    "defaultMessage": "該当なし"
+  },
   "admin.status-clean": {
     "defaultMessage": "クリーン"
   },
+  "admin.status-not-activated": {
+    "defaultMessage": "未有効化"
+  },
+  "admin.status-not-activated-tooltip": {
+    "defaultMessage": "ユーザーはまだメールアドレスを確認していません"
+  },
+  "admin.status-not-activated-tooltip-interactive": {
+    "defaultMessage": "ユーザーはまだメールアドレスを確認していません | クリックして状態を変更"
+  },
   "common.allow-email-notifications": {
     "defaultMessage": "メール通知を許可"
+  },
+  "common.cancel": {
+    "defaultMessage": "キャンセル"
+  },
+  "common.close": {
+    "defaultMessage": "閉じる"
   },
   "admin.public": {
     "defaultMessage": "公開"
@@ -611,6 +644,27 @@
   "admin.auth-type": {
     "defaultMessage": "認証タイプ"
   },
+  "admin.auth.database": {
+    "defaultMessage": "データベース"
+  },
+  "admin.auth.facebook": {
+    "defaultMessage": "Facebook"
+  },
+  "admin.auth.google": {
+    "defaultMessage": "Google"
+  },
+  "admin.auth.ldap": {
+    "defaultMessage": "LDAP"
+  },
+  "admin.button.update-user": {
+    "defaultMessage": "ユーザーを更新"
+  },
+  "admin.button.updating": {
+    "defaultMessage": "更新中..."
+  },
+  "admin.cancel": {
+    "defaultMessage": "キャンセル"
+  },
   "common.delete": {
     "defaultMessage": "削除"
   },
@@ -622,6 +676,51 @@
   },
   "admin.edit-user": {
     "defaultMessage": "ユーザーを編集"
+  },
+  "admin.error.access-denied": {
+    "defaultMessage": "アクセスが拒否されました。管理者権限が必要です。"
+  },
+  "admin.error.create-user-failed": {
+    "defaultMessage": "ユーザーの作成に失敗しました。もう一度お試しください。"
+  },
+  "admin.error.load-users": {
+    "defaultMessage": "ユーザーの読み込みに失敗しました：{message}"
+  },
+  "admin.error.unknown": {
+    "defaultMessage": "不明なエラー"
+  },
+  "admin.error.update-map-failed": {
+    "defaultMessage": "マップの更新に失敗しました。もう一度お試しください。"
+  },
+  "admin.error.update-user-failed": {
+    "defaultMessage": "ユーザーの更新に失敗しました。もう一度お試しください。"
+  },
+  "admin.facebook.filter-tooltip": {
+    "defaultMessage": "Facebookデータ削除の照会"
+  },
+  "admin.facebook.lookup-button": {
+    "defaultMessage": "アカウントを検索"
+  },
+  "admin.facebook.lookup-not-found": {
+    "defaultMessage": "このFacebookユーザーIDに該当するアカウントが見つかりません。"
+  },
+  "admin.facebook.remove": {
+    "defaultMessage": "解除"
+  },
+  "admin.facebook.remove-button": {
+    "defaultMessage": "Facebookアカウントを解除"
+  },
+  "admin.facebook.remove-confirm": {
+    "defaultMessage": "「{email}」のFacebook連携を解除しますか？"
+  },
+  "admin.facebook.remove-dialog-title": {
+    "defaultMessage": "Facebookアカウントを解除"
+  },
+  "admin.facebook.remove-warning": {
+    "defaultMessage": "このアカウントからFacebook認証の連携が解除されます。ユーザーにはアクセスを回復するためのパスワードリセットメールが送信されます。"
+  },
+  "admin.facebook.removing": {
+    "defaultMessage": "解除中..."
   },
   "admin.refresh": {
     "defaultMessage": "更新"
@@ -635,6 +734,9 @@
   "common.emails": {
     "defaultMessage": "メール"
   },
+  "common.enabled": {
+    "defaultMessage": "有効"
+  },
   "admin.suspension-reason": {
     "defaultMessage": "停止理由"
   },
@@ -643,6 +745,27 @@
   },
   "admin.suspension.terms-violation": {
     "defaultMessage": "利用規約違反"
+  },
+  "admin.system.app.name": {
+    "defaultMessage": "名前"
+  },
+  "admin.system.app.port": {
+    "defaultMessage": "ポート"
+  },
+  "admin.system.application": {
+    "defaultMessage": "アプリケーション"
+  },
+  "admin.system.database": {
+    "defaultMessage": "データベース"
+  },
+  "admin.system.database.info": {
+    "defaultMessage": "データベース"
+  },
+  "admin.system.db.ddl": {
+    "defaultMessage": "Hibernate DDL"
+  },
+  "admin.system.db.driver": {
+    "defaultMessage": "ドライバー"
   },
   "admin.suspension.security-concern": {
     "defaultMessage": "セキュリティ上の懸念"
@@ -659,6 +782,15 @@
   "admin.status-suspended": {
     "defaultMessage": "停止中"
   },
+  "admin.status.click-to-change": {
+    "defaultMessage": "クリックして状態を変更"
+  },
+  "admin.status.reason": {
+    "defaultMessage": "理由：{reason}"
+  },
+  "admin.status.suspended-on": {
+    "defaultMessage": "停止日：{date}"
+  },
   "admin.delete": {
     "defaultMessage": "削除"
   },
@@ -670,6 +802,12 @@
   },
   "admin.status-active": {
     "defaultMessage": "アクティブ"
+  },
+  "admin.status-active-tooltip": {
+    "defaultMessage": "アカウントは有効化されており、正常な状態です"
+  },
+  "admin.status-active-tooltip-interactive": {
+    "defaultMessage": "アカウントは有効化されており、正常な状態です | クリックして状態を変更"
   },
   "common.locale": {
     "defaultMessage": "言語"
@@ -683,8 +821,53 @@
   "admin.unsuspend-user": {
     "defaultMessage": "ユーザーの停止を解除"
   },
+  "admin.user-info.auth-type": {
+    "defaultMessage": "認証"
+  },
+  "admin.user-info.created": {
+    "defaultMessage": "作成日"
+  },
+  "admin.user-info.status": {
+    "defaultMessage": "状態"
+  },
+  "admin.user-info.suspension-reason": {
+    "defaultMessage": "停止理由："
+  },
+  "admin.user-info.title": {
+    "defaultMessage": "ユーザー情報"
+  },
+  "admin.user-info.total-maps": {
+    "defaultMessage": "マップの総数"
+  },
+  "admin.user-maps-dialog.loading": {
+    "defaultMessage": "ユーザーを読み込み中..."
+  },
+  "admin.user-maps-dialog.no-maps": {
+    "defaultMessage": "このユーザーにはマップがありません。"
+  },
+  "admin.user-maps-dialog.title": {
+    "defaultMessage": "{name} が所有するマップ（ID: #{id}）"
+  },
+  "admin.validation.email-invalid": {
+    "defaultMessage": "メールアドレスの形式が無効です"
+  },
+  "admin.validation.email-required": {
+    "defaultMessage": "メールアドレスは必須です"
+  },
+  "admin.validation.firstname-required": {
+    "defaultMessage": "名は必須です"
+  },
+  "admin.validation.lastname-required": {
+    "defaultMessage": "姓は必須です"
+  },
+  "admin.view-user-maps": {
+    "defaultMessage": "ユーザーのマップを表示"
+  },
   "common.delete-tag": {
     "defaultMessage": "タグを削除"
+  },
+  "common.disabled": {
+    "defaultMessage": "無効"
   },
   "admin.edit": {
     "defaultMessage": "編集"
@@ -695,6 +878,150 @@
   "admin.locked": {
     "defaultMessage": "ロック"
   },
+  "admin.maps.clean-tooltip": {
+    "defaultMessage": "スパムとしてマークされていません"
+  },
+  "admin.maps.creator-suspended-tooltip": {
+    "defaultMessage": "マップ作成者のアカウントは管理者によって停止されています"
+  },
+  "admin.maps.delete": {
+    "defaultMessage": "マップを削除"
+  },
+  "admin.maps.description": {
+    "defaultMessage": "説明"
+  },
+  "admin.maps.edit": {
+    "defaultMessage": "マップを編集"
+  },
+  "admin.maps.edit-title": {
+    "defaultMessage": "マップを編集"
+  },
+  "admin.maps.filter.date": {
+    "defaultMessage": "期間"
+  },
+  "admin.maps.filter.spam": {
+    "defaultMessage": "スパム"
+  },
+  "admin.maps.locked-tooltip": {
+    "defaultMessage": "現在 {user} が編集中です"
+  },
+  "admin.maps.mark-as-not-spam": {
+    "defaultMessage": "非スパムとしてマーク"
+  },
+  "admin.maps.mark-as-spam": {
+    "defaultMessage": "スパムとしてマーク"
+  },
+  "admin.maps.no-maps": {
+    "defaultMessage": "マップが見つかりません"
+  },
+  "admin.maps.page-title": {
+    "defaultMessage": "マップ管理"
+  },
+  "admin.maps.private-tooltip": {
+    "defaultMessage": "共同編集者のみがこのマップを表示できます"
+  },
+  "admin.maps.public-tooltip": {
+    "defaultMessage": "誰でもこのマップを表示できます"
+  },
+  "admin.maps.search": {
+    "defaultMessage": "マップを検索...（IDは #123、作成者はメールアドレス）"
+  },
+  "admin.maps.search-by-email": {
+    "defaultMessage": "🔍 作成者のメールアドレスで検索中"
+  },
+  "admin.maps.search-by-id": {
+    "defaultMessage": "🔍 マップIDで検索中"
+  },
+  "admin.maps.search-by-text": {
+    "defaultMessage": "🔍 タイトルと説明を検索中"
+  },
+  "admin.maps.spam-tooltip": {
+    "defaultMessage": "{date} にスパムとして検出されました"
+  },
+  "admin.maps.spam-tooltip-no-date": {
+    "defaultMessage": "スパムとしてマーク済み"
+  },
+  "admin.maps.spam-label": {
+    "defaultMessage": "スパム（{type}）"
+  },
+  "admin.maps.spam-type-unknown": {
+    "defaultMessage": "不明"
+  },
+  "admin.maps.suspend-user": {
+    "defaultMessage": "ユーザーアカウントを停止"
+  },
+  "admin.maps.suspend-user.confirm": {
+    "defaultMessage": "ユーザー「{userName}」（ID: {userId}）のアカウントを停止してもよろしいですか？手動レビューによる停止として記録されます。"
+  },
+  "admin.maps.suspend-user.confirm-button": {
+    "defaultMessage": "ユーザーを停止"
+  },
+  "admin.maps.suspend-user.title": {
+    "defaultMessage": "ユーザーアカウントを停止"
+  },
+  "admin.maps.suspend-user.warning": {
+    "defaultMessage": "この操作によりユーザーアカウントが停止され、ユーザーはシステムにアクセスできなくなります。"
+  },
+  "admin.maps.table.actions": {
+    "defaultMessage": "操作"
+  },
+  "admin.maps.table.created": {
+    "defaultMessage": "作成日"
+  },
+  "admin.maps.table.description": {
+    "defaultMessage": "説明"
+  },
+  "admin.maps.table.id": {
+    "defaultMessage": "マップID"
+  },
+  "admin.maps.table.modified": {
+    "defaultMessage": "更新日"
+  },
+  "admin.maps.table.spam": {
+    "defaultMessage": "スパム"
+  },
+  "admin.maps.table.spam-status": {
+    "defaultMessage": "スパム状態"
+  },
+  "admin.maps.table.status": {
+    "defaultMessage": "状態"
+  },
+  "admin.maps.table.title": {
+    "defaultMessage": "タイトル"
+  },
+  "admin.maps.title": {
+    "defaultMessage": "タイトル"
+  },
+  "admin.maps.unlocked-tooltip": {
+    "defaultMessage": "現在編集されていません"
+  },
+  "admin.maps.view-xml": {
+    "defaultMessage": "XMLを表示"
+  },
+  "admin.maps.xml-viewer.copy": {
+    "defaultMessage": "整形済みXMLをコピー"
+  },
+  "admin.maps.xml-viewer.info": {
+    "defaultMessage": "これはマインドマップの生のXMLコンテンツです。バックアップや分析のためにこの内容をコピーできます。"
+  },
+  "admin.maps.xml-viewer.loading": {
+    "defaultMessage": "XMLコンテンツを読み込み中..."
+  },
+  "admin.maps.xml-viewer.no-content": {
+    "defaultMessage": "XMLコンテンツがありません"
+  },
+  "admin.maps.xml-viewer.title": {
+    "defaultMessage": "マップのXMLコンテンツ"
+  },
+  "admin.menu.accounts": {
+    "defaultMessage": "アカウント"
+  },
+  "admin.menu.maps": {
+    "defaultMessage": "マップ"
+  },
+  "admin.menu.system": {
+    "defaultMessage": "システム"
+  },
   "common.settings": {
     "defaultMessage": "設定"
   },
@@ -704,11 +1031,23 @@
   "common.retry": {
     "defaultMessage": "再試行"
   },
+  "common.save": {
+    "defaultMessage": "保存"
+  },
   "admin.system.title": {
     "defaultMessage": "システム情報"
   },
   "admin.system.refresh": {
     "defaultMessage": "更新"
+  },
+  "admin.system.statistics": {
+    "defaultMessage": "統計"
+  },
+  "admin.system.stats.mindmaps": {
+    "defaultMessage": "マインドマップの総数"
+  },
+  "admin.system.stats.users": {
+    "defaultMessage": "ユーザーの総数"
   },
   "common.refresh": {
     "defaultMessage": "更新"
@@ -716,11 +1055,89 @@
   "admin.system.memory": {
     "defaultMessage": "メモリ"
   },
+  "admin.system.memory.info": {
+    "defaultMessage": "メモリ"
+  },
+  "admin.system.memory.max": {
+    "defaultMessage": "最大メモリ"
+  },
+  "admin.system.memory.total": {
+    "defaultMessage": "合計メモリ"
+  },
+  "admin.system.memory.usage": {
+    "defaultMessage": "メモリ使用量"
+  },
+  "admin.system.memory.used": {
+    "defaultMessage": "使用中メモリ"
+  },
+  "admin.system.mindmapMetrics.collaborations": {
+    "defaultMessage": "対象となった共同編集"
+  },
+  "admin.system.mindmapMetrics.disabled": {
+    "defaultMessage": "メトリクスを取得するには、`app.monitoring.performance.log-mindmap-listing` を true に設定してください。"
+  },
+  "admin.system.mindmapMetrics.entityLoads": {
+    "defaultMessage": "エンティティの読み込み数"
+  },
+  "admin.system.mindmapMetrics.executedStatements": {
+    "defaultMessage": "プリペアドステートメント"
+  },
+  "admin.system.mindmapMetrics.lastUpdated": {
+    "defaultMessage": "最終更新"
+  },
+  "admin.system.mindmapMetrics.mapCount": {
+    "defaultMessage": "返されたマップ数"
+  },
+  "admin.system.mindmapMetrics.pending": {
+    "defaultMessage": "メトリクスを取得するため、次のマインドマップ一覧リクエストを待機しています。"
+  },
+  "admin.system.mindmapMetrics.segments": {
+    "defaultMessage": "実行セグメント"
+  },
+  "admin.system.mindmapMetrics.title": {
+    "defaultMessage": "マインドマップ一覧のパフォーマンス"
+  },
+  "admin.system.mindmapMetrics.topQueries": {
+    "defaultMessage": "上位のクエリ"
+  },
+  "admin.system.mindmapMetrics.totalTime": {
+    "defaultMessage": "合計時間（ms）"
+  },
   "admin.system.db.url": {
     "defaultMessage": "URL"
   },
+  "admin.system.db.username": {
+    "defaultMessage": "ユーザー名"
+  },
+  "admin.system.error": {
+    "defaultMessage": "システム情報の読み込みに失敗しました"
+  },
+  "admin.system.health": {
+    "defaultMessage": "システムの状態"
+  },
   "admin.system.jvm": {
     "defaultMessage": "JVM"
+  },
+  "admin.system.jvm.load": {
+    "defaultMessage": "システム負荷"
+  },
+  "admin.system.jvm.processors": {
+    "defaultMessage": "プロセッサ数"
+  },
+  "admin.system.jvm.start": {
+    "defaultMessage": "起動時刻"
+  },
+  "admin.system.jvm.uptime": {
+    "defaultMessage": "稼働時間"
+  },
+  "admin.system.jvm.vendor": {
+    "defaultMessage": "ベンダー"
+  },
+  "admin.system.jvm.version": {
+    "defaultMessage": "Javaバージョン"
+  },
+  "admin.system.loading": {
+    "defaultMessage": "システム情報を読み込み中..."
   },
   "error.page-title": {
     "defaultMessage": "予期しないエラー | WiseMapping"
@@ -756,10 +1173,16 @@
     "defaultMessage": "マップのタイトルは必須で、空にすることはできません"
   },
   "accountinfo.personal-details": {
-    "defaultMessage": "Personal Details"
+    "defaultMessage": "個人情報の詳細"
+  },
+  "accountinfo.personal-info": {
+    "defaultMessage": "個人情報"
   },
   "account.delete-warning-title": {
     "defaultMessage": "アカウントを削除"
+  },
+  "accountinfo.account-settings": {
+    "defaultMessage": "アカウント設定"
   },
   "account.delete-warning-description": {
     "defaultMessage": "アカウントを削除すると、元に戻すことはできません。よくご確認ください。"
@@ -801,46 +1224,70 @@
     "defaultMessage": "アカウントを削除"
   },
   "menu.admin-console": {
-    "defaultMessage": "Admin Console"
+    "defaultMessage": "管理コンソール"
   },
   "registration.form-legend": {
-    "defaultMessage": "Account Information"
+    "defaultMessage": "アカウント情報"
   },
   "admin.change-password": {
-    "defaultMessage": "Change password"
+    "defaultMessage": "パスワードを変更"
   },
   "admin.change-password-title": {
-    "defaultMessage": "Change Password"
+    "defaultMessage": "パスワードを変更"
   },
   "admin.change-password-description": {
-    "defaultMessage": "Change password for user: {email}"
+    "defaultMessage": "ユーザーのパスワードを変更：{email}"
   },
   "admin.new-password": {
-    "defaultMessage": "New Password"
+    "defaultMessage": "新しいパスワード"
   },
   "admin.confirm-password": {
-    "defaultMessage": "Confirm Password"
+    "defaultMessage": "パスワードを確認"
+  },
+  "admin.confirm.delete-map": {
+    "defaultMessage": "マップ「{title}」を削除してもよろしいですか？"
+  },
+  "admin.confirm.spam-action": {
+    "defaultMessage": "このマップを{action}してもよろしいですか？"
+  },
+  "admin.console.description": {
+    "defaultMessage": "ユーザー、システム設定、アプリケーション構成を管理します。"
+  },
+  "admin.console.page-title": {
+    "defaultMessage": "管理コンソール | WiseMapping"
+  },
+  "admin.console.subtitle": {
+    "defaultMessage": "システム管理"
+  },
+  "admin.console.title": {
+    "defaultMessage": "管理コンソール"
+  },
+  "admin.current-suspension-reason": {
+    "defaultMessage": "現在の停止理由："
   },
   "admin.change-password-button": {
-    "defaultMessage": "Change Password"
+    "defaultMessage": "パスワードを変更"
   },
   "admin.password-error-length": {
-    "defaultMessage": "Password must be at least 6 characters"
+    "defaultMessage": "パスワードは6文字以上である必要があります"
   },
   "admin.password-error-mismatch": {
-    "defaultMessage": "Passwords do not match"
+    "defaultMessage": "パスワードが一致しません"
+  },
+  "admin.prompt.new-user-password": {
+    "defaultMessage": "新しいユーザーのパスワードを入力してください："
   },
   "admin.password-error-failed": {
-    "defaultMessage": "Failed to change password"
+    "defaultMessage": "パスワードの変更に失敗しました"
   },
   "admin.password-error-google": {
-    "defaultMessage": "This user is authenticated via Google. Password changes are not available for Google accounts. Please ask the user to manage their password through their Google account."
+    "defaultMessage": "このユーザーはGoogleで認証されています。Googleアカウントではパスワードを変更できません。Googleアカウントでパスワードを管理するようユーザーに依頼してください。"
   },
   "admin.password-error-facebook": {
-    "defaultMessage": "This user is authenticated via Facebook. Password changes are not available for Facebook accounts. Please ask the user to manage their password through their Facebook account."
+    "defaultMessage": "このユーザーはFacebookで認証されています。Facebookアカウントではパスワードを変更できません。Facebookアカウントでパスワードを管理するようユーザーに依頼してください。"
   },
   "admin.close": {
-    "defaultMessage": "Close"
+    "defaultMessage": "閉じる"
   },
   "validation.title-required": {
     "defaultMessage": "タイトルは必須です"
@@ -849,106 +1296,154 @@
     "defaultMessage": "リダイレクト中..."
   },
   "share.table.collaborator": {
-    "defaultMessage": "Collaborator"
+    "defaultMessage": "共同編集者"
   },
   "share.table.role": {
-    "defaultMessage": "Role"
+    "defaultMessage": "役割"
   },
   "share.table.actions": {
-    "defaultMessage": "Actions"
+    "defaultMessage": "操作"
   },
   "error.go-home": {
-    "defaultMessage": "Go to Home"
+    "defaultMessage": "ホームへ移動"
   },
   "error.go-back": {
-    "defaultMessage": "Go Back"
+    "defaultMessage": "戻る"
   },
   "error.go-to-login": {
-    "defaultMessage": "Sign In"
+    "defaultMessage": "サインイン"
+  },
+  "error.invalid-map-id": {
+    "defaultMessage": "無効なマップIDです"
   },
   "login.oauth-error": {
-    "defaultMessage": "OAuth authentication failed. Please try again or use a different sign-in method."
+    "defaultMessage": "OAuth認証に失敗しました。もう一度お試しいただくか、別のサインイン方法をご利用ください。"
   },
   "login.server-error": {
-    "defaultMessage": "An unexpected error occurred. Please try again later."
+    "defaultMessage": "予期しないエラーが発生しました。後でもう一度お試しください。"
   },
   "login.generic-error": {
-    "defaultMessage": "An error occurred during authentication. Please try again."
+    "defaultMessage": "認証中にエラーが発生しました。もう一度お試しください。"
   },
   "registration.success.title": {
-    "defaultMessage": "Registration Successful!"
+    "defaultMessage": "登録が完了しました！"
   },
   "registration.success.email-sent": {
-    "defaultMessage": "We've sent an activation email to your inbox. Please check your email and click on the activation link to activate your account."
+    "defaultMessage": "受信トレイに有効化メールをお送りしました。メールを確認し、有効化リンクをクリックしてアカウントを有効化してください。"
   },
   "registration.success.check-spam": {
-    "defaultMessage": "If you don't see the email, please check your spam folder."
+    "defaultMessage": "メールが見当たらない場合は、迷惑メールフォルダをご確認ください。"
   },
   "registration.success.already-activated": {
-    "defaultMessage": "Already activated your account?"
+    "defaultMessage": "アカウントはすでに有効化済みですか？"
   },
   "reset-password.title": {
-    "defaultMessage": "Set a new password"
+    "defaultMessage": "新しいパスワードを設定"
   },
   "reset-password.desc": {
-    "defaultMessage": "Enter your new password below."
+    "defaultMessage": "新しいパスワードを以下に入力してください。"
   },
   "reset-password.invalid-link": {
-    "defaultMessage": "Invalid password reset link. Please request a new one."
+    "defaultMessage": "パスワードリセットのリンクが無効です。新しいリンクをリクエストしてください。"
   },
   "reset-password.request-new": {
-    "defaultMessage": "Request new link"
+    "defaultMessage": "新しいリンクをリクエスト"
   },
   "reset-password.password": {
-    "defaultMessage": "New password"
+    "defaultMessage": "新しいパスワード"
   },
   "reset-password.confirm-password": {
-    "defaultMessage": "Confirm new password"
+    "defaultMessage": "新しいパスワードを確認"
   },
   "reset-password.submit": {
-    "defaultMessage": "Set new password"
+    "defaultMessage": "新しいパスワードを設定"
   },
   "reset-password.too-short": {
-    "defaultMessage": "Password must be at least 8 characters."
+    "defaultMessage": "パスワードは8文字以上である必要があります。"
   },
   "reset-password.too-long": {
-    "defaultMessage": "Password must be less than 40 characters."
+    "defaultMessage": "パスワードは40文字未満にしてください。"
   },
   "reset-password.mismatch": {
-    "defaultMessage": "Passwords do not match."
+    "defaultMessage": "パスワードが一致しません。"
   },
   "reset-password.page-title": {
-    "defaultMessage": "Reset Password | WiseMapping"
+    "defaultMessage": "パスワードをリセット | WiseMapping"
   },
   "maps.auth-required-title": {
-    "defaultMessage": "Sign In Required | WiseMapping"
+    "defaultMessage": "サインインが必要です | WiseMapping"
   },
   "maps.auth-required-heading": {
-    "defaultMessage": "Sign in to access your maps"
+    "defaultMessage": "マップにアクセスするにはサインインしてください"
   },
   "maps.auth-required-login": {
-    "defaultMessage": "Go to login"
+    "defaultMessage": "ログインへ移動"
   },
   "maps.auth-required-default-message": {
-    "defaultMessage": "You need to sign in to view your maps."
+    "defaultMessage": "マップを表示するにはサインインが必要です。"
   },
   "activation.error.message": {
-    "defaultMessage": "We couldn't activate your account. The activation link may be invalid or expired. Please contact support for assistance."
+    "defaultMessage": "アカウントを有効化できませんでした。有効化リンクが無効であるか、有効期限が切れている可能性があります。サポートまでお問い合わせください。"
   },
   "activation.error.title": {
-    "defaultMessage": "Activation Failed"
+    "defaultMessage": "有効化に失敗しました"
   },
   "activation.loading.desc": {
-    "defaultMessage": "Please wait while we activate your account..."
+    "defaultMessage": "アカウントを有効化しています。しばらくお待ちください..."
   },
   "activation.loading.title": {
-    "defaultMessage": "Activating Your Account"
+    "defaultMessage": "アカウントを有効化しています"
+  },
+  "activation.page-title": {
+    "defaultMessage": "アカウントの有効化 | WiseMapping"
   },
   "activation.success.message": {
-    "defaultMessage": "Your account has been activated. You can now sign in and start creating mind maps."
+    "defaultMessage": "アカウントが有効化されました。サインインしてマインドマップの作成を始められます。"
   },
   "activation.success.title": {
-    "defaultMessage": "Account Activated Successfully"
+    "defaultMessage": "アカウントが正常に有効化されました"
+  },
+  "admin.accounts.add-user": {
+    "defaultMessage": "新しいユーザーを追加"
+  },
+  "admin.accounts.create": {
+    "defaultMessage": "ユーザーを作成"
+  },
+  "admin.accounts.create-user": {
+    "defaultMessage": "ユーザーを作成"
+  },
+  "admin.accounts.edit-user": {
+    "defaultMessage": "ユーザーを編集"
+  },
+  "admin.accounts.filters": {
+    "defaultMessage": "検索とフィルター"
+  },
+  "admin.accounts.no-users": {
+    "defaultMessage": "ユーザーが見つかりません"
+  },
+  "admin.accounts.refresh": {
+    "defaultMessage": "更新"
+  },
+  "admin.accounts.refresh-tooltip": {
+    "defaultMessage": "データを更新"
+  },
+  "admin.accounts.search": {
+    "defaultMessage": "ユーザーを検索..."
+  },
+  "admin.accounts.subtitle": {
+    "defaultMessage": "ユーザーアカウント、権限、設定を管理します"
+  },
+  "admin.accounts.title": {
+    "defaultMessage": "ユーザー管理"
+  },
+  "admin.action.mark-as-not-spam": {
+    "defaultMessage": "非スパムとしてマーク"
+  },
+  "admin.action.mark-as-spam": {
+    "defaultMessage": "スパムとしてマーク"
+  },
+  "admin.activate-user": {
+    "defaultMessage": "ユーザーを有効化"
   },
   "map.actions": {
     "defaultMessage": "操作"

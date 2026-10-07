@@ -26,9 +26,9 @@
           </topic>
           <topic id="topic6">
             <title>Child 3</title>
-            <markers>
-              <marker marker-id="priority-1"/>
-            </markers>
+            <marker-refs>
+              <marker-ref marker-id="priority-1"/>
+            </marker-refs>
             <children>
               <topics type="attached">
                 <topic id="topic7">
@@ -42,10 +42,10 @@
             <notes>
               <plain>Another note with more details</plain>
             </notes>
-            <markers>
-              <marker marker-id="priority-2"/>
-              <marker marker-id="star"/>
-            </markers>
+            <marker-refs>
+              <marker-ref marker-id="priority-2"/>
+              <marker-ref marker-id="star-yellow"/>
+            </marker-refs>
           </topic>
         </topics>
       </children>

@@ -27,7 +27,14 @@ import CloseIcon from '@mui/icons-material/Close';
 import FormatIndentIncreaseIcon from '@mui/icons-material/FormatIndentIncrease';
 import FormatIndentDecreaseIcon from '@mui/icons-material/FormatIndentDecrease';
 import { useTheme } from '@mui/material/styles';
-import React, { ReactElement, useState, useCallback, useRef, useEffect } from 'react';
+import React, {
+  ReactElement,
+  useState,
+  useCallback,
+  useRef,
+  useEffect,
+  useImperativeHandle,
+} from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import NodeProperty from '../../../../classes/model/node-property';
 import SaveAndDelete from '../save-and-delete';
@@ -41,41 +48,83 @@ type RichTextNoteEditorProps = {
   noteModel: NodeProperty<string | undefined>;
 };
 
+const MAX_CHARACTERS = 10000;
+
+type CharacterCounterHandle = { setCount: (count: number) => void };
+
+/**
+ * The characters left. It has its own state so that an edit re-renders only the counter: a
+ * re-render of the whole editor on every input, toolbar included (MUI's FormControl updates its
+ * input after each of its renders in development), made characters typed in a burst, as Cypress
+ * does, add up to React's nested update limit.
+ */
+const CharacterCounter = ({
+  initialCount,
+  handleRef,
+}: {
+  initialCount: number;
+  handleRef: React.Ref<CharacterCounterHandle>;
+}): ReactElement => {
+  const [characterCount, setCharacterCount] = useState(initialCount);
+  useImperativeHandle(handleRef, () => ({ setCount: setCharacterCount }), []);
+  return (
+    <Box
+      sx={{
+        fontSize: '12px',
+        color: characterCount > MAX_CHARACTERS * 0.9 ? 'error.main' : 'text.secondary',
+        fontWeight: characterCount > MAX_CHARACTERS * 0.9 ? 600 : 400,
+      }}
+    >
+      <FormattedMessage
+        id="note.character.count"
+        defaultMessage="{remaining} left"
+        values={{
+          remaining: MAX_CHARACTERS - characterCount,
+        }}
+      />
+      {characterCount > MAX_CHARACTERS * 0.9 && (
+        <Box component="span" sx={{ ml: 1, fontSize: '11px' }}>
+          <FormattedMessage
+            id="note.character.limit.warning"
+            defaultMessage="(Approaching limit)"
+          />
+        </Box>
+      )}
+    </Box>
+  );
+};
+
 /**
  * Rich text note editor using contentEditable for React 19 compatibility
  */
 const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps): ReactElement => {
   const initialValue = noteModel.getValue() || '';
-  const [content, setContent] = useState(initialValue);
   const editorRef = useRef<HTMLDivElement>(null);
   const [iconPickerAnchor, setIconPickerAnchor] = useState<HTMLButtonElement | null>(null);
   const savedRangeRef = useRef<Range | null>(null);
   const editingRef = useRef<NoteEditing | null>(null);
+  const counterRef = useRef<CharacterCounterHandle>(null);
   // Count visible text, as edits do; DOMParser is inert (no scripts or image loads).
-  const [characterCount, setCharacterCount] = useState(
+  const [initialCount] = useState(
     () => new DOMParser().parseFromString(initialValue, 'text/html').body.textContent?.length ?? 0,
   );
-  const MAX_CHARACTERS = 10000;
   const theme = useTheme();
   const intl = useIntl();
 
   const submitHandler = useCallback(() => {
     closeModal();
     if (noteModel.setValue) {
-      // Only the markup the note sanitizer keeps is saved.
-      noteModel.setValue(HtmlSanitizer.sanitize(content));
+      // The content is read from the editor, which is rendered with the component. Only the
+      // markup the note sanitizer keeps is saved.
+      noteModel.setValue(HtmlSanitizer.sanitize(editorRef.current!.innerHTML));
     }
-  }, [closeModal, noteModel, content]);
+  }, [closeModal, noteModel]);
 
+  // The content stays in the editor's DOM: an edit only updates the character count.
   const handleContentChange = useCallback(() => {
     if (editorRef.current) {
-      const newContent = editorRef.current.innerHTML;
-
       // Get plain text length for character count validation
       const textContent = editorRef.current.textContent || '';
-
-      // Update character count
-      setCharacterCount(textContent.length);
 
       // Prevent exceeding character limit
       if (textContent.length > MAX_CHARACTERS) {
@@ -85,12 +134,10 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
         // Create a temporary element to convert plain text back to HTML
         const tempDiv = document.createElement('div');
         tempDiv.textContent = truncatedText;
-        const truncatedHtml = tempDiv.innerHTML;
 
         // Update the editor content
-        editorRef.current.innerHTML = truncatedHtml;
-        setContent(truncatedHtml);
-        setCharacterCount(MAX_CHARACTERS);
+        editorRef.current.innerHTML = tempDiv.innerHTML;
+        counterRef.current?.setCount(MAX_CHARACTERS);
 
         // Position cursor at the end
         const range = document.createRange();
@@ -100,7 +147,7 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
         selection?.removeAllRanges();
         selection?.addRange(range);
       } else {
-        setContent(newContent);
+        counterRef.current?.setCount(textContent.length);
       }
     }
   }, []);
@@ -108,9 +155,8 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
   const execCommand = useCallback((command: string, value?: string) => {
     document.execCommand(command, false, value);
     if (editorRef.current) {
-      setContent(editorRef.current.innerHTML);
       const textContent = editorRef.current.textContent || '';
-      setCharacterCount(textContent.length);
+      counterRef.current?.setCount(textContent.length);
     }
   }, []);
 
@@ -130,11 +176,6 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
     const selection = window.getSelection();
     if (selection && selection.rangeCount > 0) {
       savedRangeRef.current = selection.getRangeAt(0).cloneRange();
-      console.log(
-        'Cursor position saved:',
-        savedRangeRef.current.startOffset,
-        savedRangeRef.current.endOffset,
-      );
     }
     setIconPickerAnchor(event.currentTarget);
   }, []);
@@ -156,16 +197,10 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
           if (savedRangeRef.current) {
             selection.removeAllRanges();
             selection.addRange(savedRangeRef.current);
-            console.log(
-              'Cursor position restored:',
-              savedRangeRef.current.startOffset,
-              savedRangeRef.current.endOffset,
-            );
           }
 
           // Use document.execCommand for better compatibility with contentEditable
           const success = document.execCommand('insertText', false, emoji.emoji + ' ');
-          console.log('insertText success:', success);
 
           if (!success) {
             // Fallback to manual insertion
@@ -178,7 +213,6 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
               range.setEndAfter(textNode);
               selection.removeAllRanges();
               selection.addRange(range);
-              console.log('Manual insertion used');
             }
           }
 
@@ -655,29 +689,7 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
         }}
       >
         {/* Character Counter */}
-        <Box
-          sx={{
-            fontSize: '12px',
-            color: characterCount > MAX_CHARACTERS * 0.9 ? 'error.main' : 'text.secondary',
-            fontWeight: characterCount > MAX_CHARACTERS * 0.9 ? 600 : 400,
-          }}
-        >
-          <FormattedMessage
-            id="note.character.count"
-            defaultMessage="{remaining} left"
-            values={{
-              remaining: MAX_CHARACTERS - characterCount,
-            }}
-          />
-          {characterCount > MAX_CHARACTERS * 0.9 && (
-            <Box component="span" sx={{ ml: 1, fontSize: '11px' }}>
-              <FormattedMessage
-                id="note.character.limit.warning"
-                defaultMessage="(Approaching limit)"
-              />
-            </Box>
-          )}
-        </Box>
+        <CharacterCounter initialCount={initialCount} handleRef={counterRef} />
 
         {/* Save and Delete Buttons */}
         <SaveAndDelete model={noteModel} closeModal={closeModal} submitHandler={submitHandler} />

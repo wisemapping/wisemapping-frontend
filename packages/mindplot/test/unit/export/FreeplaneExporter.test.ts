@@ -27,8 +27,12 @@ import { StrokeStyle } from '../../../src/components/model/RelationshipModel';
 import ContentType from '../../../src/components/ContentType';
 import FreeplaneExporter from '../../../src/components/export/FreeplaneExporter';
 import TextExporterFactory from '../../../src/components/export/TextExporterFactory';
-import FreeplaneImporter from '../../../src/components/import/FreeplaneImporter';
+import FreeplaneImporter, {
+  FREEPLANE_ICON_EMOJIS,
+  FREEPLANE_SVG_ICONS,
+} from '../../../src/components/import/FreeplaneImporter';
 import TextImporterFactory from '../../../src/components/import/TextImporterFactory';
+import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
 
 // Central topic 1, with A (2, right) and B (3, left), and B1 (4) under B.
 const buildMindmap = (): { mindmap: Mindmap; topics: NodeModel[] } => {
@@ -206,6 +210,51 @@ describe('FreeplaneExporter', () => {
       ),
     ).toEqual(['emoji-1F984', 'emoji-1F468-200D-1F4BB', 'button_ok']);
   });
+
+  // The Freeplane builtins that share their WiseMapping icon with a FreeMind one, which Freeplane
+  // also has, are exported as the FreeMind one.
+  const CANONICAL_BUILTINS: Readonly<Record<string, string>> = {
+    neutral: 'smiley-neutral',
+    revision: 'redo',
+    'revision-green': 'redo',
+    'revision-pink': 'redo',
+    'revision-red': 'redo',
+    internet_warning: 'messagebox_warning',
+  };
+
+  test.each([...Object.keys(FREEPLANE_ICON_EMOJIS), ...Object.keys(FREEPLANE_SVG_ICONS)])(
+    'the Freeplane icon %p is exported back as a Freeplane builtin (BL5-241)',
+    async (builtin) => {
+      const freeplane = `<map version="freeplane 1.9.13"><node TEXT="Central" ID="ID_1"><node TEXT="A" ID="ID_2"><icon BUILTIN="${builtin}"/></node></node></map>`;
+      const importXml = async (mm: string): Promise<Element> => {
+        const doc = new DOMParser().parseFromString(
+          await new FreeplaneImporter(mm).import('test', ''),
+          'text/xml',
+        );
+        return topicByText(doc, 'A');
+      };
+      const iconsOf = (topic: Element): string[] =>
+        Array.from(topic.querySelectorAll(':scope > icon, :scope > eicon')).map(
+          (icon) => `${icon.tagName}:${icon.getAttribute('id')}`,
+        );
+
+      const imported = await importXml(freeplane);
+      const importedDoc = imported.ownerDocument;
+      const mindmap = XMLSerializerFactory.createFromDocument(importedDoc).loadFromDom(
+        importedDoc,
+        'test',
+      );
+      const exported = await exportXml(mindmap);
+      const exportedDoc = new DOMParser().parseFromString(exported, 'text/xml');
+      const builtins = Array.from(exportedDoc.querySelectorAll('node[TEXT="A"] > icon')).map(
+        (icon) => icon.getAttribute('BUILTIN'),
+      );
+      expect(builtins).toEqual([CANONICAL_BUILTINS[builtin] ?? builtin]);
+
+      // And it is imported back as the same WiseMapping icon.
+      expect(iconsOf(await importXml(exported))).toEqual(iconsOf(imported));
+    },
+  );
 
   test('exports colors, fonts, shapes and the collapsed state', async () => {
     const { mindmap, topics } = buildMindmap();

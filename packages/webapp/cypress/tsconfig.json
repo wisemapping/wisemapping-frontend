@@ -1,6 +1,9 @@
 {
-    "compilerOptions": {
-        "sourceMap": false,
-        "ignoreDeprecations": "6.0"
-    }
+  // Type checks the Cypress specs, support files and config (`tsc -p cypress`, part of `yarn lint`).
+  "compilerOptions": {
+    "sourceMap": false,
+    "ignoreDeprecations": "6.0",
+    "types": ["cypress", "node"]
+  },
+  "include": ["**/*", "../cypress.config.ts"]
 }

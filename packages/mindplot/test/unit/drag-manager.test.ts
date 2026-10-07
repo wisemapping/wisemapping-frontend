@@ -39,8 +39,13 @@ type CanvasElementLike = {
   removeFromWorkspace?: (canvas: Canvas) => void;
 };
 
-const mouseEvent = (type: string, clientX = 0, clientY = 0): MouseEvent =>
-  new MouseEvent(type, { clientX, clientY, bubbles: true, cancelable: true });
+const mouseEvent = (
+  type: string,
+  clientX = 0,
+  clientY = 0,
+  init: MouseEventInit = {},
+): MouseEvent =>
+  new MouseEvent(type, { clientX, clientY, bubbles: true, cancelable: true, ...init });
 
 // A workspace double that only records what is appended to it.
 const buildCanvas = (container: HTMLDivElement) => {
@@ -97,7 +102,8 @@ const buildTopic = () => {
   };
   return {
     topic: node as unknown as Topic,
-    pressMouse: (x: number, y: number) => mouseDown!(mouseEvent('mousedown', x, y)),
+    pressMouse: (x: number, y: number, init: MouseEventInit = {}) =>
+      mouseDown!(mouseEvent('mousedown', x, y, init)),
   };
 };
 
@@ -109,7 +115,7 @@ describe('DragManager', () => {
   let startDragging: jest.Mock;
   let dragging: jest.Mock;
   let endDragging: jest.Mock;
-  let pressMouse: (x: number, y: number) => void;
+  let pressMouse: (x: number, y: number, init?: MouseEventInit) => void;
 
   beforeEach(() => {
     container = document.createElement('div');
@@ -156,6 +162,52 @@ describe('DragManager', () => {
     expect(startDragging).toHaveBeenCalledTimes(1);
     expect(dragging).toHaveBeenCalledTimes(1);
   };
+
+  describe('the button of the press', () => {
+    const onPlatform = (platform: string) => {
+      Object.defineProperty(window.navigator, 'platform', { value: platform, configurable: true });
+    };
+
+    afterEach(() => {
+      delete (window.navigator as { platform?: string }).platform;
+    });
+
+    /** Whether a press with `init` and a move start a drag. */
+    const dragsWith = (init: MouseEventInit): boolean => {
+      pressMouse(10, 10, init);
+      document.body.dispatchEvent(mouseEvent('mousemove', 40, 40, init));
+      const dragged = startDragging.mock.calls.length > 0;
+      document.body.dispatchEvent(mouseEvent('mouseup', 40, 40, init));
+      return dragged;
+    };
+
+    it('the left button drags the topic', () => {
+      expect(dragsWith({ button: 0 })).toBe(true);
+    });
+
+    it('a Ctrl press drags the topic elsewhere: it drags it disconnected', () => {
+      onPlatform('Win32');
+      expect(dragsWith({ button: 0, ctrlKey: true })).toBe(true);
+    });
+
+    it('the right button does not drag the topic, nor keep the canvas waiting', () => {
+      // Before: it started a pending drag, which the next move turned into a drag.
+      expect(dragsWith({ button: 2, buttons: 2 })).toBe(false);
+      expect(canvas.isWorkspaceEventsEnabled()).toBe(true);
+    });
+
+    it('a Ctrl press on a Mac, its right click, does not drag the topic', () => {
+      onPlatform('MacIntel');
+      expect(dragsWith({ button: 0, ctrlKey: true })).toBe(false);
+      expect(canvas.isWorkspaceEventsEnabled()).toBe(true);
+    });
+
+    it('the middle, back and forward buttons do not drag the topic', () => {
+      expect(dragsWith({ button: 1 })).toBe(false);
+      expect(dragsWith({ button: 3 })).toBe(false);
+      expect(dragsWith({ button: 4 })).toBe(false);
+    });
+  });
 
   it('drops the topic when the button is released inside the container', () => {
     startDrag();
@@ -476,7 +528,7 @@ describe('DragManager without listeners', () => {
     try {
       draggable.pressMouse(10, 10);
       container.dispatchEvent(mouseEvent('mousemove', 40, 40));
-      const dragTopic = appended.find((e) => e instanceof DragTopic) as DragTopic | undefined;
+      const dragTopic = appended.find((e): e is DragTopic => e instanceof DragTopic);
       expect(dragTopic?.isInWorkspace()).toBe(true);
 
       container.dispatchEvent(mouseEvent('mouseup', 40, 40));

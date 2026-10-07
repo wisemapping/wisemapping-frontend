@@ -1,7 +1,7 @@
 {
-    "compilerOptions": {
-        "sourceMap": false,
-        "ignoreDeprecations": "6.0"
-    },
-    "include": ["**/*", "../cypress.config.ts", "../cypress.storybook.config.ts"]
+  "compilerOptions": {
+    "sourceMap": false,
+    "ignoreDeprecations": "6.0"
+  },
+  "include": ["**/*", "../cypress.config.ts", "../cypress.storybook.config.ts"]
 }

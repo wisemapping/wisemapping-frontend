@@ -7,14 +7,7 @@
     "connectionColor": "#1FFFFF"
   },
   "MainTopic": {
-    "backgroundColor": [
-      "#32194F",
-      "#401F5D",
-      "#452664",
-      "#203A68",
-      "#14385F",
-      "#0F3350"
-    ],
+    "backgroundColor": ["#32194F", "#401F5D", "#452664", "#203A68", "#14385F", "#0F3350"],
     "fontColor": "#F4F2FF"
   },
   "SubTopic": {

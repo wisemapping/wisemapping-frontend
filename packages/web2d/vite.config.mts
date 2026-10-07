@@ -19,26 +19,26 @@ import { defineConfig } from 'vite';
 import path from 'path';
 
 export default defineConfig({
-    resolve: {
-        tsconfigPaths: true,
+  resolve: {
+    tsconfigPaths: true,
+  },
+  build: {
+    lib: {
+      entry: path.resolve(import.meta.dirname, 'src/index.ts'),
+      name: 'web2d',
+      fileName: (format) => `index.${format === 'es' ? 'js' : 'cjs'}`,
     },
-    build: {
-        lib: {
-            entry: path.resolve(import.meta.dirname, 'src/index.ts'),
-            name: 'web2d',
-            fileName: (format) => `index.${format === 'es' ? 'js' : 'cjs'}`,
-        },
-        rollupOptions: {
-            // make sure to externalize deps that shouldn't be bundled
-            // into your library
-            external: [],
-            output: {
-                // Provide global variables to use in the UMD build
-                // for externalized deps
-                globals: {},
-            },
-        },
-        outDir: 'dist',
-        sourcemap: true,
+    rollupOptions: {
+      // make sure to externalize deps that shouldn't be bundled
+      // into your library
+      external: [],
+      output: {
+        // Provide global variables to use in the UMD build
+        // for externalized deps
+        globals: {},
+      },
     },
+    outDir: 'dist',
+    sourcemap: true,
+  },
 });

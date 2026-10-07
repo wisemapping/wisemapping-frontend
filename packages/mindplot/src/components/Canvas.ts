@@ -23,6 +23,8 @@ import type {
   ElementPeer,
 } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
+import { isObjectTouch } from './util/objectTouch';
+import { isContextMenuPress } from './util/platform';
 import type ScreenManager from './ScreenManager';
 import type SizeType from './SizeType';
 import type CanvasElement from './CanvasElement';
@@ -404,8 +406,9 @@ class Canvas {
   }
 
   setBackgroundStyle(css: string): void {
-    const elem = this.getSVGElement().parentElement!.parentElement!;
-    elem.setAttribute('style', css);
+    // A canvas that already left the page (disposed) has no container to style.
+    const elem = this.getSVGElement().parentElement?.parentElement;
+    elem?.setAttribute('style', css);
   }
 
   private _registerDragEvents() {
@@ -437,6 +440,24 @@ class Canvas {
             }
           }
 
+          // The left button pans, and its release with no move is a click on the background. The
+          // middle button pans too, but its release is no click. The right button, a Ctrl press
+          // on a Mac (its right click) and the back and forward buttons do neither: they open a
+          // menu or navigate, and must not move the map or lose the selection.
+          let isPrimaryPress = true;
+          if (event.type === 'mousedown') {
+            const button = (event as MouseEvent).button ?? 0;
+            if ((button !== 0 && button !== 1) || isContextMenuPress(event as MouseEvent)) {
+              return;
+            }
+            isPrimaryPress = button === 0;
+            if (button === 1) {
+              // A middle press starts the browser's autoscroll (Chrome on Windows and Linux),
+              // which would take the moves of the pan. A left press is left to the browser.
+              event.preventDefault();
+            }
+          }
+
           mWorkspace.enableWorkspaceEvents(false);
 
           const originalEvent = event;
@@ -445,6 +466,10 @@ class Canvas {
           // viewBox the pan is moving, so the canvas would lag behind the pointer.
           const mouseDownPosition = screenManager.getClientPosition(originalEvent as MouseEvent);
           const originalCoordOrigin = workspace.getCoordOrigin();
+
+          // A tap on a topic or a relationship selects it through the mousedown the browser
+          // emulates after the touch: its release is no click on the background.
+          const isObjectTap = event.type === 'touchstart' && isObjectTouch(event);
 
           let wasDragged = false;
           this._mouseMoveListener = (mouseMoveEvent: Event) => {
@@ -503,8 +528,9 @@ class Canvas {
 
             mWorkspace.enableWorkspaceEvents(true);
 
-            if (isRelease && !wasDragged) {
-              screenManager.fireEvent('click');
+            if (isRelease && !wasDragged && !isObjectTap && isPrimaryPress) {
+              // With the modifiers of the press: a Ctrl or Cmd click keeps the selection.
+              screenManager.fireEvent('click', originalEvent as UIEvent);
             }
           };
           // The button can be released where no mouseup reaches the page (another window) ...

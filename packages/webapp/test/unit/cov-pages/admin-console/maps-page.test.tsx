@@ -21,8 +21,10 @@ import { act, fireEvent, screen, waitFor, within } from '@testing-library/react'
 
 import MapsManagement from '../../../../src/components/admin-console/maps-page';
 import AppConfig from '../../../../src/classes/app-config';
+import { MAP_DESCRIPTION_MAX_LENGTH, MAP_TITLE_MAX_LENGTH } from '../../../../src/classes/client';
 import type { AdminClientInterface } from '../../../../src/classes/client/admin-client';
 import { renderWithWrapper } from '../providers';
+import { BURST_TEXT, typeInBurst } from '../../burst-typing';
 import { buildAdminClient, makeAdminMap, makeUser, MockAdminClient, page } from './fixtures';
 
 const plainMap = makeAdminMap({
@@ -177,6 +179,93 @@ describe('MapsManagement', () => {
     expect(lastParams()?.search).toBe('#11');
   });
 
+  test('the search box takes 200 characters typed in one burst, as Cypress types them', async () => {
+    setup();
+    await waitForRows();
+    const search = screen.getByPlaceholderText(/Search maps/) as HTMLInputElement;
+
+    expect(await typeInBurst(search)).toEqual([]);
+
+    await waitFor(() => expect(lastParams()?.search).toBe(BURST_TEXT), { timeout: 2000 });
+  });
+
+  describe('while a search loads', () => {
+    const searchBox = () => screen.getByPlaceholderText(/Search maps/) as HTMLInputElement;
+
+    const typeAndWait = async (term: string) => {
+      fireEvent.change(searchBox(), { target: { value: term } });
+      await act(async () => {
+        await jest.advanceTimersByTimeAsync(500);
+      });
+    };
+
+    test('the search box stays enabled and focused, and shows the load in an adornment', async () => {
+      setup();
+      await waitForRows();
+      let release = (): void => undefined;
+      client.getAdminMaps.mockImplementation(
+        () =>
+          new Promise((resolve) => {
+            release = () => resolve(page([plainMap]));
+          }),
+      );
+      jest.useFakeTimers();
+      searchBox().focus();
+
+      await typeAndWait('ad');
+      expect(lastParams()?.search).toBe('ad');
+
+      // The box is not disabled by its own search: the user keeps typing.
+      expect(searchBox().disabled).toBe(false);
+      expect(document.activeElement).toBe(searchBox());
+      expect(
+        within(searchBox().parentElement as HTMLElement).getByRole('progressbar'),
+      ).toBeTruthy();
+
+      await typeAndWait('ada');
+      expect(searchBox().value).toBe('ada');
+      expect(lastParams()?.search).toBe('ada');
+
+      await act(async () => {
+        release();
+        await jest.advanceTimersByTimeAsync(10);
+      });
+      expect(
+        within(searchBox().parentElement as HTMLElement).queryByRole('progressbar'),
+      ).toBeNull();
+      expect(document.activeElement).toBe(searchBox());
+    });
+
+    test('a late response to an older search does not replace the newer results', async () => {
+      setup();
+      await waitForRows();
+      const respond = new Map<string, (items: unknown[]) => void>();
+      client.getAdminMaps.mockImplementation(
+        (params: { search?: string }) =>
+          new Promise((resolve) => {
+            respond.set(params.search ?? '', (items) => resolve(page(items)));
+          }),
+      );
+      jest.useFakeTimers();
+
+      await typeAndWait('old');
+      await typeAndWait('new');
+
+      await act(async () => {
+        respond.get('new')!([busyMap]);
+        await jest.advanceTimersByTimeAsync(10);
+      });
+      expect(screen.getByText('Busy map')).toBeTruthy();
+
+      await act(async () => {
+        respond.get('old')!([plainMap]);
+        await jest.advanceTimersByTimeAsync(10);
+      });
+      expect(screen.getByText('Busy map')).toBeTruthy();
+      expect(screen.queryByText('Plain map')).toBeNull();
+    });
+  });
+
   test('the filters are sent to the server', async () => {
     setup();
     await waitForRows();
@@ -264,6 +353,51 @@ describe('MapsManagement', () => {
       );
       await dialogClosed();
     });
+
+    test('the title takes as many characters as the backend stores', async () => {
+      setup();
+      await waitForRows();
+
+      fireEvent.click(within(rowOf('Plain map')).getByRole('button', { name: 'Edit' }));
+      const dialog = await screen.findByRole('dialog', { name: 'Edit Map' });
+      const title = within(dialog).getByLabelText('Title') as HTMLInputElement;
+      expect(title.maxLength).toBe(MAP_TITLE_MAX_LENGTH);
+    });
+
+    test('the description takes as many characters as the backend accepts', async () => {
+      setup();
+      await waitForRows();
+
+      fireEvent.click(within(rowOf('Plain map')).getByRole('button', { name: 'Edit' }));
+      const dialog = await screen.findByRole('dialog', { name: 'Edit Map' });
+      const description = within(dialog).getByLabelText('Description') as HTMLTextAreaElement;
+      expect(description.maxLength).toBe(MAP_DESCRIPTION_MAX_LENGTH);
+    });
+
+    test('its fields take 200 characters typed in one burst, as Cypress types them', async () => {
+      setup();
+      await waitForRows();
+
+      fireEvent.click(within(rowOf('Plain map')).getByRole('button', { name: 'Edit' }));
+      const dialog = await screen.findByRole('dialog', { name: 'Edit Map' });
+      const field = (label: string) => within(dialog).getByLabelText(label) as HTMLInputElement;
+
+      expect(await typeInBurst(field('Title'))).toEqual([]);
+      expect(await typeInBurst(field('Description'))).toEqual([]);
+      fireEvent.click(within(dialog).getByRole('button', { name: 'Save' }));
+
+      await waitFor(() =>
+        expect(client.updateAdminMap).toHaveBeenCalledWith(11, {
+          id: 11,
+          title: `Plain map${BURST_TEXT}`,
+          description: BURST_TEXT,
+          public: false,
+          isLocked: false,
+        }),
+      );
+      await dialogClosed();
+      // jsdom lays out the multiline description slowly: 200 keys there take a few seconds.
+    }, 20000);
 
     test('refuses an empty title and can be cancelled', async () => {
       setup();

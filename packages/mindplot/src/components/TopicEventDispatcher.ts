@@ -24,7 +24,7 @@ import type Designer from './Designer';
 type TopicEventPayload = { model: NodeModel; readOnly: boolean };
 
 /** The events of a topic the dispatcher does not handle itself. */
-export type TopicEvents = { editnode: TopicEventPayload; clicknode: TopicEventPayload };
+type TopicEvents = { editnode: TopicEventPayload; clicknode: TopicEventPayload };
 
 type TopicEventType = keyof TopicEvents;
 

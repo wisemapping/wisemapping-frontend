@@ -38,10 +38,7 @@ import { LineType } from '../../../src/components/TopicConnection';
  */
 const importedDesigner = async (name = 'mmap2json-2017'): Promise<Harness> => {
   const buffer = fs.readFileSync(path.resolve(__dirname, `./input/mindmanager/real/${name}.mmap`));
-  const archive = buffer.buffer.slice(
-    buffer.byteOffset,
-    buffer.byteOffset + buffer.byteLength,
-  ) as ArrayBuffer;
+  const archive = buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength);
   const xml = await TextImporterFactory.create('mmap', archive).import(name, '');
   return buildDesigner(xml);
 };

@@ -57,8 +57,13 @@ jest.mock('../../src/components/layout/LayoutEventBus', () => ({
 
 type TouchPoint = { clientX: number; clientY: number };
 
-const mouseEvent = (type: string, clientX = 0, clientY = 0): MouseEvent =>
-  new MouseEvent(type, { clientX, clientY, bubbles: true, cancelable: true });
+const mouseEvent = (
+  type: string,
+  clientX = 0,
+  clientY = 0,
+  init: MouseEventInit = {},
+): MouseEvent =>
+  new MouseEvent(type, { clientX, clientY, bubbles: true, cancelable: true, ...init });
 
 const touchEvent = (type: string, touches: TouchPoint[]): Event => {
   const event = new Event(type, { bubbles: true, cancelable: true });
@@ -87,11 +92,11 @@ describe('Canvas drag (pan) events', () => {
       if (!listeners.has(type)) {
         listeners.set(type, new Set());
       }
-      listeners.get(type)!.add(listener!);
+      listeners.get(type)!.add(listener);
       originalAdd(type, listener, options);
     });
     jest.spyOn(container, 'removeEventListener').mockImplementation((type, listener, options?) => {
-      listeners.get(type)?.delete(listener!);
+      listeners.get(type)?.delete(listener);
       originalRemove(type, listener, options);
     });
 
@@ -249,6 +254,92 @@ describe('Canvas drag (pan) events', () => {
     expect(canvas.isWorkspaceEventsEnabled()).toBe(true);
     expect(listenerCount('touchmove')).toBe(0);
     expect(listenerCount('touchend')).toBe(0);
+  });
+
+  describe('the button of the press', () => {
+    const onPlatform = (platform: string) => {
+      Object.defineProperty(window.navigator, 'platform', { value: platform, configurable: true });
+    };
+
+    afterEach(() => {
+      delete (window.navigator as { platform?: string }).platform;
+    });
+
+    /** A press with `init`, a move and a release: whether the move panned the canvas. */
+    const pressMoveRelease = (init: MouseEventInit) => {
+      mockSetCoordOrigin.mockClear();
+      container.dispatchEvent(mouseEvent('mousedown', 10, 10, init));
+      document.body.dispatchEvent(mouseEvent('mousemove', 40, 25, init));
+      const panned = mockSetCoordOrigin.mock.calls.length > 0;
+      document.body.dispatchEvent(mouseEvent('mouseup', 40, 25, init));
+      return { panned, workspaceEventsEnabled: canvas.isWorkspaceEventsEnabled() };
+    };
+
+    /** A press and a release with `init`, with no move: whether the background was clicked. */
+    const clickWith = (init: MouseEventInit): boolean => {
+      const click = jest.fn();
+      canvas.getScreenManager().addEvent('click', click);
+      container.dispatchEvent(mouseEvent('mousedown', 10, 10, init));
+      document.body.dispatchEvent(mouseEvent('mouseup', 10, 10, init));
+      return click.mock.calls.length > 0;
+    };
+
+    it('the left button pans, and clicks the background on a release with no move', () => {
+      expect(pressMoveRelease({ button: 0 }).panned).toBe(true);
+      expect(clickWith({ button: 0 })).toBe(true);
+    });
+
+    it('the right button neither pans nor clicks the background', () => {
+      const { panned, workspaceEventsEnabled } = pressMoveRelease({ button: 2, buttons: 2 });
+
+      // Before: it panned, and its click unselected everything.
+      expect(panned).toBe(false);
+      expect(workspaceEventsEnabled).toBe(true);
+      expect(clickWith({ button: 2 })).toBe(false);
+    });
+
+    it('a Ctrl press on a Mac, its right click, neither pans nor clicks the background', () => {
+      onPlatform('MacIntel');
+
+      expect(pressMoveRelease({ button: 0, ctrlKey: true }).panned).toBe(false);
+      expect(clickWith({ button: 0, ctrlKey: true })).toBe(false);
+    });
+
+    it('a Ctrl press elsewhere pans and clicks, as the left button does', () => {
+      onPlatform('Win32');
+
+      expect(pressMoveRelease({ button: 0, ctrlKey: true }).panned).toBe(true);
+      expect(clickWith({ button: 0, ctrlKey: true })).toBe(true);
+    });
+
+    it('the middle button pans, but its release is no click on the background', () => {
+      expect(pressMoveRelease({ button: 1, buttons: 4 }).panned).toBe(true);
+      // A middle press and release is an auxclick, not a click.
+      expect(clickWith({ button: 1 })).toBe(false);
+      expect(canvas.isWorkspaceEventsEnabled()).toBe(true);
+    });
+
+    it('a middle press is kept from the browser, so that it starts no autoscroll', () => {
+      const press = mouseEvent('mousedown', 10, 10, { button: 1, buttons: 4 });
+      container.dispatchEvent(press);
+      document.body.dispatchEvent(mouseEvent('mouseup', 10, 10, { button: 1 }));
+
+      // Before: Chrome on Windows and Linux started its autoscroll, and took the moves.
+      expect(press.defaultPrevented).toBe(true);
+    });
+
+    it('a left press is left to the browser, as before', () => {
+      const press = mouseEvent('mousedown', 10, 10, { button: 0, buttons: 1 });
+      container.dispatchEvent(press);
+      document.body.dispatchEvent(mouseEvent('mouseup', 10, 10));
+
+      expect(press.defaultPrevented).toBe(false);
+    });
+
+    it('the back and forward buttons do not pan', () => {
+      expect(pressMoveRelease({ button: 3 }).panned).toBe(false);
+      expect(pressMoveRelease({ button: 4 }).panned).toBe(false);
+    });
   });
 
   it('still pans after the events are registered again (a second map load)', () => {

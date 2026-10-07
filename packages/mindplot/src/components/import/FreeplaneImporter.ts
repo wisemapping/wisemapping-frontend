@@ -30,23 +30,56 @@ import { legacyIconEmoji } from './support/LegacyIconMap';
 import { htmlToPlainText } from './support/HtmlText';
 import { applyFreemindFont } from './support/FreemindFont';
 import TopicIdSequence from './support/TopicIdSequence';
-import { NAMED_ICON_EMOJIS, ownEntry } from './support/IconEmoji';
+import { ownEntry } from './support/IconEmoji';
 import { alternatingSidePosition } from './support/MainTopicPosition';
 import type { WiseIcon } from './FreemindIconConverter';
 import FreemindIconConverter from './FreemindIconConverter';
 import type { TopicShapeType } from '../model/INodeModel';
 
-// Freeplane icon names and the WiseMapping emoji icons they map to.
-const FREEPLANE_ICON_EMOJIS: Readonly<Record<string, string>> = {
-  ...NAMED_ICON_EMOJIS,
-  'flag-red': '🔴',
-  'flag-orange': '🟠',
-  'flag-pink': '🩷',
-  'flag-purple': '🟣',
-  'star-yellow': '⭐',
-  'star-red': '⭐',
-  'star-green': '⭐',
-  'star-blue': '⭐',
+/**
+ * The Freeplane builtin icons (freeplane/src/viewer/resources/images/icons) that FreeMind does not
+ * have, and their emoji. The FreeMind ones, which Freeplane keeps, are mapped by
+ * FreemindIconConverter first.
+ */
+export const FREEPLANE_ICON_EMOJIS: Readonly<Record<string, string>> = {
+  bee: '🐝',
+  // The rating icons (++, +, 0, -, --), as a scale of faces: plus and minus are the math icons.
+  very_positive: '😁',
+  positive: '🙂',
+  neutral: '😐',
+  negative: '🙁',
+  very_negative: '😖',
+  addition: '➕',
+  subtraction: '➖',
+  multiplication: '✖️',
+  division: '➗',
+  checked: '☑️',
+  unchecked: '🔲',
+  // An R, in blue, green, pink or red.
+  revision: '🔄',
+  'revision-green': '🔄',
+  'revision-pink': '🔄',
+  'revision-red': '🔄',
+  audio: '🔊',
+  // Reminder.
+  clock2: '⏰',
+  executable: '⚙️',
+  females: '👭',
+  males: '👬',
+  image: '🖼️',
+  internet: '🌐',
+  internet_warning: '⚠️',
+  mindmap: '🧠',
+  narrative: '💬',
+};
+
+/** The Freeplane progress icons, imported as the WiseMapping task icons, as MindManager's are. */
+export const FREEPLANE_SVG_ICONS: Readonly<Record<string, string>> = {
+  '0%': 'task_0',
+  '25%': 'task_25',
+  '50%': 'task_50',
+  '75%': 'task_75',
+  '100%': 'task_100',
 };
 
 class FreeplaneImporter extends Importer {
@@ -276,6 +309,10 @@ class FreeplaneImporter extends Importer {
     if (emoji) {
       return { type: 'eicon', id: emoji };
     }
+    const svgId = ownEntry(FREEPLANE_SVG_ICONS, builtin);
+    if (svgId) {
+      return { type: 'icon', id: svgId };
+    }
     return (
       FreemindIconConverter.toWiseIcon(builtin) || {
         type: 'eicon',
@@ -304,10 +341,8 @@ class FreeplaneImporter extends Importer {
   }
 
   private mapFreeplaneIconToEmojiIcon(builtin: string): string {
-    // The mapped emoji, the emoji of a legacy WiseMapping icon id, or a light bulb. Hyphens and
-    // underscores are the same (flag-red, flag_red).
-    const key = builtin.toLowerCase().replace(/_/g, '-');
-    return ownEntry(FREEPLANE_ICON_EMOJIS, key) || legacyIconEmoji(builtin) || '💡';
+    // The mapped emoji, the emoji of a legacy WiseMapping icon id, or a light bulb.
+    return ownEntry(FREEPLANE_ICON_EMOJIS, builtin) || legacyIconEmoji(builtin) || '💡';
   }
 
   private addRelationships(mindmap: Mindmap, rootNode: Element): void {

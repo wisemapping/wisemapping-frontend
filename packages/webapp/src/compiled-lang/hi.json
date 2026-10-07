@@ -107,10 +107,16 @@
       "value": "खाता हटाएं"
     }
   ],
+  "accountinfo.account-settings": [
+    {
+      "type": 0,
+      "value": "खाता सेटिंग्स"
+    }
+  ],
   "accountinfo.button": [
     {
       "type": 0,
-      "value": "स्वीकार करें"
+      "value": "परिवर्तन सहेजें"
     }
   ],
   "accountinfo.deleteaccount": [
@@ -140,7 +146,13 @@
   "accountinfo.personal-details": [
     {
       "type": 0,
-      "value": "Personal Details"
+      "value": "व्यक्तिगत विवरण"
+    }
+  ],
+  "accountinfo.personal-info": [
+    {
+      "type": 0,
+      "value": "व्यक्तिगत जानकारी"
     }
   ],
   "accountinfo.title": [
@@ -278,37 +290,127 @@
   "activation.error.message": [
     {
       "type": 0,
-      "value": "We couldn't activate your account. The activation link may be invalid or expired. Please contact support for assistance."
+      "value": "हम आपका खाता सक्रिय नहीं कर सके। सक्रियण लिंक अमान्य या समाप्त हो सकता है। सहायता के लिए कृपया सहायता टीम से संपर्क करें।"
     }
   ],
   "activation.error.title": [
     {
       "type": 0,
-      "value": "Activation Failed"
+      "value": "सक्रियण विफल"
     }
   ],
   "activation.loading.desc": [
     {
       "type": 0,
-      "value": "Please wait while we activate your account..."
+      "value": "कृपया प्रतीक्षा करें, हम आपका खाता सक्रिय कर रहे हैं..."
     }
   ],
   "activation.loading.title": [
     {
       "type": 0,
-      "value": "Activating Your Account"
+      "value": "आपका खाता सक्रिय किया जा रहा है"
+    }
+  ],
+  "activation.page-title": [
+    {
+      "type": 0,
+      "value": "खाता सक्रियण | WiseMapping"
     }
   ],
   "activation.success.message": [
     {
       "type": 0,
-      "value": "Your account has been activated. You can now sign in and start creating mind maps."
+      "value": "आपका खाता सक्रिय कर दिया गया है। अब आप साइन इन करके माइंडमैप बनाना शुरू कर सकते हैं।"
     }
   ],
   "activation.success.title": [
     {
       "type": 0,
-      "value": "Account Activated Successfully"
+      "value": "खाता सफलतापूर्वक सक्रिय हुआ"
+    }
+  ],
+  "admin.accounts.add-user": [
+    {
+      "type": 0,
+      "value": "नया उपयोगकर्ता जोड़ें"
+    }
+  ],
+  "admin.accounts.create": [
+    {
+      "type": 0,
+      "value": "उपयोगकर्ता बनाएं"
+    }
+  ],
+  "admin.accounts.create-user": [
+    {
+      "type": 0,
+      "value": "उपयोगकर्ता बनाएं"
+    }
+  ],
+  "admin.accounts.edit-user": [
+    {
+      "type": 0,
+      "value": "उपयोगकर्ता संपादित करें"
+    }
+  ],
+  "admin.accounts.filters": [
+    {
+      "type": 0,
+      "value": "खोज और फ़िल्टर"
+    }
+  ],
+  "admin.accounts.no-users": [
+    {
+      "type": 0,
+      "value": "कोई उपयोगकर्ता नहीं मिला"
+    }
+  ],
+  "admin.accounts.refresh": [
+    {
+      "type": 0,
+      "value": "ताज़ा करें"
+    }
+  ],
+  "admin.accounts.refresh-tooltip": [
+    {
+      "type": 0,
+      "value": "डेटा ताज़ा करें"
+    }
+  ],
+  "admin.accounts.search": [
+    {
+      "type": 0,
+      "value": "उपयोगकर्ता खोजें..."
+    }
+  ],
+  "admin.accounts.subtitle": [
+    {
+      "type": 0,
+      "value": "उपयोगकर्ता खाते, अनुमतियां और सेटिंग्स प्रबंधित करें"
+    }
+  ],
+  "admin.accounts.title": [
+    {
+      "type": 0,
+      "value": "उपयोगकर्ता प्रबंधन"
+    }
+  ],
+  "admin.action.mark-as-not-spam": [
+    {
+      "type": 0,
+      "value": "गैर-स्पैम के रूप में चिह्नित"
+    }
+  ],
+  "admin.action.mark-as-spam": [
+    {
+      "type": 0,
+      "value": "स्पैम के रूप में चिह्नित"
+    }
+  ],
+  "admin.activate-user": [
+    {
+      "type": 0,
+      "value": "उपयोगकर्ता सक्रिय करें"
     }
   ],
   "admin.auth-type": [
@@ -317,22 +419,64 @@
       "value": "प्रमाणीकरण प्रकार"
     }
   ],
+  "admin.auth.database": [
+    {
+      "type": 0,
+      "value": "डेटाबेस"
+    }
+  ],
+  "admin.auth.facebook": [
+    {
+      "type": 0,
+      "value": "Facebook"
+    }
+  ],
+  "admin.auth.google": [
+    {
+      "type": 0,
+      "value": "Google"
+    }
+  ],
+  "admin.auth.ldap": [
+    {
+      "type": 0,
+      "value": "LDAP"
+    }
+  ],
+  "admin.button.update-user": [
+    {
+      "type": 0,
+      "value": "उपयोगकर्ता अपडेट करें"
+    }
+  ],
+  "admin.button.updating": [
+    {
+      "type": 0,
+      "value": "अपडेट हो रहा है..."
+    }
+  ],
+  "admin.cancel": [
+    {
+      "type": 0,
+      "value": "रद्द करें"
+    }
+  ],
   "admin.change-password": [
     {
       "type": 0,
-      "value": "Change password"
+      "value": "पासवर्ड बदलें"
     }
   ],
   "admin.change-password-button": [
     {
       "type": 0,
-      "value": "Change Password"
+      "value": "पासवर्ड बदलें"
     }
   ],
   "admin.change-password-description": [
     {
       "type": 0,
-      "value": "Change password for user: "
+      "value": "उपयोगकर्ता का पासवर्ड बदलें: "
     },
     {
       "type": 1,
@@ -342,19 +486,77 @@
   "admin.change-password-title": [
     {
       "type": 0,
-      "value": "Change Password"
+      "value": "पासवर्ड बदलें"
     }
   ],
   "admin.close": [
     {
       "type": 0,
-      "value": "Close"
+      "value": "बंद करें"
     }
   ],
   "admin.confirm-password": [
     {
       "type": 0,
-      "value": "Confirm Password"
+      "value": "पासवर्ड की पुष्टि करें"
+    }
+  ],
+  "admin.confirm.delete-map": [
+    {
+      "type": 0,
+      "value": "क्या आप वाकई मानचित्र \""
+    },
+    {
+      "type": 1,
+      "value": "title"
+    },
+    {
+      "type": 0,
+      "value": "\" को हटाना चाहते हैं?"
+    }
+  ],
+  "admin.confirm.spam-action": [
+    {
+      "type": 0,
+      "value": "क्या आप वाकई इस मानचित्र को "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": " करना चाहते हैं?"
+    }
+  ],
+  "admin.console.description": [
+    {
+      "type": 0,
+      "value": "उपयोगकर्ता, सिस्टम सेटिंग्स और एप्लिकेशन कॉन्फ़िगरेशन प्रबंधित करें।"
+    }
+  ],
+  "admin.console.page-title": [
+    {
+      "type": 0,
+      "value": "व्यवस्थापक कंसोल | WiseMapping"
+    }
+  ],
+  "admin.console.subtitle": [
+    {
+      "type": 0,
+      "value": "सिस्टम प्रशासन"
+    }
+  ],
+  "admin.console.title": [
+    {
+      "type": 0,
+      "value": "व्यवस्थापक कंसोल"
+    }
+  ],
+  "admin.current-suspension-reason": [
+    {
+      "type": 0,
+      "value": "वर्तमान निलंबन कारण:"
     }
   ],
   "admin.delete": [
@@ -381,6 +583,108 @@
       "value": "उपयोगकर्ता संपादित करें"
     }
   ],
+  "admin.error.access-denied": [
+    {
+      "type": 0,
+      "value": "पहुंच अस्वीकृत। व्यवस्थापक अनुमतियां आवश्यक हैं।"
+    }
+  ],
+  "admin.error.create-user-failed": [
+    {
+      "type": 0,
+      "value": "उपयोगकर्ता बनाने में विफल। कृपया फिर से प्रयास करें।"
+    }
+  ],
+  "admin.error.load-users": [
+    {
+      "type": 0,
+      "value": "उपयोगकर्ता लोड करने में विफल: "
+    },
+    {
+      "type": 1,
+      "value": "message"
+    }
+  ],
+  "admin.error.unknown": [
+    {
+      "type": 0,
+      "value": "अज्ञात त्रुटि"
+    }
+  ],
+  "admin.error.update-map-failed": [
+    {
+      "type": 0,
+      "value": "मानचित्र अपडेट करने में विफल। कृपया फिर से प्रयास करें।"
+    }
+  ],
+  "admin.error.update-user-failed": [
+    {
+      "type": 0,
+      "value": "उपयोगकर्ता अपडेट करने में विफल। कृपया फिर से प्रयास करें।"
+    }
+  ],
+  "admin.facebook.filter-tooltip": [
+    {
+      "type": 0,
+      "value": "Facebook डेटा हटाने के लिए खोज"
+    }
+  ],
+  "admin.facebook.lookup-button": [
+    {
+      "type": 0,
+      "value": "खाता खोजें"
+    }
+  ],
+  "admin.facebook.lookup-not-found": [
+    {
+      "type": 0,
+      "value": "इस Facebook उपयोगकर्ता ID के लिए कोई खाता नहीं मिला।"
+    }
+  ],
+  "admin.facebook.remove": [
+    {
+      "type": 0,
+      "value": "हटाएं"
+    }
+  ],
+  "admin.facebook.remove-button": [
+    {
+      "type": 0,
+      "value": "Facebook खाता हटाएं"
+    }
+  ],
+  "admin.facebook.remove-confirm": [
+    {
+      "type": 0,
+      "value": "\""
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": "\" के लिए Facebook संबद्धता हटाएं?"
+    }
+  ],
+  "admin.facebook.remove-dialog-title": [
+    {
+      "type": 0,
+      "value": "Facebook खाता हटाएं"
+    }
+  ],
+  "admin.facebook.remove-warning": [
+    {
+      "type": 0,
+      "value": "इससे इस खाते से Facebook प्रमाणीकरण डिस्कनेक्ट हो जाएगा। उपयोगकर्ता को फिर से पहुंच पाने के लिए पासवर्ड रीसेट ईमेल प्राप्त होगा।"
+    }
+  ],
+  "admin.facebook.removing": [
+    {
+      "type": 0,
+      "value": "हटाया जा रहा है..."
+    }
+  ],
   "admin.lock-status": [
     {
       "type": 0,
@@ -393,40 +697,370 @@
       "value": "लॉक"
     }
   ],
+  "admin.maps.clean-tooltip": [
+    {
+      "type": 0,
+      "value": "स्पैम के रूप में चिह्नित नहीं"
+    }
+  ],
+  "admin.maps.creator-suspended-tooltip": [
+    {
+      "type": 0,
+      "value": "मानचित्र निर्माता का खाता एक व्यवस्थापक द्वारा निलंबित कर दिया गया है"
+    }
+  ],
+  "admin.maps.delete": [
+    {
+      "type": 0,
+      "value": "मानचित्र हटाएं"
+    }
+  ],
+  "admin.maps.description": [
+    {
+      "type": 0,
+      "value": "विवरण"
+    }
+  ],
+  "admin.maps.edit": [
+    {
+      "type": 0,
+      "value": "मानचित्र संपादित करें"
+    }
+  ],
+  "admin.maps.edit-title": [
+    {
+      "type": 0,
+      "value": "मानचित्र संपादित करें"
+    }
+  ],
+  "admin.maps.filter.date": [
+    {
+      "type": 0,
+      "value": "दिनांक सीमा"
+    }
+  ],
+  "admin.maps.filter.spam": [
+    {
+      "type": 0,
+      "value": "स्पैम"
+    }
+  ],
+  "admin.maps.locked-tooltip": [
+    {
+      "type": 0,
+      "value": "वर्तमान में "
+    },
+    {
+      "type": 1,
+      "value": "user"
+    },
+    {
+      "type": 0,
+      "value": " द्वारा संपादित किया जा रहा है"
+    }
+  ],
+  "admin.maps.mark-as-not-spam": [
+    {
+      "type": 0,
+      "value": "गैर-स्पैम के रूप में चिह्नित करें"
+    }
+  ],
+  "admin.maps.mark-as-spam": [
+    {
+      "type": 0,
+      "value": "स्पैम के रूप में चिह्नित करें"
+    }
+  ],
+  "admin.maps.no-maps": [
+    {
+      "type": 0,
+      "value": "कोई मानचित्र नहीं मिला"
+    }
+  ],
+  "admin.maps.page-title": [
+    {
+      "type": 0,
+      "value": "मानचित्र प्रबंधन"
+    }
+  ],
+  "admin.maps.private-tooltip": [
+    {
+      "type": 0,
+      "value": "केवल सहयोगी ही इस मानचित्र को देख सकते हैं"
+    }
+  ],
+  "admin.maps.public-tooltip": [
+    {
+      "type": 0,
+      "value": "कोई भी इस मानचित्र को देख सकता है"
+    }
+  ],
+  "admin.maps.search": [
+    {
+      "type": 0,
+      "value": "मानचित्र खोजें... (ID के लिए #123, निर्माता के लिए ईमेल)"
+    }
+  ],
+  "admin.maps.search-by-email": [
+    {
+      "type": 0,
+      "value": "🔍 निर्माता के ईमेल से खोजा जा रहा है"
+    }
+  ],
+  "admin.maps.search-by-id": [
+    {
+      "type": 0,
+      "value": "🔍 मानचित्र ID से खोजा जा रहा है"
+    }
+  ],
+  "admin.maps.search-by-text": [
+    {
+      "type": 0,
+      "value": "🔍 शीर्षकों और विवरणों में खोजा जा रहा है"
+    }
+  ],
+  "admin.maps.spam-label": [
+    {
+      "type": 0,
+      "value": "स्पैम ("
+    },
+    {
+      "type": 1,
+      "value": "type"
+    },
+    {
+      "type": 0,
+      "value": ")"
+    }
+  ],
+  "admin.maps.spam-tooltip": [
+    {
+      "type": 1,
+      "value": "date"
+    },
+    {
+      "type": 0,
+      "value": " को स्पैम के रूप में पहचाना गया"
+    }
+  ],
+  "admin.maps.spam-tooltip-no-date": [
+    {
+      "type": 0,
+      "value": "स्पैम के रूप में चिह्नित"
+    }
+  ],
+  "admin.maps.spam-type-unknown": [
+    {
+      "type": 0,
+      "value": "अज्ञात"
+    }
+  ],
+  "admin.maps.suspend-user": [
+    {
+      "type": 0,
+      "value": "उपयोगकर्ता खाता निलंबित करें"
+    }
+  ],
+  "admin.maps.suspend-user.confirm": [
+    {
+      "type": 0,
+      "value": "क्या आप वाकई उपयोगकर्ता \""
+    },
+    {
+      "type": 1,
+      "value": "userName"
+    },
+    {
+      "type": 0,
+      "value": "\" (ID: "
+    },
+    {
+      "type": 1,
+      "value": "userId"
+    },
+    {
+      "type": 0,
+      "value": ") का खाता निलंबित करना चाहते हैं? इसे मैनुअल समीक्षा निलंबन के रूप में चिह्नित किया जाएगा।"
+    }
+  ],
+  "admin.maps.suspend-user.confirm-button": [
+    {
+      "type": 0,
+      "value": "उपयोगकर्ता निलंबित करें"
+    }
+  ],
+  "admin.maps.suspend-user.title": [
+    {
+      "type": 0,
+      "value": "उपयोगकर्ता खाता निलंबित करें"
+    }
+  ],
+  "admin.maps.suspend-user.warning": [
+    {
+      "type": 0,
+      "value": "यह कार्रवाई उपयोगकर्ता खाते को निलंबित कर देगी, जिससे वे सिस्टम तक नहीं पहुंच पाएंगे।"
+    }
+  ],
+  "admin.maps.table.actions": [
+    {
+      "type": 0,
+      "value": "क्रियाएँ"
+    }
+  ],
+  "admin.maps.table.created": [
+    {
+      "type": 0,
+      "value": "बनाया गया"
+    }
+  ],
+  "admin.maps.table.description": [
+    {
+      "type": 0,
+      "value": "विवरण"
+    }
+  ],
+  "admin.maps.table.id": [
+    {
+      "type": 0,
+      "value": "मानचित्र ID"
+    }
+  ],
+  "admin.maps.table.modified": [
+    {
+      "type": 0,
+      "value": "संशोधित"
+    }
+  ],
+  "admin.maps.table.spam": [
+    {
+      "type": 0,
+      "value": "स्पैम"
+    }
+  ],
+  "admin.maps.table.spam-status": [
+    {
+      "type": 0,
+      "value": "स्पैम स्थिति"
+    }
+  ],
+  "admin.maps.table.status": [
+    {
+      "type": 0,
+      "value": "स्थिति"
+    }
+  ],
+  "admin.maps.table.title": [
+    {
+      "type": 0,
+      "value": "शीर्षक"
+    }
+  ],
+  "admin.maps.title": [
+    {
+      "type": 0,
+      "value": "शीर्षक"
+    }
+  ],
+  "admin.maps.unlocked-tooltip": [
+    {
+      "type": 0,
+      "value": "वर्तमान में संपादित नहीं किया जा रहा है"
+    }
+  ],
+  "admin.maps.view-xml": [
+    {
+      "type": 0,
+      "value": "XML देखें"
+    }
+  ],
+  "admin.maps.xml-viewer.copy": [
+    {
+      "type": 0,
+      "value": "फ़ॉर्मेट किया गया XML कॉपी करें"
+    }
+  ],
+  "admin.maps.xml-viewer.info": [
+    {
+      "type": 0,
+      "value": "यह माइंडमैप की मूल XML सामग्री है। आप बैकअप या विश्लेषण के लिए इस सामग्री को कॉपी कर सकते हैं।"
+    }
+  ],
+  "admin.maps.xml-viewer.loading": [
+    {
+      "type": 0,
+      "value": "XML सामग्री लोड हो रही है..."
+    }
+  ],
+  "admin.maps.xml-viewer.no-content": [
+    {
+      "type": 0,
+      "value": "कोई XML सामग्री उपलब्ध नहीं है"
+    }
+  ],
+  "admin.maps.xml-viewer.title": [
+    {
+      "type": 0,
+      "value": "मानचित्र XML सामग्री"
+    }
+  ],
+  "admin.menu.accounts": [
+    {
+      "type": 0,
+      "value": "खाते"
+    }
+  ],
+  "admin.menu.maps": [
+    {
+      "type": 0,
+      "value": "मानचित्र"
+    }
+  ],
+  "admin.menu.system": [
+    {
+      "type": 0,
+      "value": "सिस्टम"
+    }
+  ],
   "admin.new-password": [
     {
       "type": 0,
-      "value": "New Password"
+      "value": "नया पासवर्ड"
     }
   ],
   "admin.password-error-facebook": [
     {
       "type": 0,
-      "value": "This user is authenticated via Facebook. Password changes are not available for Facebook accounts. Please ask the user to manage their password through their Facebook account."
+      "value": "यह उपयोगकर्ता Facebook के माध्यम से प्रमाणित है। Facebook खातों के लिए पासवर्ड बदलना उपलब्ध नहीं है। कृपया उपयोगकर्ता से अपने Facebook खाते के माध्यम से पासवर्ड प्रबंधित करने के लिए कहें।"
     }
   ],
   "admin.password-error-failed": [
     {
       "type": 0,
-      "value": "Failed to change password"
+      "value": "पासवर्ड बदलने में विफल"
     }
   ],
   "admin.password-error-google": [
     {
       "type": 0,
-      "value": "This user is authenticated via Google. Password changes are not available for Google accounts. Please ask the user to manage their password through their Google account."
+      "value": "यह उपयोगकर्ता Google के माध्यम से प्रमाणित है। Google खातों के लिए पासवर्ड बदलना उपलब्ध नहीं है। कृपया उपयोगकर्ता से अपने Google खाते के माध्यम से पासवर्ड प्रबंधित करने के लिए कहें।"
     }
   ],
   "admin.password-error-length": [
     {
       "type": 0,
-      "value": "Password must be at least 6 characters"
+      "value": "पासवर्ड कम से कम 6 वर्णों का होना चाहिए"
     }
   ],
   "admin.password-error-mismatch": [
     {
       "type": 0,
-      "value": "Passwords do not match"
+      "value": "पासवर्ड मेल नहीं खाते"
+    }
+  ],
+  "admin.prompt.new-user-password": [
+    {
+      "type": 0,
+      "value": "नए उपयोगकर्ता के लिए पासवर्ड दर्ज करें:"
     }
   ],
   "admin.public": [
@@ -453,16 +1087,72 @@
       "value": "सक्रिय"
     }
   ],
+  "admin.status-active-tooltip": [
+    {
+      "type": 0,
+      "value": "खाता सक्रिय है और अच्छी स्थिति में है"
+    }
+  ],
+  "admin.status-active-tooltip-interactive": [
+    {
+      "type": 0,
+      "value": "खाता सक्रिय है और अच्छी स्थिति में है | स्थिति बदलने के लिए क्लिक करें"
+    }
+  ],
   "admin.status-clean": [
     {
       "type": 0,
       "value": "साफ"
     }
   ],
+  "admin.status-not-activated": [
+    {
+      "type": 0,
+      "value": "सक्रिय नहीं"
+    }
+  ],
+  "admin.status-not-activated-tooltip": [
+    {
+      "type": 0,
+      "value": "उपयोगकर्ता ने अभी तक अपने ईमेल पते की पुष्टि नहीं की है"
+    }
+  ],
+  "admin.status-not-activated-tooltip-interactive": [
+    {
+      "type": 0,
+      "value": "उपयोगकर्ता ने अभी तक अपने ईमेल पते की पुष्टि नहीं की है | स्थिति बदलने के लिए क्लिक करें"
+    }
+  ],
   "admin.status-suspended": [
     {
       "type": 0,
       "value": "निलंबित"
+    }
+  ],
+  "admin.status.click-to-change": [
+    {
+      "type": 0,
+      "value": "स्थिति बदलने के लिए क्लिक करें"
+    }
+  ],
+  "admin.status.reason": [
+    {
+      "type": 0,
+      "value": "कारण: "
+    },
+    {
+      "type": 1,
+      "value": "reason"
+    }
+  ],
+  "admin.status.suspended-on": [
+    {
+      "type": 0,
+      "value": "निलंबन तिथि: "
+    },
+    {
+      "type": 1,
+      "value": "date"
     }
   ],
   "admin.suspend-user": [
@@ -519,10 +1209,70 @@
       "value": "नियमों का उल्लंघन"
     }
   ],
+  "admin.system.app.name": [
+    {
+      "type": 0,
+      "value": "नाम"
+    }
+  ],
+  "admin.system.app.port": [
+    {
+      "type": 0,
+      "value": "पोर्ट"
+    }
+  ],
+  "admin.system.application": [
+    {
+      "type": 0,
+      "value": "एप्लिकेशन"
+    }
+  ],
+  "admin.system.database": [
+    {
+      "type": 0,
+      "value": "डेटाबेस"
+    }
+  ],
+  "admin.system.database.info": [
+    {
+      "type": 0,
+      "value": "डेटाबेस"
+    }
+  ],
+  "admin.system.db.ddl": [
+    {
+      "type": 0,
+      "value": "Hibernate DDL"
+    }
+  ],
+  "admin.system.db.driver": [
+    {
+      "type": 0,
+      "value": "ड्राइवर"
+    }
+  ],
   "admin.system.db.url": [
     {
       "type": 0,
       "value": "URL"
+    }
+  ],
+  "admin.system.db.username": [
+    {
+      "type": 0,
+      "value": "उपयोगकर्ता नाम"
+    }
+  ],
+  "admin.system.error": [
+    {
+      "type": 0,
+      "value": "सिस्टम जानकारी लोड करने में विफल"
+    }
+  ],
+  "admin.system.health": [
+    {
+      "type": 0,
+      "value": "सिस्टम स्वास्थ्य"
     }
   ],
   "admin.system.jvm": [
@@ -531,16 +1281,172 @@
       "value": "JVM"
     }
   ],
+  "admin.system.jvm.load": [
+    {
+      "type": 0,
+      "value": "सिस्टम लोड"
+    }
+  ],
+  "admin.system.jvm.processors": [
+    {
+      "type": 0,
+      "value": "प्रोसेसर"
+    }
+  ],
+  "admin.system.jvm.start": [
+    {
+      "type": 0,
+      "value": "प्रारंभ समय"
+    }
+  ],
+  "admin.system.jvm.uptime": [
+    {
+      "type": 0,
+      "value": "अपटाइम"
+    }
+  ],
+  "admin.system.jvm.vendor": [
+    {
+      "type": 0,
+      "value": "विक्रेता"
+    }
+  ],
+  "admin.system.jvm.version": [
+    {
+      "type": 0,
+      "value": "Java संस्करण"
+    }
+  ],
+  "admin.system.loading": [
+    {
+      "type": 0,
+      "value": "सिस्टम जानकारी लोड हो रही है..."
+    }
+  ],
   "admin.system.memory": [
     {
       "type": 0,
       "value": "मेमोरी"
     }
   ],
+  "admin.system.memory.info": [
+    {
+      "type": 0,
+      "value": "मेमोरी"
+    }
+  ],
+  "admin.system.memory.max": [
+    {
+      "type": 0,
+      "value": "अधिकतम मेमोरी"
+    }
+  ],
+  "admin.system.memory.total": [
+    {
+      "type": 0,
+      "value": "कुल मेमोरी"
+    }
+  ],
+  "admin.system.memory.usage": [
+    {
+      "type": 0,
+      "value": "मेमोरी उपयोग"
+    }
+  ],
+  "admin.system.memory.used": [
+    {
+      "type": 0,
+      "value": "प्रयुक्त मेमोरी"
+    }
+  ],
+  "admin.system.mindmapMetrics.collaborations": [
+    {
+      "type": 0,
+      "value": "विचार किए गए सहयोग"
+    }
+  ],
+  "admin.system.mindmapMetrics.disabled": [
+    {
+      "type": 0,
+      "value": "मेट्रिक्स कैप्चर करने के लिए `app.monitoring.performance.log-mindmap-listing` को true पर सेट करें।"
+    }
+  ],
+  "admin.system.mindmapMetrics.entityLoads": [
+    {
+      "type": 0,
+      "value": "एंटिटी लोड"
+    }
+  ],
+  "admin.system.mindmapMetrics.executedStatements": [
+    {
+      "type": 0,
+      "value": "तैयार स्टेटमेंट"
+    }
+  ],
+  "admin.system.mindmapMetrics.lastUpdated": [
+    {
+      "type": 0,
+      "value": "अंतिम अपडेट"
+    }
+  ],
+  "admin.system.mindmapMetrics.mapCount": [
+    {
+      "type": 0,
+      "value": "लौटाए गए मानचित्र"
+    }
+  ],
+  "admin.system.mindmapMetrics.pending": [
+    {
+      "type": 0,
+      "value": "मेट्रिक्स कैप्चर करने के लिए अगले माइंडमैप सूची अनुरोध की प्रतीक्षा की जा रही है।"
+    }
+  ],
+  "admin.system.mindmapMetrics.segments": [
+    {
+      "type": 0,
+      "value": "निष्पादन खंड"
+    }
+  ],
+  "admin.system.mindmapMetrics.title": [
+    {
+      "type": 0,
+      "value": "माइंडमैप सूची प्रदर्शन"
+    }
+  ],
+  "admin.system.mindmapMetrics.topQueries": [
+    {
+      "type": 0,
+      "value": "शीर्ष क्वेरी"
+    }
+  ],
+  "admin.system.mindmapMetrics.totalTime": [
+    {
+      "type": 0,
+      "value": "कुल समय (ms)"
+    }
+  ],
   "admin.system.refresh": [
     {
       "type": 0,
       "value": "ताज़ा करें"
+    }
+  ],
+  "admin.system.statistics": [
+    {
+      "type": 0,
+      "value": "आंकड़े"
+    }
+  ],
+  "admin.system.stats.mindmaps": [
+    {
+      "type": 0,
+      "value": "कुल माइंडमैप"
+    }
+  ],
+  "admin.system.stats.users": [
+    {
+      "type": 0,
+      "value": "कुल उपयोगकर्ता"
     }
   ],
   "admin.system.title": [
@@ -553,6 +1459,102 @@
     {
       "type": 0,
       "value": "उपयोगकर्ता को पुनः सक्रिय करें"
+    }
+  ],
+  "admin.user-info.auth-type": [
+    {
+      "type": 0,
+      "value": "प्रमाणीकरण"
+    }
+  ],
+  "admin.user-info.created": [
+    {
+      "type": 0,
+      "value": "बनाया गया"
+    }
+  ],
+  "admin.user-info.status": [
+    {
+      "type": 0,
+      "value": "स्थिति"
+    }
+  ],
+  "admin.user-info.suspension-reason": [
+    {
+      "type": 0,
+      "value": "निलंबन कारण:"
+    }
+  ],
+  "admin.user-info.title": [
+    {
+      "type": 0,
+      "value": "उपयोगकर्ता जानकारी"
+    }
+  ],
+  "admin.user-info.total-maps": [
+    {
+      "type": 0,
+      "value": "कुल मानचित्र"
+    }
+  ],
+  "admin.user-maps-dialog.loading": [
+    {
+      "type": 0,
+      "value": "उपयोगकर्ता लोड हो रहा है..."
+    }
+  ],
+  "admin.user-maps-dialog.no-maps": [
+    {
+      "type": 0,
+      "value": "इस उपयोगकर्ता के पास कोई मानचित्र नहीं है।"
+    }
+  ],
+  "admin.user-maps-dialog.title": [
+    {
+      "type": 1,
+      "value": "name"
+    },
+    {
+      "type": 0,
+      "value": " के स्वामित्व वाले मानचित्र (ID: #"
+    },
+    {
+      "type": 1,
+      "value": "id"
+    },
+    {
+      "type": 0,
+      "value": ")"
+    }
+  ],
+  "admin.validation.email-invalid": [
+    {
+      "type": 0,
+      "value": "अमान्य ईमेल प्रारूप"
+    }
+  ],
+  "admin.validation.email-required": [
+    {
+      "type": 0,
+      "value": "ईमेल आवश्यक है"
+    }
+  ],
+  "admin.validation.firstname-required": [
+    {
+      "type": 0,
+      "value": "पहला नाम आवश्यक है"
+    }
+  ],
+  "admin.validation.lastname-required": [
+    {
+      "type": 0,
+      "value": "अंतिम नाम आवश्यक है"
+    }
+  ],
+  "admin.view-user-maps": [
+    {
+      "type": 0,
+      "value": "उपयोगकर्ता के मानचित्र देखें"
     }
   ],
   "admin.view-xml": [
@@ -585,6 +1587,24 @@
       "value": "पासवर्ड मेल नहीं खाते। कृपया फिर से कोशिश करें।"
     }
   ],
+  "changepwd.password-max-length": [
+    {
+      "type": 0,
+      "value": "पासवर्ड 39 वर्णों से अधिक लंबा नहीं हो सकता।"
+    }
+  ],
+  "changepwd.password-min-length": [
+    {
+      "type": 0,
+      "value": "पासवर्ड कम से कम 8 वर्णों का होना चाहिए।"
+    }
+  ],
+  "changepwd.password-required": [
+    {
+      "type": 0,
+      "value": "पासवर्ड खाली नहीं हो सकता।"
+    }
+  ],
   "changepwd.title": [
     {
       "type": 0,
@@ -595,6 +1615,18 @@
     {
       "type": 0,
       "value": "ईमेल सूचनाएं की अनुमति दें"
+    }
+  ],
+  "common.cancel": [
+    {
+      "type": 0,
+      "value": "रद्द करें"
+    }
+  ],
+  "common.close": [
+    {
+      "type": 0,
+      "value": "बंद करें"
     }
   ],
   "common.delete": [
@@ -609,6 +1641,12 @@
       "value": "टैग हटाएं"
     }
   ],
+  "common.disabled": [
+    {
+      "type": 0,
+      "value": "अक्षम"
+    }
+  ],
   "common.email": [
     {
       "type": 0,
@@ -619,6 +1657,12 @@
     {
       "type": 0,
       "value": "ईमेल"
+    }
+  ],
+  "common.enabled": [
+    {
+      "type": 0,
+      "value": "सक्षम"
     }
   ],
   "common.first-name": [
@@ -657,6 +1701,12 @@
       "value": "मानचित्र सूची"
     }
   ],
+  "common.na": [
+    {
+      "type": 0,
+      "value": "लागू नहीं"
+    }
+  ],
   "common.open-drawer": [
     {
       "type": 0,
@@ -687,6 +1737,12 @@
       "value": "पुनः प्रयास करें"
     }
   ],
+  "common.save": [
+    {
+      "type": 0,
+      "value": "सहेजें"
+    }
+  ],
   "common.settings": [
     {
       "type": 0,
@@ -696,7 +1752,7 @@
   "common.terms-notice": [
     {
       "type": 0,
-      "value": "By continuing, you agree to our "
+      "value": "जारी रखकर, आप हमारी "
     },
     {
       "type": 8,
@@ -704,13 +1760,13 @@
       "children": [
         {
           "type": 0,
-          "value": "Terms of Service"
+          "value": "सेवा की शर्तों"
         }
       ]
     },
     {
       "type": 0,
-      "value": " and "
+      "value": " और "
     },
     {
       "type": 8,
@@ -718,13 +1774,13 @@
       "children": [
         {
           "type": 0,
-          "value": "Privacy Policy"
+          "value": "गोपनीयता नीति"
         }
       ]
     },
     {
       "type": 0,
-      "value": "."
+      "value": " से सहमत होते हैं।"
     }
   ],
   "common.wait": [
@@ -798,19 +1854,25 @@
   "error.go-back": [
     {
       "type": 0,
-      "value": "Go Back"
+      "value": "वापस जाएं"
     }
   ],
   "error.go-home": [
     {
       "type": 0,
-      "value": "Go to Home"
+      "value": "होम पर जाएं"
     }
   ],
   "error.go-to-login": [
     {
       "type": 0,
-      "value": "Sign In"
+      "value": "साइन इन करें"
+    }
+  ],
+  "error.invalid-map-id": [
+    {
+      "type": 0,
+      "value": "अमान्य मानचित्र ID"
     }
   ],
   "error.map-title-required": [
@@ -1046,13 +2108,13 @@
   "forgot.success.desc": [
     {
       "type": 0,
-      "value": "हमने आपको एक ईमेल भेजा है जो आपको अपना पासवर्ड रीसेट करने की अनुमति देगा। आपको इसे अगले कुछ मिनटों में प्राप्त होना चाहिए।"
+      "value": "हमने आपके ईमेल पर पासवर्ड रीसेट लिंक भेजा है। यह लिंक 1 घंटे में समाप्त हो जाएगा। लिंक का उपयोग करने तक आपका वर्तमान पासवर्ड नहीं बदलेगा।"
     }
   ],
   "forgot.success.title": [
     {
       "type": 0,
-      "value": "आपका अस्थायी पासवर्ड भेज दिया गया है।"
+      "value": "अपना ईमेल देखें।"
     }
   ],
   "forgot.title": [
@@ -1094,7 +2156,7 @@
   "import.button": [
     {
       "type": 0,
-      "value": "बनाएं"
+      "value": "आयात"
     }
   ],
   "import.description": [
@@ -1273,6 +2335,26 @@
       "value": "अनुवाद में सहायता करें"
     }
   ],
+  "language.help-dialog.description": [
+    {
+      "type": 0,
+      "value": "हमें आपकी मदद चाहिए! यदि आप रुचि रखते हैं, तो हमें "
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": " पर ईमेल भेजें।"
+    }
+  ],
+  "language.help-dialog.title": [
+    {
+      "type": 0,
+      "value": "अधिक भाषाओं का समर्थन करने में हमारी मदद करें!"
+    }
+  ],
   "login.desc": [
     {
       "type": 0,
@@ -1312,7 +2394,7 @@
   "login.generic-error": [
     {
       "type": 0,
-      "value": "An error occurred during authentication. Please try again."
+      "value": "प्रमाणीकरण के दौरान एक त्रुटि हुई। कृपया फिर से प्रयास करें।"
     }
   ],
   "login.google.button": [
@@ -1324,7 +2406,7 @@
   "login.oauth-error": [
     {
       "type": 0,
-      "value": "OAuth authentication failed. Please try again or use a different sign-in method."
+      "value": "OAuth प्रमाणीकरण विफल रहा। कृपया फिर से प्रयास करें या साइन इन का कोई अन्य तरीका उपयोग करें।"
     }
   ],
   "login.page-title": [
@@ -1348,13 +2430,13 @@
   "login.server-error": [
     {
       "type": 0,
-      "value": "An unexpected error occurred. Please try again later."
+      "value": "एक अनपेक्षित त्रुटि हुई। कृपया बाद में फिर से प्रयास करें।"
     }
   ],
   "login.shared-map-notice": [
     {
       "type": 0,
-      "value": "एक माइंड मैप आपके साथ साझा किया गया है। कृपया इसे एक्सेस करने के लिए लॉग इन करें। खाता नहीं है? मुफ़्त में साइन अप करें या अपना Google/Facebook खाता उपयोग करें।"
+      "value": "एक माइंडमैप आपके साथ साझा किया गया है। कृपया इसे एक्सेस करने के लिए लॉग इन करें। खाता नहीं है? मुफ़्त में साइन अप करें या अपना Google/Facebook खाता उपयोग करें।"
     }
   ],
   "login.signin": [
@@ -1426,25 +2508,25 @@
   "maps.auth-required-default-message": [
     {
       "type": 0,
-      "value": "You need to sign in to view your maps."
+      "value": "अपने मानचित्र देखने के लिए आपको साइन इन करना होगा।"
     }
   ],
   "maps.auth-required-heading": [
     {
       "type": 0,
-      "value": "Sign in to access your maps"
+      "value": "अपने मानचित्रों तक पहुंचने के लिए साइन इन करें"
     }
   ],
   "maps.auth-required-login": [
     {
       "type": 0,
-      "value": "Go to login"
+      "value": "लॉगिन पर जाएं"
     }
   ],
   "maps.auth-required-title": [
     {
       "type": 0,
-      "value": "Sign In Required | WiseMapping"
+      "value": "साइन इन आवश्यक | WiseMapping"
     }
   ],
   "maps.choose-file": [
@@ -1468,7 +2550,7 @@
   "maps.copilot-dialog.description": [
     {
       "type": 0,
-      "value": "Mind Map Copilot एक ChatGPT संचालित ब्रेनस्टॉर्मिंग सहायक है जो आपके संकेतों को संरचित माइंडमैप में बदल देता है। हम इसे नए टैब में खोलेंगे ताकि आप विचारों का विस्तार कर सकें, विषय तैयार कर सकें और सर्वश्रेष्ठ को वापस WiseMapping में ला सकें।"
+      "value": "एआई को-पायलट एक ChatGPT संचालित ब्रेनस्टॉर्मिंग सहायक है जो आपके संकेतों को संरचित माइंडमैप में बदल देता है। हम इसे नए टैब में खोलेंगे ताकि आप विचारों का विस्तार कर सकें, विषय तैयार कर सकें और सर्वश्रेष्ठ को वापस WiseMapping में ला सकें।"
     }
   ],
   "maps.copilot-dialog.title": [
@@ -1540,7 +2622,7 @@
   "maps.nav-onwned": [
     {
       "type": 0,
-      "value": "स्वामित्व"
+      "value": "मेरे मानचित्र"
     }
   ],
   "maps.nav-public": [
@@ -1622,7 +2704,7 @@
   "menu.admin-console": [
     {
       "type": 0,
-      "value": "Admin Console"
+      "value": "व्यवस्थापक कंसोल"
     }
   ],
   "menu.change-password": [
@@ -1646,13 +2728,13 @@
   "publish.copied": [
     {
       "type": 0,
-      "value": "Copied to clipboard!"
+      "value": "क्लिपबोर्ड पर कॉपी किया गया!"
     }
   ],
   "publish.description": [
     {
       "type": 0,
-      "value": "मानचित्र प्रकाशित करके आप इसे इंटरनेट पर सभी के लिए दृश्यमान बनाते हैं।"
+      "value": "अपना मानचित्र सार्वजनिक करें। लिंक वाला कोई भी व्यक्ति इसे देख सकता है।"
     }
   ],
   "publish.embedded": [
@@ -1664,7 +2746,7 @@
   "publish.embedded-msg": [
     {
       "type": 0,
-      "value": "अपने ब्लॉग या पेज में एम्बेड करने के लिए इस कोड स्निपेट को कॉपी करें:"
+      "value": "क्लिपबोर्ड पर कॉपी करने के लिए नीचे दिए गए कोड पर क्लिक करें:"
     }
   ],
   "publish.public-url": [
@@ -1676,7 +2758,7 @@
   "publish.public-url-msg": [
     {
       "type": 0,
-      "value": "अपने सहयोगियों के साथ अपना मानचित्र साझा करने के लिए नीचे दिए गए लिंक को कॉपी और पेस्ट करें:"
+      "value": "क्लिपबोर्ड पर कॉपी करने के लिए नीचे दिए गए लिंक पर क्लिक करें:"
     }
   ],
   "publish.title": [
@@ -1774,7 +2856,7 @@
   "registration.form-legend": [
     {
       "type": 0,
-      "value": "Account Information"
+      "value": "खाता जानकारी"
     }
   ],
   "registration.google.button": [
@@ -1844,25 +2926,25 @@
   "registration.success.already-activated": [
     {
       "type": 0,
-      "value": "Already activated your account?"
+      "value": "क्या आपने पहले ही अपना खाता सक्रिय कर लिया है?"
     }
   ],
   "registration.success.check-spam": [
     {
       "type": 0,
-      "value": "If you don't see the email, please check your spam folder."
+      "value": "यदि आपको ईमेल नहीं दिखता है, तो कृपया अपना स्पैम फ़ोल्डर जांचें।"
     }
   ],
   "registration.success.email-sent": [
     {
       "type": 0,
-      "value": "We've sent an activation email to your inbox. Please check your email and click on the activation link to activate your account."
+      "value": "हमने आपके इनबॉक्स में एक सक्रियण ईमेल भेजा है। कृपया अपना ईमेल जांचें और अपना खाता सक्रिय करने के लिए सक्रियण लिंक पर क्लिक करें।"
     }
   ],
   "registration.success.title": [
     {
       "type": 0,
-      "value": "Registration Successful!"
+      "value": "पंजीकरण सफल!"
     }
   ],
   "registration.title": [
@@ -1886,67 +2968,67 @@
   "reset-password.confirm-password": [
     {
       "type": 0,
-      "value": "Confirm new password"
+      "value": "नए पासवर्ड की पुष्टि करें"
     }
   ],
   "reset-password.desc": [
     {
       "type": 0,
-      "value": "Enter your new password below."
+      "value": "नीचे अपना नया पासवर्ड दर्ज करें।"
     }
   ],
   "reset-password.invalid-link": [
     {
       "type": 0,
-      "value": "Invalid password reset link. Please request a new one."
+      "value": "अमान्य पासवर्ड रीसेट लिंक। कृपया नए लिंक का अनुरोध करें।"
     }
   ],
   "reset-password.mismatch": [
     {
       "type": 0,
-      "value": "Passwords do not match."
+      "value": "पासवर्ड मेल नहीं खाते।"
     }
   ],
   "reset-password.page-title": [
     {
       "type": 0,
-      "value": "Reset Password | WiseMapping"
+      "value": "पासवर्ड रीसेट करें | WiseMapping"
     }
   ],
   "reset-password.password": [
     {
       "type": 0,
-      "value": "New password"
+      "value": "नया पासवर्ड"
     }
   ],
   "reset-password.request-new": [
     {
       "type": 0,
-      "value": "Request new link"
+      "value": "नए लिंक का अनुरोध करें"
     }
   ],
   "reset-password.submit": [
     {
       "type": 0,
-      "value": "Set new password"
+      "value": "नया पासवर्ड सेट करें"
     }
   ],
   "reset-password.title": [
     {
       "type": 0,
-      "value": "Set a new password"
+      "value": "नया पासवर्ड सेट करें"
     }
   ],
   "reset-password.too-long": [
     {
       "type": 0,
-      "value": "Password must be less than 40 characters."
+      "value": "पासवर्ड 40 वर्णों से कम होना चाहिए।"
     }
   ],
   "reset-password.too-short": [
     {
       "type": 0,
-      "value": "Password must be at least 8 characters."
+      "value": "पासवर्ड कम से कम 8 वर्णों का होना चाहिए।"
     }
   ],
   "role.editor": [
@@ -1982,7 +3064,7 @@
   "share.adding-button": [
     {
       "type": 0,
-      "value": "Sharing..."
+      "value": "साझा किया जा रहा है..."
     }
   ],
   "share.can-edit": [
@@ -2018,19 +3100,19 @@
   "share.table.actions": [
     {
       "type": 0,
-      "value": "Actions"
+      "value": "क्रियाएँ"
     }
   ],
   "share.table.collaborator": [
     {
       "type": 0,
-      "value": "Collaborator"
+      "value": "सहयोगी"
     }
   ],
   "share.table.role": [
     {
       "type": 0,
-      "value": "Role"
+      "value": "भूमिका"
     }
   ],
   "theme.dark": [

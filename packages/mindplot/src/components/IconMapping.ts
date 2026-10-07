@@ -116,18 +116,6 @@ export function mapIconNameToAsset(iconName: string): string {
   return iconNameToAssetMapping[iconName] || iconName;
 }
 
-/**
- * Gets the display name for an icon asset
- * @param assetName The asset file name
- * @returns The descriptive display name
- */
-export function getIconDisplayName(assetName: string): string {
-  // Find the descriptive name for the asset
-  const entry = Object.entries(iconNameToAssetMapping).find(([_, asset]) => asset === assetName);
-  return entry ? entry[0] : assetName;
-}
-
 export default {
   mapIconNameToAsset,
-  getIconDisplayName,
 };

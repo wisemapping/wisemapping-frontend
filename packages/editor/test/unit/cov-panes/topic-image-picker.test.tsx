@@ -26,6 +26,7 @@ import ImageIconTab, {
   PICKER_ICON_NAMES,
 } from '../../../src/components/action-widget/pane/topic-image-picker/image-icon-tab';
 import { property, readOnlyProperty, renderPane } from './helpers';
+import { BURST_TEXT, typeInBurst } from '../burst-typing';
 
 const pause = jest.fn();
 const resume = jest.fn();
@@ -238,5 +239,24 @@ describe('TopicImagePicker', () => {
     fireEvent.click(screen.getAllByTestId('CloseIcon')[0].closest('button') as HTMLElement);
 
     expect(triggerClose).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('icon search typing', () => {
+  it('takes 200 characters typed in one burst, as Cypress types them', async () => {
+    renderPane(
+      <ImageIconTab
+        iconModel={property<string | undefined>(undefined)}
+        emojiModel={property<string | undefined>(undefined)}
+      />,
+    );
+    const field = screen.getByPlaceholderText('Search icons...') as HTMLInputElement;
+
+    const errors = await typeInBurst(field);
+
+    expect(errors).toEqual([]);
+    expect(field.value).toBe(BURST_TEXT);
+    // The search ran on the typed text: nothing matches it.
+    expect(screen.getByText('No icons found matching your search')).toBeTruthy();
   });
 });

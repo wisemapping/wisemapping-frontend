@@ -24,6 +24,7 @@ import { fireEvent, screen } from '@testing-library/react';
 import TopicLinkEditor from '../../../src/components/action-widget/pane/topic-link-editor';
 import SaveAndDelete from '../../../src/components/action-widget/pane/save-and-delete';
 import { property, readOnlyProperty, renderPane } from './helpers';
+import { BURST_TEXT, typeInBurst } from '../burst-typing';
 
 const pause = jest.fn();
 const resume = jest.fn();
@@ -213,5 +214,19 @@ describe('SaveAndDelete', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Delete' }));
 
     expect(closeModal).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('TopicLinkEditor typing', () => {
+  it('takes 200 characters typed in one burst, as Cypress types them', async () => {
+    const urlModel = property<string>('');
+    renderPane(<TopicLinkEditor closeModal={jest.fn()} urlModel={urlModel} />);
+
+    const typed = `https://example.org/${BURST_TEXT}`;
+    const errors = await typeInBurst(urlField(), typed);
+
+    expect(errors).toEqual([]);
+    fireEvent.click(screen.getByRole('button', { name: 'Accept' }));
+    expect(urlModel.setValue).toHaveBeenCalledWith(typed);
   });
 });

@@ -24,10 +24,6 @@ import type { Action } from './Element';
 
 type GroupArgs = { onClick: Action };
 
-// These stories have always passed the colour as the stroke width: setStroke('blue') writes
-// stroke-width="blue", which the browser ignores. Kept as is so that they render as before.
-const colourAsWidth = (colour: string): number => colour as unknown as number;
-
 // More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
 export default {
   title: 'Shapes/Group',
@@ -62,13 +58,13 @@ export const Container: StoryFn<GroupArgs> = () => {
   let line = new StraightLine();
   line.setFrom(0, 0);
   line.setTo(200, 200);
-  line.setStroke(colourAsWidth('blue'));
+  line.setStroke(1, 'solid', 'blue');
   group.append(line);
 
   line = new StraightLine();
   line.setFrom(200, 0);
   line.setTo(0, 200);
-  line.setStroke(colourAsWidth('blue'));
+  line.setStroke(1, 'solid', 'blue');
   group.append(line);
 
   workspace.addItAsChildTo(div);
@@ -154,13 +150,13 @@ export const Nested: StoryFn<GroupArgs> = () => {
   let line = new StraightLine();
   line.setFrom(0, 0);
   line.setTo(200, 200);
-  line.setStroke(colourAsWidth('red'));
+  line.setStroke(1, 'solid', 'red');
   groupOuter.append(line);
 
   line = new StraightLine();
   line.setFrom(200, 0);
   line.setTo(0, 200);
-  line.setStroke(colourAsWidth('red'));
+  line.setStroke(1, 'solid', 'red');
   groupOuter.append(line);
 
   const groupInner = new Group();
@@ -178,13 +174,13 @@ export const Nested: StoryFn<GroupArgs> = () => {
   line = new StraightLine();
   line.setFrom(0, 0);
   line.setTo(200, 200);
-  line.setStroke(colourAsWidth('blue'));
+  line.setStroke(1, 'solid', 'blue');
   groupInner.append(line);
 
   line = new StraightLine();
   line.setFrom(200, 0);
   line.setTo(0, 200);
-  line.setStroke(colourAsWidth('blue'));
+  line.setStroke(1, 'solid', 'blue');
   groupInner.append(line);
   workspace.addItAsChildTo(container);
 

@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useContext, useEffect } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo } from 'react';
 import { FormattedMessage, defineMessages, useIntl } from 'react-intl';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ErrorInfo } from '../../../../classes/client';
@@ -172,11 +172,15 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
     }
   };
 
-  const handleLanguageChange = (event: SelectChangeEvent) => {
-    const newLanguage = event.target.value as LocaleCode;
-    setSelectedLanguage(newLanguage);
-    mutationChangeLanguage.mutate(newLanguage);
-  };
+  const { mutate: changeLanguage, isPending: isChangingLanguage } = mutationChangeLanguage;
+  const handleLanguageChange = useCallback(
+    (event: SelectChangeEvent) => {
+      const newLanguage = event.target.value as LocaleCode;
+      setSelectedLanguage(newLanguage);
+      changeLanguage(newLanguage);
+    },
+    [changeLanguage],
+  );
 
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
@@ -226,21 +230,22 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
     }
   };
 
-  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  // The field handlers are stable, so that a key re-renders only the field typed in (see Input).
+  const handleOnChange = useCallback((event: React.ChangeEvent<HTMLInputElement>): void => {
     event.preventDefault();
 
     const name = event.target.name;
     const value = event.target.value;
-    setModel({ ...model, [name as keyof AccountInfoModel]: value });
-  };
+    setModel((current) => ({ ...current, [name as keyof AccountInfoModel]: value }));
+  }, []);
 
-  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const handlePasswordChange = useCallback((event: React.ChangeEvent<HTMLInputElement>): void => {
     event.preventDefault();
 
     const name = event.target.name;
     const value = event.target.value;
-    setPasswordModel({ ...passwordModel, [name as keyof ChangePasswordModel]: value });
-  };
+    setPasswordModel((current) => ({ ...current, [name as keyof ChangePasswordModel]: value }));
+  }, []);
 
   const handleDeleteAccountClick = () => {
     setShowDeleteDialog(true);
@@ -253,12 +258,13 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
     setError(undefined);
   };
 
-  const handleDeleteConfirmationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDeleteConfirmationText(event.target.value);
-    if (error?.msg?.includes(deleteChallenge)) {
-      setError(undefined);
-    }
-  };
+  const handleDeleteConfirmationChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setDeleteConfirmationText(event.target.value);
+      setError((current) => (current?.msg?.includes(deleteChallenge) ? undefined : current));
+    },
+    [deleteChallenge],
+  );
 
   const handleDeleteAccountSubmit = () => {
     if (deleteConfirmationText === deleteChallenge) {
@@ -275,6 +281,40 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
       });
     }
   };
+
+  // The language select does not take part in typing: it is not re-rendered on every key of the
+  // confirmation field (in development a re-rendered FormControl updates itself from an effect,
+  // and characters typed in one burst add up to React's nested-update limit).
+  const languageSelect = useMemo(
+    () => (
+      <FormControl fullWidth sx={{ mb: 2 }}>
+        <InputLabel>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <LanguageIcon />
+            <FormattedMessage id="language.change" defaultMessage="Change Language" />
+          </Box>
+        </InputLabel>
+        <Select
+          value={selectedLanguage}
+          onChange={handleLanguageChange}
+          label={
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <LanguageIcon />
+              <FormattedMessage id="language.change" defaultMessage="Change Language" />
+            </Box>
+          }
+          disabled={isChangingLanguage}
+        >
+          {Object.values(Locales).map((locale) => (
+            <MenuItem key={locale.code} value={locale.code}>
+              {locale.label}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    ),
+    [selectedLanguage, handleLanguageChange, isChangingLanguage],
+  );
 
   const getSubmitButtonText = () => {
     if (showDeleteDialog) {
@@ -396,33 +436,7 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
           <FormControl fullWidth={true}>
             <Box sx={{ mb: 2 }}>
               {/* Language Selection */}
-              <Box sx={{ mb: 4 }}>
-                <FormControl fullWidth sx={{ mb: 2 }}>
-                  <InputLabel>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                      <LanguageIcon />
-                      <FormattedMessage id="language.change" defaultMessage="Change Language" />
-                    </Box>
-                  </InputLabel>
-                  <Select
-                    value={selectedLanguage}
-                    onChange={handleLanguageChange}
-                    label={
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                        <LanguageIcon />
-                        <FormattedMessage id="language.change" defaultMessage="Change Language" />
-                      </Box>
-                    }
-                    disabled={mutationChangeLanguage.isPending}
-                  >
-                    {Object.values(Locales).map((locale) => (
-                      <MenuItem key={locale.code} value={locale.code}>
-                        {locale.label}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Box>
+              <Box sx={{ mb: 4 }}>{languageSelect}</Box>
 
               <Divider sx={{ mb: 4 }} />
 

@@ -19,7 +19,6 @@
 import { describe, expect, test } from '@jest/globals';
 import {
   LETTER_EMOJIS,
-  NAMED_ICON_EMOJIS,
   NUMBER_EMOJIS,
   ownEntry,
 } from '../../../src/components/import/support/IconEmoji';
@@ -39,15 +38,5 @@ describe('icon emoji tables', () => {
 
   test('a to z are the squared letters, A, B, O and P with the emoji variation selector', () => {
     expect(Object.values(LETTER_EMOJIS).join('')).toBe('🅰️🅱️🅲🅳🅴🅵🅶🅷🅸🅹🅺🅻🅼🅽🅾️🅿️🆀🆁🆂🆃🆄🆅🆆🆇🆈🆉');
-  });
-
-  test('the named icons hold the numbers and letters under their prefix', () => {
-    expect(NAMED_ICON_EMOJIS['number-10']).toBe('🔟');
-    expect(NAMED_ICON_EMOJIS['letter-o']).toBe('🅾️');
-    expect(NAMED_ICON_EMOJIS['arrow-up']).toBe('⬆️');
-  });
-
-  test('the named icons are lower case and use hyphens', () => {
-    expect(Object.keys(NAMED_ICON_EMOJIS).filter((name) => !/^[a-z0-9-]+$/.test(name))).toEqual([]);
   });
 });

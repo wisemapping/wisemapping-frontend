@@ -1,17 +1,17 @@
 {
-    "type": "static",
-    "config": {
-        "clientType": "rest",
-        "apiBaseUrl": "http://localhost:3000",
-        "uiBaseUrl": "http://localhost:3000",    
-        "analyticsAccount": "G-XXXXXXXXXX",
-        "recaptcha2Enabled": false,
-        "recaptcha2SiteKey": "6Lcat08kAAAAAIP-HjhzIa-Yq21PHgGa_ADWc-Ro",
-        "registrationEnabled": true,
-        "googleOauth2Url": "http://localhost:8080/oauth2/authorization/google",
-        "googleOauth2Enabled": true,
-        "facebookOauth2Url": "http://localhost:8080/oauth2/authorization/facebook",
-        "facebookOauth2Enabled": true,
-        "jwtExpirationMin": 10080
-    }
+  "type": "static",
+  "config": {
+    "clientType": "rest",
+    "apiBaseUrl": "http://localhost:3000",
+    "uiBaseUrl": "http://localhost:3000",
+    "analyticsAccount": "G-XXXXXXXXXX",
+    "recaptcha2Enabled": false,
+    "recaptcha2SiteKey": "6Lcat08kAAAAAIP-HjhzIa-Yq21PHgGa_ADWc-Ro",
+    "registrationEnabled": true,
+    "googleOauth2Url": "http://localhost:8080/oauth2/authorization/google",
+    "googleOauth2Enabled": true,
+    "facebookOauth2Url": "http://localhost:8080/oauth2/authorization/facebook",
+    "facebookOauth2Enabled": true,
+    "jwtExpirationMin": 10080
+  }
 }

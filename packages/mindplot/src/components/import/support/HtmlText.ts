@@ -17,7 +17,7 @@
  */
 
 // Elements that start a line of their own.
-const BLOCK_TAGS = new Set([
+export const BLOCK_TAGS: ReadonlySet<string> = new Set([
   'ADDRESS',
   'BLOCKQUOTE',
   'DD',

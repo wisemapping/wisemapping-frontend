@@ -105,18 +105,14 @@ describe('Copy link to node toolbar entry', () => {
   });
 
   it('is disabled while nothing is selected', () => {
-    const entry = findCopyEntry(
-      buildConfig([], (id) => `https://host/n/${id}`),
-    );
+    const entry = findCopyEntry(buildConfig([], (id) => `https://host/n/${id}`));
 
     expect(entry.visible).toBe(true);
     expect(entry.disabled!()).toBe(true);
   });
 
   it('is disabled for a multi-node selection -- a link names one node', () => {
-    const entry = findCopyEntry(
-      buildConfig([5, 6], (id) => `https://host/n/${id}`),
-    );
+    const entry = findCopyEntry(buildConfig([5, 6], (id) => `https://host/n/${id}`));
 
     expect(entry.disabled!()).toBe(true);
   });
@@ -139,9 +135,7 @@ describe('Copy link to node toolbar entry', () => {
     writeText.mockRejectedValue(new Error('denied'));
     jest.spyOn(console, 'error').mockImplementation();
 
-    const entry = findCopyEntry(
-      buildConfig([12], (id) => `https://host/n/${id}`),
-    );
+    const entry = findCopyEntry(buildConfig([12], (id) => `https://host/n/${id}`));
     entry.onClick!(undefined as unknown as React.MouseEvent<HTMLElement>);
     await Promise.resolve();
     await Promise.resolve();
@@ -154,9 +148,7 @@ describe('Copy link to node toolbar entry', () => {
     Object.defineProperty(navigator, 'clipboard', { configurable: true, value: undefined });
     jest.spyOn(console, 'error').mockImplementation();
 
-    const entry = findCopyEntry(
-      buildConfig([12], (id) => `https://host/n/${id}`),
-    );
+    const entry = findCopyEntry(buildConfig([12], (id) => `https://host/n/${id}`));
     entry.onClick!(undefined as unknown as React.MouseEvent<HTMLElement>);
 
     expect(notify).toHaveBeenCalledWith('Could not copy the link to the clipboard');

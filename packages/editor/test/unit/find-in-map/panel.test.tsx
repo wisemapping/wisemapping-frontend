@@ -42,6 +42,7 @@ jest.mock('react-intl', () => ({
 }));
 
 import FindInMapPanel from '../../../src/components/action-widget/pane/find-in-map';
+import { BURST_TEXT, typeInBurst } from '../burst-typing';
 
 const topic = (id: number, text: string, children: Topic[] = []): Topic =>
   ({
@@ -128,5 +129,20 @@ describe('FindInMapPanel results', () => {
     expect(pause).toHaveBeenCalledTimes(1);
     unmount();
     expect(resume).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('FindInMapPanel typing', () => {
+  it('takes 200 characters typed in one burst, as Cypress types them', async () => {
+    const { designer, closeModal } = harness();
+    render(<FindInMapPanel designer={designer} closeModal={closeModal} />);
+    const field = screen.getByRole('textbox') as HTMLInputElement;
+
+    const errors = await typeInBurst(field, `node ${BURST_TEXT}`);
+
+    expect(errors).toEqual([]);
+    expect(field.value).toBe(`node ${BURST_TEXT}`);
+    // The search ran on the typed text: nothing matches it.
+    expect(screen.getByTestId('find-in-map-counter').textContent).toBe('No matches');
   });
 });

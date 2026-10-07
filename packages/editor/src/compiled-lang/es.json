@@ -62,7 +62,7 @@
   "appbar.tooltip-history": [
     {
       "type": 0,
-      "value": "Historia de Cambios"
+      "value": "Historial de cambios"
     }
   ],
   "appbar.tooltip-info": [
@@ -314,13 +314,13 @@
   "editor-panel.tooltip-add-relationship": [
     {
       "type": 0,
-      "value": "Agregar Relacion"
+      "value": "Agregar relación"
     }
   ],
   "editor-panel.tooltip-add-topic-image": [
     {
       "type": 0,
-      "value": "Agregar imagen de tema"
+      "value": "Agregar imagen al tópico"
     }
   ],
   "editor-panel.tooltip-canvas-style": [
@@ -350,13 +350,13 @@
   "editor-panel.tooltip-unified-styling": [
     {
       "type": 0,
-      "value": "Estilo de tema y conexiones"
+      "value": "Estilo de tópico y conexiones"
     }
   ],
   "editor.edit-description-mobile": [
     {
       "type": 0,
-      "value": "En dispositivos móbiles las funciones son limitadas. Use la versión de escritorio para tener las funciones completas."
+      "value": "En dispositivos móviles las funciones son limitadas. Usa la versión de escritorio para tener las funciones completas."
     }
   ],
   "editor.try-welcome": [
@@ -368,13 +368,13 @@
   "editor.try-welcome-description": [
     {
       "type": 0,
-      "value": "Registrate para comenzar a crear, compartir y publicar una cantidad ilimitada de mapas mentales de forma gratuita."
+      "value": "Regístrate para comenzar a crear, compartir y publicar una cantidad ilimitada de mapas mentales de forma gratuita."
     }
   ],
   "editor.try-welcome-description-mobile": [
     {
       "type": 0,
-      "value": "Registrate para comenzar a crear, compartir y publicar una cantidad ilimitada de mapas mentales de forma gratuita. En dispositivos móbiles las funciones son limitadas. Use la versión de escritorio para tener las funciones completas."
+      "value": "Regístrate para comenzar a crear, compartir y publicar una cantidad ilimitada de mapas mentales de forma gratuita. En dispositivos móviles las funciones son limitadas. Usa la versión de escritorio para tener las funciones completas."
     }
   ],
   "editor.try-welcome-mobile": [
@@ -654,7 +654,7 @@
   "icon-picker.show-images": [
     {
       "type": 0,
-      "value": "Mostrar imagenes"
+      "value": "Mostrar imágenes"
     }
   ],
   "layout-selector.accept": [
@@ -708,7 +708,7 @@
   "link.help_text": [
     {
       "type": 0,
-      "value": "Dirección invalida"
+      "value": "Dirección inválida"
     }
   ],
   "link.placeholder": [
@@ -982,7 +982,7 @@
   "shortcut-help-pane.change-font-italic": [
     {
       "type": 0,
-      "value": "Cambiar texto a itálica"
+      "value": "Cambiar texto a cursiva"
     }
   ],
   "shortcut-help-pane.collapse-children": [
@@ -994,7 +994,7 @@
   "shortcut-help-pane.copy-and-text": [
     {
       "type": 0,
-      "value": "Copiar y pegar tópicos"
+      "value": "Copiar y pegar tópicos/Copiar la imagen del mapa mental al portapapeles."
     }
   ],
   "shortcut-help-pane.delete-topic": [
@@ -1060,7 +1060,7 @@
   "shortcut-help-pane.edit-multiline": [
     {
       "type": 0,
-      "value": "Agregar texto multi-linea"
+      "value": "Agregar texto multilínea"
     }
   ],
   "shortcut-help-pane.edit-topic": [
@@ -1072,19 +1072,19 @@
   "shortcut-help-pane.edit-topic-key": [
     {
       "type": 0,
-      "value": "Empezar a escribir"
+      "value": "F2 o doble clic"
     }
   ],
   "shortcut-help-pane.expand-by-level": [
     {
       "type": 0,
-      "value": "Expandir temas por nivel"
+      "value": "Expandir tópicos por nivel"
     }
   ],
   "shortcut-help-pane.expand-collapse-all": [
     {
       "type": 0,
-      "value": "Expandir/Colapsar todos los temas"
+      "value": "Expandir/Colapsar todos los tópicos"
     }
   ],
   "shortcut-help-pane.find-in-map": [
@@ -1186,7 +1186,7 @@
   "shortcut-help-pane.select-topics": [
     {
       "type": 0,
-      "value": "Seleccionar multiples tópico"
+      "value": "Seleccionar múltiples tópicos"
     }
   ],
   "shortcut-help-pane.select-topics-keys": [

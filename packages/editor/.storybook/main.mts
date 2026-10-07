@@ -1,22 +1,17 @@
-import type { StorybookConfig } from "@storybook/react-vite";
-import path, { dirname } from "path";
-import { fileURLToPath } from "url";
+import type { StorybookConfig } from '@storybook/react-vite';
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const getAbsolutePath = (value: string) => dirname(fileURLToPath(import.meta.resolve(`${value}/package.json`)));
+const getAbsolutePath = (value: string) =>
+  dirname(fileURLToPath(import.meta.resolve(`${value}/package.json`)));
 
 const config: StorybookConfig = {
-  stories: [
-    "../src/**/*.mdx",
-    "../src/**/*.stories.@(js|jsx|ts|tsx)",
-  ],
-  addons: [
-    getAbsolutePath("@storybook/addon-docs"),
-    getAbsolutePath("@storybook/addon-links"),
-  ],
+  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
+  addons: [getAbsolutePath('@storybook/addon-docs'), getAbsolutePath('@storybook/addon-links')],
   framework: {
-    name: getAbsolutePath("@storybook/react-vite"),
+    name: getAbsolutePath('@storybook/react-vite'),
     options: {
       builder: {
         viteConfigPath: undefined,
@@ -58,10 +53,19 @@ const config: StorybookConfig = {
     const existingAliases = config.resolve.alias ?? [];
     config.resolve.alias = [
       // Resolve workspace packages directly to source to avoid build order issues in storybook
-      { find: /^@wisemapping\/mindplot$/, replacement: path.resolve(__dirname, '../../mindplot/src/index.ts') },
-      { find: /^@wisemapping\/web2d$/, replacement: path.resolve(__dirname, '../../web2d/src/index.ts') },
+      {
+        find: /^@wisemapping\/mindplot$/,
+        replacement: path.resolve(__dirname, '../../mindplot/src/index.ts'),
+      },
+      {
+        find: /^@wisemapping\/web2d$/,
+        replacement: path.resolve(__dirname, '../../web2d/src/index.ts'),
+      },
       // Add explicit alias for MUI icons to fix workspace resolution
-      { find: '@mui/icons-material', replacement: path.resolve(__dirname, '../../../node_modules/@mui/icons-material') },
+      {
+        find: '@mui/icons-material',
+        replacement: path.resolve(__dirname, '../../../node_modules/@mui/icons-material'),
+      },
       ...(Array.isArray(existingAliases)
         ? existingAliases
         : Object.entries(existingAliases).map(([find, replacement]) => ({ find, replacement }))),
@@ -69,7 +73,12 @@ const config: StorybookConfig = {
 
     // Add dedupe for MUI packages to fix workspace resolution
     config.resolve.dedupe = config.resolve.dedupe || [];
-    config.resolve.dedupe.push('@mui/material', '@mui/icons-material', '@emotion/react', '@emotion/styled');
+    config.resolve.dedupe.push(
+      '@mui/material',
+      '@mui/icons-material',
+      '@emotion/react',
+      '@emotion/styled',
+    );
 
     return config;
   },

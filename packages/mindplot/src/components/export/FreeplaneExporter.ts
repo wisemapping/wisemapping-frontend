@@ -23,6 +23,24 @@ import type FeatureModel from '../model/FeatureModel';
 import ContentType from '../ContentType';
 import FreemindExporter from './FreemindExporter';
 import type { FreemindArrowlink, FreemindNode } from './freemind/FreemindModel';
+import { FREEPLANE_ICON_EMOJIS, FREEPLANE_SVG_ICONS } from '../import/FreeplaneImporter';
+
+// The same emoji can be written with or without the emoji variation selector (U+FE0F).
+const withoutVariationSelector = (emoji: string): string => emoji.replace(/️/g, '');
+
+// The builtin of each WiseMapping icon of a table, the first one listed when several share it.
+const inverse = (
+  table: Readonly<Record<string, string>>,
+  key: (icon: string) => string,
+): ReadonlyMap<string, string> => {
+  const result = new Map<string, string>();
+  Object.entries(table).forEach(([builtin, icon]) => {
+    if (!result.has(key(icon))) {
+      result.set(key(icon), builtin);
+    }
+  });
+  return result;
+};
 
 /**
  * Freeplane maps (.mm). Freeplane reads the FreeMind format, so the FreeMind exporter writes the
@@ -37,6 +55,13 @@ class FreeplaneExporter extends FreemindExporter {
     [StrokeStyle.DASHED]: '7 7',
     [StrokeStyle.DOTTED]: '3 3',
   };
+
+  // The inverse of the Freeplane importer tables. Several builtins (the revision icons) share an
+  // emoji: the first one listed is the one exported.
+  private static readonly EMOJI_BUILTINS = inverse(FREEPLANE_ICON_EMOJIS, withoutVariationSelector);
+
+  // task_0 ... task_100 as the Freeplane progress icons, 0% ... 100%.
+  private static readonly SVG_BUILTINS = inverse(FREEPLANE_SVG_ICONS, (id) => id);
 
   // mmx is only the id of the format: Freeplane maps are .mm files, as FreeMind ones.
   override extension(): string {
@@ -98,13 +123,27 @@ class FreeplaneExporter extends FreemindExporter {
   }
 
   /**
-   * Emoji without a builtin icon are written as Freeplane emoji icons (emoji-<code points>), which
-   * Freeplane names without the emoji variation selector.
+   * The icons the Freeplane importer maps from the Freeplane builtins that FreeMind does not have
+   * are written back as those builtins; the FreeMind builtins, which Freeplane also has, come first.
+   * Other emoji are written as Freeplane emoji icons (emoji-<code points>), which Freeplane names
+   * without the emoji variation selector.
    */
   protected override iconBuiltin(feature: FeatureModel): string | null {
+    if (feature.isOfType('icon')) {
+      const progress = FreeplaneExporter.SVG_BUILTINS.get(feature.getIconType());
+      if (progress) {
+        return progress;
+      }
+    }
     const builtin = super.iconBuiltin(feature);
     if (builtin || !feature.isOfType('eicon')) {
       return builtin;
+    }
+    const freeplaneBuiltin = FreeplaneExporter.EMOJI_BUILTINS.get(
+      withoutVariationSelector(feature.getIconType()),
+    );
+    if (freeplaneBuiltin) {
+      return freeplaneBuiltin;
     }
     const codePoints = Array.from(feature.getIconType())
       .map((char) => char.codePointAt(0)!)

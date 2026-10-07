@@ -35,7 +35,6 @@
 import type Topic from '../Topic';
 import PaletteTheme from './PaletteTheme';
 import type { ThemeVariant } from './Theme';
-import pickByOrder from './pickByOrder';
 
 class RobotTheme extends PaletteTheme {
   constructor(variant: ThemeVariant) {
@@ -44,18 +43,7 @@ class RobotTheme extends PaletteTheme {
 
   // Unlike the other palette themes, a fill picked on an ancestor is inherited.
   override getBackgroundColor(topic: Topic): string {
-    const model = topic.getModel();
-    let result = model.getBackgroundColor();
-
-    // If topic has a custom background color, always use it
-    if (result) {
-      return result;
-    }
-
-    // Use theme colors from style system. Palettes are arrays, so use topic order to decide color ..
-    const colors = this.resolve('backgroundColor', topic);
-    result = pickByOrder(colors, topic.getOrder());
-    return result;
+    return this.getInheritedBackgroundColor(topic);
   }
 }
 

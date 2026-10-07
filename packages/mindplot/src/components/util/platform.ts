@@ -37,3 +37,21 @@ export default function isMacPlatform(): boolean {
 
   return platform.toUpperCase().includes('MAC');
 }
+
+/**
+ * True if the platform's shortcut modifier is held: Command on macOS, Control elsewhere. A click
+ * with it adds a topic or a relationship to the selection, or removes it. Control on macOS is not
+ * it: a Control-click there is the right click of a one-button mouse.
+ */
+export function hasShortcutModifier(event: Pick<MouseEvent, 'ctrlKey' | 'metaKey'>): boolean {
+  return isMacPlatform() ? event.metaKey : event.ctrlKey;
+}
+
+/**
+ * True if a press is the right click: the right button, or a Control press of the main button on
+ * macOS, the right click of a one-button mouse. It opens the context menu: it must not pan the
+ * canvas, nor drag a topic.
+ */
+export function isContextMenuPress(event: Pick<MouseEvent, 'button' | 'ctrlKey'>): boolean {
+  return event.button === 2 || (event.button === 0 && event.ctrlKey && isMacPlatform());
+}

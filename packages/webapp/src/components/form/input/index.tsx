@@ -36,7 +36,14 @@ type InputProps = {
   rows?: number;
 };
 
-const Input = ({
+/**
+ * A memoised text field: a form that re-renders on every key re-renders only the field typed
+ * in, as long as it passes a stable `onChange`. In development MUI's FormControl (inside each
+ * TextField) gives its input a new context on every render, and the field then updates the
+ * FormControl again from an effect: with every field of the form re-rendered on each key,
+ * characters typed in one burst (as Cypress types them) add up to React's nested-update limit.
+ */
+const Input = React.memo(function Input({
   name,
   error,
   onChange,
@@ -49,7 +56,7 @@ const Input = ({
   disabled = false,
   minLength,
   maxLength = 254,
-}: InputProps): React.ReactElement => {
+}: InputProps): React.ReactElement {
   const fieldError = error?.fields?.[name];
   return (
     <TextField
@@ -71,5 +78,5 @@ const Input = ({
       }}
     />
   );
-};
+});
 export default Input;

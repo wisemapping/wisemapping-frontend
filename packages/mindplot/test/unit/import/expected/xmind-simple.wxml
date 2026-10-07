@@ -8,12 +8,13 @@
             <note><![CDATA[This is a note for Child 2]]></note>
         </topic>
         <topic position="300,75" order="2" text="Child 3" shape="line" id="6">
-            <note><![CDATA[🔖 priority-1]]></note>
+            <eicon id="🔴"/>
             <topic position="200,0" order="0" text="Subchild" shape="line" id="7"/>
         </topic>
         <topic position="-300,75" order="3" text="Child 4" shape="line" id="8">
-            <note><![CDATA[Another note with more details
-🔖 priority-2, 🔖 star]]></note>
+            <eicon id="🟡"/>
+            <eicon id="⭐"/>
+            <note><![CDATA[Another note with more details]]></note>
         </topic>
     </topic>
 </map>

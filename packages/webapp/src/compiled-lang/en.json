@@ -815,6 +815,20 @@
       "value": "🔍 Searching in titles and descriptions"
     }
   ],
+  "admin.maps.spam-label": [
+    {
+      "type": 0,
+      "value": "Spam ("
+    },
+    {
+      "type": 1,
+      "value": "type"
+    },
+    {
+      "type": 0,
+      "value": ")"
+    }
+  ],
   "admin.maps.spam-tooltip": [
     {
       "type": 0,
@@ -829,6 +843,12 @@
     {
       "type": 0,
       "value": "Marked as spam"
+    }
+  ],
+  "admin.maps.spam-type-unknown": [
+    {
+      "type": 0,
+      "value": "Unknown"
     }
   ],
   "admin.maps.suspend-user": [
@@ -2136,7 +2156,7 @@
   "import.button": [
     {
       "type": 0,
-      "value": "Create"
+      "value": "Import"
     }
   ],
   "import.description": [
@@ -2313,6 +2333,26 @@
     {
       "type": 0,
       "value": "Help to Translate"
+    }
+  ],
+  "language.help-dialog.description": [
+    {
+      "type": 0,
+      "value": "We need your help! If you are interested, send us an email at "
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "language.help-dialog.title": [
+    {
+      "type": 0,
+      "value": "Help us support more languages!"
     }
   ],
   "login.desc": [

@@ -90,6 +90,20 @@ export type BasicMapInfo = {
   description?: string;
 };
 
+/**
+ * The longest map title the backend can store: the `mindmap.title` column is a VARCHAR(255) in
+ * every schema. The create, rename, duplicate and import dialogs, and the admin console's edit map
+ * dialog, all limit the name to it.
+ */
+export const MAP_TITLE_MAX_LENGTH = 255;
+
+/**
+ * The longest map description the backend accepts: its MapInfoValidator rejects more than 512
+ * characters (`mindmap.description` is an unbounded text column, so the validator sets the
+ * limit). Every dialog that edits a description limits it to this.
+ */
+export const MAP_DESCRIPTION_MAX_LENGTH = 512;
+
 export type FieldError = {
   id: string;
   msg: string;

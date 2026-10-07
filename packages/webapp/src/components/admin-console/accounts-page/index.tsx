@@ -42,8 +42,6 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import Switch from '@mui/material/Switch';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Pagination from '@mui/material/Pagination';
 import Collapse from '@mui/material/Collapse';
 import Card from '@mui/material/Card';
@@ -75,33 +73,76 @@ import AppConfig from '../../../classes/app-config';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import UserMapsDialog from '../shared/UserMapsDialog';
 import AccountStatusChip, { getSuspensionReasonLabel } from '../shared/AccountStatusChip';
+import UserFormDialog from './UserFormDialog';
+import ChangePasswordDialog from './ChangePasswordDialog';
+import FacebookLookup from './FacebookLookup';
+import { User, UserFormData } from './types';
 
-interface User {
-  id: number;
-  email: string;
-  firstname: string;
-  lastname: string;
-  fullName: string;
-  locale: string;
-  creationDate: string;
-  isActive: boolean;
-  isSuspended: boolean;
-  suspensionReason?: string;
-  suspendedDate?: string;
-  allowSendEmail: boolean;
-  authenticationType: AuthenticationType;
-}
-
-interface UserFormData {
-  firstname: string;
-  lastname: string;
-  email: string;
-  locale: string;
-  allowSendEmail: boolean;
-}
+const emptyUserForm: UserFormData = {
+  firstname: '',
+  lastname: '',
+  email: '',
+  locale: 'en',
+  allowSendEmail: false,
+};
 
 type SortField = 'email' | 'firstname' | 'lastname' | 'creationDate' | 'isActive';
 type SortDirection = 'asc' | 'desc';
+
+/**
+ * The search box. It keeps what is typed and reports it, debounced, through `onSearch`: a key
+ * re-renders only this field, not the page and its filter selects (in development a re-rendered
+ * MUI FormControl updates itself from an effect, and characters typed in one burst, as Cypress
+ * types them, add up to React's nested-update limit).
+ *
+ * It stays enabled while its search loads, so the user can keep typing (a disabled field loses
+ * the focus): the load shows as a spinner at its end. Each search term is its own query, so a late
+ * response to an older term never replaces the results of a newer one.
+ */
+const UserSearchField = React.memo(function UserSearchField({
+  onSearch,
+  isFetching,
+}: {
+  onSearch: (term: string) => void;
+  isFetching: boolean;
+}): ReactElement {
+  const intl = useIntl();
+  const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onSearch(searchTerm);
+    }, 500); // 500ms debounce
+
+    return () => clearTimeout(timer);
+  }, [searchTerm, onSearch]);
+
+  return (
+    <TextField
+      placeholder={intl.formatMessage({
+        id: 'admin.accounts.search',
+        defaultMessage: 'Search users...',
+      })}
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+      sx={{ minWidth: 250 }}
+      slotProps={{
+        input: {
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          ),
+          endAdornment: isFetching ? (
+            <InputAdornment position="end">
+              <CircularProgress size={20} />
+            </InputAdornment>
+          ) : null,
+        },
+      }}
+    />
+  );
+});
 
 const AccountManagement = (): ReactElement => {
   const intl = useIntl();
@@ -109,7 +150,6 @@ const AccountManagement = (): ReactElement => {
   const queryClient = useQueryClient();
   const facebookEnabled = AppConfig.isFacebookOauth2Enabled();
 
-  const [searchTerm, setSearchTerm] = useState('');
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
   const [sortField, setSortField] = useState<SortField>('email');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
@@ -119,25 +159,11 @@ const AccountManagement = (): ReactElement => {
   const [filterSuspended, setFilterSuspended] = useState<string>('all');
   const [filterAuthType, setFilterAuthType] = useState<string>('all');
 
-  // Debounce search term
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedSearchTerm(searchTerm);
-    }, 500); // 500ms debounce
-
-    return () => clearTimeout(timer);
-  }, [searchTerm]);
   const [editingUser, setEditingUser] = useState<User | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
-  const [formData, setFormData] = useState<UserFormData>({
-    firstname: '',
-    lastname: '',
-    email: '',
-    locale: 'en',
-    allowSendEmail: false,
-  });
-  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  // A new key opens the user and password dialogs with a fresh form.
+  const [dialogKey, setDialogKey] = useState(0);
 
   // Suspension dialog state
   const [isSuspensionDialogOpen, setIsSuspensionDialogOpen] = useState(false);
@@ -163,16 +189,11 @@ const AccountManagement = (): ReactElement => {
   // Change password dialog state
   const [isPasswordDialogOpen, setIsPasswordDialogOpen] = useState(false);
   const [changingPasswordUser, setChangingPasswordUser] = useState<User | null>(null);
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [passwordError, setPasswordError] = useState('');
 
   // Facebook data deletion state
   const [isFacebookFilterExpanded, setIsFacebookFilterExpanded] = useState(false);
-  const [facebookIdInput, setFacebookIdInput] = useState('');
-  const [facebookLookupResult, setFacebookLookupResult] = useState<User | null>(null);
-  const [facebookLookupError, setFacebookLookupError] = useState('');
-  const [isFacebookLookupLoading, setIsFacebookLookupLoading] = useState(false);
+  // A new key clears the lookup.
+  const [facebookLookupKey, setFacebookLookupKey] = useState(0);
   const [isRemoveFacebookDialogOpen, setIsRemoveFacebookDialogOpen] = useState(false);
   const [removingFacebookUser, setRemovingFacebookUser] = useState<User | null>(null);
 
@@ -249,7 +270,6 @@ const AccountManagement = (): ReactElement => {
         filterSuspended: filterSuspended === 'all' ? undefined : filterSuspended === 'suspended',
         filterAuthType: filterAuthType !== 'all' ? filterAuthType : undefined,
       };
-      console.log('Users Query triggered with params:', params);
       return client.getAdminUsers(params);
     },
     retry: 1,
@@ -267,16 +287,9 @@ const AccountManagement = (): ReactElement => {
       queryClient.invalidateQueries({ queryKey: ['adminUsers'] });
       setIsEditDialogOpen(false);
       setEditingUser(null);
-      setFormErrors({});
     },
     onError: (error: Error) => {
       console.error('Failed to update user:', error);
-      setFormErrors({
-        general: intl.formatMessage({
-          id: 'admin.error.update-user-failed',
-          defaultMessage: 'Failed to update user. Please try again.',
-        }),
-      });
     },
   });
 
@@ -295,23 +308,9 @@ const AccountManagement = (): ReactElement => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['adminUsers'] });
       setIsCreateDialogOpen(false);
-      setFormData({
-        firstname: '',
-        lastname: '',
-        email: '',
-        locale: 'en',
-        allowSendEmail: false,
-      });
-      setFormErrors({});
     },
     onError: (error: Error) => {
       console.error('Failed to create user:', error);
-      setFormErrors({
-        general: intl.formatMessage({
-          id: 'admin.error.create-user-failed',
-          defaultMessage: 'Failed to create user. Please try again.',
-        }),
-      });
     },
   });
 
@@ -387,34 +386,16 @@ const AccountManagement = (): ReactElement => {
       queryClient.invalidateQueries({ queryKey: ['adminUsers'] });
       setIsRemoveFacebookDialogOpen(false);
       setRemovingFacebookUser(null);
-      // Clear lookup result since the account changed
-      setFacebookLookupResult(null);
-      setFacebookIdInput('');
+      // Clear the lookup since the account changed
+      setFacebookLookupKey((key) => key + 1);
     },
     onError: (error: Error) => {
       console.error('Failed to remove Facebook account:', error);
     },
   });
 
-  const handleFacebookLookup = () => {
-    const id = facebookIdInput.trim();
-    if (!id) return;
-    setIsFacebookLookupLoading(true);
-    setFacebookLookupResult(null);
-    setFacebookLookupError('');
-    client
-      .getUserByFacebookId(id)
-      .then((user) => setFacebookLookupResult(user as unknown as User))
-      .catch(() =>
-        setFacebookLookupError(
-          intl.formatMessage({
-            id: 'admin.facebook.lookup-not-found',
-            defaultMessage: 'No account found for this Facebook user ID.',
-          }),
-        ),
-      )
-      .finally(() => setIsFacebookLookupLoading(false));
-  };
+  const handleFacebookLookup = (facebookId: string) =>
+    client.getUserByFacebookId(facebookId) as unknown as Promise<User>;
 
   const handleRemoveFacebookAccount = (user: User) => {
     setRemovingFacebookUser(user);
@@ -434,159 +415,67 @@ const AccountManagement = (): ReactElement => {
 
   const handleEditUser = (user: User) => {
     setEditingUser(user);
-    setFormData({
-      firstname: user.firstname,
-      lastname: user.lastname,
-      email: user.email,
-      locale: user.locale || 'en',
-      allowSendEmail: user.allowSendEmail,
-    });
-    setFormErrors({});
+    setDialogKey((key) => key + 1);
     setIsEditDialogOpen(true);
   };
 
   const handleCreateUser = () => {
-    setFormData({
-      firstname: '',
-      lastname: '',
-      email: '',
-      locale: 'en',
-      allowSendEmail: false,
-    });
-    setFormErrors({});
+    setDialogKey((key) => key + 1);
     setIsCreateDialogOpen(true);
   };
 
-  const handleFormSubmit = () => {
-    const errors: Record<string, string> = {};
-
-    if (!formData.firstname.trim()) {
-      errors.firstname = intl.formatMessage({
-        id: 'admin.validation.firstname-required',
-        defaultMessage: 'First name is required',
-      });
-    }
-    if (!formData.lastname.trim()) {
-      errors.lastname = intl.formatMessage({
-        id: 'admin.validation.lastname-required',
-        defaultMessage: 'Last name is required',
-      });
-    }
-    if (!formData.email.trim()) {
-      errors.email = intl.formatMessage({
-        id: 'admin.validation.email-required',
-        defaultMessage: 'Email is required',
-      });
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      errors.email = intl.formatMessage({
-        id: 'admin.validation.email-invalid',
-        defaultMessage: 'Invalid email format',
-      });
-    }
-
-    if (Object.keys(errors).length > 0) {
-      setFormErrors(errors);
-      return;
-    }
-
-    if (editingUser) {
-      updateUserMutation.mutate({
-        userId: editingUser.id,
-        userData: formData,
-      });
-    } else {
-      // For creating, we need a password
-      const password = prompt(
+  const handleUpdateUserSubmit = (userData: UserFormData): Promise<string | undefined> => {
+    if (!editingUser) return Promise.resolve(undefined);
+    return updateUserMutation.mutateAsync({ userId: editingUser.id, userData }).then(
+      () => undefined,
+      () =>
         intl.formatMessage({
-          id: 'admin.prompt.new-user-password',
-          defaultMessage: 'Enter password for new user:',
+          id: 'admin.error.update-user-failed',
+          defaultMessage: 'Failed to update user. Please try again.',
         }),
-      );
-      if (password) {
-        createUserMutation.mutate({
-          ...formData,
-          password,
-        });
-      }
-    }
+    );
+  };
+
+  const handleCreateUserSubmit = (userData: UserFormData): Promise<string | undefined> => {
+    // For creating, we need a password
+    const password = prompt(
+      intl.formatMessage({
+        id: 'admin.prompt.new-user-password',
+        defaultMessage: 'Enter password for new user:',
+      }),
+    );
+    if (!password) return Promise.resolve(undefined);
+    return createUserMutation.mutateAsync({ ...userData, password }).then(
+      () => undefined,
+      () =>
+        intl.formatMessage({
+          id: 'admin.error.create-user-failed',
+          defaultMessage: 'Failed to create user. Please try again.',
+        }),
+    );
   };
 
   const handleChangePassword = (user: User) => {
-    // Check if user uses OAuth authentication
-    if (user.authenticationType === AuthenticationType.GOOGLE_OAUTH2) {
-      setPasswordError(
-        intl.formatMessage({
-          id: 'admin.password-error-google',
-          defaultMessage:
-            'This user is authenticated via Google. Password changes are not available for Google accounts. Please ask the user to manage their password through their Google account.',
-        }),
-      );
-      setChangingPasswordUser(user);
-      setIsPasswordDialogOpen(true);
-      return;
-    }
-
-    if (user.authenticationType === AuthenticationType.FACEBOOK_OAUTH2) {
-      setPasswordError(
-        intl.formatMessage({
-          id: 'admin.password-error-facebook',
-          defaultMessage:
-            'This user is authenticated via Facebook. Password changes are not available for Facebook accounts. Please ask the user to manage their password through their Facebook account.',
-        }),
-      );
-      setChangingPasswordUser(user);
-      setIsPasswordDialogOpen(true);
-      return;
-    }
-
     setChangingPasswordUser(user);
-    setNewPassword('');
-    setConfirmPassword('');
-    setPasswordError('');
+    setDialogKey((key) => key + 1);
     setIsPasswordDialogOpen(true);
   };
 
-  const handleConfirmPasswordChange = () => {
-    if (!changingPasswordUser) return;
-
-    // Validation
-    if (!newPassword || newPassword.length < 6) {
-      setPasswordError(
-        intl.formatMessage({
-          id: 'admin.password-error-length',
-          defaultMessage: 'Password must be at least 6 characters',
-        }),
-      );
-      return;
-    }
-
-    if (newPassword !== confirmPassword) {
-      setPasswordError(
-        intl.formatMessage({
-          id: 'admin.password-error-mismatch',
-          defaultMessage: 'Passwords do not match',
-        }),
-      );
-      return;
-    }
-
-    client
-      .changeUserPassword(changingPasswordUser.id, newPassword)
+  const handleConfirmPasswordChange = (password: string): Promise<string | undefined> => {
+    if (!changingPasswordUser) return Promise.resolve(undefined);
+    return client
+      .changeUserPassword(changingPasswordUser.id, password)
       .then(() => {
         setIsPasswordDialogOpen(false);
         setChangingPasswordUser(null);
-        setNewPassword('');
-        setConfirmPassword('');
-        setPasswordError('');
+        return undefined;
       })
       .catch((error) => {
         console.error('Failed to change password:', error);
-        setPasswordError(
-          intl.formatMessage({
-            id: 'admin.password-error-failed',
-            defaultMessage: 'Failed to change password',
-          }),
-        );
+        return intl.formatMessage({
+          id: 'admin.password-error-failed',
+          defaultMessage: 'Failed to change password',
+        });
       });
   };
 
@@ -833,30 +722,7 @@ const AccountManagement = (): ReactElement => {
               flexWrap: 'wrap',
             }}
           >
-            <TextField
-              placeholder={intl.formatMessage({
-                id: 'admin.accounts.search',
-                defaultMessage: 'Search users...',
-              })}
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              disabled={isFetching}
-              sx={{ minWidth: 250 }}
-              slotProps={{
-                input: {
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SearchIcon />
-                    </InputAdornment>
-                  ),
-                  endAdornment: isFetching ? (
-                    <InputAdornment position="end">
-                      <CircularProgress size={20} />
-                    </InputAdornment>
-                  ) : null,
-                },
-              }}
-            />
+            <UserSearchField onSearch={setDebouncedSearchTerm} isFetching={isFetching} />
 
             <FormControl sx={{ minWidth: 150 }}>
               <InputLabel id="admin-filter-auth-type-label">Auth Type</InputLabel>
@@ -922,85 +788,11 @@ const AccountManagement = (): ReactElement => {
 
           {facebookEnabled && (
             <Collapse in={isFacebookFilterExpanded}>
-              <Box
-                sx={{
-                  display: 'flex',
-                  gap: 2,
-                  alignItems: 'flex-start',
-                  flexWrap: 'wrap',
-                  pt: 1,
-                  pb: 1,
-                  borderTop: '1px dashed',
-                  borderColor: 'divider',
-                }}
-              >
-                <TextField
-                  label="facebookId"
-                  placeholder="652098797767905"
-                  value={facebookIdInput}
-                  onChange={(e) => {
-                    setFacebookIdInput(e.target.value);
-                    setFacebookLookupResult(null);
-                    setFacebookLookupError('');
-                  }}
-                  onKeyDown={(e) => e.key === 'Enter' && handleFacebookLookup()}
-                  size="small"
-                  sx={{ minWidth: 240, fontFamily: 'monospace' }}
-                  slotProps={{
-                    input: {
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <FacebookIcon fontSize="small" sx={{ color: '#1877F2' }} />
-                        </InputAdornment>
-                      ),
-                      endAdornment: isFacebookLookupLoading ? (
-                        <InputAdornment position="end">
-                          <CircularProgress size={16} />
-                        </InputAdornment>
-                      ) : null,
-                    },
-                  }}
-                />
-                <Button
-                  size="small"
-                  variant="outlined"
-                  onClick={handleFacebookLookup}
-                  disabled={!facebookIdInput.trim() || isFacebookLookupLoading}
-                  sx={{ alignSelf: 'center', borderColor: '#1877F2', color: '#1877F2' }}
-                >
-                  {intl.formatMessage({
-                    id: 'admin.facebook.lookup-button',
-                    defaultMessage: 'Find Account',
-                  })}
-                </Button>
-                {facebookLookupError && (
-                  <Alert severity="warning" sx={{ py: 0, alignSelf: 'center' }}>
-                    {facebookLookupError}
-                  </Alert>
-                )}
-                {facebookLookupResult && (
-                  <Alert
-                    severity="success"
-                    sx={{ py: 0, alignSelf: 'center' }}
-                    action={
-                      <Button
-                        size="small"
-                        color="error"
-                        startIcon={<LinkOffIcon />}
-                        onClick={() => handleRemoveFacebookAccount(facebookLookupResult)}
-                      >
-                        {intl.formatMessage({
-                          id: 'admin.facebook.remove',
-                          defaultMessage: 'Remove',
-                        })}
-                      </Button>
-                    }
-                  >
-                    <strong>{facebookLookupResult.fullName}</strong> &lt;
-                    {facebookLookupResult.email}&gt;
-                  </Alert>
-                )}
-              </Box>
+              <FacebookLookup
+                key={facebookLookupKey}
+                onLookup={handleFacebookLookup}
+                onRemove={handleRemoveFacebookAccount}
+              />
             </Collapse>
           )}
         </CardContent>
@@ -1210,200 +1002,51 @@ const AccountManagement = (): ReactElement => {
         </Box>
       )}
       {/* Edit User Dialog */}
-      <Dialog
+      <UserFormDialog
+        key={`edit-${dialogKey}`}
         open={isEditDialogOpen}
+        title={intl.formatMessage({
+          id: 'admin.accounts.edit-user',
+          defaultMessage: 'Edit User',
+        })}
+        initialData={
+          editingUser
+            ? {
+                firstname: editingUser.firstname,
+                lastname: editingUser.lastname,
+                email: editingUser.email,
+                locale: editingUser.locale || 'en',
+                allowSendEmail: editingUser.allowSendEmail,
+              }
+            : emptyUserForm
+        }
+        submitLabel={intl.formatMessage({
+          id: 'admin.button.update-user',
+          defaultMessage: 'Update User',
+        })}
+        pendingLabel={intl.formatMessage({
+          id: 'admin.button.updating',
+          defaultMessage: 'Updating...',
+        })}
+        isPending={updateUserMutation.isPending}
         onClose={() => setIsEditDialogOpen(false)}
-        maxWidth="sm"
-        fullWidth
-      >
-        <DialogTitle>
-          {intl.formatMessage({
-            id: 'admin.accounts.edit-user',
-            defaultMessage: 'Edit User',
-          })}
-        </DialogTitle>
-        <DialogContent>
-          {formErrors.general && (
-            <Alert severity="error" sx={{ mb: 2 }}>
-              {formErrors.general}
-            </Alert>
-          )}
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 2,
-              mt: 1,
-            }}
-          >
-            <TextField
-              label={intl.formatMessage({ id: 'common.first-name', defaultMessage: 'First Name' })}
-              value={formData.firstname}
-              onChange={(e) => setFormData({ ...formData, firstname: e.target.value })}
-              error={!!formErrors.firstname}
-              helperText={formErrors.firstname}
-              fullWidth
-              required
-            />
-            <TextField
-              label={intl.formatMessage({ id: 'common.last-name', defaultMessage: 'Last Name' })}
-              value={formData.lastname}
-              onChange={(e) => setFormData({ ...formData, lastname: e.target.value })}
-              error={!!formErrors.lastname}
-              helperText={formErrors.lastname}
-              fullWidth
-              required
-            />
-            <TextField
-              label={intl.formatMessage({ id: 'common.email', defaultMessage: 'Email' })}
-              type="email"
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              error={!!formErrors.email}
-              helperText={formErrors.email}
-              fullWidth
-              required
-            />
-            <FormControl fullWidth>
-              <InputLabel>Locale</InputLabel>
-              <Select
-                value={formData.locale}
-                label={intl.formatMessage({ id: 'common.locale', defaultMessage: 'Locale' })}
-                onChange={(e) => setFormData({ ...formData, locale: e.target.value })}
-              >
-                <MenuItem value="en">English</MenuItem>
-                <MenuItem value="es">Spanish</MenuItem>
-                <MenuItem value="fr">French</MenuItem>
-                <MenuItem value="de">German</MenuItem>
-                <MenuItem value="it">Italian</MenuItem>
-                <MenuItem value="pt">Portuguese</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={formData.allowSendEmail}
-                  onChange={(e) => setFormData({ ...formData, allowSendEmail: e.target.checked })}
-                />
-              }
-              label={intl.formatMessage({
-                id: 'common.allow-email-notifications',
-                defaultMessage: 'Allow Email Notifications',
-              })}
-            />
-          </Box>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setIsEditDialogOpen(false)}>Cancel</Button>
-          <Button
-            onClick={handleFormSubmit}
-            variant="contained"
-            disabled={updateUserMutation.isPending}
-          >
-            {updateUserMutation.isPending
-              ? intl.formatMessage({ id: 'admin.button.updating', defaultMessage: 'Updating...' })
-              : intl.formatMessage({
-                  id: 'admin.button.update-user',
-                  defaultMessage: 'Update User',
-                })}
-          </Button>
-        </DialogActions>
-      </Dialog>
+        onSubmit={handleUpdateUserSubmit}
+      />
       {/* Create User Dialog */}
-      <Dialog
+      <UserFormDialog
+        key={`create-${dialogKey}`}
         open={isCreateDialogOpen}
+        title={intl.formatMessage({
+          id: 'admin.accounts.create-user',
+          defaultMessage: 'Create User',
+        })}
+        initialData={emptyUserForm}
+        submitLabel="Create User"
+        pendingLabel="Creating..."
+        isPending={createUserMutation.isPending}
         onClose={() => setIsCreateDialogOpen(false)}
-        maxWidth="sm"
-        fullWidth
-      >
-        <DialogTitle>
-          {intl.formatMessage({
-            id: 'admin.accounts.create-user',
-            defaultMessage: 'Create User',
-          })}
-        </DialogTitle>
-        <DialogContent>
-          {formErrors.general && (
-            <Alert severity="error" sx={{ mb: 2 }}>
-              {formErrors.general}
-            </Alert>
-          )}
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 2,
-              mt: 1,
-            }}
-          >
-            <TextField
-              label={intl.formatMessage({ id: 'common.first-name', defaultMessage: 'First Name' })}
-              value={formData.firstname}
-              onChange={(e) => setFormData({ ...formData, firstname: e.target.value })}
-              error={!!formErrors.firstname}
-              helperText={formErrors.firstname}
-              fullWidth
-              required
-            />
-            <TextField
-              label={intl.formatMessage({ id: 'common.last-name', defaultMessage: 'Last Name' })}
-              value={formData.lastname}
-              onChange={(e) => setFormData({ ...formData, lastname: e.target.value })}
-              error={!!formErrors.lastname}
-              helperText={formErrors.lastname}
-              fullWidth
-              required
-            />
-            <TextField
-              label={intl.formatMessage({ id: 'common.email', defaultMessage: 'Email' })}
-              type="email"
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              error={!!formErrors.email}
-              helperText={formErrors.email}
-              fullWidth
-              required
-            />
-            <FormControl fullWidth>
-              <InputLabel>Locale</InputLabel>
-              <Select
-                value={formData.locale}
-                label={intl.formatMessage({ id: 'common.locale', defaultMessage: 'Locale' })}
-                onChange={(e) => setFormData({ ...formData, locale: e.target.value })}
-              >
-                <MenuItem value="en">English</MenuItem>
-                <MenuItem value="es">Spanish</MenuItem>
-                <MenuItem value="fr">French</MenuItem>
-                <MenuItem value="de">German</MenuItem>
-                <MenuItem value="it">Italian</MenuItem>
-                <MenuItem value="pt">Portuguese</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={formData.allowSendEmail}
-                  onChange={(e) => setFormData({ ...formData, allowSendEmail: e.target.checked })}
-                />
-              }
-              label={intl.formatMessage({
-                id: 'common.allow-email-notifications',
-                defaultMessage: 'Allow Email Notifications',
-              })}
-            />
-          </Box>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setIsCreateDialogOpen(false)}>Cancel</Button>
-          <Button
-            onClick={handleFormSubmit}
-            variant="contained"
-            disabled={createUserMutation.isPending}
-          >
-            {createUserMutation.isPending ? 'Creating...' : 'Create User'}
-          </Button>
-        </DialogActions>
-      </Dialog>
+        onSubmit={handleCreateUserSubmit}
+      />
       {/* Suspension Dialog */}
       <Dialog
         open={isSuspensionDialogOpen}
@@ -1571,86 +1214,13 @@ const AccountManagement = (): ReactElement => {
         formatDate={formatDate}
       />
       {/* Change Password Dialog */}
-      <Dialog
+      <ChangePasswordDialog
+        key={`password-${dialogKey}`}
         open={isPasswordDialogOpen}
+        user={changingPasswordUser}
         onClose={() => setIsPasswordDialogOpen(false)}
-        maxWidth="sm"
-        fullWidth
-      >
-        <DialogTitle>
-          {intl.formatMessage({
-            id: 'admin.change-password-title',
-            defaultMessage: 'Change Password',
-          })}
-        </DialogTitle>
-        <DialogContent>
-          <Typography variant="body2" sx={{ mb: 2 }}>
-            {intl.formatMessage(
-              {
-                id: 'admin.change-password-description',
-                defaultMessage: 'Change password for user: {email}',
-              },
-              { email: changingPasswordUser?.email },
-            )}
-          </Typography>
-
-          {passwordError && (
-            <Alert severity="warning" sx={{ mb: 2 }}>
-              {passwordError}
-            </Alert>
-          )}
-
-          {changingPasswordUser?.authenticationType === AuthenticationType.DATABASE && (
-            <>
-              <TextField
-                fullWidth
-                type="password"
-                label={intl.formatMessage({
-                  id: 'admin.new-password',
-                  defaultMessage: 'New Password',
-                })}
-                value={newPassword}
-                onChange={(e) => {
-                  setNewPassword(e.target.value);
-                  setPasswordError('');
-                }}
-                margin="normal"
-                autoFocus
-              />
-
-              <TextField
-                fullWidth
-                type="password"
-                label={intl.formatMessage({
-                  id: 'admin.confirm-password',
-                  defaultMessage: 'Confirm Password',
-                })}
-                value={confirmPassword}
-                onChange={(e) => {
-                  setConfirmPassword(e.target.value);
-                  setPasswordError('');
-                }}
-                margin="normal"
-              />
-            </>
-          )}
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setIsPasswordDialogOpen(false)}>
-            {changingPasswordUser?.authenticationType === AuthenticationType.DATABASE
-              ? intl.formatMessage({ id: 'admin.cancel', defaultMessage: 'Cancel' })
-              : intl.formatMessage({ id: 'admin.close', defaultMessage: 'Close' })}
-          </Button>
-          {changingPasswordUser?.authenticationType === AuthenticationType.DATABASE && (
-            <Button onClick={handleConfirmPasswordChange} variant="contained" color="primary">
-              {intl.formatMessage({
-                id: 'admin.change-password-button',
-                defaultMessage: 'Change Password',
-              })}
-            </Button>
-          )}
-        </DialogActions>
-      </Dialog>
+        onSubmit={handleConfirmPasswordChange}
+      />
       {/* Remove Facebook Account Confirmation Dialog */}
       <Dialog
         open={isRemoveFacebookDialogOpen}

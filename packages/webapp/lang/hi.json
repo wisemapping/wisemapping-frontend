@@ -1,9 +1,9 @@
 {
   "common.terms-notice": {
-    "defaultMessage": "By continuing, you agree to our <termsLink>Terms of Service</termsLink> and <privacyLink>Privacy Policy</privacyLink>."
+    "defaultMessage": "जारी रखकर, आप हमारी <termsLink>सेवा की शर्तों</termsLink> और <privacyLink>गोपनीयता नीति</privacyLink> से सहमत होते हैं।"
   },
   "accountinfo.button": {
-    "defaultMessage": "स्वीकार करें"
+    "defaultMessage": "परिवर्तन सहेजें"
   },
   "accountinfo.deleteaccount": {
     "defaultMessage": "खाता हटाएं"
@@ -94,6 +94,15 @@
   },
   "changepwd.password-match": {
     "defaultMessage": "पासवर्ड मेल नहीं खाते। कृपया फिर से कोशिश करें।"
+  },
+  "changepwd.password-max-length": {
+    "defaultMessage": "पासवर्ड 39 वर्णों से अधिक लंबा नहीं हो सकता।"
+  },
+  "changepwd.password-min-length": {
+    "defaultMessage": "पासवर्ड कम से कम 8 वर्णों का होना चाहिए।"
+  },
+  "changepwd.password-required": {
+    "defaultMessage": "पासवर्ड खाली नहीं हो सकता।"
   },
   "changepwd.title": {
     "defaultMessage": "पासवर्ड बदलें"
@@ -207,10 +216,10 @@
     "defaultMessage": "पुनर्प्राप्ति लिंक भेजें"
   },
   "forgot.success.desc": {
-    "defaultMessage": "हमने आपको एक ईमेल भेजा है जो आपको अपना पासवर्ड रीसेट करने की अनुमति देगा। आपको इसे अगले कुछ मिनटों में प्राप्त होना चाहिए।"
+    "defaultMessage": "हमने आपके ईमेल पर पासवर्ड रीसेट लिंक भेजा है। यह लिंक 1 घंटे में समाप्त हो जाएगा। लिंक का उपयोग करने तक आपका वर्तमान पासवर्ड नहीं बदलेगा।"
   },
   "forgot.success.title": {
-    "defaultMessage": "आपका अस्थायी पासवर्ड भेज दिया गया है।"
+    "defaultMessage": "अपना ईमेल देखें।"
   },
   "forgot.title": {
     "defaultMessage": "अपना पासवर्ड रीसेट करें"
@@ -231,7 +240,7 @@
     "defaultMessage": "कोई परिवर्तन उपलब्ध नहीं है"
   },
   "import.button": {
-    "defaultMessage": "बनाएं"
+    "defaultMessage": "आयात"
   },
   "import.description": {
     "defaultMessage": "आप WiseMapping, FreeMind, Freeplane, XMind, MindManager और OPML मानचित्रों को अपनी मानचित्र सूची में आयात कर सकते हैं। उस फ़ाइल का चयन करें जिसे आप आयात करना चाहते हैं।"
@@ -317,6 +326,12 @@
   "language.help": {
     "defaultMessage": "अनुवाद में सहायता करें"
   },
+  "language.help-dialog.title": {
+    "defaultMessage": "अधिक भाषाओं का समर्थन करने में हमारी मदद करें!"
+  },
+  "language.help-dialog.description": {
+    "defaultMessage": "हमें आपकी मदद चाहिए! यदि आप रुचि रखते हैं, तो हमें {email} पर ईमेल भेजें।"
+  },
   "login.desc": {
     "defaultMessage": "अपने खाते में लॉग इन करें"
   },
@@ -351,7 +366,7 @@
     "defaultMessage": "स्वागत है"
   },
   "login.shared-map-notice": {
-    "defaultMessage": "एक माइंड मैप आपके साथ साझा किया गया है। कृपया इसे एक्सेस करने के लिए लॉग इन करें। खाता नहीं है? मुफ़्त में साइन अप करें या अपना Google/Facebook खाता उपयोग करें।"
+    "defaultMessage": "एक माइंडमैप आपके साथ साझा किया गया है। कृपया इसे एक्सेस करने के लिए लॉग इन करें। खाता नहीं है? मुफ़्त में साइन अप करें या अपना Google/Facebook खाता उपयोग करें।"
   },
   "map.creator": {
     "defaultMessage": "निर्माता"
@@ -384,7 +399,7 @@
     "defaultMessage": "ChatGPT-संचालित माइंडमैप को-पायलट"
   },
   "maps.copilot-dialog.description": {
-    "defaultMessage": "Mind Map Copilot एक ChatGPT संचालित ब्रेनस्टॉर्मिंग सहायक है जो आपके संकेतों को संरचित माइंडमैप में बदल देता है। हम इसे नए टैब में खोलेंगे ताकि आप विचारों का विस्तार कर सकें, विषय तैयार कर सकें और सर्वश्रेष्ठ को वापस WiseMapping में ला सकें।"
+    "defaultMessage": "एआई को-पायलट एक ChatGPT संचालित ब्रेनस्टॉर्मिंग सहायक है जो आपके संकेतों को संरचित माइंडमैप में बदल देता है। हम इसे नए टैब में खोलेंगे ताकि आप विचारों का विस्तार कर सकें, विषय तैयार कर सकें और सर्वश्रेष्ठ को वापस WiseMapping में ला सकें।"
   },
   "maps.copilot-dialog.continue": {
     "defaultMessage": "को-पायलट खोलें"
@@ -411,7 +426,7 @@
     "defaultMessage": "सभी"
   },
   "maps.nav-onwned": {
-    "defaultMessage": "स्वामित्व"
+    "defaultMessage": "मेरे मानचित्र"
   },
   "maps.nav-public": {
     "defaultMessage": "सार्वजनिक"
@@ -453,22 +468,22 @@
     "defaultMessage": "सार्वजनिक साझाकरण सक्षम करें"
   },
   "publish.copied": {
-    "defaultMessage": "Copied to clipboard!"
+    "defaultMessage": "क्लिपबोर्ड पर कॉपी किया गया!"
   },
   "publish.description": {
-    "defaultMessage": "मानचित्र प्रकाशित करके आप इसे इंटरनेट पर सभी के लिए दृश्यमान बनाते हैं।"
+    "defaultMessage": "अपना मानचित्र सार्वजनिक करें। लिंक वाला कोई भी व्यक्ति इसे देख सकता है।"
   },
   "publish.embedded": {
     "defaultMessage": "एम्बेडेड"
   },
   "publish.embedded-msg": {
-    "defaultMessage": "अपने ब्लॉग या पेज में एम्बेड करने के लिए इस कोड स्निपेट को कॉपी करें:"
+    "defaultMessage": "क्लिपबोर्ड पर कॉपी करने के लिए नीचे दिए गए कोड पर क्लिक करें:"
   },
   "publish.public-url": {
     "defaultMessage": "सार्वजनिक URL"
   },
   "publish.public-url-msg": {
-    "defaultMessage": "अपने सहयोगियों के साथ अपना मानचित्र साझा करने के लिए नीचे दिए गए लिंक को कॉपी और पेस्ट करें:"
+    "defaultMessage": "क्लिपबोर्ड पर कॉपी करने के लिए नीचे दिए गए लिंक पर क्लिक करें:"
   },
   "publish.title": {
     "defaultMessage": "प्रकाशित करें"
@@ -549,7 +564,7 @@
     "defaultMessage": "साझा करें"
   },
   "share.adding-button": {
-    "defaultMessage": "Sharing..."
+    "defaultMessage": "साझा किया जा रहा है..."
   },
   "share.add-message": {
     "defaultMessage": "संदेश जोड़ें"
@@ -584,11 +599,29 @@
   "common.maps-list": {
     "defaultMessage": "मानचित्र सूची"
   },
+  "common.na": {
+    "defaultMessage": "लागू नहीं"
+  },
   "admin.status-clean": {
     "defaultMessage": "साफ"
   },
+  "admin.status-not-activated": {
+    "defaultMessage": "सक्रिय नहीं"
+  },
+  "admin.status-not-activated-tooltip": {
+    "defaultMessage": "उपयोगकर्ता ने अभी तक अपने ईमेल पते की पुष्टि नहीं की है"
+  },
+  "admin.status-not-activated-tooltip-interactive": {
+    "defaultMessage": "उपयोगकर्ता ने अभी तक अपने ईमेल पते की पुष्टि नहीं की है | स्थिति बदलने के लिए क्लिक करें"
+  },
   "common.allow-email-notifications": {
     "defaultMessage": "ईमेल सूचनाएं की अनुमति दें"
+  },
+  "common.cancel": {
+    "defaultMessage": "रद्द करें"
+  },
+  "common.close": {
+    "defaultMessage": "बंद करें"
   },
   "admin.public": {
     "defaultMessage": "सार्वजनिक"
@@ -611,6 +644,27 @@
   "admin.auth-type": {
     "defaultMessage": "प्रमाणीकरण प्रकार"
   },
+  "admin.auth.database": {
+    "defaultMessage": "डेटाबेस"
+  },
+  "admin.auth.facebook": {
+    "defaultMessage": "Facebook"
+  },
+  "admin.auth.google": {
+    "defaultMessage": "Google"
+  },
+  "admin.auth.ldap": {
+    "defaultMessage": "LDAP"
+  },
+  "admin.button.update-user": {
+    "defaultMessage": "उपयोगकर्ता अपडेट करें"
+  },
+  "admin.button.updating": {
+    "defaultMessage": "अपडेट हो रहा है..."
+  },
+  "admin.cancel": {
+    "defaultMessage": "रद्द करें"
+  },
   "common.delete": {
     "defaultMessage": "हटाएं"
   },
@@ -622,6 +676,51 @@
   },
   "admin.edit-user": {
     "defaultMessage": "उपयोगकर्ता संपादित करें"
+  },
+  "admin.error.access-denied": {
+    "defaultMessage": "पहुंच अस्वीकृत। व्यवस्थापक अनुमतियां आवश्यक हैं।"
+  },
+  "admin.error.create-user-failed": {
+    "defaultMessage": "उपयोगकर्ता बनाने में विफल। कृपया फिर से प्रयास करें।"
+  },
+  "admin.error.load-users": {
+    "defaultMessage": "उपयोगकर्ता लोड करने में विफल: {message}"
+  },
+  "admin.error.unknown": {
+    "defaultMessage": "अज्ञात त्रुटि"
+  },
+  "admin.error.update-map-failed": {
+    "defaultMessage": "मानचित्र अपडेट करने में विफल। कृपया फिर से प्रयास करें।"
+  },
+  "admin.error.update-user-failed": {
+    "defaultMessage": "उपयोगकर्ता अपडेट करने में विफल। कृपया फिर से प्रयास करें।"
+  },
+  "admin.facebook.filter-tooltip": {
+    "defaultMessage": "Facebook डेटा हटाने के लिए खोज"
+  },
+  "admin.facebook.lookup-button": {
+    "defaultMessage": "खाता खोजें"
+  },
+  "admin.facebook.lookup-not-found": {
+    "defaultMessage": "इस Facebook उपयोगकर्ता ID के लिए कोई खाता नहीं मिला।"
+  },
+  "admin.facebook.remove": {
+    "defaultMessage": "हटाएं"
+  },
+  "admin.facebook.remove-button": {
+    "defaultMessage": "Facebook खाता हटाएं"
+  },
+  "admin.facebook.remove-confirm": {
+    "defaultMessage": "\"{email}\" के लिए Facebook संबद्धता हटाएं?"
+  },
+  "admin.facebook.remove-dialog-title": {
+    "defaultMessage": "Facebook खाता हटाएं"
+  },
+  "admin.facebook.remove-warning": {
+    "defaultMessage": "इससे इस खाते से Facebook प्रमाणीकरण डिस्कनेक्ट हो जाएगा। उपयोगकर्ता को फिर से पहुंच पाने के लिए पासवर्ड रीसेट ईमेल प्राप्त होगा।"
+  },
+  "admin.facebook.removing": {
+    "defaultMessage": "हटाया जा रहा है..."
   },
   "admin.refresh": {
     "defaultMessage": "ताज़ा करें"
@@ -635,6 +734,9 @@
   "common.emails": {
     "defaultMessage": "ईमेल"
   },
+  "common.enabled": {
+    "defaultMessage": "सक्षम"
+  },
   "admin.suspension-reason": {
     "defaultMessage": "निलंबन कारण"
   },
@@ -643,6 +745,27 @@
   },
   "admin.suspension.terms-violation": {
     "defaultMessage": "नियमों का उल्लंघन"
+  },
+  "admin.system.app.name": {
+    "defaultMessage": "नाम"
+  },
+  "admin.system.app.port": {
+    "defaultMessage": "पोर्ट"
+  },
+  "admin.system.application": {
+    "defaultMessage": "एप्लिकेशन"
+  },
+  "admin.system.database": {
+    "defaultMessage": "डेटाबेस"
+  },
+  "admin.system.database.info": {
+    "defaultMessage": "डेटाबेस"
+  },
+  "admin.system.db.ddl": {
+    "defaultMessage": "Hibernate DDL"
+  },
+  "admin.system.db.driver": {
+    "defaultMessage": "ड्राइवर"
   },
   "admin.suspension.security-concern": {
     "defaultMessage": "सुरक्षा चिंता"
@@ -659,6 +782,15 @@
   "admin.status-suspended": {
     "defaultMessage": "निलंबित"
   },
+  "admin.status.click-to-change": {
+    "defaultMessage": "स्थिति बदलने के लिए क्लिक करें"
+  },
+  "admin.status.reason": {
+    "defaultMessage": "कारण: {reason}"
+  },
+  "admin.status.suspended-on": {
+    "defaultMessage": "निलंबन तिथि: {date}"
+  },
   "admin.delete": {
     "defaultMessage": "हटाएं"
   },
@@ -670,6 +802,12 @@
   },
   "admin.status-active": {
     "defaultMessage": "सक्रिय"
+  },
+  "admin.status-active-tooltip": {
+    "defaultMessage": "खाता सक्रिय है और अच्छी स्थिति में है"
+  },
+  "admin.status-active-tooltip-interactive": {
+    "defaultMessage": "खाता सक्रिय है और अच्छी स्थिति में है | स्थिति बदलने के लिए क्लिक करें"
   },
   "common.locale": {
     "defaultMessage": "भाषा"
@@ -683,8 +821,53 @@
   "admin.unsuspend-user": {
     "defaultMessage": "उपयोगकर्ता को पुनः सक्रिय करें"
   },
+  "admin.user-info.auth-type": {
+    "defaultMessage": "प्रमाणीकरण"
+  },
+  "admin.user-info.created": {
+    "defaultMessage": "बनाया गया"
+  },
+  "admin.user-info.status": {
+    "defaultMessage": "स्थिति"
+  },
+  "admin.user-info.suspension-reason": {
+    "defaultMessage": "निलंबन कारण:"
+  },
+  "admin.user-info.title": {
+    "defaultMessage": "उपयोगकर्ता जानकारी"
+  },
+  "admin.user-info.total-maps": {
+    "defaultMessage": "कुल मानचित्र"
+  },
+  "admin.user-maps-dialog.loading": {
+    "defaultMessage": "उपयोगकर्ता लोड हो रहा है..."
+  },
+  "admin.user-maps-dialog.no-maps": {
+    "defaultMessage": "इस उपयोगकर्ता के पास कोई मानचित्र नहीं है।"
+  },
+  "admin.user-maps-dialog.title": {
+    "defaultMessage": "{name} के स्वामित्व वाले मानचित्र (ID: #{id})"
+  },
+  "admin.validation.email-invalid": {
+    "defaultMessage": "अमान्य ईमेल प्रारूप"
+  },
+  "admin.validation.email-required": {
+    "defaultMessage": "ईमेल आवश्यक है"
+  },
+  "admin.validation.firstname-required": {
+    "defaultMessage": "पहला नाम आवश्यक है"
+  },
+  "admin.validation.lastname-required": {
+    "defaultMessage": "अंतिम नाम आवश्यक है"
+  },
+  "admin.view-user-maps": {
+    "defaultMessage": "उपयोगकर्ता के मानचित्र देखें"
+  },
   "common.delete-tag": {
     "defaultMessage": "टैग हटाएं"
+  },
+  "common.disabled": {
+    "defaultMessage": "अक्षम"
   },
   "admin.edit": {
     "defaultMessage": "संपादित करें"
@@ -695,6 +878,150 @@
   "admin.locked": {
     "defaultMessage": "लॉक"
   },
+  "admin.maps.clean-tooltip": {
+    "defaultMessage": "स्पैम के रूप में चिह्नित नहीं"
+  },
+  "admin.maps.creator-suspended-tooltip": {
+    "defaultMessage": "मानचित्र निर्माता का खाता एक व्यवस्थापक द्वारा निलंबित कर दिया गया है"
+  },
+  "admin.maps.delete": {
+    "defaultMessage": "मानचित्र हटाएं"
+  },
+  "admin.maps.description": {
+    "defaultMessage": "विवरण"
+  },
+  "admin.maps.edit": {
+    "defaultMessage": "मानचित्र संपादित करें"
+  },
+  "admin.maps.edit-title": {
+    "defaultMessage": "मानचित्र संपादित करें"
+  },
+  "admin.maps.filter.date": {
+    "defaultMessage": "दिनांक सीमा"
+  },
+  "admin.maps.filter.spam": {
+    "defaultMessage": "स्पैम"
+  },
+  "admin.maps.locked-tooltip": {
+    "defaultMessage": "वर्तमान में {user} द्वारा संपादित किया जा रहा है"
+  },
+  "admin.maps.mark-as-not-spam": {
+    "defaultMessage": "गैर-स्पैम के रूप में चिह्नित करें"
+  },
+  "admin.maps.mark-as-spam": {
+    "defaultMessage": "स्पैम के रूप में चिह्नित करें"
+  },
+  "admin.maps.no-maps": {
+    "defaultMessage": "कोई मानचित्र नहीं मिला"
+  },
+  "admin.maps.page-title": {
+    "defaultMessage": "मानचित्र प्रबंधन"
+  },
+  "admin.maps.private-tooltip": {
+    "defaultMessage": "केवल सहयोगी ही इस मानचित्र को देख सकते हैं"
+  },
+  "admin.maps.public-tooltip": {
+    "defaultMessage": "कोई भी इस मानचित्र को देख सकता है"
+  },
+  "admin.maps.search": {
+    "defaultMessage": "मानचित्र खोजें... (ID के लिए #123, निर्माता के लिए ईमेल)"
+  },
+  "admin.maps.search-by-email": {
+    "defaultMessage": "🔍 निर्माता के ईमेल से खोजा जा रहा है"
+  },
+  "admin.maps.search-by-id": {
+    "defaultMessage": "🔍 मानचित्र ID से खोजा जा रहा है"
+  },
+  "admin.maps.search-by-text": {
+    "defaultMessage": "🔍 शीर्षकों और विवरणों में खोजा जा रहा है"
+  },
+  "admin.maps.spam-tooltip": {
+    "defaultMessage": "{date} को स्पैम के रूप में पहचाना गया"
+  },
+  "admin.maps.spam-tooltip-no-date": {
+    "defaultMessage": "स्पैम के रूप में चिह्नित"
+  },
+  "admin.maps.spam-label": {
+    "defaultMessage": "स्पैम ({type})"
+  },
+  "admin.maps.spam-type-unknown": {
+    "defaultMessage": "अज्ञात"
+  },
+  "admin.maps.suspend-user": {
+    "defaultMessage": "उपयोगकर्ता खाता निलंबित करें"
+  },
+  "admin.maps.suspend-user.confirm": {
+    "defaultMessage": "क्या आप वाकई उपयोगकर्ता \"{userName}\" (ID: {userId}) का खाता निलंबित करना चाहते हैं? इसे मैनुअल समीक्षा निलंबन के रूप में चिह्नित किया जाएगा।"
+  },
+  "admin.maps.suspend-user.confirm-button": {
+    "defaultMessage": "उपयोगकर्ता निलंबित करें"
+  },
+  "admin.maps.suspend-user.title": {
+    "defaultMessage": "उपयोगकर्ता खाता निलंबित करें"
+  },
+  "admin.maps.suspend-user.warning": {
+    "defaultMessage": "यह कार्रवाई उपयोगकर्ता खाते को निलंबित कर देगी, जिससे वे सिस्टम तक नहीं पहुंच पाएंगे।"
+  },
+  "admin.maps.table.actions": {
+    "defaultMessage": "क्रियाएँ"
+  },
+  "admin.maps.table.created": {
+    "defaultMessage": "बनाया गया"
+  },
+  "admin.maps.table.description": {
+    "defaultMessage": "विवरण"
+  },
+  "admin.maps.table.id": {
+    "defaultMessage": "मानचित्र ID"
+  },
+  "admin.maps.table.modified": {
+    "defaultMessage": "संशोधित"
+  },
+  "admin.maps.table.spam": {
+    "defaultMessage": "स्पैम"
+  },
+  "admin.maps.table.spam-status": {
+    "defaultMessage": "स्पैम स्थिति"
+  },
+  "admin.maps.table.status": {
+    "defaultMessage": "स्थिति"
+  },
+  "admin.maps.table.title": {
+    "defaultMessage": "शीर्षक"
+  },
+  "admin.maps.title": {
+    "defaultMessage": "शीर्षक"
+  },
+  "admin.maps.unlocked-tooltip": {
+    "defaultMessage": "वर्तमान में संपादित नहीं किया जा रहा है"
+  },
+  "admin.maps.view-xml": {
+    "defaultMessage": "XML देखें"
+  },
+  "admin.maps.xml-viewer.copy": {
+    "defaultMessage": "फ़ॉर्मेट किया गया XML कॉपी करें"
+  },
+  "admin.maps.xml-viewer.info": {
+    "defaultMessage": "यह माइंडमैप की मूल XML सामग्री है। आप बैकअप या विश्लेषण के लिए इस सामग्री को कॉपी कर सकते हैं।"
+  },
+  "admin.maps.xml-viewer.loading": {
+    "defaultMessage": "XML सामग्री लोड हो रही है..."
+  },
+  "admin.maps.xml-viewer.no-content": {
+    "defaultMessage": "कोई XML सामग्री उपलब्ध नहीं है"
+  },
+  "admin.maps.xml-viewer.title": {
+    "defaultMessage": "मानचित्र XML सामग्री"
+  },
+  "admin.menu.accounts": {
+    "defaultMessage": "खाते"
+  },
+  "admin.menu.maps": {
+    "defaultMessage": "मानचित्र"
+  },
+  "admin.menu.system": {
+    "defaultMessage": "सिस्टम"
+  },
   "common.settings": {
     "defaultMessage": "सेटिंग्स"
   },
@@ -704,11 +1031,23 @@
   "common.retry": {
     "defaultMessage": "पुनः प्रयास करें"
   },
+  "common.save": {
+    "defaultMessage": "सहेजें"
+  },
   "admin.system.title": {
     "defaultMessage": "सिस्टम जानकारी"
   },
   "admin.system.refresh": {
     "defaultMessage": "ताज़ा करें"
+  },
+  "admin.system.statistics": {
+    "defaultMessage": "आंकड़े"
+  },
+  "admin.system.stats.mindmaps": {
+    "defaultMessage": "कुल माइंडमैप"
+  },
+  "admin.system.stats.users": {
+    "defaultMessage": "कुल उपयोगकर्ता"
   },
   "common.refresh": {
     "defaultMessage": "ताज़ा करें"
@@ -716,11 +1055,89 @@
   "admin.system.memory": {
     "defaultMessage": "मेमोरी"
   },
+  "admin.system.memory.info": {
+    "defaultMessage": "मेमोरी"
+  },
+  "admin.system.memory.max": {
+    "defaultMessage": "अधिकतम मेमोरी"
+  },
+  "admin.system.memory.total": {
+    "defaultMessage": "कुल मेमोरी"
+  },
+  "admin.system.memory.usage": {
+    "defaultMessage": "मेमोरी उपयोग"
+  },
+  "admin.system.memory.used": {
+    "defaultMessage": "प्रयुक्त मेमोरी"
+  },
+  "admin.system.mindmapMetrics.collaborations": {
+    "defaultMessage": "विचार किए गए सहयोग"
+  },
+  "admin.system.mindmapMetrics.disabled": {
+    "defaultMessage": "मेट्रिक्स कैप्चर करने के लिए `app.monitoring.performance.log-mindmap-listing` को true पर सेट करें।"
+  },
+  "admin.system.mindmapMetrics.entityLoads": {
+    "defaultMessage": "एंटिटी लोड"
+  },
+  "admin.system.mindmapMetrics.executedStatements": {
+    "defaultMessage": "तैयार स्टेटमेंट"
+  },
+  "admin.system.mindmapMetrics.lastUpdated": {
+    "defaultMessage": "अंतिम अपडेट"
+  },
+  "admin.system.mindmapMetrics.mapCount": {
+    "defaultMessage": "लौटाए गए मानचित्र"
+  },
+  "admin.system.mindmapMetrics.pending": {
+    "defaultMessage": "मेट्रिक्स कैप्चर करने के लिए अगले माइंडमैप सूची अनुरोध की प्रतीक्षा की जा रही है।"
+  },
+  "admin.system.mindmapMetrics.segments": {
+    "defaultMessage": "निष्पादन खंड"
+  },
+  "admin.system.mindmapMetrics.title": {
+    "defaultMessage": "माइंडमैप सूची प्रदर्शन"
+  },
+  "admin.system.mindmapMetrics.topQueries": {
+    "defaultMessage": "शीर्ष क्वेरी"
+  },
+  "admin.system.mindmapMetrics.totalTime": {
+    "defaultMessage": "कुल समय (ms)"
+  },
   "admin.system.db.url": {
     "defaultMessage": "URL"
   },
+  "admin.system.db.username": {
+    "defaultMessage": "उपयोगकर्ता नाम"
+  },
+  "admin.system.error": {
+    "defaultMessage": "सिस्टम जानकारी लोड करने में विफल"
+  },
+  "admin.system.health": {
+    "defaultMessage": "सिस्टम स्वास्थ्य"
+  },
   "admin.system.jvm": {
     "defaultMessage": "JVM"
+  },
+  "admin.system.jvm.load": {
+    "defaultMessage": "सिस्टम लोड"
+  },
+  "admin.system.jvm.processors": {
+    "defaultMessage": "प्रोसेसर"
+  },
+  "admin.system.jvm.start": {
+    "defaultMessage": "प्रारंभ समय"
+  },
+  "admin.system.jvm.uptime": {
+    "defaultMessage": "अपटाइम"
+  },
+  "admin.system.jvm.vendor": {
+    "defaultMessage": "विक्रेता"
+  },
+  "admin.system.jvm.version": {
+    "defaultMessage": "Java संस्करण"
+  },
+  "admin.system.loading": {
+    "defaultMessage": "सिस्टम जानकारी लोड हो रही है..."
   },
   "error.page-title": {
     "defaultMessage": "अनपेक्षित त्रुटि | WiseMapping"
@@ -756,10 +1173,16 @@
     "defaultMessage": "मानचित्र शीर्षक आवश्यक है और खाली नहीं हो सकता"
   },
   "accountinfo.personal-details": {
-    "defaultMessage": "Personal Details"
+    "defaultMessage": "व्यक्तिगत विवरण"
+  },
+  "accountinfo.personal-info": {
+    "defaultMessage": "व्यक्तिगत जानकारी"
   },
   "account.delete-warning-title": {
     "defaultMessage": "खाता हटाएं"
+  },
+  "accountinfo.account-settings": {
+    "defaultMessage": "खाता सेटिंग्स"
   },
   "account.delete-warning-description": {
     "defaultMessage": "खाता हटाने के बाद इसे वापस नहीं लाया जा सकता। कृपया पूरी तरह सुनिश्चित होकर आगे बढ़ें।"
@@ -801,46 +1224,70 @@
     "defaultMessage": "खाता हटाएं"
   },
   "menu.admin-console": {
-    "defaultMessage": "Admin Console"
+    "defaultMessage": "व्यवस्थापक कंसोल"
   },
   "registration.form-legend": {
-    "defaultMessage": "Account Information"
+    "defaultMessage": "खाता जानकारी"
   },
   "admin.change-password": {
-    "defaultMessage": "Change password"
+    "defaultMessage": "पासवर्ड बदलें"
   },
   "admin.change-password-title": {
-    "defaultMessage": "Change Password"
+    "defaultMessage": "पासवर्ड बदलें"
   },
   "admin.change-password-description": {
-    "defaultMessage": "Change password for user: {email}"
+    "defaultMessage": "उपयोगकर्ता का पासवर्ड बदलें: {email}"
   },
   "admin.new-password": {
-    "defaultMessage": "New Password"
+    "defaultMessage": "नया पासवर्ड"
   },
   "admin.confirm-password": {
-    "defaultMessage": "Confirm Password"
+    "defaultMessage": "पासवर्ड की पुष्टि करें"
+  },
+  "admin.confirm.delete-map": {
+    "defaultMessage": "क्या आप वाकई मानचित्र \"{title}\" को हटाना चाहते हैं?"
+  },
+  "admin.confirm.spam-action": {
+    "defaultMessage": "क्या आप वाकई इस मानचित्र को {action} करना चाहते हैं?"
+  },
+  "admin.console.description": {
+    "defaultMessage": "उपयोगकर्ता, सिस्टम सेटिंग्स और एप्लिकेशन कॉन्फ़िगरेशन प्रबंधित करें।"
+  },
+  "admin.console.page-title": {
+    "defaultMessage": "व्यवस्थापक कंसोल | WiseMapping"
+  },
+  "admin.console.subtitle": {
+    "defaultMessage": "सिस्टम प्रशासन"
+  },
+  "admin.console.title": {
+    "defaultMessage": "व्यवस्थापक कंसोल"
+  },
+  "admin.current-suspension-reason": {
+    "defaultMessage": "वर्तमान निलंबन कारण:"
   },
   "admin.change-password-button": {
-    "defaultMessage": "Change Password"
+    "defaultMessage": "पासवर्ड बदलें"
   },
   "admin.password-error-length": {
-    "defaultMessage": "Password must be at least 6 characters"
+    "defaultMessage": "पासवर्ड कम से कम 6 वर्णों का होना चाहिए"
   },
   "admin.password-error-mismatch": {
-    "defaultMessage": "Passwords do not match"
+    "defaultMessage": "पासवर्ड मेल नहीं खाते"
+  },
+  "admin.prompt.new-user-password": {
+    "defaultMessage": "नए उपयोगकर्ता के लिए पासवर्ड दर्ज करें:"
   },
   "admin.password-error-failed": {
-    "defaultMessage": "Failed to change password"
+    "defaultMessage": "पासवर्ड बदलने में विफल"
   },
   "admin.password-error-google": {
-    "defaultMessage": "This user is authenticated via Google. Password changes are not available for Google accounts. Please ask the user to manage their password through their Google account."
+    "defaultMessage": "यह उपयोगकर्ता Google के माध्यम से प्रमाणित है। Google खातों के लिए पासवर्ड बदलना उपलब्ध नहीं है। कृपया उपयोगकर्ता से अपने Google खाते के माध्यम से पासवर्ड प्रबंधित करने के लिए कहें।"
   },
   "admin.password-error-facebook": {
-    "defaultMessage": "This user is authenticated via Facebook. Password changes are not available for Facebook accounts. Please ask the user to manage their password through their Facebook account."
+    "defaultMessage": "यह उपयोगकर्ता Facebook के माध्यम से प्रमाणित है। Facebook खातों के लिए पासवर्ड बदलना उपलब्ध नहीं है। कृपया उपयोगकर्ता से अपने Facebook खाते के माध्यम से पासवर्ड प्रबंधित करने के लिए कहें।"
   },
   "admin.close": {
-    "defaultMessage": "Close"
+    "defaultMessage": "बंद करें"
   },
   "validation.title-required": {
     "defaultMessage": "शीर्षक आवश्यक है"
@@ -849,106 +1296,154 @@
     "defaultMessage": "पुनर्निर्देशन..."
   },
   "share.table.collaborator": {
-    "defaultMessage": "Collaborator"
+    "defaultMessage": "सहयोगी"
   },
   "share.table.role": {
-    "defaultMessage": "Role"
+    "defaultMessage": "भूमिका"
   },
   "share.table.actions": {
-    "defaultMessage": "Actions"
+    "defaultMessage": "क्रियाएँ"
   },
   "error.go-home": {
-    "defaultMessage": "Go to Home"
+    "defaultMessage": "होम पर जाएं"
   },
   "error.go-back": {
-    "defaultMessage": "Go Back"
+    "defaultMessage": "वापस जाएं"
   },
   "error.go-to-login": {
-    "defaultMessage": "Sign In"
+    "defaultMessage": "साइन इन करें"
+  },
+  "error.invalid-map-id": {
+    "defaultMessage": "अमान्य मानचित्र ID"
   },
   "login.oauth-error": {
-    "defaultMessage": "OAuth authentication failed. Please try again or use a different sign-in method."
+    "defaultMessage": "OAuth प्रमाणीकरण विफल रहा। कृपया फिर से प्रयास करें या साइन इन का कोई अन्य तरीका उपयोग करें।"
   },
   "login.server-error": {
-    "defaultMessage": "An unexpected error occurred. Please try again later."
+    "defaultMessage": "एक अनपेक्षित त्रुटि हुई। कृपया बाद में फिर से प्रयास करें।"
   },
   "login.generic-error": {
-    "defaultMessage": "An error occurred during authentication. Please try again."
+    "defaultMessage": "प्रमाणीकरण के दौरान एक त्रुटि हुई। कृपया फिर से प्रयास करें।"
   },
   "registration.success.title": {
-    "defaultMessage": "Registration Successful!"
+    "defaultMessage": "पंजीकरण सफल!"
   },
   "registration.success.email-sent": {
-    "defaultMessage": "We've sent an activation email to your inbox. Please check your email and click on the activation link to activate your account."
+    "defaultMessage": "हमने आपके इनबॉक्स में एक सक्रियण ईमेल भेजा है। कृपया अपना ईमेल जांचें और अपना खाता सक्रिय करने के लिए सक्रियण लिंक पर क्लिक करें।"
   },
   "registration.success.check-spam": {
-    "defaultMessage": "If you don't see the email, please check your spam folder."
+    "defaultMessage": "यदि आपको ईमेल नहीं दिखता है, तो कृपया अपना स्पैम फ़ोल्डर जांचें।"
   },
   "registration.success.already-activated": {
-    "defaultMessage": "Already activated your account?"
+    "defaultMessage": "क्या आपने पहले ही अपना खाता सक्रिय कर लिया है?"
   },
   "reset-password.title": {
-    "defaultMessage": "Set a new password"
+    "defaultMessage": "नया पासवर्ड सेट करें"
   },
   "reset-password.desc": {
-    "defaultMessage": "Enter your new password below."
+    "defaultMessage": "नीचे अपना नया पासवर्ड दर्ज करें।"
   },
   "reset-password.invalid-link": {
-    "defaultMessage": "Invalid password reset link. Please request a new one."
+    "defaultMessage": "अमान्य पासवर्ड रीसेट लिंक। कृपया नए लिंक का अनुरोध करें।"
   },
   "reset-password.request-new": {
-    "defaultMessage": "Request new link"
+    "defaultMessage": "नए लिंक का अनुरोध करें"
   },
   "reset-password.password": {
-    "defaultMessage": "New password"
+    "defaultMessage": "नया पासवर्ड"
   },
   "reset-password.confirm-password": {
-    "defaultMessage": "Confirm new password"
+    "defaultMessage": "नए पासवर्ड की पुष्टि करें"
   },
   "reset-password.submit": {
-    "defaultMessage": "Set new password"
+    "defaultMessage": "नया पासवर्ड सेट करें"
   },
   "reset-password.too-short": {
-    "defaultMessage": "Password must be at least 8 characters."
+    "defaultMessage": "पासवर्ड कम से कम 8 वर्णों का होना चाहिए।"
   },
   "reset-password.too-long": {
-    "defaultMessage": "Password must be less than 40 characters."
+    "defaultMessage": "पासवर्ड 40 वर्णों से कम होना चाहिए।"
   },
   "reset-password.mismatch": {
-    "defaultMessage": "Passwords do not match."
+    "defaultMessage": "पासवर्ड मेल नहीं खाते।"
   },
   "reset-password.page-title": {
-    "defaultMessage": "Reset Password | WiseMapping"
+    "defaultMessage": "पासवर्ड रीसेट करें | WiseMapping"
   },
   "maps.auth-required-title": {
-    "defaultMessage": "Sign In Required | WiseMapping"
+    "defaultMessage": "साइन इन आवश्यक | WiseMapping"
   },
   "maps.auth-required-heading": {
-    "defaultMessage": "Sign in to access your maps"
+    "defaultMessage": "अपने मानचित्रों तक पहुंचने के लिए साइन इन करें"
   },
   "maps.auth-required-login": {
-    "defaultMessage": "Go to login"
+    "defaultMessage": "लॉगिन पर जाएं"
   },
   "maps.auth-required-default-message": {
-    "defaultMessage": "You need to sign in to view your maps."
+    "defaultMessage": "अपने मानचित्र देखने के लिए आपको साइन इन करना होगा।"
   },
   "activation.error.message": {
-    "defaultMessage": "We couldn't activate your account. The activation link may be invalid or expired. Please contact support for assistance."
+    "defaultMessage": "हम आपका खाता सक्रिय नहीं कर सके। सक्रियण लिंक अमान्य या समाप्त हो सकता है। सहायता के लिए कृपया सहायता टीम से संपर्क करें।"
   },
   "activation.error.title": {
-    "defaultMessage": "Activation Failed"
+    "defaultMessage": "सक्रियण विफल"
   },
   "activation.loading.desc": {
-    "defaultMessage": "Please wait while we activate your account..."
+    "defaultMessage": "कृपया प्रतीक्षा करें, हम आपका खाता सक्रिय कर रहे हैं..."
   },
   "activation.loading.title": {
-    "defaultMessage": "Activating Your Account"
+    "defaultMessage": "आपका खाता सक्रिय किया जा रहा है"
+  },
+  "activation.page-title": {
+    "defaultMessage": "खाता सक्रियण | WiseMapping"
   },
   "activation.success.message": {
-    "defaultMessage": "Your account has been activated. You can now sign in and start creating mind maps."
+    "defaultMessage": "आपका खाता सक्रिय कर दिया गया है। अब आप साइन इन करके माइंडमैप बनाना शुरू कर सकते हैं।"
   },
   "activation.success.title": {
-    "defaultMessage": "Account Activated Successfully"
+    "defaultMessage": "खाता सफलतापूर्वक सक्रिय हुआ"
+  },
+  "admin.accounts.add-user": {
+    "defaultMessage": "नया उपयोगकर्ता जोड़ें"
+  },
+  "admin.accounts.create": {
+    "defaultMessage": "उपयोगकर्ता बनाएं"
+  },
+  "admin.accounts.create-user": {
+    "defaultMessage": "उपयोगकर्ता बनाएं"
+  },
+  "admin.accounts.edit-user": {
+    "defaultMessage": "उपयोगकर्ता संपादित करें"
+  },
+  "admin.accounts.filters": {
+    "defaultMessage": "खोज और फ़िल्टर"
+  },
+  "admin.accounts.no-users": {
+    "defaultMessage": "कोई उपयोगकर्ता नहीं मिला"
+  },
+  "admin.accounts.refresh": {
+    "defaultMessage": "ताज़ा करें"
+  },
+  "admin.accounts.refresh-tooltip": {
+    "defaultMessage": "डेटा ताज़ा करें"
+  },
+  "admin.accounts.search": {
+    "defaultMessage": "उपयोगकर्ता खोजें..."
+  },
+  "admin.accounts.subtitle": {
+    "defaultMessage": "उपयोगकर्ता खाते, अनुमतियां और सेटिंग्स प्रबंधित करें"
+  },
+  "admin.accounts.title": {
+    "defaultMessage": "उपयोगकर्ता प्रबंधन"
+  },
+  "admin.action.mark-as-not-spam": {
+    "defaultMessage": "गैर-स्पैम के रूप में चिह्नित"
+  },
+  "admin.action.mark-as-spam": {
+    "defaultMessage": "स्पैम के रूप में चिह्नित"
+  },
+  "admin.activate-user": {
+    "defaultMessage": "उपयोगकर्ता सक्रिय करें"
   },
   "map.actions": {
     "defaultMessage": "क्रियाएँ"

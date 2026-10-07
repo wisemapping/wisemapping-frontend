@@ -56,7 +56,10 @@ export default {
     linkText: { control: 'text' },
     eicon: { control: 'multi-select', options: ['❤️', '🌈', '🖇️'] },
     imageEmojiChar: { control: 'text' },
-    theme: { control: 'select', options: ['classic', 'aurora', 'retro', 'prism', 'robot', 'sunrise', 'ocean'] },
+    theme: {
+      control: 'select',
+      options: ['classic', 'aurora', 'retro', 'prism', 'robot', 'sunrise', 'ocean'],
+    },
     zoom: {
       control: { type: 'range', min: 0.3, max: 1.9, step: 0.1 },
       description: 'Zoom level (0.3 = zoomed out, 1.9 = zoomed in)',
@@ -64,7 +67,9 @@ export default {
   },
 } as Meta;
 
-const BoundingBoxTemplate: StoryFn<TopicArgs & { zoom?: number }> = (args: TopicArgs & { zoom?: number }) => {
+const BoundingBoxTemplate: StoryFn<TopicArgs & { zoom?: number }> = (
+  args: TopicArgs & { zoom?: number },
+) => {
   // The layout bus of this story: a designer would own it.
   const layoutEventBus = new LayoutEventBus();
 
@@ -150,7 +155,7 @@ const BoundingBoxTemplate: StoryFn<TopicArgs & { zoom?: number }> = (args: Topic
   // Helper function to get border-radius based on shape type
   const getBorderRadius = (shapeType: string, width: number, height: number): string => {
     const minDimension = Math.min(width, height);
-    
+
     switch (shapeType) {
       case 'rectangle':
         return '0px';
@@ -296,7 +301,9 @@ const BoundingBoxTemplate: StoryFn<TopicArgs & { zoom?: number }> = (args: Topic
   return divElem;
 };
 
-const SingleTopicOverlayTemplate: StoryFn<TopicArgs & { zoom?: number }> = (args: TopicArgs & { zoom?: number }) => {
+const SingleTopicOverlayTemplate: StoryFn<TopicArgs & { zoom?: number }> = (
+  args: TopicArgs & { zoom?: number },
+) => {
   // The layout bus of this story: a designer would own it.
   const layoutEventBus = new LayoutEventBus();
 
@@ -397,7 +404,9 @@ class StorybookWidgetBuilder extends WidgetBuilder {
   }
 }
 
-const SimpleMapWithShadowTemplate: StoryFn<TopicArgs & { zoom?: number }> = (args: TopicArgs & { zoom?: number }) => {
+const SimpleMapWithShadowTemplate: StoryFn<TopicArgs & { zoom?: number }> = (
+  args: TopicArgs & { zoom?: number },
+) => {
   // Build basic container ...
   const divElem = document.createElement('div');
   divElem.style.height = '600px';
@@ -463,7 +472,7 @@ SingleTopicOverlay.args = {
 
 export const SimpleMapWithShadow = SimpleMapWithShadowTemplate.bind({});
 SimpleMapWithShadow.args = {
-    text: 'Simple Map with HTMLTopicSelected',
+  text: 'Simple Map with HTMLTopicSelected',
   shapeType: 'rectangle',
   zoom: 0.7,
 };

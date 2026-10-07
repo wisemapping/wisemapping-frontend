@@ -24,126 +24,145 @@ import { createRequire } from 'module';
 const requireJson = createRequire(import.meta.url);
 
 const htmlTemplatePlugin = (data: Record<string, unknown>) => ({
-    name: 'html-template',
-    transformIndexHtml(html: string) {
-        return html.replace(/<%= (\w+) %>/g, (_, key) => String(data[key] ?? ''));
-    },
+  name: 'html-template',
+  transformIndexHtml(html: string) {
+    return html.replace(/<%= (\w+) %>/g, (_, key) => String(data[key] ?? ''));
+  },
 });
 
 const wxmlLoader = () => {
-    return {
-        name: 'wxml-loader',
-        transform(code: string, id: string) {
-            if (id.endsWith('.wxml')) {
-                return {
-                    code: `export default ${JSON.stringify(code)};`,
-                    map: null,
-                };
-            }
-        },
-    };
+  return {
+    name: 'wxml-loader',
+    transform(code: string, id: string) {
+      if (id.endsWith('.wxml')) {
+        return {
+          code: `export default ${JSON.stringify(code)};`,
+          map: null,
+        };
+      }
+    },
+  };
 };
 
 const sitemapMiddleware = () => ({
-    name: 'sitemap-dev-middleware',
-    configureServer(server) {
-        server.middlewares.use('/sitemap.xml', (req, res, next) => {
-            if (req.method && req.method !== 'GET') {
-                return next();
-            }
+  name: 'sitemap-dev-middleware',
+  configureServer(server) {
+    server.middlewares.use('/sitemap.xml', (req, res, next) => {
+      if (req.method && req.method !== 'GET') {
+        return next();
+      }
 
-            try {
-                const forwardedProto = req.headers['x-forwarded-proto'];
-                const forwardedValue = Array.isArray(forwardedProto) ? forwardedProto[0] : forwardedProto;
-                const protocol =
-                    forwardedValue ||
-                    ((req.socket as any)?.encrypted ? 'https' : 'http');
-                const host = req.headers.host;
+      try {
+        const forwardedProto = req.headers['x-forwarded-proto'];
+        const forwardedValue = Array.isArray(forwardedProto) ? forwardedProto[0] : forwardedProto;
+        const protocol =
+          forwardedValue ||
+          ((req.socket as { encrypted?: boolean } | undefined)?.encrypted ? 'https' : 'http');
+        const host = req.headers.host;
 
-                if (!host) {
-                    return next();
-                }
+        if (!host) {
+          return next();
+        }
 
-                const baseUrl = `${protocol}://${host}`;
-                const urls = buildStaticUrls({ baseUrl });
-                const xml = generateSitemapXml(urls);
+        const baseUrl = `${protocol}://${host}`;
+        const urls = buildStaticUrls({ baseUrl });
+        const xml = generateSitemapXml(urls);
 
-                res.statusCode = 200;
-                res.setHeader('Content-Type', 'application/xml');
-                res.end(xml);
-            } catch (error) {
-                console.error('Failed to generate sitemap.xml in dev server', error);
-                next(error);
-            }
-        });
-    },
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/xml');
+        res.end(xml);
+      } catch (error) {
+        console.error('Failed to generate sitemap.xml in dev server', error);
+        next(error);
+      }
+    });
+  },
 });
 
 export default defineConfig(({ mode }) => {
-    // env loading is not typically needed if we are just using process.env, but loadEnv makes .env files available
-    const env = loadEnv(mode, process.cwd(), '');
+  // The config reads process.env directly, so the returned values are unused. The call stays for its
+  // side effect: it copies NODE_ENV, BROWSER and BROWSER_ARGS from the .env files into process.env.
+  loadEnv(mode, process.cwd(), '');
 
-    let bootstrapConfig;
-    const configType = process.env.APP_CONFIG_TYPE || 'file:mock';
+  let bootstrapConfig;
+  const configType = process.env.APP_CONFIG_TYPE || 'file:mock';
 
-    switch (configType) {
-        case 'file:mock':
-            bootstrapConfig = requireJson('./config.mock.json');
-            break;
-        case 'file:prod':
-            bootstrapConfig = requireJson('./config.prod.json');
-            break;
-        case 'file:dev':
-            bootstrapConfig = requireJson('./config.dev.json');
-            break;
-        case 'remote':
-            bootstrapConfig = process.env.APP_CONFIG_JSON ? JSON.parse(process.env.APP_CONFIG_JSON) : {};
-            break;
-        default:
-            bootstrapConfig = requireJson('./config.mock.json');
-            break;
-    }
+  switch (configType) {
+    case 'file:mock':
+      bootstrapConfig = requireJson('./config.mock.json');
+      break;
+    case 'file:prod':
+      bootstrapConfig = requireJson('./config.prod.json');
+      break;
+    case 'file:dev':
+      bootstrapConfig = requireJson('./config.dev.json');
+      break;
+    case 'remote':
+      bootstrapConfig = process.env.APP_CONFIG_JSON ? JSON.parse(process.env.APP_CONFIG_JSON) : {};
+      break;
+    default:
+      bootstrapConfig = requireJson('./config.mock.json');
+      break;
+  }
 
-    return {
-        plugins: [
-            react(),
-            wxmlLoader(),
-            sitemapMiddleware(),
-            htmlTemplatePlugin({
-                GOOGLE_ADDS_ENABLED: process.env.GOOGLE_ADDS_ENABLED || false,
-                NEW_RELIC_ENABLED: process.env.NEW_RELIC_ENABLED || false,
-            }),
-        ],
-        resolve: {
-            tsconfigPaths: true,
-            alias: [
-                { find: /^@wisemapping\/editor\/src\/(.*)/, replacement: path.resolve(import.meta.dirname, '../editor/src/$1') },
-                { find: /^@wisemapping\/editor$/, replacement: path.resolve(import.meta.dirname, '../editor/src/index.ts') },
-                { find: /^@wisemapping\/mindplot\/src\/(.*)/, replacement: path.resolve(import.meta.dirname, '../mindplot/src/$1') },
-                { find: /^@wisemapping\/mindplot$/, replacement: path.resolve(import.meta.dirname, '../mindplot/src/index.ts') },
-                { find: /^@wisemapping\/web2d\/src\/(.*)/, replacement: path.resolve(import.meta.dirname, '../web2d/src/$1') },
-                { find: /^@wisemapping\/web2d$/, replacement: path.resolve(import.meta.dirname, '../web2d/src/index.ts') },
-            ]
+  return {
+    plugins: [
+      react(),
+      wxmlLoader(),
+      sitemapMiddleware(),
+      htmlTemplatePlugin({
+        GOOGLE_ADDS_ENABLED: process.env.GOOGLE_ADDS_ENABLED || false,
+        NEW_RELIC_ENABLED: process.env.NEW_RELIC_ENABLED || false,
+      }),
+    ],
+    resolve: {
+      tsconfigPaths: true,
+      alias: [
+        {
+          find: /^@wisemapping\/editor\/src\/(.*)/,
+          replacement: path.resolve(import.meta.dirname, '../editor/src/$1'),
         },
-        define: {
-            VITE_BOOTSTRAP_CONFIG: JSON.stringify(bootstrapConfig),
+        {
+          find: /^@wisemapping\/editor$/,
+          replacement: path.resolve(import.meta.dirname, '../editor/src/index.ts'),
         },
-        server: {
-            port: 3000,
-            proxy: {
-                '/api': {
-                    target: 'http://localhost:8080',
-                    changeOrigin: true,
-                }
-            },
+        {
+          find: /^@wisemapping\/mindplot\/src\/(.*)/,
+          replacement: path.resolve(import.meta.dirname, '../mindplot/src/$1'),
         },
-        build: {
-            outDir: 'dist',
-            sourcemap: true,
-            minify: 'esbuild', // Vite uses esbuild by default which is faster, but we can be explicit
-            chunkSizeWarningLimit: 2000, // Adjust as needed based on webpack performance hints
+        {
+          find: /^@wisemapping\/mindplot$/,
+          replacement: path.resolve(import.meta.dirname, '../mindplot/src/index.ts'),
         },
-        // Mimic webpack's production mode optimization where appropriate
-        // Vite handles minification and tree-shaking automatically in build mode
-    };
+        {
+          find: /^@wisemapping\/web2d\/src\/(.*)/,
+          replacement: path.resolve(import.meta.dirname, '../web2d/src/$1'),
+        },
+        {
+          find: /^@wisemapping\/web2d$/,
+          replacement: path.resolve(import.meta.dirname, '../web2d/src/index.ts'),
+        },
+      ],
+    },
+    define: {
+      VITE_BOOTSTRAP_CONFIG: JSON.stringify(bootstrapConfig),
+    },
+    server: {
+      port: 3000,
+      proxy: {
+        '/api': {
+          target: 'http://localhost:8080',
+          changeOrigin: true,
+        },
+      },
+    },
+    build: {
+      outDir: 'dist',
+      sourcemap: true,
+      minify: 'esbuild', // Vite uses esbuild by default which is faster, but we can be explicit
+      chunkSizeWarningLimit: 2000, // Adjust as needed based on webpack performance hints
+    },
+    // Mimic webpack's production mode optimization where appropriate
+    // Vite handles minification and tree-shaking automatically in build mode
+  };
 });

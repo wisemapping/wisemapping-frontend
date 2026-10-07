@@ -27,7 +27,7 @@ import type Topic from '../Topic';
 export type TopicMove = 'up' | 'down' | 'outdent' | 'indent';
 
 /** Where a move wants the topic to end up, in terms the layout can act on. */
-export type ReorderTarget =
+type ReorderTarget =
   { kind: 'reorder'; parent: Topic; order: number } | { kind: 'reparent'; parent: Topic };
 
 /**

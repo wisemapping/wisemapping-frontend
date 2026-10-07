@@ -31,7 +31,12 @@ const initialization = (designer: Designer) => {
   });
 };
 
-const persistence = new LocalStorageManager('/map-render/samples/{id}.wxml', false, undefined, false);
+const persistence = new LocalStorageManager(
+  '/map-render/samples/{id}.wxml',
+  false,
+  undefined,
+  false,
+);
 const options: EditorOptions = {
   mode: 'edition-editor',
   locale: 'en',

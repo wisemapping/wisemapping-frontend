@@ -82,6 +82,21 @@ describe('Designer dispose (BL-48)', () => {
     jest.restoreAllMocks();
   });
 
+  // A React effect (StrictMode double mount, or a dev-server reload) can reach a designer after it
+  // was disposed and its canvas left the page: those calls must be ignored, not throw on the
+  // missing canvas container.
+  it('ignores theme, canvas style and load calls once disposed and detached', async () => {
+    const designer = await build();
+    const mindmap = designer.getMindmap();
+    designer.dispose();
+    designer.getContainer().remove();
+
+    expect(() => designer.initializeThemeVariant('dark')).not.toThrow();
+    expect(() => designer.setThemeVariant('light')).not.toThrow();
+    expect(() => designer.applyCanvasStyle()).not.toThrow();
+    await expect(designer.loadMap(mindmap)).resolves.toBeUndefined();
+  });
+
   it('builds a designer again once the previous one is disposed', async () => {
     const first = await build();
     first.dispose();

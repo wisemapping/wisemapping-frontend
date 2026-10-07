@@ -21,7 +21,12 @@ import { useIntl } from 'react-intl';
 import { useMutation } from '@tanstack/react-query';
 import FormControl from '@mui/material/FormControl';
 
-import { BasicMapInfo, ErrorInfo } from '../../../../classes/client';
+import {
+  BasicMapInfo,
+  ErrorInfo,
+  MAP_DESCRIPTION_MAX_LENGTH,
+  MAP_TITLE_MAX_LENGTH,
+} from '../../../../classes/client';
 import Input from '../../../form/input';
 import { SimpleDialogProps } from '..';
 import BaseDialog from '../base-dialog';
@@ -104,23 +109,22 @@ const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElem
     mutation.mutate(validatedModel);
   };
 
-  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  // Stable, so that a key re-renders only the field typed in (see Input).
+  const handleOnChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>): void => {
     const name = event.target.name;
     const value = event.target.value;
 
     // Clear any previous errors when user starts typing
-    if (error) {
-      setError(undefined);
-    }
+    setError(undefined);
 
     // Update the model with the correct field name
     // Only update title and description, preserve id from mapId prop
     if (name === 'title') {
-      setModel({ ...model, title: value });
+      setModel((current) => ({ ...current, title: value }));
     } else if (name === 'description') {
-      setModel({ ...model, description: value });
+      setModel((current) => ({ ...current, description: value }));
     }
-  };
+  }, []);
 
   const { data: map } = useFetchMapById(mapId);
 
@@ -201,6 +205,7 @@ const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElem
             fullWidth={true}
             required={true}
             minLength={1}
+            maxLength={MAP_TITLE_MAX_LENGTH}
           />
 
           <Input
@@ -215,6 +220,7 @@ const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElem
             error={error}
             required={false}
             fullWidth={true}
+            maxLength={MAP_DESCRIPTION_MAX_LENGTH}
           />
         </FormControl>
       </BaseDialog>

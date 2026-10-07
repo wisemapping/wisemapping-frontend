@@ -1,9 +1,9 @@
 {
   "common.terms-notice": {
-    "defaultMessage": "By continuing, you agree to our <termsLink>Terms of Service</termsLink> and <privacyLink>Privacy Policy</privacyLink>."
+    "defaultMessage": "Продовжуючи, ви погоджуєтеся з нашими <termsLink>Умовами використання</termsLink> та <privacyLink>Політикою конфіденційності</privacyLink>."
   },
   "accountinfo.button": {
-    "defaultMessage": "Прийняти"
+    "defaultMessage": "Зберегти зміни"
   },
   "accountinfo.deleteaccount": {
     "defaultMessage": "Видалити акаунт"
@@ -93,7 +93,16 @@
     "defaultMessage": "Пароль"
   },
   "changepwd.password-match": {
-    "defaultMessage": "Паролі не співпадають. Будь ласка, спробуйте ще раз."
+    "defaultMessage": "Паролі не збігаються. Будь ласка, спробуйте ще раз."
+  },
+  "changepwd.password-max-length": {
+    "defaultMessage": "Пароль не може бути довшим за 39 символів."
+  },
+  "changepwd.password-min-length": {
+    "defaultMessage": "Пароль має містити щонайменше 8 символів."
+  },
+  "changepwd.password-required": {
+    "defaultMessage": "Пароль не може бути порожнім."
   },
   "changepwd.title": {
     "defaultMessage": "Змінити пароль"
@@ -207,10 +216,10 @@
     "defaultMessage": "Надіслати посилання для відновлення"
   },
   "forgot.success.desc": {
-    "defaultMessage": "Ми надіслали вам електронний лист, який дозволить скинути ваш пароль. Ви повинні отримати його в найближчі хвилини."
+    "defaultMessage": "Ми надіслали посилання для скидання пароля на вашу пошту. Посилання дійсне 1 годину. Поточний пароль не зміниться, доки ви не скористаєтеся посиланням."
   },
   "forgot.success.title": {
-    "defaultMessage": "Ваш тимчасовий пароль було надіслано."
+    "defaultMessage": "Перевірте пошту."
   },
   "forgot.title": {
     "defaultMessage": "Скинути ваш пароль"
@@ -231,7 +240,7 @@
     "defaultMessage": "Немає доступних змін"
   },
   "import.button": {
-    "defaultMessage": "Створити"
+    "defaultMessage": "Імпорт"
   },
   "import.description": {
     "defaultMessage": "Ви можете імпортувати карти WiseMapping, FreeMind, Freeplane, XMind, MindManager та OPML до вашого списку карт. Виберіть файл, який хочете імпортувати."
@@ -317,6 +326,12 @@
   "language.help": {
     "defaultMessage": "Допомогти з перекладом"
   },
+  "language.help-dialog.title": {
+    "defaultMessage": "Допоможіть нам підтримувати більше мов!"
+  },
+  "language.help-dialog.description": {
+    "defaultMessage": "Нам потрібна ваша допомога! Якщо вам цікаво, напишіть нам на {email}."
+  },
   "login.desc": {
     "defaultMessage": "Увійдіть у ваш акаунт"
   },
@@ -354,7 +369,7 @@
     "defaultMessage": "Ласкаво просимо"
   },
   "login.shared-map-notice": {
-    "defaultMessage": "З вами поділилися ментальною картою. Будь ласка, увійдіть, щоб отримати доступ. Немає облікового запису? Зареєструйтеся безкоштовно або використовуйте свій обліковий запис Google/Facebook."
+    "defaultMessage": "З вами поділилися картою розуму. Будь ласка, увійдіть, щоб отримати доступ. Немає акаунта? Зареєструйтеся безкоштовно або використовуйте свій акаунт Google чи Facebook."
   },
   "map.creator": {
     "defaultMessage": "Створювач"
@@ -381,13 +396,13 @@
     "defaultMessage": "ШІ Копілот"
   },
   "maps.copilot-tooltip": {
-    "defaultMessage": "Запустіть ментальну карту з ШІ Копілотом"
+    "defaultMessage": "Почніть карту розуму з ШІ Копілотом"
   },
   "maps.copilot-dialog.title": {
-    "defaultMessage": "Копілот майндмапів на базі ChatGPT"
+    "defaultMessage": "Копілот карт розуму на базі ChatGPT"
   },
   "maps.copilot-dialog.description": {
-    "defaultMessage": "Mind Map Copilot — це помічник для брейнштормінгу на базі ChatGPT, який перетворює ваші підказки на структуровані ментальні карти. Ми відкриємо його в новій вкладці, щоб ви могли розширювати ідеї, генерувати теми та повернути найкраще до WiseMapping."
+    "defaultMessage": "ШІ Копілот на базі ChatGPT — це помічник для брейнштормінгу, який перетворює ваші підказки на структуровані карти розуму. Ми відкриємо його в новій вкладці, щоб ви могли розширювати ідеї, генерувати теми та повернути найкраще до WiseMapping."
   },
   "maps.copilot-dialog.continue": {
     "defaultMessage": "Відкрити Копілот"
@@ -414,7 +429,7 @@
     "defaultMessage": "Всі"
   },
   "maps.nav-onwned": {
-    "defaultMessage": "Мої"
+    "defaultMessage": "Мої карти"
   },
   "maps.nav-public": {
     "defaultMessage": "Публічні"
@@ -456,22 +471,22 @@
     "defaultMessage": "Увімкнути публічне спільне використання"
   },
   "publish.copied": {
-    "defaultMessage": "Copied to clipboard!"
+    "defaultMessage": "Скопійовано в буфер обміну!"
   },
   "publish.description": {
-    "defaultMessage": "Опублікувавши карту, ви робите її видимою для всіх в Інтернеті."
+    "defaultMessage": "Зробіть карту публічною. Її зможе переглядати будь-хто, хто має посилання."
   },
   "publish.embedded": {
     "defaultMessage": "Вбудована"
   },
   "publish.embedded-msg": {
-    "defaultMessage": "Скопіюйте цей фрагмент коду для вбудовування у ваш блог або сторінку:"
+    "defaultMessage": "Натисніть на код, щоб скопіювати його в буфер обміну:"
   },
   "publish.public-url": {
     "defaultMessage": "Публічне посилання"
   },
   "publish.public-url-msg": {
-    "defaultMessage": "Скопіюйте та вставте посилання нижче, щоб поділитися вашою картою з колегами:"
+    "defaultMessage": "Натисніть на посилання, щоб скопіювати його в буфер обміну:"
   },
   "publish.title": {
     "defaultMessage": "Опублікувати"
@@ -555,7 +570,7 @@
     "defaultMessage": "Поділитися"
   },
   "share.adding-button": {
-    "defaultMessage": "Sharing..."
+    "defaultMessage": "Надання доступу..."
   },
   "share.add-message": {
     "defaultMessage": "Додати повідомлення"
@@ -564,10 +579,10 @@
     "defaultMessage": "Може редагувати"
   },
   "share.delete": {
-    "defaultMessage": "Видалити співробітника"
+    "defaultMessage": "Видалити співавтора"
   },
   "share.delete-description": {
-    "defaultMessage": "Додайте співавторів. Вони отримають миттєвий доступ по email для спільного редагування."
+    "defaultMessage": "Додайте співавторів. Вони миттєво отримають доступ електронною поштою для спільного редагування."
   },
   "share.delete-title": {
     "defaultMessage": "Поділитися з людьми"
@@ -590,11 +605,29 @@
   "common.maps-list": {
     "defaultMessage": "Список карт"
   },
+  "common.na": {
+    "defaultMessage": "Н/Д"
+  },
   "admin.status-clean": {
-    "defaultMessage": "Очистити"
+    "defaultMessage": "Не спам"
+  },
+  "admin.status-not-activated": {
+    "defaultMessage": "Не активовано"
+  },
+  "admin.status-not-activated-tooltip": {
+    "defaultMessage": "Користувач ще не підтвердив свою адресу електронної пошти"
+  },
+  "admin.status-not-activated-tooltip-interactive": {
+    "defaultMessage": "Користувач ще не підтвердив свою адресу електронної пошти | Натисніть, щоб змінити статус"
   },
   "common.allow-email-notifications": {
-    "defaultMessage": "Дозволити сповіщення email"
+    "defaultMessage": "Дозволити сповіщення електронною поштою"
+  },
+  "common.cancel": {
+    "defaultMessage": "Скасувати"
+  },
+  "common.close": {
+    "defaultMessage": "Закрити"
   },
   "admin.public": {
     "defaultMessage": "Публічний"
@@ -614,6 +647,27 @@
   "admin.auth-type": {
     "defaultMessage": "Тип авторизації"
   },
+  "admin.auth.database": {
+    "defaultMessage": "База даних"
+  },
+  "admin.auth.facebook": {
+    "defaultMessage": "Facebook"
+  },
+  "admin.auth.google": {
+    "defaultMessage": "Google"
+  },
+  "admin.auth.ldap": {
+    "defaultMessage": "LDAP"
+  },
+  "admin.button.update-user": {
+    "defaultMessage": "Оновити користувача"
+  },
+  "admin.button.updating": {
+    "defaultMessage": "Оновлення..."
+  },
+  "admin.cancel": {
+    "defaultMessage": "Скасувати"
+  },
   "common.delete": {
     "defaultMessage": "Видалити"
   },
@@ -625,6 +679,51 @@
   },
   "admin.edit-user": {
     "defaultMessage": "Редагувати користувача"
+  },
+  "admin.error.access-denied": {
+    "defaultMessage": "Доступ заборонено. Потрібні права адміністратора."
+  },
+  "admin.error.create-user-failed": {
+    "defaultMessage": "Не вдалося створити користувача. Будь ласка, спробуйте ще раз."
+  },
+  "admin.error.load-users": {
+    "defaultMessage": "Не вдалося завантажити користувачів: {message}"
+  },
+  "admin.error.unknown": {
+    "defaultMessage": "Невідома помилка"
+  },
+  "admin.error.update-map-failed": {
+    "defaultMessage": "Не вдалося оновити карту. Будь ласка, спробуйте ще раз."
+  },
+  "admin.error.update-user-failed": {
+    "defaultMessage": "Не вдалося оновити користувача. Будь ласка, спробуйте ще раз."
+  },
+  "admin.facebook.filter-tooltip": {
+    "defaultMessage": "Пошук для видалення даних Facebook"
+  },
+  "admin.facebook.lookup-button": {
+    "defaultMessage": "Знайти акаунт"
+  },
+  "admin.facebook.lookup-not-found": {
+    "defaultMessage": "Для цього ідентифікатора користувача Facebook акаунт не знайдено."
+  },
+  "admin.facebook.remove": {
+    "defaultMessage": "Видалити"
+  },
+  "admin.facebook.remove-button": {
+    "defaultMessage": "Видалити акаунт Facebook"
+  },
+  "admin.facebook.remove-confirm": {
+    "defaultMessage": "Видалити прив'язку Facebook для «{email}»?"
+  },
+  "admin.facebook.remove-dialog-title": {
+    "defaultMessage": "Видалити акаунт Facebook"
+  },
+  "admin.facebook.remove-warning": {
+    "defaultMessage": "Це від'єднає автентифікацію Facebook від цього акаунта. Користувач отримає електронний лист для скидання пароля, щоб відновити доступ."
+  },
+  "admin.facebook.removing": {
+    "defaultMessage": "Видалення..."
   },
   "admin.refresh": {
     "defaultMessage": "Оновити"
@@ -638,6 +737,9 @@
   "common.emails": {
     "defaultMessage": "Електронні листи"
   },
+  "common.enabled": {
+    "defaultMessage": "Увімкнено"
+  },
   "admin.suspension-reason": {
     "defaultMessage": "Причина призупинення"
   },
@@ -646,6 +748,27 @@
   },
   "admin.suspension.terms-violation": {
     "defaultMessage": "Порушення умов"
+  },
+  "admin.system.app.name": {
+    "defaultMessage": "Назва"
+  },
+  "admin.system.app.port": {
+    "defaultMessage": "Порт"
+  },
+  "admin.system.application": {
+    "defaultMessage": "Застосунок"
+  },
+  "admin.system.database": {
+    "defaultMessage": "База даних"
+  },
+  "admin.system.database.info": {
+    "defaultMessage": "База даних"
+  },
+  "admin.system.db.ddl": {
+    "defaultMessage": "Hibernate DDL"
+  },
+  "admin.system.db.driver": {
+    "defaultMessage": "Драйвер"
   },
   "admin.suspension.security-concern": {
     "defaultMessage": "Проблема безпеки"
@@ -662,6 +785,15 @@
   "admin.status-suspended": {
     "defaultMessage": "Призупинено"
   },
+  "admin.status.click-to-change": {
+    "defaultMessage": "Натисніть, щоб змінити статус"
+  },
+  "admin.status.reason": {
+    "defaultMessage": "Причина: {reason}"
+  },
+  "admin.status.suspended-on": {
+    "defaultMessage": "Дата призупинення: {date}"
+  },
   "admin.delete": {
     "defaultMessage": "Видалити"
   },
@@ -674,17 +806,68 @@
   "admin.status-active": {
     "defaultMessage": "Активний"
   },
+  "admin.status-active-tooltip": {
+    "defaultMessage": "Акаунт активовано, обмежень немає"
+  },
+  "admin.status-active-tooltip-interactive": {
+    "defaultMessage": "Акаунт активовано, обмежень немає | Натисніть, щоб змінити статус"
+  },
   "common.locale": {
     "defaultMessage": "Мова"
   },
   "common.email": {
-    "defaultMessage": "Email"
+    "defaultMessage": "Електронна пошта"
   },
   "admin.unsuspend-user": {
     "defaultMessage": "Відновити користувача"
   },
+  "admin.user-info.auth-type": {
+    "defaultMessage": "Автентифікація"
+  },
+  "admin.user-info.created": {
+    "defaultMessage": "Створено"
+  },
+  "admin.user-info.status": {
+    "defaultMessage": "Статус"
+  },
+  "admin.user-info.suspension-reason": {
+    "defaultMessage": "Причина призупинення:"
+  },
+  "admin.user-info.title": {
+    "defaultMessage": "Інформація про користувача"
+  },
+  "admin.user-info.total-maps": {
+    "defaultMessage": "Усього карт"
+  },
+  "admin.user-maps-dialog.loading": {
+    "defaultMessage": "Завантаження користувача..."
+  },
+  "admin.user-maps-dialog.no-maps": {
+    "defaultMessage": "У цього користувача немає карт."
+  },
+  "admin.user-maps-dialog.title": {
+    "defaultMessage": "Карти користувача {name} (ID: #{id})"
+  },
+  "admin.validation.email-invalid": {
+    "defaultMessage": "Недійсний формат електронної пошти"
+  },
+  "admin.validation.email-required": {
+    "defaultMessage": "Електронна пошта обов'язкова"
+  },
+  "admin.validation.firstname-required": {
+    "defaultMessage": "Ім'я обов'язкове"
+  },
+  "admin.validation.lastname-required": {
+    "defaultMessage": "Прізвище обов'язкове"
+  },
+  "admin.view-user-maps": {
+    "defaultMessage": "Переглянути карти користувача"
+  },
   "common.delete-tag": {
     "defaultMessage": "Видалити тег"
+  },
+  "common.disabled": {
+    "defaultMessage": "Вимкнено"
   },
   "admin.edit": {
     "defaultMessage": "Редагувати"
@@ -695,6 +878,150 @@
   "admin.locked": {
     "defaultMessage": "Заблоковано"
   },
+  "admin.maps.clean-tooltip": {
+    "defaultMessage": "Не позначено як спам"
+  },
+  "admin.maps.creator-suspended-tooltip": {
+    "defaultMessage": "Акаунт створювача карти призупинено адміністратором"
+  },
+  "admin.maps.delete": {
+    "defaultMessage": "Видалити карту"
+  },
+  "admin.maps.description": {
+    "defaultMessage": "Опис"
+  },
+  "admin.maps.edit": {
+    "defaultMessage": "Редагувати карту"
+  },
+  "admin.maps.edit-title": {
+    "defaultMessage": "Редагування карти"
+  },
+  "admin.maps.filter.date": {
+    "defaultMessage": "Діапазон дат"
+  },
+  "admin.maps.filter.spam": {
+    "defaultMessage": "Спам"
+  },
+  "admin.maps.locked-tooltip": {
+    "defaultMessage": "Зараз редагується користувачем {user}"
+  },
+  "admin.maps.mark-as-not-spam": {
+    "defaultMessage": "Позначити як не спам"
+  },
+  "admin.maps.mark-as-spam": {
+    "defaultMessage": "Позначити як спам"
+  },
+  "admin.maps.no-maps": {
+    "defaultMessage": "Карт не знайдено"
+  },
+  "admin.maps.page-title": {
+    "defaultMessage": "Керування картами"
+  },
+  "admin.maps.private-tooltip": {
+    "defaultMessage": "Лише співавтори можуть переглядати цю карту"
+  },
+  "admin.maps.public-tooltip": {
+    "defaultMessage": "Будь-хто може переглядати цю карту"
+  },
+  "admin.maps.search": {
+    "defaultMessage": "Пошук карт... (#123 для пошуку за ID, email для пошуку за створювачем)"
+  },
+  "admin.maps.search-by-email": {
+    "defaultMessage": "🔍 Пошук за електронною поштою створювача"
+  },
+  "admin.maps.search-by-id": {
+    "defaultMessage": "🔍 Пошук за ID карти"
+  },
+  "admin.maps.search-by-text": {
+    "defaultMessage": "🔍 Пошук у назвах та описах"
+  },
+  "admin.maps.spam-tooltip": {
+    "defaultMessage": "Визначено як спам {date}"
+  },
+  "admin.maps.spam-tooltip-no-date": {
+    "defaultMessage": "Позначено як спам"
+  },
+  "admin.maps.spam-label": {
+    "defaultMessage": "Спам ({type})"
+  },
+  "admin.maps.spam-type-unknown": {
+    "defaultMessage": "Невідомо"
+  },
+  "admin.maps.suspend-user": {
+    "defaultMessage": "Призупинити акаунт користувача"
+  },
+  "admin.maps.suspend-user.confirm": {
+    "defaultMessage": "Ви впевнені, що хочете призупинити акаунт користувача «{userName}» (ID: {userId})? Призупинення буде позначено як результат ручної перевірки."
+  },
+  "admin.maps.suspend-user.confirm-button": {
+    "defaultMessage": "Призупинити користувача"
+  },
+  "admin.maps.suspend-user.title": {
+    "defaultMessage": "Призупинення акаунта користувача"
+  },
+  "admin.maps.suspend-user.warning": {
+    "defaultMessage": "Ця дія призупинить акаунт користувача й позбавить його доступу до системи."
+  },
+  "admin.maps.table.actions": {
+    "defaultMessage": "Дії"
+  },
+  "admin.maps.table.created": {
+    "defaultMessage": "Створено"
+  },
+  "admin.maps.table.description": {
+    "defaultMessage": "Опис"
+  },
+  "admin.maps.table.id": {
+    "defaultMessage": "ID карти"
+  },
+  "admin.maps.table.modified": {
+    "defaultMessage": "Змінено"
+  },
+  "admin.maps.table.spam": {
+    "defaultMessage": "Спам"
+  },
+  "admin.maps.table.spam-status": {
+    "defaultMessage": "Статус спаму"
+  },
+  "admin.maps.table.status": {
+    "defaultMessage": "Статус"
+  },
+  "admin.maps.table.title": {
+    "defaultMessage": "Назва"
+  },
+  "admin.maps.title": {
+    "defaultMessage": "Назва"
+  },
+  "admin.maps.unlocked-tooltip": {
+    "defaultMessage": "Зараз ніхто не редагує"
+  },
+  "admin.maps.view-xml": {
+    "defaultMessage": "Переглянути XML"
+  },
+  "admin.maps.xml-viewer.copy": {
+    "defaultMessage": "Копіювати відформатований XML"
+  },
+  "admin.maps.xml-viewer.info": {
+    "defaultMessage": "Це необроблений XML-вміст карти розуму. Ви можете скопіювати його для резервного копіювання або аналізу."
+  },
+  "admin.maps.xml-viewer.loading": {
+    "defaultMessage": "Завантаження XML-вмісту..."
+  },
+  "admin.maps.xml-viewer.no-content": {
+    "defaultMessage": "XML-вміст недоступний"
+  },
+  "admin.maps.xml-viewer.title": {
+    "defaultMessage": "XML-вміст карти"
+  },
+  "admin.menu.accounts": {
+    "defaultMessage": "Акаунти"
+  },
+  "admin.menu.maps": {
+    "defaultMessage": "Карти"
+  },
+  "admin.menu.system": {
+    "defaultMessage": "Система"
+  },
   "common.settings": {
     "defaultMessage": "Налаштування"
   },
@@ -704,11 +1031,23 @@
   "common.retry": {
     "defaultMessage": "Повторити"
   },
+  "common.save": {
+    "defaultMessage": "Зберегти"
+  },
   "admin.system.title": {
     "defaultMessage": "Системна інформація"
   },
   "admin.system.refresh": {
     "defaultMessage": "Оновити"
+  },
+  "admin.system.statistics": {
+    "defaultMessage": "Статистика"
+  },
+  "admin.system.stats.mindmaps": {
+    "defaultMessage": "Усього карт розуму"
+  },
+  "admin.system.stats.users": {
+    "defaultMessage": "Усього користувачів"
   },
   "common.refresh": {
     "defaultMessage": "Оновити"
@@ -716,14 +1055,92 @@
   "admin.system.memory": {
     "defaultMessage": "Пам'ять"
   },
+  "admin.system.memory.info": {
+    "defaultMessage": "Пам'ять"
+  },
+  "admin.system.memory.max": {
+    "defaultMessage": "Максимальна пам'ять"
+  },
+  "admin.system.memory.total": {
+    "defaultMessage": "Загальна пам'ять"
+  },
+  "admin.system.memory.usage": {
+    "defaultMessage": "Використання пам'яті"
+  },
+  "admin.system.memory.used": {
+    "defaultMessage": "Використана пам'ять"
+  },
+  "admin.system.mindmapMetrics.collaborations": {
+    "defaultMessage": "Враховані співпраці"
+  },
+  "admin.system.mindmapMetrics.disabled": {
+    "defaultMessage": "Установіть `app.monitoring.performance.log-mindmap-listing` у значення true, щоб збирати метрики."
+  },
+  "admin.system.mindmapMetrics.entityLoads": {
+    "defaultMessage": "Завантаження сутностей"
+  },
+  "admin.system.mindmapMetrics.executedStatements": {
+    "defaultMessage": "Підготовлені запити"
+  },
+  "admin.system.mindmapMetrics.lastUpdated": {
+    "defaultMessage": "Останнє оновлення"
+  },
+  "admin.system.mindmapMetrics.mapCount": {
+    "defaultMessage": "Повернуто карт"
+  },
+  "admin.system.mindmapMetrics.pending": {
+    "defaultMessage": "Очікування наступного запиту списку карт розуму для збору метрик."
+  },
+  "admin.system.mindmapMetrics.segments": {
+    "defaultMessage": "Сегменти виконання"
+  },
+  "admin.system.mindmapMetrics.title": {
+    "defaultMessage": "Продуктивність списку карт розуму"
+  },
+  "admin.system.mindmapMetrics.topQueries": {
+    "defaultMessage": "Основні запити"
+  },
+  "admin.system.mindmapMetrics.totalTime": {
+    "defaultMessage": "Загальний час (мс)"
+  },
   "admin.system.db.url": {
     "defaultMessage": "URL"
+  },
+  "admin.system.db.username": {
+    "defaultMessage": "Ім'я користувача"
+  },
+  "admin.system.error": {
+    "defaultMessage": "Не вдалося завантажити системну інформацію"
+  },
+  "admin.system.health": {
+    "defaultMessage": "Стан системи"
   },
   "admin.system.jvm": {
     "defaultMessage": "JVM"
   },
+  "admin.system.jvm.load": {
+    "defaultMessage": "Навантаження системи"
+  },
+  "admin.system.jvm.processors": {
+    "defaultMessage": "Процесори"
+  },
+  "admin.system.jvm.start": {
+    "defaultMessage": "Час запуску"
+  },
+  "admin.system.jvm.uptime": {
+    "defaultMessage": "Час роботи"
+  },
+  "admin.system.jvm.vendor": {
+    "defaultMessage": "Постачальник"
+  },
+  "admin.system.jvm.version": {
+    "defaultMessage": "Версія Java"
+  },
+  "admin.system.loading": {
+    "defaultMessage": "Завантаження системної інформації..."
+  },
   "error.page-title": {
-    "defaultMessage": "Неочікувана Помилка | WiseMapping"
+    "defaultMessage": "Неочікувана помилка | WiseMapping"
   },
   "error.generic-title": {
     "defaultMessage": "Ми зіткнулися з проблемою."
@@ -747,19 +1164,25 @@
     "defaultMessage": "Можливо, сторінку було видалено, перейменовано або вона тимчасово недоступна."
   },
   "error.map-unavailable-title": {
-    "defaultMessage": "Ця майнд-карта недоступна для публічного перегляду."
+    "defaultMessage": "Ця карта розуму недоступна для публічного перегляду."
   },
   "error.map-unavailable-message": {
-    "defaultMessage": "Ця майнд-карта недоступна для публічного перегляду, оскільки порушує політику нашого сайту. Якщо вам потрібна додаткова допомога, зверніться до support@wisemapping.com."
+    "defaultMessage": "Ця карта розуму недоступна для публічного перегляду, оскільки порушує політику нашого сайту. Якщо вам потрібна додаткова допомога, зверніться до support@wisemapping.com."
   },
   "error.map-title-required": {
     "defaultMessage": "Назва карти обов'язкова і не може бути порожньою"
   },
   "accountinfo.personal-details": {
-    "defaultMessage": "Personal Details"
+    "defaultMessage": "Особисті дані"
+  },
+  "accountinfo.personal-info": {
+    "defaultMessage": "Особиста інформація"
   },
   "account.delete-warning-title": {
     "defaultMessage": "Видалити акаунт"
+  },
+  "accountinfo.account-settings": {
+    "defaultMessage": "Налаштування акаунта"
   },
   "account.delete-warning-description": {
     "defaultMessage": "Після видалення акаунта повернути його буде неможливо. Будь ласка, ухвалюйте рішення зважено."
@@ -801,46 +1224,70 @@
     "defaultMessage": "Видалити акаунт"
   },
   "menu.admin-console": {
-    "defaultMessage": "Admin Console"
+    "defaultMessage": "Консоль адміністратора"
   },
   "registration.form-legend": {
-    "defaultMessage": "Account Information"
+    "defaultMessage": "Інформація про акаунт"
   },
   "admin.change-password": {
-    "defaultMessage": "Change password"
+    "defaultMessage": "Змінити пароль"
   },
   "admin.change-password-title": {
-    "defaultMessage": "Change Password"
+    "defaultMessage": "Зміна пароля"
   },
   "admin.change-password-description": {
-    "defaultMessage": "Change password for user: {email}"
+    "defaultMessage": "Змінити пароль користувача: {email}"
   },
   "admin.new-password": {
-    "defaultMessage": "New Password"
+    "defaultMessage": "Новий пароль"
   },
   "admin.confirm-password": {
-    "defaultMessage": "Confirm Password"
+    "defaultMessage": "Підтвердити пароль"
+  },
+  "admin.confirm.delete-map": {
+    "defaultMessage": "Ви впевнені, що хочете видалити карту «{title}»?"
+  },
+  "admin.confirm.spam-action": {
+    "defaultMessage": "Ви впевнені, що хочете {action} цю карту?"
+  },
+  "admin.console.description": {
+    "defaultMessage": "Керування користувачами, системними налаштуваннями та конфігурацією застосунку."
+  },
+  "admin.console.page-title": {
+    "defaultMessage": "Консоль адміністратора | WiseMapping"
+  },
+  "admin.console.subtitle": {
+    "defaultMessage": "Системне адміністрування"
+  },
+  "admin.console.title": {
+    "defaultMessage": "Консоль адміністратора"
+  },
+  "admin.current-suspension-reason": {
+    "defaultMessage": "Поточна причина призупинення:"
   },
   "admin.change-password-button": {
-    "defaultMessage": "Change Password"
+    "defaultMessage": "Змінити пароль"
   },
   "admin.password-error-length": {
-    "defaultMessage": "Password must be at least 6 characters"
+    "defaultMessage": "Пароль має містити щонайменше 6 символів"
   },
   "admin.password-error-mismatch": {
-    "defaultMessage": "Passwords do not match"
+    "defaultMessage": "Паролі не збігаються"
+  },
+  "admin.prompt.new-user-password": {
+    "defaultMessage": "Введіть пароль для нового користувача:"
   },
   "admin.password-error-failed": {
-    "defaultMessage": "Failed to change password"
+    "defaultMessage": "Не вдалося змінити пароль"
   },
   "admin.password-error-google": {
-    "defaultMessage": "This user is authenticated via Google. Password changes are not available for Google accounts. Please ask the user to manage their password through their Google account."
+    "defaultMessage": "Цей користувач автентифікований через Google. Зміна пароля для акаунтів Google недоступна. Будь ласка, попросіть користувача керувати паролем через свій акаунт Google."
   },
   "admin.password-error-facebook": {
-    "defaultMessage": "This user is authenticated via Facebook. Password changes are not available for Facebook accounts. Please ask the user to manage their password through their Facebook account."
+    "defaultMessage": "Цей користувач автентифікований через Facebook. Зміна пароля для акаунтів Facebook недоступна. Будь ласка, попросіть користувача керувати паролем через свій акаунт Facebook."
   },
   "admin.close": {
-    "defaultMessage": "Close"
+    "defaultMessage": "Закрити"
   },
   "validation.title-required": {
     "defaultMessage": "Назва обов'язкова"
@@ -849,106 +1296,154 @@
     "defaultMessage": "Переспрямування..."
   },
   "share.table.collaborator": {
-    "defaultMessage": "Collaborator"
+    "defaultMessage": "Співавтор"
   },
   "share.table.role": {
-    "defaultMessage": "Role"
+    "defaultMessage": "Роль"
   },
   "share.table.actions": {
-    "defaultMessage": "Actions"
+    "defaultMessage": "Дії"
   },
   "error.go-home": {
-    "defaultMessage": "Go to Home"
+    "defaultMessage": "На головну"
   },
   "error.go-back": {
-    "defaultMessage": "Go Back"
+    "defaultMessage": "Назад"
   },
   "error.go-to-login": {
-    "defaultMessage": "Sign In"
+    "defaultMessage": "Увійти"
+  },
+  "error.invalid-map-id": {
+    "defaultMessage": "Недійсний ID карти"
   },
   "login.oauth-error": {
-    "defaultMessage": "OAuth authentication failed. Please try again or use a different sign-in method."
+    "defaultMessage": "Не вдалося виконати автентифікацію OAuth. Будь ласка, спробуйте ще раз або скористайтеся іншим способом входу."
   },
   "login.server-error": {
-    "defaultMessage": "An unexpected error occurred. Please try again later."
+    "defaultMessage": "Сталася неочікувана помилка. Будь ласка, спробуйте пізніше."
   },
   "login.generic-error": {
-    "defaultMessage": "An error occurred during authentication. Please try again."
+    "defaultMessage": "Під час автентифікації сталася помилка. Будь ласка, спробуйте ще раз."
   },
   "registration.success.title": {
-    "defaultMessage": "Registration Successful!"
+    "defaultMessage": "Реєстрація успішна!"
   },
   "registration.success.email-sent": {
-    "defaultMessage": "We've sent an activation email to your inbox. Please check your email and click on the activation link to activate your account."
+    "defaultMessage": "Ми надіслали лист для активації на вашу поштову скриньку. Будь ласка, перевірте пошту й натисніть посилання для активації, щоб активувати свій акаунт."
   },
   "registration.success.check-spam": {
-    "defaultMessage": "If you don't see the email, please check your spam folder."
+    "defaultMessage": "Якщо ви не бачите листа, перевірте папку «Спам»."
   },
   "registration.success.already-activated": {
-    "defaultMessage": "Already activated your account?"
+    "defaultMessage": "Уже активували свій акаунт?"
   },
   "reset-password.title": {
-    "defaultMessage": "Set a new password"
+    "defaultMessage": "Установіть новий пароль"
   },
   "reset-password.desc": {
-    "defaultMessage": "Enter your new password below."
+    "defaultMessage": "Введіть новий пароль нижче."
   },
   "reset-password.invalid-link": {
-    "defaultMessage": "Invalid password reset link. Please request a new one."
+    "defaultMessage": "Недійсне посилання для скидання пароля. Будь ласка, запросіть нове."
   },
   "reset-password.request-new": {
-    "defaultMessage": "Request new link"
+    "defaultMessage": "Запросити нове посилання"
   },
   "reset-password.password": {
-    "defaultMessage": "New password"
+    "defaultMessage": "Новий пароль"
   },
   "reset-password.confirm-password": {
-    "defaultMessage": "Confirm new password"
+    "defaultMessage": "Підтвердьте новий пароль"
   },
   "reset-password.submit": {
-    "defaultMessage": "Set new password"
+    "defaultMessage": "Установити новий пароль"
   },
   "reset-password.too-short": {
-    "defaultMessage": "Password must be at least 8 characters."
+    "defaultMessage": "Пароль має містити щонайменше 8 символів."
   },
   "reset-password.too-long": {
-    "defaultMessage": "Password must be less than 40 characters."
+    "defaultMessage": "Пароль має містити менше 40 символів."
   },
   "reset-password.mismatch": {
-    "defaultMessage": "Passwords do not match."
+    "defaultMessage": "Паролі не збігаються."
   },
   "reset-password.page-title": {
-    "defaultMessage": "Reset Password | WiseMapping"
+    "defaultMessage": "Скидання пароля | WiseMapping"
   },
   "maps.auth-required-title": {
-    "defaultMessage": "Sign In Required | WiseMapping"
+    "defaultMessage": "Потрібен вхід | WiseMapping"
   },
   "maps.auth-required-heading": {
-    "defaultMessage": "Sign in to access your maps"
+    "defaultMessage": "Увійдіть, щоб отримати доступ до своїх карт"
   },
   "maps.auth-required-login": {
-    "defaultMessage": "Go to login"
+    "defaultMessage": "Перейти до входу"
   },
   "maps.auth-required-default-message": {
-    "defaultMessage": "You need to sign in to view your maps."
+    "defaultMessage": "Щоб переглянути свої карти, потрібно увійти."
   },
   "activation.error.message": {
-    "defaultMessage": "We couldn't activate your account. The activation link may be invalid or expired. Please contact support for assistance."
+    "defaultMessage": "Не вдалося активувати ваш акаунт. Посилання для активації може бути недійсним або застарілим. Будь ласка, зверніться до служби підтримки за допомогою."
   },
   "activation.error.title": {
-    "defaultMessage": "Activation Failed"
+    "defaultMessage": "Активація не вдалася"
   },
   "activation.loading.desc": {
-    "defaultMessage": "Please wait while we activate your account..."
+    "defaultMessage": "Будь ласка, зачекайте, поки ми активуємо ваш акаунт..."
   },
   "activation.loading.title": {
-    "defaultMessage": "Activating Your Account"
+    "defaultMessage": "Активація вашого акаунта"
+  },
+  "activation.page-title": {
+    "defaultMessage": "Активація акаунта | WiseMapping"
   },
   "activation.success.message": {
-    "defaultMessage": "Your account has been activated. You can now sign in and start creating mind maps."
+    "defaultMessage": "Ваш акаунт активовано. Тепер ви можете увійти та почати створювати карти розуму."
   },
   "activation.success.title": {
-    "defaultMessage": "Account Activated Successfully"
+    "defaultMessage": "Акаунт успішно активовано"
+  },
+  "admin.accounts.add-user": {
+    "defaultMessage": "Додати нового користувача"
+  },
+  "admin.accounts.create": {
+    "defaultMessage": "Створити користувача"
+  },
+  "admin.accounts.create-user": {
+    "defaultMessage": "Створити користувача"
+  },
+  "admin.accounts.edit-user": {
+    "defaultMessage": "Редагувати користувача"
+  },
+  "admin.accounts.filters": {
+    "defaultMessage": "Пошук і фільтри"
+  },
+  "admin.accounts.no-users": {
+    "defaultMessage": "Користувачів не знайдено"
+  },
+  "admin.accounts.refresh": {
+    "defaultMessage": "Оновити"
+  },
+  "admin.accounts.refresh-tooltip": {
+    "defaultMessage": "Оновити дані"
+  },
+  "admin.accounts.search": {
+    "defaultMessage": "Пошук користувачів..."
+  },
+  "admin.accounts.subtitle": {
+    "defaultMessage": "Керування акаунтами користувачів, дозволами та налаштуваннями"
+  },
+  "admin.accounts.title": {
+    "defaultMessage": "Керування користувачами"
+  },
+  "admin.action.mark-as-not-spam": {
+    "defaultMessage": "позначити як не спам"
+  },
+  "admin.action.mark-as-spam": {
+    "defaultMessage": "позначити як спам"
+  },
+  "admin.activate-user": {
+    "defaultMessage": "Активувати користувача"
   },
   "map.actions": {
     "defaultMessage": "Дії"

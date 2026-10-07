@@ -74,6 +74,7 @@ import { logCriticalError } from '../../../../src/utils';
 import { trackPageView } from '../../../../src/utils/analytics';
 import { initAppConfig, installMatchMedia, renderPage, useConfig } from '../helpers';
 import { resetRouter, routerState, setLocation } from '../router-mock';
+import { BURST_TEXT, typeInBurst } from '../../burst-typing';
 
 const setup = () => {
   setLocation('/c/registration');
@@ -132,6 +133,29 @@ describe('RegistrationPage', () => {
     );
     await waitFor(() =>
       expect(routerState.navigate).toHaveBeenCalledWith('/c/registration-success'),
+    );
+  });
+
+  test('takes 200 characters typed in one burst, as Cypress types them', async () => {
+    const client = setup();
+    const field = (label: RegExp): HTMLInputElement =>
+      screen.getByLabelText(label) as HTMLInputElement;
+
+    expect(await typeInBurst(field(/^Email/), `${BURST_TEXT}@wisemapping.com`)).toEqual([]);
+    expect(await typeInBurst(field(/^First Name/))).toEqual([]);
+    expect(await typeInBurst(field(/^Last Name/))).toEqual([]);
+    expect(await typeInBurst(field(/^Password/))).toEqual([]);
+    submit();
+
+    await waitFor(() =>
+      expect(client.registerNewUser).toHaveBeenCalledWith(
+        expect.objectContaining({
+          email: field(/^Email/).value,
+          firstname: field(/^First Name/).value,
+          lastname: field(/^Last Name/).value,
+          password: field(/^Password/).value,
+        }),
+      ),
     );
   });
 

@@ -67,8 +67,7 @@ const LanguageMenu = (): React.ReactElement => {
     setAnchorEl(null);
   };
 
-  const handleOnClick = (event: React.MouseEvent<HTMLElement>) => {
-    const localeCode = (event.target as HTMLElement).id as LocaleCode;
+  const handleOnClick = (localeCode: LocaleCode) => {
     mutation.mutate(localeCode);
   };
 
@@ -114,7 +113,7 @@ const LanguageMenu = (): React.ReactElement => {
       >
         {/* Every supported locale, so none can be left out of the menu. */}
         {Object.values(Locales).map((locale) => (
-          <MenuItem key={locale.code} onClick={handleOnClick} id={locale.code}>
+          <MenuItem key={locale.code} onClick={() => handleOnClick(locale.code)} id={locale.code}>
             {locale.label}
           </MenuItem>
         ))}
@@ -141,15 +140,24 @@ type HelpUsToTranslateDialogProp = {
 const HelpUsToTranslateDialog = ({ onClose }: HelpUsToTranslateDialogProp) => {
   return (
     <Dialog open={true} onClose={onClose}>
-      <DialogTitle>Help us to support more languages !</DialogTitle>
+      <DialogTitle>
+        <FormattedMessage
+          id="language.help-dialog.title"
+          defaultMessage="Help us support more languages!"
+        />
+      </DialogTitle>
       <DialogContent>
         <DialogContentText>
-          We need your help !. If you are interested, send us an email to team@wisemapping.com.
+          <FormattedMessage
+            id="language.help-dialog.description"
+            defaultMessage="We need your help! If you are interested, send us an email at {email}."
+            values={{ email: 'team@wisemapping.com' }}
+          />
         </DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button autoFocus onClick={onClose}>
-          Close
+          <FormattedMessage id="common.close" defaultMessage="Close" />
         </Button>
       </DialogActions>
     </Dialog>

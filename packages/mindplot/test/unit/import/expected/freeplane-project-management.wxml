@@ -33,7 +33,7 @@
         <topic position="300,75" order="2" text="Monitoring &amp; Control" shape="line" id="10">
             <eicon id="3️⃣"/>
             <topic position="200,0" order="0" text="Progress Tracking" shape="line" id="11">
-                <eicon id="🔴"/>
+                <eicon id="💡"/>
                 <note contentType="html"><![CDATA[<p>Monitor project progress against timeline</p>]]></note>
             </topic>
             <topic position="-200,0" order="1" text="Quality Assurance" shape="line" id="12">

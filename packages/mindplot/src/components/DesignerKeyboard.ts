@@ -27,7 +27,7 @@ import type { TopicMove } from './util/topicReorder';
 import { $msg } from './Messages';
 import { $notify } from './model/ToolbarNotifier';
 
-export type EventCallback = (event?: Event) => void;
+type EventCallback = (event?: Event) => void;
 class DesignerKeyboard extends Keyboard {
   // The keyboards of the live designers: one per designer, several maps can share a page ...
   private static _live: Set<DesignerKeyboard> = new Set();
@@ -748,10 +748,8 @@ class DesignerKeyboard extends Keyboard {
   }
 
   private _goToNode(designer: Designer, node: Topic): void {
-    // First deselect all the nodes ...
-    designer.deselectAll();
-
-    // Give focus to the selected node....
+    // goToNode unselects every other entity in the same change: a deselectAll first would tell
+    // the editor of an empty selection before the node is selected.
     designer.goToNode(node);
   }
 

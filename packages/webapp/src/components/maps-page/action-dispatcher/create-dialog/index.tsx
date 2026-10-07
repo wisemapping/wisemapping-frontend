@@ -21,7 +21,12 @@ import { useIntl } from 'react-intl';
 import { useMutation } from '@tanstack/react-query';
 import FormControl from '@mui/material/FormControl';
 
-import { BasicMapInfo, ErrorInfo } from '../../../../classes/client';
+import {
+  BasicMapInfo,
+  ErrorInfo,
+  MAP_DESCRIPTION_MAX_LENGTH,
+  MAP_TITLE_MAX_LENGTH,
+} from '../../../../classes/client';
 import Input from '../../../form/input';
 import BaseDialog from '../base-dialog';
 import { ClientContext } from '../../../../classes/provider/client-context';
@@ -66,13 +71,14 @@ const CreateDialog = ({ onClose }: CreateProps): React.ReactElement => {
     mutation.mutate(model);
   };
 
-  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  // Stable, so that a key re-renders only the field typed in (see Input).
+  const handleOnChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>): void => {
     event.preventDefault();
 
     const name = event.target.name;
     const value = event.target.value;
-    setModel({ ...model, [name as keyof BasicMapInfo]: value });
-  };
+    setModel((current) => ({ ...current, [name as keyof BasicMapInfo]: value }));
+  }, []);
 
   return (
     <div>
@@ -103,7 +109,7 @@ const CreateDialog = ({ onClose }: CreateProps): React.ReactElement => {
             onChange={handleOnChange}
             error={error}
             fullWidth={true}
-            maxLength={60}
+            maxLength={MAP_TITLE_MAX_LENGTH}
           />
 
           <Input
@@ -118,6 +124,7 @@ const CreateDialog = ({ onClose }: CreateProps): React.ReactElement => {
             required={false}
             fullWidth={true}
             rows={3}
+            maxLength={MAP_DESCRIPTION_MAX_LENGTH}
           />
         </FormControl>
       </BaseDialog>

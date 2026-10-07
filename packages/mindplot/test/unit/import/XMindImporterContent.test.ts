@@ -116,7 +116,33 @@ describe('XMindImporter (JSON format) content', () => {
   test('imports Zen markers as icons', async () => {
     const mindmap = await importSheet();
 
-    expect(iconsOf(findByText(mindmap, 'Attached'))).toEqual(['🔴', '✅']);
+    const attached = findByText(mindmap, 'Attached');
+    expect(iconsOf(attached)).toEqual(['🔴']);
+    // The task progress is a WiseMapping task icon.
+    expect(attached.findFeatureByType('icon').map((icon) => icon.getIconType())).toEqual([
+      'task_100',
+    ]);
+  });
+
+  // The topic of xmind-sdk-js (src/common/model.ts) has markers and labels, but no icons.
+  test('ignores icons, which is not an XMind topic field (BL5-243)', async () => {
+    const topic = {
+      id: 'root',
+      title: 'Root',
+      notes: { plain: { content: 'The note' } },
+      labels: ['Label'],
+      icons: ['priority-1'],
+      markers: [{ markerId: 'priority-2', groupId: 'priorityMarkers' }],
+    };
+    const mindmap = loadMindmap(
+      await new XMindImporter(
+        JSON.stringify([{ id: 'sheet1', class: 'sheet', rootTopic: topic }]),
+      ).import('test'),
+    );
+
+    const root = findByText(mindmap, 'Root');
+    expect(noteOf(root)).toBe('The note\n🏷️ Label');
+    expect(iconsOf(root)).toEqual(['🟡']);
   });
 });
 
@@ -152,6 +178,58 @@ describe('XMindImporter (XML format) content', () => {
     expect(branches[1]!.getText()).toBe('Floating');
     expect(branches[1]!.getPosition()).toEqual({ x: 120, y: -80 });
     expect(mindmap.getRelationships()).toHaveLength(1);
+  });
+
+  // XMind 8 writes the markers of a topic as <marker-refs><marker-ref marker-id>. <marker> elements
+  // only exist in the marker sheet of the archive (markers/markerSheet.xml), never in a topic.
+  test('imports marker-refs as icons and ignores a <markers> element (BL5-252)', async () => {
+    const xmind = `<?xml version="1.0" encoding="UTF-8"?>
+<xmap-content xmlns="urn:xmind:xmap:xmlns:content:2.0" version="2.0">
+  <sheet id="sheet1">
+    <topic id="root">
+      <title>Root</title>
+      <notes><plain>The note</plain></notes>
+      <marker-refs>
+        <marker-ref marker-id="priority-1"/>
+        <marker-ref marker-id="task-done"/>
+      </marker-refs>
+      <markers><marker marker-id="priority-2"/></markers>
+    </topic>
+  </sheet>
+</xmap-content>`;
+
+    const root = findByText(loadMindmap(await new XMindImporter(xmind).import('test')), 'Root');
+
+    expect(noteOf(root)).toBe('The note');
+    expect(iconsOf(root)).toEqual(['🔴']);
+    expect(root.findFeatureByType('icon').map((icon) => icon.getIconType())).toEqual(['task_100']);
+  });
+
+  // XMind 8 writes the labels of a topic as <labels><label>text</label></labels>.
+  test('adds the labels to the note, as the JSON format does (BL5-252)', async () => {
+    const xmind = `<?xml version="1.0" encoding="UTF-8"?>
+<xmap-content xmlns="urn:xmind:xmap:xmlns:content:2.0" version="2.0">
+  <sheet id="sheet1">
+    <topic id="root">
+      <title>Root</title>
+      <notes><plain>The note</plain></notes>
+      <labels><label>Label A</label><label>Label B</label></labels>
+      <children>
+        <topics type="attached">
+          <topic id="a">
+            <title>Only labels</title>
+            <labels><label>Child label</label></labels>
+          </topic>
+        </topics>
+      </children>
+    </topic>
+  </sheet>
+</xmap-content>`;
+
+    const mindmap = loadMindmap(await new XMindImporter(xmind).import('test'));
+
+    expect(noteOf(findByText(mindmap, 'Root'))).toBe('The note\n🏷️ Label A, 🏷️ Label B');
+    expect(noteOf(findByText(mindmap, 'Only labels'))).toBe('🏷️ Child label');
   });
 });
 

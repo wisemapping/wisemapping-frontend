@@ -37,7 +37,7 @@ describe.each([
     classicLight.MainTopic.backgroundColor,
   ],
 ] as const)('%s-%s MainTopic background palette', (_name, variant, create, palette) => {
-  const theme = create(variant as ThemeVariant);
+  const theme = create(variant);
   const central = fakeTopic({}, undefined, { central: true });
 
   it.each([0, 1, 3, palette.length + 2])('picks a single colour for order %p', (order) => {

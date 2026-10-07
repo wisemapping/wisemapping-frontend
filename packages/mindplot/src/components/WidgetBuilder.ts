@@ -18,7 +18,6 @@
 
 import debounce from 'lodash/debounce';
 import type { ElementClass, ElementPeer } from '@wisemapping/web2d';
-import DOMUtils from './util/DOMUtils';
 import type LinkIcon from './LinkIcon';
 import type LinkModel from './model/LinkModel';
 import type NoteModel from './model/NoteModel';
@@ -47,7 +46,7 @@ abstract class WidgetBuilder {
 
     // Initialize debounced hide function for tooltips
     this._hideTooltip = debounce((tooltip: HTMLElement) => {
-      DOMUtils.css(tooltip, 'display', 'none');
+      tooltip.style.display = 'none';
     }, TOOLTIP_HIDE_DELAY);
   }
 
@@ -94,7 +93,7 @@ abstract class WidgetBuilder {
         tooltip.addEventListener('mouseover', (evt) => {
           // Cancel any pending hide when hovering over tooltip
           this._hideTooltip.cancel();
-          DOMUtils.css(evt.currentTarget as HTMLElement, 'display', 'block');
+          (evt.currentTarget as HTMLElement).style.display = 'block';
           evt.stopPropagation();
         });
         tooltip.addEventListener('mouseleave', (evt) => {
@@ -115,22 +114,22 @@ abstract class WidgetBuilder {
       // Delay showing tooltip to avoid flashing on quick hover
       this._showTimeout = window.setTimeout(() => {
         const tooltipTitle = webcomponentShadowRoot.getElementById('mindplot-svg-tooltip-title')!;
-        DOMUtils.text(tooltipTitle, title);
+        tooltipTitle.textContent = title;
 
         // Configure content based on tooltip type
         if (linkModel) {
           const tooltipLink = webcomponentShadowRoot.getElementById(
             'mindplot-svg-tooltip-content-link',
           )! as HTMLAnchorElement;
-          DOMUtils.attr(tooltipLink, 'href', linkModel.getUrl());
-          DOMUtils.attr(tooltipLink, 'rel', 'nofollow noopener noreferrer');
-          DOMUtils.text(tooltipLink, linkModel.getUrl());
-          DOMUtils.css(tooltipLink, 'display', 'block');
+          tooltipLink.setAttribute('href', linkModel.getUrl());
+          tooltipLink.setAttribute('rel', 'nofollow noopener noreferrer');
+          tooltipLink.textContent = linkModel.getUrl();
+          tooltipLink.style.display = 'block';
 
           const tooltipNote = webcomponentShadowRoot.getElementById(
             'mindplot-svg-tooltip-content-note',
           )!;
-          DOMUtils.css(tooltipNote, 'display', 'none');
+          tooltipNote.style.display = 'none';
         }
 
         if (noteModel) {
@@ -140,28 +139,28 @@ abstract class WidgetBuilder {
           if (noteModel.getContentType() === ContentType.HTML) {
             try {
               // Its links open in a new tab, so the map stays open.
-              DOMUtils.html(tooltipNote, HtmlSanitizer.sanitizeForDisplay(noteModel.getText()));
+              tooltipNote.innerHTML = HtmlSanitizer.sanitizeForDisplay(noteModel.getText());
             } catch {
               // Too large to sanitize: show its text instead.
-              DOMUtils.text(tooltipNote, noteModel.getPlainText());
+              tooltipNote.textContent = noteModel.getPlainText();
             }
           } else {
-            DOMUtils.text(tooltipNote, noteModel.getText());
+            tooltipNote.textContent = noteModel.getText();
           }
-          DOMUtils.css(tooltipNote, 'display', 'block');
+          tooltipNote.style.display = 'block';
 
           const tooltipLink = webcomponentShadowRoot.getElementById(
             'mindplot-svg-tooltip-content-link',
           )!;
-          DOMUtils.css(tooltipLink, 'display', 'none');
+          tooltipLink.style.display = 'none';
         }
 
         // Position tooltip near the icon while keeping it inside the visible mindmap container
         const targetRect = targetElement.getBoundingClientRect();
 
         if (tooltip) {
-          const tooltipWidth = DOMUtils.width(tooltip) || 0;
-          const tooltipHeight = DOMUtils.height(tooltip) || 0;
+          const tooltipWidth = tooltip.offsetWidth || 0;
+          const tooltipHeight = tooltip.offsetHeight || 0;
 
           const containerRect = mindmapComp.getBoundingClientRect();
           const containerWidth = containerRect.width;
@@ -195,10 +194,10 @@ abstract class WidgetBuilder {
             top = Math.max(0, containerHeight - tooltipHeight);
           }
 
-          DOMUtils.css(tooltip, 'top', `${top}px`);
-          DOMUtils.css(tooltip, 'left', `${left}px`);
-          DOMUtils.css(tooltip, 'position', 'absolute');
-          DOMUtils.css(tooltip, 'display', 'block');
+          tooltip.style.top = `${top}px`;
+          tooltip.style.left = `${left}px`;
+          tooltip.style.position = 'absolute';
+          tooltip.style.display = 'block';
         }
 
         this._showTimeout = null;

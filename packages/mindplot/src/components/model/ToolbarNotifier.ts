@@ -18,18 +18,17 @@
 
 import debounce from 'lodash/debounce';
 import { $assert } from '../util/assert';
-import DOMUtils from '../util/DOMUtils';
 
 class ToolbarNotifier {
   private static hideNotification = debounce((container: HTMLElement) => {
-    DOMUtils.hide(container);
-    DOMUtils.css(container, 'opacity', '');
-    DOMUtils.css(container, 'transition', '');
+    container.style.display = 'none';
+    container.style.opacity = '';
+    container.style.transition = '';
   }, 3100);
 
   private static hideNonFadingNotification = debounce((container: HTMLElement) => {
-    DOMUtils.hide(container);
-    DOMUtils.css(container, 'opacity', '');
+    container.style.display = 'none';
+    container.style.opacity = '';
   }, 2000);
 
   private static fadeOutTimer: number | undefined;
@@ -41,7 +40,7 @@ class ToolbarNotifier {
   static hide() {
     const { container } = this;
     if (container) {
-      DOMUtils.hide(container);
+      container.style.display = 'none';
     }
   }
 
@@ -58,8 +57,8 @@ class ToolbarNotifier {
     const { container } = this;
     if (container) {
       // Reset any ongoing animations
-      DOMUtils.css(container, 'opacity', '');
-      DOMUtils.css(container, 'transition', '');
+      container.style.opacity = '';
+      container.style.transition = '';
     }
 
     // Display the new notification
@@ -70,33 +69,33 @@ class ToolbarNotifier {
     const { container } = this;
 
     if (container) {
-      DOMUtils.text(container, msg);
+      container.textContent = msg;
 
       // Calculate center position
-      const windowWidth = DOMUtils.windowWidth();
-      const elementWidth = DOMUtils.width(container);
+      const windowWidth = window.innerWidth;
+      const elementWidth = container.offsetWidth;
       const leftPosition = Math.max(0, (windowWidth - elementWidth) / 2 - 9);
 
       // Override styled component positioning for proper centering
-      DOMUtils.css(container, 'left', `${leftPosition}px`);
-      DOMUtils.css(container, 'transform', 'none'); // Override the translateX(-50%)
+      container.style.left = `${leftPosition}px`;
+      container.style.transform = 'none'; // Override the translateX(-50%)
 
       if (fade) {
-        DOMUtils.show(container);
+        container.style.display = 'block';
         // Set initial opacity to 1 (fully visible)
-        DOMUtils.css(container, 'opacity', '1');
-        DOMUtils.css(container, 'transition', 'opacity 3000ms');
+        container.style.opacity = '1';
+        container.style.transition = 'opacity 3000ms';
 
         // Start fade out after a brief delay to ensure visibility
         this.fadeOutTimer = window.setTimeout(() => {
-          DOMUtils.css(container, 'opacity', '0');
+          container.style.opacity = '0';
         }, 100);
 
         // Hide after fade completes
         this.hideNotification(container);
       } else {
-        DOMUtils.show(container);
-        DOMUtils.css(container, 'opacity', '1');
+        container.style.display = 'block';
+        container.style.opacity = '1';
 
         // Hide after a short time (use debounce with shorter delay)
         this.hideNonFadingNotification(container);

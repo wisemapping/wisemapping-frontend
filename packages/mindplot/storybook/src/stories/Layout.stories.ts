@@ -241,9 +241,7 @@ const ensureMindmapStory = (): HTMLDivElement => {
     container.setAttribute('data-testid', 'mindmap-story-container');
     container.setAttribute('data-loaded', 'initial');
 
-    const mindplotElement = document.createElement(
-      'mindplot-component',
-    ) as MindplotWebComponent;
+    const mindplotElement = document.createElement('mindplot-component') as MindplotWebComponent;
     mindplotElement.id = 'mindmap-comp';
     mindplotElement.setAttribute('mode', 'viewonly-private');
     mindplotElement.style.width = '100%';

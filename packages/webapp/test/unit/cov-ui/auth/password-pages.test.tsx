@@ -30,6 +30,7 @@ import Client from '../../../../src/classes/client';
 import { trackPageView } from '../../../../src/utils/analytics';
 import { initAppConfig, installMatchMedia, renderPage } from '../helpers';
 import { resetRouter, routerState, setLocation } from '../router-mock';
+import { BURST_TEXT, typeInBurst } from '../../burst-typing';
 
 beforeAll(async () => {
   await initAppConfig();
@@ -70,6 +71,16 @@ describe('ForgotPasswordPage', () => {
     await waitFor(() =>
       expect(routerState.navigate).toHaveBeenCalledWith('/c/forgot-password-success'),
     );
+  });
+
+  test('takes 200 characters typed in one burst, as Cypress types them', async () => {
+    const client = setup();
+    const email = screen.getByLabelText(/^Email/) as HTMLInputElement;
+
+    expect(await typeInBurst(email, `${BURST_TEXT}@wisemapping.com`)).toEqual([]);
+    fireEvent.click(screen.getByRole('button', { name: 'Send recovery link' }));
+
+    await waitFor(() => expect(client.resetPassword).toHaveBeenCalledWith(email.value));
   });
 
   test('tells OAuth users they have no password to reset', async () => {
@@ -139,6 +150,21 @@ describe('ResetPasswordPage', () => {
       expect(client.resetPasswordFromToken).toHaveBeenCalledWith('tok-123', 'new-password'),
     );
     await waitFor(() => expect(routerState.navigate).toHaveBeenCalledWith('/c/login'));
+  });
+
+  test('takes 200 characters typed in one burst, as Cypress types them', async () => {
+    const client = setup();
+    const password = screen.getByLabelText(/^New password/) as HTMLInputElement;
+    const confirm = screen.getByLabelText(/^Confirm new password/) as HTMLInputElement;
+
+    expect(await typeInBurst(password)).toEqual([]);
+    expect(await typeInBurst(confirm)).toEqual([]);
+    fireEvent.submit(screen.getByRole('button', { name: 'Set new password' }).closest('form')!);
+
+    // What was typed reached the form: it is refused for its length.
+    expect(await screen.findByText('Password must be less than 40 characters.')).toBeTruthy();
+    expect(password.value).toBe(BURST_TEXT);
+    expect(client.resetPasswordFromToken).not.toHaveBeenCalled();
   });
 
   test.each([

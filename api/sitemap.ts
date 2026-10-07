@@ -16,7 +16,10 @@
  *   limitations under the License.
  */
 
-import { buildStaticUrls, generateSitemapXml } from '../packages/webapp/src/components/sitemap/utils';
+import {
+  buildStaticUrls,
+  generateSitemapXml,
+} from '../packages/webapp/src/components/sitemap/utils';
 
 type VercelRequest = {
   headers: Record<string, string | string[] | undefined>;

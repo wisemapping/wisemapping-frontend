@@ -20,7 +20,7 @@ const clampChannel = (value: number): number => Math.min(255, Math.max(0, value)
 
 const toHex = (value: number): string => value.toString(16).padStart(2, '0');
 
-export type Rgba = { r: number; g: number; b: number; a: number };
+type Rgba = { r: number; g: number; b: number; a: number };
 
 // WCAG 2 relative luminance (https://www.w3.org/TR/WCAG21/#dfn-relative-luminance).
 const relativeLuminance = ({ r, g, b }: Rgba): number => {

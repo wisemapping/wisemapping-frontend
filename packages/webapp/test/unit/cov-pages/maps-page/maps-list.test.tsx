@@ -60,6 +60,7 @@ import {
 import type { Filter } from '../../../../src/components/maps-page';
 import Client, { Label, MapInfo } from '../../../../src/classes/client';
 import { renderWithWrapper } from '../providers';
+import { BURST_TEXT, typeInBurst } from '../../burst-typing';
 
 const research: Label = { id: 7, title: 'Research', color: '#ff0000' };
 const travel: Label = { id: 8, title: 'Travel', color: '#00ff00' };
@@ -236,6 +237,18 @@ describe('MapsList', () => {
     fireEvent.change(screen.getByRole('textbox', { name: 'search' }), {
       target: { value: 'nothing like this' },
     });
+    expect(
+      screen.getAllByText('No matching mindmap found with the current filter criteria.'),
+    ).toHaveLength(2);
+  });
+
+  test('the search box takes 200 characters typed in one burst, as Cypress types them', async () => {
+    renderList();
+    await screen.findAllByText('Alpha plan');
+    const search = screen.getByRole('textbox', { name: 'search' }) as HTMLInputElement;
+
+    expect(await typeInBurst(search, `gamma${BURST_TEXT}`)).toEqual([]);
+
     expect(
       screen.getAllByText('No matching mindmap found with the current filter criteria.'),
     ).toHaveLength(2);

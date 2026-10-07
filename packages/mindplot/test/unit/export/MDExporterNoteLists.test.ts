@@ -94,3 +94,33 @@ describe('MD export of notes with lists', () => {
     expect(result).toBe(['[^1]: one two', '[^2]: \\- a - b', ''].join('\n'));
   });
 });
+
+describe('MD export of notes with blocks (BL5-215)', () => {
+  it('separates the paragraphs of a single-line footnote with a space', async () => {
+    expect(await footnotes(html('<p>one</p><p>two</p>'))).toBe('[^1]: one two\n');
+  });
+
+  it('separates the lines broken by <br> and nested blocks', async () => {
+    expect(await footnotes(html('<div><div>first</div><h2>second</h2></div>third<br>fourth'))).toBe(
+      '[^1]: first second third fourth\n',
+    );
+  });
+
+  it('keeps inline elements inside words', async () => {
+    expect(await footnotes(html('<p>bo<b>ld</b> and <i>it</i>alic</p>'))).toBe(
+      '[^1]: bold and italic\n',
+    );
+  });
+
+  it('separates the nested blocks of the text around lists', async () => {
+    const result = await footnotes(
+      html('<div><p>Plan</p><p>ahead</p></div><ul><li><p>a</p><p>b</p></li></ul>'),
+    );
+
+    expect(result).toBe(['[^1]: Plan ahead', '', '    - a b', ''].join('\n'));
+  });
+
+  it('leaves plain notes as they are', async () => {
+    expect(await footnotes({ text: 'one\ntwo' })).toBe('[^1]: one two\n');
+  });
+});

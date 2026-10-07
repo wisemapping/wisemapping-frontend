@@ -34,6 +34,7 @@ import { LocaleCode, localeFromStr } from '../../app-i18n';
 import Cookies from 'universal-cookie';
 import JwtTokenConfig from '../../jwt-token-config';
 import { setAnalyticsUserEmail, clearAnalyticsUserId } from '../../../utils/analytics';
+import { appLogger as log } from '../../../utils/logger';
 
 const label1: Label = {
   id: 1,
@@ -312,12 +313,12 @@ class MockClient implements Client {
   }
 
   updateAccountInfo(firstname: string, lastname: string): Promise<void> {
-    console.log('firstname:' + firstname, +lastname);
+    log.debug('firstname:' + firstname, lastname);
     return Promise.resolve();
   }
 
   updateAccountPassword(pasword: string): Promise<void> {
-    console.log('password:' + pasword);
+    log.debug('password:' + pasword);
     return Promise.resolve();
   }
 
@@ -327,12 +328,12 @@ class MockClient implements Client {
   }
 
   importMap(model: ImportMapInfo): Promise<number> {
-    console.log('model:' + model);
+    log.debug('model:' + model);
     return Promise.resolve(10);
   }
 
   fetchAccountInfo(): Promise<AccountInfo> {
-    console.log('Fetch account info ...');
+    log.debug('Fetch account info ...');
     const token = JwtTokenConfig.retreiveToken();
     if (!token) {
       return Promise.reject({ msg: 'User not authenticated', isAuth: true, status: 401 });
@@ -353,7 +354,7 @@ class MockClient implements Client {
     return Promise.resolve();
   }
   revertHistory(id: number, cid: number): Promise<void> {
-    console.log('model:' + id + cid);
+    log.debug('model:' + id + cid);
     return Promise.resolve();
   }
 
@@ -376,7 +377,7 @@ class MockClient implements Client {
   }
 
   fetchLabels(): Promise<Label[]> {
-    console.log('Fetching  labels from server');
+    log.debug('Fetching  labels from server');
     return Promise.resolve(this.labels);
   }
 
@@ -391,7 +392,7 @@ class MockClient implements Client {
   updateStarred(id: number, starred: boolean): Promise<void> {
     const mapInfo = this.maps.find((m) => m.id == id);
     if (!mapInfo) {
-      console.log(`Could not find the map iwth id ${id}`);
+      log.debug(`Could not find the map iwth id ${id}`);
       return Promise.reject();
     }
     mapInfo.starred = starred;
@@ -422,7 +423,7 @@ class MockClient implements Client {
   }
 
   fetchHistory(id: number): Promise<ChangeHistory[]> {
-    console.log(`Fetching history for ${id}`);
+    log.debug(`Fetching history for ${id}`);
     const result = [
       {
         id: 1,
@@ -552,7 +553,7 @@ class MockClient implements Client {
   }
 
   fetchAllMaps(): Promise<MapInfo[]> {
-    console.log('Fetching  maps from server');
+    log.debug('Fetching  maps from server');
     return Promise.resolve(this.maps);
   }
 
@@ -565,7 +566,7 @@ class MockClient implements Client {
   }
 
   activateAccount(code: string): Promise<void> {
-    console.log('Activating account with code:' + code);
+    log.debug('Activating account with code:' + code);
     if (code === '999999999') {
       return Promise.reject({
         msg: 'Invalid activation code. The link may be incorrect or expired.',

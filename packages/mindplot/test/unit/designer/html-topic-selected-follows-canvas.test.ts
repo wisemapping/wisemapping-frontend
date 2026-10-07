@@ -24,18 +24,17 @@ jest.mock('../../../src/components/export/PDFExporter', () => ({
   default: class MockPDFExporter {},
 }));
 
-const rect = (left: number, top: number, width: number, height: number): DOMRect =>
-  ({
-    left,
-    top,
-    width,
-    height,
-    right: left + width,
-    bottom: top + height,
-    x: left,
-    y: top,
-    toJSON: () => ({}),
-  }) as DOMRect;
+const rect = (left: number, top: number, width: number, height: number): DOMRect => ({
+  left,
+  top,
+  width,
+  height,
+  right: left + width,
+  bottom: top + height,
+  x: left,
+  y: top,
+  toJSON: () => ({}),
+});
 
 // jsdom runs animation frames on a ~16 ms timer.
 const afterAnimationFrames = () =>

@@ -18,7 +18,6 @@
  */
 import type { FontStyle } from '@wisemapping/web2d';
 
-import DOMUtils from './util/DOMUtils';
 import EventManager from './util/EventManager';
 import EventDispatcher from './EventDispatcher';
 import type Topic from './Topic';
@@ -70,31 +69,31 @@ class EditorComponent extends EventDispatcher<EditorEvents> {
   }
 
   private static buildEditor(): HTMLElement {
-    const result = DOMUtils.createElement('div');
-    DOMUtils.attr(result, 'id', 'textContainer');
-    DOMUtils.css(result, 'display', 'none');
-    DOMUtils.css(result, 'zIndex', '8');
-    DOMUtils.css(result, 'border', '0 none');
+    const result = document.createElement('div');
+    result.setAttribute('id', 'textContainer');
+    result.style.display = 'none';
+    result.style.zIndex = '8';
+    result.style.border = '0 none';
 
-    const textareaElem = DOMUtils.createElement('textarea');
-    DOMUtils.attr(textareaElem, 'tabindex', '-1');
-    DOMUtils.attr(textareaElem, 'value', '');
-    DOMUtils.attr(textareaElem, 'wrap', 'off');
+    const textareaElem = document.createElement('textarea');
+    textareaElem.setAttribute('tabindex', '-1');
+    textareaElem.setAttribute('value', '');
+    textareaElem.setAttribute('wrap', 'off');
     // Prevent browser extensions from interfering with this textarea
-    DOMUtils.attr(textareaElem, 'autocomplete', 'off');
-    DOMUtils.attr(textareaElem, 'data-lpignore', 'true'); // LastPass ignore
-    DOMUtils.attr(textareaElem, 'data-form-type', 'other'); // 1Password ignore
-    DOMUtils.attr(textareaElem, 'data-1p-ignore', 'true'); // 1Password ignore
-    DOMUtils.css(textareaElem, 'border', '0px');
-    DOMUtils.css(textareaElem, 'background', 'rgba(0, 0, 0, 0)');
-    DOMUtils.css(textareaElem, 'outline', '0 none');
-    DOMUtils.css(textareaElem, 'resize', 'none');
-    DOMUtils.css(textareaElem, 'overflow', 'hidden');
-    DOMUtils.css(textareaElem, 'padding', '0px 0px 0px 0px');
-    DOMUtils.css(textareaElem, 'lineHeight', '100%');
-    DOMUtils.css(textareaElem, 'width', '100%');
+    textareaElem.setAttribute('autocomplete', 'off');
+    textareaElem.setAttribute('data-lpignore', 'true'); // LastPass ignore
+    textareaElem.setAttribute('data-form-type', 'other'); // 1Password ignore
+    textareaElem.setAttribute('data-1p-ignore', 'true'); // 1Password ignore
+    textareaElem.style.border = '0px';
+    textareaElem.style.background = 'rgba(0, 0, 0, 0)';
+    textareaElem.style.outline = '0 none';
+    textareaElem.style.resize = 'none';
+    textareaElem.style.overflow = 'hidden';
+    textareaElem.style.padding = '0px 0px 0px 0px';
+    textareaElem.style.lineHeight = '100%';
+    textareaElem.style.width = '100%';
 
-    DOMUtils.append(result, textareaElem);
+    result.appendChild(textareaElem);
     return result;
   }
 
@@ -232,7 +231,7 @@ class EditorComponent extends EventDispatcher<EditorEvents> {
 
     const mindmapCompData = EditorComponent.anchorOf(this._topic)?.getBoundingClientRect();
     const maxWidth = mindmapCompData ? mindmapCompData.width - left : 0;
-    DOMUtils.css(this._containerElem, 'maxWidth', `${maxWidth}px`);
+    this._containerElem.style.maxWidth = `${maxWidth}px`;
   }
 
   private sizeToText(textValue: string): void {
@@ -241,11 +240,11 @@ class EditorComponent extends EventDispatcher<EditorEvents> {
     const rows = [...textValue].filter((x) => x === '\n').length + 1;
     const maxLineLength = Math.max(...textValue.split('\n').map((l) => l.length));
 
-    DOMUtils.attr(textElem, 'cols', maxLineLength.toString());
-    DOMUtils.attr(textElem, 'rows', rows.toString());
+    textElem.setAttribute('cols', maxLineLength.toString());
+    textElem.setAttribute('rows', rows.toString());
 
-    DOMUtils.css(this._containerElem, 'width', `${maxLineLength + 2}em`);
-    DOMUtils.css(this._containerElem, 'height', '0');
+    this._containerElem.style.width = `${maxLineLength + 2}em`;
+    this._containerElem.style.height = '0';
   }
 
   private updateModel() {
@@ -291,19 +290,15 @@ class EditorComponent extends EventDispatcher<EditorEvents> {
 
     // Set editor's initial size
     // Position the editor and set the size...
-    DOMUtils.css(this._containerElem, 'display', 'block');
+    this._containerElem.style.display = 'block';
 
     // Set editor's initial text. If the text has not been specifed, it will be empty
     const modelText = topic.getModel().getText();
     const text = textOverwrite || modelText || '';
     this.setText(text);
 
-    // Set the element focus and select the current text ...
-    const textAreaElem = this.getTextareaElem();
-    if (textAreaElem) {
-      this.positionCursor(textAreaElem, textOverwrite === undefined);
-    }
-    textAreaElem.focus();
+    // Focus the element and select the current text: positionCursor does both ...
+    this.positionCursor(this.getTextareaElem(), textOverwrite === undefined);
   }
 
   private setStyle(fontStyle: FontStyle) {
@@ -323,21 +318,25 @@ class EditorComponent extends EventDispatcher<EditorEvents> {
     }
 
     const cssStyle: Record<string, string> = {
-      'font-size': `${fontStyle.size}px`,
+      // A text without a size: the empty value removes the property rather than writing
+      // "undefinedpx", so that the editor inherits one.
+      'font-size': fontStyle.size === undefined ? '' : `${fontStyle.size}px`,
       'font-family': fontStyle.fontFamily,
       'font-style': fontStyle.style,
       'font-weight': fontStyle.weight,
-      color: fontStyle.color!,
+      // A text without a colour of its own: the empty value removes the one of the topic edited
+      // before, so that the editor inherits one.
+      color: fontStyle.color ?? '',
     };
     Object.entries(cssStyle).forEach(([prop, value]) => {
-      DOMUtils.css(inputField, prop, value);
-      DOMUtils.css(this._containerElem, prop, value);
+      inputField.style.setProperty(prop, value);
+      this._containerElem.style.setProperty(prop, value);
     });
   }
 
   private setText(text: string): void {
     const textareaElem = this.getTextareaElem();
-    DOMUtils.val(textareaElem, text);
+    textareaElem.value = text;
 
     this._topic.setText(text);
 
@@ -345,11 +344,15 @@ class EditorComponent extends EventDispatcher<EditorEvents> {
   }
 
   private getTextAreaText(): string {
-    return DOMUtils.val(this.getTextareaElem());
+    return this.getTextareaElem().value;
   }
 
   private getTextareaElem(): HTMLTextAreaElement {
-    return DOMUtils.find(this._containerElem, 'textarea')[0] as HTMLTextAreaElement;
+    const result = this._containerElem.querySelector('textarea');
+    if (!result) {
+      throw new Error('The text editor has no textarea');
+    }
+    return result;
   }
 
   private positionCursor(textareaElem: HTMLTextAreaElement, selectText: boolean) {
@@ -369,7 +372,7 @@ class EditorComponent extends EventDispatcher<EditorEvents> {
       this.updateModel();
     }
     // Remove it form the screen ...
-    DOMUtils.remove(this._containerElem);
+    this._containerElem.remove();
 
     // Restore topoc share visibility ...
     this._topic.getOrBuildTextShape().setVisibility(true);

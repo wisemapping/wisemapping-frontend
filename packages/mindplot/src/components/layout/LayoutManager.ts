@@ -31,14 +31,14 @@ import type { SorterPrediction } from './ChildrenSorterStrategy';
 import type { LayoutType, OrientationType } from './LayoutType';
 
 /** The events of the layout manager: 'change' sends each node the layout moved. */
-export type LayoutManagerEvents = Record<LayoutEventType, ChangeEvent>;
+type LayoutManagerEvents = Record<LayoutEventType, ChangeEvent>;
 
 /**
  * A layout node as LayoutManager.find gives it: without its setters. The manager tracks what
  * changes through its own methods (see needsLayout); a node changed behind its back would not be
  * laid out by the next forceLayout.
  */
-export type NodeView = Omit<
+type NodeView = Omit<
   Node,
   | 'setShrunken'
   | 'setOrder'

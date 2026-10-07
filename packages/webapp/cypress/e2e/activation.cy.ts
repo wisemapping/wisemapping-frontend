@@ -29,10 +29,10 @@ describe('Activation Page', () => {
     it('should display activation error message', () => {
       // Wait for error state to render
       cy.contains('Activation Failed', { timeout: 10000 }).should('be.visible');
-      
+
       // Check error message (updated to match actual i18n message from backend)
       cy.contains('Invalid activation code').should('be.visible');
-      
+
       // Check only Sign In button is present (no Sign Up button)
       cy.contains('button', 'Sign In').should('be.visible');
       cy.contains('button', 'Sign Up').should('not.exist');
@@ -58,11 +58,11 @@ describe('Activation Page', () => {
     it('should display activation success message', () => {
       // Wait for success state to render
       cy.contains('Account Activated Successfully', { timeout: 10000 }).should('be.visible');
-      
+
       // Check success message in the alert
       cy.contains('Your account has been activated').should('be.visible');
       cy.contains('You can now sign in and start creating mind maps').should('be.visible');
-      
+
       // Check Sign In button exists
       cy.contains('button', 'Sign In').should('be.visible');
     });
@@ -91,7 +91,7 @@ describe('Activation Page', () => {
     it('should display error for missing activation code', () => {
       // Check error title
       cy.contains('Activation Failed').should('be.visible');
-      
+
       // The component should detect missing code immediately without API call
       cy.contains('button', 'Sign In').should('be.visible');
       cy.contains('button', 'Sign Up').should('not.exist');
@@ -108,10 +108,9 @@ describe('Activation Page', () => {
       // Check loading title appears briefly (may not always catch it due to fast mock)
       // This test might be flaky with mock client, but we'll check for either loading or success state
       cy.get('body').should('be.visible');
-      
+
       // Eventually should show success
       cy.contains('Account Activated Successfully', { timeout: 10000 }).should('be.visible');
     });
   });
 });
-

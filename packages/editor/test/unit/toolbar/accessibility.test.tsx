@@ -67,7 +67,12 @@ describe('toolbar accessibility', () => {
     it('falls back to the tooltip for its accessible name', () => {
       render(
         <ToolbarButtonOption
-          configuration={{ icon: <span />, tooltip: 'Zoom In', 'data-testid': 'trigger', onClick: jest.fn() }}
+          configuration={{
+            icon: <span />,
+            tooltip: 'Zoom In',
+            'data-testid': 'trigger',
+            onClick: jest.fn(),
+          }}
         />,
       );
       expect(trigger()).toHaveAttribute('aria-label', 'Zoom In');

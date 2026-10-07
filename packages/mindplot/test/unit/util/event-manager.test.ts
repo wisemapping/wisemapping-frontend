@@ -15,74 +15,11 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import DOMUtils from '../../../src/components/util/DOMUtils';
 import EventManager from '../../../src/components/util/EventManager';
 
 afterEach(() => {
   document.body.innerHTML = '';
   jest.useRealTimers();
-});
-
-describe('DOMUtils setters', () => {
-  it('sets a style, html, text and attributes', () => {
-    const element = document.body.appendChild(document.createElement('div'));
-    DOMUtils.css(element, 'zIndex', '8');
-    expect(element.style.zIndex).toBe('8');
-
-    DOMUtils.html(element, '<b>bold</b>');
-    expect(element.innerHTML).toBe('<b>bold</b>');
-
-    DOMUtils.text(element, '<i>');
-    expect(element.innerHTML).toBe('&lt;i&gt;');
-
-    DOMUtils.attr(element, 'title', 'tip');
-    expect(element.getAttribute('title')).toBe('tip');
-  });
-
-  it('sets and reads input values', () => {
-    const input = document.createElement('input');
-    DOMUtils.val(input, 'typed');
-    expect(DOMUtils.val(input)).toBe('typed');
-  });
-
-  it('shows and hides', () => {
-    const element = document.createElement('div');
-    DOMUtils.hide(element);
-    expect(element.style.display).toBe('none');
-    DOMUtils.show(element);
-    expect(element.style.display).toBe('block');
-  });
-
-  it('reads sizes', () => {
-    const element = document.createElement('div');
-    expect(DOMUtils.width(element)).toBe(0);
-    expect(DOMUtils.height(element)).toBe(0);
-    expect(DOMUtils.windowWidth()).toBe(window.innerWidth);
-  });
-});
-
-describe('DOMUtils tree helpers', () => {
-  it('appends, finds and removes', () => {
-    const parent = DOMUtils.createElement('div');
-    const child = DOMUtils.createElement('span');
-    child.className = 'item';
-    DOMUtils.append(parent, child);
-
-    expect(DOMUtils.find(parent, '.item')).toEqual([child]);
-    expect(child.parentElement).toBe(parent);
-
-    DOMUtils.remove(child);
-    expect(DOMUtils.find(parent, '.item')).toEqual([]);
-    // Removing a detached element is a no-op.
-    expect(() => DOMUtils.remove(child)).not.toThrow();
-  });
-
-  it('creates an empty XML document', () => {
-    const doc = DOMUtils.createDocument();
-    expect(doc.documentElement).toBeNull();
-    doc.appendChild(doc.createElement('map'));
-    expect(doc.documentElement.tagName).toBe('map');
-  });
 });
 
 describe('EventManager', () => {

@@ -38,6 +38,13 @@ describe('Rect', () => {
     expect(node.getAttribute('ry')).toBe('10.25');
   });
 
+  it('without an arc writes no rx/ry (an arc of 0 writes them as 0)', () => {
+    const square = new Rect().peer._native;
+    expect(square.hasAttribute('rx')).toBe(false);
+    expect(square.hasAttribute('ry')).toBe(false);
+    expect(new Rect(0).peer._native.getAttribute('rx')).toBe('0');
+  });
+
   it('rejects an arc above 1', () => {
     expect(() => new Rect(2)).toThrow('Arc must be 0<=arc<=1');
   });

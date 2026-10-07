@@ -19,40 +19,46 @@ import { defineConfig } from 'vite';
 import path from 'path';
 
 export default defineConfig({
-    resolve: {
-        tsconfigPaths: true,
-        alias: [
-            { find: /^@wisemapping\/web2d\/src\/(.*)/, replacement: path.resolve(import.meta.dirname, '../web2d/src/$1') },
-            { find: /^@wisemapping\/web2d$/, replacement: path.resolve(import.meta.dirname, '../web2d/src/index.ts') },
-        ],
+  resolve: {
+    tsconfigPaths: true,
+    alias: [
+      {
+        find: /^@wisemapping\/web2d\/src\/(.*)/,
+        replacement: path.resolve(import.meta.dirname, '../web2d/src/$1'),
+      },
+      {
+        find: /^@wisemapping\/web2d$/,
+        replacement: path.resolve(import.meta.dirname, '../web2d/src/index.ts'),
+      },
+    ],
+  },
+  build: {
+    lib: {
+      entry: path.resolve(import.meta.dirname, 'src/index.ts'),
+      name: 'mindplot',
+      fileName: (format) => `index.${format === 'es' ? 'js' : 'cjs'}`,
     },
-    build: {
-        lib: {
-            entry: path.resolve(import.meta.dirname, 'src/index.ts'),
-            name: 'mindplot',
-            fileName: (format) => `index.${format === 'es' ? 'js' : 'cjs'}`,
+    rollupOptions: {
+      external: [
+        'react',
+        'react-dom',
+        'jquery',
+        '@wisemapping/web2d',
+        'jspdf',
+        'xml-formatter',
+        'lodash',
+        'html2canvas',
+      ],
+      output: {
+        globals: {
+          react: 'React',
+          'react-dom': 'ReactDOM',
+          jquery: '$',
+          '@wisemapping/web2d': 'web2d',
         },
-        rollupOptions: {
-            external: [
-                'react',
-                'react-dom',
-                'jquery',
-                '@wisemapping/web2d',
-                'jspdf',
-                'xml-formatter',
-                'lodash',
-                'html2canvas',
-            ],
-            output: {
-                globals: {
-                    react: 'React',
-                    'react-dom': 'ReactDOM',
-                    jquery: '$',
-                    '@wisemapping/web2d': 'web2d',
-                },
-            },
-        },
-        outDir: 'dist',
-        sourcemap: true,
+      },
     },
+    outDir: 'dist',
+    sourcemap: true,
+  },
 });

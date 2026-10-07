@@ -25,6 +25,8 @@ import { StrokeStyle } from './model/RelationshipModel';
 import type PositionType from './PositionType';
 import type Topic from './Topic';
 import Shape from './util/Shape';
+import { hasShortcutModifier } from './util/platform';
+import { markObjectTouch } from './util/objectTouch';
 import RelationshipSnap from './RelationshipSnap';
 import type Canvas from './Canvas';
 
@@ -60,6 +62,8 @@ class Relationship extends BaseConnectionLine<CurvedLine> {
   private _focusEndArrow: Arrow;
 
   private _onFocusHandler: (event: Event) => void;
+
+  private _onClickHandler: (event: Event) => void;
 
   private _model: RelationshipModel;
 
@@ -140,8 +144,27 @@ class Relationship extends BaseConnectionLine<CurvedLine> {
 
     // Initialize handler ..
 
+    // A press selects the relationship, or toggles it with the shortcut modifier, as on a topic:
+    // the designer also unselects the other entities and closes the text editor, as one change.
+    // The press goes no further: on the canvas it would start a pan, whose release is a click on
+    // the background, which unselects everything.
     this._onFocusHandler = (event) => {
-      this.setOnFocus(true);
+      const mouseEvent = event as MouseEvent;
+      let focus = true;
+      if (hasShortcutModifier(mouseEvent)) {
+        focus = !this.isOnFocus();
+        mouseEvent.preventDefault();
+      }
+      const designer = this._sourceTopic.getDesigner();
+      if (designer) {
+        designer.selectOnClick(this, focus, mouseEvent);
+      } else {
+        this.setOnFocus(focus);
+      }
+      mouseEvent.stopPropagation();
+    };
+    // The click that follows the press has nothing left to do, and must not reach the page.
+    this._onClickHandler = (event) => {
       event.stopPropagation();
       event.preventDefault();
     };
@@ -279,8 +302,13 @@ class Relationship extends BaseConnectionLine<CurvedLine> {
       this._line.setCursor('default');
       this._focusShape.setCursor('default');
     } else {
-      this._line.addEvent('click', this._onFocusHandler);
-      this._focusShape.addEvent('click', this._onFocusHandler);
+      this._line.addEvent('mousedown', this._onFocusHandler);
+      this._focusShape.addEvent('mousedown', this._onFocusHandler);
+      this._line.addEvent('click', this._onClickHandler);
+      this._focusShape.addEvent('click', this._onClickHandler);
+      // A tap selects through its emulated mousedown: its release is no click on the background.
+      this._line.addEvent('touchstart', markObjectTouch);
+      this._focusShape.addEvent('touchstart', markObjectTouch);
     }
     this._isInWorkspace = true;
 
@@ -309,8 +337,12 @@ class Relationship extends BaseConnectionLine<CurvedLine> {
   override removeFromWorkspace(workspace: Canvas): void {
     workspace.removeChild(this._controlPointsController);
 
-    this._line.removeEvent('click', this._onFocusHandler);
-    this._focusShape.removeEvent('click', this._onFocusHandler);
+    this._line.removeEvent('mousedown', this._onFocusHandler);
+    this._focusShape.removeEvent('mousedown', this._onFocusHandler);
+    this._line.removeEvent('click', this._onClickHandler);
+    this._focusShape.removeEvent('click', this._onClickHandler);
+    this._line.removeEvent('touchstart', markObjectTouch);
+    this._focusShape.removeEvent('touchstart', markObjectTouch);
     this._isInWorkspace = false;
 
     // Remove all relationship components from workspace
@@ -498,6 +530,7 @@ class Relationship extends BaseConnectionLine<CurvedLine> {
 
       this._controlPointsController.setVisibility(focus);
       this._onFocus = focus;
+      this._sourceTopic.getDesigner()?.getModel().setRelationshipSelected(this, focus);
       this.fireEvent(focus ? 'ontfocus' : 'ontblur', this);
     }
   }

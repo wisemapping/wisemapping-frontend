@@ -108,8 +108,8 @@ describe('Relationship released end after its topic is resized (BL5-125)', () =>
     const placedEnd = endOf(relationship, type);
     expect(relationship.getLine().getControlPoints()[type]).toEqual(ctrlPoint);
     const facing = RelationshipSnap.calculateSnapPoint(end, {
-      x: placedEnd.x + ctrlPoint.x!,
-      y: placedEnd.y + ctrlPoint.y!,
+      x: placedEnd.x + ctrlPoint.x,
+      y: placedEnd.y + ctrlPoint.y,
     });
     expect(facing.x).toBeCloseTo(placedEnd.x);
     expect(facing.y).toBeCloseTo(placedEnd.y);

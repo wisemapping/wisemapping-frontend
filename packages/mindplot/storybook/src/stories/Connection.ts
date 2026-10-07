@@ -47,7 +47,6 @@ const registerRefreshHook = (topics: Topic[], layoutEventBus: LayoutEventBus) =>
   globalThis.observer.observe(rootElement, { childList: true });
 };
 
-
 export type TopicArgs = {
   readOnly?: boolean;
   theme?: ThemeType;

@@ -107,6 +107,12 @@
       "value": "Удалить аккаунт"
     }
   ],
+  "accountinfo.account-settings": [
+    {
+      "type": 0,
+      "value": "Настройки аккаунта"
+    }
+  ],
   "accountinfo.button": [
     {
       "type": 0,
@@ -122,7 +128,7 @@
   "accountinfo.email": [
     {
       "type": 0,
-      "value": "Email"
+      "value": "Электронная почта"
     }
   ],
   "accountinfo.firstname": [
@@ -140,7 +146,13 @@
   "accountinfo.personal-details": [
     {
       "type": 0,
-      "value": "Personal Details"
+      "value": "Личные данные"
+    }
+  ],
+  "accountinfo.personal-info": [
+    {
+      "type": 0,
+      "value": "Личная информация"
     }
   ],
   "accountinfo.title": [
@@ -278,37 +290,127 @@
   "activation.error.message": [
     {
       "type": 0,
-      "value": "We couldn't activate your account. The activation link may be invalid or expired. Please contact support for assistance."
+      "value": "Не удалось активировать ваш аккаунт. Ссылка для активации может быть недействительной или устаревшей. Пожалуйста, обратитесь в службу поддержки."
     }
   ],
   "activation.error.title": [
     {
       "type": 0,
-      "value": "Activation Failed"
+      "value": "Ошибка активации"
     }
   ],
   "activation.loading.desc": [
     {
       "type": 0,
-      "value": "Please wait while we activate your account..."
+      "value": "Пожалуйста, подождите, пока мы активируем ваш аккаунт..."
     }
   ],
   "activation.loading.title": [
     {
       "type": 0,
-      "value": "Activating Your Account"
+      "value": "Активация аккаунта"
+    }
+  ],
+  "activation.page-title": [
+    {
+      "type": 0,
+      "value": "Активация аккаунта | WiseMapping"
     }
   ],
   "activation.success.message": [
     {
       "type": 0,
-      "value": "Your account has been activated. You can now sign in and start creating mind maps."
+      "value": "Ваш аккаунт активирован. Теперь вы можете войти и начать создавать майнд-карты."
     }
   ],
   "activation.success.title": [
     {
       "type": 0,
-      "value": "Account Activated Successfully"
+      "value": "Аккаунт успешно активирован"
+    }
+  ],
+  "admin.accounts.add-user": [
+    {
+      "type": 0,
+      "value": "Добавить пользователя"
+    }
+  ],
+  "admin.accounts.create": [
+    {
+      "type": 0,
+      "value": "Создать пользователя"
+    }
+  ],
+  "admin.accounts.create-user": [
+    {
+      "type": 0,
+      "value": "Создать пользователя"
+    }
+  ],
+  "admin.accounts.edit-user": [
+    {
+      "type": 0,
+      "value": "Редактировать пользователя"
+    }
+  ],
+  "admin.accounts.filters": [
+    {
+      "type": 0,
+      "value": "Поиск и фильтры"
+    }
+  ],
+  "admin.accounts.no-users": [
+    {
+      "type": 0,
+      "value": "Пользователи не найдены"
+    }
+  ],
+  "admin.accounts.refresh": [
+    {
+      "type": 0,
+      "value": "Обновить"
+    }
+  ],
+  "admin.accounts.refresh-tooltip": [
+    {
+      "type": 0,
+      "value": "Обновить данные"
+    }
+  ],
+  "admin.accounts.search": [
+    {
+      "type": 0,
+      "value": "Поиск пользователей..."
+    }
+  ],
+  "admin.accounts.subtitle": [
+    {
+      "type": 0,
+      "value": "Управление аккаунтами пользователей, правами доступа и настройками"
+    }
+  ],
+  "admin.accounts.title": [
+    {
+      "type": 0,
+      "value": "Управление пользователями"
+    }
+  ],
+  "admin.action.mark-as-not-spam": [
+    {
+      "type": 0,
+      "value": "пометить как не спам"
+    }
+  ],
+  "admin.action.mark-as-spam": [
+    {
+      "type": 0,
+      "value": "пометить как спам"
+    }
+  ],
+  "admin.activate-user": [
+    {
+      "type": 0,
+      "value": "Активировать пользователя"
     }
   ],
   "admin.auth-type": [
@@ -317,22 +419,64 @@
       "value": "Тип авторизации"
     }
   ],
+  "admin.auth.database": [
+    {
+      "type": 0,
+      "value": "База данных"
+    }
+  ],
+  "admin.auth.facebook": [
+    {
+      "type": 0,
+      "value": "Facebook"
+    }
+  ],
+  "admin.auth.google": [
+    {
+      "type": 0,
+      "value": "Google"
+    }
+  ],
+  "admin.auth.ldap": [
+    {
+      "type": 0,
+      "value": "LDAP"
+    }
+  ],
+  "admin.button.update-user": [
+    {
+      "type": 0,
+      "value": "Обновить пользователя"
+    }
+  ],
+  "admin.button.updating": [
+    {
+      "type": 0,
+      "value": "Обновление..."
+    }
+  ],
+  "admin.cancel": [
+    {
+      "type": 0,
+      "value": "Отмена"
+    }
+  ],
   "admin.change-password": [
     {
       "type": 0,
-      "value": "Change password"
+      "value": "Сменить пароль"
     }
   ],
   "admin.change-password-button": [
     {
       "type": 0,
-      "value": "Change Password"
+      "value": "Сменить пароль"
     }
   ],
   "admin.change-password-description": [
     {
       "type": 0,
-      "value": "Change password for user: "
+      "value": "Смена пароля для пользователя: "
     },
     {
       "type": 1,
@@ -342,19 +486,77 @@
   "admin.change-password-title": [
     {
       "type": 0,
-      "value": "Change Password"
+      "value": "Смена пароля"
     }
   ],
   "admin.close": [
     {
       "type": 0,
-      "value": "Close"
+      "value": "Закрыть"
     }
   ],
   "admin.confirm-password": [
     {
       "type": 0,
-      "value": "Confirm Password"
+      "value": "Подтвердите пароль"
+    }
+  ],
+  "admin.confirm.delete-map": [
+    {
+      "type": 0,
+      "value": "Вы уверены, что хотите удалить карту «"
+    },
+    {
+      "type": 1,
+      "value": "title"
+    },
+    {
+      "type": 0,
+      "value": "»?"
+    }
+  ],
+  "admin.confirm.spam-action": [
+    {
+      "type": 0,
+      "value": "Вы уверены, что хотите "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": " эту карту?"
+    }
+  ],
+  "admin.console.description": [
+    {
+      "type": 0,
+      "value": "Управление пользователями, системными параметрами и конфигурацией приложения."
+    }
+  ],
+  "admin.console.page-title": [
+    {
+      "type": 0,
+      "value": "Консоль администратора | WiseMapping"
+    }
+  ],
+  "admin.console.subtitle": [
+    {
+      "type": 0,
+      "value": "Администрирование системы"
+    }
+  ],
+  "admin.console.title": [
+    {
+      "type": 0,
+      "value": "Консоль администратора"
+    }
+  ],
+  "admin.current-suspension-reason": [
+    {
+      "type": 0,
+      "value": "Текущая причина приостановки:"
     }
   ],
   "admin.delete": [
@@ -381,6 +583,108 @@
       "value": "Редактировать пользователя"
     }
   ],
+  "admin.error.access-denied": [
+    {
+      "type": 0,
+      "value": "Доступ запрещён. Требуются права администратора."
+    }
+  ],
+  "admin.error.create-user-failed": [
+    {
+      "type": 0,
+      "value": "Не удалось создать пользователя. Пожалуйста, попробуйте ещё раз."
+    }
+  ],
+  "admin.error.load-users": [
+    {
+      "type": 0,
+      "value": "Не удалось загрузить пользователей: "
+    },
+    {
+      "type": 1,
+      "value": "message"
+    }
+  ],
+  "admin.error.unknown": [
+    {
+      "type": 0,
+      "value": "Неизвестная ошибка"
+    }
+  ],
+  "admin.error.update-map-failed": [
+    {
+      "type": 0,
+      "value": "Не удалось обновить карту. Пожалуйста, попробуйте ещё раз."
+    }
+  ],
+  "admin.error.update-user-failed": [
+    {
+      "type": 0,
+      "value": "Не удалось обновить пользователя. Пожалуйста, попробуйте ещё раз."
+    }
+  ],
+  "admin.facebook.filter-tooltip": [
+    {
+      "type": 0,
+      "value": "Поиск для удаления данных Facebook"
+    }
+  ],
+  "admin.facebook.lookup-button": [
+    {
+      "type": 0,
+      "value": "Найти аккаунт"
+    }
+  ],
+  "admin.facebook.lookup-not-found": [
+    {
+      "type": 0,
+      "value": "Аккаунт с этим идентификатором пользователя Facebook не найден."
+    }
+  ],
+  "admin.facebook.remove": [
+    {
+      "type": 0,
+      "value": "Отвязать"
+    }
+  ],
+  "admin.facebook.remove-button": [
+    {
+      "type": 0,
+      "value": "Отвязать аккаунт Facebook"
+    }
+  ],
+  "admin.facebook.remove-confirm": [
+    {
+      "type": 0,
+      "value": "Отвязать Facebook от аккаунта «"
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": "»?"
+    }
+  ],
+  "admin.facebook.remove-dialog-title": [
+    {
+      "type": 0,
+      "value": "Отвязать аккаунт Facebook"
+    }
+  ],
+  "admin.facebook.remove-warning": [
+    {
+      "type": 0,
+      "value": "Аутентификация через Facebook будет отключена для этого аккаунта. Пользователь получит письмо для сброса пароля, чтобы восстановить доступ."
+    }
+  ],
+  "admin.facebook.removing": [
+    {
+      "type": 0,
+      "value": "Отвязка..."
+    }
+  ],
   "admin.lock-status": [
     {
       "type": 0,
@@ -393,40 +697,366 @@
       "value": "Заблокирован"
     }
   ],
+  "admin.maps.clean-tooltip": [
+    {
+      "type": 0,
+      "value": "Не помечена как спам"
+    }
+  ],
+  "admin.maps.creator-suspended-tooltip": [
+    {
+      "type": 0,
+      "value": "Аккаунт создателя карты приостановлен администратором"
+    }
+  ],
+  "admin.maps.delete": [
+    {
+      "type": 0,
+      "value": "Удалить карту"
+    }
+  ],
+  "admin.maps.description": [
+    {
+      "type": 0,
+      "value": "Описание"
+    }
+  ],
+  "admin.maps.edit": [
+    {
+      "type": 0,
+      "value": "Редактировать карту"
+    }
+  ],
+  "admin.maps.edit-title": [
+    {
+      "type": 0,
+      "value": "Редактирование карты"
+    }
+  ],
+  "admin.maps.filter.date": [
+    {
+      "type": 0,
+      "value": "Диапазон дат"
+    }
+  ],
+  "admin.maps.filter.spam": [
+    {
+      "type": 0,
+      "value": "Спам"
+    }
+  ],
+  "admin.maps.locked-tooltip": [
+    {
+      "type": 0,
+      "value": "Сейчас редактируется пользователем "
+    },
+    {
+      "type": 1,
+      "value": "user"
+    }
+  ],
+  "admin.maps.mark-as-not-spam": [
+    {
+      "type": 0,
+      "value": "Пометить как не спам"
+    }
+  ],
+  "admin.maps.mark-as-spam": [
+    {
+      "type": 0,
+      "value": "Пометить как спам"
+    }
+  ],
+  "admin.maps.no-maps": [
+    {
+      "type": 0,
+      "value": "Карты не найдены"
+    }
+  ],
+  "admin.maps.page-title": [
+    {
+      "type": 0,
+      "value": "Управление картами"
+    }
+  ],
+  "admin.maps.private-tooltip": [
+    {
+      "type": 0,
+      "value": "Эту карту могут просматривать только соавторы"
+    }
+  ],
+  "admin.maps.public-tooltip": [
+    {
+      "type": 0,
+      "value": "Эту карту может просматривать любой"
+    }
+  ],
+  "admin.maps.search": [
+    {
+      "type": 0,
+      "value": "Поиск карт... (#123 — по ID, электронная почта — по создателю)"
+    }
+  ],
+  "admin.maps.search-by-email": [
+    {
+      "type": 0,
+      "value": "🔍 Поиск по электронной почте создателя"
+    }
+  ],
+  "admin.maps.search-by-id": [
+    {
+      "type": 0,
+      "value": "🔍 Поиск по ID карты"
+    }
+  ],
+  "admin.maps.search-by-text": [
+    {
+      "type": 0,
+      "value": "🔍 Поиск по названиям и описаниям"
+    }
+  ],
+  "admin.maps.spam-label": [
+    {
+      "type": 0,
+      "value": "Спам ("
+    },
+    {
+      "type": 1,
+      "value": "type"
+    },
+    {
+      "type": 0,
+      "value": ")"
+    }
+  ],
+  "admin.maps.spam-tooltip": [
+    {
+      "type": 0,
+      "value": "Определена как спам "
+    },
+    {
+      "type": 1,
+      "value": "date"
+    }
+  ],
+  "admin.maps.spam-tooltip-no-date": [
+    {
+      "type": 0,
+      "value": "Помечена как спам"
+    }
+  ],
+  "admin.maps.spam-type-unknown": [
+    {
+      "type": 0,
+      "value": "Неизвестно"
+    }
+  ],
+  "admin.maps.suspend-user": [
+    {
+      "type": 0,
+      "value": "Приостановить аккаунт пользователя"
+    }
+  ],
+  "admin.maps.suspend-user.confirm": [
+    {
+      "type": 0,
+      "value": "Вы уверены, что хотите приостановить аккаунт пользователя «"
+    },
+    {
+      "type": 1,
+      "value": "userName"
+    },
+    {
+      "type": 0,
+      "value": "» (ID: "
+    },
+    {
+      "type": 1,
+      "value": "userId"
+    },
+    {
+      "type": 0,
+      "value": ")? Приостановка будет отмечена как результат ручной проверки."
+    }
+  ],
+  "admin.maps.suspend-user.confirm-button": [
+    {
+      "type": 0,
+      "value": "Приостановить пользователя"
+    }
+  ],
+  "admin.maps.suspend-user.title": [
+    {
+      "type": 0,
+      "value": "Приостановка аккаунта пользователя"
+    }
+  ],
+  "admin.maps.suspend-user.warning": [
+    {
+      "type": 0,
+      "value": "Это действие приостановит аккаунт пользователя и лишит его доступа к системе."
+    }
+  ],
+  "admin.maps.table.actions": [
+    {
+      "type": 0,
+      "value": "Действия"
+    }
+  ],
+  "admin.maps.table.created": [
+    {
+      "type": 0,
+      "value": "Создана"
+    }
+  ],
+  "admin.maps.table.description": [
+    {
+      "type": 0,
+      "value": "Описание"
+    }
+  ],
+  "admin.maps.table.id": [
+    {
+      "type": 0,
+      "value": "ID карты"
+    }
+  ],
+  "admin.maps.table.modified": [
+    {
+      "type": 0,
+      "value": "Изменена"
+    }
+  ],
+  "admin.maps.table.spam": [
+    {
+      "type": 0,
+      "value": "Спам"
+    }
+  ],
+  "admin.maps.table.spam-status": [
+    {
+      "type": 0,
+      "value": "Статус спама"
+    }
+  ],
+  "admin.maps.table.status": [
+    {
+      "type": 0,
+      "value": "Статус"
+    }
+  ],
+  "admin.maps.table.title": [
+    {
+      "type": 0,
+      "value": "Название"
+    }
+  ],
+  "admin.maps.title": [
+    {
+      "type": 0,
+      "value": "Название"
+    }
+  ],
+  "admin.maps.unlocked-tooltip": [
+    {
+      "type": 0,
+      "value": "Сейчас никем не редактируется"
+    }
+  ],
+  "admin.maps.view-xml": [
+    {
+      "type": 0,
+      "value": "Просмотр XML"
+    }
+  ],
+  "admin.maps.xml-viewer.copy": [
+    {
+      "type": 0,
+      "value": "Копировать форматированный XML"
+    }
+  ],
+  "admin.maps.xml-viewer.info": [
+    {
+      "type": 0,
+      "value": "Это исходное XML-содержимое майнд-карты. Вы можете скопировать его для резервного копирования или анализа."
+    }
+  ],
+  "admin.maps.xml-viewer.loading": [
+    {
+      "type": 0,
+      "value": "Загрузка XML-содержимого..."
+    }
+  ],
+  "admin.maps.xml-viewer.no-content": [
+    {
+      "type": 0,
+      "value": "XML-содержимое недоступно"
+    }
+  ],
+  "admin.maps.xml-viewer.title": [
+    {
+      "type": 0,
+      "value": "XML-содержимое карты"
+    }
+  ],
+  "admin.menu.accounts": [
+    {
+      "type": 0,
+      "value": "Аккаунты"
+    }
+  ],
+  "admin.menu.maps": [
+    {
+      "type": 0,
+      "value": "Карты"
+    }
+  ],
+  "admin.menu.system": [
+    {
+      "type": 0,
+      "value": "Система"
+    }
+  ],
   "admin.new-password": [
     {
       "type": 0,
-      "value": "New Password"
+      "value": "Новый пароль"
     }
   ],
   "admin.password-error-facebook": [
     {
       "type": 0,
-      "value": "This user is authenticated via Facebook. Password changes are not available for Facebook accounts. Please ask the user to manage their password through their Facebook account."
+      "value": "Этот пользователь входит через Facebook. Смена пароля для аккаунтов Facebook недоступна. Попросите пользователя управлять паролем в своём аккаунте Facebook."
     }
   ],
   "admin.password-error-failed": [
     {
       "type": 0,
-      "value": "Failed to change password"
+      "value": "Не удалось сменить пароль"
     }
   ],
   "admin.password-error-google": [
     {
       "type": 0,
-      "value": "This user is authenticated via Google. Password changes are not available for Google accounts. Please ask the user to manage their password through their Google account."
+      "value": "Этот пользователь входит через Google. Смена пароля для аккаунтов Google недоступна. Попросите пользователя управлять паролем в своём аккаунте Google."
     }
   ],
   "admin.password-error-length": [
     {
       "type": 0,
-      "value": "Password must be at least 6 characters"
+      "value": "Пароль должен содержать не менее 6 символов"
     }
   ],
   "admin.password-error-mismatch": [
     {
       "type": 0,
-      "value": "Passwords do not match"
+      "value": "Пароли не совпадают"
+    }
+  ],
+  "admin.prompt.new-user-password": [
+    {
+      "type": 0,
+      "value": "Введите пароль для нового пользователя:"
     }
   ],
   "admin.public": [
@@ -453,16 +1083,72 @@
       "value": "Активный"
     }
   ],
+  "admin.status-active-tooltip": [
+    {
+      "type": 0,
+      "value": "Аккаунт активирован, нарушений нет"
+    }
+  ],
+  "admin.status-active-tooltip-interactive": [
+    {
+      "type": 0,
+      "value": "Аккаунт активирован, нарушений нет | Нажмите, чтобы изменить статус"
+    }
+  ],
   "admin.status-clean": [
     {
       "type": 0,
-      "value": "Очистить"
+      "value": "Не спам"
+    }
+  ],
+  "admin.status-not-activated": [
+    {
+      "type": 0,
+      "value": "Не активирован"
+    }
+  ],
+  "admin.status-not-activated-tooltip": [
+    {
+      "type": 0,
+      "value": "Пользователь ещё не подтвердил адрес электронной почты"
+    }
+  ],
+  "admin.status-not-activated-tooltip-interactive": [
+    {
+      "type": 0,
+      "value": "Пользователь ещё не подтвердил адрес электронной почты | Нажмите, чтобы изменить статус"
     }
   ],
   "admin.status-suspended": [
     {
       "type": 0,
       "value": "Приостановлен"
+    }
+  ],
+  "admin.status.click-to-change": [
+    {
+      "type": 0,
+      "value": "Нажмите, чтобы изменить статус"
+    }
+  ],
+  "admin.status.reason": [
+    {
+      "type": 0,
+      "value": "Причина: "
+    },
+    {
+      "type": 1,
+      "value": "reason"
+    }
+  ],
+  "admin.status.suspended-on": [
+    {
+      "type": 0,
+      "value": "Дата приостановки: "
+    },
+    {
+      "type": 1,
+      "value": "date"
     }
   ],
   "admin.suspend-user": [
@@ -519,10 +1205,70 @@
       "value": "Нарушение условий"
     }
   ],
+  "admin.system.app.name": [
+    {
+      "type": 0,
+      "value": "Название"
+    }
+  ],
+  "admin.system.app.port": [
+    {
+      "type": 0,
+      "value": "Порт"
+    }
+  ],
+  "admin.system.application": [
+    {
+      "type": 0,
+      "value": "Приложение"
+    }
+  ],
+  "admin.system.database": [
+    {
+      "type": 0,
+      "value": "База данных"
+    }
+  ],
+  "admin.system.database.info": [
+    {
+      "type": 0,
+      "value": "База данных"
+    }
+  ],
+  "admin.system.db.ddl": [
+    {
+      "type": 0,
+      "value": "Hibernate DDL"
+    }
+  ],
+  "admin.system.db.driver": [
+    {
+      "type": 0,
+      "value": "Драйвер"
+    }
+  ],
   "admin.system.db.url": [
     {
       "type": 0,
       "value": "URL"
+    }
+  ],
+  "admin.system.db.username": [
+    {
+      "type": 0,
+      "value": "Имя пользователя"
+    }
+  ],
+  "admin.system.error": [
+    {
+      "type": 0,
+      "value": "Не удалось загрузить информацию о системе"
+    }
+  ],
+  "admin.system.health": [
+    {
+      "type": 0,
+      "value": "Состояние системы"
     }
   ],
   "admin.system.jvm": [
@@ -531,16 +1277,172 @@
       "value": "JVM"
     }
   ],
+  "admin.system.jvm.load": [
+    {
+      "type": 0,
+      "value": "Загрузка системы"
+    }
+  ],
+  "admin.system.jvm.processors": [
+    {
+      "type": 0,
+      "value": "Процессоры"
+    }
+  ],
+  "admin.system.jvm.start": [
+    {
+      "type": 0,
+      "value": "Время запуска"
+    }
+  ],
+  "admin.system.jvm.uptime": [
+    {
+      "type": 0,
+      "value": "Время работы"
+    }
+  ],
+  "admin.system.jvm.vendor": [
+    {
+      "type": 0,
+      "value": "Поставщик"
+    }
+  ],
+  "admin.system.jvm.version": [
+    {
+      "type": 0,
+      "value": "Версия Java"
+    }
+  ],
+  "admin.system.loading": [
+    {
+      "type": 0,
+      "value": "Загрузка информации о системе..."
+    }
+  ],
   "admin.system.memory": [
     {
       "type": 0,
       "value": "Память"
     }
   ],
+  "admin.system.memory.info": [
+    {
+      "type": 0,
+      "value": "Память"
+    }
+  ],
+  "admin.system.memory.max": [
+    {
+      "type": 0,
+      "value": "Максимум памяти"
+    }
+  ],
+  "admin.system.memory.total": [
+    {
+      "type": 0,
+      "value": "Всего памяти"
+    }
+  ],
+  "admin.system.memory.usage": [
+    {
+      "type": 0,
+      "value": "Использование памяти"
+    }
+  ],
+  "admin.system.memory.used": [
+    {
+      "type": 0,
+      "value": "Используемая память"
+    }
+  ],
+  "admin.system.mindmapMetrics.collaborations": [
+    {
+      "type": 0,
+      "value": "Учтено совместных доступов"
+    }
+  ],
+  "admin.system.mindmapMetrics.disabled": [
+    {
+      "type": 0,
+      "value": "Установите для `app.monitoring.performance.log-mindmap-listing` значение true, чтобы собирать метрики."
+    }
+  ],
+  "admin.system.mindmapMetrics.entityLoads": [
+    {
+      "type": 0,
+      "value": "Загрузки сущностей"
+    }
+  ],
+  "admin.system.mindmapMetrics.executedStatements": [
+    {
+      "type": 0,
+      "value": "Подготовленные запросы"
+    }
+  ],
+  "admin.system.mindmapMetrics.lastUpdated": [
+    {
+      "type": 0,
+      "value": "Последнее обновление"
+    }
+  ],
+  "admin.system.mindmapMetrics.mapCount": [
+    {
+      "type": 0,
+      "value": "Возвращено карт"
+    }
+  ],
+  "admin.system.mindmapMetrics.pending": [
+    {
+      "type": 0,
+      "value": "Ожидание следующего запроса списка майнд-карт для сбора метрик."
+    }
+  ],
+  "admin.system.mindmapMetrics.segments": [
+    {
+      "type": 0,
+      "value": "Этапы выполнения"
+    }
+  ],
+  "admin.system.mindmapMetrics.title": [
+    {
+      "type": 0,
+      "value": "Производительность списка майнд-карт"
+    }
+  ],
+  "admin.system.mindmapMetrics.topQueries": [
+    {
+      "type": 0,
+      "value": "Основные запросы"
+    }
+  ],
+  "admin.system.mindmapMetrics.totalTime": [
+    {
+      "type": 0,
+      "value": "Общее время (мс)"
+    }
+  ],
   "admin.system.refresh": [
     {
       "type": 0,
       "value": "Обновить"
+    }
+  ],
+  "admin.system.statistics": [
+    {
+      "type": 0,
+      "value": "Статистика"
+    }
+  ],
+  "admin.system.stats.mindmaps": [
+    {
+      "type": 0,
+      "value": "Всего майнд-карт"
+    }
+  ],
+  "admin.system.stats.users": [
+    {
+      "type": 0,
+      "value": "Всего пользователей"
     }
   ],
   "admin.system.title": [
@@ -553,6 +1455,106 @@
     {
       "type": 0,
       "value": "Возобновить пользователя"
+    }
+  ],
+  "admin.user-info.auth-type": [
+    {
+      "type": 0,
+      "value": "Аутентификация"
+    }
+  ],
+  "admin.user-info.created": [
+    {
+      "type": 0,
+      "value": "Создан"
+    }
+  ],
+  "admin.user-info.status": [
+    {
+      "type": 0,
+      "value": "Статус"
+    }
+  ],
+  "admin.user-info.suspension-reason": [
+    {
+      "type": 0,
+      "value": "Причина приостановки:"
+    }
+  ],
+  "admin.user-info.title": [
+    {
+      "type": 0,
+      "value": "Информация о пользователе"
+    }
+  ],
+  "admin.user-info.total-maps": [
+    {
+      "type": 0,
+      "value": "Всего карт"
+    }
+  ],
+  "admin.user-maps-dialog.loading": [
+    {
+      "type": 0,
+      "value": "Загрузка пользователя..."
+    }
+  ],
+  "admin.user-maps-dialog.no-maps": [
+    {
+      "type": 0,
+      "value": "У этого пользователя нет карт."
+    }
+  ],
+  "admin.user-maps-dialog.title": [
+    {
+      "type": 0,
+      "value": "Карты пользователя "
+    },
+    {
+      "type": 1,
+      "value": "name"
+    },
+    {
+      "type": 0,
+      "value": " (ID: #"
+    },
+    {
+      "type": 1,
+      "value": "id"
+    },
+    {
+      "type": 0,
+      "value": ")"
+    }
+  ],
+  "admin.validation.email-invalid": [
+    {
+      "type": 0,
+      "value": "Неверный формат адреса электронной почты"
+    }
+  ],
+  "admin.validation.email-required": [
+    {
+      "type": 0,
+      "value": "Укажите адрес электронной почты"
+    }
+  ],
+  "admin.validation.firstname-required": [
+    {
+      "type": 0,
+      "value": "Укажите имя"
+    }
+  ],
+  "admin.validation.lastname-required": [
+    {
+      "type": 0,
+      "value": "Укажите фамилию"
+    }
+  ],
+  "admin.view-user-maps": [
+    {
+      "type": 0,
+      "value": "Просмотреть карты пользователя"
     }
   ],
   "admin.view-xml": [
@@ -570,7 +1572,7 @@
   "changepwd.description": [
     {
       "type": 0,
-      "value": "Укажите новый пароль вашей учетной записи."
+      "value": "Укажите новый пароль для вашего аккаунта."
     }
   ],
   "changepwd.password": [
@@ -585,6 +1587,24 @@
       "value": "Пароли не совпадают. Пожалуйста, попробуйте еще раз."
     }
   ],
+  "changepwd.password-max-length": [
+    {
+      "type": 0,
+      "value": "Пароль не может быть длиннее 39 символов."
+    }
+  ],
+  "changepwd.password-min-length": [
+    {
+      "type": 0,
+      "value": "Пароль должен содержать не менее 8 символов."
+    }
+  ],
+  "changepwd.password-required": [
+    {
+      "type": 0,
+      "value": "Пароль не может быть пустым."
+    }
+  ],
   "changepwd.title": [
     {
       "type": 0,
@@ -595,6 +1615,18 @@
     {
       "type": 0,
       "value": "Разрешить уведомления по email"
+    }
+  ],
+  "common.cancel": [
+    {
+      "type": 0,
+      "value": "Отмена"
+    }
+  ],
+  "common.close": [
+    {
+      "type": 0,
+      "value": "Закрыть"
     }
   ],
   "common.delete": [
@@ -609,16 +1641,28 @@
       "value": "Удалить тег"
     }
   ],
+  "common.disabled": [
+    {
+      "type": 0,
+      "value": "Отключено"
+    }
+  ],
   "common.email": [
     {
       "type": 0,
-      "value": "Email"
+      "value": "Электронная почта"
     }
   ],
   "common.emails": [
     {
       "type": 0,
       "value": "Электронные письма"
+    }
+  ],
+  "common.enabled": [
+    {
+      "type": 0,
+      "value": "Включено"
     }
   ],
   "common.first-name": [
@@ -657,6 +1701,12 @@
       "value": "Список карт"
     }
   ],
+  "common.na": [
+    {
+      "type": 0,
+      "value": "Н/Д"
+    }
+  ],
   "common.open-drawer": [
     {
       "type": 0,
@@ -687,6 +1737,12 @@
       "value": "Повторить"
     }
   ],
+  "common.save": [
+    {
+      "type": 0,
+      "value": "Сохранить"
+    }
+  ],
   "common.settings": [
     {
       "type": 0,
@@ -696,7 +1752,7 @@
   "common.terms-notice": [
     {
       "type": 0,
-      "value": "By continuing, you agree to our "
+      "value": "Продолжая, вы соглашаетесь с нашими "
     },
     {
       "type": 8,
@@ -704,13 +1760,13 @@
       "children": [
         {
           "type": 0,
-          "value": "Terms of Service"
+          "value": "Условиями использования"
         }
       ]
     },
     {
       "type": 0,
-      "value": " and "
+      "value": " и "
     },
     {
       "type": 8,
@@ -718,7 +1774,7 @@
       "children": [
         {
           "type": 0,
-          "value": "Privacy Policy"
+          "value": "Политикой конфиденциальности"
         }
       ]
     },
@@ -798,19 +1854,25 @@
   "error.go-back": [
     {
       "type": 0,
-      "value": "Go Back"
+      "value": "Назад"
     }
   ],
   "error.go-home": [
     {
       "type": 0,
-      "value": "Go to Home"
+      "value": "На главную"
     }
   ],
   "error.go-to-login": [
     {
       "type": 0,
-      "value": "Sign In"
+      "value": "Войти"
+    }
+  ],
+  "error.invalid-map-id": [
+    {
+      "type": 0,
+      "value": "Неверный ID карты"
     }
   ],
   "error.map-title-required": [
@@ -968,7 +2030,7 @@
   "footer.faq": [
     {
       "type": 0,
-      "value": "F.A.Q."
+      "value": "Частые вопросы"
     }
   ],
   "footer.feedback": [
@@ -986,7 +2048,7 @@
   "footer.opensource": [
     {
       "type": 0,
-      "value": "Open Source"
+      "value": "Открытый исходный код"
     }
   ],
   "footer.privacypolicy": [
@@ -1016,7 +2078,7 @@
   "forgot.email": [
     {
       "type": 0,
-      "value": "Email"
+      "value": "Электронная почта"
     }
   ],
   "forgot.oauth.back": [
@@ -1046,13 +2108,13 @@
   "forgot.success.desc": [
     {
       "type": 0,
-      "value": "Мы отправили e-mail с инструкциями по восстановлению пароля. Вы должны получить его в течение пары минут."
+      "value": "Мы отправили ссылку для сброса пароля на вашу почту. Ссылка действительна 1 час. Текущий пароль не изменится, пока вы не воспользуетесь ссылкой."
     }
   ],
   "forgot.success.title": [
     {
       "type": 0,
-      "value": "Ваш временный пароль отправлен."
+      "value": "Проверьте почту."
     }
   ],
   "forgot.title": [
@@ -1094,7 +2156,7 @@
   "import.button": [
     {
       "type": 0,
-      "value": "Создать"
+      "value": "Импорт"
     }
   ],
   "import.description": [
@@ -1273,6 +2335,26 @@
       "value": "Помочь переводить"
     }
   ],
+  "language.help-dialog.description": [
+    {
+      "type": 0,
+      "value": "Нам нужна ваша помощь! Если вам интересно, напишите нам на "
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "language.help-dialog.title": [
+    {
+      "type": 0,
+      "value": "Помогите нам поддерживать больше языков!"
+    }
+  ],
   "login.desc": [
     {
       "type": 0,
@@ -1288,7 +2370,7 @@
   "login.email": [
     {
       "type": 0,
-      "value": "Email"
+      "value": "Электронная почта"
     }
   ],
   "login.error": [
@@ -1312,7 +2394,7 @@
   "login.generic-error": [
     {
       "type": 0,
-      "value": "An error occurred during authentication. Please try again."
+      "value": "При аутентификации произошла ошибка. Пожалуйста, попробуйте ещё раз."
     }
   ],
   "login.google.button": [
@@ -1324,7 +2406,7 @@
   "login.oauth-error": [
     {
       "type": 0,
-      "value": "OAuth authentication failed. Please try again or use a different sign-in method."
+      "value": "Ошибка аутентификации OAuth. Пожалуйста, попробуйте ещё раз или выберите другой способ входа."
     }
   ],
   "login.page-title": [
@@ -1348,13 +2430,13 @@
   "login.server-error": [
     {
       "type": 0,
-      "value": "An unexpected error occurred. Please try again later."
+      "value": "Произошла непредвиденная ошибка. Пожалуйста, попробуйте позже."
     }
   ],
   "login.shared-map-notice": [
     {
       "type": 0,
-      "value": "С вами поделились ментальной картой. Пожалуйста, войдите в систему, чтобы получить доступ. Нет аккаунта? Зарегистрируйтесь бесплатно или используйте свой аккаунт Google/Facebook."
+      "value": "С вами поделились майнд-картой. Пожалуйста, войдите в систему, чтобы получить доступ. Нет аккаунта? Зарегистрируйтесь бесплатно или используйте свой аккаунт Google/Facebook."
     }
   ],
   "login.signin": [
@@ -1408,7 +2490,7 @@
   "map.more-actions": [
     {
       "type": 0,
-      "value": "Больше... "
+      "value": "Другие действия"
     }
   ],
   "map.name": [
@@ -1426,25 +2508,25 @@
   "maps.auth-required-default-message": [
     {
       "type": 0,
-      "value": "You need to sign in to view your maps."
+      "value": "Чтобы просмотреть свои карты, необходимо войти."
     }
   ],
   "maps.auth-required-heading": [
     {
       "type": 0,
-      "value": "Sign in to access your maps"
+      "value": "Войдите, чтобы получить доступ к своим картам"
     }
   ],
   "maps.auth-required-login": [
     {
       "type": 0,
-      "value": "Go to login"
+      "value": "Перейти ко входу"
     }
   ],
   "maps.auth-required-title": [
     {
       "type": 0,
-      "value": "Sign In Required | WiseMapping"
+      "value": "Требуется вход | WiseMapping"
     }
   ],
   "maps.choose-file": [
@@ -1468,13 +2550,13 @@
   "maps.copilot-dialog.description": [
     {
       "type": 0,
-      "value": "Mind Map Copilot — это помощник для мозгового штурма на базе ChatGPT, который превращает ваши запросы в структурированные майнд-карты. Мы откроем его в новой вкладке, чтобы вы могли развивать идеи, генерировать темы и вернуть лучшее в WiseMapping."
+      "value": "ИИ Копилот — это помощник для мозгового штурма на базе ChatGPT, который превращает ваши запросы в структурированные майнд-карты. Мы откроем его в новой вкладке, чтобы вы могли развивать идеи, генерировать темы и вернуть лучшее в WiseMapping."
     }
   ],
   "maps.copilot-dialog.title": [
     {
       "type": 0,
-      "value": "Майндмэп-копилот на базе ChatGPT"
+      "value": "Копилот майнд-карт на базе ChatGPT"
     }
   ],
   "maps.copilot-tooltip": [
@@ -1540,7 +2622,7 @@
   "maps.nav-onwned": [
     {
       "type": 0,
-      "value": "Созданные мной"
+      "value": "Мои карты"
     }
   ],
   "maps.nav-public": [
@@ -1622,7 +2704,7 @@
   "menu.admin-console": [
     {
       "type": 0,
-      "value": "Admin Console"
+      "value": "Консоль администратора"
     }
   ],
   "menu.change-password": [
@@ -1646,13 +2728,13 @@
   "publish.copied": [
     {
       "type": 0,
-      "value": "Copied to clipboard!"
+      "value": "Скопировано в буфер обмена!"
     }
   ],
   "publish.description": [
     {
       "type": 0,
-      "value": "После публикация карта станет видима для любого, у кого есть ссылка."
+      "value": "Сделайте карту публичной. Её сможет просматривать любой, у кого есть ссылка."
     }
   ],
   "publish.embedded": [
@@ -1664,7 +2746,7 @@
   "publish.embedded-msg": [
     {
       "type": 0,
-      "value": "Скопируйте этот код, чтобы встроить майнд-карту в ваш сайт:"
+      "value": "Нажмите на код, чтобы скопировать его в буфер обмена:"
     }
   ],
   "publish.public-url": [
@@ -1676,7 +2758,7 @@
   "publish.public-url-msg": [
     {
       "type": 0,
-      "value": "Скопируйте ссылку, чтобы поделиться с коллегами доступом к карте:"
+      "value": "Нажмите на ссылку, чтобы скопировать её в буфер обмена:"
     }
   ],
   "publish.title": [
@@ -1700,7 +2782,7 @@
   "registration.callback.confirm.description": [
     {
       "type": 0,
-      "value": "Учетная запись c таким же адресом электронной почты была ранее зарегистрирована. Вы хотите связать свою учетную запись "
+      "value": "Аккаунт с таким же адресом электронной почты уже зарегистрирован. Хотите связать свой аккаунт "
     },
     {
       "type": 1,
@@ -1708,7 +2790,7 @@
     },
     {
       "type": 0,
-      "value": " с этой учетной записью WiseMapping?"
+      "value": " с этим аккаунтом WiseMapping?"
     }
   ],
   "registration.callback.confirm.title": [
@@ -1720,7 +2802,7 @@
   "registration.callback.sync": [
     {
       "type": 0,
-      "value": "Синхронизировать учетную запись"
+      "value": "Синхронизировать аккаунт"
     }
   ],
   "registration.callback.waiting.description": [
@@ -1750,7 +2832,7 @@
   "registration.email": [
     {
       "type": 0,
-      "value": "Email"
+      "value": "Электронная почта"
     }
   ],
   "registration.error.title": [
@@ -1774,7 +2856,7 @@
   "registration.form-legend": [
     {
       "type": 0,
-      "value": "Account Information"
+      "value": "Данные аккаунта"
     }
   ],
   "registration.google.button": [
@@ -1844,25 +2926,25 @@
   "registration.success.already-activated": [
     {
       "type": 0,
-      "value": "Already activated your account?"
+      "value": "Уже активировали аккаунт?"
     }
   ],
   "registration.success.check-spam": [
     {
       "type": 0,
-      "value": "If you don't see the email, please check your spam folder."
+      "value": "Если вы не видите письмо, проверьте папку «Спам»."
     }
   ],
   "registration.success.email-sent": [
     {
       "type": 0,
-      "value": "We've sent an activation email to your inbox. Please check your email and click on the activation link to activate your account."
+      "value": "Мы отправили вам письмо для активации. Пожалуйста, проверьте почту и перейдите по ссылке в письме, чтобы активировать аккаунт."
     }
   ],
   "registration.success.title": [
     {
       "type": 0,
-      "value": "Registration Successful!"
+      "value": "Регистрация прошла успешно!"
     }
   ],
   "registration.title": [
@@ -1886,67 +2968,67 @@
   "reset-password.confirm-password": [
     {
       "type": 0,
-      "value": "Confirm new password"
+      "value": "Подтвердите новый пароль"
     }
   ],
   "reset-password.desc": [
     {
       "type": 0,
-      "value": "Enter your new password below."
+      "value": "Введите новый пароль ниже."
     }
   ],
   "reset-password.invalid-link": [
     {
       "type": 0,
-      "value": "Invalid password reset link. Please request a new one."
+      "value": "Недействительная ссылка для сброса пароля. Пожалуйста, запросите новую."
     }
   ],
   "reset-password.mismatch": [
     {
       "type": 0,
-      "value": "Passwords do not match."
+      "value": "Пароли не совпадают."
     }
   ],
   "reset-password.page-title": [
     {
       "type": 0,
-      "value": "Reset Password | WiseMapping"
+      "value": "Сброс пароля | WiseMapping"
     }
   ],
   "reset-password.password": [
     {
       "type": 0,
-      "value": "New password"
+      "value": "Новый пароль"
     }
   ],
   "reset-password.request-new": [
     {
       "type": 0,
-      "value": "Request new link"
+      "value": "Запросить новую ссылку"
     }
   ],
   "reset-password.submit": [
     {
       "type": 0,
-      "value": "Set new password"
+      "value": "Установить новый пароль"
     }
   ],
   "reset-password.title": [
     {
       "type": 0,
-      "value": "Set a new password"
+      "value": "Установка нового пароля"
     }
   ],
   "reset-password.too-long": [
     {
       "type": 0,
-      "value": "Password must be less than 40 characters."
+      "value": "Пароль должен быть короче 40 символов."
     }
   ],
   "reset-password.too-short": [
     {
       "type": 0,
-      "value": "Password must be at least 8 characters."
+      "value": "Пароль должен содержать не менее 8 символов."
     }
   ],
   "role.editor": [
@@ -1970,7 +3052,7 @@
   "share.add-button": [
     {
       "type": 0,
-      "value": "Добавить"
+      "value": "Поделиться"
     }
   ],
   "share.add-message": [
@@ -2018,19 +3100,19 @@
   "share.table.actions": [
     {
       "type": 0,
-      "value": "Actions"
+      "value": "Действия"
     }
   ],
   "share.table.collaborator": [
     {
       "type": 0,
-      "value": "Collaborator"
+      "value": "Соавтор"
     }
   ],
   "share.table.role": [
     {
       "type": 0,
-      "value": "Role"
+      "value": "Роль"
     }
   ],
   "theme.dark": [

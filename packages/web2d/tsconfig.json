@@ -26,15 +26,8 @@
     "verbatimModuleSyntax": true,
     "allowUnusedLabels": false,
     "allowUnreachableCode": false,
-    "rootDirs": [
-      "src",
-    ]
+    "rootDirs": ["src"]
   },
-  "include": [
-    "src/**/*",
-  ],
-  "exclude": [
-    "./node_modules",
-    "./dist"
-  ]
+  "include": ["src/**/*"],
+  "exclude": ["./node_modules", "./dist"]
 }

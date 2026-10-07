@@ -15,303 +15,309 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { describe, expect, test } from '@jest/globals';
+import XMindImporter, {
+  XMIND_MARKER_EMOJIS,
+  XMIND_MARKER_SVG_ICONS,
+} from '../../../src/components/import/XMindImporter';
+import NodeModel from '../../../src/components/model/NodeModel';
+import Mindmap from '../../../src/components/model/Mindmap';
+import { ownEntry } from '../../../src/components/import/support/IconEmoji';
 
-import XMindImporter from '../../../src/components/import/XMindImporter';
+// The private icon mappers under test.
+type IconMapper = {
+  mapXMindIconToEmojiIcon(iconId: string): string;
+  addIcon(topic: NodeModel, iconId: string): void;
+};
 
-// The private icon mapper under test.
-type IconMapper = { mapXMindIconToEmojiIcon(iconId: string): string };
+/**
+ * The XMind marker ids: the markers of xmind-sdk-js (src/common/constants/marker.ts), in its
+ * order, hidden ones included, which XMind 8 and XMind Zen write.
+ */
+const XMIND_MARKER_IDS = [
+  'priority-1',
+  'priority-2',
+  'priority-3',
+  'priority-4',
+  'priority-5',
+  'priority-6',
+  'priority-7',
+  'priority-8',
+  'priority-9',
+  'smiley-laugh',
+  'smiley-smile',
+  'smiley-cry',
+  'smiley-surprise',
+  'smiley-boring',
+  'smiley-angry',
+  'smiley-embarrass',
+  'task-start',
+  'task-oct',
+  'task-quarter',
+  'task-3oct',
+  'task-half',
+  'task-5oct',
+  'task-3quar',
+  'task-7oct',
+  'task-done',
+  'task-pause',
+  'flag-red',
+  'flag-orange',
+  'flag-yellow',
+  'flag-dark-blue',
+  'flag-purple',
+  'flag-green',
+  'flag-blue',
+  'flag-gray',
+  'flag-dark-green',
+  'flag-dark-gray',
+  'star-red',
+  'star-orange',
+  'star-dark-blue',
+  'star-purple',
+  'star-green',
+  'star-blue',
+  'star-gray',
+  'star-yellow',
+  'star-dark-green',
+  'star-dark-gray',
+  'people-red',
+  'people-orange',
+  'people-yellow',
+  'people-dark-blue',
+  'people-purple',
+  'people-green',
+  'people-blue',
+  'people-gray',
+  'people-dark-green',
+  'people-dark-gray',
+  'arrow-left',
+  'arrow-right',
+  'arrow-up',
+  'arrow-down',
+  'arrow-left-right',
+  'arrow-up-down',
+  'arrow-refresh',
+  'arrow-up-right',
+  'arrow-down-right',
+  'arrow-down-left',
+  'arrow-up-left',
+  'c_symbol_heart',
+  'c_symbol_dislike',
+  'c_symbol_like',
+  'c_symbol_music',
+  'c_symbol_lock',
+  'c_symbol_hourglass',
+  'c_symbol_broken_heart',
+  'c_symbol_quote',
+  'c_symbol_apostrophe',
+  'symbol-question',
+  'symbol-attention',
+  'symbol-wrong',
+  'symbol-pause',
+  'symbol-no-entry',
+  'symbol-plus',
+  'symbol-minus',
+  'symbol-info',
+  'symbol-divide',
+  'symbol-equality',
+  'symbol-right',
+  'symbol-code',
+  'c_symbol_contact',
+  'c_symbol_telephone',
+  'c_symbol_pen',
+  'c_symbol_money',
+  'c_symbol_bar_chart',
+  'c_symbol_pie_chart',
+  'c_symbol_line_graph',
+  'c_symbol_shopping_cart',
+  'c_symbol_medals',
+  'c_symbol_trophy',
+  'symbol-image',
+  'c_symbol_exercise',
+  'c_symbol_flight',
+  'symbol-pin',
+  'symbol-exclam',
+  'c_simbol-plus',
+  'c_simbol-minus',
+  'c_simbol-question',
+  'c_simbol-exclam',
+  'c_simbol-info',
+  'c_simbol-wrong',
+  'c_simbol-right',
+  'c_simbol-pause',
+  'c_symbol_thermometer',
+  'month-jan',
+  'month-feb',
+  'month-mar',
+  'month-apr',
+  'month-may',
+  'month-jun',
+  'month-jul',
+  'month-aug',
+  'month-sep',
+  'month-oct',
+  'month-nov',
+  'month-dec',
+  'week-sun',
+  'week-mon',
+  'week-tue',
+  'week-wed',
+  'week-thu',
+  'week-fri',
+  'week-sat',
+  'half-star-green',
+  'half-star-red',
+  'half-star-yellow',
+  'half-star-purple',
+  'half-star-blue',
+  'half-star-gray',
+  'other-calendar',
+  'other-email',
+  'other-phone',
+  'other-phone2',
+  'other-fax',
+  'other-people',
+  'other-people2',
+  'other-clock',
+  'other-coffee-cup',
+  'other-question',
+  'other-exclam',
+  'other-lightbulb',
+  'other-businesscard',
+  'other-social',
+  'other-chat',
+  'other-note',
+  'other-lock',
+  'other-unlock',
+  'other-yes',
+  'other-no',
+  'other-bomb',
+];
 
-describe('XMind Icon Mapping Tests', () => {
-  let importer: XMindImporter;
+describe('XMind marker mapping', () => {
+  const mapper = (): IconMapper => new XMindImporter('') as unknown as IconMapper;
+  const mapIcon = (iconId: string): string => mapper().mapXMindIconToEmojiIcon(iconId);
 
-  beforeEach(() => {
-    importer = new XMindImporter('');
+  // The icon feature a marker is imported as.
+  const importedIcon = (iconId: string): { type: string; id: unknown } => {
+    const topic = new NodeModel('MainTopic', new Mindmap('icons'), 1);
+    mapper().addIcon(topic, iconId);
+    const features = topic.getFeatures();
+    expect(features).toHaveLength(1);
+    const [feature] = features;
+    return { type: feature?.getType() ?? '', id: feature?.getAttribute('id') };
+  };
+
+  test('lists the 158 XMind markers', () => {
+    expect(new Set(XMIND_MARKER_IDS).size).toBe(158);
   });
 
-  describe('Icon Mapping Functionality', () => {
-    test('should map priority icons correctly', () => {
-      // Access the private method through type assertion
-      const mapIcon = (importer as unknown as IconMapper).mapXMindIconToEmojiIcon.bind(importer);
-
-      expect(mapIcon('priority-1')).toBe('🔴'); // 🔴
-      expect(mapIcon('priority-2')).toBe('🟡'); // 🟡
-      expect(mapIcon('priority-3')).toBe('🟢'); // 🟢
-      expect(mapIcon('priority-4')).toBe('🔵'); // 🔵
-      expect(mapIcon('priority-5')).toBe('🟣'); // 🟣
-    });
-
-    test('should map star icons correctly', () => {
-      const mapIcon = (importer as unknown as IconMapper).mapXMindIconToEmojiIcon.bind(importer);
-
-      expect(mapIcon('star')).toBe('⭐'); // ⭐
-      expect(mapIcon('star-1')).toBe('⭐'); // ⭐
-      expect(mapIcon('star-2')).toBe('⭐'); // ⭐
-      expect(mapIcon('star-3')).toBe('⭐'); // ⭐
-    });
-
-    test('should map task icons correctly', () => {
-      const mapIcon = (importer as unknown as IconMapper).mapXMindIconToEmojiIcon.bind(importer);
-
-      expect(mapIcon('task')).toBe('📋'); // 📋
-      expect(mapIcon('task-done')).toBe('✅'); // ✅
-      expect(mapIcon('task-start')).toBe('🟡'); // 🟡
-      expect(mapIcon('task-pause')).toBe('⏸️'); // ⏸️
-      expect(mapIcon('task-stop')).toBe('⏹️'); // ⏹️
-    });
-
-    test('should map emotion icons correctly', () => {
-      const mapIcon = (importer as unknown as IconMapper).mapXMindIconToEmojiIcon.bind(importer);
-
-      expect(mapIcon('smile')).toBe('😊'); // 😊
-      expect(mapIcon('happy')).toBe('😃'); // 😃
-      expect(mapIcon('thinking')).toBe('🤔'); // 🤔
-      expect(mapIcon('sad')).toBe('😢'); // 😢
-      expect(mapIcon('angry')).toBe('😠'); // 😠
-    });
-
-    test('should map number icons correctly', () => {
-      const mapIcon = (importer as unknown as IconMapper).mapXMindIconToEmojiIcon.bind(importer);
-
-      expect(mapIcon('1')).toBe('1️⃣'); // 1️⃣
-      expect(mapIcon('2')).toBe('2️⃣'); // 2️⃣
-      expect(mapIcon('3')).toBe('3️⃣'); // 3️⃣
-      expect(mapIcon('10')).toBe('🔟'); // 🔟
-    });
-
-    test('should map letter icons correctly', () => {
-      const mapIcon = (importer as unknown as IconMapper).mapXMindIconToEmojiIcon.bind(importer);
-
-      expect(mapIcon('a')).toBe('🅰️'); // 🅰️
-      expect(mapIcon('b')).toBe('🅱️'); // 🅱️
-      expect(mapIcon('c')).toBe('🅲'); // 🅲
-      expect(mapIcon('z')).toBe('🆉'); // 🆉
-    });
-
-    test('should map animal icons correctly', () => {
-      const mapIcon = (importer as unknown as IconMapper).mapXMindIconToEmojiIcon.bind(importer);
-
-      expect(mapIcon('dog')).toBe('🐶'); // 🐶
-      expect(mapIcon('cat')).toBe('🐱'); // 🐱
-      expect(mapIcon('bird')).toBe('🐦'); // 🐦
-      expect(mapIcon('butterfly')).toBe('🦋'); // 🦋
-    });
-
-    test('should map food icons correctly', () => {
-      const mapIcon = (importer as unknown as IconMapper).mapXMindIconToEmojiIcon.bind(importer);
-
-      expect(mapIcon('apple')).toBe('🍎'); // 🍎
-      expect(mapIcon('pizza')).toBe('🍕'); // 🍕
-      expect(mapIcon('coffee')).toBe('☕'); // ☕
-      expect(mapIcon('cake')).toBe('🎂'); // 🎂
-    });
-
-    test('should map technology icons correctly', () => {
-      const mapIcon = (importer as unknown as IconMapper).mapXMindIconToEmojiIcon.bind(importer);
-
-      expect(mapIcon('computer')).toBe('💻'); // 💻
-      expect(mapIcon('phone-mobile')).toBe('📱'); // 📱
-      expect(mapIcon('camera')).toBe('📷'); // 📷
-      expect(mapIcon('keyboard')).toBe('⌨️'); // ⌨️
-    });
-
-    test('should map weather icons correctly', () => {
-      const mapIcon = (importer as unknown as IconMapper).mapXMindIconToEmojiIcon.bind(importer);
-
-      expect(mapIcon('sun')).toBe('☀️'); // ☀️
-      expect(mapIcon('rain')).toBe('🌧️'); // 🌧️
-      expect(mapIcon('snow')).toBe('❄️'); // ❄️
-      expect(mapIcon('lightning')).toBe('⚡'); // ⚡
-    });
-
-    test('should map sports icons correctly', () => {
-      const mapIcon = (importer as unknown as IconMapper).mapXMindIconToEmojiIcon.bind(importer);
-
-      expect(mapIcon('football')).toBe('⚽'); // ⚽
-      expect(mapIcon('basketball')).toBe('🏀'); // 🏀
-      expect(mapIcon('tennis')).toBe('🎾'); // 🎾
-      expect(mapIcon('swimming')).toBe('🏊'); // 🏊
-    });
-
-    test('should handle case insensitive mapping', () => {
-      const mapIcon = (importer as unknown as IconMapper).mapXMindIconToEmojiIcon.bind(importer);
-
-      expect(mapIcon('PRIORITY-1')).toBe('🔴'); // 🔴
-      expect(mapIcon('STAR')).toBe('⭐'); // ⭐
-      expect(mapIcon('SMILE')).toBe('😊'); // 😊
-    });
-
-    test('should return default icon for unknown icons', () => {
-      const mapIcon = (importer as unknown as IconMapper).mapXMindIconToEmojiIcon.bind(importer);
-
-      expect(mapIcon('unknown-icon')).toBe('💡'); // 💡 (default)
-      expect(mapIcon('non-existent')).toBe('💡'); // 💡 (default)
-      expect(mapIcon('')).toBe('💡'); // 💡 (default)
-    });
-
-    test('should handle edge cases', () => {
-      const mapIcon = (importer as unknown as IconMapper).mapXMindIconToEmojiIcon.bind(importer);
-
-      expect(mapIcon('priority-0')).toBe('💡'); // 💡 (default)
-      expect(mapIcon('priority-6')).toBe('💡'); // 💡 (default)
-      expect(mapIcon('star-4')).toBe('💡'); // 💡 (default)
-    });
+  test('maps only real XMind markers', () => {
+    const mapped = [...Object.keys(XMIND_MARKER_EMOJIS), ...Object.keys(XMIND_MARKER_SVG_ICONS)];
+    expect(mapped.filter((id) => !XMIND_MARKER_IDS.includes(id))).toEqual([]);
   });
 
-  describe('Icon Mapping Coverage', () => {
-    test('should have comprehensive icon coverage', () => {
-      const mapIcon = (importer as unknown as IconMapper).mapXMindIconToEmojiIcon.bind(importer);
+  test('maps every XMind marker but the apostrophe, which has no emoji', () => {
+    expect(XMIND_MARKER_IDS.filter((id) => !ownEntry(XMIND_MARKER_EMOJIS, id))).toEqual([
+      'c_symbol_apostrophe',
+    ]);
+    expect(importedIcon('c_symbol_apostrophe')).toEqual({ type: 'eicon', id: '💡' });
+  });
 
-      // Test a sample from each major category
-      const testIcons = [
-        // Priority
-        'priority-1',
-        'priority-2',
-        'priority-3',
-        // Stars
-        'star',
-        'star-1',
-        'star-2',
-        // Tasks
-        'task',
-        'task-done',
-        'task-start',
-        // Emotions
-        'smile',
-        'happy',
-        'thinking',
-        'sad',
-        'angry',
-        // Numbers
-        '1',
-        '2',
-        '3',
-        '10',
-        // Letters
-        'a',
-        'b',
-        'c',
-        'z',
-        // Animals
-        'dog',
-        'cat',
-        'bird',
-        'butterfly',
-        // Food
-        'apple',
-        'pizza',
-        'coffee',
-        'cake',
-        // Technology
-        'computer',
-        'phone-mobile',
-        'camera',
-        'keyboard',
-        // Weather
-        'sun',
-        'rain',
-        'snow',
-        'lightning',
-        // Sports
-        'football',
-        'basketball',
-        'tennis',
-        'swimming',
-        // Arrows
-        'arrow-up',
-        'arrow-down',
-        'arrow-left',
-        'arrow-right',
-        // Flags
-        'flag',
-        'flag-red',
-        'flag-green',
-        // People
-        'person',
-        'people',
-        // Time
-        'clock',
-        'calendar',
-        'time',
-        // Communication
-        'phone',
-        'email',
-        'message',
-        // Files
-        'file',
-        'folder',
-        'attachment',
-        // Warnings
-        'warning',
-        'info',
-        'question',
-        'exclamation',
-        // Hearts
-        'heart',
-        'like',
-        'dislike',
-        // Ideas
-        'lightbulb',
-        'idea',
-        'bulb',
-        // Money
-        'money',
-        'dollar',
-        'euro',
-        // Location
-        'location',
-        'home',
-        'building',
-        // Transport
-        'car',
-        'plane',
-        'train',
-        'bus',
-        // Nature
-        'tree',
-        'flower',
-        'leaf',
-        'mountain',
-        // Holidays
-        'gift',
-        'party',
-        'fireworks',
-        'christmas',
-        // Tools
-        'tool',
-        'wrench',
-        'hammer',
-        'key',
-        // Medical
-        'medical',
-        'health',
-        'pill',
-        // Shopping
-        'shopping',
-        'cart',
-        'bag',
-        // Security
-        'security',
-        'shield',
-        'lock',
-        // Science
-        'science',
-        'microscope',
-        'telescope',
-      ];
+  test('maps every marker to a single emoji', () => {
+    expect(
+      Object.values(XMIND_MARKER_EMOJIS).filter(
+        (emoji) => !/^(\p{Extended_Pictographic}|[0-9]️⃣|ℹ)️?$/u.test(emoji),
+      ),
+    ).toEqual([]);
+  });
 
-      // Count how many icons are successfully mapped (not default)
-      const mappedIcons = testIcons.filter((icon) => {
-        const result = mapIcon(icon);
-        return result !== 'emoji-1f4a1'; // Not the default lightbulb
-      });
+  test.each([
+    ['priority-1', '🔴'],
+    ['priority-5', '🟣'],
+    ['priority-6', '6️⃣'],
+    ['priority-9', '9️⃣'],
+    ['smiley-laugh', '😆'],
+    ['smiley-smile', '🙂'],
+    ['smiley-cry', '😢'],
+    ['smiley-surprise', '😮'],
+    ['smiley-boring', '😑'],
+    ['smiley-angry', '😠'],
+    ['smiley-embarrass', '😳'],
+    ['task-pause', '⏸️'],
+    ['flag-red', '🚩'],
+    ['flag-gray', '🏳️'],
+    ['flag-dark-gray', '🏴'],
+    ['star-red', '⭐'],
+    ['half-star-blue', '⭐'],
+    ['people-green', '👤'],
+    ['arrow-left-right', '↔️'],
+    ['arrow-refresh', '🔄'],
+    ['arrow-up-left', '↖️'],
+    ['c_symbol_heart', '❤️'],
+    ['c_symbol_like', '👍'],
+    ['c_symbol_line_graph', '📈'],
+    ['c_symbol_trophy', '🏆'],
+    ['symbol-question', '❓'],
+    ['c_simbol-question', '❓'],
+    ['symbol-attention', '⚠️'],
+    ['symbol-wrong', '❌'],
+    ['symbol-right', '✅'],
+    ['symbol-no-entry', '⛔'],
+    ['symbol-equality', '🟰'],
+    ['symbol-pin', '📌'],
+    ['month-jan', '📅'],
+    ['week-sun', '📅'],
+    ['other-email', '📧'],
+    ['other-fax', '📠'],
+    ['other-people2', '👥'],
+    ['other-coffee-cup', '☕'],
+    ['other-lightbulb', '💡'],
+    ['other-yes', '✔️'],
+    ['other-no', '✖️'],
+    ['other-bomb', '💣'],
+  ])('imports the marker %p as the emoji %p', (iconId, emoji) => {
+    expect(importedIcon(iconId)).toEqual({ type: 'eicon', id: emoji });
+  });
 
-      // Should have mapped at least 80% of test icons
-      const coveragePercentage = (mappedIcons.length / testIcons.length) * 100;
-      expect(coveragePercentage).toBeGreaterThan(80);
+  test.each([
+    ['task-start', 'task_0'],
+    ['task-oct', 'task_0'],
+    ['task-quarter', 'task_25'],
+    ['task-3oct', 'task_25'],
+    ['task-half', 'task_50'],
+    ['task-5oct', 'task_50'],
+    ['task-3quar', 'task_75'],
+    ['task-7oct', 'task_75'],
+    ['task-done', 'task_100'],
+    ['flag-orange', 'flag_orange'],
+    ['flag-yellow', 'flag_yellow'],
+    ['flag-green', 'flag_green'],
+    ['flag-dark-green', 'flag_green'],
+    ['flag-blue', 'flag_blue'],
+    ['flag-dark-blue', 'flag_blue'],
+    ['flag-purple', 'flag_purple'],
+    ['c_symbol_pie_chart', 'chart_pie'],
+  ])('imports the marker %p as the SVG icon %p', (iconId, svgId) => {
+    expect(importedIcon(iconId)).toEqual({ type: 'icon', id: svgId });
+  });
 
-      console.log(
-        `Icon mapping coverage: ${coveragePercentage.toFixed(1)}% (${mappedIcons.length}/${testIcons.length} icons mapped)`,
-      );
-    });
+  test('ignores the case of the marker id', () => {
+    expect(importedIcon('PRIORITY-1')).toEqual({ type: 'eicon', id: '🔴' });
+    expect(importedIcon('Task-Done')).toEqual({ type: 'icon', id: 'task_100' });
+  });
+
+  test('no longer maps names that are not XMind markers', () => {
+    // star, smile, task, 1, a, dog, coffee... were invented: XMind has no such markers.
+    ['star', 'smile', 'happy', 'task', 'task-stop', '1', 'a', 'dog', 'coffee', 'computer'].forEach(
+      (name) => expect(mapIcon(name)).toBe('💡'),
+    );
+  });
+
+  test('returns the light bulb for an unknown marker', () => {
+    expect(mapIcon('unknown-icon')).toBe('💡');
+    expect(mapIcon('')).toBe('💡');
+    expect(mapIcon('constructor')).toBe('💡');
   });
 });

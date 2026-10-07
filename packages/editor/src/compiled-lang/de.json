@@ -20,7 +20,7 @@
   "appbar.button-signup": [
     {
       "type": 0,
-      "value": "Anmelden"
+      "value": "Registrieren"
     }
   ],
   "appbar.error-saving-title": [
@@ -110,7 +110,7 @@
   "appbar.tooltip-signup": [
     {
       "type": 0,
-      "value": "Anmelden"
+      "value": "Registrieren"
     }
   ],
   "appbar.tooltip-starred": [
@@ -176,13 +176,13 @@
   "canvas-style.grid-size-xl": [
     {
       "type": 0,
-      "value": "Sehr Groß"
+      "value": "Sehr groß"
     }
   ],
   "canvas-style.grid-size-xs": [
     {
       "type": 0,
-      "value": "Sehr Klein"
+      "value": "Sehr klein"
     }
   ],
   "canvas-style.grid-style": [
@@ -356,25 +356,25 @@
   "editor.edit-description-mobile": [
     {
       "type": 0,
-      "value": "Eingeschränkte Funktionen der Mindmap-Edition werden auf Mobilgeräten unterstützt. Verwenden Sie den Desktop-Browser für vollständige Editorfunktionen."
+      "value": "Auf Mobilgeräten ist das Bearbeiten von Mindmaps nur eingeschränkt möglich. Verwende einen Desktop-Browser für alle Editorfunktionen."
     }
   ],
   "editor.try-welcome": [
     {
       "type": 0,
-      "value": "Dieser Ausgabebereich zeigt einige der Mindmap-Editor-Funktionen!"
+      "value": "Dieser Bereich zeigt einige Funktionen des Mindmap-Editors!"
     }
   ],
   "editor.try-welcome-description": [
     {
       "type": 0,
-      "value": "Melden Sie sich an, um kostenlos eine unbegrenzte Anzahl von Mindmaps zu erstellen, zu teilen und zu veröffentlichen."
+      "value": "Registriere dich, um kostenlos unbegrenzt viele Mindmaps zu erstellen, zu teilen und zu veröffentlichen."
     }
   ],
   "editor.try-welcome-description-mobile": [
     {
       "type": 0,
-      "value": "Melden Sie sich an, um kostenlos eine unbegrenzte Anzahl von Mindmaps zu erstellen, zu teilen und zu veröffentlichen. Eingeschränkte Funktionen der Mindmap-Edition werden auf Mobilgeräten unterstützt. Verwenden Sie den Desktop-Browser für vollständige Editorfunktionen."
+      "value": "Registriere dich, um kostenlos unbegrenzt viele Mindmaps zu erstellen, zu teilen und zu veröffentlichen. Auf Mobilgeräten ist das Bearbeiten von Mindmaps nur eingeschränkt möglich. Verwende einen Desktop-Browser für alle Editorfunktionen."
     }
   ],
   "editor.try-welcome-mobile": [
@@ -730,7 +730,7 @@
   "note.character.limit.warning": [
     {
       "type": 0,
-      "value": "(Grenze erreicht)"
+      "value": "(Limit fast erreicht)"
     }
   ],
   "outline.collapse": [
@@ -874,13 +874,13 @@
   "rich-text-editor.insert-icon": [
     {
       "type": 0,
-      "value": "Symbol Einfügen"
+      "value": "Symbol einfügen"
     }
   ],
   "rich-text-editor.insert-link": [
     {
       "type": 0,
-      "value": "Link Einfügen"
+      "value": "Link einfügen"
     }
   ],
   "rich-text-editor.italic": [
@@ -1018,7 +1018,7 @@
   "shortcut-help-pane.diagram-caption": [
     {
       "type": 0,
-      "value": "In der linken Hälfte der Karte tauschen ← und → ihre Rollen."
+      "value": "In der linken Hälfte der Mindmap tauschen ← und → ihre Rollen."
     }
   ],
   "shortcut-help-pane.diagram-child": [
@@ -1090,7 +1090,7 @@
   "shortcut-help-pane.find-in-map": [
     {
       "type": 0,
-      "value": "Thema in der Map suchen"
+      "value": "Thema in der Mindmap suchen"
     }
   ],
   "shortcut-help-pane.indent-topic": [
@@ -1144,7 +1144,7 @@
   "shortcut-help-pane.overwrite-edit-topic-key": [
     {
       "type": 0,
-      "value": "Ausgewähltes Thema durch tippen überschreiben"
+      "value": "Ausgewähltes Thema durch Tippen überschreiben"
     }
   ],
   "shortcut-help-pane.pan-canvas": [
@@ -1240,7 +1240,7 @@
   "theme-editor.description": [
     {
       "type": 0,
-      "value": "Ein Thema definiert den visuellen Stil Ihrer Mindmap, einschließlich Farben, Schriftarten und Gesamterscheinung. Wählen Sie ein Thema, das am besten zu Ihrem Inhalt und Publikum passt."
+      "value": "Ein Thema definiert den visuellen Stil deiner Mindmap, einschließlich Farben, Schriftarten und Gesamterscheinung. Wähle ein Thema, das am besten zu deinem Inhalt und Publikum passt."
     }
   ],
   "theme-editor.title": [
@@ -1524,7 +1524,7 @@
   "visualization-toolbar.tooltip-find-in-map": [
     {
       "type": 0,
-      "value": "In der Map suchen"
+      "value": "In der Mindmap suchen"
     }
   ],
   "visualization-toolbar.tooltip-keyboard": [

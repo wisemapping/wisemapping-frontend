@@ -26,6 +26,8 @@ jest.mock('../../../../src/utils/analytics', () => ({ trackPageView: jest.fn() }
 import LoginPage from '../../../../src/components/login-page';
 import Client from '../../../../src/classes/client';
 import { trackPageView } from '../../../../src/utils/analytics';
+import { appLogger } from '../../../../src/utils/logger';
+import { BURST_TEXT, typeInBurst } from '../../burst-typing';
 import { initAppConfig, installMatchMedia, renderPage, useConfig } from '../helpers';
 import { resetRouter, setLocation } from '../router-mock';
 
@@ -97,6 +99,20 @@ describe('LoginPage', () => {
     await waitFor(() => expect(localStorage.getItem('themeMode')).toBe('dark'));
   });
 
+  test('takes 200 characters typed in one burst, as Cypress types them', async () => {
+    const client = setup();
+    const email = (await screen.findByLabelText(/^Email/)) as HTMLInputElement;
+    const password = screen.getByLabelText(/^Password/) as HTMLInputElement;
+
+    expect(await typeInBurst(email, `${BURST_TEXT}@wisemapping.com`)).toEqual([]);
+    expect(await typeInBurst(password)).toEqual([]);
+    fireEvent.click(screen.getByRole('button', { name: 'Sign In' }));
+
+    await waitFor(() =>
+      expect(client.login).toHaveBeenCalledWith({ email: email.value, password: password.value }),
+    );
+  });
+
   test('shows the server message when the login fails', async () => {
     const client = setup();
     client.login.mockRejectedValue({ msg: 'Account is not activated', code: 2 });
@@ -164,7 +180,7 @@ describe('LoginPage', () => {
       facebookOauth2Enabled: true,
       facebookOauth2Url: 'https://facebook.example.com/auth',
     });
-    const log = jest.spyOn(console, 'log').mockImplementation(() => undefined);
+    const log = jest.spyOn(appLogger, 'warn').mockImplementation(() => undefined);
     setup('/c/login?redirect=%2Fc%2Fmaps%2F3');
 
     fireEvent.click(await screen.findByRole('button', { name: 'Sign in with Google' }));
@@ -176,7 +192,7 @@ describe('LoginPage', () => {
 
   test('a provider without a URL is reported and not navigated to', async () => {
     useConfig({ googleOauth2Enabled: true, googleOauth2Url: undefined });
-    const log = jest.spyOn(console, 'log').mockImplementation(() => undefined);
+    const log = jest.spyOn(appLogger, 'warn').mockImplementation(() => undefined);
     setup();
 
     fireEvent.click(await screen.findByRole('button', { name: 'Sign in with Google' }));

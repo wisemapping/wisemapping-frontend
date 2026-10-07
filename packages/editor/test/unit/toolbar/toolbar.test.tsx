@@ -225,7 +225,6 @@ describe('Editor Toolbar Submenu', () => {
 
     expect(screen.queryByRole('menu')).toBeFalsy();
   });
-
 });
 
 describe('toolbar menu item', () => {

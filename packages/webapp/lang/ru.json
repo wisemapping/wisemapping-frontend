@@ -1,12 +1,12 @@
 {
   "common.terms-notice": {
-    "defaultMessage": "By continuing, you agree to our <termsLink>Terms of Service</termsLink> and <privacyLink>Privacy Policy</privacyLink>."
+    "defaultMessage": "Продолжая, вы соглашаетесь с нашими <termsLink>Условиями использования</termsLink> и <privacyLink>Политикой конфиденциальности</privacyLink>."
   },
   "accountinfo.button": {
     "defaultMessage": "Сохранить"
   },
   "accountinfo.email": {
-    "defaultMessage": "Email"
+    "defaultMessage": "Электронная почта"
   },
   "accountinfo.firstname": {
     "defaultMessage": "Имя"
@@ -84,13 +84,22 @@
     "defaultMessage": "Подтвердить пароль"
   },
   "changepwd.description": {
-    "defaultMessage": "Укажите новый пароль вашей учетной записи."
+    "defaultMessage": "Укажите новый пароль для вашего аккаунта."
   },
   "changepwd.password": {
     "defaultMessage": "Пароль"
   },
   "changepwd.password-match": {
     "defaultMessage": "Пароли не совпадают. Пожалуйста, попробуйте еще раз."
+  },
+  "changepwd.password-max-length": {
+    "defaultMessage": "Пароль не может быть длиннее 39 символов."
+  },
+  "changepwd.password-min-length": {
+    "defaultMessage": "Пароль должен содержать не менее 8 символов."
+  },
+  "changepwd.password-required": {
+    "defaultMessage": "Пароль не может быть пустым."
   },
   "changepwd.title": {
     "defaultMessage": "Изменить пароль"
@@ -147,13 +156,13 @@
     "defaultMessage": "Контакты"
   },
   "footer.faq": {
-    "defaultMessage": "F.A.Q."
+    "defaultMessage": "Частые вопросы"
   },
   "footer.feedback": {
     "defaultMessage": "Обратная связь"
   },
   "footer.opensource": {
-    "defaultMessage": "Open Source"
+    "defaultMessage": "Открытый исходный код"
   },
   "footer.termsandconditions": {
     "defaultMessage": "Общие Правила"
@@ -183,7 +192,7 @@
     "defaultMessage": "Мы отправим Вам e-mail для восстановления пароля."
   },
   "forgot.email": {
-    "defaultMessage": "Email"
+    "defaultMessage": "Электронная почта"
   },
   "forgot.page-title": {
     "defaultMessage": "Забыл пароль | WiseMapping"
@@ -192,10 +201,10 @@
     "defaultMessage": "Отправить"
   },
   "forgot.success.desc": {
-    "defaultMessage": "Мы отправили e-mail с инструкциями по восстановлению пароля. Вы должны получить его в течение пары минут."
+    "defaultMessage": "Мы отправили ссылку для сброса пароля на вашу почту. Ссылка действительна 1 час. Текущий пароль не изменится, пока вы не воспользуетесь ссылкой."
   },
   "forgot.success.title": {
-    "defaultMessage": "Ваш временный пароль отправлен."
+    "defaultMessage": "Проверьте почту."
   },
   "forgot.title": {
     "defaultMessage": "Установить новый пароль"
@@ -216,7 +225,7 @@
     "defaultMessage": "Нет доступных изменений"
   },
   "import.button": {
-    "defaultMessage": "Создать"
+    "defaultMessage": "Импорт"
   },
   "import.description": {
     "defaultMessage": "Можно импортировать файлы WiseMapping, FreeMind, Freeplane, XMind, MindManager и OPML. Выберите файл, который хотите импортировать."
@@ -275,11 +284,17 @@
   "language.help": {
     "defaultMessage": "Помочь переводить"
   },
+  "language.help-dialog.title": {
+    "defaultMessage": "Помогите нам поддерживать больше языков!"
+  },
+  "language.help-dialog.description": {
+    "defaultMessage": "Нам нужна ваша помощь! Если вам интересно, напишите нам на {email}."
+  },
   "login.desc": {
     "defaultMessage": "Войдите в свой аккаунт"
   },
   "login.email": {
-    "defaultMessage": "Email"
+    "defaultMessage": "Электронная почта"
   },
   "login.error": {
     "defaultMessage": "Некорректный email или пароль."
@@ -303,7 +318,7 @@
     "defaultMessage": "Добро пожаловать!"
   },
   "login.shared-map-notice": {
-    "defaultMessage": "С вами поделились ментальной картой. Пожалуйста, войдите в систему, чтобы получить доступ. Нет аккаунта? Зарегистрируйтесь бесплатно или используйте свой аккаунт Google/Facebook."
+    "defaultMessage": "С вами поделились майнд-картой. Пожалуйста, войдите в систему, чтобы получить доступ. Нет аккаунта? Зарегистрируйтесь бесплатно или используйте свой аккаунт Google/Facebook."
   },
   "map.creator": {
     "defaultMessage": "Создатель"
@@ -315,7 +330,7 @@
     "defaultMessage": "Последнее изменение"
   },
   "map.more-actions": {
-    "defaultMessage": "Больше... "
+    "defaultMessage": "Другие действия"
   },
   "map.name": {
     "defaultMessage": "Имя"
@@ -333,10 +348,10 @@
     "defaultMessage": "Запустить майнд-карту с ИИ Копилотом"
   },
   "maps.copilot-dialog.title": {
-    "defaultMessage": "Майндмэп-копилот на базе ChatGPT"
+    "defaultMessage": "Копилот майнд-карт на базе ChatGPT"
   },
   "maps.copilot-dialog.description": {
-    "defaultMessage": "Mind Map Copilot — это помощник для мозгового штурма на базе ChatGPT, который превращает ваши запросы в структурированные майнд-карты. Мы откроем его в новой вкладке, чтобы вы могли развивать идеи, генерировать темы и вернуть лучшее в WiseMapping."
+    "defaultMessage": "ИИ Копилот — это помощник для мозгового штурма на базе ChatGPT, который превращает ваши запросы в структурированные майнд-карты. Мы откроем его в новой вкладке, чтобы вы могли развивать идеи, генерировать темы и вернуть лучшее в WiseMapping."
   },
   "maps.copilot-dialog.continue": {
     "defaultMessage": "Открыть Копилот"
@@ -363,7 +378,7 @@
     "defaultMessage": "Все"
   },
   "maps.nav-onwned": {
-    "defaultMessage": "Созданные мной"
+    "defaultMessage": "Мои карты"
   },
   "maps.nav-public": {
     "defaultMessage": "Публичные"
@@ -405,22 +420,22 @@
     "defaultMessage": "Включить общий доступ"
   },
   "publish.copied": {
-    "defaultMessage": "Copied to clipboard!"
+    "defaultMessage": "Скопировано в буфер обмена!"
   },
   "publish.description": {
-    "defaultMessage": "После публикация карта станет видима для любого, у кого есть ссылка."
+    "defaultMessage": "Сделайте карту публичной. Её сможет просматривать любой, у кого есть ссылка."
   },
   "publish.embedded": {
     "defaultMessage": "Встроить"
   },
   "publish.embedded-msg": {
-    "defaultMessage": "Скопируйте этот код, чтобы встроить майнд-карту в ваш сайт:"
+    "defaultMessage": "Нажмите на код, чтобы скопировать его в буфер обмена:"
   },
   "publish.public-url": {
     "defaultMessage": "Публичный URL"
   },
   "publish.public-url-msg": {
-    "defaultMessage": "Скопируйте ссылку, чтобы поделиться с коллегами доступом к карте:"
+    "defaultMessage": "Нажмите на ссылку, чтобы скопировать её в буфер обмена:"
   },
   "publish.title": {
     "defaultMessage": "Опубликовать"
@@ -432,7 +447,7 @@
     "defaultMessage": "Регистрация бесплатна и займет всего минуту"
   },
   "registration.email": {
-    "defaultMessage": "Email"
+    "defaultMessage": "Электронная почта"
   },
   "registration.firstname": {
     "defaultMessage": "Имя"
@@ -468,7 +483,7 @@
     "defaultMessage": "Читатель"
   },
   "share.add-button": {
-    "defaultMessage": "Добавить"
+    "defaultMessage": "Поделиться"
   },
   "share.adding-button": {
     "defaultMessage": "Отправка..."
@@ -516,7 +531,7 @@
     "defaultMessage": "Отделка ..."
   },
   "registration.callback.confirm.description": {
-    "defaultMessage": "Учетная запись c таким же адресом электронной почты была ранее зарегистрирована. Вы хотите связать свою учетную запись {provider} с этой учетной записью WiseMapping?"
+    "defaultMessage": "Аккаунт с таким же адресом электронной почты уже зарегистрирован. Хотите связать свой аккаунт {provider} с этим аккаунтом WiseMapping?"
   },
   "registration.callback.waiting.description": {
     "defaultMessage": "Подождите, пока мы подтвердим вашу личность"
@@ -525,7 +540,7 @@
     "defaultMessage": "Вернуться на страницу авторизации"
   },
   "registration.callback.sync": {
-    "defaultMessage": "Синхронизировать учетную запись"
+    "defaultMessage": "Синхронизировать аккаунт"
   },
   "forgot.oauth.message": {
     "defaultMessage": "Вам не нужен пароль, пожалуйста, войдите с помощью Facebook или Google"
@@ -551,11 +566,29 @@
   "common.maps-list": {
     "defaultMessage": "Список карт"
   },
+  "common.na": {
+    "defaultMessage": "Н/Д"
+  },
   "admin.status-clean": {
-    "defaultMessage": "Очистить"
+    "defaultMessage": "Не спам"
+  },
+  "admin.status-not-activated": {
+    "defaultMessage": "Не активирован"
+  },
+  "admin.status-not-activated-tooltip": {
+    "defaultMessage": "Пользователь ещё не подтвердил адрес электронной почты"
+  },
+  "admin.status-not-activated-tooltip-interactive": {
+    "defaultMessage": "Пользователь ещё не подтвердил адрес электронной почты | Нажмите, чтобы изменить статус"
   },
   "common.allow-email-notifications": {
     "defaultMessage": "Разрешить уведомления по email"
+  },
+  "common.cancel": {
+    "defaultMessage": "Отмена"
+  },
+  "common.close": {
+    "defaultMessage": "Закрыть"
   },
   "admin.public": {
     "defaultMessage": "Публичный"
@@ -581,6 +614,27 @@
   "admin.auth-type": {
     "defaultMessage": "Тип авторизации"
   },
+  "admin.auth.database": {
+    "defaultMessage": "База данных"
+  },
+  "admin.auth.facebook": {
+    "defaultMessage": "Facebook"
+  },
+  "admin.auth.google": {
+    "defaultMessage": "Google"
+  },
+  "admin.auth.ldap": {
+    "defaultMessage": "LDAP"
+  },
+  "admin.button.update-user": {
+    "defaultMessage": "Обновить пользователя"
+  },
+  "admin.button.updating": {
+    "defaultMessage": "Обновление..."
+  },
+  "admin.cancel": {
+    "defaultMessage": "Отмена"
+  },
   "label.delete-description": {
     "defaultMessage": "будет удалена, включая все связи с существующими картами. Вы хотите продолжить?"
   },
@@ -598,6 +652,51 @@
   },
   "admin.edit-user": {
     "defaultMessage": "Редактировать пользователя"
+  },
+  "admin.error.access-denied": {
+    "defaultMessage": "Доступ запрещён. Требуются права администратора."
+  },
+  "admin.error.create-user-failed": {
+    "defaultMessage": "Не удалось создать пользователя. Пожалуйста, попробуйте ещё раз."
+  },
+  "admin.error.load-users": {
+    "defaultMessage": "Не удалось загрузить пользователей: {message}"
+  },
+  "admin.error.unknown": {
+    "defaultMessage": "Неизвестная ошибка"
+  },
+  "admin.error.update-map-failed": {
+    "defaultMessage": "Не удалось обновить карту. Пожалуйста, попробуйте ещё раз."
+  },
+  "admin.error.update-user-failed": {
+    "defaultMessage": "Не удалось обновить пользователя. Пожалуйста, попробуйте ещё раз."
+  },
+  "admin.facebook.filter-tooltip": {
+    "defaultMessage": "Поиск для удаления данных Facebook"
+  },
+  "admin.facebook.lookup-button": {
+    "defaultMessage": "Найти аккаунт"
+  },
+  "admin.facebook.lookup-not-found": {
+    "defaultMessage": "Аккаунт с этим идентификатором пользователя Facebook не найден."
+  },
+  "admin.facebook.remove": {
+    "defaultMessage": "Отвязать"
+  },
+  "admin.facebook.remove-button": {
+    "defaultMessage": "Отвязать аккаунт Facebook"
+  },
+  "admin.facebook.remove-confirm": {
+    "defaultMessage": "Отвязать Facebook от аккаунта «{email}»?"
+  },
+  "admin.facebook.remove-dialog-title": {
+    "defaultMessage": "Отвязать аккаунт Facebook"
+  },
+  "admin.facebook.remove-warning": {
+    "defaultMessage": "Аутентификация через Facebook будет отключена для этого аккаунта. Пользователь получит письмо для сброса пароля, чтобы восстановить доступ."
+  },
+  "admin.facebook.removing": {
+    "defaultMessage": "Отвязка..."
   },
   "label.description": {
     "defaultMessage": "Используйте метки для организации ваших карт."
@@ -617,6 +716,9 @@
   "common.emails": {
     "defaultMessage": "Электронные письма"
   },
+  "common.enabled": {
+    "defaultMessage": "Включено"
+  },
   "label.change-color": {
     "defaultMessage": "Изменить цвет метки"
   },
@@ -632,6 +734,27 @@
   "admin.suspension.terms-violation": {
     "defaultMessage": "Нарушение условий"
   },
+  "admin.system.app.name": {
+    "defaultMessage": "Название"
+  },
+  "admin.system.app.port": {
+    "defaultMessage": "Порт"
+  },
+  "admin.system.application": {
+    "defaultMessage": "Приложение"
+  },
+  "admin.system.database": {
+    "defaultMessage": "База данных"
+  },
+  "admin.system.database.info": {
+    "defaultMessage": "База данных"
+  },
+  "admin.system.db.ddl": {
+    "defaultMessage": "Hibernate DDL"
+  },
+  "admin.system.db.driver": {
+    "defaultMessage": "Драйвер"
+  },
   "admin.suspension.security-concern": {
     "defaultMessage": "Проблема безопасности"
   },
@@ -646,6 +769,15 @@
   },
   "admin.status-suspended": {
     "defaultMessage": "Приостановлен"
+  },
+  "admin.status.click-to-change": {
+    "defaultMessage": "Нажмите, чтобы изменить статус"
+  },
+  "admin.status.reason": {
+    "defaultMessage": "Причина: {reason}"
+  },
+  "admin.status.suspended-on": {
+    "defaultMessage": "Дата приостановки: {date}"
   },
   "label.maps-count": {
     "defaultMessage": "{count} карт"
@@ -665,6 +797,12 @@
   "admin.status-active": {
     "defaultMessage": "Активный"
   },
+  "admin.status-active-tooltip": {
+    "defaultMessage": "Аккаунт активирован, нарушений нет"
+  },
+  "admin.status-active-tooltip-interactive": {
+    "defaultMessage": "Аккаунт активирован, нарушений нет | Нажмите, чтобы изменить статус"
+  },
   "common.locale": {
     "defaultMessage": "Язык"
   },
@@ -678,13 +816,58 @@
     "defaultMessage": "Подтвердить удаление метки"
   },
   "common.email": {
-    "defaultMessage": "Email"
+    "defaultMessage": "Электронная почта"
   },
   "admin.unsuspend-user": {
     "defaultMessage": "Возобновить пользователя"
   },
+  "admin.user-info.auth-type": {
+    "defaultMessage": "Аутентификация"
+  },
+  "admin.user-info.created": {
+    "defaultMessage": "Создан"
+  },
+  "admin.user-info.status": {
+    "defaultMessage": "Статус"
+  },
+  "admin.user-info.suspension-reason": {
+    "defaultMessage": "Причина приостановки:"
+  },
+  "admin.user-info.title": {
+    "defaultMessage": "Информация о пользователе"
+  },
+  "admin.user-info.total-maps": {
+    "defaultMessage": "Всего карт"
+  },
+  "admin.user-maps-dialog.loading": {
+    "defaultMessage": "Загрузка пользователя..."
+  },
+  "admin.user-maps-dialog.no-maps": {
+    "defaultMessage": "У этого пользователя нет карт."
+  },
+  "admin.user-maps-dialog.title": {
+    "defaultMessage": "Карты пользователя {name} (ID: #{id})"
+  },
+  "admin.validation.email-invalid": {
+    "defaultMessage": "Неверный формат адреса электронной почты"
+  },
+  "admin.validation.email-required": {
+    "defaultMessage": "Укажите адрес электронной почты"
+  },
+  "admin.validation.firstname-required": {
+    "defaultMessage": "Укажите имя"
+  },
+  "admin.validation.lastname-required": {
+    "defaultMessage": "Укажите фамилию"
+  },
+  "admin.view-user-maps": {
+    "defaultMessage": "Просмотреть карты пользователя"
+  },
   "common.delete-tag": {
     "defaultMessage": "Удалить тег"
+  },
+  "common.disabled": {
+    "defaultMessage": "Отключено"
   },
   "admin.edit": {
     "defaultMessage": "Редактировать"
@@ -695,6 +878,150 @@
   "admin.locked": {
     "defaultMessage": "Заблокирован"
   },
+  "admin.maps.clean-tooltip": {
+    "defaultMessage": "Не помечена как спам"
+  },
+  "admin.maps.creator-suspended-tooltip": {
+    "defaultMessage": "Аккаунт создателя карты приостановлен администратором"
+  },
+  "admin.maps.delete": {
+    "defaultMessage": "Удалить карту"
+  },
+  "admin.maps.description": {
+    "defaultMessage": "Описание"
+  },
+  "admin.maps.edit": {
+    "defaultMessage": "Редактировать карту"
+  },
+  "admin.maps.edit-title": {
+    "defaultMessage": "Редактирование карты"
+  },
+  "admin.maps.filter.date": {
+    "defaultMessage": "Диапазон дат"
+  },
+  "admin.maps.filter.spam": {
+    "defaultMessage": "Спам"
+  },
+  "admin.maps.locked-tooltip": {
+    "defaultMessage": "Сейчас редактируется пользователем {user}"
+  },
+  "admin.maps.mark-as-not-spam": {
+    "defaultMessage": "Пометить как не спам"
+  },
+  "admin.maps.mark-as-spam": {
+    "defaultMessage": "Пометить как спам"
+  },
+  "admin.maps.no-maps": {
+    "defaultMessage": "Карты не найдены"
+  },
+  "admin.maps.page-title": {
+    "defaultMessage": "Управление картами"
+  },
+  "admin.maps.private-tooltip": {
+    "defaultMessage": "Эту карту могут просматривать только соавторы"
+  },
+  "admin.maps.public-tooltip": {
+    "defaultMessage": "Эту карту может просматривать любой"
+  },
+  "admin.maps.search": {
+    "defaultMessage": "Поиск карт... (#123 — по ID, электронная почта — по создателю)"
+  },
+  "admin.maps.search-by-email": {
+    "defaultMessage": "🔍 Поиск по электронной почте создателя"
+  },
+  "admin.maps.search-by-id": {
+    "defaultMessage": "🔍 Поиск по ID карты"
+  },
+  "admin.maps.search-by-text": {
+    "defaultMessage": "🔍 Поиск по названиям и описаниям"
+  },
+  "admin.maps.spam-tooltip": {
+    "defaultMessage": "Определена как спам {date}"
+  },
+  "admin.maps.spam-tooltip-no-date": {
+    "defaultMessage": "Помечена как спам"
+  },
+  "admin.maps.spam-label": {
+    "defaultMessage": "Спам ({type})"
+  },
+  "admin.maps.spam-type-unknown": {
+    "defaultMessage": "Неизвестно"
+  },
+  "admin.maps.suspend-user": {
+    "defaultMessage": "Приостановить аккаунт пользователя"
+  },
+  "admin.maps.suspend-user.confirm": {
+    "defaultMessage": "Вы уверены, что хотите приостановить аккаунт пользователя «{userName}» (ID: {userId})? Приостановка будет отмечена как результат ручной проверки."
+  },
+  "admin.maps.suspend-user.confirm-button": {
+    "defaultMessage": "Приостановить пользователя"
+  },
+  "admin.maps.suspend-user.title": {
+    "defaultMessage": "Приостановка аккаунта пользователя"
+  },
+  "admin.maps.suspend-user.warning": {
+    "defaultMessage": "Это действие приостановит аккаунт пользователя и лишит его доступа к системе."
+  },
+  "admin.maps.table.actions": {
+    "defaultMessage": "Действия"
+  },
+  "admin.maps.table.created": {
+    "defaultMessage": "Создана"
+  },
+  "admin.maps.table.description": {
+    "defaultMessage": "Описание"
+  },
+  "admin.maps.table.id": {
+    "defaultMessage": "ID карты"
+  },
+  "admin.maps.table.modified": {
+    "defaultMessage": "Изменена"
+  },
+  "admin.maps.table.spam": {
+    "defaultMessage": "Спам"
+  },
+  "admin.maps.table.spam-status": {
+    "defaultMessage": "Статус спама"
+  },
+  "admin.maps.table.status": {
+    "defaultMessage": "Статус"
+  },
+  "admin.maps.table.title": {
+    "defaultMessage": "Название"
+  },
+  "admin.maps.title": {
+    "defaultMessage": "Название"
+  },
+  "admin.maps.unlocked-tooltip": {
+    "defaultMessage": "Сейчас никем не редактируется"
+  },
+  "admin.maps.view-xml": {
+    "defaultMessage": "Просмотр XML"
+  },
+  "admin.maps.xml-viewer.copy": {
+    "defaultMessage": "Копировать форматированный XML"
+  },
+  "admin.maps.xml-viewer.info": {
+    "defaultMessage": "Это исходное XML-содержимое майнд-карты. Вы можете скопировать его для резервного копирования или анализа."
+  },
+  "admin.maps.xml-viewer.loading": {
+    "defaultMessage": "Загрузка XML-содержимого..."
+  },
+  "admin.maps.xml-viewer.no-content": {
+    "defaultMessage": "XML-содержимое недоступно"
+  },
+  "admin.maps.xml-viewer.title": {
+    "defaultMessage": "XML-содержимое карты"
+  },
+  "admin.menu.accounts": {
+    "defaultMessage": "Аккаунты"
+  },
+  "admin.menu.maps": {
+    "defaultMessage": "Карты"
+  },
+  "admin.menu.system": {
+    "defaultMessage": "Система"
+  },
   "common.settings": {
     "defaultMessage": "Настройки"
   },
@@ -704,11 +1031,23 @@
   "common.retry": {
     "defaultMessage": "Повторить"
   },
+  "common.save": {
+    "defaultMessage": "Сохранить"
+  },
   "admin.system.title": {
     "defaultMessage": "Системная информация"
   },
   "admin.system.refresh": {
     "defaultMessage": "Обновить"
+  },
+  "admin.system.statistics": {
+    "defaultMessage": "Статистика"
+  },
+  "admin.system.stats.mindmaps": {
+    "defaultMessage": "Всего майнд-карт"
+  },
+  "admin.system.stats.users": {
+    "defaultMessage": "Всего пользователей"
   },
   "common.refresh": {
     "defaultMessage": "Обновить"
@@ -716,11 +1055,89 @@
   "admin.system.memory": {
     "defaultMessage": "Память"
   },
+  "admin.system.memory.info": {
+    "defaultMessage": "Память"
+  },
+  "admin.system.memory.max": {
+    "defaultMessage": "Максимум памяти"
+  },
+  "admin.system.memory.total": {
+    "defaultMessage": "Всего памяти"
+  },
+  "admin.system.memory.usage": {
+    "defaultMessage": "Использование памяти"
+  },
+  "admin.system.memory.used": {
+    "defaultMessage": "Используемая память"
+  },
+  "admin.system.mindmapMetrics.collaborations": {
+    "defaultMessage": "Учтено совместных доступов"
+  },
+  "admin.system.mindmapMetrics.disabled": {
+    "defaultMessage": "Установите для `app.monitoring.performance.log-mindmap-listing` значение true, чтобы собирать метрики."
+  },
+  "admin.system.mindmapMetrics.entityLoads": {
+    "defaultMessage": "Загрузки сущностей"
+  },
+  "admin.system.mindmapMetrics.executedStatements": {
+    "defaultMessage": "Подготовленные запросы"
+  },
+  "admin.system.mindmapMetrics.lastUpdated": {
+    "defaultMessage": "Последнее обновление"
+  },
+  "admin.system.mindmapMetrics.mapCount": {
+    "defaultMessage": "Возвращено карт"
+  },
+  "admin.system.mindmapMetrics.pending": {
+    "defaultMessage": "Ожидание следующего запроса списка майнд-карт для сбора метрик."
+  },
+  "admin.system.mindmapMetrics.segments": {
+    "defaultMessage": "Этапы выполнения"
+  },
+  "admin.system.mindmapMetrics.title": {
+    "defaultMessage": "Производительность списка майнд-карт"
+  },
+  "admin.system.mindmapMetrics.topQueries": {
+    "defaultMessage": "Основные запросы"
+  },
+  "admin.system.mindmapMetrics.totalTime": {
+    "defaultMessage": "Общее время (мс)"
+  },
   "admin.system.db.url": {
     "defaultMessage": "URL"
   },
+  "admin.system.db.username": {
+    "defaultMessage": "Имя пользователя"
+  },
+  "admin.system.error": {
+    "defaultMessage": "Не удалось загрузить информацию о системе"
+  },
+  "admin.system.health": {
+    "defaultMessage": "Состояние системы"
+  },
   "admin.system.jvm": {
     "defaultMessage": "JVM"
+  },
+  "admin.system.jvm.load": {
+    "defaultMessage": "Загрузка системы"
+  },
+  "admin.system.jvm.processors": {
+    "defaultMessage": "Процессоры"
+  },
+  "admin.system.jvm.start": {
+    "defaultMessage": "Время запуска"
+  },
+  "admin.system.jvm.uptime": {
+    "defaultMessage": "Время работы"
+  },
+  "admin.system.jvm.vendor": {
+    "defaultMessage": "Поставщик"
+  },
+  "admin.system.jvm.version": {
+    "defaultMessage": "Версия Java"
+  },
+  "admin.system.loading": {
+    "defaultMessage": "Загрузка информации о системе..."
   },
   "error.page-title": {
     "defaultMessage": "Неожиданная ошибка | WiseMapping"
@@ -756,10 +1173,16 @@
     "defaultMessage": "Название карты обязательно и не может быть пустым"
   },
   "accountinfo.personal-details": {
-    "defaultMessage": "Personal Details"
+    "defaultMessage": "Личные данные"
+  },
+  "accountinfo.personal-info": {
+    "defaultMessage": "Личная информация"
   },
   "account.delete-warning-title": {
     "defaultMessage": "Удалить аккаунт"
+  },
+  "accountinfo.account-settings": {
+    "defaultMessage": "Настройки аккаунта"
   },
   "account.delete-warning-description": {
     "defaultMessage": "После удаления аккаунта восстановить его будет невозможно. Пожалуйста, примите решение обдуманно."
@@ -801,46 +1224,70 @@
     "defaultMessage": "Удалить аккаунт"
   },
   "menu.admin-console": {
-    "defaultMessage": "Admin Console"
+    "defaultMessage": "Консоль администратора"
   },
   "registration.form-legend": {
-    "defaultMessage": "Account Information"
+    "defaultMessage": "Данные аккаунта"
   },
   "admin.change-password": {
-    "defaultMessage": "Change password"
+    "defaultMessage": "Сменить пароль"
   },
   "admin.change-password-title": {
-    "defaultMessage": "Change Password"
+    "defaultMessage": "Смена пароля"
   },
   "admin.change-password-description": {
-    "defaultMessage": "Change password for user: {email}"
+    "defaultMessage": "Смена пароля для пользователя: {email}"
   },
   "admin.new-password": {
-    "defaultMessage": "New Password"
+    "defaultMessage": "Новый пароль"
   },
   "admin.confirm-password": {
-    "defaultMessage": "Confirm Password"
+    "defaultMessage": "Подтвердите пароль"
+  },
+  "admin.confirm.delete-map": {
+    "defaultMessage": "Вы уверены, что хотите удалить карту «{title}»?"
+  },
+  "admin.confirm.spam-action": {
+    "defaultMessage": "Вы уверены, что хотите {action} эту карту?"
+  },
+  "admin.console.description": {
+    "defaultMessage": "Управление пользователями, системными параметрами и конфигурацией приложения."
+  },
+  "admin.console.page-title": {
+    "defaultMessage": "Консоль администратора | WiseMapping"
+  },
+  "admin.console.subtitle": {
+    "defaultMessage": "Администрирование системы"
+  },
+  "admin.console.title": {
+    "defaultMessage": "Консоль администратора"
+  },
+  "admin.current-suspension-reason": {
+    "defaultMessage": "Текущая причина приостановки:"
   },
   "admin.change-password-button": {
-    "defaultMessage": "Change Password"
+    "defaultMessage": "Сменить пароль"
   },
   "admin.password-error-length": {
-    "defaultMessage": "Password must be at least 6 characters"
+    "defaultMessage": "Пароль должен содержать не менее 6 символов"
   },
   "admin.password-error-mismatch": {
-    "defaultMessage": "Passwords do not match"
+    "defaultMessage": "Пароли не совпадают"
+  },
+  "admin.prompt.new-user-password": {
+    "defaultMessage": "Введите пароль для нового пользователя:"
   },
   "admin.password-error-failed": {
-    "defaultMessage": "Failed to change password"
+    "defaultMessage": "Не удалось сменить пароль"
   },
   "admin.password-error-google": {
-    "defaultMessage": "This user is authenticated via Google. Password changes are not available for Google accounts. Please ask the user to manage their password through their Google account."
+    "defaultMessage": "Этот пользователь входит через Google. Смена пароля для аккаунтов Google недоступна. Попросите пользователя управлять паролем в своём аккаунте Google."
   },
   "admin.password-error-facebook": {
-    "defaultMessage": "This user is authenticated via Facebook. Password changes are not available for Facebook accounts. Please ask the user to manage their password through their Facebook account."
+    "defaultMessage": "Этот пользователь входит через Facebook. Смена пароля для аккаунтов Facebook недоступна. Попросите пользователя управлять паролем в своём аккаунте Facebook."
   },
   "admin.close": {
-    "defaultMessage": "Close"
+    "defaultMessage": "Закрыть"
   },
   "validation.title-required": {
     "defaultMessage": "Название обязательно"
@@ -849,106 +1296,154 @@
     "defaultMessage": "Перенаправление..."
   },
   "share.table.collaborator": {
-    "defaultMessage": "Collaborator"
+    "defaultMessage": "Соавтор"
   },
   "share.table.role": {
-    "defaultMessage": "Role"
+    "defaultMessage": "Роль"
   },
   "share.table.actions": {
-    "defaultMessage": "Actions"
+    "defaultMessage": "Действия"
   },
   "error.go-home": {
-    "defaultMessage": "Go to Home"
+    "defaultMessage": "На главную"
   },
   "error.go-back": {
-    "defaultMessage": "Go Back"
+    "defaultMessage": "Назад"
   },
   "error.go-to-login": {
-    "defaultMessage": "Sign In"
+    "defaultMessage": "Войти"
+  },
+  "error.invalid-map-id": {
+    "defaultMessage": "Неверный ID карты"
   },
   "login.oauth-error": {
-    "defaultMessage": "OAuth authentication failed. Please try again or use a different sign-in method."
+    "defaultMessage": "Ошибка аутентификации OAuth. Пожалуйста, попробуйте ещё раз или выберите другой способ входа."
   },
   "login.server-error": {
-    "defaultMessage": "An unexpected error occurred. Please try again later."
+    "defaultMessage": "Произошла непредвиденная ошибка. Пожалуйста, попробуйте позже."
   },
   "login.generic-error": {
-    "defaultMessage": "An error occurred during authentication. Please try again."
+    "defaultMessage": "При аутентификации произошла ошибка. Пожалуйста, попробуйте ещё раз."
   },
   "registration.success.title": {
-    "defaultMessage": "Registration Successful!"
+    "defaultMessage": "Регистрация прошла успешно!"
   },
   "registration.success.email-sent": {
-    "defaultMessage": "We've sent an activation email to your inbox. Please check your email and click on the activation link to activate your account."
+    "defaultMessage": "Мы отправили вам письмо для активации. Пожалуйста, проверьте почту и перейдите по ссылке в письме, чтобы активировать аккаунт."
   },
   "registration.success.check-spam": {
-    "defaultMessage": "If you don't see the email, please check your spam folder."
+    "defaultMessage": "Если вы не видите письмо, проверьте папку «Спам»."
   },
   "registration.success.already-activated": {
-    "defaultMessage": "Already activated your account?"
+    "defaultMessage": "Уже активировали аккаунт?"
   },
   "reset-password.title": {
-    "defaultMessage": "Set a new password"
+    "defaultMessage": "Установка нового пароля"
   },
   "reset-password.desc": {
-    "defaultMessage": "Enter your new password below."
+    "defaultMessage": "Введите новый пароль ниже."
   },
   "reset-password.invalid-link": {
-    "defaultMessage": "Invalid password reset link. Please request a new one."
+    "defaultMessage": "Недействительная ссылка для сброса пароля. Пожалуйста, запросите новую."
   },
   "reset-password.request-new": {
-    "defaultMessage": "Request new link"
+    "defaultMessage": "Запросить новую ссылку"
   },
   "reset-password.password": {
-    "defaultMessage": "New password"
+    "defaultMessage": "Новый пароль"
   },
   "reset-password.confirm-password": {
-    "defaultMessage": "Confirm new password"
+    "defaultMessage": "Подтвердите новый пароль"
   },
   "reset-password.submit": {
-    "defaultMessage": "Set new password"
+    "defaultMessage": "Установить новый пароль"
   },
   "reset-password.too-short": {
-    "defaultMessage": "Password must be at least 8 characters."
+    "defaultMessage": "Пароль должен содержать не менее 8 символов."
   },
   "reset-password.too-long": {
-    "defaultMessage": "Password must be less than 40 characters."
+    "defaultMessage": "Пароль должен быть короче 40 символов."
   },
   "reset-password.mismatch": {
-    "defaultMessage": "Passwords do not match."
+    "defaultMessage": "Пароли не совпадают."
   },
   "reset-password.page-title": {
-    "defaultMessage": "Reset Password | WiseMapping"
+    "defaultMessage": "Сброс пароля | WiseMapping"
   },
   "maps.auth-required-title": {
-    "defaultMessage": "Sign In Required | WiseMapping"
+    "defaultMessage": "Требуется вход | WiseMapping"
   },
   "maps.auth-required-heading": {
-    "defaultMessage": "Sign in to access your maps"
+    "defaultMessage": "Войдите, чтобы получить доступ к своим картам"
   },
   "maps.auth-required-login": {
-    "defaultMessage": "Go to login"
+    "defaultMessage": "Перейти ко входу"
   },
   "maps.auth-required-default-message": {
-    "defaultMessage": "You need to sign in to view your maps."
+    "defaultMessage": "Чтобы просмотреть свои карты, необходимо войти."
   },
   "activation.error.message": {
-    "defaultMessage": "We couldn't activate your account. The activation link may be invalid or expired. Please contact support for assistance."
+    "defaultMessage": "Не удалось активировать ваш аккаунт. Ссылка для активации может быть недействительной или устаревшей. Пожалуйста, обратитесь в службу поддержки."
   },
   "activation.error.title": {
-    "defaultMessage": "Activation Failed"
+    "defaultMessage": "Ошибка активации"
   },
   "activation.loading.desc": {
-    "defaultMessage": "Please wait while we activate your account..."
+    "defaultMessage": "Пожалуйста, подождите, пока мы активируем ваш аккаунт..."
   },
   "activation.loading.title": {
-    "defaultMessage": "Activating Your Account"
+    "defaultMessage": "Активация аккаунта"
+  },
+  "activation.page-title": {
+    "defaultMessage": "Активация аккаунта | WiseMapping"
   },
   "activation.success.message": {
-    "defaultMessage": "Your account has been activated. You can now sign in and start creating mind maps."
+    "defaultMessage": "Ваш аккаунт активирован. Теперь вы можете войти и начать создавать майнд-карты."
   },
   "activation.success.title": {
-    "defaultMessage": "Account Activated Successfully"
+    "defaultMessage": "Аккаунт успешно активирован"
+  },
+  "admin.accounts.add-user": {
+    "defaultMessage": "Добавить пользователя"
+  },
+  "admin.accounts.create": {
+    "defaultMessage": "Создать пользователя"
+  },
+  "admin.accounts.create-user": {
+    "defaultMessage": "Создать пользователя"
+  },
+  "admin.accounts.edit-user": {
+    "defaultMessage": "Редактировать пользователя"
+  },
+  "admin.accounts.filters": {
+    "defaultMessage": "Поиск и фильтры"
+  },
+  "admin.accounts.no-users": {
+    "defaultMessage": "Пользователи не найдены"
+  },
+  "admin.accounts.refresh": {
+    "defaultMessage": "Обновить"
+  },
+  "admin.accounts.refresh-tooltip": {
+    "defaultMessage": "Обновить данные"
+  },
+  "admin.accounts.search": {
+    "defaultMessage": "Поиск пользователей..."
+  },
+  "admin.accounts.subtitle": {
+    "defaultMessage": "Управление аккаунтами пользователей, правами доступа и настройками"
+  },
+  "admin.accounts.title": {
+    "defaultMessage": "Управление пользователями"
+  },
+  "admin.action.mark-as-not-spam": {
+    "defaultMessage": "пометить как не спам"
+  },
+  "admin.action.mark-as-spam": {
+    "defaultMessage": "пометить как спам"
+  },
+  "admin.activate-user": {
+    "defaultMessage": "Активировать пользователя"
   },
   "map.actions": {
     "defaultMessage": "Действия"

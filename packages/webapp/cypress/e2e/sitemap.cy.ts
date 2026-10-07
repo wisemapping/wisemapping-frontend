@@ -18,7 +18,21 @@
 
 /// <reference types="cypress" />
 
-const SUPPORTED_LOCALES = ['en', 'es', 'fr', 'de', 'ru', 'uk', 'zh', 'zh-CN', 'ja', 'pt', 'it', 'hi', 'ar'];
+const SUPPORTED_LOCALES = [
+  'en',
+  'es',
+  'fr',
+  'de',
+  'ru',
+  'uk',
+  'zh',
+  'zh-CN',
+  'ja',
+  'pt',
+  'it',
+  'hi',
+  'ar',
+];
 const LOCALIZED_PAGES = ['/c/login', '/c/registration', '/c/forgot-password'];
 
 describe('Sitemap XML', () => {
@@ -136,7 +150,10 @@ describe('Sitemap XML', () => {
 
         if (nonLocalizedEntry) {
           // Use getElementsByTagNameNS for namespace-aware querying
-          const hreflangLinks = nonLocalizedEntry.getElementsByTagNameNS('http://www.w3.org/1999/xhtml', 'link');
+          const hreflangLinks = nonLocalizedEntry.getElementsByTagNameNS(
+            'http://www.w3.org/1999/xhtml',
+            'link',
+          );
           expect(hreflangLinks.length).to.be.greaterThan(0);
 
           // Verify x-default exists
@@ -169,7 +186,10 @@ describe('Sitemap XML', () => {
           expect(localizedEntry).to.not.be.undefined;
 
           if (localizedEntry) {
-            const hreflangLinks = localizedEntry.getElementsByTagNameNS('http://www.w3.org/1999/xhtml', 'link');
+            const hreflangLinks = localizedEntry.getElementsByTagNameNS(
+              'http://www.w3.org/1999/xhtml',
+              'link',
+            );
             expect(hreflangLinks.length).to.be.greaterThan(SUPPORTED_LOCALES.length);
 
             // Verify x-default exists
@@ -262,4 +282,3 @@ describe('Sitemap XML', () => {
     });
   });
 });
-

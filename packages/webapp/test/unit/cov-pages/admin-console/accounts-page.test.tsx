@@ -24,6 +24,7 @@ import AppConfig from '../../../../src/classes/app-config';
 import { AuthenticationType } from '../../../../src/classes/client';
 import type { AdminClientInterface } from '../../../../src/classes/client/admin-client';
 import { renderWithWrapper } from '../providers';
+import { BURST_TEXT, typeInBurst } from '../../burst-typing';
 import { buildAdminClient, makeAdminMap, makeUser, MockAdminClient, page } from './fixtures';
 
 const dbUser = makeUser({
@@ -87,11 +88,12 @@ describe('AccountManagement', () => {
     jest
       .spyOn(AppConfig, 'getAdminClient')
       .mockReturnValue(client as unknown as AdminClientInterface);
-    // The page logs every query it sends.
     jest.spyOn(console, 'log').mockImplementation(() => undefined);
   });
 
   afterEach(() => {
+    // The page sends its queries without debug output.
+    expect(console.log).not.toHaveBeenCalled();
     jest.useRealTimers();
   });
 
@@ -233,6 +235,93 @@ describe('AccountManagement', () => {
     expect(lastParams()?.search).toBe('ada');
   });
 
+  test('the search box takes 200 characters typed in one burst, as Cypress types them', async () => {
+    setup();
+    await waitForRows();
+    const search = screen.getByPlaceholderText('Search users...') as HTMLInputElement;
+
+    expect(await typeInBurst(search)).toEqual([]);
+
+    await waitFor(() => expect(lastParams()?.search).toBe(BURST_TEXT), { timeout: 2000 });
+  });
+
+  describe('while a search loads', () => {
+    const searchBox = () => screen.getByPlaceholderText('Search users...') as HTMLInputElement;
+
+    const typeAndWait = async (term: string) => {
+      fireEvent.change(searchBox(), { target: { value: term } });
+      await act(async () => {
+        await jest.advanceTimersByTimeAsync(500);
+      });
+    };
+
+    test('the search box stays enabled and focused, and shows the load in an adornment', async () => {
+      setup();
+      await waitForRows();
+      let release = (): void => undefined;
+      client.getAdminUsers.mockImplementation(
+        () =>
+          new Promise((resolve) => {
+            release = () => resolve(page([dbUser]));
+          }),
+      );
+      jest.useFakeTimers();
+      searchBox().focus();
+
+      await typeAndWait('ad');
+      expect(lastParams()?.search).toBe('ad');
+
+      // The box is not disabled by its own search: the user keeps typing.
+      expect(searchBox().disabled).toBe(false);
+      expect(document.activeElement).toBe(searchBox());
+      expect(
+        within(searchBox().parentElement as HTMLElement).getByRole('progressbar'),
+      ).toBeTruthy();
+
+      await typeAndWait('ada');
+      expect(searchBox().value).toBe('ada');
+      expect(lastParams()?.search).toBe('ada');
+
+      await act(async () => {
+        release();
+        await jest.advanceTimersByTimeAsync(10);
+      });
+      expect(
+        within(searchBox().parentElement as HTMLElement).queryByRole('progressbar'),
+      ).toBeNull();
+      expect(document.activeElement).toBe(searchBox());
+    });
+
+    test('a late response to an older search does not replace the newer results', async () => {
+      setup();
+      await waitForRows();
+      const respond = new Map<string, (items: unknown[]) => void>();
+      client.getAdminUsers.mockImplementation(
+        (params: { search?: string }) =>
+          new Promise((resolve) => {
+            respond.set(params.search ?? '', (items) => resolve(page(items)));
+          }),
+      );
+      jest.useFakeTimers();
+
+      await typeAndWait('old');
+      await typeAndWait('new');
+
+      await act(async () => {
+        respond.get('new')!([googleUser]);
+        await jest.advanceTimersByTimeAsync(10);
+      });
+      expect(screen.getByText(/<google@example\.com>/)).toBeTruthy();
+
+      await act(async () => {
+        respond.get('old')!([ldapUser]);
+        await jest.advanceTimersByTimeAsync(10);
+      });
+      expect(screen.getByText(/<google@example\.com>/)).toBeTruthy();
+      expect(screen.queryByText(/<ldap@example\.com>/)).toBeNull();
+    });
+  });
+
   test('the pagination requests the chosen page', async () => {
     setup({ totalPages: 3 });
     await waitForRows();
@@ -305,6 +394,61 @@ describe('AccountManagement', () => {
       await dialogClosed();
     });
 
+    test('its fields take 200 characters typed in one burst, as Cypress types them', async () => {
+      setup();
+      await waitForRows();
+
+      fireEvent.click(within(rowOf('db@example.com')).getByTitle('Edit user'));
+      const dialog = await screen.findByRole('dialog', { name: 'Edit User' });
+      const field = (label: RegExp) => within(dialog).getByLabelText(label) as HTMLInputElement;
+
+      expect(await typeInBurst(field(/First Name/))).toEqual([]);
+      expect(await typeInBurst(field(/Last Name/))).toEqual([]);
+      fireEvent.change(field(/^Email/), { target: { value: '' } });
+      expect(await typeInBurst(field(/^Email/))).toEqual([]);
+      fireEvent.change(field(/^Email/), { target: { value: 'ada@example.com' } });
+      fireEvent.click(within(dialog).getByRole('button', { name: 'Update User' }));
+
+      await waitFor(() =>
+        expect(client.updateAdminUser).toHaveBeenCalledWith(1, {
+          firstname: `First${BURST_TEXT}`,
+          lastname: `Last1${BURST_TEXT}`,
+          email: 'ada@example.com',
+          locale: 'en',
+          allowSendEmail: true,
+        }),
+      );
+    });
+
+    test('creating after a cancelled edit creates a new user', async () => {
+      jest.spyOn(window, 'prompt').mockReturnValue('s3cret!');
+      setup();
+      await waitForRows();
+
+      fireEvent.click(within(rowOf('db@example.com')).getByTitle('Edit user'));
+      let dialog = await screen.findByRole('dialog', { name: 'Edit User' });
+      fireEvent.click(within(dialog).getByRole('button', { name: 'Cancel' }));
+      await dialogClosed();
+
+      fireEvent.click(screen.getByRole('button', { name: 'Add New User' }));
+      dialog = await screen.findByRole('dialog', { name: 'Create User' });
+      // The form starts empty, not with the user that was being edited.
+      expect((within(dialog).getByLabelText(/First Name/) as HTMLInputElement).value).toBe('');
+      fireEvent.change(within(dialog).getByLabelText(/First Name/), { target: { value: 'Ada' } });
+      fireEvent.change(within(dialog).getByLabelText(/Last Name/), { target: { value: 'Byron' } });
+      fireEvent.change(within(dialog).getByLabelText(/^Email/), {
+        target: { value: 'ada@example.com' },
+      });
+      fireEvent.click(within(dialog).getByRole('button', { name: 'Create User' }));
+
+      await waitFor(() =>
+        expect(client.createAdminUser).toHaveBeenCalledWith(
+          expect.objectContaining({ email: 'ada@example.com', password: 's3cret!' }),
+        ),
+      );
+      expect(client.updateAdminUser).not.toHaveBeenCalled();
+    });
+
     test('a failed update is reported in the dialog', async () => {
       jest.spyOn(console, 'error').mockImplementation(() => undefined);
       client.updateAdminUser.mockRejectedValue(new Error('nope'));
@@ -359,6 +503,33 @@ describe('AccountManagement', () => {
         ),
       );
       await dialogClosed();
+    });
+
+    test('its fields take 200 characters typed in one burst, as Cypress types them', async () => {
+      jest.spyOn(window, 'prompt').mockReturnValue('s3cret!');
+      setup();
+      await waitForRows();
+
+      fireEvent.click(screen.getByRole('button', { name: 'Add New User' }));
+      const dialog = await screen.findByRole('dialog', { name: 'Create User' });
+      const field = (label: RegExp) => within(dialog).getByLabelText(label) as HTMLInputElement;
+
+      expect(await typeInBurst(field(/First Name/))).toEqual([]);
+      expect(await typeInBurst(field(/Last Name/))).toEqual([]);
+      expect(await typeInBurst(field(/^Email/))).toEqual([]);
+      fireEvent.change(field(/^Email/), { target: { value: 'ada@example.com' } });
+      fireEvent.click(within(dialog).getByRole('button', { name: 'Create User' }));
+
+      await waitFor(() =>
+        expect(client.createAdminUser).toHaveBeenCalledWith(
+          expect.objectContaining({
+            firstname: BURST_TEXT,
+            lastname: BURST_TEXT,
+            email: 'ada@example.com',
+            password: 's3cret!',
+          }),
+        ),
+      );
     });
 
     test('cancelling the password prompt creates nothing', async () => {
@@ -572,6 +743,45 @@ describe('AccountManagement', () => {
       await dialogClosed();
     });
 
+    test('its fields take 200 characters typed in one burst, as Cypress types them', async () => {
+      setup();
+      await waitForRows();
+
+      const dialog = await openFor('db@example.com');
+      const field = (label: string) => within(dialog).getByLabelText(label) as HTMLInputElement;
+
+      expect(await typeInBurst(field('New Password'))).toEqual([]);
+      expect(await typeInBurst(field('Confirm Password'))).toEqual([]);
+      fireEvent.click(within(dialog).getByRole('button', { name: 'Change Password' }));
+
+      await waitFor(() => expect(client.changeUserPassword).toHaveBeenCalledWith(1, BURST_TEXT));
+      await dialogClosed();
+    });
+
+    test('reopening the dialog starts from empty fields', async () => {
+      setup();
+      await waitForRows();
+
+      let dialog = await openFor('db@example.com');
+      fireEvent.change(within(dialog).getByLabelText('New Password'), {
+        target: { value: 'abc' },
+      });
+      fireEvent.click(within(dialog).getByRole('button', { name: 'Change Password' }));
+      expect(within(dialog).getByText('Password must be at least 6 characters')).toBeTruthy();
+      fireEvent.click(within(dialog).getByRole('button', { name: 'Cancel' }));
+      await dialogClosed();
+
+      dialog = await openFor('ldap@example.com');
+      expect(within(dialog).getByText('Change password for user: ldap@example.com')).toBeTruthy();
+      expect(within(dialog).queryByRole('alert')).toBeNull();
+      fireEvent.click(within(dialog).getByRole('button', { name: 'Close' }));
+      await dialogClosed();
+
+      dialog = await openFor('db@example.com');
+      expect((within(dialog).getByLabelText('New Password') as HTMLInputElement).value).toBe('');
+      expect(within(dialog).queryByRole('alert')).toBeNull();
+    });
+
     test('a failed change is reported', async () => {
       jest.spyOn(console, 'error').mockImplementation(() => undefined);
       client.changeUserPassword.mockRejectedValue(new Error('weak'));
@@ -686,6 +896,18 @@ describe('AccountManagement', () => {
       // The lookup is reset.
       expect(screen.queryByText('Eff Bee')).toBeNull();
       expect((screen.getByLabelText('facebookId') as HTMLInputElement).value).toBe('');
+    });
+
+    test('the Facebook id field takes 200 characters typed in one burst, as Cypress types them', async () => {
+      client.getUserByFacebookId.mockResolvedValue(facebookUser);
+      setup({ facebook: true });
+      await waitForRows();
+
+      const input = (await openLookup()) as HTMLInputElement;
+      expect(await typeInBurst(input)).toEqual([]);
+      fireEvent.click(screen.getByRole('button', { name: 'Find Account' }));
+
+      await waitFor(() => expect(client.getUserByFacebookId).toHaveBeenCalledWith(BURST_TEXT));
     });
 
     test('reports an unknown Facebook id', async () => {

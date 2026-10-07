@@ -357,4 +357,3 @@ class SymmetricTestSuite extends TestSuite {
 }
 
 export default SymmetricTestSuite;
-

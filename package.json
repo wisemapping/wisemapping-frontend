@@ -18,8 +18,9 @@
   "scripts": {
     "build": "lerna run build",
     "clean": "lerna run clean --parallel && lerna clean --yes && rm -rf node_modules && yarn install",
-    "lint": "lerna run lint --stream",
-    "lint:fix": "lerna run lint:fix --stream",
+    "lint": "lerna run lint --stream && yarn lint:root",
+    "lint:fix": "lerna run lint:fix --stream && eslint api middleware.ts --fix",
+    "lint:root": "eslint api middleware.ts && tsc -p tsconfig.root.json",
     "playground": "lerna run playground --stream",
     "prepare": "husky",
     "test": "lerna run test --stream",
@@ -48,7 +49,30 @@
       "sh -c 'cd packages/web2d && eslint \"$@\"' eslint",
       "prettier --check"
     ],
-    "packages/web2d/{storybook/**/*,cypress/**/*,cypress.config}.ts": [
+    "packages/web2d/{eslint.config.mjs,vite.config.mts,cypress.config.ts,jest.config.js,.storybook/*.{mjs,ts}}": [
+      "sh -c 'cd packages/web2d && eslint \"$@\"' eslint"
+    ],
+    "packages/mindplot/{eslint.config.mjs,vite.config.mts,cypress.config.js,.storybook/*.{js,mjs},cypress/{e2e,plugins,support}/**/*.js}": [
+      "sh -c 'cd packages/mindplot && eslint \"$@\"' eslint"
+    ],
+    "packages/webapp/{eslint.config.mjs,vite.config.mts,.storybook/*.mjs}": [
+      "sh -c 'cd packages/webapp && eslint \"$@\"' eslint"
+    ],
+    "packages/webapp/{cypress/**/*,cypress.config}.ts": [
+      "sh -c 'cd packages/webapp && eslint \"$@\"' eslint",
+      "prettier --check"
+    ],
+    "packages/web2d/{cypress/**/*,cypress.config}.ts": [
+      "prettier --check"
+    ],
+    "packages/*/{.storybook,storybook}/**/*.{ts,tsx}": [
+      "prettier --check"
+    ],
+    "{api/**/*,middleware}.ts": [
+      "eslint",
+      "prettier --check"
+    ],
+    "**/*.{mjs,cjs,mts,cts,css,html}": [
       "prettier --check"
     ],
     "**/*.{js,jsx}": [

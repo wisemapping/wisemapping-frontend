@@ -75,8 +75,8 @@ const createHarness = (options: { loaded?: boolean; zoom?: number } = {}): Harne
   const model = {
     isMapLoadded: () => state.loaded,
     getDesignerModel: () => ({
-      filterSelectedTopics: () => [],
-      filterSelectedRelationships: () => [],
+      countSelectedTopics: () => 0,
+      countSelectedRelationships: () => 0,
     }),
     getDesigner: () => ({
       addEvent: (event: string, callback: () => void) => {

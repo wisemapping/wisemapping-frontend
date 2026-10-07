@@ -107,10 +107,16 @@
       "value": "アカウントを削除"
     }
   ],
+  "accountinfo.account-settings": [
+    {
+      "type": 0,
+      "value": "アカウント設定"
+    }
+  ],
   "accountinfo.button": [
     {
       "type": 0,
-      "value": "受け入れる"
+      "value": "変更を保存"
     }
   ],
   "accountinfo.deleteaccount": [
@@ -140,7 +146,13 @@
   "accountinfo.personal-details": [
     {
       "type": 0,
-      "value": "Personal Details"
+      "value": "個人情報の詳細"
+    }
+  ],
+  "accountinfo.personal-info": [
+    {
+      "type": 0,
+      "value": "個人情報"
     }
   ],
   "accountinfo.title": [
@@ -278,37 +290,127 @@
   "activation.error.message": [
     {
       "type": 0,
-      "value": "We couldn't activate your account. The activation link may be invalid or expired. Please contact support for assistance."
+      "value": "アカウントを有効化できませんでした。有効化リンクが無効であるか、有効期限が切れている可能性があります。サポートまでお問い合わせください。"
     }
   ],
   "activation.error.title": [
     {
       "type": 0,
-      "value": "Activation Failed"
+      "value": "有効化に失敗しました"
     }
   ],
   "activation.loading.desc": [
     {
       "type": 0,
-      "value": "Please wait while we activate your account..."
+      "value": "アカウントを有効化しています。しばらくお待ちください..."
     }
   ],
   "activation.loading.title": [
     {
       "type": 0,
-      "value": "Activating Your Account"
+      "value": "アカウントを有効化しています"
+    }
+  ],
+  "activation.page-title": [
+    {
+      "type": 0,
+      "value": "アカウントの有効化 | WiseMapping"
     }
   ],
   "activation.success.message": [
     {
       "type": 0,
-      "value": "Your account has been activated. You can now sign in and start creating mind maps."
+      "value": "アカウントが有効化されました。サインインしてマインドマップの作成を始められます。"
     }
   ],
   "activation.success.title": [
     {
       "type": 0,
-      "value": "Account Activated Successfully"
+      "value": "アカウントが正常に有効化されました"
+    }
+  ],
+  "admin.accounts.add-user": [
+    {
+      "type": 0,
+      "value": "新しいユーザーを追加"
+    }
+  ],
+  "admin.accounts.create": [
+    {
+      "type": 0,
+      "value": "ユーザーを作成"
+    }
+  ],
+  "admin.accounts.create-user": [
+    {
+      "type": 0,
+      "value": "ユーザーを作成"
+    }
+  ],
+  "admin.accounts.edit-user": [
+    {
+      "type": 0,
+      "value": "ユーザーを編集"
+    }
+  ],
+  "admin.accounts.filters": [
+    {
+      "type": 0,
+      "value": "検索とフィルター"
+    }
+  ],
+  "admin.accounts.no-users": [
+    {
+      "type": 0,
+      "value": "ユーザーが見つかりません"
+    }
+  ],
+  "admin.accounts.refresh": [
+    {
+      "type": 0,
+      "value": "更新"
+    }
+  ],
+  "admin.accounts.refresh-tooltip": [
+    {
+      "type": 0,
+      "value": "データを更新"
+    }
+  ],
+  "admin.accounts.search": [
+    {
+      "type": 0,
+      "value": "ユーザーを検索..."
+    }
+  ],
+  "admin.accounts.subtitle": [
+    {
+      "type": 0,
+      "value": "ユーザーアカウント、権限、設定を管理します"
+    }
+  ],
+  "admin.accounts.title": [
+    {
+      "type": 0,
+      "value": "ユーザー管理"
+    }
+  ],
+  "admin.action.mark-as-not-spam": [
+    {
+      "type": 0,
+      "value": "非スパムとしてマーク"
+    }
+  ],
+  "admin.action.mark-as-spam": [
+    {
+      "type": 0,
+      "value": "スパムとしてマーク"
+    }
+  ],
+  "admin.activate-user": [
+    {
+      "type": 0,
+      "value": "ユーザーを有効化"
     }
   ],
   "admin.auth-type": [
@@ -317,22 +419,64 @@
       "value": "認証タイプ"
     }
   ],
+  "admin.auth.database": [
+    {
+      "type": 0,
+      "value": "データベース"
+    }
+  ],
+  "admin.auth.facebook": [
+    {
+      "type": 0,
+      "value": "Facebook"
+    }
+  ],
+  "admin.auth.google": [
+    {
+      "type": 0,
+      "value": "Google"
+    }
+  ],
+  "admin.auth.ldap": [
+    {
+      "type": 0,
+      "value": "LDAP"
+    }
+  ],
+  "admin.button.update-user": [
+    {
+      "type": 0,
+      "value": "ユーザーを更新"
+    }
+  ],
+  "admin.button.updating": [
+    {
+      "type": 0,
+      "value": "更新中..."
+    }
+  ],
+  "admin.cancel": [
+    {
+      "type": 0,
+      "value": "キャンセル"
+    }
+  ],
   "admin.change-password": [
     {
       "type": 0,
-      "value": "Change password"
+      "value": "パスワードを変更"
     }
   ],
   "admin.change-password-button": [
     {
       "type": 0,
-      "value": "Change Password"
+      "value": "パスワードを変更"
     }
   ],
   "admin.change-password-description": [
     {
       "type": 0,
-      "value": "Change password for user: "
+      "value": "ユーザーのパスワードを変更："
     },
     {
       "type": 1,
@@ -342,19 +486,77 @@
   "admin.change-password-title": [
     {
       "type": 0,
-      "value": "Change Password"
+      "value": "パスワードを変更"
     }
   ],
   "admin.close": [
     {
       "type": 0,
-      "value": "Close"
+      "value": "閉じる"
     }
   ],
   "admin.confirm-password": [
     {
       "type": 0,
-      "value": "Confirm Password"
+      "value": "パスワードを確認"
+    }
+  ],
+  "admin.confirm.delete-map": [
+    {
+      "type": 0,
+      "value": "マップ「"
+    },
+    {
+      "type": 1,
+      "value": "title"
+    },
+    {
+      "type": 0,
+      "value": "」を削除してもよろしいですか？"
+    }
+  ],
+  "admin.confirm.spam-action": [
+    {
+      "type": 0,
+      "value": "このマップを"
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "してもよろしいですか？"
+    }
+  ],
+  "admin.console.description": [
+    {
+      "type": 0,
+      "value": "ユーザー、システム設定、アプリケーション構成を管理します。"
+    }
+  ],
+  "admin.console.page-title": [
+    {
+      "type": 0,
+      "value": "管理コンソール | WiseMapping"
+    }
+  ],
+  "admin.console.subtitle": [
+    {
+      "type": 0,
+      "value": "システム管理"
+    }
+  ],
+  "admin.console.title": [
+    {
+      "type": 0,
+      "value": "管理コンソール"
+    }
+  ],
+  "admin.current-suspension-reason": [
+    {
+      "type": 0,
+      "value": "現在の停止理由："
     }
   ],
   "admin.delete": [
@@ -381,6 +583,108 @@
       "value": "ユーザーを編集"
     }
   ],
+  "admin.error.access-denied": [
+    {
+      "type": 0,
+      "value": "アクセスが拒否されました。管理者権限が必要です。"
+    }
+  ],
+  "admin.error.create-user-failed": [
+    {
+      "type": 0,
+      "value": "ユーザーの作成に失敗しました。もう一度お試しください。"
+    }
+  ],
+  "admin.error.load-users": [
+    {
+      "type": 0,
+      "value": "ユーザーの読み込みに失敗しました："
+    },
+    {
+      "type": 1,
+      "value": "message"
+    }
+  ],
+  "admin.error.unknown": [
+    {
+      "type": 0,
+      "value": "不明なエラー"
+    }
+  ],
+  "admin.error.update-map-failed": [
+    {
+      "type": 0,
+      "value": "マップの更新に失敗しました。もう一度お試しください。"
+    }
+  ],
+  "admin.error.update-user-failed": [
+    {
+      "type": 0,
+      "value": "ユーザーの更新に失敗しました。もう一度お試しください。"
+    }
+  ],
+  "admin.facebook.filter-tooltip": [
+    {
+      "type": 0,
+      "value": "Facebookデータ削除の照会"
+    }
+  ],
+  "admin.facebook.lookup-button": [
+    {
+      "type": 0,
+      "value": "アカウントを検索"
+    }
+  ],
+  "admin.facebook.lookup-not-found": [
+    {
+      "type": 0,
+      "value": "このFacebookユーザーIDに該当するアカウントが見つかりません。"
+    }
+  ],
+  "admin.facebook.remove": [
+    {
+      "type": 0,
+      "value": "解除"
+    }
+  ],
+  "admin.facebook.remove-button": [
+    {
+      "type": 0,
+      "value": "Facebookアカウントを解除"
+    }
+  ],
+  "admin.facebook.remove-confirm": [
+    {
+      "type": 0,
+      "value": "「"
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": "」のFacebook連携を解除しますか？"
+    }
+  ],
+  "admin.facebook.remove-dialog-title": [
+    {
+      "type": 0,
+      "value": "Facebookアカウントを解除"
+    }
+  ],
+  "admin.facebook.remove-warning": [
+    {
+      "type": 0,
+      "value": "このアカウントからFacebook認証の連携が解除されます。ユーザーにはアクセスを回復するためのパスワードリセットメールが送信されます。"
+    }
+  ],
+  "admin.facebook.removing": [
+    {
+      "type": 0,
+      "value": "解除中..."
+    }
+  ],
   "admin.lock-status": [
     {
       "type": 0,
@@ -393,40 +697,370 @@
       "value": "ロック"
     }
   ],
+  "admin.maps.clean-tooltip": [
+    {
+      "type": 0,
+      "value": "スパムとしてマークされていません"
+    }
+  ],
+  "admin.maps.creator-suspended-tooltip": [
+    {
+      "type": 0,
+      "value": "マップ作成者のアカウントは管理者によって停止されています"
+    }
+  ],
+  "admin.maps.delete": [
+    {
+      "type": 0,
+      "value": "マップを削除"
+    }
+  ],
+  "admin.maps.description": [
+    {
+      "type": 0,
+      "value": "説明"
+    }
+  ],
+  "admin.maps.edit": [
+    {
+      "type": 0,
+      "value": "マップを編集"
+    }
+  ],
+  "admin.maps.edit-title": [
+    {
+      "type": 0,
+      "value": "マップを編集"
+    }
+  ],
+  "admin.maps.filter.date": [
+    {
+      "type": 0,
+      "value": "期間"
+    }
+  ],
+  "admin.maps.filter.spam": [
+    {
+      "type": 0,
+      "value": "スパム"
+    }
+  ],
+  "admin.maps.locked-tooltip": [
+    {
+      "type": 0,
+      "value": "現在 "
+    },
+    {
+      "type": 1,
+      "value": "user"
+    },
+    {
+      "type": 0,
+      "value": " が編集中です"
+    }
+  ],
+  "admin.maps.mark-as-not-spam": [
+    {
+      "type": 0,
+      "value": "非スパムとしてマーク"
+    }
+  ],
+  "admin.maps.mark-as-spam": [
+    {
+      "type": 0,
+      "value": "スパムとしてマーク"
+    }
+  ],
+  "admin.maps.no-maps": [
+    {
+      "type": 0,
+      "value": "マップが見つかりません"
+    }
+  ],
+  "admin.maps.page-title": [
+    {
+      "type": 0,
+      "value": "マップ管理"
+    }
+  ],
+  "admin.maps.private-tooltip": [
+    {
+      "type": 0,
+      "value": "共同編集者のみがこのマップを表示できます"
+    }
+  ],
+  "admin.maps.public-tooltip": [
+    {
+      "type": 0,
+      "value": "誰でもこのマップを表示できます"
+    }
+  ],
+  "admin.maps.search": [
+    {
+      "type": 0,
+      "value": "マップを検索...（IDは #123、作成者はメールアドレス）"
+    }
+  ],
+  "admin.maps.search-by-email": [
+    {
+      "type": 0,
+      "value": "🔍 作成者のメールアドレスで検索中"
+    }
+  ],
+  "admin.maps.search-by-id": [
+    {
+      "type": 0,
+      "value": "🔍 マップIDで検索中"
+    }
+  ],
+  "admin.maps.search-by-text": [
+    {
+      "type": 0,
+      "value": "🔍 タイトルと説明を検索中"
+    }
+  ],
+  "admin.maps.spam-label": [
+    {
+      "type": 0,
+      "value": "スパム（"
+    },
+    {
+      "type": 1,
+      "value": "type"
+    },
+    {
+      "type": 0,
+      "value": "）"
+    }
+  ],
+  "admin.maps.spam-tooltip": [
+    {
+      "type": 1,
+      "value": "date"
+    },
+    {
+      "type": 0,
+      "value": " にスパムとして検出されました"
+    }
+  ],
+  "admin.maps.spam-tooltip-no-date": [
+    {
+      "type": 0,
+      "value": "スパムとしてマーク済み"
+    }
+  ],
+  "admin.maps.spam-type-unknown": [
+    {
+      "type": 0,
+      "value": "不明"
+    }
+  ],
+  "admin.maps.suspend-user": [
+    {
+      "type": 0,
+      "value": "ユーザーアカウントを停止"
+    }
+  ],
+  "admin.maps.suspend-user.confirm": [
+    {
+      "type": 0,
+      "value": "ユーザー「"
+    },
+    {
+      "type": 1,
+      "value": "userName"
+    },
+    {
+      "type": 0,
+      "value": "」（ID: "
+    },
+    {
+      "type": 1,
+      "value": "userId"
+    },
+    {
+      "type": 0,
+      "value": "）のアカウントを停止してもよろしいですか？手動レビューによる停止として記録されます。"
+    }
+  ],
+  "admin.maps.suspend-user.confirm-button": [
+    {
+      "type": 0,
+      "value": "ユーザーを停止"
+    }
+  ],
+  "admin.maps.suspend-user.title": [
+    {
+      "type": 0,
+      "value": "ユーザーアカウントを停止"
+    }
+  ],
+  "admin.maps.suspend-user.warning": [
+    {
+      "type": 0,
+      "value": "この操作によりユーザーアカウントが停止され、ユーザーはシステムにアクセスできなくなります。"
+    }
+  ],
+  "admin.maps.table.actions": [
+    {
+      "type": 0,
+      "value": "操作"
+    }
+  ],
+  "admin.maps.table.created": [
+    {
+      "type": 0,
+      "value": "作成日"
+    }
+  ],
+  "admin.maps.table.description": [
+    {
+      "type": 0,
+      "value": "説明"
+    }
+  ],
+  "admin.maps.table.id": [
+    {
+      "type": 0,
+      "value": "マップID"
+    }
+  ],
+  "admin.maps.table.modified": [
+    {
+      "type": 0,
+      "value": "更新日"
+    }
+  ],
+  "admin.maps.table.spam": [
+    {
+      "type": 0,
+      "value": "スパム"
+    }
+  ],
+  "admin.maps.table.spam-status": [
+    {
+      "type": 0,
+      "value": "スパム状態"
+    }
+  ],
+  "admin.maps.table.status": [
+    {
+      "type": 0,
+      "value": "状態"
+    }
+  ],
+  "admin.maps.table.title": [
+    {
+      "type": 0,
+      "value": "タイトル"
+    }
+  ],
+  "admin.maps.title": [
+    {
+      "type": 0,
+      "value": "タイトル"
+    }
+  ],
+  "admin.maps.unlocked-tooltip": [
+    {
+      "type": 0,
+      "value": "現在編集されていません"
+    }
+  ],
+  "admin.maps.view-xml": [
+    {
+      "type": 0,
+      "value": "XMLを表示"
+    }
+  ],
+  "admin.maps.xml-viewer.copy": [
+    {
+      "type": 0,
+      "value": "整形済みXMLをコピー"
+    }
+  ],
+  "admin.maps.xml-viewer.info": [
+    {
+      "type": 0,
+      "value": "これはマインドマップの生のXMLコンテンツです。バックアップや分析のためにこの内容をコピーできます。"
+    }
+  ],
+  "admin.maps.xml-viewer.loading": [
+    {
+      "type": 0,
+      "value": "XMLコンテンツを読み込み中..."
+    }
+  ],
+  "admin.maps.xml-viewer.no-content": [
+    {
+      "type": 0,
+      "value": "XMLコンテンツがありません"
+    }
+  ],
+  "admin.maps.xml-viewer.title": [
+    {
+      "type": 0,
+      "value": "マップのXMLコンテンツ"
+    }
+  ],
+  "admin.menu.accounts": [
+    {
+      "type": 0,
+      "value": "アカウント"
+    }
+  ],
+  "admin.menu.maps": [
+    {
+      "type": 0,
+      "value": "マップ"
+    }
+  ],
+  "admin.menu.system": [
+    {
+      "type": 0,
+      "value": "システム"
+    }
+  ],
   "admin.new-password": [
     {
       "type": 0,
-      "value": "New Password"
+      "value": "新しいパスワード"
     }
   ],
   "admin.password-error-facebook": [
     {
       "type": 0,
-      "value": "This user is authenticated via Facebook. Password changes are not available for Facebook accounts. Please ask the user to manage their password through their Facebook account."
+      "value": "このユーザーはFacebookで認証されています。Facebookアカウントではパスワードを変更できません。Facebookアカウントでパスワードを管理するようユーザーに依頼してください。"
     }
   ],
   "admin.password-error-failed": [
     {
       "type": 0,
-      "value": "Failed to change password"
+      "value": "パスワードの変更に失敗しました"
     }
   ],
   "admin.password-error-google": [
     {
       "type": 0,
-      "value": "This user is authenticated via Google. Password changes are not available for Google accounts. Please ask the user to manage their password through their Google account."
+      "value": "このユーザーはGoogleで認証されています。Googleアカウントではパスワードを変更できません。Googleアカウントでパスワードを管理するようユーザーに依頼してください。"
     }
   ],
   "admin.password-error-length": [
     {
       "type": 0,
-      "value": "Password must be at least 6 characters"
+      "value": "パスワードは6文字以上である必要があります"
     }
   ],
   "admin.password-error-mismatch": [
     {
       "type": 0,
-      "value": "Passwords do not match"
+      "value": "パスワードが一致しません"
+    }
+  ],
+  "admin.prompt.new-user-password": [
+    {
+      "type": 0,
+      "value": "新しいユーザーのパスワードを入力してください："
     }
   ],
   "admin.public": [
@@ -453,16 +1087,72 @@
       "value": "アクティブ"
     }
   ],
+  "admin.status-active-tooltip": [
+    {
+      "type": 0,
+      "value": "アカウントは有効化されており、正常な状態です"
+    }
+  ],
+  "admin.status-active-tooltip-interactive": [
+    {
+      "type": 0,
+      "value": "アカウントは有効化されており、正常な状態です | クリックして状態を変更"
+    }
+  ],
   "admin.status-clean": [
     {
       "type": 0,
       "value": "クリーン"
     }
   ],
+  "admin.status-not-activated": [
+    {
+      "type": 0,
+      "value": "未有効化"
+    }
+  ],
+  "admin.status-not-activated-tooltip": [
+    {
+      "type": 0,
+      "value": "ユーザーはまだメールアドレスを確認していません"
+    }
+  ],
+  "admin.status-not-activated-tooltip-interactive": [
+    {
+      "type": 0,
+      "value": "ユーザーはまだメールアドレスを確認していません | クリックして状態を変更"
+    }
+  ],
   "admin.status-suspended": [
     {
       "type": 0,
       "value": "停止中"
+    }
+  ],
+  "admin.status.click-to-change": [
+    {
+      "type": 0,
+      "value": "クリックして状態を変更"
+    }
+  ],
+  "admin.status.reason": [
+    {
+      "type": 0,
+      "value": "理由："
+    },
+    {
+      "type": 1,
+      "value": "reason"
+    }
+  ],
+  "admin.status.suspended-on": [
+    {
+      "type": 0,
+      "value": "停止日："
+    },
+    {
+      "type": 1,
+      "value": "date"
     }
   ],
   "admin.suspend-user": [
@@ -519,10 +1209,70 @@
       "value": "利用規約違反"
     }
   ],
+  "admin.system.app.name": [
+    {
+      "type": 0,
+      "value": "名前"
+    }
+  ],
+  "admin.system.app.port": [
+    {
+      "type": 0,
+      "value": "ポート"
+    }
+  ],
+  "admin.system.application": [
+    {
+      "type": 0,
+      "value": "アプリケーション"
+    }
+  ],
+  "admin.system.database": [
+    {
+      "type": 0,
+      "value": "データベース"
+    }
+  ],
+  "admin.system.database.info": [
+    {
+      "type": 0,
+      "value": "データベース"
+    }
+  ],
+  "admin.system.db.ddl": [
+    {
+      "type": 0,
+      "value": "Hibernate DDL"
+    }
+  ],
+  "admin.system.db.driver": [
+    {
+      "type": 0,
+      "value": "ドライバー"
+    }
+  ],
   "admin.system.db.url": [
     {
       "type": 0,
       "value": "URL"
+    }
+  ],
+  "admin.system.db.username": [
+    {
+      "type": 0,
+      "value": "ユーザー名"
+    }
+  ],
+  "admin.system.error": [
+    {
+      "type": 0,
+      "value": "システム情報の読み込みに失敗しました"
+    }
+  ],
+  "admin.system.health": [
+    {
+      "type": 0,
+      "value": "システムの状態"
     }
   ],
   "admin.system.jvm": [
@@ -531,16 +1281,172 @@
       "value": "JVM"
     }
   ],
+  "admin.system.jvm.load": [
+    {
+      "type": 0,
+      "value": "システム負荷"
+    }
+  ],
+  "admin.system.jvm.processors": [
+    {
+      "type": 0,
+      "value": "プロセッサ数"
+    }
+  ],
+  "admin.system.jvm.start": [
+    {
+      "type": 0,
+      "value": "起動時刻"
+    }
+  ],
+  "admin.system.jvm.uptime": [
+    {
+      "type": 0,
+      "value": "稼働時間"
+    }
+  ],
+  "admin.system.jvm.vendor": [
+    {
+      "type": 0,
+      "value": "ベンダー"
+    }
+  ],
+  "admin.system.jvm.version": [
+    {
+      "type": 0,
+      "value": "Javaバージョン"
+    }
+  ],
+  "admin.system.loading": [
+    {
+      "type": 0,
+      "value": "システム情報を読み込み中..."
+    }
+  ],
   "admin.system.memory": [
     {
       "type": 0,
       "value": "メモリ"
     }
   ],
+  "admin.system.memory.info": [
+    {
+      "type": 0,
+      "value": "メモリ"
+    }
+  ],
+  "admin.system.memory.max": [
+    {
+      "type": 0,
+      "value": "最大メモリ"
+    }
+  ],
+  "admin.system.memory.total": [
+    {
+      "type": 0,
+      "value": "合計メモリ"
+    }
+  ],
+  "admin.system.memory.usage": [
+    {
+      "type": 0,
+      "value": "メモリ使用量"
+    }
+  ],
+  "admin.system.memory.used": [
+    {
+      "type": 0,
+      "value": "使用中メモリ"
+    }
+  ],
+  "admin.system.mindmapMetrics.collaborations": [
+    {
+      "type": 0,
+      "value": "対象となった共同編集"
+    }
+  ],
+  "admin.system.mindmapMetrics.disabled": [
+    {
+      "type": 0,
+      "value": "メトリクスを取得するには、`app.monitoring.performance.log-mindmap-listing` を true に設定してください。"
+    }
+  ],
+  "admin.system.mindmapMetrics.entityLoads": [
+    {
+      "type": 0,
+      "value": "エンティティの読み込み数"
+    }
+  ],
+  "admin.system.mindmapMetrics.executedStatements": [
+    {
+      "type": 0,
+      "value": "プリペアドステートメント"
+    }
+  ],
+  "admin.system.mindmapMetrics.lastUpdated": [
+    {
+      "type": 0,
+      "value": "最終更新"
+    }
+  ],
+  "admin.system.mindmapMetrics.mapCount": [
+    {
+      "type": 0,
+      "value": "返されたマップ数"
+    }
+  ],
+  "admin.system.mindmapMetrics.pending": [
+    {
+      "type": 0,
+      "value": "メトリクスを取得するため、次のマインドマップ一覧リクエストを待機しています。"
+    }
+  ],
+  "admin.system.mindmapMetrics.segments": [
+    {
+      "type": 0,
+      "value": "実行セグメント"
+    }
+  ],
+  "admin.system.mindmapMetrics.title": [
+    {
+      "type": 0,
+      "value": "マインドマップ一覧のパフォーマンス"
+    }
+  ],
+  "admin.system.mindmapMetrics.topQueries": [
+    {
+      "type": 0,
+      "value": "上位のクエリ"
+    }
+  ],
+  "admin.system.mindmapMetrics.totalTime": [
+    {
+      "type": 0,
+      "value": "合計時間（ms）"
+    }
+  ],
   "admin.system.refresh": [
     {
       "type": 0,
       "value": "更新"
+    }
+  ],
+  "admin.system.statistics": [
+    {
+      "type": 0,
+      "value": "統計"
+    }
+  ],
+  "admin.system.stats.mindmaps": [
+    {
+      "type": 0,
+      "value": "マインドマップの総数"
+    }
+  ],
+  "admin.system.stats.users": [
+    {
+      "type": 0,
+      "value": "ユーザーの総数"
     }
   ],
   "admin.system.title": [
@@ -553,6 +1459,102 @@
     {
       "type": 0,
       "value": "ユーザーの停止を解除"
+    }
+  ],
+  "admin.user-info.auth-type": [
+    {
+      "type": 0,
+      "value": "認証"
+    }
+  ],
+  "admin.user-info.created": [
+    {
+      "type": 0,
+      "value": "作成日"
+    }
+  ],
+  "admin.user-info.status": [
+    {
+      "type": 0,
+      "value": "状態"
+    }
+  ],
+  "admin.user-info.suspension-reason": [
+    {
+      "type": 0,
+      "value": "停止理由："
+    }
+  ],
+  "admin.user-info.title": [
+    {
+      "type": 0,
+      "value": "ユーザー情報"
+    }
+  ],
+  "admin.user-info.total-maps": [
+    {
+      "type": 0,
+      "value": "マップの総数"
+    }
+  ],
+  "admin.user-maps-dialog.loading": [
+    {
+      "type": 0,
+      "value": "ユーザーを読み込み中..."
+    }
+  ],
+  "admin.user-maps-dialog.no-maps": [
+    {
+      "type": 0,
+      "value": "このユーザーにはマップがありません。"
+    }
+  ],
+  "admin.user-maps-dialog.title": [
+    {
+      "type": 1,
+      "value": "name"
+    },
+    {
+      "type": 0,
+      "value": " が所有するマップ（ID: #"
+    },
+    {
+      "type": 1,
+      "value": "id"
+    },
+    {
+      "type": 0,
+      "value": "）"
+    }
+  ],
+  "admin.validation.email-invalid": [
+    {
+      "type": 0,
+      "value": "メールアドレスの形式が無効です"
+    }
+  ],
+  "admin.validation.email-required": [
+    {
+      "type": 0,
+      "value": "メールアドレスは必須です"
+    }
+  ],
+  "admin.validation.firstname-required": [
+    {
+      "type": 0,
+      "value": "名は必須です"
+    }
+  ],
+  "admin.validation.lastname-required": [
+    {
+      "type": 0,
+      "value": "姓は必須です"
+    }
+  ],
+  "admin.view-user-maps": [
+    {
+      "type": 0,
+      "value": "ユーザーのマップを表示"
     }
   ],
   "admin.view-xml": [
@@ -585,6 +1587,24 @@
       "value": "パスワードが一致しません。もう一度お試しください。"
     }
   ],
+  "changepwd.password-max-length": [
+    {
+      "type": 0,
+      "value": "パスワードは39文字以内にしてください。"
+    }
+  ],
+  "changepwd.password-min-length": [
+    {
+      "type": 0,
+      "value": "パスワードは8文字以上である必要があります。"
+    }
+  ],
+  "changepwd.password-required": [
+    {
+      "type": 0,
+      "value": "パスワードを入力してください。"
+    }
+  ],
   "changepwd.title": [
     {
       "type": 0,
@@ -595,6 +1615,18 @@
     {
       "type": 0,
       "value": "メール通知を許可"
+    }
+  ],
+  "common.cancel": [
+    {
+      "type": 0,
+      "value": "キャンセル"
+    }
+  ],
+  "common.close": [
+    {
+      "type": 0,
+      "value": "閉じる"
     }
   ],
   "common.delete": [
@@ -609,6 +1641,12 @@
       "value": "タグを削除"
     }
   ],
+  "common.disabled": [
+    {
+      "type": 0,
+      "value": "無効"
+    }
+  ],
   "common.email": [
     {
       "type": 0,
@@ -619,6 +1657,12 @@
     {
       "type": 0,
       "value": "メール"
+    }
+  ],
+  "common.enabled": [
+    {
+      "type": 0,
+      "value": "有効"
     }
   ],
   "common.first-name": [
@@ -657,6 +1701,12 @@
       "value": "マップ一覧"
     }
   ],
+  "common.na": [
+    {
+      "type": 0,
+      "value": "該当なし"
+    }
+  ],
   "common.open-drawer": [
     {
       "type": 0,
@@ -687,6 +1737,12 @@
       "value": "再試行"
     }
   ],
+  "common.save": [
+    {
+      "type": 0,
+      "value": "保存"
+    }
+  ],
   "common.settings": [
     {
       "type": 0,
@@ -696,7 +1752,7 @@
   "common.terms-notice": [
     {
       "type": 0,
-      "value": "By continuing, you agree to our "
+      "value": "続行すると、"
     },
     {
       "type": 8,
@@ -704,13 +1760,13 @@
       "children": [
         {
           "type": 0,
-          "value": "Terms of Service"
+          "value": "利用規約"
         }
       ]
     },
     {
       "type": 0,
-      "value": " and "
+      "value": "および"
     },
     {
       "type": 8,
@@ -718,13 +1774,13 @@
       "children": [
         {
           "type": 0,
-          "value": "Privacy Policy"
+          "value": "プライバシーポリシー"
         }
       ]
     },
     {
       "type": 0,
-      "value": "."
+      "value": "に同意したものとみなされます。"
     }
   ],
   "common.wait": [
@@ -798,19 +1854,25 @@
   "error.go-back": [
     {
       "type": 0,
-      "value": "Go Back"
+      "value": "戻る"
     }
   ],
   "error.go-home": [
     {
       "type": 0,
-      "value": "Go to Home"
+      "value": "ホームへ移動"
     }
   ],
   "error.go-to-login": [
     {
       "type": 0,
-      "value": "Sign In"
+      "value": "サインイン"
+    }
+  ],
+  "error.invalid-map-id": [
+    {
+      "type": 0,
+      "value": "無効なマップIDです"
     }
   ],
   "error.map-title-required": [
@@ -1046,13 +2108,13 @@
   "forgot.success.desc": [
     {
       "type": 0,
-      "value": "パスワードをリセットできるメールをお送りしました。数分以内に受信されるはずです。"
+      "value": "パスワード再設定用のリンクをメールでお送りしました。リンクの有効期限は1時間です。リンクを使用するまで、現在のパスワードは変更されません。"
     }
   ],
   "forgot.success.title": [
     {
       "type": 0,
-      "value": "一時パスワードが送信されました。"
+      "value": "メールをご確認ください。"
     }
   ],
   "forgot.title": [
@@ -1094,13 +2156,13 @@
   "import.button": [
     {
       "type": 0,
-      "value": "作成"
+      "value": "インポート"
     }
   ],
   "import.description": [
     {
       "type": 0,
-      "value": "WiseMappingとFreemindのマップをマップリストにインポートできます。インポートするファイルを選択してください。"
+      "value": "WiseMapping、FreeMind、Freeplane、XMind、MindManager、OPMLのマップをマップリストにインポートできます。インポートするファイルを選択してください。"
     }
   ],
   "import.error-file": [
@@ -1273,6 +2335,26 @@
       "value": "翻訳を支援"
     }
   ],
+  "language.help-dialog.description": [
+    {
+      "type": 0,
+      "value": "皆さんのご協力が必要です！ご興味のある方は "
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": " までメールでご連絡ください。"
+    }
+  ],
+  "language.help-dialog.title": [
+    {
+      "type": 0,
+      "value": "より多くの言語への対応にご協力ください！"
+    }
+  ],
   "login.desc": [
     {
       "type": 0,
@@ -1312,7 +2394,7 @@
   "login.generic-error": [
     {
       "type": 0,
-      "value": "An error occurred during authentication. Please try again."
+      "value": "認証中にエラーが発生しました。もう一度お試しください。"
     }
   ],
   "login.google.button": [
@@ -1324,7 +2406,7 @@
   "login.oauth-error": [
     {
       "type": 0,
-      "value": "OAuth authentication failed. Please try again or use a different sign-in method."
+      "value": "OAuth認証に失敗しました。もう一度お試しいただくか、別のサインイン方法をご利用ください。"
     }
   ],
   "login.page-title": [
@@ -1348,7 +2430,7 @@
   "login.server-error": [
     {
       "type": 0,
-      "value": "An unexpected error occurred. Please try again later."
+      "value": "予期しないエラーが発生しました。後でもう一度お試しください。"
     }
   ],
   "login.shared-map-notice": [
@@ -1426,25 +2508,25 @@
   "maps.auth-required-default-message": [
     {
       "type": 0,
-      "value": "You need to sign in to view your maps."
+      "value": "マップを表示するにはサインインが必要です。"
     }
   ],
   "maps.auth-required-heading": [
     {
       "type": 0,
-      "value": "Sign in to access your maps"
+      "value": "マップにアクセスするにはサインインしてください"
     }
   ],
   "maps.auth-required-login": [
     {
       "type": 0,
-      "value": "Go to login"
+      "value": "ログインへ移動"
     }
   ],
   "maps.auth-required-title": [
     {
       "type": 0,
-      "value": "Sign In Required | WiseMapping"
+      "value": "サインインが必要です | WiseMapping"
     }
   ],
   "maps.choose-file": [
@@ -1468,7 +2550,7 @@
   "maps.copilot-dialog.description": [
     {
       "type": 0,
-      "value": "Mind Map Copilot は、あなたのプロンプトを構造化されたマインドマップに変換する ChatGPT 搭載のブレーンストーミング支援ツールです。新しいタブで開きますので、アイデアを膨らませ、トピックを生成し、ベストな内容を WiseMapping に持ち帰ってください。"
+      "value": "AIコパイロットは、あなたのプロンプトを構造化されたマインドマップに変換する ChatGPT 搭載のブレーンストーミング支援ツールです。新しいタブで開きますので、アイデアを膨らませ、トピックを生成し、ベストな内容を WiseMapping に持ち帰ってください。"
     }
   ],
   "maps.copilot-dialog.title": [
@@ -1540,7 +2622,7 @@
   "maps.nav-onwned": [
     {
       "type": 0,
-      "value": "所有"
+      "value": "マイマップ"
     }
   ],
   "maps.nav-public": [
@@ -1622,7 +2704,7 @@
   "menu.admin-console": [
     {
       "type": 0,
-      "value": "Admin Console"
+      "value": "管理コンソール"
     }
   ],
   "menu.change-password": [
@@ -1646,13 +2728,13 @@
   "publish.copied": [
     {
       "type": 0,
-      "value": "Copied to clipboard!"
+      "value": "クリップボードにコピーしました！"
     }
   ],
   "publish.description": [
     {
       "type": 0,
-      "value": "マップを公開することで、インターネット上のすべての人に表示されます。"
+      "value": "マップを公開します。リンクを知っている人は誰でも閲覧できます。"
     }
   ],
   "publish.embedded": [
@@ -1664,7 +2746,7 @@
   "publish.embedded-msg": [
     {
       "type": 0,
-      "value": "このコードスニペットをコピーして、ブログやページに埋め込みます："
+      "value": "コードをクリックするとクリップボードにコピーされます："
     }
   ],
   "publish.public-url": [
@@ -1676,7 +2758,7 @@
   "publish.public-url-msg": [
     {
       "type": 0,
-      "value": "以下のリンクをコピーして貼り付け、同僚とマップを共有します："
+      "value": "リンクをクリックするとクリップボードにコピーされます："
     }
   ],
   "publish.title": [
@@ -1774,7 +2856,7 @@
   "registration.form-legend": [
     {
       "type": 0,
-      "value": "Account Information"
+      "value": "アカウント情報"
     }
   ],
   "registration.google.button": [
@@ -1844,25 +2926,25 @@
   "registration.success.already-activated": [
     {
       "type": 0,
-      "value": "Already activated your account?"
+      "value": "アカウントはすでに有効化済みですか？"
     }
   ],
   "registration.success.check-spam": [
     {
       "type": 0,
-      "value": "If you don't see the email, please check your spam folder."
+      "value": "メールが見当たらない場合は、迷惑メールフォルダをご確認ください。"
     }
   ],
   "registration.success.email-sent": [
     {
       "type": 0,
-      "value": "We've sent an activation email to your inbox. Please check your email and click on the activation link to activate your account."
+      "value": "受信トレイに有効化メールをお送りしました。メールを確認し、有効化リンクをクリックしてアカウントを有効化してください。"
     }
   ],
   "registration.success.title": [
     {
       "type": 0,
-      "value": "Registration Successful!"
+      "value": "登録が完了しました！"
     }
   ],
   "registration.title": [
@@ -1886,67 +2968,67 @@
   "reset-password.confirm-password": [
     {
       "type": 0,
-      "value": "Confirm new password"
+      "value": "新しいパスワードを確認"
     }
   ],
   "reset-password.desc": [
     {
       "type": 0,
-      "value": "Enter your new password below."
+      "value": "新しいパスワードを以下に入力してください。"
     }
   ],
   "reset-password.invalid-link": [
     {
       "type": 0,
-      "value": "Invalid password reset link. Please request a new one."
+      "value": "パスワードリセットのリンクが無効です。新しいリンクをリクエストしてください。"
     }
   ],
   "reset-password.mismatch": [
     {
       "type": 0,
-      "value": "Passwords do not match."
+      "value": "パスワードが一致しません。"
     }
   ],
   "reset-password.page-title": [
     {
       "type": 0,
-      "value": "Reset Password | WiseMapping"
+      "value": "パスワードをリセット | WiseMapping"
     }
   ],
   "reset-password.password": [
     {
       "type": 0,
-      "value": "New password"
+      "value": "新しいパスワード"
     }
   ],
   "reset-password.request-new": [
     {
       "type": 0,
-      "value": "Request new link"
+      "value": "新しいリンクをリクエスト"
     }
   ],
   "reset-password.submit": [
     {
       "type": 0,
-      "value": "Set new password"
+      "value": "新しいパスワードを設定"
     }
   ],
   "reset-password.title": [
     {
       "type": 0,
-      "value": "Set a new password"
+      "value": "新しいパスワードを設定"
     }
   ],
   "reset-password.too-long": [
     {
       "type": 0,
-      "value": "Password must be less than 40 characters."
+      "value": "パスワードは40文字未満にしてください。"
     }
   ],
   "reset-password.too-short": [
     {
       "type": 0,
-      "value": "Password must be at least 8 characters."
+      "value": "パスワードは8文字以上である必要があります。"
     }
   ],
   "role.editor": [
@@ -1982,7 +3064,7 @@
   "share.adding-button": [
     {
       "type": 0,
-      "value": "Sharing..."
+      "value": "共有中..."
     }
   ],
   "share.can-edit": [
@@ -2018,19 +3100,19 @@
   "share.table.actions": [
     {
       "type": 0,
-      "value": "Actions"
+      "value": "操作"
     }
   ],
   "share.table.collaborator": [
     {
       "type": 0,
-      "value": "Collaborator"
+      "value": "共同編集者"
     }
   ],
   "share.table.role": [
     {
       "type": 0,
-      "value": "Role"
+      "value": "役割"
     }
   ],
   "theme.dark": [

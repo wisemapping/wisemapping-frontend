@@ -53,6 +53,10 @@ describe('ThemeStyle checks the JSON values (BL5-186)', () => {
     [{ fontStyle: 'slanted' }, /Unknown font style: slanted/],
     [{ fontWeight: 'heavy' }, /Unknown font weight: heavy/],
     [{ shapeType: 'hexagon' }, /Unknown shape type: hexagon/],
+    // BL5-221: palettes are non-empty, so picking a colour by order always finds one.
+    [{ borderColor: [] }, /Empty border colour palette/],
+    [{ backgroundColor: [] }, /Empty background colour palette/],
+    [{ connectionColor: [] }, /Empty connection colour palette/],
   ])('rejects the unknown value in %p', (json, error) => {
     const style = new ThemeStyle('classic', 'light');
     const convert = (style as unknown as { convertJsonToTopicStyle: (j: object) => unknown })
@@ -79,6 +83,11 @@ class ResolvingTheme extends ClassicTheme {
   ownFontColor(topic: Topic): string | undefined {
     return this.resolve('fontColor', topic, false);
   }
+
+  // BL5-203: a model sets a single colour, where the theme may set a palette.
+  ownConnectionColor(topic: Topic): string | undefined {
+    return this.resolve('connectionColor', topic, false);
+  }
 }
 
 describe('DefaultTheme.resolve is typed by key (BL5-186)', () => {
@@ -91,5 +100,8 @@ describe('DefaultTheme.resolve is typed by key (BL5-186)', () => {
     expect(theme.fontStyle(main)).toBe('italic');
     expect(theme.connectionStyle(main)).toBe(theme.getConnectionType(main));
     expect(theme.ownFontColor(main)).toBeUndefined();
+    expect(theme.ownConnectionColor(fakeTopic({ connectionColor: '#123456' }, central))).toBe(
+      '#123456',
+    );
   });
 });

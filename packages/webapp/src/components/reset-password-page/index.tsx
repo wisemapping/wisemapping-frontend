@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useNavigate, useSearchParams } from 'react-router';
 import { Link as RouterLink } from 'react-router';
@@ -49,6 +49,15 @@ const ResetPassword = () => {
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [validationError, setValidationError] = useState<string | null>(null);
   const [error, setError] = useState<ErrorInfo | undefined>(undefined);
+  // Stable, so that a key re-renders only the field typed in (see Input).
+  const handlePasswordChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value),
+    [],
+  );
+  const handleConfirmPasswordChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => setConfirmPassword(e.target.value),
+    [],
+  );
 
   const mutation = useMutation<void, ErrorInfo, { token: string; password: string }>({
     mutationFn: ({ token, password }) => client.resetPasswordFromToken(token, password),
@@ -149,7 +158,7 @@ const ResetPassword = () => {
             defaultMessage: 'New password',
           })}
           autoComplete="new-password"
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={handlePasswordChange}
           error={error}
         />
         <Input
@@ -160,7 +169,7 @@ const ResetPassword = () => {
             defaultMessage: 'Confirm new password',
           })}
           autoComplete="new-password"
-          onChange={(e) => setConfirmPassword(e.target.value)}
+          onChange={handleConfirmPasswordChange}
         />
 
         <SubmitButton

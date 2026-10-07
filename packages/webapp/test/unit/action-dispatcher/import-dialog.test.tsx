@@ -93,7 +93,7 @@ describe('ImportDialog', () => {
 
     selectFile(new File(['not a map'], 'notes.txt', { type: 'text/plain' }));
     await screen.findByRole('alert');
-    fireEvent.click(screen.getByRole('button', { name: 'Create' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Import' }));
 
     expect(mockImportMap).not.toHaveBeenCalled();
   });
@@ -111,7 +111,7 @@ describe('ImportDialog', () => {
     renderWithProviders(<ImportDialog onClose={jest.fn()} />, { client });
 
     expect(screen.getByLabelText(/Name/)).toHaveProperty('value', '');
-    fireEvent.submit(screen.getByRole('button', { name: 'Create' }).closest('form')!);
+    fireEvent.submit(screen.getByRole('button', { name: 'Import' }).closest('form')!);
     expect(mockImportMap).not.toHaveBeenCalled();
   });
 
@@ -135,7 +135,7 @@ describe('ImportDialog', () => {
 
     expect(screen.getByLabelText(/Description/)).toHaveProperty('value', 'My notes');
     // Submitted directly: jsdom's constraint validation can't see the file in the required input.
-    fireEvent.submit(screen.getByRole('button', { name: 'Create' }).closest('form')!);
+    fireEvent.submit(screen.getByRole('button', { name: 'Import' }).closest('form')!);
     await waitFor(() => expect(mockImportMap).toHaveBeenCalled());
     expect(mockImportMap.mock.calls[0][0]).toEqual({
       title: 'alpha',
@@ -174,7 +174,7 @@ describe('ImportDialog', () => {
       await act(async () => imports[1].resolve('<map name="beta"/>'));
       await act(async () => imports[0].resolve('<map name="alpha"/>'));
 
-      fireEvent.submit(screen.getByRole('button', { name: 'Create' }).closest('form')!);
+      fireEvent.submit(screen.getByRole('button', { name: 'Import' }).closest('form')!);
       await waitFor(() => expect(mockImportMap).toHaveBeenCalled());
       expect(mockImportMap.mock.calls[0][0]).toMatchObject({ content: '<map name="beta"/>' });
     });
@@ -201,7 +201,7 @@ describe('ImportDialog', () => {
       await act(async () => imports[0].resolve('<map name="alpha"/>'));
       selectFile(new File(['<map/>'], 'beta.wxml', { type: 'text/xml' }));
       // beta is picked but not imported yet: there is nothing to save.
-      fireEvent.submit(screen.getByRole('button', { name: 'Create' }).closest('form')!);
+      fireEvent.submit(screen.getByRole('button', { name: 'Import' }).closest('form')!);
 
       // The mutation calls the client asynchronously.
       await act(() => new Promise((resolve) => setTimeout(resolve, 50)));

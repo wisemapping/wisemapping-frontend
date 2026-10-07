@@ -21,6 +21,7 @@ import type Canvas from './Canvas';
 import type PositionType from './PositionType';
 import type Relationship from './Relationship';
 import RelationshipSnap from './RelationshipSnap';
+import { markObjectTouch } from './util/objectTouch';
 
 /** Which end of a relationship a control point belongs to. */
 export const PivotType = {
@@ -149,9 +150,12 @@ class ControlPivotLine {
         this.removeDragListeners();
         this._dragStart = null;
         this._dot.removeEvent('mousedown', this._mouseDownHandler);
+        this._dot.removeEvent('touchstart', markObjectTouch);
       } else {
         // Register events ...
         this._dot.addEvent('mousedown', this._mouseDownHandler);
+        // A tap on the dot is no click on the background, which would unselect the relationship.
+        this._dot.addEvent('touchstart', markObjectTouch);
       }
 
       // Make it visible ...

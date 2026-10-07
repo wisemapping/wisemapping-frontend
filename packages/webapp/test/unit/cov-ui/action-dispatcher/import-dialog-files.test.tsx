@@ -30,8 +30,12 @@ jest.mock('@wisemapping/editor', () => ({
 
 import { ImportError } from '@wisemapping/editor';
 import ImportDialog from '../../../../src/components/maps-page/action-dispatcher/import-dialog';
-import Client from '../../../../src/classes/client';
+import Client, {
+  MAP_DESCRIPTION_MAX_LENGTH,
+  MAP_TITLE_MAX_LENGTH,
+} from '../../../../src/classes/client';
 import { renderWithProviders } from '../../helpers/render';
+import { typeInBurst } from '../../burst-typing';
 
 const selectFile = (...files: File[]): void => {
   const input = document.getElementById('contained-button-file') as HTMLInputElement;
@@ -51,7 +55,7 @@ const nameInput = (): HTMLInputElement =>
   screen.getByRole('textbox', { name: /Name/ }) as HTMLInputElement;
 
 const submit = (): void => {
-  fireEvent.submit(screen.getByRole('button', { name: 'Create' }).closest('form')!);
+  fireEvent.submit(screen.getByRole('button', { name: 'Import' }).closest('form')!);
 };
 
 describe('ImportDialog files', () => {
@@ -82,6 +86,35 @@ describe('ImportDialog files', () => {
         content: '<map name="Plan"/>',
       }),
     );
+  });
+
+  test('the name and description take as many characters as the backend accepts', async () => {
+    setup();
+    selectFile(new File(['<map/>'], 'Plan.wxml', { type: 'text/xml' }));
+    await waitFor(() => expect(nameInput().value).toBe('Plan'));
+
+    expect(nameInput().maxLength).toBe(MAP_TITLE_MAX_LENGTH);
+    const description = screen.getByRole('textbox', { name: /Description/ }) as HTMLInputElement;
+    expect(description.maxLength).toBe(MAP_DESCRIPTION_MAX_LENGTH);
+  });
+
+  test('takes 200 characters typed in one burst, as Cypress types them', async () => {
+    const { importMap } = setup();
+    selectFile(new File(['<map/>'], 'Plan.wxml', { type: 'text/xml' }));
+    await waitFor(() => expect(nameInput().value).toBe('Plan'));
+    await act(() => new Promise((resolve) => setTimeout(resolve, 10)));
+    const description = screen.getByRole('textbox', { name: /Description/ }) as HTMLInputElement;
+    fireEvent.change(nameInput(), { target: { value: '' } });
+
+    expect(await typeInBurst(nameInput())).toEqual([]);
+    expect(await typeInBurst(description)).toEqual([]);
+    submit();
+
+    await waitFor(() => expect(importMap).toHaveBeenCalled());
+    expect(importMap.mock.calls[0][0]).toMatchObject({
+      title: nameInput().value,
+      description: description.value,
+    });
   });
 
   test('an XMind file is read as binary and sent as an XMind workbook', async () => {

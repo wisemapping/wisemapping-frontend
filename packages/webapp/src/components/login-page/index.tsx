@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Link as RouterLink, useLocation } from 'react-router';
 import AccountAccessLayout from '../layout/AccountAccessLayout';
@@ -39,6 +39,7 @@ import { ClientContext } from '../../classes/provider/client-context';
 import { SEOHead } from '../seo';
 import { useTheme } from '../../contexts/ThemeContext';
 import { trackPageView } from '../../utils/analytics';
+import { appLogger as log } from '../../utils/logger';
 import { getCanonicalUrl, getAlternateLanguageUrls } from '../../utils/seo-locale';
 import CircularProgress from '@mui/material/CircularProgress';
 
@@ -88,7 +89,7 @@ const LoginPage = (): React.ReactElement => {
   // Generic OAuth handler
   const handleOAuthLogin = (authUrl: string | undefined, providerName: string): void => {
     if (!authUrl) {
-      console.log(`${providerName} OAuth URL is not configured.`);
+      log.warn(`${providerName} OAuth URL is not configured.`);
       return;
     }
 
@@ -149,13 +150,14 @@ const LoginPage = (): React.ReactElement => {
     event.preventDefault();
   };
 
-  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  // Stable, so that a key re-renders only the field typed in (see Input).
+  const handleOnChange = useCallback((event: React.ChangeEvent<HTMLInputElement>): void => {
     event.preventDefault();
 
     const name = event.target.name;
     const value = event.target.value;
-    setModel({ ...model, [name as keyof Model]: value });
-  };
+    setModel((current) => ({ ...current, [name as keyof Model]: value }));
+  }, []);
 
   const canonicalUrl = getCanonicalUrl('/c/login');
   const alternateLanguages = getAlternateLanguageUrls('/c/login');

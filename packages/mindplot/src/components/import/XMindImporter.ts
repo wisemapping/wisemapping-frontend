@@ -19,45 +19,35 @@
 /**
  * XMind Importer for WiseMapping
  *
- * This importer provides comprehensive support for importing XMind mind maps into WiseMapping format.
- * It handles both XMind XML format (legacy) and XMind JSON format (modern) files.
+ * Imports the first sheet with a root topic of an XMind map. It reads both formats XMind writes:
+ * the JSON one (`content.json`, XMind Zen and later) and the legacy XML one (`content.xml`, XMind 8
+ * and earlier), from the XMind ZIP archive or from the content itself. See README-XMind.md.
  *
- * ## Supported XMind Features:
+ * ## What is imported
  *
- * ### 📝 Content Mapping:
- * - **Topics**: All topic hierarchies are preserved with proper parent-child relationships
- * - **Notes**: XMind notes are converted to WiseMapping notes with rich HTML support
- * - **Labels**: XMind labels (categorization tags) are preserved as `🏷️ label-name`
- * - **Markers**: XMind markers (visual indicators) are preserved as `🔖 marker-name`
- * - **Icons**: XMind icons are comprehensively mapped to WiseMapping EmojiIcons with 300+ mappings
+ * - **Topics**: attached topics keep their hierarchy; detached topics become floating topics at
+ *   their XMind position.
+ * - **Markers** (`markers[].markerId`, `<marker-refs><marker-ref marker-id>`): icons, through
+ *   XMIND_MARKER_SVG_ICONS (task progress, flags, pie chart) or else XMIND_MARKER_EMOJIS.
+ * - **Notes** (`notes.plain.content`, `<notes><plain>`): a plain text note.
+ * - **Labels** (`labels`, `<labels><label>`): added to the note as `🏷️ label`.
+ * - **Links** (`href`, `xlink:href`): links, but not to a topic (`xmind:`) or attachment (`xap:`).
+ * - **Relationships**: between two imported topics.
+ * - **Fill color** (`svg:fill`, JSON only): the background and the border color of the topic.
+ * - **Layout**: tree-like structure classes import as a `tree` map, the others as `mindmap`.
  *
- * ### 🎨 Styling Support:
- * - **Background Colors**: XMind `svg:fill` colors are mapped to WiseMapping `bgColor`
- * - **Border Colors**: XMind border colors are mapped to WiseMapping `brColor`
- * - **Topic Shapes**: All topics use `shape="line"` for consistent appearance
- * - **Positioning**: Intelligent circular positioning for child topics
+ * Attached topics are laid out again (alternating sides in a mind map, to the right in a tree),
+ * all topics use the line shape and the map the prism theme. Ids are incremental, so the same file
+ * always imports the same. Boundaries, summaries, images, numbering, relationship titles, the other
+ * styles and the other sheets are not imported.
  *
- * ### 📊 Data Integrity:
- * - **Deterministic IDs**: Incremental ID generation ensures consistent import results
- * - **No Data Loss**: All XMind metadata is preserved and converted appropriately
- * - **Single Note Constraint**: Multiple XMind elements (notes, labels, markers) are intelligently
- *   combined into a single WiseMapping note to respect architectural constraints
+ * ## Note content
  *
- * ### 🔄 Format Support:
- * - **XMind XML**: Legacy XMind format with `<notes><plain>` and `<markers>` elements
- * - **XMind JSON**: Modern XMind format with `labels` arrays and style properties
- * - **ZIP Archives**: Both formats are extracted from XMind ZIP file structure
- *
- * ## Note Content Strategy:
- *
- * When a topic has multiple XMind elements, they're combined into one WiseMapping note:
+ * WiseMapping has one note per topic, so the XMind note and the labels are combined:
  * ```
  * [XMind Note Content]
- * 🔖 marker1, 🔖 marker2
  * 🏷️ label1, 🏷️ label2
  * ```
- *
- * This ensures maximum data preservation while respecting WiseMapping's single-note-per-topic limitation.
  *
  * ## Example Usage:
  * ```typescript
@@ -65,7 +55,6 @@
  * const wisemappingXML = await importer.import('My Mind Map', 'Description');
  * ```
  */
-import { unzipSync } from 'fflate';
 import type { LayoutType } from '../layout/LayoutType';
 import Importer from './Importer';
 import ImportError from './ImportError';
@@ -77,13 +66,8 @@ import FeatureModelFactory from '../model/FeatureModelFactory';
 import { decodeUtf8, tryDecodeUtf8 } from './support/Utf8Decoder';
 import toWiseMappingXml from './support/MindmapXml';
 import TopicIdSequence from './support/TopicIdSequence';
-import {
-  LETTER_EMOJIS,
-  NAMED_ICON_EMOJIS,
-  NUMBER_EMOJIS,
-  ownEntry,
-  PRIORITY_EMOJIS,
-} from './support/IconEmoji';
+import readZipEntries from './support/ZipEntries';
+import { ownEntry, PRIORITY_EMOJIS } from './support/IconEmoji';
 import { alternatingSidePosition } from './support/MainTopicPosition';
 import type PositionType from '../PositionType';
 
@@ -109,7 +93,6 @@ interface XMindTopic {
     };
   };
   labels?: string[];
-  icons?: string[];
   href?: string;
 }
 
@@ -152,138 +135,183 @@ const MAX_XMIND_CONTENT_BYTES = 50 * 1024 * 1024;
 const isXMindContentEntry = (name: string): boolean =>
   name.endsWith('content.json') || name.endsWith('content.xml');
 
-// XMind marker ids and the WiseMapping emoji icons they map to.
-const XMIND_ICON_EMOJIS: Readonly<Record<string, string>> = {
-  ...NAMED_ICON_EMOJIS,
-  ...NUMBER_EMOJIS,
-  ...LETTER_EMOJIS,
+const sameEmoji = (ids: string[], emoji: string): Record<string, string> =>
+  Object.fromEntries(ids.map((id) => [id, emoji]));
+
+// The colors of the flag, star, half star and people markers.
+const MARKER_COLORS = [
+  'red',
+  'orange',
+  'yellow',
+  'green',
+  'dark-green',
+  'blue',
+  'dark-blue',
+  'purple',
+  'gray',
+  'dark-gray',
+];
+
+const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+
+const WEEK_DAYS = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+
+/**
+ * The XMind marker ids (the markers of xmind-sdk-js, src/common/constants/marker.ts, which XMind 8
+ * and XMind Zen write) and their emoji icons. A marker is imported as the WiseMapping SVG icon of
+ * XMIND_MARKER_SVG_ICONS when it has one: the emoji is then only written in the note of the topic.
+ */
+export const XMIND_MARKER_EMOJIS: Readonly<Record<string, string>> = {
+  // Priorities: the five colors MindManager's are imported as, then the number.
   ...PRIORITY_EMOJIS,
+  'priority-6': '6️⃣',
+  'priority-7': '7️⃣',
+  'priority-8': '8️⃣',
+  'priority-9': '9️⃣',
 
-  // Star and rating icons
-  'star-1': '⭐',
-  'star-2': '⭐',
-  'star-3': '⭐',
+  'smiley-laugh': '😆',
+  'smiley-smile': '🙂',
+  'smiley-cry': '😢',
+  'smiley-surprise': '😮',
+  'smiley-boring': '😑',
+  'smiley-angry': '😠',
+  'smiley-embarrass': '😳',
 
-  // Flag icons
-  flag: '🚩',
-  'flag-red': '🚩',
+  // Task progress, from not started to done, and paused.
+  'task-start': '▶️',
+  ...sameEmoji(
+    ['task-oct', 'task-quarter', 'task-3oct', 'task-half', 'task-5oct', 'task-3quar', 'task-7oct'],
+    '⏳',
+  ),
+  'task-done': '✅',
+  'task-pause': '⏸️',
 
-  // Entertainment
-  tv: '📺',
-  radio: '📻',
-  camera: '📷',
-  video: '📹',
-  microphone: '🎤',
-  headphones: '🎧',
-  guitar: '🎸',
-  piano: '🎹',
-  drum: '🥁',
-  trumpet: '🎺',
-  violin: '🎻',
-  saxophone: '🎷',
+  // There are no colored flag, star or people emoji.
+  ...sameEmoji(
+    MARKER_COLORS.filter((color) => !color.endsWith('gray')).map((color) => `flag-${color}`),
+    '🚩',
+  ),
+  'flag-gray': '🏳️',
+  'flag-dark-gray': '🏴',
+  ...sameEmoji(
+    MARKER_COLORS.map((color) => `star-${color}`),
+    '⭐',
+  ),
+  ...sameEmoji(
+    ['green', 'red', 'yellow', 'purple', 'blue', 'gray'].map((color) => `half-star-${color}`),
+    '⭐',
+  ),
+  ...sameEmoji(
+    MARKER_COLORS.map((color) => `people-${color}`),
+    '👤',
+  ),
 
-  // Symbols and objects
-  fire: '🔥',
-  bomb: '💣',
-  diamond: '💎',
-  gem: '💎',
-  ring: '💍',
-  balloon: '🎈',
-  confetti: '🎊',
-  celebration: '🎆',
+  'arrow-left': '⬅️',
+  'arrow-right': '➡️',
+  'arrow-up': '⬆️',
+  'arrow-down': '⬇️',
+  'arrow-left-right': '↔️',
+  'arrow-up-down': '↕️',
+  'arrow-refresh': '🔄',
+  'arrow-up-right': '↗️',
+  'arrow-down-right': '↘️',
+  'arrow-down-left': '↙️',
+  'arrow-up-left': '↖️',
 
-  // Transport
-  helicopter: '🚁',
-  rocket: '🚀',
-  satellite: '🛰️',
-  ufo: '🛸',
-  ship: '🚢',
-  anchor: '⚓',
-  sailboat: '⛵',
-  'ferris-wheel': '🎡',
-  'roller-coaster': '🎢',
-  carousel: '🎠',
-  circus: '🎪',
-  tent: '⛺',
+  // Symbols: XMind Zen writes the c_symbol_ and c_simbol- ones.
+  c_symbol_heart: '❤️',
+  c_symbol_dislike: '👎',
+  c_symbol_like: '👍',
+  c_symbol_music: '🎵',
+  c_symbol_lock: '🔒',
+  c_symbol_hourglass: '⏳',
+  c_symbol_broken_heart: '💔',
+  c_symbol_quote: '💬',
+  c_symbol_contact: '📇',
+  c_symbol_telephone: '📞',
+  c_symbol_pen: '🖊️',
+  c_symbol_money: '💰',
+  c_symbol_bar_chart: '📊',
+  c_symbol_pie_chart: '📊',
+  c_symbol_line_graph: '📈',
+  c_symbol_shopping_cart: '🛒',
+  c_symbol_medals: '🏅',
+  c_symbol_trophy: '🏆',
+  c_symbol_exercise: '🏋️',
+  c_symbol_flight: '✈️',
+  c_symbol_thermometer: '🌡️',
+  ...sameEmoji(['symbol-question', 'c_simbol-question'], '❓'),
+  ...sameEmoji(['symbol-exclam', 'c_simbol-exclam'], '❗'),
+  ...sameEmoji(['symbol-info', 'c_simbol-info'], 'ℹ️'),
+  ...sameEmoji(['symbol-wrong', 'c_simbol-wrong'], '❌'),
+  ...sameEmoji(['symbol-right', 'c_simbol-right'], '✅'),
+  ...sameEmoji(['symbol-pause', 'c_simbol-pause'], '⏸️'),
+  ...sameEmoji(['symbol-plus', 'c_simbol-plus'], '➕'),
+  ...sameEmoji(['symbol-minus', 'c_simbol-minus'], '➖'),
+  'symbol-attention': '⚠️',
+  'symbol-no-entry': '⛔',
+  'symbol-divide': '➗',
+  'symbol-equality': '🟰',
+  'symbol-code': '💻',
+  'symbol-image': '🖼️',
+  'symbol-pin': '📌',
 
-  // Nature and environment
-  desert: '🏜️',
-  volcano: '🌋',
-  island: '🏝️',
-  beach: '🏖️',
-  'national-park': '🏞️',
-  stadium: '🏟️',
-  bridge: '🌉',
-  cityscape: '🏙️',
-  'night-sky': '🌃',
-  sunrise: '🌅',
-  sunset: '🌇',
+  // There are no emoji of a month or a day of the week.
+  ...sameEmoji(
+    MONTHS.map((month) => `month-${month}`),
+    '📅',
+  ),
+  ...sameEmoji(
+    WEEK_DAYS.map((day) => `week-${day}`),
+    '📅',
+  ),
 
-  // Technology and gadgets
-  keyboard: '⌨️',
-  'mouse-computer': '🖱️',
-  printer: '🖨️',
-  scanner: '📸',
-  cd: '💿',
-  dvd: '📀',
-  'floppy-disk': '💾',
-  'hard-disk': '💾',
-  battery: '🔋',
-  'electric-plug': '🔌',
-  'satellite-antenna': '📡',
-  'radio-signal': '📡',
+  'other-calendar': '📅',
+  'other-email': '📧',
+  'other-phone': '📞',
+  'other-phone2': '📱',
+  'other-fax': '📠',
+  'other-people': '👤',
+  'other-people2': '👥',
+  'other-clock': '🕐',
+  'other-coffee-cup': '☕',
+  'other-question': '❓',
+  'other-exclam': '❗',
+  'other-lightbulb': '💡',
+  'other-businesscard': '📇',
+  'other-social': '🌐',
+  'other-chat': '💬',
+  'other-note': '📝',
+  'other-lock': '🔒',
+  'other-unlock': '🔓',
+  'other-yes': '✔️',
+  'other-no': '✖️',
+  'other-bomb': '💣',
+};
 
-  // Business and office
-  briefcase: '💼',
-  'office-building': '🏢',
-  factory: '🏭',
-  warehouse: '🏭',
-  bank: '🏦',
-  hospital: '🏥',
-  university: '🏫',
-  library: '🏛️',
-  museum: '🏟️',
-  theater: '🎭',
-  cinema: '🎬',
-
-  // Household items
-  bed: '🛏️',
-  couch: '🛋️',
-  chair: 'emoji-1f6c0',
-  table: 'emoji-1f5d4',
-  lamp: '💡',
-  candle: '🕯️',
-  mirror: '🪞',
-  window: '🪟',
-  door: '🚪',
-  unlock: '🔓',
-
-  // Clothing and accessories
-  shirt: '👕',
-  jeans: '👖',
-  dress: '👗',
-  bikini: '👙',
-  kimono: '👘',
-  sari: '🥻',
-  'lab-coat': '🥼',
-  goggles: '🥽',
-  gloves: '🧤',
-  coat: '🧥',
-  socks: '🧦',
-  hat: 'emoji-1f9e2',
-  'top-hat': '🎩',
-  'military-helmet': '🪖',
-
-  // Miscellaneous
-  hourglass: '⏳',
-  stopwatch: '⏱️',
-  'alarm-clock': '⏰',
-  timer: 'emoji-23f2',
-  'magnifying-glass': '🔍',
-  compass: '🧭',
-  globe: '🌍',
-  'world-map': '🗺️',
-  pennant: 'emoji-1f3f1',
+/**
+ * The XMind markers imported as a WiseMapping SVG icon: the task progress, as the task icons
+ * MindManager's TaskPercentage is imported as, at the quarter at or below it, so that only a done
+ * task looks done; the colored flags, as FreeMind's are; and the pie chart, which has no emoji.
+ */
+export const XMIND_MARKER_SVG_ICONS: Readonly<Record<string, string>> = {
+  'task-start': 'task_0',
+  'task-oct': 'task_0',
+  'task-quarter': 'task_25',
+  'task-3oct': 'task_25',
+  'task-half': 'task_50',
+  'task-5oct': 'task_50',
+  'task-3quar': 'task_75',
+  'task-7oct': 'task_75',
+  'task-done': 'task_100',
+  'flag-orange': 'flag_orange',
+  'flag-yellow': 'flag_yellow',
+  'flag-green': 'flag_green',
+  'flag-dark-green': 'flag_green',
+  'flag-blue': 'flag_blue',
+  'flag-dark-blue': 'flag_blue',
+  'flag-purple': 'flag_purple',
+  c_symbol_pie_chart: 'chart_pie',
 };
 
 class XMindImporter extends Importer {
@@ -505,23 +533,15 @@ class XMindImporter extends Importer {
     }
 
     let files: Record<string, Uint8Array>;
-    let inflatedBytes = 0;
     try {
-      // The filter sees each entry's declared size before it is inflated. fflate inflates into a
-      // buffer of exactly that size, so an entry that under-declares can not exceed it either.
-      files = unzipSync(data, {
-        filter: (file) => {
-          if (!isXMindContentEntry(file.name)) {
-            return false;
-          }
-          inflatedBytes += file.originalSize;
-          if (inflatedBytes > MAX_XMIND_CONTENT_BYTES) {
-            throw new ImportError(
-              `The XMind file is too large: its content exceeds ${MAX_XMIND_CONTENT_BYTES / (1024 * 1024)} MB uncompressed.`,
-            );
-          }
-          return true;
-        },
+      // Only the content entries are inflated, within the cap, and none past its declared size.
+      files = readZipEntries(data, {
+        accept: isXMindContentEntry,
+        maxBytes: MAX_XMIND_CONTENT_BYTES,
+        tooLarge: () =>
+          new ImportError(
+            `The XMind file is too large: its content exceeds ${MAX_XMIND_CONTENT_BYTES / (1024 * 1024)} MB uncompressed.`,
+          ),
       });
     } catch (error) {
       if (error instanceof ImportError) {
@@ -629,6 +649,11 @@ class XMindImporter extends Importer {
   }
 
   private addIcon(topic: NodeModel, xmindIconId: string): void {
+    const svgIcon = ownEntry(XMIND_MARKER_SVG_ICONS, xmindIconId.toLowerCase());
+    if (svgIcon) {
+      topic.addFeature(FeatureModelFactory.createModel('icon', { id: svgIcon }));
+      return;
+    }
     const emojiIcon = this.mapXMindIconToEmojiIcon(xmindIconId);
     topic.addFeature(FeatureModelFactory.createModel('eicon', { id: emojiIcon }));
   }
@@ -839,8 +864,7 @@ class XMindImporter extends Importer {
       topic.setBorderColor(borderColor);
     }
 
-    // Add icons if present (mapped to EmojiIcons). XMind Zen writes them as markers.
-    jsonTopic.icons?.forEach((icon) => this.addIcon(topic, icon));
+    // The markers are the icons of a topic.
     jsonTopic.markers?.forEach((marker) => {
       if (marker.markerId) {
         this.addIcon(topic, marker.markerId);
@@ -878,17 +902,6 @@ class XMindImporter extends Importer {
       parts.push(noteText);
     }
 
-    // Add icons if present (mapped to appropriate emojis)
-    if (topic.icons && topic.icons.length > 0) {
-      const formattedIcons = topic.icons
-        .map((icon) => {
-          const emoji = this.mapXMindIconToEmojiIcon(icon);
-          return `${emoji} ${icon}`;
-        })
-        .join(', ');
-      parts.push(formattedIcons);
-    }
-
     // Add labels if present (at the bottom)
     if (topic.labels && topic.labels.length > 0) {
       const formattedLabels = topic.labels.map((label) => `🏷️ ${label}`).join(', ');
@@ -911,23 +924,21 @@ class XMindImporter extends Importer {
       }
     }
 
-    // Handle XMind markers (middle)
-    const markersElement = XMindImporter.childElement(xmlTopic, 'markers');
-    const markers = markersElement ? XMindImporter.childElements(markersElement, 'marker') : [];
-    if (markers.length > 0) {
-      const markerTexts = markers.map((marker) => marker.getAttribute('marker-id') || 'unknown');
-      const formattedMarkers = markerTexts.map((marker) => `🔖 ${marker}`).join(', ');
-      parts.push(formattedMarkers);
+    // Labels (<labels><label>text</label></labels>) at the bottom, as in the JSON format
+    const labelsElement = XMindImporter.childElement(xmlTopic, 'labels');
+    const labelElements = labelsElement ? XMindImporter.childElements(labelsElement, 'label') : [];
+    const labels = labelElements
+      .map((label) => label.textContent?.trim() ?? '')
+      .filter((label) => label.length > 0);
+    if (labels.length > 0) {
+      parts.push(labels.map((label) => `🏷️ ${label}`).join(', '));
     }
-
-    // Note: XMind XML format doesn't have labels, only JSON format does
-    // Labels would be added at the bottom if present
 
     return parts.length > 0 ? parts.join('\n') : null;
   }
 
   private mapXMindIconToEmojiIcon(iconId: string): string {
-    return ownEntry(XMIND_ICON_EMOJIS, iconId.toLowerCase()) || '💡'; // Default to lightbulb
+    return ownEntry(XMIND_MARKER_EMOJIS, iconId.toLowerCase()) || '💡'; // Default to lightbulb
   }
 
   // Only direct children: descendant queries would pick up the data of nested topics.

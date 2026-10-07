@@ -23,7 +23,8 @@ import type {
   ElementPeer,
 } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
-import isMacPlatform from './util/platform';
+import { hasShortcutModifier } from './util/platform';
+import { markObjectTouch } from './util/objectTouch';
 
 import type { NodeOption } from './NodeGraph';
 import NodeGraph from './NodeGraph';
@@ -72,7 +73,7 @@ type AppliedTextValues = {
   text?: string;
 };
 
-export type TopicCornerCoordinates = {
+type TopicCornerCoordinates = {
   topLeft: PositionType;
   topRight: PositionType;
   bottomLeft: PositionType;
@@ -726,22 +727,31 @@ abstract class Topic extends NodeGraph {
     // Focus events ...
     elem.addEvent('mousedown', (event: Event) => {
       const mouseEvent = event as MouseEvent;
-      const isMac = isMacPlatform();
       if (!me.isReadOnly()) {
         // Disable topic selection of readOnly mode ...
         let value = true;
-        if ((mouseEvent.metaKey && isMac) || (mouseEvent.ctrlKey && !isMac)) {
+        if (hasShortcutModifier(mouseEvent)) {
           value = !me.isOnFocus();
           mouseEvent.stopPropagation();
           mouseEvent.preventDefault();
         }
-        topic.setOnFocus(value);
+        const designer = me.getDesigner();
+        if (designer) {
+          // The designer also unselects the other entities, and tells the editor once ...
+          designer.selectOnClick(topic, value, mouseEvent);
+        } else {
+          topic.setOnFocus(value);
+        }
       }
 
       const eventDispatcher = me._getTopicEventDispatcher();
       eventDispatcher?.process('clicknode', me);
       mouseEvent.stopPropagation();
     });
+    // A tap selects through the mousedown the browser emulates for it, which the handler above
+    // keeps from the canvas. The touch itself still reaches it, to pan on a swipe, but its release
+    // must not be a click on the background ...
+    elem.addEvent('touchstart', markObjectTouch);
   }
 
   setOnFocus(focus: boolean) {

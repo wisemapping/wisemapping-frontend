@@ -22,6 +22,7 @@ import Canvas from '../../../src/components/Canvas';
 import type Designer from '../../../src/components/Designer';
 import HTMLTopicSelected from '../../../src/components/HTMLTopicSelected';
 import NodeGraph from '../../../src/components/NodeGraph';
+import Relationship from '../../../src/components/Relationship';
 import Topic from '../../../src/components/Topic';
 import TopicEventDispatcher from '../../../src/components/TopicEventDispatcher';
 
@@ -181,6 +182,113 @@ describe('Selection work', () => {
     expect(fired.onfocus).toBe(0);
     // Before: 257,000. Now a few per topic.
     expect(reads).toBeLessThan(10 * TOPICS);
+  });
+
+  it('a click on the background after select-all deselects in one pass, with one designer event', async () => {
+    const { designer } = await buildDesigner(buildMediumMap({ topics: TOPICS }));
+    designer.selectAll();
+    const fired = countEvents(designer);
+    const focusReads = countCalls(NodeGraph.prototype, 'isOnFocus');
+
+    designer.onObjectFocusEvent(undefined, new MouseEvent('click'));
+    const reads = focusReads.count;
+
+    expect(designer.getModel().filterSelectedTopics()).toHaveLength(0);
+    expect(designer.getModel().filterSelectedRelationships()).toHaveLength(0);
+    // Each topic still reports its own deselection, as before.
+    expect(fired.topicUnselected).toBe(TOPICS);
+    expect(fired.onblur).toBe(1);
+    expect(fired.onfocus).toBe(0);
+    // Before: 257,500: each topic unselected counted the selection. Now a few per topic.
+    expect(reads).toBeLessThan(10 * TOPICS);
+  });
+
+  it('a click on a topic after select-all keeps only that topic, with one designer event', async () => {
+    const { designer, topic } = await buildDesigner(buildMediumMap({ topics: TOPICS }));
+    designer.selectAll();
+    const fired = countEvents(designer);
+    const focusReads = countCalls(NodeGraph.prototype, 'isOnFocus');
+
+    designer.onObjectFocusEvent(topic(3), new MouseEvent('mousedown'));
+    const reads = focusReads.count;
+
+    expect(designer.getModel().filterSelectedTopics()).toEqual([topic(3)]);
+    expect(designer.getModel().filterSelectedRelationships()).toHaveLength(0);
+    expect(fired.topicUnselected).toBe(TOPICS - 1);
+    // The selection changed without becoming empty: one 'onfocus' (before: none, so the editor
+    // kept showing every topic selected), no 'onblur'.
+    expect(fired).toMatchObject({ onblur: 0, onfocus: 1, topicSelected: 0 });
+    // Before: 256,998. Now a few per topic.
+    expect(reads).toBeLessThan(10 * TOPICS);
+  });
+
+  it('a click with the shortcut modifier keeps the selection', async () => {
+    const { designer } = await buildDesigner(buildMediumMap({ topics: 50 }));
+    designer.selectAll();
+    const fired = countEvents(designer);
+
+    // Ctrl, as jsdom is not a Mac (Cmd there: see designer-selection-events) ...
+    designer.onObjectFocusEvent(undefined, new MouseEvent('click', { ctrlKey: true }));
+
+    expect(designer.getModel().countSelectedTopics()).toBe(50);
+    expect(fired).toEqual({ onfocus: 0, onblur: 0, topicSelected: 0, topicUnselected: 0 });
+  });
+
+  it('selecting or unselecting one topic does not scan the topics', async () => {
+    const { designer, topic } = await buildDesigner(buildMediumMap({ topics: TOPICS }));
+    const fired = countEvents(designer);
+    const focusReads = countCalls(NodeGraph.prototype, 'isOnFocus');
+
+    topic(3).setOnFocus(true);
+    topic(3).setOnFocus(false);
+
+    // One per change: the central topic, selected when the map loads, stays selected, so
+    // unselecting topic 3 is an 'onfocus' too. It used to fire nothing, which left the editor
+    // counting two topics (BL5-244).
+    expect(fired.onfocus).toBe(2);
+    // Before: 1,005: the designer's handlers counted the selected topics by reading every topic.
+    expect(focusReads.count).toBeLessThan(TOPICS / 5);
+  });
+
+  it('selecting or unselecting a topic or a relationship does not scan the relationships', async () => {
+    const RELATIONSHIPS = 200;
+    const { designer, topic } = await buildDesigner(
+      buildMediumMap({ topics: 50, relationships: RELATIONSHIPS }),
+    );
+    const relationships = designer.getModel().getRelationships();
+    expect(relationships).toHaveLength(RELATIONSHIPS);
+    const relationship = relationships[0]!;
+    const fired = countEvents(designer);
+    const focusReads = countCalls(Relationship.prototype, 'isOnFocus');
+
+    topic(3).setOnFocus(true);
+    topic(3).setOnFocus(false);
+    relationship.setOnFocus(true);
+    relationship.setOnFocus(false);
+
+    // One per change, as above: each unselection leaves the central topic selected (it used to
+    // fire nothing, so 2).
+    expect(fired.onfocus).toBe(4);
+    expect(designer.getModel().countSelectedRelationships()).toBe(0);
+    // Before: 1,002: the designer's handlers listed the selected relationships by reading each one.
+    expect(focusReads.count).toBeLessThan(RELATIONSHIPS / 5);
+  });
+
+  it('selecting and deselecting every relationship reads each one a few times', async () => {
+    const RELATIONSHIPS = 200;
+    const { designer } = await buildDesigner(
+      buildMediumMap({ topics: 50, relationships: RELATIONSHIPS }),
+    );
+    const focusReads = countCalls(Relationship.prototype, 'isOnFocus');
+
+    designer.selectAll();
+    expect(designer.getModel().countSelectedRelationships()).toBe(RELATIONSHIPS);
+    designer.deselectAll();
+    expect(designer.getModel().countSelectedRelationships()).toBe(0);
+
+    // Two reads per relationship and pass. Before: 1,200: _setFocusOfAll also listed the selected
+    // relationships after each pass.
+    expect(focusReads.count).toBeLessThanOrEqual(4 * RELATIONSHIPS);
   });
 
   it('selecting all again fires nothing and does not pan', async () => {
