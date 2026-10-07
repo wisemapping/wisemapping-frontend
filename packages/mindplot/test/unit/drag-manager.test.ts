@@ -89,6 +89,7 @@ const buildTopic = () => {
   const node = {
     getId: () => 3,
     isCentralTopic: () => false,
+    isInWorkspace: () => true,
     // A topic without a designer: it runs its commands through ActionDispatcher.getInstance().
     getActionDispatcher: () => ActionDispatcher.getInstance(),
     getSize: () => ({ width: 40, height: 20 }),

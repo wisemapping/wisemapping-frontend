@@ -165,6 +165,13 @@ class DragManager {
   ): (event: Event) => void {
     const screen = workspace.getScreenManager();
     const result = (event: Event) => {
+      // The dragged topic was removed during the drag: cancel it instead of predicting against
+      // nodes the layout no longer has (throws "node could not be found").
+      if (dragNode.isDraggedTopicRemoved()) {
+        dragManager._endDrag(workspace, dragNode, event, true);
+        return;
+      }
+
       if (!this._isDragInProcess) {
         // Check if drag threshold has been met
         const currentTime = Date.now();
@@ -258,7 +265,8 @@ class DragManager {
     if (this._isDragInProcess) {
       // A cancelled drag still ends, so that listeners can restore their state, but it does not
       // move the topic ...
-      if (cancel) {
+      // A topic removed during the drag can not be dropped either ...
+      if (cancel || dragNode.isDraggedTopicRemoved()) {
         dragNode.cancel();
       }
 
