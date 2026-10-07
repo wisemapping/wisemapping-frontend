@@ -160,7 +160,8 @@ describe('ShareDialog', () => {
         { email: `${BURST_TEXT}@example.org`, role: 'editor' },
       ]),
     );
-  });
+    // Two bursts, about 440 keys: under 2 s alone, but over the 5 s default in a loaded full run.
+  }, 20000);
 
   test('removing a collaborator calls deleteMapPermission with their email', async () => {
     renderDialog();
