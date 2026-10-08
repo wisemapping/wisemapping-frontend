@@ -35,6 +35,9 @@ type AxiosLike = {
 const asString = (value: unknown): string | undefined =>
   typeof value === 'string' ? value : undefined;
 
+// The query string is dropped: one-time codes travel there (activation?code=, OAuth callbacks).
+const withoutQuery = (url: string | undefined): string | undefined => url?.replace(/[?#].*$/, '');
+
 /**
  * What may be logged about a failed request: method, URL, status and the response body.
  *
@@ -42,6 +45,8 @@ const asString = (value: unknown): string | undefined =>
  * body (a password on login or on a password change) and whose headers hold the
  * `Authorization: Bearer` token. Logging the whole object, or JSON.stringify of it, writes
  * both to the console and to anything that collects it.
+ *
+ * The URL is logged without its query string, where one-time codes travel.
  *
  * Accepts an axios error or an axios response.
  */
@@ -55,7 +60,7 @@ export const describeHttpError = (error: unknown): HttpErrorSummary => {
   return {
     message: asString(value.message),
     method: asString(config?.method),
-    url: asString(config?.url),
+    url: withoutQuery(asString(config?.url)),
     status: typeof response?.status === 'number' ? response.status : undefined,
     data: response?.data,
   };
