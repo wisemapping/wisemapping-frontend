@@ -66,7 +66,8 @@ const BaseDialog = (props: DialogProps): React.ReactElement => {
     <div>
       <Dialog
         open={true}
-        onClose={onClose}
+        // Escape and the backdrop wait for the request too, as Cancel does.
+        onClose={isLoading ? undefined : onClose}
         maxWidth={maxWidth}
         fullWidth={!papercss}
         // `sx` rather than `css`: slotProps are spread onto the Paper as plain

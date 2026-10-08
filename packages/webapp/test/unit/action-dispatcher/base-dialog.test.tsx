@@ -17,7 +17,7 @@
  */
 
 import React, { useContext, useState } from 'react';
-import { act, screen } from '@testing-library/react';
+import { act, fireEvent, screen } from '@testing-library/react';
 import BaseDialog from '../../../src/components/maps-page/action-dispatcher/base-dialog';
 import {
   KeyboardContext,
@@ -61,5 +61,35 @@ describe('BaseDialog', () => {
 
     act(() => setOpenDialogs([]));
     expect(hotkeys()).toBe('enabled');
+  });
+});
+
+describe('BaseDialog while its request runs', () => {
+  test('Escape does not close it, as Cancel is disabled too', () => {
+    // A dialog closed mid-request still acted on its result: Create or Duplicate navigated to
+    // the new map, and a failed rename lost its error.
+    const onClose = jest.fn();
+    renderWithProviders(
+      <BaseDialog title="Rename" onClose={onClose} onSubmit={jest.fn()} isLoading={true}>
+        body
+      </BaseDialog>,
+    );
+
+    fireEvent.keyDown(screen.getByRole('dialog'), { key: 'Escape' });
+
+    expect(onClose).not.toHaveBeenCalled();
+  });
+
+  test('Escape closes it once the request is over', () => {
+    const onClose = jest.fn();
+    renderWithProviders(
+      <BaseDialog title="Rename" onClose={onClose} onSubmit={jest.fn()}>
+        body
+      </BaseDialog>,
+    );
+
+    fireEvent.keyDown(screen.getByRole('dialog'), { key: 'Escape' });
+
+    expect(onClose).toHaveBeenCalledTimes(1);
   });
 });
