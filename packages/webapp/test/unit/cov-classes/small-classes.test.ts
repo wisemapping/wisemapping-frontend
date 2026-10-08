@@ -245,8 +245,14 @@ describe('LocalStorageThemeVariantStorage', () => {
 });
 
 describe('queryClient retry policy', () => {
-  it.each([401, 403, 404])('never retries a %s', (status) => {
+  it.each([400, 401, 403, 404, 409, 410, 422])('never retries a %s', (status) => {
+    // A request the server refused will be refused again: retrying a deleted (410) or spam
+    // (422) map only delayed its error page by 1 + 2 + 4 seconds.
     expect(shouldRetryQuery(0, { status })).toBe(false);
+  });
+
+  it.each([429, 500, 502, 503])('retries a %s, which may pass next time', (status) => {
+    expect(shouldRetryQuery(0, { status })).toBe(true);
   });
 
   it('never retries an auth error', () => {
