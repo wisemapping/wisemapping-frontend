@@ -247,18 +247,21 @@ describe('DeleteDialog', () => {
 });
 
 describe('DeleteMultiselectDialog', () => {
-  const setup = () => {
+  const listed = (id: number, title: string): MapInfo => ({ ...map, id, title });
+
+  const setup = (mapsId = [3, 4]) => {
     const deleteMaps = jest.fn<Promise<void>, [number[]]>(() => Promise.resolve());
     const onClose = jest.fn();
-    renderWithProviders(<DeleteMultiselectDialog mapsId={[3, 4]} onClose={onClose} />, {
+    const maps = Array.from({ length: 8 }, (_, i) => listed(i + 1, `Map ${i + 1}`));
+    renderWithProviders(<DeleteMultiselectDialog mapsId={mapsId} onClose={onClose} />, {
       client: { deleteMaps } as unknown as Client,
+      queryData: [[['maps'], maps]],
     });
     return { deleteMaps, onClose };
   };
 
   test('deletes every selected map and closes reporting success', async () => {
     const { deleteMaps, onClose } = setup();
-    expect(screen.getByText('All selected maps will be deleted')).toBeTruthy();
 
     fireEvent.click(button('Delete'));
 
@@ -266,14 +269,32 @@ describe('DeleteMultiselectDialog', () => {
     await waitFor(() => expect(onClose).toHaveBeenCalledWith(true));
   });
 
-  test('logs a failed delete and keeps the dialog open', async () => {
-    const consoleError = jest.spyOn(console, 'error').mockImplementation(() => undefined);
+  test('says how many maps will be deleted, and which', () => {
+    // "Select all" takes the maps of every page: the confirmation used to say only "All
+    // selected maps will be deleted".
+    setup([3, 4]);
+
+    expect(screen.getByText('2 maps will be deleted')).toBeTruthy();
+    expect(screen.getByText('Map 3')).toBeTruthy();
+    expect(screen.getByText('Map 4')).toBeTruthy();
+  });
+
+  test('names the first five maps and counts the rest', () => {
+    setup([1, 2, 3, 4, 5, 6, 7, 8]);
+
+    expect(screen.getByText('8 maps will be deleted')).toBeTruthy();
+    expect(screen.getByText('Map 5')).toBeTruthy();
+    expect(screen.queryByText('Map 6')).toBeNull();
+    expect(screen.getByText('and 3 more')).toBeTruthy();
+  });
+
+  test('shows a failed delete and keeps the dialog open', async () => {
     const { deleteMaps, onClose } = setup();
-    deleteMaps.mockRejectedValue('boom');
+    deleteMaps.mockRejectedValue({ msg: 'Could not delete' });
 
     fireEvent.click(button('Delete'));
 
-    await waitFor(() => expect(consoleError).toHaveBeenCalledWith('Unexpected error boom'));
+    expect(await screen.findByText('Could not delete')).toBeTruthy();
     expect(onClose).not.toHaveBeenCalled();
   });
 

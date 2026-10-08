@@ -119,8 +119,11 @@
   "create.title": {
     "defaultMessage": "एक नया माइंडमैप बनाएं"
   },
-  "deletem.title": {
-    "defaultMessage": "सभी चयनित मानचित्र हटा दिए जाएंगे"
+  "deletem.count-title": {
+    "defaultMessage": "{count, plural, one {# मैप हटाया जाएगा} other {# मैप हटाए जाएंगे}}"
+  },
+  "deletem.more": {
+    "defaultMessage": "और {count} अन्य"
   },
   "duplicate.copy-title": {
     "defaultMessage": "{title} की प्रतिलिपि"

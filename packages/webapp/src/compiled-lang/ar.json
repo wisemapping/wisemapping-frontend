@@ -1811,10 +1811,97 @@
       "value": "إنشاء خريطة ذهنية جديدة"
     }
   ],
-  "deletem.title": [
+  "deletem.count-title": [
+    {
+      "type": 6,
+      "value": "count",
+      "options": {
+        "zero": {
+          "value": [
+            {
+              "type": 0,
+              "value": "لن يتم حذف أي خريطة"
+            }
+          ]
+        },
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "سيتم حذف خريطة واحدة"
+            }
+          ]
+        },
+        "two": {
+          "value": [
+            {
+              "type": 0,
+              "value": "سيتم حذف خريطتين"
+            }
+          ]
+        },
+        "few": {
+          "value": [
+            {
+              "type": 0,
+              "value": "سيتم حذف "
+            },
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " خرائط"
+            }
+          ]
+        },
+        "many": {
+          "value": [
+            {
+              "type": 0,
+              "value": "سيتم حذف "
+            },
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " خريطة"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "سيتم حذف "
+            },
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " خريطة"
+            }
+          ]
+        }
+      },
+      "offset": 0,
+      "pluralType": "cardinal"
+    }
+  ],
+  "deletem.more": [
     {
       "type": 0,
-      "value": "سيتم حذف جميع الخرائط المحددة"
+      "value": "و"
+    },
+    {
+      "type": 1,
+      "value": "count"
+    },
+    {
+      "type": 0,
+      "value": " أخرى"
     }
   ],
   "duplicate.copy-title": [

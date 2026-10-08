@@ -1811,10 +1811,46 @@
       "value": "Criar um novo mapa mental"
     }
   ],
-  "deletem.title": [
+  "deletem.count-title": [
+    {
+      "type": 6,
+      "value": "count",
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " mapa será excluído"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " mapas serão excluídos"
+            }
+          ]
+        }
+      },
+      "offset": 0,
+      "pluralType": "cardinal"
+    }
+  ],
+  "deletem.more": [
     {
       "type": 0,
-      "value": "Todos os mapas selecionados serão excluídos"
+      "value": "e mais "
+    },
+    {
+      "type": 1,
+      "value": "count"
     }
   ],
   "duplicate.copy-title": [

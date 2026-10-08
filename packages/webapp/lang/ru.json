@@ -116,8 +116,11 @@
   "create.title": {
     "defaultMessage": "Создание новой майнд-карты."
   },
-  "deletem.title": {
-    "defaultMessage": "Все выбранные карты будут удалены"
+  "deletem.count-title": {
+    "defaultMessage": "{count, plural, one {Будет удалена # карта} few {Будут удалены # карты} many {Будут удалены # карт} other {Будут удалены # карты}}"
+  },
+  "deletem.more": {
+    "defaultMessage": "и ещё {count}"
   },
   "duplicate.copy-title": {
     "defaultMessage": "Копия {title}"

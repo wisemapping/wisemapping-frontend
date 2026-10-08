@@ -27,6 +27,8 @@ import { createAppTheme } from '../../../src/theme';
 
 type Options = {
   client?: Client;
+  /** Query data already in the cache, as [queryKey, data] pairs. */
+  queryData?: [unknown[], unknown][];
 };
 
 /**
@@ -39,11 +41,12 @@ type Options = {
  */
 export const renderWithProviders = (
   ui: React.ReactElement,
-  { client }: Options = {},
+  { client, queryData = [] }: Options = {},
 ): RenderResult => {
   const queryClient = new QueryClient({
     defaultOptions: { queries: { retry: false }, mutations: { retry: false } },
   });
+  queryData.forEach(([key, data]) => queryClient.setQueryData(key, data));
 
   return render(
     <ThemeProvider theme={createAppTheme('light')}>

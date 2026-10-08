@@ -119,8 +119,11 @@
   "create.title": {
     "defaultMessage": "创建一个新的思维导图"
   },
-  "deletem.title": {
-    "defaultMessage": "所有选中的思维导图将被删除"
+  "deletem.count-title": {
+    "defaultMessage": "{count, plural, other {将删除 # 个导图}}"
+  },
+  "deletem.more": {
+    "defaultMessage": "以及另外 {count} 个"
   },
   "duplicate.copy-title": {
     "defaultMessage": "{title}的副本"

@@ -119,8 +119,11 @@
   "create.title": {
     "defaultMessage": "Crea una nuova mappa mentale"
   },
-  "deletem.title": {
-    "defaultMessage": "Tutte le mappe selezionate verranno eliminate"
+  "deletem.count-title": {
+    "defaultMessage": "{count, plural, one {Verrà eliminata # mappa} other {Verranno eliminate # mappe}}"
+  },
+  "deletem.more": {
+    "defaultMessage": "e altre {count}"
   },
   "duplicate.copy-title": {
     "defaultMessage": "Copia di {title}"

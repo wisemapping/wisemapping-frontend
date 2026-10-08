@@ -119,8 +119,11 @@
   "create.title": {
     "defaultMessage": "新しいマインドマップを作成"
   },
-  "deletem.title": {
-    "defaultMessage": "選択されたすべてのマップが削除されます"
+  "deletem.count-title": {
+    "defaultMessage": "{count, plural, other {# 件のマップが削除されます}}"
+  },
+  "deletem.more": {
+    "defaultMessage": "ほか {count} 件"
   },
   "duplicate.copy-title": {
     "defaultMessage": "{title}のコピー"

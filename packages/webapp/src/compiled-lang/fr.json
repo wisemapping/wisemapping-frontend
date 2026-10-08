@@ -1807,10 +1807,50 @@
       "value": "Créer une nouvelle carte mentale"
     }
   ],
-  "deletem.title": [
+  "deletem.count-title": [
+    {
+      "type": 6,
+      "value": "count",
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " carte sera supprimée"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " cartes seront supprimées"
+            }
+          ]
+        }
+      },
+      "offset": 0,
+      "pluralType": "cardinal"
+    }
+  ],
+  "deletem.more": [
     {
       "type": 0,
-      "value": "Toutes les cartes sélectionnées seront supprimées"
+      "value": "et "
+    },
+    {
+      "type": 1,
+      "value": "count"
+    },
+    {
+      "type": 0,
+      "value": " de plus"
     }
   ],
   "duplicate.copy-title": [

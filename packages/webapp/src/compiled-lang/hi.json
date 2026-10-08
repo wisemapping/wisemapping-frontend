@@ -1807,10 +1807,50 @@
       "value": "एक नया माइंडमैप बनाएं"
     }
   ],
-  "deletem.title": [
+  "deletem.count-title": [
+    {
+      "type": 6,
+      "value": "count",
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " मैप हटाया जाएगा"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " मैप हटाए जाएंगे"
+            }
+          ]
+        }
+      },
+      "offset": 0,
+      "pluralType": "cardinal"
+    }
+  ],
+  "deletem.more": [
     {
       "type": 0,
-      "value": "सभी चयनित मानचित्र हटा दिए जाएंगे"
+      "value": "और "
+    },
+    {
+      "type": 1,
+      "value": "count"
+    },
+    {
+      "type": 0,
+      "value": " अन्य"
     }
   ],
   "duplicate.copy-title": [

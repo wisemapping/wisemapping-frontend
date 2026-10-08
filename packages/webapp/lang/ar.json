@@ -119,8 +119,11 @@
   "create.title": {
     "defaultMessage": "إنشاء خريطة ذهنية جديدة"
   },
-  "deletem.title": {
-    "defaultMessage": "سيتم حذف جميع الخرائط المحددة"
+  "deletem.count-title": {
+    "defaultMessage": "{count, plural, zero {لن يتم حذف أي خريطة} one {سيتم حذف خريطة واحدة} two {سيتم حذف خريطتين} few {سيتم حذف # خرائط} many {سيتم حذف # خريطة} other {سيتم حذف # خريطة}}"
+  },
+  "deletem.more": {
+    "defaultMessage": "و{count} أخرى"
   },
   "duplicate.copy-title": {
     "defaultMessage": "نسخة من {title}"

@@ -833,8 +833,11 @@
   "create.title": {
     "defaultMessage": "Create a new mindmap"
   },
-  "deletem.title": {
-    "defaultMessage": "All selected maps will be deleted"
+  "deletem.count-title": {
+    "defaultMessage": "{count, plural, one {# map will be deleted} other {# maps will be deleted}}"
+  },
+  "deletem.more": {
+    "defaultMessage": "and {count} more"
   },
   "duplicate.copy-title": {
     "defaultMessage": "Copy of {title}"

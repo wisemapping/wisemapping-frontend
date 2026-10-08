@@ -119,8 +119,11 @@
   "create.title": {
     "defaultMessage": "Créer une nouvelle carte mentale"
   },
-  "deletem.title": {
-    "defaultMessage": "Toutes les cartes sélectionnées seront supprimées"
+  "deletem.count-title": {
+    "defaultMessage": "{count, plural, one {# carte sera supprimée} other {# cartes seront supprimées}}"
+  },
+  "deletem.more": {
+    "defaultMessage": "et {count} de plus"
   },
   "duplicate.copy-title": {
     "defaultMessage": "Copie de {title}"

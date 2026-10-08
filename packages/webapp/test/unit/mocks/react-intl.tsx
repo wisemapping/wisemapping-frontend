@@ -34,9 +34,25 @@ type Descriptor = {
 
 type Values = Record<string, unknown>;
 
+// English plurals: `{count, plural, one {# map} other {# maps}}`, with `=N` cases too.
+const PLURAL = /\{(\w+), plural,((?:\s*(?:=\d+|zero|one|two|few|many|other)\s*\{[^{}]*\})+)\s*\}/g;
+
+const pluralize = (message: string, values: Values): string =>
+  message.replace(PLURAL, (match, key: string, cases: string) => {
+    const value = Number(values[key]);
+    if (values[key] === undefined || Number.isNaN(value)) {
+      return match;
+    }
+    const options = Object.fromEntries(
+      Array.from(cases.matchAll(/(=\d+|\w+)\s*\{([^{}]*)\}/g), (m) => [m[1], m[2]]),
+    );
+    const chosen = options[`=${value}`] ?? (value === 1 ? options.one : undefined) ?? options.other;
+    return (chosen ?? match).replace(/#/g, String(value));
+  });
+
 const interpolate = (message: string, values?: Values): string =>
   values
-    ? message.replace(/\{(\w+)\}/g, (match, key) =>
+    ? pluralize(message, values).replace(/\{(\w+)\}/g, (match, key) =>
         values[key] === undefined ? match : String(values[key]),
       )
     : message;

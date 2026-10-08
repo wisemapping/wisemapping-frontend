@@ -116,8 +116,11 @@
   "create.title": {
     "defaultMessage": "Erstelle eine neue Mindmap."
   },
-  "deletem.title": {
-    "defaultMessage": "Alle ausgewählten Mindmaps werden gelöscht"
+  "deletem.count-title": {
+    "defaultMessage": "{count, plural, one {# Mindmap wird gelöscht} other {# Mindmaps werden gelöscht}}"
+  },
+  "deletem.more": {
+    "defaultMessage": "und {count} weitere"
   },
   "duplicate.copy-title": {
     "defaultMessage": "Kopie von {title}"

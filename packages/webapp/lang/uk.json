@@ -119,8 +119,11 @@
   "create.title": {
     "defaultMessage": "Створити нову карту розуму"
   },
-  "deletem.title": {
-    "defaultMessage": "Всі вибрані карти будуть видалені"
+  "deletem.count-title": {
+    "defaultMessage": "{count, plural, one {Буде видалено # карту} few {Буде видалено # карти} many {Буде видалено # карт} other {Буде видалено # карти}}"
+  },
+  "deletem.more": {
+    "defaultMessage": "і ще {count}"
   },
   "duplicate.copy-title": {
     "defaultMessage": "Копія {title}"

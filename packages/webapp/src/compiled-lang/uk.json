@@ -1807,10 +1807,84 @@
       "value": "Створити нову карту розуму"
     }
   ],
-  "deletem.title": [
+  "deletem.count-title": [
+    {
+      "type": 6,
+      "value": "count",
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Буде видалено "
+            },
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " карту"
+            }
+          ]
+        },
+        "few": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Буде видалено "
+            },
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " карти"
+            }
+          ]
+        },
+        "many": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Буде видалено "
+            },
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " карт"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Буде видалено "
+            },
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " карти"
+            }
+          ]
+        }
+      },
+      "offset": 0,
+      "pluralType": "cardinal"
+    }
+  ],
+  "deletem.more": [
     {
       "type": 0,
-      "value": "Всі вибрані карти будуть видалені"
+      "value": "і ще "
+    },
+    {
+      "type": 1,
+      "value": "count"
     }
   ],
   "duplicate.copy-title": [

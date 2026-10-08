@@ -1807,10 +1807,54 @@
       "value": "Crea una nuova mappa mentale"
     }
   ],
-  "deletem.title": [
+  "deletem.count-title": [
+    {
+      "type": 6,
+      "value": "count",
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Verrà eliminata "
+            },
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " mappa"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Verranno eliminate "
+            },
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " mappe"
+            }
+          ]
+        }
+      },
+      "offset": 0,
+      "pluralType": "cardinal"
+    }
+  ],
+  "deletem.more": [
     {
       "type": 0,
-      "value": "Tutte le mappe selezionate verranno eliminate"
+      "value": "e altre "
+    },
+    {
+      "type": 1,
+      "value": "count"
     }
   ],
   "duplicate.copy-title": [

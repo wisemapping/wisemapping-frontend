@@ -119,8 +119,11 @@
   "create.title": {
     "defaultMessage": "Criar um novo mapa mental"
   },
-  "deletem.title": {
-    "defaultMessage": "Todos os mapas selecionados serão excluídos"
+  "deletem.count-title": {
+    "defaultMessage": "{count, plural, one {# mapa será excluído} other {# mapas serão excluídos}}"
+  },
+  "deletem.more": {
+    "defaultMessage": "e mais {count}"
   },
   "duplicate.copy-title": {
     "defaultMessage": "Cópia de {title}"

@@ -1807,10 +1807,84 @@
       "value": "Создание новой майнд-карты."
     }
   ],
-  "deletem.title": [
+  "deletem.count-title": [
+    {
+      "type": 6,
+      "value": "count",
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Будет удалена "
+            },
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " карта"
+            }
+          ]
+        },
+        "few": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Будут удалены "
+            },
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " карты"
+            }
+          ]
+        },
+        "many": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Будут удалены "
+            },
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " карт"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Будут удалены "
+            },
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " карты"
+            }
+          ]
+        }
+      },
+      "offset": 0,
+      "pluralType": "cardinal"
+    }
+  ],
+  "deletem.more": [
     {
       "type": 0,
-      "value": "Все выбранные карты будут удалены"
+      "value": "и ещё "
+    },
+    {
+      "type": 1,
+      "value": "count"
     }
   ],
   "duplicate.copy-title": [
