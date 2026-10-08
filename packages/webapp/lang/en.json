@@ -842,6 +842,9 @@
   "deletem.more": {
     "defaultMessage": "and {count} more"
   },
+  "dialog.close": {
+    "defaultMessage": "Close dialog"
+  },
   "duplicate.copy-title": {
     "defaultMessage": "Copy of {title}"
   },

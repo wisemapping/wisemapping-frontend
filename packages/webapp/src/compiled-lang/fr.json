@@ -1863,6 +1863,12 @@
       "value": " de plus"
     }
   ],
+  "dialog.close": [
+    {
+      "type": 0,
+      "value": "Fermer la boîte de dialogue"
+    }
+  ],
   "duplicate.copy-title": [
     {
       "type": 0,

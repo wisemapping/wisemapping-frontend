@@ -1914,6 +1914,12 @@
       "value": " أخرى"
     }
   ],
+  "dialog.close": [
+    {
+      "type": 0,
+      "value": "إغلاق مربع الحوار"
+    }
+  ],
   "duplicate.copy-title": [
     {
       "type": 0,

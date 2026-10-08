@@ -93,3 +93,31 @@ describe('BaseDialog while its request runs', () => {
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 });
+
+describe('BaseDialog header', () => {
+  test('shows the title and subtitle, and closes from the close button', () => {
+    const onClose = jest.fn();
+    renderWithProviders(
+      <BaseDialog title="Share" description="Add collaborators" onClose={onClose}>
+        body
+      </BaseDialog>,
+    );
+
+    expect(screen.getByRole('heading', { name: /Share/ })).toBeTruthy();
+    expect(screen.getByText('Add collaborators')).toBeTruthy();
+    fireEvent.click(screen.getByRole('button', { name: 'Close dialog' }));
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
+  test('the close button waits for the request, as Cancel does', () => {
+    renderWithProviders(
+      <BaseDialog title="Rename" onClose={jest.fn()} onSubmit={jest.fn()} isLoading={true}>
+        body
+      </BaseDialog>,
+    );
+
+    expect(
+      (screen.getByRole('button', { name: 'Close dialog' }) as HTMLButtonElement).disabled,
+    ).toBe(true);
+  });
+});

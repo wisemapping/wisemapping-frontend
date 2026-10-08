@@ -1852,6 +1852,12 @@
       "value": " 件"
     }
   ],
+  "dialog.close": [
+    {
+      "type": 0,
+      "value": "ダイアログを閉じる"
+    }
+  ],
   "duplicate.copy-title": [
     {
       "type": 1,

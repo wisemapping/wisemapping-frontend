@@ -1863,6 +1863,12 @@
       "value": "count"
     }
   ],
+  "dialog.close": [
+    {
+      "type": 0,
+      "value": "Fechar a caixa de diálogo"
+    }
+  ],
   "duplicate.copy-title": [
     {
       "type": 0,

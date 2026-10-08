@@ -1860,6 +1860,12 @@
       "value": " 个"
     }
   ],
+  "dialog.close": [
+    {
+      "type": 0,
+      "value": "关闭对话框"
+    }
+  ],
   "duplicate.copy-title": [
     {
       "type": 1,

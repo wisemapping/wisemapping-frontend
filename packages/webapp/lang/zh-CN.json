@@ -1480,5 +1480,8 @@
   },
   "maps.select-map": {
     "defaultMessage": "选择 {title}"
+  },
+  "dialog.close": {
+    "defaultMessage": "关闭对话框"
   }
 }
