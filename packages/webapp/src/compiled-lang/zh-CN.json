@@ -595,6 +595,16 @@
       "value": "创建用户失败。请重试。"
     }
   ],
+  "admin.error.load-maps": [
+    {
+      "type": 0,
+      "value": "加载导图失败："
+    },
+    {
+      "type": 1,
+      "value": "message"
+    }
+  ],
   "admin.error.load-users": [
     {
       "type": 0,

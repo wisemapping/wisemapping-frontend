@@ -595,6 +595,16 @@
       "value": "Falha ao criar o usuário. Tente novamente."
     }
   ],
+  "admin.error.load-maps": [
+    {
+      "type": 0,
+      "value": "Falha ao carregar os mapas: "
+    },
+    {
+      "type": 1,
+      "value": "message"
+    }
+  ],
   "admin.error.load-users": [
     {
       "type": 0,

@@ -595,6 +595,16 @@
       "value": "فشل إنشاء المستخدم. يرجى المحاولة مرة أخرى."
     }
   ],
+  "admin.error.load-maps": [
+    {
+      "type": 0,
+      "value": "فشل تحميل الخرائط: "
+    },
+    {
+      "type": 1,
+      "value": "message"
+    }
+  ],
   "admin.error.load-users": [
     {
       "type": 0,

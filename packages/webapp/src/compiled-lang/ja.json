@@ -595,6 +595,16 @@
       "value": "ユーザーの作成に失敗しました。もう一度お試しください。"
     }
   ],
+  "admin.error.load-maps": [
+    {
+      "type": 0,
+      "value": "マップの読み込みに失敗しました："
+    },
+    {
+      "type": 1,
+      "value": "message"
+    }
+  ],
   "admin.error.load-users": [
     {
       "type": 0,

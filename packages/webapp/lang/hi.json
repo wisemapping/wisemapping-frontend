@@ -704,6 +704,9 @@
   "admin.error.create-user-failed": {
     "defaultMessage": "उपयोगकर्ता बनाने में विफल। कृपया फिर से प्रयास करें।"
   },
+  "admin.error.load-maps": {
+    "defaultMessage": "मैप लोड करने में विफल: {message}"
+  },
   "admin.error.load-users": {
     "defaultMessage": "उपयोगकर्ता लोड करने में विफल: {message}"
   },

@@ -701,6 +701,9 @@
   "admin.error.create-user-failed": {
     "defaultMessage": "Échec de la création de l'utilisateur. Veuillez réessayer."
   },
+  "admin.error.load-maps": {
+    "defaultMessage": "Échec du chargement des cartes : {message}"
+  },
   "admin.error.load-users": {
     "defaultMessage": "Échec du chargement des utilisateurs : {message}"
   },

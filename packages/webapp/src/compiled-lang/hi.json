@@ -595,6 +595,16 @@
       "value": "उपयोगकर्ता बनाने में विफल। कृपया फिर से प्रयास करें।"
     }
   ],
+  "admin.error.load-maps": [
+    {
+      "type": 0,
+      "value": "मैप लोड करने में विफल: "
+    },
+    {
+      "type": 1,
+      "value": "message"
+    }
+  ],
   "admin.error.load-users": [
     {
       "type": 0,

@@ -595,6 +595,16 @@
       "value": "Échec de la création de l'utilisateur. Veuillez réessayer."
     }
   ],
+  "admin.error.load-maps": [
+    {
+      "type": 0,
+      "value": "Échec du chargement des cartes : "
+    },
+    {
+      "type": 1,
+      "value": "message"
+    }
+  ],
   "admin.error.load-users": [
     {
       "type": 0,

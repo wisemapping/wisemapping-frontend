@@ -78,6 +78,7 @@ import ChangePasswordDialog from './ChangePasswordDialog';
 import FacebookLookup from './FacebookLookup';
 import { User, UserFormData } from './types';
 import { useAdminPage, useClampedPage } from '../shared/useAdminPage';
+import { errorMessage } from '../shared/errorMessage';
 
 const emptyUserForm: UserFormData = {
   firstname: '',
@@ -609,24 +610,6 @@ const AccountManagement = (): ReactElement => {
     }
   };
 
-  if (error) {
-    return (
-      <Alert severity="error" sx={{ mb: 2 }}>
-        {intl.formatMessage(
-          {
-            id: 'admin.error.load-users',
-            defaultMessage: 'Failed to load users: {message}',
-          },
-          {
-            message:
-              (error as Error)?.message ||
-              intl.formatMessage({ id: 'admin.error.unknown', defaultMessage: 'Unknown error' }),
-          },
-        )}
-      </Alert>
-    );
-  }
-
   return (
     <Box>
       {/* Header Section */}
@@ -807,6 +790,19 @@ const AccountManagement = (): ReactElement => {
         </CardContent>
       </Card>
       {/* Users Table */}
+      {/* Inline, so the search, filters and Refresh stay to recover with. */}
+      {error && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {intl.formatMessage(
+            { id: 'admin.error.load-users', defaultMessage: 'Failed to load users: {message}' },
+            {
+              message:
+                errorMessage(error) ||
+                intl.formatMessage({ id: 'admin.error.unknown', defaultMessage: 'Unknown error' }),
+            },
+          )}
+        </Alert>
+      )}
       <TableContainer component={Paper}>
         <Table>
           <TableHead>

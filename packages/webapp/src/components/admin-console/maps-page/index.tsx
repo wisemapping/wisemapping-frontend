@@ -68,6 +68,7 @@ import SpamStatusChip from '../shared/SpamStatusChip';
 import EditMapDialog, { MapFormData } from './EditMapDialog';
 import { copyText } from '../../../utils/clipboard';
 import { useAdminPage, useClampedPage } from '../shared/useAdminPage';
+import { errorMessage } from '../shared/errorMessage';
 
 // XML formatting utility
 const formatXml = (xml: string): string => {
@@ -654,14 +655,6 @@ const MapsManagement = (): ReactElement => {
     }
   };
 
-  if (error) {
-    return (
-      <Alert severity="error" sx={{ mb: 2 }}>
-        Failed to load maps: {(error as Error)?.message || 'Unknown error'}
-      </Alert>
-    );
-  }
-
   return (
     <Box>
       <Box
@@ -776,6 +769,19 @@ const MapsManagement = (): ReactElement => {
         </FormControl>
       </Box>
       {/* Maps Table */}
+      {/* Inline, so the search, filters and Refresh stay to recover with. */}
+      {error && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {intl.formatMessage(
+            { id: 'admin.error.load-maps', defaultMessage: 'Failed to load maps: {message}' },
+            {
+              message:
+                errorMessage(error) ||
+                intl.formatMessage({ id: 'admin.error.unknown', defaultMessage: 'Unknown error' }),
+            },
+          )}
+        </Alert>
+      )}
       <TableContainer component={Paper}>
         <Table>
           <TableHead>

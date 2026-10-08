@@ -595,6 +595,16 @@
       "value": "No se pudo crear el usuario. Inténtalo de nuevo."
     }
   ],
+  "admin.error.load-maps": [
+    {
+      "type": 0,
+      "value": "No se pudieron cargar los mapas: "
+    },
+    {
+      "type": 1,
+      "value": "message"
+    }
+  ],
   "admin.error.load-users": [
     {
       "type": 0,

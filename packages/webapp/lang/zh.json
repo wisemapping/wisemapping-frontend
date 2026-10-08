@@ -701,6 +701,9 @@
   "admin.error.create-user-failed": {
     "defaultMessage": "创建用户失败。请重试。"
   },
+  "admin.error.load-maps": {
+    "defaultMessage": "加载导图失败：{message}"
+  },
   "admin.error.load-users": {
     "defaultMessage": "加载用户失败：{message}"
   },

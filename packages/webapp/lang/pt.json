@@ -704,6 +704,9 @@
   "admin.error.create-user-failed": {
     "defaultMessage": "Falha ao criar o usuário. Tente novamente."
   },
+  "admin.error.load-maps": {
+    "defaultMessage": "Falha ao carregar os mapas: {message}"
+  },
   "admin.error.load-users": {
     "defaultMessage": "Falha ao carregar os usuários: {message}"
   },

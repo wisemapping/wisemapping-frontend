@@ -704,6 +704,9 @@
   "admin.error.create-user-failed": {
     "defaultMessage": "ユーザーの作成に失敗しました。もう一度お試しください。"
   },
+  "admin.error.load-maps": {
+    "defaultMessage": "マップの読み込みに失敗しました：{message}"
+  },
   "admin.error.load-users": {
     "defaultMessage": "ユーザーの読み込みに失敗しました：{message}"
   },

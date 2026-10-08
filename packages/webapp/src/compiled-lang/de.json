@@ -595,6 +595,16 @@
       "value": "Benutzer konnte nicht erstellt werden. Bitte versuche es erneut."
     }
   ],
+  "admin.error.load-maps": [
+    {
+      "type": 0,
+      "value": "Mindmaps konnten nicht geladen werden: "
+    },
+    {
+      "type": 1,
+      "value": "message"
+    }
+  ],
   "admin.error.load-users": [
     {
       "type": 0,

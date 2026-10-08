@@ -166,6 +166,23 @@ describe('AccountManagement', () => {
     expect(client.getAdminUsers).toHaveBeenCalledTimes(2);
   });
 
+  test('a load error shows the backend message and keeps the search and Refresh', async () => {
+    // The admin client rejects with an ErrorInfo ({ msg }), and the page read `.message`; the
+    // alert also replaced the whole page, search and Refresh included, until a full reload.
+    jest.useFakeTimers();
+    client.getAdminUsers.mockRejectedValue({ msg: 'Search failed', status: 500 });
+    jest.spyOn(AppConfig, 'isFacebookOauth2Enabled').mockReturnValue(false);
+    renderWithWrapper(<AccountManagement />);
+
+    await act(async () => {
+      await jest.advanceTimersByTimeAsync(1500);
+    });
+
+    expect(screen.getByText('Failed to load users: Search failed')).toBeTruthy();
+    expect(screen.getByPlaceholderText('Search users...')).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Refresh' })).toBeTruthy();
+  });
+
   test('an error without a message reads "Unknown error"', async () => {
     jest.useFakeTimers();
     client.getAdminUsers.mockRejectedValue({});

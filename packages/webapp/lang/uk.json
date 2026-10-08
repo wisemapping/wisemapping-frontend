@@ -707,6 +707,9 @@
   "admin.error.create-user-failed": {
     "defaultMessage": "Не вдалося створити користувача. Будь ласка, спробуйте ще раз."
   },
+  "admin.error.load-maps": {
+    "defaultMessage": "Не вдалося завантажити карти: {message}"
+  },
   "admin.error.load-users": {
     "defaultMessage": "Не вдалося завантажити користувачів: {message}"
   },

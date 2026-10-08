@@ -595,6 +595,16 @@
       "value": "Failed to create user. Please try again."
     }
   ],
+  "admin.error.load-maps": [
+    {
+      "type": 0,
+      "value": "Failed to load maps: "
+    },
+    {
+      "type": 1,
+      "value": "message"
+    }
+  ],
   "admin.error.load-users": [
     {
       "type": 0,

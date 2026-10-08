@@ -141,6 +141,19 @@ describe('MapsManagement', () => {
     expect(screen.getByText('Failed to load maps: Server unreachable')).toBeTruthy();
   });
 
+  test('a load error shows the backend message and keeps the search and Refresh', async () => {
+    jest.useFakeTimers();
+    client.getAdminMaps.mockRejectedValue({ msg: 'Search failed', status: 500 });
+    renderWithWrapper(<MapsManagement />);
+
+    await act(async () => {
+      await jest.advanceTimersByTimeAsync(1500);
+    });
+    expect(screen.getByText('Failed to load maps: Search failed')).toBeTruthy();
+    expect(screen.getByPlaceholderText(/Search maps/)).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Refresh' })).toBeTruthy();
+  });
+
   test('an error without a message reads "Unknown error"', async () => {
     jest.useFakeTimers();
     client.getAdminMaps.mockRejectedValue({});

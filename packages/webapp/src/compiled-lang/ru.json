@@ -595,6 +595,16 @@
       "value": "Не удалось создать пользователя. Пожалуйста, попробуйте ещё раз."
     }
   ],
+  "admin.error.load-maps": [
+    {
+      "type": 0,
+      "value": "Не удалось загрузить карты: "
+    },
+    {
+      "type": 1,
+      "value": "message"
+    }
+  ],
   "admin.error.load-users": [
     {
       "type": 0,

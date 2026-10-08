@@ -632,6 +632,9 @@
   "admin.error.create-user-failed": {
     "defaultMessage": "فشل إنشاء المستخدم. يرجى المحاولة مرة أخرى."
   },
+  "admin.error.load-maps": {
+    "defaultMessage": "فشل تحميل الخرائط: {message}"
+  },
   "admin.error.load-users": {
     "defaultMessage": "فشل تحميل المستخدمين: {message}"
   },

@@ -680,6 +680,9 @@
   "admin.error.create-user-failed": {
     "defaultMessage": "Не удалось создать пользователя. Пожалуйста, попробуйте ещё раз."
   },
+  "admin.error.load-maps": {
+    "defaultMessage": "Не удалось загрузить карты: {message}"
+  },
   "admin.error.load-users": {
     "defaultMessage": "Не удалось загрузить пользователей: {message}"
   },

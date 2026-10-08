@@ -595,6 +595,16 @@
       "value": "Impossibile creare l'utente. Riprova."
     }
   ],
+  "admin.error.load-maps": [
+    {
+      "type": 0,
+      "value": "Impossibile caricare le mappe: "
+    },
+    {
+      "type": 1,
+      "value": "message"
+    }
+  ],
   "admin.error.load-users": [
     {
       "type": 0,

@@ -595,6 +595,16 @@
       "value": "Не вдалося створити користувача. Будь ласка, спробуйте ще раз."
     }
   ],
+  "admin.error.load-maps": [
+    {
+      "type": 0,
+      "value": "Не вдалося завантажити карти: "
+    },
+    {
+      "type": 1,
+      "value": "message"
+    }
+  ],
   "admin.error.load-users": [
     {
       "type": 0,

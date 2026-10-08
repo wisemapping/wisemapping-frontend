@@ -275,6 +275,9 @@
   "admin.error.create-user-failed": {
     "defaultMessage": "Failed to create user. Please try again."
   },
+  "admin.error.load-maps": {
+    "defaultMessage": "Failed to load maps: {message}"
+  },
   "admin.error.load-users": {
     "defaultMessage": "Failed to load users: {message}"
   },

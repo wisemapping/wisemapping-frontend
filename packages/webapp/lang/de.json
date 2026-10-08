@@ -701,6 +701,9 @@
   "admin.error.create-user-failed": {
     "defaultMessage": "Benutzer konnte nicht erstellt werden. Bitte versuche es erneut."
   },
+  "admin.error.load-maps": {
+    "defaultMessage": "Mindmaps konnten nicht geladen werden: {message}"
+  },
   "admin.error.load-users": {
     "defaultMessage": "Benutzer konnten nicht geladen werden: {message}"
   },
