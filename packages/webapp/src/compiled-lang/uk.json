@@ -3241,28 +3241,22 @@
       "value": "Поділитися з людьми"
     }
   ],
+  "share.emails-placeholder": [
+    {
+      "type": 0,
+      "value": "Додайте людей за адресою електронної пошти через кому"
+    }
+  ],
   "share.message": [
     {
       "type": 0,
       "value": "Повідомлення"
     }
   ],
-  "share.table.actions": [
+  "share.people-with-access": [
     {
       "type": 0,
-      "value": "Дії"
-    }
-  ],
-  "share.table.collaborator": [
-    {
-      "type": 0,
-      "value": "Співавтор"
-    }
-  ],
-  "share.table.role": [
-    {
-      "type": 0,
-      "value": "Роль"
+      "value": "Люди з доступом"
     }
   ],
   "theme.dark": [

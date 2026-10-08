@@ -1319,15 +1319,6 @@
   "login.redirecting": {
     "defaultMessage": "重定向中..."
   },
-  "share.table.collaborator": {
-    "defaultMessage": "协作人"
-  },
-  "share.table.role": {
-    "defaultMessage": "角色"
-  },
-  "share.table.actions": {
-    "defaultMessage": "操作"
-  },
   "error.go-home": {
     "defaultMessage": "返回首页"
   },
@@ -1483,5 +1474,11 @@
   },
   "dialog.close": {
     "defaultMessage": "关闭对话框"
+  },
+  "share.emails-placeholder": {
+    "defaultMessage": "通过电子邮件添加人员，用逗号分隔"
+  },
+  "share.people-with-access": {
+    "defaultMessage": "有权访问的人员"
   }
 }

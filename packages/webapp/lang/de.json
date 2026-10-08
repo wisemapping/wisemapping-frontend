@@ -1319,15 +1319,6 @@
   "login.redirecting": {
     "defaultMessage": "Weiterleitung..."
   },
-  "share.table.collaborator": {
-    "defaultMessage": "Mitarbeiter"
-  },
-  "share.table.role": {
-    "defaultMessage": "Rolle"
-  },
-  "share.table.actions": {
-    "defaultMessage": "Aktionen"
-  },
   "error.go-home": {
     "defaultMessage": "Zur Startseite"
   },
@@ -1483,5 +1474,11 @@
   },
   "dialog.close": {
     "defaultMessage": "Dialog schließen"
+  },
+  "share.emails-placeholder": {
+    "defaultMessage": "Personen per E-Mail hinzufügen, durch Kommas getrennt"
+  },
+  "share.people-with-access": {
+    "defaultMessage": "Personen mit Zugriff"
   }
 }

@@ -3215,28 +3215,22 @@
       "value": "Compartir con otros"
     }
   ],
+  "share.emails-placeholder": [
+    {
+      "type": 0,
+      "value": "Añade personas por correo, separadas por comas"
+    }
+  ],
   "share.message": [
     {
       "type": 0,
       "value": "Mensaje"
     }
   ],
-  "share.table.actions": [
+  "share.people-with-access": [
     {
       "type": 0,
-      "value": "Acciones"
-    }
-  ],
-  "share.table.collaborator": [
-    {
-      "type": 0,
-      "value": "Colaborador"
-    }
-  ],
-  "share.table.role": [
-    {
-      "type": 0,
-      "value": "Rol"
+      "value": "Personas con acceso"
     }
   ],
   "theme.dark": [

@@ -1460,17 +1460,14 @@
   "share.delete-title": {
     "defaultMessage": "Share with people"
   },
+  "share.emails-placeholder": {
+    "defaultMessage": "Add people by email, separated by commas"
+  },
   "share.message": {
     "defaultMessage": "Message"
   },
-  "share.table.actions": {
-    "defaultMessage": "Actions"
-  },
-  "share.table.collaborator": {
-    "defaultMessage": "Collaborator"
-  },
-  "share.table.role": {
-    "defaultMessage": "Role"
+  "share.people-with-access": {
+    "defaultMessage": "People with access"
   },
   "theme.dark": {
     "defaultMessage": "Dark"

@@ -1319,15 +1319,6 @@
   "login.redirecting": {
     "defaultMessage": "Переспрямування..."
   },
-  "share.table.collaborator": {
-    "defaultMessage": "Співавтор"
-  },
-  "share.table.role": {
-    "defaultMessage": "Роль"
-  },
-  "share.table.actions": {
-    "defaultMessage": "Дії"
-  },
   "error.go-home": {
     "defaultMessage": "На головну"
   },
@@ -1483,5 +1474,11 @@
   },
   "dialog.close": {
     "defaultMessage": "Закрити діалог"
+  },
+  "share.emails-placeholder": {
+    "defaultMessage": "Додайте людей за адресою електронної пошти через кому"
+  },
+  "share.people-with-access": {
+    "defaultMessage": "Люди з доступом"
   }
 }

@@ -1319,15 +1319,6 @@
   "login.redirecting": {
     "defaultMessage": "Перенаправление..."
   },
-  "share.table.collaborator": {
-    "defaultMessage": "Соавтор"
-  },
-  "share.table.role": {
-    "defaultMessage": "Роль"
-  },
-  "share.table.actions": {
-    "defaultMessage": "Действия"
-  },
   "error.go-home": {
     "defaultMessage": "На главную"
   },
@@ -1483,5 +1474,11 @@
   },
   "dialog.close": {
     "defaultMessage": "Закрыть диалог"
+  },
+  "share.emails-placeholder": {
+    "defaultMessage": "Добавьте людей по адресу электронной почты через запятую"
+  },
+  "share.people-with-access": {
+    "defaultMessage": "Люди с доступом"
   }
 }

@@ -60,15 +60,18 @@ describe('ShareDialog', () => {
   test('lists the existing collaborators, falling back to the bare email when there is no name', async () => {
     renderDialog();
 
-    expect(await screen.findByText('Ana Ruiz<ana@wisemapping.com>')).toBeDefined();
-    expect(screen.getByText('Diego Martin<diego@wisemapping.com>')).toBeDefined();
-    expect(screen.getByText('priya@wisemapping.com')).toBeDefined();
+    const people = await screen.findByRole('list', { name: 'People with access' });
+    expect(within(people).getByText('Ana Ruiz')).toBeDefined();
+    expect(within(people).getByText('ana@wisemapping.com')).toBeDefined();
+    expect(within(people).getByText('Diego Martin')).toBeDefined();
+    expect(within(people).getByText('priya@wisemapping.com')).toBeDefined();
+    expect(within(people).getByText('Owner')).toBeDefined();
     expect(mockFetchMapPermissions).toHaveBeenCalledWith(101);
   });
 
   test('keeps Share disabled until the typed address looks like an email', async () => {
     renderDialog();
-    await screen.findByText('Ana Ruiz<ana@wisemapping.com>');
+    await screen.findByText('Ana Ruiz');
 
     fireEvent.change(emailsInput(), { target: { value: 'not-an-email' } });
     expect((shareButton() as HTMLButtonElement).disabled).toBe(true);
@@ -79,7 +82,7 @@ describe('ShareDialog', () => {
 
   test('shares with the editor role by default', async () => {
     renderDialog();
-    await screen.findByText('Ana Ruiz<ana@wisemapping.com>');
+    await screen.findByText('Ana Ruiz');
 
     fireEvent.change(emailsInput(), { target: { value: 'sam@wisemapping.com' } });
     fireEvent.click(shareButton());
@@ -93,7 +96,7 @@ describe('ShareDialog', () => {
 
   test('unchecking "Can edit" downgrades the invite to viewer', async () => {
     renderDialog();
-    await screen.findByText('Ana Ruiz<ana@wisemapping.com>');
+    await screen.findByText('Ana Ruiz');
 
     fireEvent.click(screen.getByRole('checkbox', { name: 'Can edit' }));
     fireEvent.change(emailsInput(), { target: { value: 'sam@wisemapping.com' } });
@@ -108,7 +111,7 @@ describe('ShareDialog', () => {
 
   test('splits a comma or semicolon separated list into one permission each', async () => {
     renderDialog();
-    await screen.findByText('Ana Ruiz<ana@wisemapping.com>');
+    await screen.findByText('Ana Ruiz');
 
     fireEvent.change(emailsInput(), {
       target: { value: 'sam@wisemapping.com, lee@wisemapping.com; mo@wisemapping.com' },
@@ -126,7 +129,7 @@ describe('ShareDialog', () => {
 
   test('sends the custom message once it has been enabled', async () => {
     renderDialog();
-    await screen.findByText('Ana Ruiz<ana@wisemapping.com>');
+    await screen.findByText('Ana Ruiz');
 
     fireEvent.click(screen.getByRole('checkbox', { name: 'Customize share message' }));
     fireEvent.change(screen.getByRole('textbox', { name: 'Message' }), {
@@ -144,7 +147,7 @@ describe('ShareDialog', () => {
 
   test('takes 200 characters typed in one burst, as Cypress types them', async () => {
     renderDialog();
-    await screen.findByText('Ana Ruiz<ana@wisemapping.com>');
+    await screen.findByText('Ana Ruiz');
     fireEvent.click(screen.getByRole('checkbox', { name: 'Customize share message' }));
     const message = screen.getByRole('textbox', { name: 'Message' }) as HTMLTextAreaElement;
 
@@ -166,10 +169,8 @@ describe('ShareDialog', () => {
   test('removing a collaborator calls deleteMapPermission with their email', async () => {
     renderDialog();
 
-    const row = (await screen.findByText('Diego Martin<diego@wisemapping.com>')).closest(
-      'tr',
-    ) as HTMLElement;
-    fireEvent.click(within(row).getByRole('button'));
+    const row = (await screen.findByText('Diego Martin')).closest('li') as HTMLElement;
+    fireEvent.click(within(row).getByRole('button', { name: 'Delete collaborator' }));
 
     await waitFor(() =>
       expect(mockDeleteMapPermission).toHaveBeenCalledWith(101, 'diego@wisemapping.com'),
@@ -179,17 +180,16 @@ describe('ShareDialog', () => {
   test('the owner cannot be removed', async () => {
     renderDialog();
 
-    const row = (await screen.findByText('Ana Ruiz<ana@wisemapping.com>')).closest(
-      'tr',
-    ) as HTMLElement;
+    const row = (await screen.findByText('Ana Ruiz')).closest('li') as HTMLElement;
 
-    expect((within(row).getByRole('button') as HTMLButtonElement).disabled).toBe(true);
+    const remove = within(row).getByRole('button', { name: 'Delete collaborator' });
+    expect((remove as HTMLButtonElement).disabled).toBe(true);
   });
 
   test('surfaces a server error raised while sharing', async () => {
     mockAddMapPermissions.mockRejectedValue({ msg: 'You cannot share this map' });
     renderDialog();
-    await screen.findByText('Ana Ruiz<ana@wisemapping.com>');
+    await screen.findByText('Ana Ruiz');
 
     fireEvent.change(emailsInput(), { target: { value: 'sam@wisemapping.com' } });
     fireEvent.click(shareButton());
@@ -199,7 +199,7 @@ describe('ShareDialog', () => {
 
   test('Close invokes onClose', async () => {
     const onClose = renderDialog();
-    await screen.findByText('Ana Ruiz<ana@wisemapping.com>');
+    await screen.findByText('Ana Ruiz');
 
     fireEvent.click(screen.getByRole('button', { name: 'Close' }));
 

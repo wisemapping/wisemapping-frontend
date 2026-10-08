@@ -3215,28 +3215,22 @@
       "value": "Teile deine Mindmap"
     }
   ],
+  "share.emails-placeholder": [
+    {
+      "type": 0,
+      "value": "Personen per E-Mail hinzufügen, durch Kommas getrennt"
+    }
+  ],
   "share.message": [
     {
       "type": 0,
       "value": "Nachricht"
     }
   ],
-  "share.table.actions": [
+  "share.people-with-access": [
     {
       "type": 0,
-      "value": "Aktionen"
-    }
-  ],
-  "share.table.collaborator": [
-    {
-      "type": 0,
-      "value": "Mitarbeiter"
-    }
-  ],
-  "share.table.role": [
-    {
-      "type": 0,
-      "value": "Rolle"
+      "value": "Personen mit Zugriff"
     }
   ],
   "theme.dark": [

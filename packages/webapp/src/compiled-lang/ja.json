@@ -3188,28 +3188,22 @@
       "value": "人と共有"
     }
   ],
+  "share.emails-placeholder": [
+    {
+      "type": 0,
+      "value": "メールアドレスで追加（カンマ区切り）"
+    }
+  ],
   "share.message": [
     {
       "type": 0,
       "value": "メッセージ"
     }
   ],
-  "share.table.actions": [
+  "share.people-with-access": [
     {
       "type": 0,
-      "value": "操作"
-    }
-  ],
-  "share.table.collaborator": [
-    {
-      "type": 0,
-      "value": "共同編集者"
-    }
-  ],
-  "share.table.role": [
-    {
-      "type": 0,
-      "value": "役割"
+      "value": "アクセスできるユーザー"
     }
   ],
   "theme.dark": [

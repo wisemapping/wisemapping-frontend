@@ -1319,15 +1319,6 @@
   "login.redirecting": {
     "defaultMessage": "リダイレクト中..."
   },
-  "share.table.collaborator": {
-    "defaultMessage": "共同編集者"
-  },
-  "share.table.role": {
-    "defaultMessage": "役割"
-  },
-  "share.table.actions": {
-    "defaultMessage": "操作"
-  },
   "error.go-home": {
     "defaultMessage": "ホームへ移動"
   },
@@ -1483,5 +1474,11 @@
   },
   "dialog.close": {
     "defaultMessage": "ダイアログを閉じる"
+  },
+  "share.emails-placeholder": {
+    "defaultMessage": "メールアドレスで追加（カンマ区切り）"
+  },
+  "share.people-with-access": {
+    "defaultMessage": "アクセスできるユーザー"
   }
 }

@@ -3258,28 +3258,22 @@
       "value": "المشاركة مع أشخاص"
     }
   ],
+  "share.emails-placeholder": [
+    {
+      "type": 0,
+      "value": "أضف أشخاصًا عبر البريد الإلكتروني، مفصولين بفواصل"
+    }
+  ],
   "share.message": [
     {
       "type": 0,
       "value": "رسالة"
     }
   ],
-  "share.table.actions": [
+  "share.people-with-access": [
     {
       "type": 0,
-      "value": "الإجراءات"
-    }
-  ],
-  "share.table.collaborator": [
-    {
-      "type": 0,
-      "value": "المتعاون"
-    }
-  ],
-  "share.table.role": [
-    {
-      "type": 0,
-      "value": "الدور"
+      "value": "الأشخاص الذين لديهم حق الوصول"
     }
   ],
   "theme.dark": [

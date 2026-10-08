@@ -1382,15 +1382,6 @@
   "validation.title-required": {
     "defaultMessage": "العنوان مطلوب"
   },
-  "share.table.collaborator": {
-    "defaultMessage": "المتعاون"
-  },
-  "share.table.role": {
-    "defaultMessage": "الدور"
-  },
-  "share.table.actions": {
-    "defaultMessage": "الإجراءات"
-  },
   "error.go-home": {
     "defaultMessage": "الذهاب إلى الصفحة الرئيسية"
   },
@@ -1483,5 +1474,11 @@
   },
   "dialog.close": {
     "defaultMessage": "إغلاق مربع الحوار"
+  },
+  "share.emails-placeholder": {
+    "defaultMessage": "أضف أشخاصًا عبر البريد الإلكتروني، مفصولين بفواصل"
+  },
+  "share.people-with-access": {
+    "defaultMessage": "الأشخاص الذين لديهم حق الوصول"
   }
 }

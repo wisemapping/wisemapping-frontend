@@ -1319,15 +1319,6 @@
   "login.redirecting": {
     "defaultMessage": "Redirection en cours..."
   },
-  "share.table.collaborator": {
-    "defaultMessage": "Collaborateur"
-  },
-  "share.table.role": {
-    "defaultMessage": "Rôle"
-  },
-  "share.table.actions": {
-    "defaultMessage": "Actions"
-  },
   "error.go-home": {
     "defaultMessage": "Aller à l'accueil"
   },
@@ -1483,5 +1474,11 @@
   },
   "dialog.close": {
     "defaultMessage": "Fermer la boîte de dialogue"
+  },
+  "share.emails-placeholder": {
+    "defaultMessage": "Ajoutez des personnes par e-mail, séparées par des virgules"
+  },
+  "share.people-with-access": {
+    "defaultMessage": "Personnes ayant accès"
   }
 }

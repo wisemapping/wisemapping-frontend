@@ -3241,28 +3241,22 @@
       "value": "Общий доступ"
     }
   ],
+  "share.emails-placeholder": [
+    {
+      "type": 0,
+      "value": "Добавьте людей по адресу электронной почты через запятую"
+    }
+  ],
   "share.message": [
     {
       "type": 0,
       "value": "Сообщение"
     }
   ],
-  "share.table.actions": [
+  "share.people-with-access": [
     {
       "type": 0,
-      "value": "Действия"
-    }
-  ],
-  "share.table.collaborator": [
-    {
-      "type": 0,
-      "value": "Соавтор"
-    }
-  ],
-  "share.table.role": [
-    {
-      "type": 0,
-      "value": "Роль"
+      "value": "Люди с доступом"
     }
   ],
   "theme.dark": [

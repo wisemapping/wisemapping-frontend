@@ -3207,28 +3207,22 @@
       "value": "Share with people"
     }
   ],
+  "share.emails-placeholder": [
+    {
+      "type": 0,
+      "value": "Add people by email, separated by commas"
+    }
+  ],
   "share.message": [
     {
       "type": 0,
       "value": "Message"
     }
   ],
-  "share.table.actions": [
+  "share.people-with-access": [
     {
       "type": 0,
-      "value": "Actions"
-    }
-  ],
-  "share.table.collaborator": [
-    {
-      "type": 0,
-      "value": "Collaborator"
-    }
-  ],
-  "share.table.role": [
-    {
-      "type": 0,
-      "value": "Role"
+      "value": "People with access"
     }
   ],
   "theme.dark": [

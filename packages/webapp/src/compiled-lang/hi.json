@@ -3207,28 +3207,22 @@
       "value": "लोगों के साथ साझा करें"
     }
   ],
+  "share.emails-placeholder": [
+    {
+      "type": 0,
+      "value": "ईमेल से लोगों को जोड़ें, अल्पविराम से अलग करें"
+    }
+  ],
   "share.message": [
     {
       "type": 0,
       "value": "संदेश"
     }
   ],
-  "share.table.actions": [
+  "share.people-with-access": [
     {
       "type": 0,
-      "value": "क्रियाएँ"
-    }
-  ],
-  "share.table.collaborator": [
-    {
-      "type": 0,
-      "value": "सहयोगी"
-    }
-  ],
-  "share.table.role": [
-    {
-      "type": 0,
-      "value": "भूमिका"
+      "value": "पहुँच वाले लोग"
     }
   ],
   "theme.dark": [

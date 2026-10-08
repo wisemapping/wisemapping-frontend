@@ -3204,28 +3204,22 @@
       "value": "与人分享"
     }
   ],
+  "share.emails-placeholder": [
+    {
+      "type": 0,
+      "value": "通过电子邮件添加人员，用逗号分隔"
+    }
+  ],
   "share.message": [
     {
       "type": 0,
       "value": "消息"
     }
   ],
-  "share.table.actions": [
+  "share.people-with-access": [
     {
       "type": 0,
-      "value": "操作"
-    }
-  ],
-  "share.table.collaborator": [
-    {
-      "type": 0,
-      "value": "协作人"
-    }
-  ],
-  "share.table.role": [
-    {
-      "type": 0,
-      "value": "角色"
+      "value": "有权访问的人员"
     }
   ],
   "theme.dark": [

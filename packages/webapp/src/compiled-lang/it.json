@@ -3211,28 +3211,22 @@
       "value": "Condividi con persone"
     }
   ],
+  "share.emails-placeholder": [
+    {
+      "type": 0,
+      "value": "Aggiungi persone tramite e-mail, separate da virgole"
+    }
+  ],
   "share.message": [
     {
       "type": 0,
       "value": "Messaggio"
     }
   ],
-  "share.table.actions": [
+  "share.people-with-access": [
     {
       "type": 0,
-      "value": "Azioni"
-    }
-  ],
-  "share.table.collaborator": [
-    {
-      "type": 0,
-      "value": "Collaboratore"
-    }
-  ],
-  "share.table.role": [
-    {
-      "type": 0,
-      "value": "Ruolo"
+      "value": "Persone con accesso"
     }
   ],
   "theme.dark": [

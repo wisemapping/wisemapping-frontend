@@ -1319,15 +1319,6 @@
   "login.redirecting": {
     "defaultMessage": "पुनर्निर्देशन..."
   },
-  "share.table.collaborator": {
-    "defaultMessage": "सहयोगी"
-  },
-  "share.table.role": {
-    "defaultMessage": "भूमिका"
-  },
-  "share.table.actions": {
-    "defaultMessage": "क्रियाएँ"
-  },
   "error.go-home": {
     "defaultMessage": "होम पर जाएं"
   },
@@ -1483,5 +1474,11 @@
   },
   "dialog.close": {
     "defaultMessage": "डायलॉग बंद करें"
+  },
+  "share.emails-placeholder": {
+    "defaultMessage": "ईमेल से लोगों को जोड़ें, अल्पविराम से अलग करें"
+  },
+  "share.people-with-access": {
+    "defaultMessage": "पहुँच वाले लोग"
   }
 }
