@@ -788,13 +788,13 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                 <MapsListSkeleton rowsPerPage={rowsPerPage} />
               ) : mapsLoadFailed ? (
                 <TableRow>
-                  <TableCell colSpan={6} style={{ textAlign: 'center' }}>
+                  <TableCell colSpan={6} css={classes.messageCell}>
                     {loadFailedMessage}
                   </TableCell>
                 </TableRow>
               ) : filteredMaps.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={6} style={{ textAlign: 'center' }}>
+                  <TableCell colSpan={6} css={classes.messageCell}>
                     <FormattedMessage
                       id="maps.empty-result"
                       defaultMessage="No matching mindmap found with the current filter criteria."

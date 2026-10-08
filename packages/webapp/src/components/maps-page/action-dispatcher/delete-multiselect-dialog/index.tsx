@@ -25,6 +25,7 @@ import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import { ClientContext } from '../../../../classes/provider/client-context';
 import { ErrorInfo, MapInfo } from '../../../../classes/client';
+import { MapTitleList } from './styled';
 
 // Titles named in the confirmation; the rest are counted.
 const NAMED_MAPS = 5;
@@ -77,7 +78,7 @@ const DeleteMultiselectDialog = ({ onClose, mapsId }: MultiDialogProps): React.R
             />
           </AlertTitle>
           {titles.length > 0 && (
-            <ul style={{ margin: '0 0 8px', paddingInlineStart: '20px' }}>
+            <MapTitleList>
               {titles.slice(0, NAMED_MAPS).map((title, index) => (
                 <li key={index}>{title}</li>
               ))}
@@ -90,7 +91,7 @@ const DeleteMultiselectDialog = ({ onClose, mapsId }: MultiDialogProps): React.R
                   />
                 </li>
               )}
-            </ul>
+            </MapTitleList>
           )}
           <FormattedMessage
             id="action.delete-description"

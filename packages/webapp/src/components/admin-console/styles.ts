@@ -19,6 +19,11 @@ import { Theme } from '@mui/material/styles';
 
 // Admin Console Layout Styles
 export const adminConsoleStyles = {
+  /** A failed list load, above the table it could not fill. */
+  loadErrorAlert: {
+    mb: 2,
+  },
+
   drawer: {
     width: 240,
     flexShrink: 0,
@@ -277,4 +282,5 @@ export const {
   emptyState: emptyStateStyles,
   sectionHeader: sectionHeaderStyles,
   sectionTitle: sectionTitleStyles,
+  loadErrorAlert: loadErrorAlertStyles,
 } = adminConsoleStyles;
