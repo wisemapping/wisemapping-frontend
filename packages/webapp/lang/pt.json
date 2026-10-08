@@ -119,8 +119,11 @@
   "create.title": {
     "defaultMessage": "Criar um novo mapa mental"
   },
-  "deletem.title": {
-    "defaultMessage": "Todos os mapas selecionados serão excluídos"
+  "deletem.count-title": {
+    "defaultMessage": "{count, plural, one {# mapa será excluído} other {# mapas serão excluídos}}"
+  },
+  "deletem.more": {
+    "defaultMessage": "e mais {count}"
   },
   "duplicate.copy-title": {
     "defaultMessage": "Cópia de {title}"
@@ -410,6 +413,9 @@
   "maps.empty-result": {
     "defaultMessage": "Nenhum mapa mental correspondente encontrado com os critérios de filtro atuais."
   },
+  "maps.load-error": {
+    "defaultMessage": "Não foi possível carregar seus mapas. Tente novamente mais tarde."
+  },
   "maps.import-desc": {
     "defaultMessage": "Importar de outras ferramentas"
   },
@@ -505,6 +511,9 @@
   },
   "registration.callback.continue": {
     "defaultMessage": "Continuar"
+  },
+  "registration.callback.invalid": {
+    "defaultMessage": "Este link de acesso não é válido. Entre novamente."
   },
   "registration.callback.confirm.description": {
     "defaultMessage": "Uma conta com o mesmo e-mail foi registrada anteriormente. Deseja vincular sua conta do {provider} a essa conta do WiseMapping?"
@@ -694,6 +703,9 @@
   },
   "admin.error.create-user-failed": {
     "defaultMessage": "Falha ao criar o usuário. Tente novamente."
+  },
+  "admin.error.load-maps": {
+    "defaultMessage": "Falha ao carregar os mapas: {message}"
   },
   "admin.error.load-users": {
     "defaultMessage": "Falha ao carregar os usuários: {message}"

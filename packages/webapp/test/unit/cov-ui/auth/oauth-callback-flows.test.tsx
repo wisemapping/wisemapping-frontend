@@ -80,6 +80,12 @@ const setup = (
   return client;
 };
 
+/** A JWT as the backend issues it: the account email is the subject. */
+const jwt = (sub: string): string =>
+  `h.${btoa(JSON.stringify({ sub })).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')}.s`;
+const ANA = jwt('ana@wisemapping.com');
+const MALLORY = jwt('mallory@example.com');
+
 const pending: Oauth2CallbackResult = {
   email: 'ana@wisemapping.com',
   oauthSync: false,
@@ -126,9 +132,9 @@ describe('OAuthCallbackPage flows', () => {
   test('a synced token callback stores the token and applies the system theme', () => {
     const store = jest.spyOn(JwtTokenConfig, 'storeToken').mockImplementation(() => undefined);
 
-    setup('/c/registration-google?jwtToken=jwt-1&email=ana%40wisemapping.com&oauthSync=true');
+    setup(`/c/registration-google?jwtToken=${ANA}&email=ana%40wisemapping.com&oauthSync=true`);
 
-    expect(store).toHaveBeenCalledWith('jwt-1');
+    expect(store).toHaveBeenCalledWith(ANA);
     expect(setAnalyticsUserEmail).toHaveBeenCalledWith('ana@wisemapping.com');
     expect(localStorage.getItem('themeMode')).toBe('dark');
     expect(screen.getByText('Please wait while we validate your identity')).toBeTruthy();
@@ -137,7 +143,7 @@ describe('OAuthCallbackPage flows', () => {
   test('a token callback for an account not linked yet asks to link it', async () => {
     jest.spyOn(JwtTokenConfig, 'storeToken').mockImplementation(() => undefined);
     const client = setup(
-      '/c/registration-facebook?jwtToken=jwt-1&email=ana%40wisemapping.com&oauthSync=false&syncCode=code-9',
+      `/c/registration-facebook?jwtToken=${ANA}&email=ana%40wisemapping.com&oauthSync=false&syncCode=code-9`,
     );
 
     expect(await screen.findByText('Confirm')).toBeTruthy();
@@ -225,7 +231,7 @@ describe('OAuthCallbackPage flows', () => {
   test('a synced sign-in goes on to the map list through the login page', () => {
     jest.spyOn(JwtTokenConfig, 'storeToken').mockImplementation(() => undefined);
 
-    setup('/c/registration-google?jwtToken=jwt-1&email=ana%40wisemapping.com&oauthSync=true');
+    setup(`/c/registration-google?jwtToken=${ANA}&email=ana%40wisemapping.com&oauthSync=true`);
 
     expect(leaveTo).toHaveBeenCalledWith('/c/login?redirect=%2Fc%2Fmaps%2F');
   });
@@ -234,7 +240,7 @@ describe('OAuthCallbackPage flows', () => {
     jest.spyOn(JwtTokenConfig, 'storeToken').mockImplementation(() => undefined);
 
     setup(
-      '/c/registration-google?jwtToken=jwt-1&email=ana%40wisemapping.com&oauthSync=true',
+      `/c/registration-google?jwtToken=${ANA}&email=ana%40wisemapping.com&oauthSync=true`,
       undefined,
       {},
       { redirect: '/c/maps/7/edit' },
@@ -261,7 +267,7 @@ describe('OAuthCallbackPage flows', () => {
     jest.spyOn(JwtTokenConfig, 'storeToken').mockImplementation(() => undefined);
 
     setup(
-      '/c/registration-facebook?jwtToken=jwt-1&email=ana%40wisemapping.com&oauthSync=false&syncCode=code-9&state=x',
+      `/c/registration-facebook?jwtToken=${ANA}&email=ana%40wisemapping.com&oauthSync=false&syncCode=code-9&state=x`,
     );
 
     expect(window.location.pathname).toBe('/c/registration-facebook');
@@ -272,7 +278,7 @@ describe('OAuthCallbackPage flows', () => {
     const store = jest.spyOn(JwtTokenConfig, 'storeToken').mockImplementation(() => undefined);
 
     setup(
-      '/c/registration-google?jwtToken=attacker-jwt&email=mallory%40example.com&oauthSync=true',
+      `/c/registration-google?jwtToken=${MALLORY}&email=mallory%40example.com&oauthSync=true`,
       undefined,
       {},
       false,
@@ -289,7 +295,7 @@ describe('OAuthCallbackPage flows', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
 
-    expect(store).toHaveBeenCalledWith('attacker-jwt');
+    expect(store).toHaveBeenCalledWith(MALLORY);
     expect(leaveTo).toHaveBeenCalledWith('/c/login?redirect=%2Fc%2Fmaps%2F');
   });
 
@@ -311,16 +317,50 @@ describe('OAuthCallbackPage flows', () => {
 
   test('a started sign-in is good for one callback only', () => {
     const store = jest.spyOn(JwtTokenConfig, 'storeToken').mockImplementation(() => undefined);
-    setup('/c/registration-google?jwtToken=jwt-1&email=ana%40wisemapping.com&oauthSync=true');
+    setup(`/c/registration-google?jwtToken=${ANA}&email=ana%40wisemapping.com&oauthSync=true`);
     expect(store).toHaveBeenCalledTimes(1);
 
     setup(
-      '/c/registration-google?jwtToken=jwt-2&email=ana%40wisemapping.com&oauthSync=true',
+      `/c/registration-google?jwtToken=${ANA}&email=ana%40wisemapping.com&oauthSync=true`,
       undefined,
       {},
       false,
     );
 
     expect(store).toHaveBeenCalledTimes(1);
+  });
+  test("the account shown is the token's, whatever the email parameter says", () => {
+    // An attacker's token with the victim's own address in the link: the confirmation would
+    // read "as <victim>" and the victim would continue into the attacker's account.
+    const store = jest.spyOn(JwtTokenConfig, 'storeToken').mockImplementation(() => undefined);
+
+    setup(
+      `/c/registration-google?jwtToken=${MALLORY}&email=ana%40wisemapping.com&oauthSync=true`,
+      undefined,
+      {},
+      false,
+    );
+
+    expect(screen.getByText('This sign-in link is not valid. Please sign in again.')).toBeTruthy();
+    expect(screen.queryByRole('button', { name: 'Continue' })).toBeNull();
+    expect(store).not.toHaveBeenCalled();
+    expect(setAnalyticsUserEmail).not.toHaveBeenCalled();
+  });
+
+  test('a token that is not a JWT is refused', () => {
+    const store = jest.spyOn(JwtTokenConfig, 'storeToken').mockImplementation(() => undefined);
+
+    setup('/c/registration-google?jwtToken=garbage&email=ana%40wisemapping.com&oauthSync=true');
+
+    expect(screen.getByText('This sign-in link is not valid. Please sign in again.')).toBeTruthy();
+    expect(store).not.toHaveBeenCalled();
+  });
+
+  test('the analytics email comes from the token', () => {
+    jest.spyOn(JwtTokenConfig, 'storeToken').mockImplementation(() => undefined);
+
+    setup(`/c/registration-google?jwtToken=${ANA}&oauthSync=true`);
+
+    expect(setAnalyticsUserEmail).toHaveBeenCalledWith('ana@wisemapping.com');
   });
 });

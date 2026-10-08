@@ -164,6 +164,33 @@ describe('PublishDialog', () => {
     expect(document.body.querySelectorAll('body > textarea')).toHaveLength(0);
   });
 
+  test('copies with the copy command where there is no clipboard API (plain HTTP)', async () => {
+    // navigator.clipboard is undefined outside a secure context: calling it threw before the
+    // fallback could run, so self-hosted http:// installs copied nothing.
+    Object.defineProperty(navigator, 'clipboard', { configurable: true, value: undefined });
+    const execCommand = jest.fn(() => true);
+    Object.defineProperty(document, 'execCommand', { configurable: true, value: execCommand });
+    setup(true);
+
+    fireEvent.click(screen.getByDisplayValue(PUBLIC_URL));
+
+    await waitFor(() => expect(execCommand).toHaveBeenCalledWith('copy'));
+    expect(await screen.findByText('Copied to clipboard!')).toBeTruthy();
+  });
+
+  test('does not claim a copy that failed', async () => {
+    writeText.mockRejectedValue(new Error('denied'));
+    const execCommand = jest.fn(() => false);
+    Object.defineProperty(document, 'execCommand', { configurable: true, value: execCommand });
+    setup(true);
+
+    fireEvent.click(screen.getByDisplayValue(PUBLIC_URL));
+
+    await waitFor(() => expect(execCommand).toHaveBeenCalledWith('copy'));
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    expect(screen.queryByText('Copied to clipboard!')).toBeNull();
+  });
+
   test('while the map is loading it is shown as private', () => {
     mockUseFetchMapById.mockReturnValue({ isLoading: true, error: null, data: undefined });
     renderWithProviders(<PublishDialog mapId={12} onClose={jest.fn()} />, {

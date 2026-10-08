@@ -66,6 +66,9 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import UserMapsDialog from '../shared/UserMapsDialog';
 import SpamStatusChip from '../shared/SpamStatusChip';
 import EditMapDialog, { MapFormData } from './EditMapDialog';
+import { copyText } from '../../../utils/clipboard';
+import { useAdminPage, useClampedPage } from '../shared/useAdminPage';
+import { errorMessage } from '../shared/errorMessage';
 
 // XML formatting utility
 const formatXml = (xml: string): string => {
@@ -136,7 +139,7 @@ interface AdminMap {
   spamType?: string;
   spamDetectedDate?: string;
   spamDescription?: string;
-  isCreatorSuspended?: boolean;
+  creatorSuspended?: boolean;
   collaboratorCount: number;
 }
 
@@ -254,7 +257,6 @@ const MapsManagement = (): ReactElement => {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
   const [sortField, setSortField] = useState<SortField>('title');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
-  const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(50);
   const [filterPublic, setFilterPublic] = useState<string>('all');
   const [filterLocked, setFilterLocked] = useState<string>('all');
@@ -288,6 +290,15 @@ const MapsManagement = (): ReactElement => {
   const [isPendingOwnerInfo, setIsLoadingOwnerInfo] = useState(false);
 
   // Fetch maps with pagination and filters
+  const [currentPage, setCurrentPage] = useAdminPage([
+    debouncedSearchTerm,
+    sortField,
+    sortDirection,
+    filterPublic,
+    filterLocked,
+    filterSpam,
+    dateFilter,
+  ]);
   const {
     data: mapsResponse,
     isPending,
@@ -327,6 +338,7 @@ const MapsManagement = (): ReactElement => {
 
   const maps = mapsResponse?.data || [];
   const totalPages = mapsResponse?.totalPages || 0;
+  useClampedPage(currentPage, setCurrentPage, mapsResponse?.totalPages);
 
   // Update map mutation
   const updateMapMutation = useMutation({
@@ -643,14 +655,6 @@ const MapsManagement = (): ReactElement => {
     }
   };
 
-  if (error) {
-    return (
-      <Alert severity="error" sx={{ mb: 2 }}>
-        Failed to load maps: {(error as Error)?.message || 'Unknown error'}
-      </Alert>
-    );
-  }
-
   return (
     <Box>
       <Box
@@ -765,6 +769,19 @@ const MapsManagement = (): ReactElement => {
         </FormControl>
       </Box>
       {/* Maps Table */}
+      {/* Inline, so the search, filters and Refresh stay to recover with. */}
+      {error && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {intl.formatMessage(
+            { id: 'admin.error.load-maps', defaultMessage: 'Failed to load maps: {message}' },
+            {
+              message:
+                errorMessage(error) ||
+                intl.formatMessage({ id: 'admin.error.unknown', defaultMessage: 'Unknown error' }),
+            },
+          )}
+        </Alert>
+      )}
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -928,7 +945,7 @@ const MapsManagement = (): ReactElement => {
                     >
                       {getPublicChip(map.public)}
                       {getLockedChip(map.isLocked, map.isLockedBy)}
-                      {getSuspendedUserChip(map.isCreatorSuspended || false)}
+                      {getSuspendedUserChip(map.creatorSuspended || false)}
                     </Box>
                   </TableCell>
                   <TableCell>
@@ -1008,7 +1025,7 @@ const MapsManagement = (): ReactElement => {
                           </IconButton>
                         </span>
                       </Tooltip>
-                      {!map.isCreatorSuspended && (
+                      {!map.creatorSuspended && (
                         <Tooltip
                           title={intl.formatMessage({
                             id: 'admin.maps.suspend-user',
@@ -1204,8 +1221,7 @@ const MapsManagement = (): ReactElement => {
             variant="contained"
             onClick={() => {
               if (xmlContent) {
-                navigator.clipboard.writeText(formatXml(xmlContent));
-                // You could add a snackbar notification here
+                copyText(formatXml(xmlContent));
               }
             }}
             disabled={!xmlContent || isPendingXml}

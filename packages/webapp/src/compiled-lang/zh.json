@@ -595,6 +595,16 @@
       "value": "创建用户失败。请重试。"
     }
   ],
+  "admin.error.load-maps": [
+    {
+      "type": 0,
+      "value": "加载导图失败："
+    },
+    {
+      "type": 1,
+      "value": "message"
+    }
+  ],
   "admin.error.load-users": [
     {
       "type": 0,
@@ -1811,10 +1821,43 @@
       "value": "创建一个新的思维导图"
     }
   ],
-  "deletem.title": [
+  "deletem.count-title": [
+    {
+      "type": 6,
+      "value": "count",
+      "options": {
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "将删除 "
+            },
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " 个导图"
+            }
+          ]
+        }
+      },
+      "offset": 0,
+      "pluralType": "cardinal"
+    }
+  ],
+  "deletem.more": [
     {
       "type": 0,
-      "value": "所有选中的思维导图将被删除"
+      "value": "以及另外 "
+    },
+    {
+      "type": 1,
+      "value": "count"
+    },
+    {
+      "type": 0,
+      "value": " 个"
     }
   ],
   "duplicate.copy-title": [
@@ -2587,6 +2630,12 @@
       "value": "从其它工具导入"
     }
   ],
+  "maps.load-error": [
+    {
+      "type": 0,
+      "value": "无法加载您的导图。请稍后再试。"
+    }
+  ],
   "maps.modified": [
     {
       "type": 0,
@@ -2849,6 +2898,12 @@
     {
       "type": 0,
       "value": "继续"
+    }
+  ],
+  "registration.callback.invalid": [
+    {
+      "type": 0,
+      "value": "此登录链接无效。请重新登录。"
     }
   ],
   "registration.callback.sync": [

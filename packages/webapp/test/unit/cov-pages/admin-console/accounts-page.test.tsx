@@ -166,6 +166,23 @@ describe('AccountManagement', () => {
     expect(client.getAdminUsers).toHaveBeenCalledTimes(2);
   });
 
+  test('a load error shows the backend message and keeps the search and Refresh', async () => {
+    // The admin client rejects with an ErrorInfo ({ msg }), and the page read `.message`; the
+    // alert also replaced the whole page, search and Refresh included, until a full reload.
+    jest.useFakeTimers();
+    client.getAdminUsers.mockRejectedValue({ msg: 'Search failed', status: 500 });
+    jest.spyOn(AppConfig, 'isFacebookOauth2Enabled').mockReturnValue(false);
+    renderWithWrapper(<AccountManagement />);
+
+    await act(async () => {
+      await jest.advanceTimersByTimeAsync(1500);
+    });
+
+    expect(screen.getByText('Failed to load users: Search failed')).toBeTruthy();
+    expect(screen.getByPlaceholderText('Search users...')).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Refresh' })).toBeTruthy();
+  });
+
   test('an error without a message reads "Unknown error"', async () => {
     jest.useFakeTimers();
     client.getAdminUsers.mockRejectedValue({});
@@ -328,6 +345,46 @@ describe('AccountManagement', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Go to page 2' }));
     await waitFor(() => expect(lastParams()).toMatchObject({ page: 1 }));
+  });
+
+  test('a new search or filter starts again from the first page', async () => {
+    // Kept on page 3, a search matching one user asked the backend for page 3 of its results,
+    // got none, and the hidden pagination left "No users found" with no way back.
+    setup({ totalPages: 3 });
+    await waitForRows();
+    fireEvent.click(screen.getByRole('button', { name: 'Go to page 3' }));
+    await waitFor(() => expect(lastParams()).toMatchObject({ page: 2 }));
+
+    fireEvent.change(screen.getByPlaceholderText('Search users...'), { target: { value: 'ada' } });
+    // The search is debounced by 500 ms.
+    await waitFor(() => expect(lastParams()).toMatchObject({ search: 'ada', page: 0 }), {
+      timeout: 2000,
+    });
+    await waitForRows();
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Go to page 2' }));
+    await waitFor(() => expect(lastParams()).toMatchObject({ page: 1 }));
+    await waitForRows();
+    await chooseOption(screen.getByRole('combobox', { name: 'Auth Type' }), 'Google');
+    await waitFor(() =>
+      expect(lastParams()).toMatchObject({ filterAuthType: 'GOOGLE_OAUTH2', page: 0 }),
+    );
+  });
+
+  test('a page that no longer exists falls back to the last one', async () => {
+    // Deleting the only user of the last page left the table on an empty page, its
+    // pagination hidden.
+    setup({ totalPages: 2 });
+    await waitForRows();
+    fireEvent.click(screen.getByRole('button', { name: 'Go to page 2' }));
+    await waitFor(() => expect(lastParams()).toMatchObject({ page: 1 }));
+
+    client.getAdminUsers.mockResolvedValue(page([], 1));
+    const refresh = screen.getByRole('button', { name: 'Refresh' }) as HTMLButtonElement;
+    await waitFor(() => expect(refresh.disabled).toBe(false));
+    fireEvent.click(refresh);
+
+    await waitFor(() => expect(lastParams()).toMatchObject({ page: 0 }));
   });
 
   test('"Refresh" reloads the list', async () => {

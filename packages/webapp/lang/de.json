@@ -116,8 +116,11 @@
   "create.title": {
     "defaultMessage": "Erstelle eine neue Mindmap."
   },
-  "deletem.title": {
-    "defaultMessage": "Alle ausgewählten Mindmaps werden gelöscht"
+  "deletem.count-title": {
+    "defaultMessage": "{count, plural, one {# Mindmap wird gelöscht} other {# Mindmaps werden gelöscht}}"
+  },
+  "deletem.more": {
+    "defaultMessage": "und {count} weitere"
   },
   "duplicate.copy-title": {
     "defaultMessage": "Kopie von {title}"
@@ -362,6 +365,9 @@
   "maps.empty-result": {
     "defaultMessage": "Kein passender Datensatz mit den aktuellen Filterkriterien gefunden."
   },
+  "maps.load-error": {
+    "defaultMessage": "Deine Mindmaps konnten nicht geladen werden. Bitte versuche es später erneut."
+  },
   "maps.import-desc": {
     "defaultMessage": "Import aus anderen Tools"
   },
@@ -578,6 +584,9 @@
   "registration.callback.continue": {
     "defaultMessage": "Weiter"
   },
+  "registration.callback.invalid": {
+    "defaultMessage": "Dieser Anmeldelink ist ungültig. Bitte melde dich erneut an."
+  },
   "registration.callback.sync": {
     "defaultMessage": "Konto synchronisieren"
   },
@@ -691,6 +700,9 @@
   },
   "admin.error.create-user-failed": {
     "defaultMessage": "Benutzer konnte nicht erstellt werden. Bitte versuche es erneut."
+  },
+  "admin.error.load-maps": {
+    "defaultMessage": "Mindmaps konnten nicht geladen werden: {message}"
   },
   "admin.error.load-users": {
     "defaultMessage": "Benutzer konnten nicht geladen werden: {message}"

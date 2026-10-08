@@ -48,6 +48,8 @@ type ActionDialogProps = {
   pageMode?: PageModeType;
   /** The designer of the editor the action comes from, if any. */
   designer?: Designer;
+  /** From the editor: saves its pending changes and stops it saving before a revert. */
+  beforeRevert?: () => Promise<void>;
 };
 
 const ActionDispatcher = ({
@@ -57,6 +59,7 @@ const ActionDispatcher = ({
   fromEditor,
   pageMode,
   designer,
+  beforeRevert,
 }: ActionDialogProps): React.ReactElement => {
   useEffect(() => {
     if (action) {
@@ -103,7 +106,9 @@ const ActionDispatcher = ({
       )}
       {action === 'rename' && <RenameDialog onClose={handleOnClose} mapId={mapsId[0]} />}
       {action === 'duplicate' && <DuplicateDialog onClose={handleOnClose} mapId={mapsId[0]} />}
-      {action === 'history' && <HistoryDialog onClose={handleOnClose} mapId={mapsId[0]} />}
+      {action === 'history' && (
+        <HistoryDialog onClose={handleOnClose} mapId={mapsId[0]} beforeRevert={beforeRevert} />
+      )}
       {action === 'import' && <ImportDialog onClose={handleOnClose} />}
       {action === 'publish' && <PublishDialog onClose={handleOnClose} mapId={mapsId[0]} />}
       {action === 'info' && <InfoDialog onClose={handleOnClose} mapId={mapsId[0]} />}

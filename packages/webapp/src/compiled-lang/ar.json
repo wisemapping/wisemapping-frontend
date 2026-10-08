@@ -595,6 +595,16 @@
       "value": "فشل إنشاء المستخدم. يرجى المحاولة مرة أخرى."
     }
   ],
+  "admin.error.load-maps": [
+    {
+      "type": 0,
+      "value": "فشل تحميل الخرائط: "
+    },
+    {
+      "type": 1,
+      "value": "message"
+    }
+  ],
   "admin.error.load-users": [
     {
       "type": 0,
@@ -1811,10 +1821,97 @@
       "value": "إنشاء خريطة ذهنية جديدة"
     }
   ],
-  "deletem.title": [
+  "deletem.count-title": [
+    {
+      "type": 6,
+      "value": "count",
+      "options": {
+        "zero": {
+          "value": [
+            {
+              "type": 0,
+              "value": "لن يتم حذف أي خريطة"
+            }
+          ]
+        },
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "سيتم حذف خريطة واحدة"
+            }
+          ]
+        },
+        "two": {
+          "value": [
+            {
+              "type": 0,
+              "value": "سيتم حذف خريطتين"
+            }
+          ]
+        },
+        "few": {
+          "value": [
+            {
+              "type": 0,
+              "value": "سيتم حذف "
+            },
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " خرائط"
+            }
+          ]
+        },
+        "many": {
+          "value": [
+            {
+              "type": 0,
+              "value": "سيتم حذف "
+            },
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " خريطة"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "سيتم حذف "
+            },
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " خريطة"
+            }
+          ]
+        }
+      },
+      "offset": 0,
+      "pluralType": "cardinal"
+    }
+  ],
+  "deletem.more": [
     {
       "type": 0,
-      "value": "سيتم حذف جميع الخرائط المحددة"
+      "value": "و"
+    },
+    {
+      "type": 1,
+      "value": "count"
+    },
+    {
+      "type": 0,
+      "value": " أخرى"
     }
   ],
   "duplicate.copy-title": [
@@ -2587,6 +2684,12 @@
       "value": "استيراد من أدوات أخرى"
     }
   ],
+  "maps.load-error": [
+    {
+      "type": 0,
+      "value": "تعذّر تحميل خرائطك. يُرجى المحاولة مرة أخرى لاحقًا."
+    }
+  ],
   "maps.modified": [
     {
       "type": 0,
@@ -2849,6 +2952,12 @@
     {
       "type": 0,
       "value": "متابعة"
+    }
+  ],
+  "registration.callback.invalid": [
+    {
+      "type": 0,
+      "value": "رابط تسجيل الدخول هذا غير صالح. يُرجى تسجيل الدخول مرة أخرى."
     }
   ],
   "registration.callback.sync": [

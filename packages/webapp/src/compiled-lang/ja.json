@@ -595,6 +595,16 @@
       "value": "ユーザーの作成に失敗しました。もう一度お試しください。"
     }
   ],
+  "admin.error.load-maps": [
+    {
+      "type": 0,
+      "value": "マップの読み込みに失敗しました："
+    },
+    {
+      "type": 1,
+      "value": "message"
+    }
+  ],
   "admin.error.load-users": [
     {
       "type": 0,
@@ -1807,10 +1817,39 @@
       "value": "新しいマインドマップを作成"
     }
   ],
-  "deletem.title": [
+  "deletem.count-title": [
+    {
+      "type": 6,
+      "value": "count",
+      "options": {
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " 件のマップが削除されます"
+            }
+          ]
+        }
+      },
+      "offset": 0,
+      "pluralType": "cardinal"
+    }
+  ],
+  "deletem.more": [
     {
       "type": 0,
-      "value": "選択されたすべてのマップが削除されます"
+      "value": "ほか "
+    },
+    {
+      "type": 1,
+      "value": "count"
+    },
+    {
+      "type": 0,
+      "value": " 件"
     }
   ],
   "duplicate.copy-title": [
@@ -2583,6 +2622,12 @@
       "value": "他のツールからインポート"
     }
   ],
+  "maps.load-error": [
+    {
+      "type": 0,
+      "value": "マップを読み込めませんでした。しばらくしてからもう一度お試しください。"
+    }
+  ],
   "maps.modified": [
     {
       "type": 0,
@@ -2837,6 +2882,12 @@
     {
       "type": 0,
       "value": "続ける"
+    }
+  ],
+  "registration.callback.invalid": [
+    {
+      "type": 0,
+      "value": "このサインインリンクは無効です。もう一度サインインしてください。"
     }
   ],
   "registration.callback.sync": [

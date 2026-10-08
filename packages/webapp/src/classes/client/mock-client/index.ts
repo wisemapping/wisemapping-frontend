@@ -399,8 +399,10 @@ class MockClient implements Client {
     return Promise.resolve();
   }
 
-  renameMap(id: number, basicInfo: BasicMapInfo): Promise<void> {
-    const exists = this.maps.find((m) => m.title == basicInfo.title) != undefined;
+  renameMap(id: number, basicInfo: Partial<BasicMapInfo>): Promise<void> {
+    const exists =
+      basicInfo.title !== undefined &&
+      this.maps.find((m) => m.title == basicInfo.title) != undefined;
     if (!exists) {
       this.maps = this.maps.map((m) => {
         const result = m;
@@ -408,7 +410,9 @@ class MockClient implements Client {
           if (basicInfo.description !== undefined) {
             result.description = basicInfo.description;
           }
-          result.title = basicInfo.title;
+          if (basicInfo.title !== undefined) {
+            result.title = basicInfo.title;
+          }
         }
         return result;
       });

@@ -112,7 +112,8 @@ export const loader = (pageMode: PageModeType, bootstrap = false) => {
           let editorMode: EditorRenderMode;
           if (!isCollaboratorRole(mapMetadata.role)) {
             // Somebody else's public map: only its public XML can be read, and nothing saved.
-            editorMode = 'viewonly-public';
+            // A revision has no public endpoint, so it is read through the private one.
+            editorMode = params.hid ? 'viewonly-private' : 'viewonly-public';
           } else if (mapMetadata.isLocked || pageMode === 'view-private') {
             editorMode = 'viewonly-private';
           } else {

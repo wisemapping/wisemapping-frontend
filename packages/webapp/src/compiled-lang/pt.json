@@ -595,6 +595,16 @@
       "value": "Falha ao criar o usuário. Tente novamente."
     }
   ],
+  "admin.error.load-maps": [
+    {
+      "type": 0,
+      "value": "Falha ao carregar os mapas: "
+    },
+    {
+      "type": 1,
+      "value": "message"
+    }
+  ],
   "admin.error.load-users": [
     {
       "type": 0,
@@ -1811,10 +1821,46 @@
       "value": "Criar um novo mapa mental"
     }
   ],
-  "deletem.title": [
+  "deletem.count-title": [
+    {
+      "type": 6,
+      "value": "count",
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " mapa será excluído"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " mapas serão excluídos"
+            }
+          ]
+        }
+      },
+      "offset": 0,
+      "pluralType": "cardinal"
+    }
+  ],
+  "deletem.more": [
     {
       "type": 0,
-      "value": "Todos os mapas selecionados serão excluídos"
+      "value": "e mais "
+    },
+    {
+      "type": 1,
+      "value": "count"
     }
   ],
   "duplicate.copy-title": [
@@ -2587,6 +2633,12 @@
       "value": "Importar de outras ferramentas"
     }
   ],
+  "maps.load-error": [
+    {
+      "type": 0,
+      "value": "Não foi possível carregar seus mapas. Tente novamente mais tarde."
+    }
+  ],
   "maps.modified": [
     {
       "type": 0,
@@ -2849,6 +2901,12 @@
     {
       "type": 0,
       "value": "Continuar"
+    }
+  ],
+  "registration.callback.invalid": [
+    {
+      "type": 0,
+      "value": "Este link de acesso não é válido. Entre novamente."
     }
   ],
   "registration.callback.sync": [

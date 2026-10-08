@@ -16,10 +16,10 @@
  *   limitations under the License.
  */
 
-import React, { ErrorInfo, useContext } from 'react';
+import React, { useContext } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useQuery } from '@tanstack/react-query';
-import { ChangeHistory } from '../../../../classes/client';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { ChangeHistory, ErrorInfo } from '../../../../classes/client';
 import { SimpleDialogProps } from '..';
 import BaseDialog from '../base-dialog';
 import dayjs from 'dayjs';
@@ -33,8 +33,21 @@ import Tooltip from '@mui/material/Tooltip';
 import Link from '@mui/material/Link';
 import { ClientContext } from '../../../../classes/provider/client-context';
 import { StyledTableContainer, StyledHeaderCell, StyledEmptyCell } from './styled';
+import { reloadPage } from '../../../../utils/redirect';
 
-const HistoryDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
+type HistoryDialogProps = SimpleDialogProps & {
+  /**
+   * Run before reverting, from the editor: saves its pending changes and stops it saving, or the
+   * save on page unload would write the map back over the revert.
+   */
+  beforeRevert?: () => Promise<void>;
+};
+
+const HistoryDialog = ({
+  mapId,
+  onClose,
+  beforeRevert,
+}: HistoryDialogProps): React.ReactElement => {
   const intl = useIntl();
   const client = useContext(ClientContext);
   const { data } = useQuery<unknown, ErrorInfo, ChangeHistory[]>({
@@ -49,18 +62,29 @@ const HistoryDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
     onClose();
   };
 
+  const revert = useMutation<void, ErrorInfo, number>({
+    mutationFn: async (vid: number) => {
+      await beforeRevert?.();
+      await client.revertHistory(mapId, vid);
+    },
+    onSuccess: () => {
+      handleOnClose();
+      // The reverted map is loaded again from the server.
+      reloadPage();
+    },
+  });
+
   const handleOnClick = (event: React.MouseEvent, vid: number): void => {
     event.preventDefault();
-    client.revertHistory(mapId, vid).then(() => {
-      handleOnClose();
-      window.location.reload();
-    });
-    // Reload page after revert ...
+    if (!revert.isPending) {
+      revert.mutate(vid);
+    }
   };
 
   return (
     <BaseDialog
       onClose={handleOnClose}
+      error={revert.error ?? undefined}
       title={intl.formatMessage({
         id: 'action.history-title',
         defaultMessage: 'Version history',
@@ -112,7 +136,11 @@ const HistoryDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
                     </Link>
                   </TableCell>
                   <TableCell align="left">
-                    <Link href="#" onClick={(e) => handleOnClick(e, row.id)}>
+                    <Link
+                      href="#"
+                      onClick={(e) => handleOnClick(e, row.id)}
+                      aria-disabled={revert.isPending}
+                    >
                       <FormattedMessage id="maps.revert" defaultMessage="Revert" />
                     </Link>
                   </TableCell>

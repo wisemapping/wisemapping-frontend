@@ -26,6 +26,15 @@ import { stubBackend, flushPromises, installWebCrypto, Reply } from './helpers/a
 
 const API = 'http://api.test';
 
+/** A JWT whose exp is `secondsFromNow` away (negative: already expired). */
+const tokenExpiringIn = (secondsFromNow: number): string => {
+  const payload = {
+    sub: 'ana@wisemapping.com',
+    exp: Math.floor(Date.now() / 1000) + secondsFromNow,
+  };
+  return `h.${btoa(JSON.stringify(payload)).replace(/=+$/, '')}.s`;
+};
+
 const newClient = (replies?: Reply[] | ((req: { url: string; method: string }) => Reply)) => {
   const client = new RestClient(API);
   const calls = stubBackend(client, replies);
@@ -72,16 +81,32 @@ describe('RestClient request headers', () => {
 
 describe('RestClient maps', () => {
   it('fetchMapMetadata gets the metadata, with the xml flag when asked', async () => {
-    const meta = { id: 3, title: 't' };
+    const meta = { id: 3, title: 't', locked: false };
     const { client, calls } = newClient([{ data: meta }, { data: meta }]);
 
-    await expect(client.fetchMapMetadata(3)).resolves.toEqual(meta);
+    await expect(client.fetchMapMetadata(3)).resolves.toMatchObject({ id: 3, title: 't' });
     await client.fetchMapMetadata(3, true);
 
     expect(calls.map((c) => [c.method, c.url])).toEqual([
       ['GET', `${API}/api/restful/maps/3/metadata`],
       ['GET', `${API}/api/restful/maps/3/metadata?xml=true`],
     ]);
+  });
+
+  it('fetchMapMetadata reads the lock as the backend sends it, and fills in the id', async () => {
+    // RestMindmapMetadata serialises the lock as "locked" and sends no id. Reading "isLocked"
+    // made every map look unlocked: a second user got an editable map whose saves all failed.
+    const { client } = newClient([
+      { data: { title: 't', locked: true, isLockedBy: 'Ana', role: 'editor' } },
+      { data: { title: 't', locked: false, role: 'editor' } },
+    ]);
+
+    await expect(client.fetchMapMetadata(3)).resolves.toMatchObject({
+      id: 3,
+      isLocked: true,
+      isLockedBy: 'Ana',
+    });
+    await expect(client.fetchMapMetadata(3)).resolves.toMatchObject({ id: 3, isLocked: false });
   });
 
   it('fetchMapMetadata turns a 422 (spam map) into a 410 gone error', async () => {
@@ -203,6 +228,16 @@ describe('RestClient maps', () => {
 
     expect(calls.map((c) => [c.method, c.url, c.data])).toEqual([
       ['PUT', `${API}/api/restful/maps/4/title`, 'Other'],
+    ]);
+  });
+
+  it('renameMap without a title only updates the description', async () => {
+    const { client, calls } = newClient();
+
+    await client.renameMap(4, { description: 'Desc' });
+
+    expect(calls.map((c) => [c.method, c.url, c.data])).toEqual([
+      ['PUT', `${API}/api/restful/maps/4/description`, 'Desc'],
     ]);
   });
 
@@ -767,7 +802,19 @@ describe('RestClient error handling', () => {
     });
   });
 
+  it('treats a 403 with an expired token as an auth problem', async () => {
+    // The backend reads an expired JWT as anonymous, so a private map answers 403. The cookie
+    // outlives the JWT: a returning user opening a map link was told they had no access
+    // instead of being sent to sign in.
+    JwtTokenConfig.storeToken(tokenExpiringIn(-60));
+    await expect(failWith({ status: 403, data: {} })).rejects.toEqual({
+      status: 403,
+      isAuth: true,
+    });
+  });
+
   it('turns a 401 without details into a session-expired auth error', async () => {
+    JwtTokenConfig.storeToken(tokenExpiringIn(3600));
     const expired = jest.fn();
     const { client } = newClient([{ status: 401 }]);
     client.onSessionExpired(expired);
@@ -777,7 +824,7 @@ describe('RestClient error handling', () => {
       msg: 'Your current session has expired. Please, sign in and try again.',
       status: 401,
     });
-    expect(expired).toHaveBeenCalled();
+    expect(expired).toHaveBeenCalledTimes(1);
   });
 
   it('treats a 302 redirect like an expired session', async () => {
@@ -790,14 +837,39 @@ describe('RestClient error handling', () => {
     });
   });
 
-  it.each([403, 405])('notifies the session-expired callback on a %s', async (status) => {
+  const expiryNotified = async (status: number, token?: string): Promise<boolean> => {
+    if (token) {
+      JwtTokenConfig.storeToken(token);
+    }
     const expired = jest.fn();
     const { client } = newClient([{ status, data: {} }]);
     client.onSessionExpired(expired);
-
     await expect(client.deleteMap(1)).rejects.toBeDefined();
+    return expired.mock.calls.length > 0;
+  };
 
-    expect(expired).toHaveBeenCalled();
+  it('a 401 on a signed-in request is an expired session', async () => {
+    expect(await expiryNotified(401, tokenExpiringIn(3600))).toBe(true);
+  });
+
+  it('a 403 sent with an expired token is an expired session', async () => {
+    expect(await expiryNotified(403, tokenExpiringIn(-60))).toBe(true);
+  });
+
+  it('a 403 sent with a valid token is a refusal, not an expired session', async () => {
+    // A map that was unshared or deleted meanwhile: the user is still signed in.
+    expect(await expiryNotified(403, tokenExpiringIn(3600))).toBe(false);
+  });
+
+  it('a 401 or 403 without a token is no session expiry: nobody was signed in', async () => {
+    // An anonymous visitor on a public map: the account request answers 401, and a "session
+    // expired" dialog used to cover the map.
+    expect(await expiryNotified(401)).toBe(false);
+    expect(await expiryNotified(403)).toBe(false);
+  });
+
+  it('a 405 is no session expiry', async () => {
+    expect(await expiryNotified(405, tokenExpiringIn(3600))).toBe(false);
   });
 
   it('does not notify the session-expired callback on other errors', async () => {

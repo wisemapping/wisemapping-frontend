@@ -167,14 +167,47 @@ describe('MapsList', () => {
     expect(screen.queryByRole('checkbox', { name: 'Open for edition' })).toBeNull();
   });
 
+  test('shows placeholders, not the empty message, while the maps are loading', async () => {
+    let resolve: (maps: MapInfo[]) => void = () => undefined;
+    const client = buildClient();
+    client.fetchAllMaps.mockReturnValue(new Promise<MapInfo[]>((r) => (resolve = r)));
+    renderList({ type: 'all' }, client);
+
+    await waitFor(() => expect(client.fetchAllMaps).toHaveBeenCalled());
+    // Before the list arrives the page used to say there were no maps, then show them.
+    expect(
+      screen.queryByText('No matching mindmap found with the current filter criteria.'),
+    ).toBeNull();
+    expect(screen.getAllByTestId('maps-loading')).toHaveLength(2);
+
+    resolve(defaultMaps());
+
+    expect(await screen.findAllByText('Alpha plan')).toBeTruthy();
+    expect(screen.queryByTestId('maps-loading')).toBeNull();
+  });
+
+  test('says the maps could not be loaded instead of that there are none', async () => {
+    const client = buildClient();
+    client.fetchAllMaps.mockRejectedValue({ msg: 'Service unavailable', status: 503 });
+    renderList({ type: 'all' }, client);
+
+    expect(
+      await screen.findAllByText('Your maps could not be loaded. Please try again later.'),
+    ).toHaveLength(2);
+    expect(
+      screen.queryByText('No matching mindmap found with the current filter criteria.'),
+    ).toBeNull();
+    expect(screen.queryByTestId('maps-loading')).toBeNull();
+  });
+
   test('shows the empty message when there are no maps', async () => {
     const client = buildClient([]);
     renderList({ type: 'all' }, client);
 
-    await waitFor(() => expect(client.fetchAllMaps).toHaveBeenCalled());
     expect(
-      screen.getAllByText('No matching mindmap found with the current filter criteria.'),
+      await screen.findAllByText('No matching mindmap found with the current filter criteria.'),
     ).toHaveLength(2);
+    expect(client.fetchAllMaps).toHaveBeenCalled();
   });
 
   test.each<[string, Filter, string[]]>([
@@ -441,6 +474,20 @@ describe('MapsList', () => {
     expect(screen.queryByTestId('chooser')).toBeNull();
     expect(screen.getByTestId('dispatcher-action').textContent).toBe('rename');
     expect(screen.getByTestId('dispatcher-maps').textContent).toBe('3');
+  });
+
+  test('opening a row menu leaves the selection alone', async () => {
+    // The click bubbled to the row and toggled it: "Delete selected" then included a map the
+    // user had only opened the menu of.
+    renderList();
+    await screen.findAllByText('Alpha plan');
+    fireEvent.click(rowFor('Alpha plan'));
+
+    fireEvent.click(within(rowFor('Gamma ideas')).getByRole('button', { name: 'Others' }));
+    fireEvent.click(within(rowFor('Alpha plan')).getByRole('button', { name: 'Others' }));
+
+    expect(checkboxFor('Gamma ideas').checked).toBe(false);
+    expect(checkboxFor('Alpha plan').checked).toBe(true);
   });
 
   test('dismissing the row menu opens no dialog', async () => {

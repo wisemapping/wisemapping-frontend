@@ -77,6 +77,8 @@ import UserFormDialog from './UserFormDialog';
 import ChangePasswordDialog from './ChangePasswordDialog';
 import FacebookLookup from './FacebookLookup';
 import { User, UserFormData } from './types';
+import { useAdminPage, useClampedPage } from '../shared/useAdminPage';
+import { errorMessage } from '../shared/errorMessage';
 
 const emptyUserForm: UserFormData = {
   firstname: '',
@@ -153,7 +155,6 @@ const AccountManagement = (): ReactElement => {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
   const [sortField, setSortField] = useState<SortField>('email');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
-  const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(50);
   const [filterActive] = useState<string>('all');
   const [filterSuspended, setFilterSuspended] = useState<string>('all');
@@ -237,6 +238,14 @@ const AccountManagement = (): ReactElement => {
     },
   ];
 
+  const [currentPage, setCurrentPage] = useAdminPage([
+    debouncedSearchTerm,
+    sortField,
+    sortDirection,
+    filterActive,
+    filterSuspended,
+    filterAuthType,
+  ]);
   // Fetch users
   const {
     data: usersResponse,
@@ -278,6 +287,7 @@ const AccountManagement = (): ReactElement => {
 
   const users = usersResponse?.data || [];
   const totalPages = usersResponse?.totalPages || 0;
+  useClampedPage(currentPage, setCurrentPage, usersResponse?.totalPages);
 
   // Update user mutation
   const updateUserMutation = useMutation({
@@ -600,24 +610,6 @@ const AccountManagement = (): ReactElement => {
     }
   };
 
-  if (error) {
-    return (
-      <Alert severity="error" sx={{ mb: 2 }}>
-        {intl.formatMessage(
-          {
-            id: 'admin.error.load-users',
-            defaultMessage: 'Failed to load users: {message}',
-          },
-          {
-            message:
-              (error as Error)?.message ||
-              intl.formatMessage({ id: 'admin.error.unknown', defaultMessage: 'Unknown error' }),
-          },
-        )}
-      </Alert>
-    );
-  }
-
   return (
     <Box>
       {/* Header Section */}
@@ -798,6 +790,19 @@ const AccountManagement = (): ReactElement => {
         </CardContent>
       </Card>
       {/* Users Table */}
+      {/* Inline, so the search, filters and Refresh stay to recover with. */}
+      {error && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {intl.formatMessage(
+            { id: 'admin.error.load-users', defaultMessage: 'Failed to load users: {message}' },
+            {
+              message:
+                errorMessage(error) ||
+                intl.formatMessage({ id: 'admin.error.unknown', defaultMessage: 'Unknown error' }),
+            },
+          )}
+        </Alert>
+      )}
       <TableContainer component={Paper}>
         <Table>
           <TableHead>

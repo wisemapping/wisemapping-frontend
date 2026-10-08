@@ -217,7 +217,7 @@ class MockAdminClient implements AdminClientInterface {
       starred: true,
       labels: ['Sample', 'Demo'],
       spam: false,
-      isCreatorSuspended: false,
+      creatorSuspended: false,
       collaboratorCount: 2,
     },
     {
@@ -235,7 +235,7 @@ class MockAdminClient implements AdminClientInterface {
       starred: false,
       labels: ['Project', 'Private'],
       spam: false,
-      isCreatorSuspended: false,
+      creatorSuspended: false,
       collaboratorCount: 1,
     },
     {
@@ -254,7 +254,7 @@ class MockAdminClient implements AdminClientInterface {
       starred: false,
       labels: ['Research', 'Work-in-Progress'],
       spam: false,
-      isCreatorSuspended: false,
+      creatorSuspended: false,
       collaboratorCount: 3,
     },
     {
@@ -272,7 +272,7 @@ class MockAdminClient implements AdminClientInterface {
       starred: true,
       labels: ['Knowledge', 'Public', 'Reference'],
       spam: false,
-      isCreatorSuspended: false,
+      creatorSuspended: false,
       collaboratorCount: 5,
     },
     {
@@ -293,7 +293,7 @@ class MockAdminClient implements AdminClientInterface {
       spamType: 'CONTACT_INFO',
       spamDetectedDate: '2023-05-01T12:05:00Z',
       spamDescription: 'Contains contact information and promotional content',
-      isCreatorSuspended: true,
+      creatorSuspended: true,
       collaboratorCount: 0,
     },
     {
@@ -311,7 +311,7 @@ class MockAdminClient implements AdminClientInterface {
       starred: false,
       labels: ['Marketing', 'Strategy'],
       spam: false,
-      isCreatorSuspended: false,
+      creatorSuspended: false,
       collaboratorCount: 2,
     },
     {
@@ -329,7 +329,7 @@ class MockAdminClient implements AdminClientInterface {
       starred: true,
       labels: ['Product', 'Roadmap', 'Planning'],
       spam: false,
-      isCreatorSuspended: false,
+      creatorSuspended: false,
       collaboratorCount: 4,
     },
     {
@@ -348,7 +348,7 @@ class MockAdminClient implements AdminClientInterface {
       starred: false,
       labels: ['HR', 'Organization', 'Team'],
       spam: false,
-      isCreatorSuspended: false,
+      creatorSuspended: false,
       collaboratorCount: 3,
     },
     {
@@ -366,7 +366,7 @@ class MockAdminClient implements AdminClientInterface {
       starred: true,
       labels: ['Finance', 'Budget', 'Planning'],
       spam: false,
-      isCreatorSuspended: false,
+      creatorSuspended: false,
       collaboratorCount: 2,
     },
     {
@@ -384,7 +384,7 @@ class MockAdminClient implements AdminClientInterface {
       starred: false,
       labels: ['Customer', 'Feedback', 'Analysis'],
       spam: false,
-      isCreatorSuspended: false,
+      creatorSuspended: false,
       collaboratorCount: 1,
     },
     {
@@ -402,7 +402,7 @@ class MockAdminClient implements AdminClientInterface {
       starred: true,
       labels: ['Technical', 'Architecture', 'System'],
       spam: false,
-      isCreatorSuspended: false,
+      creatorSuspended: false,
       collaboratorCount: 3,
     },
     {
@@ -423,7 +423,7 @@ class MockAdminClient implements AdminClientInterface {
       spamType: 'KEYWORD_PATTERN',
       spamDetectedDate: '2023-09-01T12:10:00Z',
       spamDescription: 'Contains promotional keywords and patterns',
-      isCreatorSuspended: true,
+      creatorSuspended: true,
       collaboratorCount: 0,
     },
   ];

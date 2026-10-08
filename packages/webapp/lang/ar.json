@@ -119,8 +119,11 @@
   "create.title": {
     "defaultMessage": "إنشاء خريطة ذهنية جديدة"
   },
-  "deletem.title": {
-    "defaultMessage": "سيتم حذف جميع الخرائط المحددة"
+  "deletem.count-title": {
+    "defaultMessage": "{count, plural, zero {لن يتم حذف أي خريطة} one {سيتم حذف خريطة واحدة} two {سيتم حذف خريطتين} few {سيتم حذف # خرائط} many {سيتم حذف # خريطة} other {سيتم حذف # خريطة}}"
+  },
+  "deletem.more": {
+    "defaultMessage": "و{count} أخرى"
   },
   "duplicate.copy-title": {
     "defaultMessage": "نسخة من {title}"
@@ -416,6 +419,9 @@
   "maps.empty-result": {
     "defaultMessage": "لا توجد خرائط ذهنية مطابقة لمعايير التصفية الحالية."
   },
+  "maps.load-error": {
+    "defaultMessage": "تعذّر تحميل خرائطك. يُرجى المحاولة مرة أخرى لاحقًا."
+  },
   "maps.import-desc": {
     "defaultMessage": "استيراد من أدوات أخرى"
   },
@@ -511,6 +517,9 @@
   },
   "registration.callback.continue": {
     "defaultMessage": "متابعة"
+  },
+  "registration.callback.invalid": {
+    "defaultMessage": "رابط تسجيل الدخول هذا غير صالح. يُرجى تسجيل الدخول مرة أخرى."
   },
   "registration.callback.confirm.description": {
     "defaultMessage": "تم تسجيل حساب بنفس البريد الإلكتروني سابقًا. هل تريد ربط حساب {provider} بحساب WiseMapping ذاك؟"
@@ -622,6 +631,9 @@
   },
   "admin.error.create-user-failed": {
     "defaultMessage": "فشل إنشاء المستخدم. يرجى المحاولة مرة أخرى."
+  },
+  "admin.error.load-maps": {
+    "defaultMessage": "فشل تحميل الخرائط: {message}"
   },
   "admin.error.load-users": {
     "defaultMessage": "فشل تحميل المستخدمين: {message}"

@@ -27,7 +27,6 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import React, { useContext } from 'react';
 import { FormattedMessage } from 'react-intl';
 import AccountInfoDialog from './account-info-dialog';
-import Link from '@mui/material/Link';
 import ExitToAppOutlined from '@mui/icons-material/ExitToAppOutlined';
 import AdminPanelSettingsOutlined from '@mui/icons-material/AdminPanelSettingsOutlined';
 import { useNavigate } from 'react-router';
@@ -113,13 +112,12 @@ const AccountMenu = (): React.ReactElement => {
           </MenuItem>
         )}
 
-        <MenuItem onClick={handleClose}>
-          <Link color="textSecondary" href="/c/logout" onClick={(e) => handleLogout(e)}>
-            <ListItemIcon>
-              <ExitToAppOutlined fontSize="small" />
-            </ListItemIcon>
-            <FormattedMessage id="menu.signout" defaultMessage="Sign Out" />
-          </Link>
+        {/* The handler is on the item itself: Enter on a focused item clicks the item. */}
+        <MenuItem onClick={handleLogout}>
+          <ListItemIcon>
+            <ExitToAppOutlined fontSize="small" />
+          </ListItemIcon>
+          <FormattedMessage id="menu.signout" defaultMessage="Sign Out" />
         </MenuItem>
       </Menu>
       {action == 'account-info' && <AccountInfoDialog onClose={() => setAction(undefined)} />}

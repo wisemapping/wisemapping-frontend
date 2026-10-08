@@ -151,7 +151,8 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
         // meanwhile is kept.
         const { title: typedTitle, description } = latestModel.current;
         const keepTitle = typedTitle !== '' && typedTitle !== suggestedTitle.current;
-        const title = keepTitle ? typedTitle : file.name.split('.')[0];
+        // The file name without its extension only: "Plan v1.2.mm" is "Plan v1.2".
+        const title = keepTitle ? typedTitle : file.name.replace(/\.[^.]*$/, '');
         if (!keepTitle) {
           suggestedTitle.current = title;
         }

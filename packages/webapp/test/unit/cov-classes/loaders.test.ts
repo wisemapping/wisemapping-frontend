@@ -216,6 +216,15 @@ describe('editor page loader', () => {
     await expect(response.json()).resolves.toMatchObject({ editorMode: 'viewonly-public' });
   });
 
+  it("opens a revision of somebody else's map through the private history endpoint", async () => {
+    // There is no public history endpoint ({id}/{hid}/document/xml-pub does not exist).
+    useClient(jest.fn().mockResolvedValue(metadata({ role: 'none' })));
+
+    const response = await runLoader('view-private', '5', true, '55');
+
+    await expect(response.json()).resolves.toMatchObject({ editorMode: 'viewonly-private' });
+  });
+
   it('does not bootstrap a history revision with the current map', async () => {
     const fetchMapMetadata = jest.fn().mockResolvedValue(metadata({ xml: '<current/>' }));
     useClient(fetchMapMetadata);

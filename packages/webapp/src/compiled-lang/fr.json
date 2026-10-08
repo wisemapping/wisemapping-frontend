@@ -595,6 +595,16 @@
       "value": "Échec de la création de l'utilisateur. Veuillez réessayer."
     }
   ],
+  "admin.error.load-maps": [
+    {
+      "type": 0,
+      "value": "Échec du chargement des cartes : "
+    },
+    {
+      "type": 1,
+      "value": "message"
+    }
+  ],
   "admin.error.load-users": [
     {
       "type": 0,
@@ -1807,10 +1817,50 @@
       "value": "Créer une nouvelle carte mentale"
     }
   ],
-  "deletem.title": [
+  "deletem.count-title": [
+    {
+      "type": 6,
+      "value": "count",
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " carte sera supprimée"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " cartes seront supprimées"
+            }
+          ]
+        }
+      },
+      "offset": 0,
+      "pluralType": "cardinal"
+    }
+  ],
+  "deletem.more": [
     {
       "type": 0,
-      "value": "Toutes les cartes sélectionnées seront supprimées"
+      "value": "et "
+    },
+    {
+      "type": 1,
+      "value": "count"
+    },
+    {
+      "type": 0,
+      "value": " de plus"
     }
   ],
   "duplicate.copy-title": [
@@ -2583,6 +2633,12 @@
       "value": "Importer depuis d'autres outils"
     }
   ],
+  "maps.load-error": [
+    {
+      "type": 0,
+      "value": "Vos cartes n'ont pas pu être chargées. Veuillez réessayer plus tard."
+    }
+  ],
   "maps.modified": [
     {
       "type": 0,
@@ -2845,6 +2901,12 @@
     {
       "type": 0,
       "value": "Continuer"
+    }
+  ],
+  "registration.callback.invalid": [
+    {
+      "type": 0,
+      "value": "Ce lien de connexion n'est pas valide. Veuillez vous reconnecter."
     }
   ],
   "registration.callback.sync": [

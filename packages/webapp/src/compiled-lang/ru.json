@@ -595,6 +595,16 @@
       "value": "Не удалось создать пользователя. Пожалуйста, попробуйте ещё раз."
     }
   ],
+  "admin.error.load-maps": [
+    {
+      "type": 0,
+      "value": "Не удалось загрузить карты: "
+    },
+    {
+      "type": 1,
+      "value": "message"
+    }
+  ],
   "admin.error.load-users": [
     {
       "type": 0,
@@ -1807,10 +1817,84 @@
       "value": "Создание новой майнд-карты."
     }
   ],
-  "deletem.title": [
+  "deletem.count-title": [
+    {
+      "type": 6,
+      "value": "count",
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Будет удалена "
+            },
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " карта"
+            }
+          ]
+        },
+        "few": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Будут удалены "
+            },
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " карты"
+            }
+          ]
+        },
+        "many": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Будут удалены "
+            },
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " карт"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Будут удалены "
+            },
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " карты"
+            }
+          ]
+        }
+      },
+      "offset": 0,
+      "pluralType": "cardinal"
+    }
+  ],
+  "deletem.more": [
     {
       "type": 0,
-      "value": "Все выбранные карты будут удалены"
+      "value": "и ещё "
+    },
+    {
+      "type": 1,
+      "value": "count"
     }
   ],
   "duplicate.copy-title": [
@@ -2583,6 +2667,12 @@
       "value": "Загрузить из других редакторов"
     }
   ],
+  "maps.load-error": [
+    {
+      "type": 0,
+      "value": "Не удалось загрузить ваши карты. Повторите попытку позже."
+    }
+  ],
   "maps.modified": [
     {
       "type": 0,
@@ -2845,6 +2935,12 @@
     {
       "type": 0,
       "value": "Продолжить"
+    }
+  ],
+  "registration.callback.invalid": [
+    {
+      "type": 0,
+      "value": "Эта ссылка для входа недействительна. Войдите снова."
     }
   ],
   "registration.callback.sync": [

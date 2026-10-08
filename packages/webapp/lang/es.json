@@ -119,8 +119,11 @@
   "create.title": {
     "defaultMessage": "Crea un nuevo mapa mental."
   },
-  "deletem.title": {
-    "defaultMessage": "Todos los mapas seleccionados serán eliminados"
+  "deletem.count-title": {
+    "defaultMessage": "{count, plural, one {Se eliminará # mapa} other {Se eliminarán # mapas}}"
+  },
+  "deletem.more": {
+    "defaultMessage": "y {count} más"
   },
   "duplicate.copy-title": {
     "defaultMessage": "Copia de {title}"
@@ -395,6 +398,9 @@
   "maps.empty-result": {
     "defaultMessage": "No se encontró ningún mapa mental coincidente con los criterios de filtro actuales."
   },
+  "maps.load-error": {
+    "defaultMessage": "No se pudieron cargar tus mapas. Inténtalo de nuevo más tarde."
+  },
   "maps.import-desc": {
     "defaultMessage": "Importar desde otras herramientas"
   },
@@ -581,6 +587,9 @@
   "registration.callback.continue": {
     "defaultMessage": "Continuar"
   },
+  "registration.callback.invalid": {
+    "defaultMessage": "Este enlace de inicio de sesión no es válido. Vuelve a iniciar sesión."
+  },
   "registration.callback.sync": {
     "defaultMessage": "Sincronizar cuenta"
   },
@@ -691,6 +700,9 @@
   },
   "admin.error.create-user-failed": {
     "defaultMessage": "No se pudo crear el usuario. Inténtalo de nuevo."
+  },
+  "admin.error.load-maps": {
+    "defaultMessage": "No se pudieron cargar los mapas: {message}"
   },
   "admin.error.load-users": {
     "defaultMessage": "No se pudieron cargar los usuarios: {message}"

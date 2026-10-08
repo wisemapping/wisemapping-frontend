@@ -43,7 +43,7 @@ import { appLogger as log } from '../../utils/logger';
 import { getCanonicalUrl, getAlternateLanguageUrls } from '../../utils/seo-locale';
 import CircularProgress from '@mui/material/CircularProgress';
 import { leaveTo, safeRedirectPath } from '../../utils/redirect';
-import { startOAuthFlow } from '../../utils/oauth-flow';
+import { startOAuthFlow, takeOAuthFlow } from '../../utils/oauth-flow';
 
 export type Model = {
   email: string;
@@ -87,6 +87,14 @@ const LoginPage = (): React.ReactElement => {
   const redirectUrl = searchParams.get('redirect');
   const isSharedLink = redirectUrl?.includes('shared=true') || false;
   const oauthError = searchParams.get('error');
+
+  // A sign-in that came back with an error is over: its mark must not let a later callback in
+  // this tab through without the confirmation.
+  useEffect(() => {
+    if (oauthError) {
+      takeOAuthFlow();
+    }
+  }, [oauthError]);
 
   // Generic OAuth handler
   const handleOAuthLogin = (authUrl: string | undefined, providerName: string): void => {

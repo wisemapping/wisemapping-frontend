@@ -39,14 +39,30 @@ class JwtTokenConfig {
    * decoded, or that carry no `exp`, are treated as not expired and left to the server.
    */
   static isTokenExpired(token: string): boolean {
+    const exp = JwtTokenConfig.decodePayload(token)?.exp;
+    return typeof exp === 'number' && exp * 1000 <= Date.now();
+  }
+
+  /**
+   * The token's `sub` claim: the backend puts the account email there. Undefined when the token
+   * can not be decoded. Read only, not verified: the signature is the server's business.
+   */
+  static getSubject(token: string): string | undefined {
+    const sub = JwtTokenConfig.decodePayload(token)?.sub;
+    return typeof sub === 'string' && sub ? sub : undefined;
+  }
+
+  private static decodePayload(token: string): Record<string, unknown> | undefined {
     try {
       const payload = token.split('.')[1];
-      if (!payload) return false;
+      if (!payload) return undefined;
       const base64 = payload.replace(/-/g, '+').replace(/_/g, '/');
-      const { exp } = JSON.parse(atob(base64.padEnd(Math.ceil(base64.length / 4) * 4, '=')));
-      return typeof exp === 'number' && exp * 1000 <= Date.now();
+      const binary = atob(base64.padEnd(Math.ceil(base64.length / 4) * 4, '='));
+      const bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0));
+      const decoded = JSON.parse(new TextDecoder().decode(bytes));
+      return decoded && typeof decoded === 'object' ? decoded : undefined;
     } catch {
-      return false;
+      return undefined;
     }
   }
 

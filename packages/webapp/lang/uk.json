@@ -119,8 +119,11 @@
   "create.title": {
     "defaultMessage": "Створити нову карту розуму"
   },
-  "deletem.title": {
-    "defaultMessage": "Всі вибрані карти будуть видалені"
+  "deletem.count-title": {
+    "defaultMessage": "{count, plural, one {Буде видалено # карту} few {Буде видалено # карти} many {Буде видалено # карт} other {Буде видалено # карти}}"
+  },
+  "deletem.more": {
+    "defaultMessage": "і ще {count}"
   },
   "duplicate.copy-title": {
     "defaultMessage": "Копія {title}"
@@ -413,6 +416,9 @@
   "maps.empty-result": {
     "defaultMessage": "Не знайдено карт розуму, що відповідають поточним критеріям фільтрації."
   },
+  "maps.load-error": {
+    "defaultMessage": "Не вдалося завантажити ваші карти. Спробуйте пізніше."
+  },
   "maps.import-desc": {
     "defaultMessage": "Імпорт з інших інструментів"
   },
@@ -508,6 +514,9 @@
   },
   "registration.callback.continue": {
     "defaultMessage": "Продовжити"
+  },
+  "registration.callback.invalid": {
+    "defaultMessage": "Це посилання для входу недійсне. Увійдіть знову."
   },
   "registration.callback.confirm.description": {
     "defaultMessage": "Акаунт з такою ж електронною поштою був раніше зареєстрований. Чи хочете прив'язати ваш {provider} акаунт до того акаунту WiseMapping?"
@@ -697,6 +706,9 @@
   },
   "admin.error.create-user-failed": {
     "defaultMessage": "Не вдалося створити користувача. Будь ласка, спробуйте ще раз."
+  },
+  "admin.error.load-maps": {
+    "defaultMessage": "Не вдалося завантажити карти: {message}"
   },
   "admin.error.load-users": {
     "defaultMessage": "Не вдалося завантажити користувачів: {message}"

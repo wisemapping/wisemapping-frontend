@@ -65,6 +65,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardHeader from '@mui/material/CardHeader';
 import { ClientContext } from '../../../classes/provider/client-context';
+import { CardSkeleton, MapsListSkeleton } from './MapsListSkeleton';
 
 dayjs.extend(LocalizedFormat);
 dayjs.extend(relativeTime);
@@ -359,10 +360,23 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
     });
   }, [props.filter.type, filterLabelId]);
 
-  const { data: mapsData = [] } = useQuery<unknown, ErrorInfo, MapInfo[]>({
+  const {
+    data: mapsData = [],
+    // Only until the first list arrives: a background refetch keeps showing the maps.
+    isPending: isLoadingMaps,
+    isError: mapsLoadFailed,
+  } = useQuery<unknown, ErrorInfo, MapInfo[]>({
     queryKey: ['maps'],
     queryFn: () => client.fetchAllMaps(),
   });
+
+  // While loading, or when loading failed, the list is empty, but "no maps" would be wrong.
+  const loadFailedMessage = (
+    <FormattedMessage
+      id="maps.load-error"
+      defaultMessage="Your maps could not be loaded. Please try again later."
+    />
+  );
 
   const filteredMaps: MapInfo[] = useMemo(() => {
     const predicate = mapsFilter(filter, searchCondition);
@@ -439,6 +453,8 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
         el: event.currentTarget,
       });
       event.preventDefault();
+      // The table row toggles its selection on click: opening the menu must not.
+      event.stopPropagation();
     };
   };
 
@@ -630,7 +646,17 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
 
         <TableContainer css={classes.tableContainer as Interpolation<Theme>}>
           <Box css={classes.cards}>
-            {filteredMaps.length === 0 ? (
+            {isLoadingMaps ? (
+              <Box data-testid="maps-loading" aria-busy="true">
+                {Array.from({ length: 5 }).map((_, index) => (
+                  <CardSkeleton key={index} />
+                ))}
+              </Box>
+            ) : mapsLoadFailed ? (
+              <Card>
+                <CardContent>{loadFailedMessage}</CardContent>
+              </Card>
+            ) : filteredMaps.length === 0 ? (
               <Card>
                 <CardContent>
                   <FormattedMessage
@@ -754,8 +780,19 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
               rowCount={filteredMaps.length}
             />
 
-            <TableBody>
-              {filteredMaps.length === 0 ? (
+            <TableBody
+              data-testid={isLoadingMaps ? 'maps-loading' : undefined}
+              aria-busy={isLoadingMaps}
+            >
+              {isLoadingMaps ? (
+                <MapsListSkeleton rowsPerPage={rowsPerPage} />
+              ) : mapsLoadFailed ? (
+                <TableRow>
+                  <TableCell colSpan={6} style={{ textAlign: 'center' }}>
+                    {loadFailedMessage}
+                  </TableCell>
+                </TableRow>
+              ) : filteredMaps.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={6} style={{ textAlign: 'center' }}>
                     <FormattedMessage

@@ -595,6 +595,16 @@
       "value": "Impossibile creare l'utente. Riprova."
     }
   ],
+  "admin.error.load-maps": [
+    {
+      "type": 0,
+      "value": "Impossibile caricare le mappe: "
+    },
+    {
+      "type": 1,
+      "value": "message"
+    }
+  ],
   "admin.error.load-users": [
     {
       "type": 0,
@@ -1807,10 +1817,54 @@
       "value": "Crea una nuova mappa mentale"
     }
   ],
-  "deletem.title": [
+  "deletem.count-title": [
+    {
+      "type": 6,
+      "value": "count",
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Verrà eliminata "
+            },
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " mappa"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Verranno eliminate "
+            },
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " mappe"
+            }
+          ]
+        }
+      },
+      "offset": 0,
+      "pluralType": "cardinal"
+    }
+  ],
+  "deletem.more": [
     {
       "type": 0,
-      "value": "Tutte le mappe selezionate verranno eliminate"
+      "value": "e altre "
+    },
+    {
+      "type": 1,
+      "value": "count"
     }
   ],
   "duplicate.copy-title": [
@@ -2583,6 +2637,12 @@
       "value": "Importa da altri strumenti"
     }
   ],
+  "maps.load-error": [
+    {
+      "type": 0,
+      "value": "Non è stato possibile caricare le tue mappe. Riprova più tardi."
+    }
+  ],
   "maps.modified": [
     {
       "type": 0,
@@ -2845,6 +2905,12 @@
     {
       "type": 0,
       "value": "Continua"
+    }
+  ],
+  "registration.callback.invalid": [
+    {
+      "type": 0,
+      "value": "Questo link di accesso non è valido. Accedi di nuovo."
     }
   ],
   "registration.callback.sync": [

@@ -119,8 +119,11 @@
   "create.title": {
     "defaultMessage": "创建一个新的思维导图"
   },
-  "deletem.title": {
-    "defaultMessage": "所有选中的思维导图将被删除"
+  "deletem.count-title": {
+    "defaultMessage": "{count, plural, other {将删除 # 个导图}}"
+  },
+  "deletem.more": {
+    "defaultMessage": "以及另外 {count} 个"
   },
   "duplicate.copy-title": {
     "defaultMessage": "{title}的副本"
@@ -392,6 +395,9 @@
   "maps.empty-result": {
     "defaultMessage": "没有找到与当前筛选条件匹配的思维导图。"
   },
+  "maps.load-error": {
+    "defaultMessage": "无法加载您的导图。请稍后再试。"
+  },
   "maps.import-desc": {
     "defaultMessage": "从其它工具导入"
   },
@@ -584,6 +590,9 @@
   "registration.callback.continue": {
     "defaultMessage": "继续"
   },
+  "registration.callback.invalid": {
+    "defaultMessage": "此登录链接无效。请重新登录。"
+  },
   "registration.callback.sync": {
     "defaultMessage": "同步账号"
   },
@@ -691,6 +700,9 @@
   },
   "admin.error.create-user-failed": {
     "defaultMessage": "创建用户失败。请重试。"
+  },
+  "admin.error.load-maps": {
+    "defaultMessage": "加载导图失败：{message}"
   },
   "admin.error.load-users": {
     "defaultMessage": "加载用户失败：{message}"

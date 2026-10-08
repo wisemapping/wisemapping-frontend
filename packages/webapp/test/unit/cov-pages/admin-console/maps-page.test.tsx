@@ -44,7 +44,7 @@ const busyMap = makeAdminMap({
   isLockedBy: 'eve',
   spam: true,
   spamType: 'LINKS',
-  isCreatorSuspended: true,
+  creatorSuspended: true,
   createdBy: 'spammer@example.com',
   createdById: 60,
 });
@@ -139,6 +139,19 @@ describe('MapsManagement', () => {
       await jest.advanceTimersByTimeAsync(1500);
     });
     expect(screen.getByText('Failed to load maps: Server unreachable')).toBeTruthy();
+  });
+
+  test('a load error shows the backend message and keeps the search and Refresh', async () => {
+    jest.useFakeTimers();
+    client.getAdminMaps.mockRejectedValue({ msg: 'Search failed', status: 500 });
+    renderWithWrapper(<MapsManagement />);
+
+    await act(async () => {
+      await jest.advanceTimersByTimeAsync(1500);
+    });
+    expect(screen.getByText('Failed to load maps: Search failed')).toBeTruthy();
+    expect(screen.getByPlaceholderText(/Search maps/)).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Refresh' })).toBeTruthy();
   });
 
   test('an error without a message reads "Unknown error"', async () => {
@@ -322,6 +335,24 @@ describe('MapsManagement', () => {
     const calls = client.getAdminMaps.mock.calls.length;
     fireEvent.click(screen.getByRole('button', { name: 'Refresh' }));
     await waitFor(() => expect(client.getAdminMaps.mock.calls.length).toBe(calls + 1));
+  });
+
+  test('a new search starts from the first page, and a vanished page falls back', async () => {
+    setup({ totalPages: 3 });
+    await waitForRows();
+    fireEvent.click(screen.getByRole('button', { name: 'Go to page 3' }));
+    await waitFor(() => expect(lastParams()).toMatchObject({ page: 2 }));
+
+    fireEvent.change(screen.getByPlaceholderText(/Search maps/), { target: { value: 'plan' } });
+    await waitFor(() => expect(lastParams()).toMatchObject({ search: 'plan', page: 0 }));
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Go to page 2' }));
+    await waitFor(() => expect(lastParams()).toMatchObject({ page: 1 }));
+    client.getAdminMaps.mockResolvedValue(page([], 1));
+    const refresh = screen.getByRole('button', { name: 'Refresh' }) as HTMLButtonElement;
+    await waitFor(() => expect(refresh.disabled).toBe(false));
+    fireEvent.click(refresh);
+    await waitFor(() => expect(lastParams()).toMatchObject({ page: 0 }));
   });
 
   describe('editing', () => {
@@ -630,7 +661,7 @@ describe('MapsManagement', () => {
     const owner = makeUser({ id: 50, email: 'owner@example.com' });
     const ownerMaps = [
       makeAdminMap({ id: 21, title: 'Owner first', public: true }),
-      makeAdminMap({ id: 22, title: 'Owner second', spam: true, isCreatorSuspended: true }),
+      makeAdminMap({ id: 22, title: 'Owner second', spam: true, creatorSuspended: true }),
     ];
 
     const openOwner = async () => {

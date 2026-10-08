@@ -595,6 +595,16 @@
       "value": "उपयोगकर्ता बनाने में विफल। कृपया फिर से प्रयास करें।"
     }
   ],
+  "admin.error.load-maps": [
+    {
+      "type": 0,
+      "value": "मैप लोड करने में विफल: "
+    },
+    {
+      "type": 1,
+      "value": "message"
+    }
+  ],
   "admin.error.load-users": [
     {
       "type": 0,
@@ -1807,10 +1817,50 @@
       "value": "एक नया माइंडमैप बनाएं"
     }
   ],
-  "deletem.title": [
+  "deletem.count-title": [
+    {
+      "type": 6,
+      "value": "count",
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " मैप हटाया जाएगा"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " मैप हटाए जाएंगे"
+            }
+          ]
+        }
+      },
+      "offset": 0,
+      "pluralType": "cardinal"
+    }
+  ],
+  "deletem.more": [
     {
       "type": 0,
-      "value": "सभी चयनित मानचित्र हटा दिए जाएंगे"
+      "value": "और "
+    },
+    {
+      "type": 1,
+      "value": "count"
+    },
+    {
+      "type": 0,
+      "value": " अन्य"
     }
   ],
   "duplicate.copy-title": [
@@ -2583,6 +2633,12 @@
       "value": "अन्य टूल्स से आयात करें"
     }
   ],
+  "maps.load-error": [
+    {
+      "type": 0,
+      "value": "आपके मैप लोड नहीं हो सके। कृपया बाद में फिर से कोशिश करें।"
+    }
+  ],
   "maps.modified": [
     {
       "type": 0,
@@ -2845,6 +2901,12 @@
     {
       "type": 0,
       "value": "जारी रखें"
+    }
+  ],
+  "registration.callback.invalid": [
+    {
+      "type": 0,
+      "value": "यह साइन इन लिंक मान्य नहीं है। कृपया फिर से साइन इन करें।"
     }
   ],
   "registration.callback.sync": [

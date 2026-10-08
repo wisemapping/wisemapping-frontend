@@ -116,8 +116,11 @@
   "create.title": {
     "defaultMessage": "Создание новой майнд-карты."
   },
-  "deletem.title": {
-    "defaultMessage": "Все выбранные карты будут удалены"
+  "deletem.count-title": {
+    "defaultMessage": "{count, plural, one {Будет удалена # карта} few {Будут удалены # карты} many {Будут удалены # карт} other {Будут удалены # карты}}"
+  },
+  "deletem.more": {
+    "defaultMessage": "и ещё {count}"
   },
   "duplicate.copy-title": {
     "defaultMessage": "Копия {title}"
@@ -362,6 +365,9 @@
   "maps.empty-result": {
     "defaultMessage": "Нет карт, подходящих под условия фильтра."
   },
+  "maps.load-error": {
+    "defaultMessage": "Не удалось загрузить ваши карты. Повторите попытку позже."
+  },
   "maps.import-desc": {
     "defaultMessage": "Загрузить из других редакторов"
   },
@@ -551,6 +557,9 @@
   "registration.callback.continue": {
     "defaultMessage": "Продолжить"
   },
+  "registration.callback.invalid": {
+    "defaultMessage": "Эта ссылка для входа недействительна. Войдите снова."
+  },
   "registration.callback.sync": {
     "defaultMessage": "Синхронизировать аккаунт"
   },
@@ -670,6 +679,9 @@
   },
   "admin.error.create-user-failed": {
     "defaultMessage": "Не удалось создать пользователя. Пожалуйста, попробуйте ещё раз."
+  },
+  "admin.error.load-maps": {
+    "defaultMessage": "Не удалось загрузить карты: {message}"
   },
   "admin.error.load-users": {
     "defaultMessage": "Не удалось загрузить пользователей: {message}"

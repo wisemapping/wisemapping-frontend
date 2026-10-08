@@ -595,6 +595,16 @@
       "value": "Benutzer konnte nicht erstellt werden. Bitte versuche es erneut."
     }
   ],
+  "admin.error.load-maps": [
+    {
+      "type": 0,
+      "value": "Mindmaps konnten nicht geladen werden: "
+    },
+    {
+      "type": 1,
+      "value": "message"
+    }
+  ],
   "admin.error.load-users": [
     {
       "type": 0,
@@ -1815,10 +1825,50 @@
       "value": "Erstelle eine neue Mindmap."
     }
   ],
-  "deletem.title": [
+  "deletem.count-title": [
+    {
+      "type": 6,
+      "value": "count",
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " Mindmap wird gelöscht"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " Mindmaps werden gelöscht"
+            }
+          ]
+        }
+      },
+      "offset": 0,
+      "pluralType": "cardinal"
+    }
+  ],
+  "deletem.more": [
     {
       "type": 0,
-      "value": "Alle ausgewählten Mindmaps werden gelöscht"
+      "value": "und "
+    },
+    {
+      "type": 1,
+      "value": "count"
+    },
+    {
+      "type": 0,
+      "value": " weitere"
     }
   ],
   "duplicate.copy-title": [
@@ -2591,6 +2641,12 @@
       "value": "Import aus anderen Tools"
     }
   ],
+  "maps.load-error": [
+    {
+      "type": 0,
+      "value": "Deine Mindmaps konnten nicht geladen werden. Bitte versuche es später erneut."
+    }
+  ],
   "maps.modified": [
     {
       "type": 0,
@@ -2853,6 +2909,12 @@
     {
       "type": 0,
       "value": "Weiter"
+    }
+  ],
+  "registration.callback.invalid": [
+    {
+      "type": 0,
+      "value": "Dieser Anmeldelink ist ungültig. Bitte melde dich erneut an."
     }
   ],
   "registration.callback.sync": [

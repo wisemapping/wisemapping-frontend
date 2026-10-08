@@ -275,6 +275,9 @@
   "admin.error.create-user-failed": {
     "defaultMessage": "Failed to create user. Please try again."
   },
+  "admin.error.load-maps": {
+    "defaultMessage": "Failed to load maps: {message}"
+  },
   "admin.error.load-users": {
     "defaultMessage": "Failed to load users: {message}"
   },
@@ -833,8 +836,11 @@
   "create.title": {
     "defaultMessage": "Create a new mindmap"
   },
-  "deletem.title": {
-    "defaultMessage": "All selected maps will be deleted"
+  "deletem.count-title": {
+    "defaultMessage": "{count, plural, one {# map will be deleted} other {# maps will be deleted}}"
+  },
+  "deletem.more": {
+    "defaultMessage": "and {count} more"
   },
   "duplicate.copy-title": {
     "defaultMessage": "Copy of {title}"
@@ -1205,6 +1211,9 @@
   "maps.import-desc": {
     "defaultMessage": "Import from other tools"
   },
+  "maps.load-error": {
+    "defaultMessage": "Your maps could not be loaded. Please try again later."
+  },
   "maps.modified": {
     "defaultMessage": "Modified"
   },
@@ -1312,6 +1321,9 @@
   },
   "registration.callback.continue": {
     "defaultMessage": "Continue"
+  },
+  "registration.callback.invalid": {
+    "defaultMessage": "This sign-in link is not valid. Please sign in again."
   },
   "registration.callback.sync": {
     "defaultMessage": "Sync account"

@@ -119,8 +119,11 @@
   "create.title": {
     "defaultMessage": "新しいマインドマップを作成"
   },
-  "deletem.title": {
-    "defaultMessage": "選択されたすべてのマップが削除されます"
+  "deletem.count-title": {
+    "defaultMessage": "{count, plural, other {# 件のマップが削除されます}}"
+  },
+  "deletem.more": {
+    "defaultMessage": "ほか {count} 件"
   },
   "duplicate.copy-title": {
     "defaultMessage": "{title}のコピー"
@@ -410,6 +413,9 @@
   "maps.empty-result": {
     "defaultMessage": "現在のフィルター条件に一致するマインドマップが見つかりません。"
   },
+  "maps.load-error": {
+    "defaultMessage": "マップを読み込めませんでした。しばらくしてからもう一度お試しください。"
+  },
   "maps.import-desc": {
     "defaultMessage": "他のツールからインポート"
   },
@@ -505,6 +511,9 @@
   },
   "registration.callback.continue": {
     "defaultMessage": "続ける"
+  },
+  "registration.callback.invalid": {
+    "defaultMessage": "このサインインリンクは無効です。もう一度サインインしてください。"
   },
   "registration.callback.confirm.description": {
     "defaultMessage": "同じメールアドレスのアカウントが以前に登録されています。{provider}アカウントをそのWiseMappingアカウントにリンクしますか？"
@@ -694,6 +703,9 @@
   },
   "admin.error.create-user-failed": {
     "defaultMessage": "ユーザーの作成に失敗しました。もう一度お試しください。"
+  },
+  "admin.error.load-maps": {
+    "defaultMessage": "マップの読み込みに失敗しました：{message}"
   },
   "admin.error.load-users": {
     "defaultMessage": "ユーザーの読み込みに失敗しました：{message}"

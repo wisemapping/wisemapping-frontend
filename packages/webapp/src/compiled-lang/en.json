@@ -595,6 +595,16 @@
       "value": "Failed to create user. Please try again."
     }
   ],
+  "admin.error.load-maps": [
+    {
+      "type": 0,
+      "value": "Failed to load maps: "
+    },
+    {
+      "type": 1,
+      "value": "message"
+    }
+  ],
   "admin.error.load-users": [
     {
       "type": 0,
@@ -1807,10 +1817,50 @@
       "value": "Create a new mindmap"
     }
   ],
-  "deletem.title": [
+  "deletem.count-title": [
+    {
+      "type": 6,
+      "value": "count",
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " map will be deleted"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " maps will be deleted"
+            }
+          ]
+        }
+      },
+      "offset": 0,
+      "pluralType": "cardinal"
+    }
+  ],
+  "deletem.more": [
     {
       "type": 0,
-      "value": "All selected maps will be deleted"
+      "value": "and "
+    },
+    {
+      "type": 1,
+      "value": "count"
+    },
+    {
+      "type": 0,
+      "value": " more"
     }
   ],
   "duplicate.copy-title": [
@@ -2583,6 +2633,12 @@
       "value": "Import from other tools"
     }
   ],
+  "maps.load-error": [
+    {
+      "type": 0,
+      "value": "Your maps could not be loaded. Please try again later."
+    }
+  ],
   "maps.modified": [
     {
       "type": 0,
@@ -2845,6 +2901,12 @@
     {
       "type": 0,
       "value": "Continue"
+    }
+  ],
+  "registration.callback.invalid": [
+    {
+      "type": 0,
+      "value": "This sign-in link is not valid. Please sign in again."
     }
   ],
   "registration.callback.sync": [

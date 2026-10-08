@@ -106,7 +106,8 @@ export interface AdminMap {
   spamType?: string;
   spamDetectedDate?: string;
   spamDescription?: string;
-  isCreatorSuspended?: boolean;
+  // AdminRestMap.isCreatorSuspended() has no @JsonProperty: Jackson sends "creatorSuspended".
+  creatorSuspended?: boolean;
   collaboratorCount: number;
 }
 
@@ -581,7 +582,7 @@ export default class AdminClient implements AdminClientInterface {
     return Promise.resolve();
   }
 
-  renameMap(_id: number, _basicInfo: BasicMapInfo): Promise<void> {
+  renameMap(_id: number, _changes: Partial<BasicMapInfo>): Promise<void> {
     return Promise.resolve();
   }
 
