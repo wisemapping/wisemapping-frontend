@@ -35,6 +35,13 @@ describe('safeRedirectPath', () => {
     ['//evil.example/c/maps/'],
     ['/\\evil.example'],
     ['\\\\evil.example'],
+    // Dot-segments and tabs that normalise to a protocol-relative "//host" path.
+    ['/.//evil.example'],
+    ['/a/..//evil.example'],
+    ['/%2e//evil.example'],
+    ['/%2e%2e//evil.example'],
+    ['/./\t/evil.example'],
+    ['/./\\evil.example'],
     ['c/maps/3'],
     ['wisemapping'],
     [''],

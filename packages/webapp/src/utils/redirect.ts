@@ -34,7 +34,13 @@ export const safeRedirectPath = (
   }
   try {
     const url = new URL(value, window.location.origin);
-    if (url.origin !== window.location.origin) {
+    // The path is checked again once normalised: dot-segments and stripped tabs turn
+    // "/.//evil.example" into "//evil.example", which the browser reads as another host.
+    if (
+      url.origin !== window.location.origin ||
+      url.pathname.startsWith('//') ||
+      url.pathname.startsWith('/\\')
+    ) {
       return fallback;
     }
     return `${url.pathname}${url.search}${url.hash}`;
