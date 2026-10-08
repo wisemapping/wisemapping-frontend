@@ -35,6 +35,7 @@ import {
 } from '..';
 import { Locale, LocaleCode } from '../../app-i18n';
 import JwtTokenConfig from '../../jwt-token-config';
+import { describeHttpError } from '../http-error';
 
 export interface AdminUser {
   id: number;
@@ -270,7 +271,7 @@ export default class AdminClient implements AdminClientInterface {
       .get(url)
       .then((response) => response.data)
       .catch((error) => {
-        console.error('Failed to fetch admin users:', error);
+        console.error('Failed to fetch admin users:', describeHttpError(error));
         throw this.parseResponseOnError(error.response);
       });
   }
@@ -282,7 +283,7 @@ export default class AdminClient implements AdminClientInterface {
       .get(url)
       .then((response) => response.data)
       .catch((error) => {
-        console.error(`Failed to fetch user ${userId}:`, error);
+        console.error(`Failed to fetch user ${userId}:`, describeHttpError(error));
         throw this.parseResponseOnError(error.response);
       });
   }
@@ -292,7 +293,7 @@ export default class AdminClient implements AdminClientInterface {
       .put(`${this.baseUrl}/api/restful/admin/users/${userId}`, userData)
       .then((response) => response.data)
       .catch((error) => {
-        console.error('Failed to update admin user:', error);
+        console.error('Failed to update admin user:', describeHttpError(error));
         throw this.parseResponseOnError(error.response);
       });
   }
@@ -304,7 +305,7 @@ export default class AdminClient implements AdminClientInterface {
       .post(`${this.baseUrl}/api/restful/admin/users`, userData)
       .then((response) => response.data)
       .catch((error) => {
-        console.error('Failed to create admin user:', error);
+        console.error('Failed to create admin user:', describeHttpError(error));
         throw this.parseResponseOnError(error.response);
       });
   }
@@ -314,7 +315,7 @@ export default class AdminClient implements AdminClientInterface {
       .delete(`${this.baseUrl}/api/restful/admin/users/${userId}`)
       .then(() => {})
       .catch((error) => {
-        console.error('Failed to delete admin user:', error);
+        console.error('Failed to delete admin user:', describeHttpError(error));
         throw this.parseResponseOnError(error.response);
       });
   }
@@ -327,7 +328,7 @@ export default class AdminClient implements AdminClientInterface {
       .put(`${this.baseUrl}/api/restful/admin/users/${userId}/suspension`, suspensionData)
       .then((response) => response.data)
       .catch((error) => {
-        console.error('Failed to update user suspension:', error);
+        console.error('Failed to update user suspension:', describeHttpError(error));
         throw this.parseResponseOnError(error.response);
       });
   }
@@ -337,7 +338,7 @@ export default class AdminClient implements AdminClientInterface {
       .put(`${this.baseUrl}/api/restful/admin/users/${userId}/suspend`)
       .then((response) => response.data)
       .catch((error) => {
-        console.error('Failed to suspend admin user:', error);
+        console.error('Failed to suspend admin user:', describeHttpError(error));
         throw this.parseResponseOnError(error.response);
       });
   }
@@ -347,7 +348,7 @@ export default class AdminClient implements AdminClientInterface {
       .put(`${this.baseUrl}/api/restful/admin/users/${userId}/unsuspend`)
       .then((response) => response.data)
       .catch((error) => {
-        console.error('Failed to unsuspend admin user:', error);
+        console.error('Failed to unsuspend admin user:', describeHttpError(error));
         throw this.parseResponseOnError(error.response);
       });
   }
@@ -357,7 +358,7 @@ export default class AdminClient implements AdminClientInterface {
       .put(`${this.baseUrl}/api/restful/admin/users/${userId}/activate`)
       .then(() => {})
       .catch((error) => {
-        console.error('Failed to activate admin user:', error);
+        console.error('Failed to activate admin user:', describeHttpError(error));
         throw this.parseResponseOnError(error.response);
       });
   }
@@ -369,7 +370,7 @@ export default class AdminClient implements AdminClientInterface {
       })
       .then(() => {})
       .catch((error) => {
-        console.error('Failed to change user password:', error);
+        console.error('Failed to change user password:', describeHttpError(error));
         throw this.parseResponseOnError(error.response);
       });
   }
@@ -379,7 +380,10 @@ export default class AdminClient implements AdminClientInterface {
       .get(`${this.baseUrl}/api/restful/admin/users/facebook/${encodeURIComponent(facebookId)}`)
       .then((response) => response.data)
       .catch((error) => {
-        console.error(`Failed to find user for Facebook ID ${facebookId}:`, error);
+        console.error(
+          `Failed to find user for Facebook ID ${facebookId}:`,
+          describeHttpError(error),
+        );
         throw this.parseResponseOnError(error.response);
       });
   }
@@ -389,7 +393,10 @@ export default class AdminClient implements AdminClientInterface {
       .delete(`${this.baseUrl}/api/restful/admin/users/${userId}/facebook`)
       .then(() => {})
       .catch((error) => {
-        console.error(`Failed to remove Facebook account for user ${userId}:`, error);
+        console.error(
+          `Failed to remove Facebook account for user ${userId}:`,
+          describeHttpError(error),
+        );
         throw this.parseResponseOnError(error.response);
       });
   }
@@ -419,7 +426,7 @@ export default class AdminClient implements AdminClientInterface {
       .get(url)
       .then((response) => response.data)
       .catch((error) => {
-        console.error('Failed to fetch admin maps:', error);
+        console.error('Failed to fetch admin maps:', describeHttpError(error));
         throw this.parseResponseOnError(error.response);
       });
   }
@@ -429,7 +436,7 @@ export default class AdminClient implements AdminClientInterface {
       .get(`${this.baseUrl}/api/restful/admin/users/${userId}/maps`)
       .then((response) => response.data)
       .catch((error) => {
-        console.error('Failed to fetch user maps:', error);
+        console.error('Failed to fetch user maps:', describeHttpError(error));
         throw this.parseResponseOnError(error.response);
       });
   }
@@ -448,7 +455,7 @@ export default class AdminClient implements AdminClientInterface {
       .put(`${this.baseUrl}/api/restful/admin/maps/${mapId}`, restMapData)
       .then((response) => response.data)
       .catch((error) => {
-        console.error('Failed to update admin map:', error);
+        console.error('Failed to update admin map:', describeHttpError(error));
         throw this.parseResponseOnError(error.response);
       });
   }
@@ -460,7 +467,7 @@ export default class AdminClient implements AdminClientInterface {
       .put(`${this.baseUrl}/api/restful/admin/maps/${mapId}/spam`, backendData)
       .then((response) => response.data)
       .catch((error) => {
-        console.error('Failed to update map spam status:', error);
+        console.error('Failed to update map spam status:', describeHttpError(error));
         throw this.parseResponseOnError(error.response);
       });
   }
@@ -470,7 +477,7 @@ export default class AdminClient implements AdminClientInterface {
       .delete(`${this.baseUrl}/api/restful/admin/maps/${mapId}`)
       .then(() => {})
       .catch((error) => {
-        console.error('Failed to delete admin map:', error);
+        console.error('Failed to delete admin map:', describeHttpError(error));
         throw this.parseResponseOnError(error.response);
       });
   }
@@ -482,7 +489,7 @@ export default class AdminClient implements AdminClientInterface {
       })
       .then((response) => response.data)
       .catch((error) => {
-        console.error('Failed to fetch admin map XML:', error);
+        console.error('Failed to fetch admin map XML:', describeHttpError(error));
         throw this.parseResponseOnError(error.response);
       });
   }
@@ -492,7 +499,7 @@ export default class AdminClient implements AdminClientInterface {
       .get(`${this.baseUrl}/api/restful/admin/system/info`)
       .then((response) => response.data)
       .catch((error) => {
-        console.error('Failed to fetch system info:', error);
+        console.error('Failed to fetch system info:', describeHttpError(error));
         throw this.parseResponseOnError(error.response);
       });
   }
@@ -502,7 +509,7 @@ export default class AdminClient implements AdminClientInterface {
       .get(`${this.baseUrl}/api/restful/admin/system/health`)
       .then((response) => response.data)
       .catch((error) => {
-        console.error('Failed to fetch system health:', error);
+        console.error('Failed to fetch system health:', describeHttpError(error));
         throw this.parseResponseOnError(error.response);
       });
   }
@@ -537,7 +544,7 @@ export default class AdminClient implements AdminClientInterface {
           success(response.data);
         })
         .catch((error) => {
-          console.error(error);
+          console.error(describeHttpError(error));
           const errorInfo = this.parseResponseOnError(error.response) as ErrorInfo;
           reject(errorInfo);
         });
@@ -564,7 +571,7 @@ export default class AdminClient implements AdminClientInterface {
         })
         .catch((error) => {
           // Handle an expected error ...
-          console.error(error);
+          console.error(describeHttpError(error));
           const errorInfo = this.parseResponseOnError(error.response) as LoginErrorInfo;
           errorInfo.code = !error.response || error.response.status !== 403 ? 1 : 3;
 

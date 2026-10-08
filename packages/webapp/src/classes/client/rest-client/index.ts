@@ -36,6 +36,7 @@ import AppI18n, { Locale, LocaleCode, Locales, localeFromStr } from '../../app-i
 import JwtTokenConfig from '../../jwt-token-config';
 import { setAnalyticsUserEmail, clearAnalyticsUserId } from '../../../utils/analytics';
 import { appLogger as log } from '../../../utils/logger';
+import { describeHttpError } from '../http-error';
 
 export default class RestClient implements Client {
   private baseUrl: string;
@@ -118,7 +119,7 @@ export default class RestClient implements Client {
         headers: { 'Content-Type': 'application/json' },
       });
     } catch (e) {
-      log.error('Error logging out from backend', e);
+      log.error('Error logging out from backend', describeHttpError(e));
     }
   }
 
@@ -146,7 +147,7 @@ export default class RestClient implements Client {
         })
         .catch((error) => {
           // Handle an expected error ...
-          log.error(error);
+          log.error(describeHttpError(error));
           const errorInfo = this.parseResponseOnError(error.response) as LoginErrorInfo;
           errorInfo.code = !error.response || error.response.status !== 403 ? 1 : 3;
 
@@ -932,7 +933,7 @@ export default class RestClient implements Client {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private parseResponseOnError = (response: any): ErrorInfo => {
     if (response?.status !== 401) {
-      log.error(`Performing backend action error: ${JSON.stringify(response)}`);
+      log.error(`Performing backend action error: ${JSON.stringify(describeHttpError(response))}`);
     }
 
     let result: ErrorInfo | undefined;

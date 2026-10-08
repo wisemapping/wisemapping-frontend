@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 
+import { inspect } from 'util';
 import { waitFor } from '@testing-library/react';
 import ReactGA from 'react-ga4';
 import RestClient from '../../../src/classes/client/rest-client';
@@ -512,6 +513,20 @@ describe('RestClient login and logout', () => {
       code: 1,
     });
     expect(expired).not.toHaveBeenCalled();
+  });
+
+  it('a failed login logs neither the password nor the token', async () => {
+    JwtTokenConfig.storeToken('secret.jwt.value');
+    const { client } = newClient([{ status: 500, data: { globalErrors: ['Boom'] } }]);
+
+    await expect(client.login({ email: 'a', password: 'S3cret-pass!' })).rejects.toBeDefined();
+
+    const logged = inspect(jest.mocked(appLogger.error).mock.calls, { depth: 10 });
+    expect(appLogger.error).toHaveBeenCalled();
+    expect(logged).not.toContain('S3cret-pass!');
+    expect(logged).not.toContain('secret.jwt.value');
+    expect(logged).toContain('/api/restful/authenticate');
+    expect(logged).toContain('500');
   });
 
   it('login reports a 403 (account not active) with code 3', async () => {

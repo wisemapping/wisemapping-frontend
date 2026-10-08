@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 
+import { inspect } from 'util';
 import AdminClient from '../../../src/classes/client/admin-client';
 import JwtTokenConfig from '../../../src/classes/jwt-token-config';
 import { stubBackend, Reply } from './helpers/axios-stub';
@@ -366,5 +367,20 @@ describe('AdminClient regular-client stand-ins', () => {
     await expect(client.revertHistory(1, 2)).resolves.toBeUndefined();
 
     expect(calls).toHaveLength(0);
+  });
+});
+
+describe('AdminClient error logging', () => {
+  it('a failed password change logs neither the new password nor the token', async () => {
+    JwtTokenConfig.storeToken('secret.admin.jwt');
+    const { client } = newClient([{ status: 400, data: { globalErrors: ['Too short'] } }]);
+
+    await expect(client.changeUserPassword(3, 'N3w-pass-value')).rejects.toBeDefined();
+
+    const logged = inspect(jest.mocked(console.error).mock.calls, { depth: 10 });
+    expect(console.error).toHaveBeenCalled();
+    expect(logged).not.toContain('N3w-pass-value');
+    expect(logged).not.toContain('secret.admin.jwt');
+    expect(logged).toContain('400');
   });
 });
