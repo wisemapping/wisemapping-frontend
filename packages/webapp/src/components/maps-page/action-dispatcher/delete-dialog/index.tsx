@@ -20,11 +20,11 @@ import React, { useContext } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ErrorInfo } from '../../../../classes/client';
-import { SimpleDialogProps, handleOnMutationSuccess } from '..';
+import { SimpleDialogProps } from '..';
 import BaseDialog from '../base-dialog';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
-import { useFetchMapMetadata } from '../../../../classes/middleware';
+import { useFetchMapMetadata, mapMetadataQueryKey } from '../../../../classes/middleware';
 import { ClientContext } from '../../../../classes/provider/client-context';
 
 const DeleteDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
@@ -35,7 +35,16 @@ const DeleteDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement
 
   const mutation = useMutation({
     mutationFn: (id: number) => client.deleteMap(id),
-    onSuccess: () => handleOnMutationSuccess(() => onClose(true), queryClient),
+    onSuccess: (_data, id) => {
+      // Everything under ['maps'] but the deleted map itself: this dialog still shows it, and
+      // refetching it would ask for a map that no longer exists.
+      const [, metadata, deletedId] = mapMetadataQueryKey(id);
+      queryClient.invalidateQueries({
+        queryKey: ['maps'],
+        predicate: ({ queryKey }) => !(queryKey[1] === metadata && queryKey[2] === deletedId),
+      });
+      onClose(true);
+    },
     onError: (error: ErrorInfo) => {
       setError(error);
     },

@@ -199,14 +199,25 @@ describe('RenameDialog', () => {
 describe('DeleteDialog', () => {
   const setup = () => {
     const deleteMap = jest.fn<Promise<void>, [number]>(() => Promise.resolve());
+    const fetchMapMetadata = jest.fn(() => Promise.resolve({ id: 7, title: 'Travel plans' }));
     const onClose = jest.fn();
-    const client = {
-      deleteMap,
-      fetchMapMetadata: () => Promise.resolve({ id: 7, title: 'Travel plans' }),
-    } as unknown as Client;
+    const client = { deleteMap, fetchMapMetadata } as unknown as Client;
     renderWithProviders(<DeleteDialog mapId={7} onClose={onClose} />, { client });
-    return { deleteMap, onClose };
+    return { deleteMap, fetchMapMetadata, onClose };
   };
+
+  test('does not ask for the deleted map again', async () => {
+    // Invalidating ['maps'] refetched the dialog's own metadata query: a request for a map
+    // that no longer exists, answered with an error that was logged on every delete.
+    const { fetchMapMetadata, onClose } = setup();
+    await screen.findByText('Delete Travel plans');
+
+    fireEvent.click(button('Delete'));
+    await waitFor(() => expect(onClose).toHaveBeenCalledWith(true));
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    expect(fetchMapMetadata).toHaveBeenCalledTimes(1);
+  });
 
   test('names the map being deleted and warns it can not be recovered', async () => {
     setup();
