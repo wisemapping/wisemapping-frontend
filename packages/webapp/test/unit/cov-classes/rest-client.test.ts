@@ -26,6 +26,15 @@ import { stubBackend, flushPromises, installWebCrypto, Reply } from './helpers/a
 
 const API = 'http://api.test';
 
+/** A JWT whose exp is `secondsFromNow` away (negative: already expired). */
+const tokenExpiringIn = (secondsFromNow: number): string => {
+  const payload = {
+    sub: 'ana@wisemapping.com',
+    exp: Math.floor(Date.now() / 1000) + secondsFromNow,
+  };
+  return `h.${btoa(JSON.stringify(payload)).replace(/=+$/, '')}.s`;
+};
+
 const newClient = (replies?: Reply[] | ((req: { url: string; method: string }) => Reply)) => {
   const client = new RestClient(API);
   const calls = stubBackend(client, replies);
@@ -793,7 +802,19 @@ describe('RestClient error handling', () => {
     });
   });
 
+  it('treats a 403 with an expired token as an auth problem', async () => {
+    // The backend reads an expired JWT as anonymous, so a private map answers 403. The cookie
+    // outlives the JWT: a returning user opening a map link was told they had no access
+    // instead of being sent to sign in.
+    JwtTokenConfig.storeToken(tokenExpiringIn(-60));
+    await expect(failWith({ status: 403, data: {} })).rejects.toEqual({
+      status: 403,
+      isAuth: true,
+    });
+  });
+
   it('turns a 401 without details into a session-expired auth error', async () => {
+    JwtTokenConfig.storeToken(tokenExpiringIn(3600));
     const expired = jest.fn();
     const { client } = newClient([{ status: 401 }]);
     client.onSessionExpired(expired);
@@ -803,7 +824,7 @@ describe('RestClient error handling', () => {
       msg: 'Your current session has expired. Please, sign in and try again.',
       status: 401,
     });
-    expect(expired).toHaveBeenCalled();
+    expect(expired).toHaveBeenCalledTimes(1);
   });
 
   it('treats a 302 redirect like an expired session', async () => {
@@ -816,14 +837,39 @@ describe('RestClient error handling', () => {
     });
   });
 
-  it.each([403, 405])('notifies the session-expired callback on a %s', async (status) => {
+  const expiryNotified = async (status: number, token?: string): Promise<boolean> => {
+    if (token) {
+      JwtTokenConfig.storeToken(token);
+    }
     const expired = jest.fn();
     const { client } = newClient([{ status, data: {} }]);
     client.onSessionExpired(expired);
-
     await expect(client.deleteMap(1)).rejects.toBeDefined();
+    return expired.mock.calls.length > 0;
+  };
 
-    expect(expired).toHaveBeenCalled();
+  it('a 401 on a signed-in request is an expired session', async () => {
+    expect(await expiryNotified(401, tokenExpiringIn(3600))).toBe(true);
+  });
+
+  it('a 403 sent with an expired token is an expired session', async () => {
+    expect(await expiryNotified(403, tokenExpiringIn(-60))).toBe(true);
+  });
+
+  it('a 403 sent with a valid token is a refusal, not an expired session', async () => {
+    // A map that was unshared or deleted meanwhile: the user is still signed in.
+    expect(await expiryNotified(403, tokenExpiringIn(3600))).toBe(false);
+  });
+
+  it('a 401 or 403 without a token is no session expiry: nobody was signed in', async () => {
+    // An anonymous visitor on a public map: the account request answers 401, and a "session
+    // expired" dialog used to cover the map.
+    expect(await expiryNotified(401)).toBe(false);
+    expect(await expiryNotified(403)).toBe(false);
+  });
+
+  it('a 405 is no session expiry', async () => {
+    expect(await expiryNotified(405, tokenExpiringIn(3600))).toBe(false);
   });
 
   it('does not notify the session-expired callback on other errors', async () => {

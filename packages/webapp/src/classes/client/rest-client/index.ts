@@ -43,17 +43,29 @@ export default class RestClient implements Client {
   private axios: AxiosInstance;
   private _onSessionExpired: () => void;
 
+  /**
+   * The one place that reports an expired session, from the token the request carried:
+   * - a request without a token was made by nobody signed in (an anonymous visitor on a public
+   *   map), so its 401 is no expired session;
+   * - the backend reads an expired token as anonymous, so a 403 sent with one is an expired
+   *   session, while a 403 with a valid token is a refusal (the map was unshared or deleted).
+   */
   private checkResponseForSessionExpired = <T>(error: {
     response?: AxiosResponse<T>;
-    config?: { url?: string };
+    config?: { url?: string; headers?: { get?: (name: string) => unknown } };
   }): Promise<{ response?: AxiosResponse<T> }> => {
     const status = error.response ? error.response.status : 0;
-    if (
-      status === 405 ||
-      status === 403 ||
-      (status === 401 && !error.config?.url?.endsWith('/authenticate'))
-    ) {
-      this.sessionExpired();
+    const authorization = error.config?.headers?.get?.('Authorization');
+    const sentToken =
+      typeof authorization === 'string' ? authorization.replace(/^Bearer\s+/i, '') : undefined;
+    if (sentToken) {
+      const signInFailed = error.config?.url?.endsWith('/authenticate');
+      if (
+        ((status === 401 || status === 302) && !signInFailed) ||
+        (status === 403 && JwtTokenConfig.isTokenExpired(sentToken))
+      ) {
+        this.sessionExpired();
+      }
     }
     return Promise.reject(error);
   };
@@ -968,8 +980,8 @@ export default class RestClient implements Client {
               msg: data.globalErrors[0],
             };
           } else {
-            // No specific error message, treat as session expiration
-            this.sessionExpired();
+            // No specific error message, treat as session expiration. The response interceptor
+            // has already notified it, when the request was a signed-in one.
             result = {
               isAuth: true,
               msg: 'Your current session has expired. Please, sign in and try again.',
@@ -1022,8 +1034,11 @@ export default class RestClient implements Client {
       result.status = normalizedStatus;
 
       if (result.isAuth === undefined) {
-        // No access to the operation and not session token, assuming that the issue is related to missing auth.
-        result.isAuth = normalizedStatus === 403 && JwtTokenConfig.retreiveToken() === undefined;
+        // No access and no valid session: signing in may give access. The backend reads an
+        // expired token as anonymous, and the cookie outlives the token.
+        const token = JwtTokenConfig.retreiveToken();
+        result.isAuth =
+          normalizedStatus === 403 && (token === undefined || JwtTokenConfig.isTokenExpired(token));
       }
     }
 
