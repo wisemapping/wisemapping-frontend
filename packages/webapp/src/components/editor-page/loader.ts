@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import { ErrorInfo, MapMetadata } from '../../classes/client';
+import { ErrorInfo, MapMetadata, Role } from '../../classes/client';
 import type { EditorRenderMode } from '@wisemapping/mindplot';
 import type { LoaderFunctionArgs } from 'react-router';
 import AppConfig from '../../classes/app-config';
@@ -52,6 +52,9 @@ async function fetchMapMetadataWithCache(
     queryFn: () => client.fetchMapMetadata(mapId, includeXml),
   });
 }
+
+const isCollaboratorRole = (role: Role): role is Exclude<Role, 'none'> =>
+  role === 'owner' || role === 'editor' || role === 'viewer';
 
 const isErrorInfo = (error: unknown): error is ErrorInfo =>
   typeof error === 'object' &&
@@ -101,10 +104,16 @@ export const loader = (pageMode: PageModeType, bootstrap = false) => {
       case 'edit':
       case 'view-private': {
         try {
-          const mapMetadata = await fetchMapMetadataWithCache(mapId, client, bootstrap);
+          // A history revision is loaded by the editor from its own URL: bootstrapping it with
+          // the current map's XML would show today's map instead of the revision.
+          const bootstrapXml = bootstrap && !params.hid;
+          const mapMetadata = await fetchMapMetadataWithCache(mapId, client, bootstrapXml);
 
           let editorMode: EditorRenderMode;
-          if (mapMetadata.isLocked || pageMode === 'view-private') {
+          if (!isCollaboratorRole(mapMetadata.role)) {
+            // Somebody else's public map: only its public XML can be read, and nothing saved.
+            editorMode = 'viewonly-public';
+          } else if (mapMetadata.isLocked || pageMode === 'view-private') {
             editorMode = 'viewonly-private';
           } else {
             editorMode = `edition-${mapMetadata.role}`;
@@ -135,7 +144,7 @@ export const loader = (pageMode: PageModeType, bootstrap = false) => {
           };
 
           // Include XML if requested and available
-          if (bootstrap && mapMetadata.xml) {
+          if (bootstrapXml && mapMetadata.xml) {
             data.bootstrapXML = mapMetadata.xml;
           }
 

@@ -44,7 +44,8 @@ export type Label = {
   color: string;
 };
 
-export type Role = 'owner' | 'editor' | 'viewer';
+// 'none': the map is public and the signed-in user (or the anonymous visitor) is no collaborator.
+export type Role = 'owner' | 'editor' | 'viewer' | 'none';
 
 export type MapInfo = {
   id: number;
