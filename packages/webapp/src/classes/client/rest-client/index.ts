@@ -479,28 +479,30 @@ export default class RestClient implements Client {
     return AppI18n.getDefaultLocale();
   }
 
-  renameMap(id: number, basicInfo: BasicMapInfo): Promise<void> {
+  renameMap(id: number, changes: Partial<BasicMapInfo>): Promise<void> {
     const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
-      this.axios
-        .put(`${this.baseUrl}/api/restful/maps/${id}/title`, basicInfo.title, {
-          headers: { 'Content-Type': 'text/plain' },
-        })
-        .then(() => {
-          // No description given (the editor renames with the title only): keep the current one.
-          if (basicInfo.description === undefined) {
-            return undefined;
-          }
-          // A cleared description is sent as a blank: the backend refuses an empty body.
-          return this.axios.put(
-            `${this.baseUrl}/api/restful/maps/${id}/description`,
-            basicInfo.description || ' ',
-            { headers: { 'Content-Type': 'text/plain' } },
-          );
-        })
-        .then(() => {
-          // All was ok, let's sent to success page ...;
-          success();
-        })
+      // Only what changed is sent: the backend refuses a title the user already has, the map's
+      // own included, so resending an unchanged title would fail a description-only edit.
+      const updateTitle = () =>
+        changes.title === undefined
+          ? undefined
+          : this.axios.put(`${this.baseUrl}/api/restful/maps/${id}/title`, changes.title, {
+              headers: { 'Content-Type': 'text/plain' },
+            });
+      // A cleared description is sent as a blank: the backend refuses an empty body.
+      const updateDescription = () =>
+        changes.description === undefined
+          ? undefined
+          : this.axios.put(
+              `${this.baseUrl}/api/restful/maps/${id}/description`,
+              changes.description || ' ',
+              { headers: { 'Content-Type': 'text/plain' } },
+            );
+
+      Promise.resolve()
+        .then(updateTitle)
+        .then(updateDescription)
+        .then(() => success())
         .catch((error) => {
           const response = error.response;
           const errorInfo = this.parseResponseOnError(response);

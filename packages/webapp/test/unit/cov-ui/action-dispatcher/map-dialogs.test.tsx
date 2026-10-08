@@ -109,6 +109,31 @@ describe('RenameDialog', () => {
     await waitFor(() => expect(onClose).toHaveBeenCalledTimes(1));
   });
 
+  test('changing only the description does not send the title again', async () => {
+    // The backend refuses a title the user already has, the map's own included: sending the
+    // unchanged title made a description-only edit fail with "You already have a mindmap...".
+    const { renameMap, onClose } = setup();
+    await screen.findByDisplayValue('Travel plans');
+
+    fireEvent.change(textbox(/Description/), { target: { value: 'Ski trip' } });
+    fireEvent.click(button('Rename'));
+
+    await waitFor(() => expect(renameMap).toHaveBeenCalledTimes(1));
+    expect(renameMap.mock.calls[0]).toEqual([7, { description: 'Ski trip' }]);
+    await waitFor(() => expect(onClose).toHaveBeenCalledTimes(1));
+  });
+
+  test('changing only the name does not send the description again', async () => {
+    const { renameMap } = setup();
+    await screen.findByDisplayValue('Travel plans');
+
+    fireEvent.change(textbox(/Name/), { target: { value: 'Winter plans' } });
+    fireEvent.click(button('Rename'));
+
+    await waitFor(() => expect(renameMap).toHaveBeenCalledTimes(1));
+    expect(renameMap.mock.calls[0]).toEqual([7, { title: 'Winter plans' }]);
+  });
+
   test('takes 200 characters typed in one burst, as Cypress types them', async () => {
     const { renameMap } = setup();
     await screen.findByDisplayValue('Travel plans');

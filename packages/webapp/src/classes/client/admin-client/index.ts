@@ -581,7 +581,7 @@ export default class AdminClient implements AdminClientInterface {
     return Promise.resolve();
   }
 
-  renameMap(_id: number, _basicInfo: BasicMapInfo): Promise<void> {
+  renameMap(_id: number, _changes: Partial<BasicMapInfo>): Promise<void> {
     return Promise.resolve();
   }
 

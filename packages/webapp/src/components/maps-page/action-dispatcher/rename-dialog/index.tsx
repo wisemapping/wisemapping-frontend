@@ -33,7 +33,7 @@ import { ClientContext } from '../../../../classes/provider/client-context';
 
 export type RenameModel = {
   id: number;
-  title: string;
+  title?: string;
   description?: string;
 };
 
@@ -82,12 +82,15 @@ const RenameDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement
       return;
     }
 
-    // Use mapId from props, not model.id, to ensure it's always valid
-    const validatedModel: RenameModel = {
-      id: mapId,
-      title: model.title,
-      description: model.description,
-    };
+    // Use mapId from props, not model.id, to ensure it's always valid. Only the fields that
+    // changed are sent: the backend refuses the map's own, unchanged title as a duplicate.
+    const validatedModel: RenameModel = { id: mapId };
+    if (model.title !== map?.title) {
+      validatedModel.title = model.title;
+    }
+    if (model.description !== map?.description) {
+      validatedModel.description = model.description;
+    }
 
     mutation.mutate(validatedModel);
   };

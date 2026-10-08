@@ -164,7 +164,8 @@ interface Client {
   createMap(map: BasicMapInfo): Promise<number>;
   deleteMaps(ids: number[]): Promise<void>;
   deleteMap(id: number): Promise<void>;
-  renameMap(id: number, basicInfo: BasicMapInfo): Promise<void>;
+  /** Updates the title and/or the description: a field left out is not sent. */
+  renameMap(id: number, changes: Partial<BasicMapInfo>): Promise<void>;
   fetchAllMaps(): Promise<MapInfo[]>;
   fetchMapMetadata(id: number, includeXml?: boolean): Promise<MapMetadata>;
   fetchMapInfo(id: number): Promise<MapInfo>;

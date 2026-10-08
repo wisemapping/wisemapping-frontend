@@ -222,6 +222,16 @@ describe('RestClient maps', () => {
     ]);
   });
 
+  it('renameMap without a title only updates the description', async () => {
+    const { client, calls } = newClient();
+
+    await client.renameMap(4, { description: 'Desc' });
+
+    expect(calls.map((c) => [c.method, c.url, c.data])).toEqual([
+      ['PUT', `${API}/api/restful/maps/4/description`, 'Desc'],
+    ]);
+  });
+
   it('renameMap reports the field error of a duplicated title', async () => {
     const { client, calls } = newClient([
       { status: 400, data: { fieldErrors: { title: 'Title already in use' } } },
