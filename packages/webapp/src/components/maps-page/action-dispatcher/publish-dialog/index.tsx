@@ -40,6 +40,7 @@ import Tooltip from '@mui/material/Tooltip';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useFetchMapById } from '../../../../classes/middleware';
 import { ClientContext } from '../../../../classes/provider/client-context';
+import { copyText } from '../../../../utils/clipboard';
 
 const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
   const { data: map } = useFetchMapById(mapId);
@@ -103,21 +104,7 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
   };
 
   const handleCopyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text).then(
-      () => {
-        setCopied(true);
-      },
-      () => {
-        // Fallback for older browsers
-        const textArea = document.createElement('textarea');
-        textArea.value = text;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
-        setCopied(true);
-      },
-    );
+    copyText(text).then((copied) => setCopied(copied));
   };
 
   const handleCloseTooltip = () => {

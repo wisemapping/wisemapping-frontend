@@ -66,6 +66,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import UserMapsDialog from '../shared/UserMapsDialog';
 import SpamStatusChip from '../shared/SpamStatusChip';
 import EditMapDialog, { MapFormData } from './EditMapDialog';
+import { copyText } from '../../../utils/clipboard';
 
 // XML formatting utility
 const formatXml = (xml: string): string => {
@@ -1204,8 +1205,7 @@ const MapsManagement = (): ReactElement => {
             variant="contained"
             onClick={() => {
               if (xmlContent) {
-                navigator.clipboard.writeText(formatXml(xmlContent));
-                // You could add a snackbar notification here
+                copyText(formatXml(xmlContent));
               }
             }}
             disabled={!xmlContent || isPendingXml}
