@@ -497,6 +497,18 @@
   "registration.callback.back": {
     "defaultMessage": "Повернутися до входу"
   },
+  "registration.callback.confirm-signin.account": {
+    "defaultMessage": "Ви збираєтеся увійти до WiseMapping через {provider} як {email}. Продовжуйте, лише якщо ви самі почали цей вхід."
+  },
+  "registration.callback.confirm-signin.description": {
+    "defaultMessage": "Ви збираєтеся увійти до WiseMapping через {provider}. Продовжуйте, лише якщо ви самі почали цей вхід."
+  },
+  "registration.callback.confirm-signin.title": {
+    "defaultMessage": "Продовжити вхід?"
+  },
+  "registration.callback.continue": {
+    "defaultMessage": "Продовжити"
+  },
   "registration.callback.confirm.description": {
     "defaultMessage": "Акаунт з такою ж електронною поштою був раніше зареєстрований. Чи хочете прив'язати ваш {provider} акаунт до того акаунту WiseMapping?"
   },

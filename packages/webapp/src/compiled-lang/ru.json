@@ -2779,6 +2779,48 @@
       "value": "Вернуться на страницу авторизации"
     }
   ],
+  "registration.callback.confirm-signin.account": [
+    {
+      "type": 0,
+      "value": "Вы собираетесь войти в WiseMapping через "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": " как "
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": ". Продолжайте, только если вы сами начали этот вход."
+    }
+  ],
+  "registration.callback.confirm-signin.description": [
+    {
+      "type": 0,
+      "value": "Вы собираетесь войти в WiseMapping через "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": ". Продолжайте, только если вы сами начали этот вход."
+    }
+  ],
+  "registration.callback.confirm-signin.title": [
+    {
+      "type": 0,
+      "value": "Продолжить вход?"
+    }
+  ],
   "registration.callback.confirm.description": [
     {
       "type": 0,
@@ -2797,6 +2839,12 @@
     {
       "type": 0,
       "value": "Подтверждать"
+    }
+  ],
+  "registration.callback.continue": [
+    {
+      "type": 0,
+      "value": "Продолжить"
     }
   ],
   "registration.callback.sync": [

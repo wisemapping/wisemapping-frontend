@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import FormContainer from '../layout/form-container';
 import Header from '../layout/header';
@@ -34,8 +34,39 @@ import { logCriticalError } from '../../utils';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useTheme } from '../../contexts/ThemeContext';
 import JwtTokenConfig from '../../classes/jwt-token-config';
+import { DEFAULT_REDIRECT, leaveTo, safeRedirectPath } from '../../utils/redirect';
+import { takeOAuthFlow } from '../../utils/oauth-flow';
 
 type OAuthProvider = 'google' | 'facebook';
+
+type OAuthCallbackParams =
+  | { kind: 'token'; jwtToken: string; email: string; oauthSync: boolean; syncCode?: string }
+  | { kind: 'code'; code: string };
+
+// Spring Boot OAuth2 sends the JWT itself; the legacy endpoints send a code to exchange.
+const readCallbackParams = (searchParams: URLSearchParams): OAuthCallbackParams | undefined => {
+  const jwtToken = searchParams.get('jwtToken');
+  const email = searchParams.get('email');
+  if (jwtToken && email) {
+    return {
+      kind: 'token',
+      jwtToken,
+      email,
+      oauthSync: searchParams.get('oauthSync') === 'true',
+      syncCode: searchParams.get('syncCode') || undefined,
+    };
+  }
+  const code = searchParams.get('code');
+  return code ? { kind: 'code', code } : undefined;
+};
+
+const SECRET_PARAMS = ['jwtToken', 'email', 'syncCode', 'code', 'oauthSync'];
+
+const scrubCallbackParams = (): void => {
+  const url = new URL(window.location.href);
+  SECRET_PARAMS.forEach((name) => url.searchParams.delete(name));
+  window.history.replaceState(window.history.state, '', `${url.pathname}${url.search}${url.hash}`);
+};
 
 const OAuthCallbackPage = (): React.ReactElement => {
   const intl = useIntl();
@@ -46,10 +77,14 @@ const OAuthCallbackPage = (): React.ReactElement => {
 
   const [error, setError] = useState<ErrorInfo | undefined>();
   const [callbackResult, setCallbackResult] = useState<Oauth2CallbackResult>();
+  // A callback that did not start from a sign-in in this tab, held until the user confirms it.
+  const [unconfirmed, setUnconfirmed] = useState<OAuthCallbackParams>();
+  // Where to go once signed in: a path on this site only (see safeRedirectPath).
+  const redirectTarget = useRef<string>(DEFAULT_REDIRECT);
 
   // Route through login page so Google Ads vignette fires from a page with ads already loaded.
-  const navigateAfterOAuth = (url: string): void => {
-    window.location.href = `/c/login?redirect=${encodeURIComponent(url)}`;
+  const navigateAfterOAuth = (): void => {
+    leaveTo(`/c/login?redirect=${encodeURIComponent(redirectTarget.current)}`);
   };
 
   // Determine OAuth provider based on route path
@@ -68,8 +103,52 @@ const OAuthCallbackPage = (): React.ReactElement => {
     trackPageView(window.location.pathname, 'Registration:Success');
   }, []);
 
+  const processCallback = (params: OAuthCallbackParams): void => {
+    if (params.kind === 'token') {
+      // This is a Spring Boot OAuth2 callback - process directly
+      JwtTokenConfig.storeToken(params.jwtToken);
+      setAnalyticsUserEmail(params.email);
+
+      if (params.oauthSync) {
+        // Initialize theme from system preference if not already set
+        initializeThemeFromSystem();
+        navigateAfterOAuth();
+        return;
+      }
+      setCallbackResult({
+        email: params.email,
+        oauthSync: params.oauthSync,
+        syncCode: params.syncCode,
+      });
+      return;
+    }
+
+    // Legacy OAuth callback handling (old custom OAuth endpoints)
+    const callbackPromise =
+      provider === 'facebook'
+        ? client.processFacebookCallback(params.code)
+        : client.processGoogleCallback(params.code);
+
+    callbackPromise
+      .then((result) => {
+        if (result.oauthSync) {
+          // Initialize theme from system preference if not already set
+          initializeThemeFromSystem();
+          navigateAfterOAuth();
+          return;
+        }
+        setCallbackResult(result);
+      })
+      .catch((errorInfo: ErrorInfo) => {
+        setError(errorInfo);
+        logCriticalError(`Unexpected error on ${provider} OAuth callback`, errorInfo);
+      });
+  };
+
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
+    const flow = takeOAuthFlow();
+    redirectTarget.current = safeRedirectPath(flow?.redirect ?? searchParams.get('state'));
 
     // Check if user cancelled the OAuth flow
     const error = searchParams.get('error');
@@ -90,74 +169,21 @@ const OAuthCallbackPage = (): React.ReactElement => {
       return;
     }
 
-    // Check if this is a Spring Boot OAuth2 callback (with jwtToken in URL)
-    const jwtToken = searchParams.get('jwtToken');
-    const email = searchParams.get('email');
-    const oauthSync = searchParams.get('oauthSync');
-    const syncCode = searchParams.get('syncCode');
-
-    if (jwtToken && email) {
-      // This is a Spring Boot OAuth2 callback - process directly
-      // Store JWT token
-      if (jwtToken) {
-        JwtTokenConfig.storeToken(jwtToken);
-        setAnalyticsUserEmail(email);
-      }
-
-      const result: Oauth2CallbackResult = {
-        email: email,
-        oauthSync: oauthSync === 'true',
-        syncCode: syncCode || undefined,
-      };
-
-      if (result.oauthSync) {
-        // Initialize theme from system preference if not already set
-        initializeThemeFromSystem();
-        // Get redirect URL from OAuth state parameter
-        const stateRedirectUrl = searchParams.get('state');
-        navigateAfterOAuth(
-          stateRedirectUrl && stateRedirectUrl !== 'wisemapping' ? stateRedirectUrl : '/c/maps/',
-        );
-        return;
-      }
-      setCallbackResult(result);
-      return;
-    }
-
-    // Legacy OAuth callback handling (old custom OAuth endpoints)
-    const oauthCode = searchParams.get('code');
-    if (!oauthCode) {
+    const params = readCallbackParams(searchParams);
+    // The token, code and email must not stay in the address bar, the history or the Referer.
+    scrubCallbackParams();
+    if (!params) {
       setError({
         msg: `Missing OAuth code or token in callback: ${window.location.search}`,
       });
       return;
     }
 
-    // Get redirect URL from OAuth state parameter
-    const stateRedirectUrl = searchParams.get('state');
-
-    // Call the appropriate OAuth callback based on provider
-    const callbackPromise =
-      provider === 'facebook'
-        ? client.processFacebookCallback(oauthCode)
-        : client.processGoogleCallback(oauthCode);
-
-    callbackPromise
-      .then((result) => {
-        if (result.oauthSync) {
-          // Initialize theme from system preference if not already set
-          initializeThemeFromSystem();
-          navigateAfterOAuth(
-            stateRedirectUrl && stateRedirectUrl !== 'wisemapping' ? stateRedirectUrl : '/c/maps/',
-          );
-          return;
-        }
-        setCallbackResult(result);
-      })
-      .catch((errorInfo: ErrorInfo) => {
-        setError(errorInfo);
-        logCriticalError(`Unexpected error on ${provider} OAuth callback`, errorInfo);
-      });
+    if (flow) {
+      processCallback(params);
+    } else {
+      setUnconfirmed(params);
+    }
     // Once, on arrival: the OAuth code in the URL is single-use, and initializeThemeFromSystem is a
     // new function on every ThemeContext render, so re-running would post the spent code again.
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -169,18 +195,12 @@ const OAuthCallbackPage = (): React.ReactElement => {
       throw new Error(`callbackResult can not be null`);
     }
 
-    // Get redirect URL from OAuth state parameter
-    const searchParams = new URLSearchParams(window.location.search);
-    const stateRedirectUrl = searchParams.get('state');
-
     client
       .confirmAccountSync(callback.email, callback.syncCode, provider)
       .then(() => {
         // Initialize theme from system preference if not already set
         initializeThemeFromSystem();
-        navigateAfterOAuth(
-          stateRedirectUrl && stateRedirectUrl !== 'wisemapping' ? stateRedirectUrl : '/c/maps/',
-        );
+        navigateAfterOAuth();
       })
       .catch((errorInfo: ErrorInfo) => {
         setError(errorInfo);
@@ -193,20 +213,21 @@ const OAuthCallbackPage = (): React.ReactElement => {
           console.warn(probableCause);
         }
 
-        // Add detailed debug information for troubleshooting
+        // Add detailed debug information for troubleshooting. The URL is left out: before it is
+        // scrubbed it carries the JWT, and the path is all the log needs.
         const debugInfo = {
           errorInfo,
           probableCause,
           context: {
             email: callback.email,
             syncCode: callback.syncCode || '(not provided)',
-            stateRedirectUrl: stateRedirectUrl || '(not provided)',
+            redirectTarget: redirectTarget.current,
             provider,
-            url: window.location.href,
+            path: window.location.pathname,
           },
         };
         logCriticalError(
-          `Unexpected error on confirmAccountSynching. Email: ${callback.email}, Provider: ${provider}, Status: ${errorInfo.status || 'unknown'}, Message: ${errorInfo.msg || 'none'}`,
+          `Unexpected error on confirmAccountSynching. Provider: ${provider}, Status: ${errorInfo.status || 'unknown'}, Message: ${errorInfo.msg || 'none'}`,
           debugInfo,
         );
       });
@@ -214,6 +235,7 @@ const OAuthCallbackPage = (): React.ReactElement => {
 
   // if service reports that user doesnt sync accounts yet, we need to show the options
   const needConfirmLinking = !error && callbackResult?.email && !callbackResult?.oauthSync;
+  const needConfirmSignIn = !error && unconfirmed !== undefined;
 
   // Show the standard OAuth callback page with form container
   return (
@@ -221,7 +243,12 @@ const OAuthCallbackPage = (): React.ReactElement => {
       <Header type="none" />
       <FormContainer>
         <Typography variant="h4" component="h1">
-          {needConfirmLinking ? (
+          {needConfirmSignIn ? (
+            <FormattedMessage
+              id="registration.callback.confirm-signin.title"
+              defaultMessage="Continue signing in?"
+            />
+          ) : needConfirmLinking ? (
             <FormattedMessage id="registration.callback.confirm.title" defaultMessage="Confirm" />
           ) : (
             <FormattedMessage
@@ -235,7 +262,21 @@ const OAuthCallbackPage = (): React.ReactElement => {
             marginBottom: '16px',
           }}
         >
-          {needConfirmLinking ? (
+          {needConfirmSignIn ? (
+            unconfirmed.kind === 'token' ? (
+              <FormattedMessage
+                id="registration.callback.confirm-signin.account"
+                defaultMessage="You are about to sign in to WiseMapping with {provider} as {email}. Continue only if you started this sign-in yourself."
+                values={{ provider: providerName, email: unconfirmed.email }}
+              />
+            ) : (
+              <FormattedMessage
+                id="registration.callback.confirm-signin.description"
+                defaultMessage="You are about to sign in to WiseMapping with {provider}. Continue only if you started this sign-in yourself."
+                values={{ provider: providerName }}
+              />
+            )
+          ) : needConfirmLinking ? (
             <FormattedMessage
               id="registration.callback.confirm.description"
               defaultMessage="An account with the same email was previously registered. Do you want to link your {provider} account to that WiseMapping account?"
@@ -266,7 +307,36 @@ const OAuthCallbackPage = (): React.ReactElement => {
           </div>
         )}
 
-        {!needConfirmLinking && !error && <CircularProgress />}
+        {!needConfirmLinking && !needConfirmSignIn && !error && <CircularProgress />}
+
+        {needConfirmSignIn && (
+          <div key="confirm-signin">
+            <Button
+              color="secondary"
+              size="medium"
+              variant="contained"
+              component={RouterLink}
+              to="/c/login"
+              disableElevation={true}
+              css={buttonsStyle}
+            >
+              <FormattedMessage id="registration.callback.back" defaultMessage="Back to login" />
+            </Button>
+            <Button
+              onClick={() => {
+                setUnconfirmed(undefined);
+                processCallback(unconfirmed);
+              }}
+              color="primary"
+              size="medium"
+              variant="contained"
+              disableElevation={true}
+              css={buttonsStyle}
+            >
+              <FormattedMessage id="registration.callback.continue" defaultMessage="Continue" />
+            </Button>
+          </div>
+        )}
 
         {needConfirmLinking && (
           <div key="confirm-sync">

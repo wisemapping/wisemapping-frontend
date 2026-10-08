@@ -2779,6 +2779,48 @@
       "value": "लॉगिन पर वापस जाएं"
     }
   ],
+  "registration.callback.confirm-signin.account": [
+    {
+      "type": 0,
+      "value": "आप "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": " के ज़रिए "
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": " के रूप में WiseMapping में साइन इन करने वाले हैं। केवल तभी जारी रखें जब यह साइन इन आपने खुद शुरू किया हो।"
+    }
+  ],
+  "registration.callback.confirm-signin.description": [
+    {
+      "type": 0,
+      "value": "आप "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": " के ज़रिए WiseMapping में साइन इन करने वाले हैं। केवल तभी जारी रखें जब यह साइन इन आपने खुद शुरू किया हो।"
+    }
+  ],
+  "registration.callback.confirm-signin.title": [
+    {
+      "type": 0,
+      "value": "साइन इन जारी रखें?"
+    }
+  ],
   "registration.callback.confirm.description": [
     {
       "type": 0,
@@ -2797,6 +2839,12 @@
     {
       "type": 0,
       "value": "पुष्टि करें"
+    }
+  ],
+  "registration.callback.continue": [
+    {
+      "type": 0,
+      "value": "जारी रखें"
     }
   ],
   "registration.callback.sync": [

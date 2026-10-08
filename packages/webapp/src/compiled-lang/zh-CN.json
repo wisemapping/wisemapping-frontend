@@ -2783,6 +2783,48 @@
       "value": "返回登录"
     }
   ],
+  "registration.callback.confirm-signin.account": [
+    {
+      "type": 0,
+      "value": "您即将以 "
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": " 的身份通过 "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": " 登录 WiseMapping。仅当这次登录是您本人发起时才继续。"
+    }
+  ],
+  "registration.callback.confirm-signin.description": [
+    {
+      "type": 0,
+      "value": "您即将通过 "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": " 登录 WiseMapping。仅当这次登录是您本人发起时才继续。"
+    }
+  ],
+  "registration.callback.confirm-signin.title": [
+    {
+      "type": 0,
+      "value": "继续登录？"
+    }
+  ],
   "registration.callback.confirm.description": [
     {
       "type": 0,
@@ -2801,6 +2843,12 @@
     {
       "type": 0,
       "value": "确认"
+    }
+  ],
+  "registration.callback.continue": [
+    {
+      "type": 0,
+      "value": "继续"
     }
   ],
   "registration.callback.sync": [

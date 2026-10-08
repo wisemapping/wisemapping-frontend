@@ -2783,6 +2783,48 @@
       "value": "العودة إلى تسجيل الدخول"
     }
   ],
+  "registration.callback.confirm-signin.account": [
+    {
+      "type": 0,
+      "value": "أنت على وشك تسجيل الدخول إلى WiseMapping باستخدام "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": " بصفتك "
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": ". تابع فقط إذا كنت أنت من بدأ عملية تسجيل الدخول هذه."
+    }
+  ],
+  "registration.callback.confirm-signin.description": [
+    {
+      "type": 0,
+      "value": "أنت على وشك تسجيل الدخول إلى WiseMapping باستخدام "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": ". تابع فقط إذا كنت أنت من بدأ عملية تسجيل الدخول هذه."
+    }
+  ],
+  "registration.callback.confirm-signin.title": [
+    {
+      "type": 0,
+      "value": "متابعة تسجيل الدخول؟"
+    }
+  ],
   "registration.callback.confirm.description": [
     {
       "type": 0,
@@ -2801,6 +2843,12 @@
     {
       "type": 0,
       "value": "تأكيد"
+    }
+  ],
+  "registration.callback.continue": [
+    {
+      "type": 0,
+      "value": "متابعة"
     }
   ],
   "registration.callback.sync": [

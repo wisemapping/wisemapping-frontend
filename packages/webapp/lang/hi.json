@@ -494,6 +494,18 @@
   "registration.callback.back": {
     "defaultMessage": "लॉगिन पर वापस जाएं"
   },
+  "registration.callback.confirm-signin.account": {
+    "defaultMessage": "आप {provider} के ज़रिए {email} के रूप में WiseMapping में साइन इन करने वाले हैं। केवल तभी जारी रखें जब यह साइन इन आपने खुद शुरू किया हो।"
+  },
+  "registration.callback.confirm-signin.description": {
+    "defaultMessage": "आप {provider} के ज़रिए WiseMapping में साइन इन करने वाले हैं। केवल तभी जारी रखें जब यह साइन इन आपने खुद शुरू किया हो।"
+  },
+  "registration.callback.confirm-signin.title": {
+    "defaultMessage": "साइन इन जारी रखें?"
+  },
+  "registration.callback.continue": {
+    "defaultMessage": "जारी रखें"
+  },
   "registration.callback.confirm.description": {
     "defaultMessage": "उसी ईमेल के साथ एक खाता पहले पंजीकृत था। क्या आप अपने {provider} खाते को उस WiseMapping खाते से लिंक करना चाहते हैं?"
   },

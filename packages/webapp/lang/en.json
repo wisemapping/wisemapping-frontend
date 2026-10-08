@@ -1295,11 +1295,23 @@
   "registration.callback.back": {
     "defaultMessage": "Back to login"
   },
+  "registration.callback.confirm-signin.account": {
+    "defaultMessage": "You are about to sign in to WiseMapping with {provider} as {email}. Continue only if you started this sign-in yourself."
+  },
+  "registration.callback.confirm-signin.description": {
+    "defaultMessage": "You are about to sign in to WiseMapping with {provider}. Continue only if you started this sign-in yourself."
+  },
+  "registration.callback.confirm-signin.title": {
+    "defaultMessage": "Continue signing in?"
+  },
   "registration.callback.confirm.description": {
     "defaultMessage": "An account with the same email was previously registered. Do you want to link your {provider} account to that WiseMapping account?"
   },
   "registration.callback.confirm.title": {
     "defaultMessage": "Confirm"
+  },
+  "registration.callback.continue": {
+    "defaultMessage": "Continue"
   },
   "registration.callback.sync": {
     "defaultMessage": "Sync account"
