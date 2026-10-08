@@ -98,6 +98,9 @@ export type BasicMapInfo = {
  */
 export const MAP_TITLE_MAX_LENGTH = 255;
 
+/** The longest label title the backend accepts (Constants.MAX_LABEL_NAME_LENGTH). */
+export const LABEL_TITLE_MAX_LENGTH = 30;
+
 /**
  * The longest map description the backend accepts: its MapInfoValidator rejects more than 512
  * characters (`mindmap.description` is an unbounded text column, so the validator sets the

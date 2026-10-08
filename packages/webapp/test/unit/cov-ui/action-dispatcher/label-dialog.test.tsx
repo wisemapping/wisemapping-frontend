@@ -20,7 +20,7 @@ import React from 'react';
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import LabelDialog from '../../../../src/components/maps-page/action-dispatcher/label-dialog';
 import AddLabelDialog from '../../../../src/components/maps-page/action-dispatcher/add-label-dialog';
-import Client, { Label, MapInfo } from '../../../../src/classes/client';
+import Client, { Label, LABEL_TITLE_MAX_LENGTH, MapInfo } from '../../../../src/classes/client';
 import { renderWithProviders } from '../../helpers/render';
 import { BURST_TEXT, typeInBurst } from '../../burst-typing';
 
@@ -130,7 +130,10 @@ describe('LabelDialog', () => {
     expect(await typeInBurst(title)).toEqual([]);
     fireEvent.click(screen.getByRole('button', { name: 'Add label' }));
 
-    await waitFor(() => expect(client.createLabel).toHaveBeenCalledWith(BURST_TEXT, '#00b327'));
+    // The field stops at the 30 characters the backend accepts, as Cypress's typing does.
+    await waitFor(() =>
+      expect(client.createLabel).toHaveBeenCalledWith(BURST_TEXT.slice(0, 30), '#00b327'),
+    );
   });
 
   test('shows the error when a label can not be changed', async () => {
@@ -170,6 +173,26 @@ describe('AddLabelDialog', () => {
     const addButton = screen.getByRole('button', { name: 'Add label' }) as HTMLButtonElement;
     return { onAdd, titleInput, addButton, container: view.container };
   };
+
+  test('the title takes no more characters than the backend accepts', () => {
+    // LabelValidator refuses more than 30: a longer title failed after the field was cleared.
+    const { titleInput } = setup();
+    expect(titleInput.maxLength).toBe(LABEL_TITLE_MAX_LENGTH);
+    expect(LABEL_TITLE_MAX_LENGTH).toBe(30);
+  });
+
+  test('a blank title can not be added, and the title is trimmed', () => {
+    const { onAdd, titleInput, addButton } = setup(0);
+
+    fireEvent.change(titleInput, { target: { value: '   ' } });
+    expect(addButton.disabled).toBe(true);
+    fireEvent.keyPress(titleInput, { key: 'Enter', code: 'Enter', charCode: 13 });
+    expect(onAdd).not.toHaveBeenCalled();
+
+    fireEvent.change(titleInput, { target: { value: '  Ideas ' } });
+    fireEvent.click(addButton);
+    expect(onAdd).toHaveBeenLastCalledWith(expect.objectContaining({ title: 'Ideas' }));
+  });
 
   test('Add stays disabled until a title is typed', () => {
     const { titleInput, addButton } = setup();

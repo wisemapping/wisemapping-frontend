@@ -24,7 +24,7 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Chip from '@mui/material/Chip';
 
-import { Label } from '../../../../classes/client';
+import { Label, LABEL_TITLE_MAX_LENGTH } from '../../../../classes/client';
 import { NewLabelColor } from './styled';
 import Tooltip from '@mui/material/Tooltip';
 
@@ -51,6 +51,8 @@ const AddLabelDialog = ({ onAdd }: AddLabelFormProps): React.ReactElement => {
   const [newLabelTitle, setNewLabelTitle] = React.useState('');
 
   const newLabelColor = labelColors[createLabelColorIndex];
+  // The backend refuses a blank title.
+  const title = newLabelTitle.trim();
 
   const setNextLabelColorIndex = () => {
     const nextIndex = labelColors[createLabelColorIndex + 1] ? createLabelColorIndex + 1 : 0;
@@ -58,8 +60,11 @@ const AddLabelDialog = ({ onAdd }: AddLabelFormProps): React.ReactElement => {
   };
 
   const handleSubmitNew = () => {
+    if (!title) {
+      return;
+    }
     onAdd({
-      title: newLabelTitle,
+      title,
       color: newLabelColor,
       id: 0,
     });
@@ -116,11 +121,12 @@ const AddLabelDialog = ({ onAdd }: AddLabelFormProps): React.ReactElement => {
           })}
           onChange={(e) => setNewLabelTitle(e.target.value)}
           onKeyPress={(e) => {
-            if (e.key === 'Enter' && newLabelTitle.length) {
+            if (e.key === 'Enter') {
               handleSubmitNew();
             }
           }}
           value={newLabelTitle}
+          slotProps={{ htmlInput: { maxLength: LABEL_TITLE_MAX_LENGTH } }}
           fullWidth
           sx={{
             '& .MuiOutlinedInput-root': {
@@ -139,7 +145,7 @@ const AddLabelDialog = ({ onAdd }: AddLabelFormProps): React.ReactElement => {
             <IconButton
               color="primary"
               onClick={() => handleSubmitNew()}
-              disabled={!newLabelTitle.length}
+              disabled={!title}
               aria-label={intl.formatMessage({
                 id: 'label.add-button',
                 defaultMessage: 'Add label',
