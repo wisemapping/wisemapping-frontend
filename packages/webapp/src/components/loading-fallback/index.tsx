@@ -22,6 +22,7 @@ import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 import { EditorLoadingSkeleton } from '@wisemapping/editor';
+import { MapsPageLoading } from '../maps-page/maps-list/MapsListSkeleton';
 
 const isEditorRoute = () => {
   if (typeof window === 'undefined') {
@@ -31,9 +32,17 @@ const isEditorRoute = () => {
   return /\/c\/maps\/(?:\d+)(?:\/|$)/.test(window.location.pathname);
 };
 
+// The map list shows its own skeleton from the first paint, so that loading it is one skeleton
+// followed by the page.
+const isMapListRoute = () =>
+  typeof window !== 'undefined' && /^\/c\/maps\/?$/.test(window.location.pathname);
+
 const LoadingFallback = (): React.ReactElement => {
   if (isEditorRoute()) {
     return <EditorLoadingSkeleton />;
+  }
+  if (isMapListRoute()) {
+    return <MapsPageLoading />;
   }
 
   return (
