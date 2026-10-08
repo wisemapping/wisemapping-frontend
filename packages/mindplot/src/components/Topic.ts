@@ -1298,6 +1298,10 @@ abstract class Topic extends NodeGraph {
     this.getLayoutEventBus().fireEvent('topicRemoved', this.getModel());
   }
 
+  isInWorkspace(): boolean {
+    return this._isInWorkspace;
+  }
+
   addToWorkspace(workspace: Canvas): void {
     const elem = this.get2DElement();
     workspace.append(elem);

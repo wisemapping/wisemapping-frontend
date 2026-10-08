@@ -36,9 +36,10 @@ export const loader = async (): Promise<Response> => {
       },
     ]);
 
-    // Initialize user ID if user is already logged in
+    // Initialize user ID if user is already logged in. Skip expired tokens: the cookie
+    // outlives the JWT, and the request would only 401 and trigger session-expired handling.
     const token = JwtTokenConfig.retreiveToken();
-    if (token) {
+    if (token && !JwtTokenConfig.isTokenExpired(token)) {
       // Fetch account info and set user ID asynchronously
       // Don't await to avoid blocking the loader
       AppConfig.getClient()

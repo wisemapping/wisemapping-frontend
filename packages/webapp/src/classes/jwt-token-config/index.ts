@@ -34,6 +34,22 @@ class JwtTokenConfig {
     return cookies.get(JwtTokenConfig.COOKIE_NAME);
   }
 
+  /**
+   * Returns true when the token's `exp` claim is in the past. Tokens that cannot be
+   * decoded, or that carry no `exp`, are treated as not expired and left to the server.
+   */
+  static isTokenExpired(token: string): boolean {
+    try {
+      const payload = token.split('.')[1];
+      if (!payload) return false;
+      const base64 = payload.replace(/-/g, '+').replace(/_/g, '/');
+      const { exp } = JSON.parse(atob(base64.padEnd(Math.ceil(base64.length / 4) * 4, '=')));
+      return typeof exp === 'number' && exp * 1000 <= Date.now();
+    } catch {
+      return false;
+    }
+  }
+
   static removeToken(): void {
     // Set jwt token on cookie ...
     const cookies = new Cookies();

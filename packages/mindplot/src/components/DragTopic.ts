@@ -155,6 +155,16 @@ class DragTopic {
     return this._draggedNode as Topic;
   }
 
+  /**
+   * True when the dragged topic, or the topic it is connected to, has been removed from the
+   * workspace while the drag was in progress (e.g. deleted or cut with the keyboard). The layout
+   * no longer knows these nodes, so the drag must not be predicted or applied.
+   */
+  isDraggedTopicRemoved(): boolean {
+    const target = this.getConnectedToTopic();
+    return !this.getDraggedTopic().isInWorkspace() || (target != null && !target.isInWorkspace());
+  }
+
   removeFromWorkspace(workspace: Canvas) {
     if (this._isInWorkspace) {
       // Remove drag shadow.
