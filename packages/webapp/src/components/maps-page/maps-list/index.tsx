@@ -485,6 +485,10 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
 
   const handleOnSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchCondition(e.target.value);
+    // As on a filter change: a selection kept across a search would include maps the search
+    // hides, and a bulk delete would remove them unseen. The matches start on the first page.
+    setSelected([]);
+    setPage(0);
   };
 
   const handleDeleteClick = () => {

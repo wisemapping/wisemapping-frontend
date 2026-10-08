@@ -305,6 +305,48 @@ describe('MapsList', () => {
     expect(screen.queryByRole('button', { name: 'Delete selected' })).toBeNull();
   });
 
+  test('a search clears the selection, so a bulk delete never takes maps out of sight', async () => {
+    renderList();
+    await screen.findAllByText('Alpha plan');
+
+    fireEvent.click(screen.getByRole('checkbox', { name: 'Select all' }));
+    expect(checkboxFor('Beta notes').checked).toBe(true);
+
+    fireEvent.change(screen.getByRole('textbox', { name: 'search' }), {
+      target: { value: 'gamma' },
+    });
+    expect(tableTitles()).toEqual(['Gamma ideas']);
+
+    // Nothing is selected any more, so there is nothing to delete...
+    expect(checkboxFor('Gamma ideas').checked).toBe(false);
+    expect(screen.queryByRole('button', { name: 'Delete selected' })).toBeNull();
+
+    // ...and what is selected now is what is listed.
+    fireEvent.click(rowFor('Gamma ideas'));
+    fireEvent.click(screen.getByRole('button', { name: 'Delete selected' }));
+    expect(screen.getByTestId('dispatcher-maps').textContent).toBe('3');
+  });
+
+  test('a search from a later page shows its matches from the first page', async () => {
+    const many = Array.from({ length: 12 }, (_, i) =>
+      makeMap({
+        id: i + 1,
+        title: `Map ${String(i + 1).padStart(2, '0')}`,
+        lastModificationTime: `2026-01-${String(i + 1).padStart(2, '0')}T00:00:00Z`,
+      }),
+    );
+    renderList({ type: 'all' }, buildClient(many));
+    await screen.findAllByText('Map 12');
+    fireEvent.click(screen.getAllByRole('button', { name: 'Go to next page', hidden: true })[0]);
+    expect(tableTitles()).toEqual(['Map 02', 'Map 01']);
+
+    fireEvent.change(screen.getByRole('textbox', { name: 'search' }), {
+      target: { value: 'Map 1' },
+    });
+
+    expect(tableTitles()).toEqual(['Map 12', 'Map 11', 'Map 10']);
+  });
+
   test('clicking a selected row again unselects it, whatever its position', async () => {
     renderList();
     await screen.findAllByText('Alpha plan');
