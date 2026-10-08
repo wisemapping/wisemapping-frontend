@@ -192,7 +192,9 @@ describe('AccountMenu', () => {
     const client = setup();
     const menu = await openMenu();
 
-    fireEvent.click(within(menu).getByRole('link', { name: 'Sign Out' }));
+    // The menu item itself: Enter on a focused item, or a click beside the text, clicks the
+    // item, and the handler used to sit on a link inside it.
+    fireEvent.click(within(menu).getByRole('menuitem', { name: 'Sign Out' }));
 
     expect(client.logout).toHaveBeenCalledTimes(1);
     expect(routerState.navigate).toHaveBeenCalledWith('/c/login');
@@ -206,9 +208,10 @@ describe('HelpMenu', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Support' }));
 
     const menu = await screen.findByRole('menu');
+    // Each item is the link itself, so Enter on a focused item follows it.
     const hrefs = within(menu)
-      .getAllByRole('link')
-      .map((link) => link.getAttribute('href'));
+      .getAllByRole('menuitem')
+      .map((item) => item.getAttribute('href'));
     expect(hrefs).toEqual([
       'https://www.wisemapping.com/termsofuse.html',
       'https://www.wisemapping.com/privacy',

@@ -29,7 +29,6 @@ import EmailOutlined from '@mui/icons-material/EmailOutlined';
 import Fab from '@mui/material/Fab';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import Link from '@mui/material/Link';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Tooltip from '@mui/material/Tooltip';
 
@@ -84,70 +83,81 @@ const HelpMenu = (): React.ReactElement => {
           horizontal: 'right',
         }}
       >
-        <MenuItem onClick={handleClose}>
-          <Link
-            color="textSecondary"
-            href="https://www.wisemapping.com/termsofuse.html"
-            target="help"
-          >
-            <ListItemIcon>
-              <PolicyOutlined fontSize="small" />
-            </ListItemIcon>
-            <FormattedMessage
-              id="footer.termsandconditions"
-              defaultMessage="Terms and Conditions"
-            />
-          </Link>
+        <MenuItem
+          component="a"
+          href="https://www.wisemapping.com/termsofuse.html"
+          target="help"
+          onClick={handleClose}
+          sx={{ color: 'text.secondary' }}
+        >
+          <ListItemIcon>
+            <PolicyOutlined fontSize="small" />
+          </ListItemIcon>
+          <FormattedMessage id="footer.termsandconditions" defaultMessage="Terms and Conditions" />
         </MenuItem>
 
-        <MenuItem onClick={handleClose}>
-          <Link color="textSecondary" href="https://www.wisemapping.com/privacy" target="help">
-            <ListItemIcon>
-              <PrivacyTipOutlined fontSize="small" />
-            </ListItemIcon>
-            <FormattedMessage id="footer.privacypolicy" defaultMessage="Privacy Policy" />
-          </Link>
+        <MenuItem
+          component="a"
+          href="https://www.wisemapping.com/privacy"
+          target="help"
+          onClick={handleClose}
+          sx={{ color: 'text.secondary' }}
+        >
+          <ListItemIcon>
+            <PrivacyTipOutlined fontSize="small" />
+          </ListItemIcon>
+          <FormattedMessage id="footer.privacypolicy" defaultMessage="Privacy Policy" />
         </MenuItem>
 
-        <MenuItem onClick={handleClose}>
-          <Link
-            color="textSecondary"
-            href="https://www.paypal.com/donate/?hosted_button_id=CF7GJ7T6E4RS4"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <ListItemIcon>
-              <FavoriteOutlined fontSize="small" />
-            </ListItemIcon>
-            <FormattedMessage id="footer.donations" defaultMessage="Donate" />
-          </Link>
+        <MenuItem
+          component="a"
+          href="https://www.paypal.com/donate/?hosted_button_id=CF7GJ7T6E4RS4"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={handleClose}
+          sx={{ color: 'text.secondary' }}
+        >
+          <ListItemIcon>
+            <FavoriteOutlined fontSize="small" />
+          </ListItemIcon>
+          <FormattedMessage id="footer.donations" defaultMessage="Donate" />
         </MenuItem>
 
-        <MenuItem onClick={handleClose}>
-          <Link color="textSecondary" href="mailto:team@wisemapping.com">
-            <ListItemIcon>
-              <EmailOutlined fontSize="small" />
-            </ListItemIcon>
-            <FormattedMessage id="footer.contactus" defaultMessage="Contact Us" />
-          </Link>
+        <MenuItem
+          component="a"
+          href="mailto:team@wisemapping.com"
+          onClick={handleClose}
+          sx={{ color: 'text.secondary' }}
+        >
+          <ListItemIcon>
+            <EmailOutlined fontSize="small" />
+          </ListItemIcon>
+          <FormattedMessage id="footer.contactus" defaultMessage="Contact Us" />
         </MenuItem>
 
-        <MenuItem onClick={handleClose}>
-          <Link color="textSecondary" href="mailto:feedback@wisemapping.com">
-            <ListItemIcon>
-              <FeedbackOutlined fontSize="small" />
-            </ListItemIcon>
-            <FormattedMessage id="footer.feedback" defaultMessage="Feedback" />
-          </Link>
+        <MenuItem
+          component="a"
+          href="mailto:feedback@wisemapping.com"
+          onClick={handleClose}
+          sx={{ color: 'text.secondary' }}
+        >
+          <ListItemIcon>
+            <FeedbackOutlined fontSize="small" />
+          </ListItemIcon>
+          <FormattedMessage id="footer.feedback" defaultMessage="Feedback" />
         </MenuItem>
 
-        <MenuItem onClick={handleClose}>
-          <Link color="textSecondary" href="https://www.wisemapping.com/aboutus.html" target="help">
-            <ListItemIcon>
-              <EmojiPeopleOutlined fontSize="small" />
-            </ListItemIcon>
-            <FormattedMessage id="footer.aboutus" defaultMessage="About Us" />
-          </Link>
+        <MenuItem
+          component="a"
+          href="https://www.wisemapping.com/aboutus.html"
+          target="help"
+          onClick={handleClose}
+          sx={{ color: 'text.secondary' }}
+        >
+          <ListItemIcon>
+            <EmojiPeopleOutlined fontSize="small" />
+          </ListItemIcon>
+          <FormattedMessage id="footer.aboutus" defaultMessage="About Us" />
         </MenuItem>
       </Menu>
     </>
