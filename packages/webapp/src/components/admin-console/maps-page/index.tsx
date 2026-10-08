@@ -391,7 +391,8 @@ const MapsManagement = (): ReactElement => {
 
   // Unsuspend user mutation
   const unsuspendUserMutation = useMutation({
-    mutationFn: ({ userId }: { userId: number }) => client.unsuspendAdminUser(userId),
+    mutationFn: ({ userId }: { userId: number }) =>
+      client.updateUserSuspension(userId, { suspended: false }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['adminMaps'] });
       // Refresh owner user info if in owner maps dialog

@@ -188,8 +188,6 @@ export interface AdminClientInterface {
     userId: number,
     suspensionData: { suspended: boolean; suspensionReason?: string },
   ): Promise<AdminUser>;
-  suspendAdminUser(userId: number): Promise<AdminUser>;
-  unsuspendAdminUser(userId: number): Promise<AdminUser>;
   activateAdminUser(userId: number): Promise<void>;
   changeUserPassword(userId: number, password: string): Promise<void>;
   getUserByFacebookId(facebookId: string): Promise<AdminUser>;
@@ -333,26 +331,6 @@ export default class AdminClient implements AdminClientInterface {
       });
   }
 
-  suspendAdminUser(userId: number): Promise<AdminUser> {
-    return this.axios
-      .put(`${this.baseUrl}/api/restful/admin/users/${userId}/suspend`)
-      .then((response) => response.data)
-      .catch((error) => {
-        console.error('Failed to suspend admin user:', describeHttpError(error));
-        throw this.parseResponseOnError(error.response);
-      });
-  }
-
-  unsuspendAdminUser(userId: number): Promise<AdminUser> {
-    return this.axios
-      .put(`${this.baseUrl}/api/restful/admin/users/${userId}/unsuspend`)
-      .then((response) => response.data)
-      .catch((error) => {
-        console.error('Failed to unsuspend admin user:', describeHttpError(error));
-        throw this.parseResponseOnError(error.response);
-      });
-  }
-
   activateAdminUser(userId: number): Promise<void> {
     return this.axios
       .put(`${this.baseUrl}/api/restful/admin/users/${userId}/activate`)
@@ -447,7 +425,9 @@ export default class AdminClient implements AdminClientInterface {
       id: mapId,
       title: mapData.title,
       description: mapData.description,
-      isPublic: mapData.public, // Convert 'public' to 'isPublic' for backend
+      // RestMap has only setPublic, so the backend reads "public": an "isPublic" was dropped,
+      // read as false, and made every map edited here private.
+      public: mapData.public,
       isLocked: mapData.isLocked,
     };
 

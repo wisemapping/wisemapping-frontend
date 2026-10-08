@@ -83,8 +83,6 @@ export const buildAdminClient = (): MockAdminClient => ({
   createAdminUser: jest.fn().mockResolvedValue({}),
   deleteAdminUser: jest.fn().mockResolvedValue(undefined),
   updateUserSuspension: jest.fn().mockResolvedValue({}),
-  suspendAdminUser: jest.fn().mockResolvedValue({}),
-  unsuspendAdminUser: jest.fn().mockResolvedValue({}),
   activateAdminUser: jest.fn().mockResolvedValue(undefined),
   changeUserPassword: jest.fn().mockResolvedValue(undefined),
   getUserByFacebookId: jest.fn(),

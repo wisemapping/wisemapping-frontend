@@ -793,36 +793,6 @@ class MockAdminClient implements AdminClientInterface {
     });
   }
 
-  suspendAdminUser(userId: number): Promise<AdminUser> {
-    log.debug(`MockAdminClient: Suspending user ${userId}`);
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        const user = this.adminUsers.find((u) => u.id === userId);
-        if (user) {
-          user.isSuspended = true;
-          resolve({ ...user });
-        } else {
-          reject(new Error(`User with ID ${userId} not found`));
-        }
-      }, 500);
-    });
-  }
-
-  unsuspendAdminUser(userId: number): Promise<AdminUser> {
-    log.debug(`MockAdminClient: Unsuspending user ${userId}`);
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        const user = this.adminUsers.find((u) => u.id === userId);
-        if (user) {
-          user.isSuspended = false;
-          resolve({ ...user });
-        } else {
-          reject(new Error(`User with ID ${userId} not found`));
-        }
-      }, 500);
-    });
-  }
-
   activateAdminUser(userId: number): Promise<void> {
     log.debug(`MockAdminClient: Activating user ${userId}`);
     return new Promise((resolve, reject) => {
