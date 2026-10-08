@@ -2857,6 +2857,12 @@
       "value": "متابعة"
     }
   ],
+  "registration.callback.invalid": [
+    {
+      "type": 0,
+      "value": "رابط تسجيل الدخول هذا غير صالح. يُرجى تسجيل الدخول مرة أخرى."
+    }
+  ],
   "registration.callback.sync": [
     {
       "type": 0,

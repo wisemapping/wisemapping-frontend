@@ -509,6 +509,9 @@
   "registration.callback.continue": {
     "defaultMessage": "続ける"
   },
+  "registration.callback.invalid": {
+    "defaultMessage": "このサインインリンクは無効です。もう一度サインインしてください。"
+  },
   "registration.callback.confirm.description": {
     "defaultMessage": "同じメールアドレスのアカウントが以前に登録されています。{provider}アカウントをそのWiseMappingアカウントにリンクしますか？"
   },

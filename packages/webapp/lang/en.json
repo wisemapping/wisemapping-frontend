@@ -1316,6 +1316,9 @@
   "registration.callback.continue": {
     "defaultMessage": "Continue"
   },
+  "registration.callback.invalid": {
+    "defaultMessage": "This sign-in link is not valid. Please sign in again."
+  },
   "registration.callback.sync": {
     "defaultMessage": "Sync account"
   },

@@ -509,6 +509,9 @@
   "registration.callback.continue": {
     "defaultMessage": "继续"
   },
+  "registration.callback.invalid": {
+    "defaultMessage": "此登录链接无效。请重新登录。"
+  },
   "registration.callback.confirm.description": {
     "defaultMessage": "之前已注册了相同电子邮件的账户。您想将您的{provider}账户链接到该WiseMapping账户吗？"
   },

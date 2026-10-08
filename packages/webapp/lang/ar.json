@@ -515,6 +515,9 @@
   "registration.callback.continue": {
     "defaultMessage": "متابعة"
   },
+  "registration.callback.invalid": {
+    "defaultMessage": "رابط تسجيل الدخول هذا غير صالح. يُرجى تسجيل الدخول مرة أخرى."
+  },
   "registration.callback.confirm.description": {
     "defaultMessage": "تم تسجيل حساب بنفس البريد الإلكتروني سابقًا. هل تريد ربط حساب {provider} بحساب WiseMapping ذاك؟"
   },

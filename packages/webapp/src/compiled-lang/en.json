@@ -2853,6 +2853,12 @@
       "value": "Continue"
     }
   ],
+  "registration.callback.invalid": [
+    {
+      "type": 0,
+      "value": "This sign-in link is not valid. Please sign in again."
+    }
+  ],
   "registration.callback.sync": [
     {
       "type": 0,

@@ -581,6 +581,9 @@
   "registration.callback.continue": {
     "defaultMessage": "Weiter"
   },
+  "registration.callback.invalid": {
+    "defaultMessage": "Dieser Anmeldelink ist ungültig. Bitte melde dich erneut an."
+  },
   "registration.callback.sync": {
     "defaultMessage": "Konto synchronisieren"
   },

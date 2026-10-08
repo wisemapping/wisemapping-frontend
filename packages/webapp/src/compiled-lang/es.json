@@ -2853,6 +2853,12 @@
       "value": "Continuar"
     }
   ],
+  "registration.callback.invalid": [
+    {
+      "type": 0,
+      "value": "Este enlace de inicio de sesión no es válido. Vuelve a iniciar sesión."
+    }
+  ],
   "registration.callback.sync": [
     {
       "type": 0,

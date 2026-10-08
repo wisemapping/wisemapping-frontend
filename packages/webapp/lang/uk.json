@@ -512,6 +512,9 @@
   "registration.callback.continue": {
     "defaultMessage": "Продовжити"
   },
+  "registration.callback.invalid": {
+    "defaultMessage": "Це посилання для входу недійсне. Увійдіть знову."
+  },
   "registration.callback.confirm.description": {
     "defaultMessage": "Акаунт з такою ж електронною поштою був раніше зареєстрований. Чи хочете прив'язати ваш {provider} акаунт до того акаунту WiseMapping?"
   },

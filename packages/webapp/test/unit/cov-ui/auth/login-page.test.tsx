@@ -31,7 +31,7 @@ import LoginPage from '../../../../src/components/login-page';
 import Client from '../../../../src/classes/client';
 import { trackPageView } from '../../../../src/utils/analytics';
 import { leaveTo } from '../../../../src/utils/redirect';
-import { takeOAuthFlow } from '../../../../src/utils/oauth-flow';
+import { startOAuthFlow, takeOAuthFlow } from '../../../../src/utils/oauth-flow';
 import { appLogger } from '../../../../src/utils/logger';
 import { BURST_TEXT, typeInBurst } from '../../burst-typing';
 import { initAppConfig, installMatchMedia, renderPage, useConfig } from '../helpers';
@@ -83,6 +83,14 @@ describe('LoginPage', () => {
   ])('a signed-in user is not sent to redirect=%s', async (redirect) => {
     setup(`/c/login?redirect=${redirect}`, true);
     await waitFor(() => expect(leaveTo).toHaveBeenCalledWith('/c/maps/'));
+  });
+
+  test('a sign-in that came back with an error forgets its mark', async () => {
+    startOAuthFlow('https://accounts.example.com/auth');
+    setup('/c/login?error=oauth_failed');
+
+    await screen.findByRole('form', { name: 'Login form' });
+    expect(takeOAuthFlow()).toBeUndefined();
   });
 
   test('after signing in, an unsafe redirect goes to the map list instead', async () => {

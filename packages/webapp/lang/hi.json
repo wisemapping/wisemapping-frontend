@@ -509,6 +509,9 @@
   "registration.callback.continue": {
     "defaultMessage": "जारी रखें"
   },
+  "registration.callback.invalid": {
+    "defaultMessage": "यह साइन इन लिंक मान्य नहीं है। कृपया फिर से साइन इन करें।"
+  },
   "registration.callback.confirm.description": {
     "defaultMessage": "उसी ईमेल के साथ एक खाता पहले पंजीकृत था। क्या आप अपने {provider} खाते को उस WiseMapping खाते से लिंक करना चाहते हैं?"
   },

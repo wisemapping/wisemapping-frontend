@@ -2861,6 +2861,12 @@
       "value": "Weiter"
     }
   ],
+  "registration.callback.invalid": [
+    {
+      "type": 0,
+      "value": "Dieser Anmeldelink ist ungültig. Bitte melde dich erneut an."
+    }
+  ],
   "registration.callback.sync": [
     {
       "type": 0,

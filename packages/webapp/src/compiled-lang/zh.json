@@ -2857,6 +2857,12 @@
       "value": "继续"
     }
   ],
+  "registration.callback.invalid": [
+    {
+      "type": 0,
+      "value": "此登录链接无效。请重新登录。"
+    }
+  ],
   "registration.callback.sync": [
     {
       "type": 0,

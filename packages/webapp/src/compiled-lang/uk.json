@@ -2853,6 +2853,12 @@
       "value": "Продовжити"
     }
   ],
+  "registration.callback.invalid": [
+    {
+      "type": 0,
+      "value": "Це посилання для входу недійсне. Увійдіть знову."
+    }
+  ],
   "registration.callback.sync": [
     {
       "type": 0,

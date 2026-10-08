@@ -584,6 +584,9 @@
   "registration.callback.continue": {
     "defaultMessage": "Continuar"
   },
+  "registration.callback.invalid": {
+    "defaultMessage": "Este enlace de inicio de sesión no es válido. Vuelve a iniciar sesión."
+  },
   "registration.callback.sync": {
     "defaultMessage": "Sincronizar cuenta"
   },

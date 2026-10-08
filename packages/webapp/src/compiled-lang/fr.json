@@ -2853,6 +2853,12 @@
       "value": "Continuer"
     }
   ],
+  "registration.callback.invalid": [
+    {
+      "type": 0,
+      "value": "Ce lien de connexion n'est pas valide. Veuillez vous reconnecter."
+    }
+  ],
   "registration.callback.sync": [
     {
       "type": 0,

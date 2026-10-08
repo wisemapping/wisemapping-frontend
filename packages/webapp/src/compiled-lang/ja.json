@@ -2845,6 +2845,12 @@
       "value": "続ける"
     }
   ],
+  "registration.callback.invalid": [
+    {
+      "type": 0,
+      "value": "このサインインリンクは無効です。もう一度サインインしてください。"
+    }
+  ],
   "registration.callback.sync": [
     {
       "type": 0,

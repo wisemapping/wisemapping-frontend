@@ -44,14 +44,24 @@ type OAuthCallbackParams =
   | { kind: 'code'; code: string };
 
 // Spring Boot OAuth2 sends the JWT itself; the legacy endpoints send a code to exchange.
-const readCallbackParams = (searchParams: URLSearchParams): OAuthCallbackParams | undefined => {
+// 'invalid': a token whose account can not be read, or that is not the account the link names.
+const readCallbackParams = (
+  searchParams: URLSearchParams,
+): OAuthCallbackParams | 'invalid' | undefined => {
   const jwtToken = searchParams.get('jwtToken');
-  const email = searchParams.get('email');
-  if (jwtToken && email) {
+  if (jwtToken) {
+    // The account is the token's subject. The email parameter is only a copy that anyone can
+    // edit: shown on the confirmation, a forged one would make an attacker's token look like the
+    // victim's own sign-in.
+    const subject = JwtTokenConfig.getSubject(jwtToken);
+    const email = searchParams.get('email');
+    if (!subject || (email && email.toLowerCase() !== subject.toLowerCase())) {
+      return 'invalid';
+    }
     return {
       kind: 'token',
       jwtToken,
-      email,
+      email: subject,
       oauthSync: searchParams.get('oauthSync') === 'true',
       syncCode: searchParams.get('syncCode') || undefined,
     };
@@ -175,6 +185,15 @@ const OAuthCallbackPage = (): React.ReactElement => {
     if (!params) {
       setError({
         msg: `Missing OAuth code or token in callback: ${window.location.search}`,
+      });
+      return;
+    }
+    if (params === 'invalid') {
+      setError({
+        msg: intl.formatMessage({
+          id: 'registration.callback.invalid',
+          defaultMessage: 'This sign-in link is not valid. Please sign in again.',
+        }),
       });
       return;
     }

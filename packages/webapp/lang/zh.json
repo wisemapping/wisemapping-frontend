@@ -587,6 +587,9 @@
   "registration.callback.continue": {
     "defaultMessage": "继续"
   },
+  "registration.callback.invalid": {
+    "defaultMessage": "此登录链接无效。请重新登录。"
+  },
   "registration.callback.sync": {
     "defaultMessage": "同步账号"
   },

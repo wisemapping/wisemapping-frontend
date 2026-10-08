@@ -584,6 +584,9 @@
   "registration.callback.continue": {
     "defaultMessage": "Continuer"
   },
+  "registration.callback.invalid": {
+    "defaultMessage": "Ce lien de connexion n'est pas valide. Veuillez vous reconnecter."
+  },
   "registration.callback.sync": {
     "defaultMessage": "Synchroniser le compte"
   },

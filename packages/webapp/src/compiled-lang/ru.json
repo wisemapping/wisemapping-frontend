@@ -2853,6 +2853,12 @@
       "value": "Продолжить"
     }
   ],
+  "registration.callback.invalid": [
+    {
+      "type": 0,
+      "value": "Эта ссылка для входа недействительна. Войдите снова."
+    }
+  ],
   "registration.callback.sync": [
     {
       "type": 0,

@@ -52,3 +52,27 @@ describe('JwtTokenConfig.isTokenExpired', () => {
     expect(JwtTokenConfig.isTokenExpired('a.%%%.c')).toBe(false);
   });
 });
+
+describe('JwtTokenConfig.getSubject', () => {
+  it('reads the sub claim', () => {
+    expect(JwtTokenConfig.getSubject(makeToken({ sub: 'ana@wisemapping.com' }))).toBe(
+      'ana@wisemapping.com',
+    );
+  });
+
+  it('decodes a non-ASCII subject as UTF-8', () => {
+    // A JWT payload is UTF-8 JSON; btoa alone would encode it as Latin-1.
+    const bytes = new TextEncoder().encode(JSON.stringify({ sub: 'józef@wisemapping.com' }));
+    const payload = btoa(String.fromCharCode(...bytes))
+      .replace(/\+/g, '-')
+      .replace(/\//g, '_')
+      .replace(/=+$/, '');
+    expect(JwtTokenConfig.getSubject(`header.${payload}.signature`)).toBe('józef@wisemapping.com');
+  });
+
+  it('is undefined without a sub claim or for a malformed token', () => {
+    expect(JwtTokenConfig.getSubject(makeToken({ exp: 1 }))).toBeUndefined();
+    expect(JwtTokenConfig.getSubject('not-a-jwt')).toBeUndefined();
+    expect(JwtTokenConfig.getSubject('a.%%%.c')).toBeUndefined();
+  });
+});

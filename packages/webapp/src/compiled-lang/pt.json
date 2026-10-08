@@ -2857,6 +2857,12 @@
       "value": "Continuar"
     }
   ],
+  "registration.callback.invalid": [
+    {
+      "type": 0,
+      "value": "Este link de acesso não é válido. Entre novamente."
+    }
+  ],
   "registration.callback.sync": [
     {
       "type": 0,

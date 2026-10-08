@@ -554,6 +554,9 @@
   "registration.callback.continue": {
     "defaultMessage": "Продолжить"
   },
+  "registration.callback.invalid": {
+    "defaultMessage": "Эта ссылка для входа недействительна. Войдите снова."
+  },
   "registration.callback.sync": {
     "defaultMessage": "Синхронизировать аккаунт"
   },

@@ -2853,6 +2853,12 @@
       "value": "जारी रखें"
     }
   ],
+  "registration.callback.invalid": [
+    {
+      "type": 0,
+      "value": "यह साइन इन लिंक मान्य नहीं है। कृपया फिर से साइन इन करें।"
+    }
+  ],
   "registration.callback.sync": [
     {
       "type": 0,
