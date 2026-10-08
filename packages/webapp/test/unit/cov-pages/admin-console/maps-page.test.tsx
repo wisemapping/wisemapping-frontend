@@ -324,6 +324,24 @@ describe('MapsManagement', () => {
     await waitFor(() => expect(client.getAdminMaps.mock.calls.length).toBe(calls + 1));
   });
 
+  test('a new search starts from the first page, and a vanished page falls back', async () => {
+    setup({ totalPages: 3 });
+    await waitForRows();
+    fireEvent.click(screen.getByRole('button', { name: 'Go to page 3' }));
+    await waitFor(() => expect(lastParams()).toMatchObject({ page: 2 }));
+
+    fireEvent.change(screen.getByPlaceholderText(/Search maps/), { target: { value: 'plan' } });
+    await waitFor(() => expect(lastParams()).toMatchObject({ search: 'plan', page: 0 }));
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Go to page 2' }));
+    await waitFor(() => expect(lastParams()).toMatchObject({ page: 1 }));
+    client.getAdminMaps.mockResolvedValue(page([], 1));
+    const refresh = screen.getByRole('button', { name: 'Refresh' }) as HTMLButtonElement;
+    await waitFor(() => expect(refresh.disabled).toBe(false));
+    fireEvent.click(refresh);
+    await waitFor(() => expect(lastParams()).toMatchObject({ page: 0 }));
+  });
+
   describe('editing', () => {
     test('saves the edited title, description, visibility and lock', async () => {
       setup();

@@ -67,6 +67,7 @@ import UserMapsDialog from '../shared/UserMapsDialog';
 import SpamStatusChip from '../shared/SpamStatusChip';
 import EditMapDialog, { MapFormData } from './EditMapDialog';
 import { copyText } from '../../../utils/clipboard';
+import { useAdminPage, useClampedPage } from '../shared/useAdminPage';
 
 // XML formatting utility
 const formatXml = (xml: string): string => {
@@ -255,7 +256,6 @@ const MapsManagement = (): ReactElement => {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
   const [sortField, setSortField] = useState<SortField>('title');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
-  const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(50);
   const [filterPublic, setFilterPublic] = useState<string>('all');
   const [filterLocked, setFilterLocked] = useState<string>('all');
@@ -289,6 +289,15 @@ const MapsManagement = (): ReactElement => {
   const [isPendingOwnerInfo, setIsLoadingOwnerInfo] = useState(false);
 
   // Fetch maps with pagination and filters
+  const [currentPage, setCurrentPage] = useAdminPage([
+    debouncedSearchTerm,
+    sortField,
+    sortDirection,
+    filterPublic,
+    filterLocked,
+    filterSpam,
+    dateFilter,
+  ]);
   const {
     data: mapsResponse,
     isPending,
@@ -328,6 +337,7 @@ const MapsManagement = (): ReactElement => {
 
   const maps = mapsResponse?.data || [];
   const totalPages = mapsResponse?.totalPages || 0;
+  useClampedPage(currentPage, setCurrentPage, mapsResponse?.totalPages);
 
   // Update map mutation
   const updateMapMutation = useMutation({
