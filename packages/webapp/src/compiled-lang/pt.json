@@ -2587,6 +2587,12 @@
       "value": "Importar de outras ferramentas"
     }
   ],
+  "maps.load-error": [
+    {
+      "type": 0,
+      "value": "Não foi possível carregar seus mapas. Tente novamente mais tarde."
+    }
+  ],
   "maps.modified": [
     {
       "type": 0,

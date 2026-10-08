@@ -410,6 +410,9 @@
   "maps.empty-result": {
     "defaultMessage": "現在のフィルター条件に一致するマインドマップが見つかりません。"
   },
+  "maps.load-error": {
+    "defaultMessage": "マップを読み込めませんでした。しばらくしてからもう一度お試しください。"
+  },
   "maps.import-desc": {
     "defaultMessage": "他のツールからインポート"
   },

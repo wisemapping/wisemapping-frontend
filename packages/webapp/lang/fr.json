@@ -365,6 +365,9 @@
   "maps.empty-result": {
     "defaultMessage": "Aucun enregistrement correspondant trouvé avec les critères de filtre actuels."
   },
+  "maps.load-error": {
+    "defaultMessage": "Vos cartes n'ont pas pu être chargées. Veuillez réessayer plus tard."
+  },
   "maps.import-desc": {
     "defaultMessage": "Importer depuis d'autres outils"
   },

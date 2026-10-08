@@ -115,7 +115,7 @@ export const CardSkeleton: React.FC = () => {
   );
 };
 
-const MapsListSkeleton: React.FC<{ rowsPerPage: number }> = ({ rowsPerPage }) => {
+export const MapsListSkeleton: React.FC<{ rowsPerPage: number }> = ({ rowsPerPage }) => {
   const skeletonCount = Math.min(rowsPerPage, 5); // Show max 5 skeleton rows
 
   return (

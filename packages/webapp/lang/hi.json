@@ -410,6 +410,9 @@
   "maps.empty-result": {
     "defaultMessage": "वर्तमान फ़िल्टर मानदंड के साथ कोई मिलता-जुलता माइंडमैप नहीं मिला।"
   },
+  "maps.load-error": {
+    "defaultMessage": "आपके मैप लोड नहीं हो सके। कृपया बाद में फिर से कोशिश करें।"
+  },
   "maps.import-desc": {
     "defaultMessage": "अन्य टूल्स से आयात करें"
   },

@@ -2591,6 +2591,12 @@
       "value": "Import aus anderen Tools"
     }
   ],
+  "maps.load-error": [
+    {
+      "type": 0,
+      "value": "Deine Mindmaps konnten nicht geladen werden. Bitte versuche es später erneut."
+    }
+  ],
   "maps.modified": [
     {
       "type": 0,

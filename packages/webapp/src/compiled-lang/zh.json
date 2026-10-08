@@ -2587,6 +2587,12 @@
       "value": "从其它工具导入"
     }
   ],
+  "maps.load-error": [
+    {
+      "type": 0,
+      "value": "无法加载您的导图。请稍后再试。"
+    }
+  ],
   "maps.modified": [
     {
       "type": 0,

@@ -413,6 +413,9 @@
   "maps.empty-result": {
     "defaultMessage": "Не знайдено карт розуму, що відповідають поточним критеріям фільтрації."
   },
+  "maps.load-error": {
+    "defaultMessage": "Не вдалося завантажити ваші карти. Спробуйте пізніше."
+  },
   "maps.import-desc": {
     "defaultMessage": "Імпорт з інших інструментів"
   },

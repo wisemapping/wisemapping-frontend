@@ -395,6 +395,9 @@
   "maps.empty-result": {
     "defaultMessage": "No se encontró ningún mapa mental coincidente con los criterios de filtro actuales."
   },
+  "maps.load-error": {
+    "defaultMessage": "No se pudieron cargar tus mapas. Inténtalo de nuevo más tarde."
+  },
   "maps.import-desc": {
     "defaultMessage": "Importar desde otras herramientas"
   },

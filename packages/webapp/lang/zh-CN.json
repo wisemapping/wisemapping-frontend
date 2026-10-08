@@ -410,6 +410,9 @@
   "maps.empty-result": {
     "defaultMessage": "使用当前过滤条件未找到匹配的思维导图。"
   },
+  "maps.load-error": {
+    "defaultMessage": "无法加载您的导图。请稍后再试。"
+  },
   "maps.import-desc": {
     "defaultMessage": "从其他工具导入"
   },

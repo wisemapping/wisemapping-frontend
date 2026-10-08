@@ -362,6 +362,9 @@
   "maps.empty-result": {
     "defaultMessage": "Нет карт, подходящих под условия фильтра."
   },
+  "maps.load-error": {
+    "defaultMessage": "Не удалось загрузить ваши карты. Повторите попытку позже."
+  },
   "maps.import-desc": {
     "defaultMessage": "Загрузить из других редакторов"
   },

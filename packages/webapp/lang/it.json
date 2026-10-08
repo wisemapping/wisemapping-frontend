@@ -410,6 +410,9 @@
   "maps.empty-result": {
     "defaultMessage": "Nessuna mappa mentale trovata con i criteri di filtro correnti."
   },
+  "maps.load-error": {
+    "defaultMessage": "Non è stato possibile caricare le tue mappe. Riprova più tardi."
+  },
   "maps.import-desc": {
     "defaultMessage": "Importa da altri strumenti"
   },

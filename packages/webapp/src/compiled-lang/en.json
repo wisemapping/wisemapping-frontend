@@ -2583,6 +2583,12 @@
       "value": "Import from other tools"
     }
   ],
+  "maps.load-error": [
+    {
+      "type": 0,
+      "value": "Your maps could not be loaded. Please try again later."
+    }
+  ],
   "maps.modified": [
     {
       "type": 0,

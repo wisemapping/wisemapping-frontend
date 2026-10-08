@@ -2583,6 +2583,12 @@
       "value": "Importer depuis d'autres outils"
     }
   ],
+  "maps.load-error": [
+    {
+      "type": 0,
+      "value": "Vos cartes n'ont pas pu être chargées. Veuillez réessayer plus tard."
+    }
+  ],
   "maps.modified": [
     {
       "type": 0,

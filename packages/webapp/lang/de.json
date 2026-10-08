@@ -362,6 +362,9 @@
   "maps.empty-result": {
     "defaultMessage": "Kein passender Datensatz mit den aktuellen Filterkriterien gefunden."
   },
+  "maps.load-error": {
+    "defaultMessage": "Deine Mindmaps konnten nicht geladen werden. Bitte versuche es später erneut."
+  },
   "maps.import-desc": {
     "defaultMessage": "Import aus anderen Tools"
   },

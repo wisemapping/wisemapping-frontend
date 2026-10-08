@@ -416,6 +416,9 @@
   "maps.empty-result": {
     "defaultMessage": "لا توجد خرائط ذهنية مطابقة لمعايير التصفية الحالية."
   },
+  "maps.load-error": {
+    "defaultMessage": "تعذّر تحميل خرائطك. يُرجى المحاولة مرة أخرى لاحقًا."
+  },
   "maps.import-desc": {
     "defaultMessage": "استيراد من أدوات أخرى"
   },

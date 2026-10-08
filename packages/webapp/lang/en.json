@@ -1205,6 +1205,9 @@
   "maps.import-desc": {
     "defaultMessage": "Import from other tools"
   },
+  "maps.load-error": {
+    "defaultMessage": "Your maps could not be loaded. Please try again later."
+  },
   "maps.modified": {
     "defaultMessage": "Modified"
   },
