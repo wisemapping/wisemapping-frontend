@@ -23,6 +23,7 @@ import AppConfig from '../../classes/app-config';
 import queryClient from '../../queryClient';
 import Client from '../../classes/client';
 import { createJsonResponse } from '../../utils/response';
+import { mapMetadataQueryKey } from '../../classes/middleware';
 
 export type EditorMetadata = {
   editorMode: EditorRenderMode;
@@ -46,9 +47,8 @@ async function fetchMapMetadataWithCache(
   client: Client,
   includeXml = false,
 ): Promise<MapMetadata> {
-  const cacheKey = includeXml ? `maps-metadata-xml-${mapId}` : `maps-metadata-${mapId}`;
   return queryClient.fetchQuery<MapMetadata, ErrorInfo>({
-    queryKey: [cacheKey],
+    queryKey: mapMetadataQueryKey(mapId, includeXml),
     queryFn: () => client.fetchMapMetadata(mapId, includeXml),
   });
 }

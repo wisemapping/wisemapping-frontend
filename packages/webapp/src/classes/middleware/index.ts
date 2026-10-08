@@ -22,6 +22,15 @@ import { ClientContext } from '../provider/client-context';
 import { useContext, useMemo } from 'react';
 import AppI18n from '../app-i18n';
 
+/**
+ * The cache key of a map's metadata. It sits under ['maps'], so the invalidation every map
+ * mutation does (rename, star, labels, publish...) also refreshes it: with its own top-level
+ * key it stayed fresh for the 5-minute staleTime, and a dialog opened again showed, and saved
+ * back, the values from before the change.
+ */
+export const mapMetadataQueryKey = (id: number, withXml = false): unknown[] =>
+  withXml ? ['maps', 'metadata', id, 'xml'] : ['maps', 'metadata', id];
+
 type MapLoadResult = {
   isLoading: boolean;
   error: ErrorInfo | null;
@@ -31,7 +40,7 @@ type MapLoadResult = {
 export const useFetchMapById = (id: number): MapLoadResult => {
   const client = useContext(ClientContext);
   const { isLoading, error, data } = useQuery<MapMetadata, ErrorInfo>({
-    queryKey: [`maps-metadata-${id}`],
+    queryKey: mapMetadataQueryKey(id),
     queryFn: () => client.fetchMapMetadata(id),
     // 0 is a valid map ID, only disable for null/undefined/NaN
     enabled: id != null && !Number.isNaN(id),
@@ -71,7 +80,7 @@ type MapMetadataLoadResult = {
 export const useFetchMapMetadata = (id: number): MapMetadataLoadResult => {
   const client = useContext(ClientContext);
   const { isLoading, error, data } = useQuery<MapMetadata, ErrorInfo>({
-    queryKey: [`maps-metadata-${id}`],
+    queryKey: mapMetadataQueryKey(id),
     queryFn: () => client.fetchMapMetadata(id),
   });
   return { isLoading, error, data };
