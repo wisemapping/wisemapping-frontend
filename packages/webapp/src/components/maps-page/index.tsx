@@ -62,6 +62,7 @@ import { trackMindmapListAction, trackPageView } from '../../utils/analytics';
 import { CSSObject, Interpolation, Theme } from '@emotion/react';
 import { ClientContext } from '../../classes/provider/client-context';
 import { SEOHead } from '../seo';
+import { readStorage, writeStorage, removeStorage } from '../../utils/storage';
 
 const CHATGPT_COPILOT_URL =
   'https://chatgpt.com/g/g-6908d77ed7988191bb7a62f29fcf0177-mind-map-copilot';
@@ -86,7 +87,7 @@ const MapsPage = (): ReactElement => {
   const [labelToDelete, setLabelToDelete] = React.useState<number | null>(null);
   const [mobileDrawerOpen, setMobileDrawerOpen] = React.useState(false);
   const [desktopDrawerOpen, setDesktopDrawerOpen] = React.useState(
-    localStorage.getItem('desktopDrawerOpen') === 'true',
+    readStorage('desktopDrawerOpen') === 'true',
   );
   const classes = useStyles(desktopDrawerOpen);
 
@@ -100,8 +101,8 @@ const MapsPage = (): ReactElement => {
   };
 
   const handleDesktopDrawerToggle = () => {
-    if (!desktopDrawerOpen) localStorage.setItem('desktopDrawerOpen', 'true');
-    else localStorage.removeItem('desktopDrawerOpen');
+    if (!desktopDrawerOpen) writeStorage('desktopDrawerOpen', 'true');
+    else removeStorage('desktopDrawerOpen');
     setDesktopDrawerOpen(!desktopDrawerOpen);
   };
 
