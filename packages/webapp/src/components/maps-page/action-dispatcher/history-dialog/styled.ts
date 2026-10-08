@@ -16,26 +16,70 @@
  *   limitations under the License.
  */
 
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
-import TableContainer from '@mui/material/TableContainer';
-import TableCell from '@mui/material/TableCell';
 
-export const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
+export const HistoryList = styled('ul')({
+  listStyle: 'none',
+  margin: 0,
+  padding: 0,
   maxHeight: 400,
-  border: `1px solid ${theme.palette.divider}`,
-  borderRadius: theme.shape.borderRadius,
+  overflowY: 'auto',
+});
+
+/** A version: who saved it and when, then View and Revert. */
+export const HistoryRow = styled('li')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: theme.spacing(1.5),
+  padding: theme.spacing(1, 0),
+  '& + &': {
+    borderTop: `1px solid ${theme.palette.divider}`,
+  },
 }));
 
-export const StyledHeaderCell = styled(TableCell)(({ theme }) => ({
-  fontWeight: 600,
-  backgroundColor: theme.palette.background.default,
-  position: 'sticky',
-  top: 0,
-  zIndex: 1,
-}));
+export const HistoryText = styled(Box)({
+  flex: 1,
+  minWidth: 0,
+});
 
-export const StyledEmptyCell = styled(TableCell)(({ theme }) => ({
-  textAlign: 'center',
-  padding: theme.spacing(3),
+export const HistoryAuthor = styled(Typography)({
+  fontSize: '0.875rem',
+  fontWeight: 500,
+  overflow: 'hidden',
+  whiteSpace: 'nowrap',
+  textOverflow: 'ellipsis',
+});
+
+export const HistoryTime = styled(Typography)(({ theme }) => ({
+  display: 'inline-block',
+  fontSize: '0.75rem',
   color: theme.palette.text.secondary,
+}));
+
+export const HistoryActions = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  gap: theme.spacing(0.5),
+  flexShrink: 0,
+  // Row actions: lighter than the dialog's own buttons.
+  '& .MuiButton-root': {
+    fontSize: '0.8125rem',
+    fontWeight: 500,
+    padding: theme.spacing(0.5, 1.25),
+  },
+}));
+
+export const HistoryEmpty = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  gap: theme.spacing(1),
+  padding: theme.spacing(4, 2),
+  color: theme.palette.text.secondary,
+  textAlign: 'center',
+  '& .MuiSvgIcon-root': {
+    fontSize: 36,
+    opacity: 0.6,
+  },
 }));

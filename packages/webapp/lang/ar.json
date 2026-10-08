@@ -425,12 +425,6 @@
   "maps.import-desc": {
     "defaultMessage": "استيراد من أدوات أخرى"
   },
-  "maps.modified": {
-    "defaultMessage": "آخر تعديل"
-  },
-  "maps.modified-by": {
-    "defaultMessage": "آخر تعديل بواسطة"
-  },
   "maps.modified-by-desc": {
     "defaultMessage": "آخر تعديل بواسطة {by} في {on}"
   },

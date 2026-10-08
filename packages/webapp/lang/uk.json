@@ -422,12 +422,6 @@
   "maps.import-desc": {
     "defaultMessage": "Імпорт з інших інструментів"
   },
-  "maps.modified": {
-    "defaultMessage": "Змінено"
-  },
-  "maps.modified-by": {
-    "defaultMessage": "Змінено"
-  },
   "maps.modified-by-desc": {
     "defaultMessage": "Змінено {by} {on}"
   },

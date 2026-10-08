@@ -2634,18 +2634,6 @@
       "value": "マップを読み込めませんでした。しばらくしてからもう一度お試しください。"
     }
   ],
-  "maps.modified": [
-    {
-      "type": 0,
-      "value": "変更"
-    }
-  ],
-  "maps.modified-by": [
-    {
-      "type": 0,
-      "value": "変更者"
-    }
-  ],
   "maps.modified-by-desc": [
     {
       "type": 1,

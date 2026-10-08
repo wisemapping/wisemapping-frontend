@@ -2645,18 +2645,6 @@
       "value": "Your maps could not be loaded. Please try again later."
     }
   ],
-  "maps.modified": [
-    {
-      "type": 0,
-      "value": "Modified"
-    }
-  ],
-  "maps.modified-by": [
-    {
-      "type": 0,
-      "value": "Modified By"
-    }
-  ],
   "maps.modified-by-desc": [
     {
       "type": 0,

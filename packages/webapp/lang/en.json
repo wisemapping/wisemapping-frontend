@@ -1217,12 +1217,6 @@
   "maps.load-error": {
     "defaultMessage": "Your maps could not be loaded. Please try again later."
   },
-  "maps.modified": {
-    "defaultMessage": "Modified"
-  },
-  "maps.modified-by": {
-    "defaultMessage": "Modified By"
-  },
   "maps.modified-by-desc": {
     "defaultMessage": "Modified by {by} on {on}"
   },

@@ -2649,18 +2649,6 @@
       "value": "Non è stato possibile caricare le tue mappe. Riprova più tardi."
     }
   ],
-  "maps.modified": [
-    {
-      "type": 0,
-      "value": "Modificato"
-    }
-  ],
-  "maps.modified-by": [
-    {
-      "type": 0,
-      "value": "Modificato Da"
-    }
-  ],
   "maps.modified-by-desc": [
     {
       "type": 0,

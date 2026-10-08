@@ -2653,18 +2653,6 @@
       "value": "No se pudieron cargar tus mapas. Inténtalo de nuevo más tarde."
     }
   ],
-  "maps.modified": [
-    {
-      "type": 0,
-      "value": "Modificado"
-    }
-  ],
-  "maps.modified-by": [
-    {
-      "type": 0,
-      "value": "Modificado por"
-    }
-  ],
   "maps.modified-by-desc": [
     {
       "type": 0,

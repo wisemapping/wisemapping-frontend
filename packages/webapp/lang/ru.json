@@ -371,12 +371,6 @@
   "maps.import-desc": {
     "defaultMessage": "Загрузить из других редакторов"
   },
-  "maps.modified": {
-    "defaultMessage": "Изменена"
-  },
-  "maps.modified-by": {
-    "defaultMessage": "Редактор"
-  },
   "maps.modified-by-desc": {
     "defaultMessage": "Изменена {by} в {on}"
   },

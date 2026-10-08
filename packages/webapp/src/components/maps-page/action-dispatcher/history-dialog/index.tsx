@@ -24,15 +24,22 @@ import { SimpleDialogProps } from '..';
 import BaseDialog from '../base-dialog';
 import dayjs from 'dayjs';
 
-import Table from '@mui/material/Table';
-import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
-import TableHead from '@mui/material/TableHead';
-import TableBody from '@mui/material/TableBody';
 import Tooltip from '@mui/material/Tooltip';
-import Link from '@mui/material/Link';
 import { ClientContext } from '../../../../classes/provider/client-context';
-import { StyledTableContainer, StyledHeaderCell, StyledEmptyCell } from './styled';
+import Button from '@mui/material/Button';
+import HistoryIcon from '@mui/icons-material/History';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import RestoreIcon from '@mui/icons-material/Restore';
+import UserAvatar from '../user-avatar';
+import {
+  HistoryActions,
+  HistoryAuthor,
+  HistoryEmpty,
+  HistoryList,
+  HistoryRow,
+  HistoryText,
+  HistoryTime,
+} from './styled';
 import { reloadPage } from '../../../../utils/redirect';
 
 type HistoryDialogProps = SimpleDialogProps & {
@@ -94,62 +101,50 @@ const HistoryDialog = ({
         defaultMessage: 'List of changes introduced in the last 90 days.',
       })}
     >
-      <StyledTableContainer>
-        <Table size="small" stickyHeader>
-          <TableHead>
-            <TableRow>
-              <StyledHeaderCell align="left">
-                <FormattedMessage id="maps.modified-by" defaultMessage="Modified By" />
-              </StyledHeaderCell>
-              <StyledHeaderCell align="left">
-                <FormattedMessage id="maps.modified" defaultMessage="Modified" />
-              </StyledHeaderCell>
-              <StyledHeaderCell align="left"></StyledHeaderCell>
-              <StyledHeaderCell align="left"></StyledHeaderCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {changeHistory.length === 0 ? (
-              <TableRow>
-                <StyledEmptyCell colSpan={4}>
-                  <FormattedMessage
-                    id="history.no-changes"
-                    defaultMessage="There is no changes available"
-                  />
-                </StyledEmptyCell>
-              </TableRow>
-            ) : (
-              changeHistory.map((row) => (
-                <TableRow key={row.id}>
-                  <TableCell align="left">{row.lastModificationBy}</TableCell>
-                  <TableCell align="left">
-                    <Tooltip
-                      title={dayjs(row.lastModificationTime).format('lll')}
-                      placement="bottom-start"
-                    >
-                      <span>{dayjs(row.lastModificationTime).fromNow()}</span>
-                    </Tooltip>
-                  </TableCell>
-                  <TableCell align="left">
-                    <Link href={`/c/maps/${mapId}/${row.id}/view`} target="history">
-                      <FormattedMessage id="maps.view" defaultMessage="View" />
-                    </Link>
-                  </TableCell>
-                  <TableCell align="left">
-                    <Link
-                      href="#"
-                      onClick={(e) => handleOnClick(e, row.id)}
-                      aria-disabled={revert.isPending}
-                    >
-                      <FormattedMessage id="maps.revert" defaultMessage="Revert" />
-                    </Link>
-                  </TableCell>
-                </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
-      </StyledTableContainer>
+      {changeHistory.length === 0 ? (
+        <HistoryEmpty>
+          <HistoryIcon />
+          <FormattedMessage
+            id="history.no-changes"
+            defaultMessage="There is no changes available"
+          />
+        </HistoryEmpty>
+      ) : (
+        <HistoryList>
+          {changeHistory.map((row) => (
+            <HistoryRow key={row.id}>
+              <UserAvatar name={row.lastModificationBy} />
+              <HistoryText>
+                <HistoryAuthor>{row.lastModificationBy}</HistoryAuthor>
+                <Tooltip
+                  title={dayjs(row.lastModificationTime).format('lll')}
+                  placement="bottom-start"
+                >
+                  <HistoryTime>{dayjs(row.lastModificationTime).fromNow()}</HistoryTime>
+                </Tooltip>
+              </HistoryText>
+              <HistoryActions>
+                <Button
+                  size="small"
+                  href={`/c/maps/${mapId}/${row.id}/view`}
+                  target="history"
+                  startIcon={<OpenInNewIcon fontSize="small" />}
+                >
+                  <FormattedMessage id="maps.view" defaultMessage="View" />
+                </Button>
+                <Button
+                  size="small"
+                  onClick={(e) => handleOnClick(e, row.id)}
+                  disabled={revert.isPending}
+                  startIcon={<RestoreIcon fontSize="small" />}
+                >
+                  <FormattedMessage id="maps.revert" defaultMessage="Revert" />
+                </Button>
+              </HistoryActions>
+            </HistoryRow>
+          ))}
+        </HistoryList>
+      )}
     </BaseDialog>
   );
 };

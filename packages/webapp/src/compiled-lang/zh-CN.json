@@ -2642,18 +2642,6 @@
       "value": "无法加载您的导图。请稍后再试。"
     }
   ],
-  "maps.modified": [
-    {
-      "type": 0,
-      "value": "已修改"
-    }
-  ],
-  "maps.modified-by": [
-    {
-      "type": 0,
-      "value": "修改者"
-    }
-  ],
   "maps.modified-by-desc": [
     {
       "type": 1,

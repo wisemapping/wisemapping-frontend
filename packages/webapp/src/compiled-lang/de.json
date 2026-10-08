@@ -2653,18 +2653,6 @@
       "value": "Deine Mindmaps konnten nicht geladen werden. Bitte versuche es später erneut."
     }
   ],
-  "maps.modified": [
-    {
-      "type": 0,
-      "value": "Geändert"
-    }
-  ],
-  "maps.modified-by": [
-    {
-      "type": 0,
-      "value": "Geändert von"
-    }
-  ],
   "maps.modified-by-desc": [
     {
       "type": 0,

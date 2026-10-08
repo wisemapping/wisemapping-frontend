@@ -419,12 +419,6 @@
   "maps.import-desc": {
     "defaultMessage": "他のツールからインポート"
   },
-  "maps.modified": {
-    "defaultMessage": "変更"
-  },
-  "maps.modified-by": {
-    "defaultMessage": "変更者"
-  },
   "maps.modified-by-desc": {
     "defaultMessage": "{on}に{by}が変更"
   },

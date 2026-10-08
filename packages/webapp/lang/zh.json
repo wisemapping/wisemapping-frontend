@@ -401,12 +401,6 @@
   "maps.import-desc": {
     "defaultMessage": "从其它工具导入"
   },
-  "maps.modified": {
-    "defaultMessage": "修改"
-  },
-  "maps.modified-by": {
-    "defaultMessage": "修改人"
-  },
   "maps.modified-by-desc": {
     "defaultMessage": "{on}由{by}修改"
   },

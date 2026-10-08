@@ -419,12 +419,6 @@
   "maps.import-desc": {
     "defaultMessage": "अन्य टूल्स से आयात करें"
   },
-  "maps.modified": {
-    "defaultMessage": "संशोधित"
-  },
-  "maps.modified-by": {
-    "defaultMessage": "द्वारा संशोधित"
-  },
   "maps.modified-by-desc": {
     "defaultMessage": "{by} द्वारा {on} पर संशोधित"
   },

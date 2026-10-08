@@ -2696,18 +2696,6 @@
       "value": "تعذّر تحميل خرائطك. يُرجى المحاولة مرة أخرى لاحقًا."
     }
   ],
-  "maps.modified": [
-    {
-      "type": 0,
-      "value": "آخر تعديل"
-    }
-  ],
-  "maps.modified-by": [
-    {
-      "type": 0,
-      "value": "آخر تعديل بواسطة"
-    }
-  ],
   "maps.modified-by-desc": [
     {
       "type": 0,

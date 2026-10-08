@@ -371,12 +371,6 @@
   "maps.import-desc": {
     "defaultMessage": "Import aus anderen Tools"
   },
-  "maps.modified": {
-    "defaultMessage": "Geändert"
-  },
-  "maps.modified-by": {
-    "defaultMessage": "Geändert von"
-  },
   "maps.modified-by-desc": {
     "defaultMessage": "Geändert von {by} am {on}"
   },

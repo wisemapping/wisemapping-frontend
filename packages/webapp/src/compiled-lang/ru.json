@@ -2679,18 +2679,6 @@
       "value": "Не удалось загрузить ваши карты. Повторите попытку позже."
     }
   ],
-  "maps.modified": [
-    {
-      "type": 0,
-      "value": "Изменена"
-    }
-  ],
-  "maps.modified-by": [
-    {
-      "type": 0,
-      "value": "Редактор"
-    }
-  ],
   "maps.modified-by-desc": [
     {
       "type": 0,

@@ -419,12 +419,6 @@
   "maps.import-desc": {
     "defaultMessage": "从其他工具导入"
   },
-  "maps.modified": {
-    "defaultMessage": "已修改"
-  },
-  "maps.modified-by": {
-    "defaultMessage": "修改者"
-  },
   "maps.modified-by-desc": {
     "defaultMessage": "{by} 于 {on} 修改"
   },

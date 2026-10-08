@@ -2645,18 +2645,6 @@
       "value": "Vos cartes n'ont pas pu être chargées. Veuillez réessayer plus tard."
     }
   ],
-  "maps.modified": [
-    {
-      "type": 0,
-      "value": "Modifié"
-    }
-  ],
-  "maps.modified-by": [
-    {
-      "type": 0,
-      "value": "Modifié par"
-    }
-  ],
   "maps.modified-by-desc": [
     {
       "type": 0,
