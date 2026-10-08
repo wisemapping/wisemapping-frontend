@@ -453,6 +453,8 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
         el: event.currentTarget,
       });
       event.preventDefault();
+      // The table row toggles its selection on click: opening the menu must not.
+      event.stopPropagation();
     };
   };
 

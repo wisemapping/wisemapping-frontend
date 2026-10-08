@@ -476,6 +476,20 @@ describe('MapsList', () => {
     expect(screen.getByTestId('dispatcher-maps').textContent).toBe('3');
   });
 
+  test('opening a row menu leaves the selection alone', async () => {
+    // The click bubbled to the row and toggled it: "Delete selected" then included a map the
+    // user had only opened the menu of.
+    renderList();
+    await screen.findAllByText('Alpha plan');
+    fireEvent.click(rowFor('Alpha plan'));
+
+    fireEvent.click(within(rowFor('Gamma ideas')).getByRole('button', { name: 'Others' }));
+    fireEvent.click(within(rowFor('Alpha plan')).getByRole('button', { name: 'Others' }));
+
+    expect(checkboxFor('Gamma ideas').checked).toBe(false);
+    expect(checkboxFor('Alpha plan').checked).toBe(true);
+  });
+
   test('dismissing the row menu opens no dialog', async () => {
     renderList();
     await screen.findAllByText('Alpha plan');
