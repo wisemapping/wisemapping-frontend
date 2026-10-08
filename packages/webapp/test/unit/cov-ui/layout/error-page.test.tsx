@@ -84,7 +84,10 @@ describe('ErrorPage', () => {
 
     expect(heading()).toBe("You don't have access to this page.");
     expect(screen.getByText(/contact your administrator/)).toBeTruthy();
-    expect(screen.getByRole('link', { name: 'Sign In' }).getAttribute('href')).toBe('/c/login');
+    // Signing in comes back here: a private map's link would otherwise end on the map list.
+    expect(screen.getByRole('link', { name: 'Sign In' }).getAttribute('href')).toBe(
+      `/c/login?redirect=${encodeURIComponent('/c/broken')}`,
+    );
     expect(screen.queryByRole('button', { name: 'Go to Home' })).toBeNull();
     // Access errors are expected: they are not reported.
     expect(logCriticalError).not.toHaveBeenCalled();
