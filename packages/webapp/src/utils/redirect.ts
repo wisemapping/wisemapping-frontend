@@ -53,3 +53,8 @@ export const safeRedirectPath = (
 export const leaveTo = (url: string): void => {
   window.location.href = url;
 };
+
+/** Reloads the page. Its own function for the same reason as leaveTo. */
+export const reloadPage = (): void => {
+  window.location.reload();
+};

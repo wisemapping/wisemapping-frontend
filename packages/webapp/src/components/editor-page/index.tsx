@@ -276,6 +276,7 @@ const LoadedEditorPage = ({
             designer={
               editorConfig.model?.isMapLoadded() ? editorConfig.model.getDesigner() : undefined
             }
+            beforeRevert={async () => editorConfig.model?.stopSaving()}
           />
         </Suspense>
       )}

@@ -208,6 +208,17 @@ class Editor {
   }
 
   /**
+   * Saves the pending changes, then stops saving: no autosave and no save when the page unloads.
+   * For a change the server makes to the map next, such as reverting it to an older version
+   * before a reload, which a later save of this map would overwrite.
+   */
+  async stopSaving(): Promise<void> {
+    this.removeAutoSave();
+    await this.flushPendingChangesOnce();
+    this.removeBeforeUnloadHandler();
+  }
+
+  /**
    * Releases the listeners added by registerEvents and disposes the designer. A pending autosave
    * is dropped, not run: the caller flushes the pending changes before disposing. The designer
    * keeps its map, so a flush still in flight can save and unlock it.

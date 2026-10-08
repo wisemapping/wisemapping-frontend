@@ -22,6 +22,10 @@ import { fireEvent, screen, waitFor } from '@testing-library/react';
 // `useFetchMapById` is stubbed, as in test/unit/action-dispatcher: these suites are about the
 // dialogs, not about the query behind them.
 const mockUseFetchMapById = jest.fn();
+jest.mock('../../../../src/utils/redirect', () => ({
+  ...jest.requireActual('../../../../src/utils/redirect'),
+  reloadPage: jest.fn(),
+}));
 jest.mock('../../../../src/classes/middleware', () => ({
   ...jest.requireActual('../../../../src/classes/middleware'),
   useFetchMapById: (id: number) => mockUseFetchMapById(id),
@@ -33,6 +37,7 @@ import DeleteMultiselectDialog from '../../../../src/components/maps-page/action
 import CreateDialog from '../../../../src/components/maps-page/action-dispatcher/create-dialog';
 import InfoDialog from '../../../../src/components/maps-page/action-dispatcher/info-dialog';
 import HistoryDialog from '../../../../src/components/maps-page/action-dispatcher/history-dialog';
+import { reloadPage } from '../../../../src/utils/redirect';
 import Client, {
   ChangeHistory,
   MAP_DESCRIPTION_MAX_LENGTH,
@@ -418,15 +423,17 @@ describe('HistoryDialog', () => {
     { id: 32, lastModificationBy: 'diego@wisemapping.com', lastModificationTime: '2026-01-02' },
   ];
 
-  const setup = (changes: ChangeHistory[]) => {
+  const setup = (changes: ChangeHistory[], beforeRevert?: () => Promise<void>) => {
     const fetchHistory = jest.fn(() => Promise.resolve(changes));
     const revertHistory = jest.fn<Promise<void>, [number, number]>(() => Promise.resolve());
     const onClose = jest.fn();
-    renderWithProviders(<HistoryDialog mapId={7} onClose={onClose} />, {
+    renderWithProviders(<HistoryDialog mapId={7} onClose={onClose} beforeRevert={beforeRevert} />, {
       client: { fetchHistory, revertHistory } as unknown as Client,
     });
     return { fetchHistory, revertHistory, onClose };
   };
+
+  beforeEach(() => jest.mocked(reloadPage).mockClear());
 
   test('says when the map has no recorded changes', async () => {
     const { fetchHistory } = setup([]);
@@ -454,6 +461,50 @@ describe('HistoryDialog', () => {
 
     await waitFor(() => expect(revertHistory).toHaveBeenCalledWith(7, 32));
     await waitFor(() => expect(onClose).toHaveBeenCalledTimes(1));
+    expect(reloadPage).toHaveBeenCalledTimes(1);
+  });
+
+  test('from the editor, the pending changes are saved and saving stops before reverting', async () => {
+    // Otherwise the editor's save on unload pushed the map back over the revert.
+    const order: string[] = [];
+    const beforeRevert = jest.fn(async () => {
+      order.push('stop saving');
+    });
+    const { revertHistory } = setup(history, beforeRevert);
+    revertHistory.mockImplementation(async () => {
+      order.push('revert');
+    });
+    jest.mocked(reloadPage).mockImplementation(() => order.push('reload'));
+    await screen.findByText('ana@wisemapping.com');
+
+    fireEvent.click(screen.getAllByRole('link', { name: 'Revert' })[0]);
+
+    await waitFor(() => expect(order).toEqual(['stop saving', 'revert', 'reload']));
+  });
+
+  test('a failed revert is shown, and nothing is reloaded', async () => {
+    const { revertHistory, onClose } = setup(history);
+    revertHistory.mockRejectedValue({ msg: 'Revert refused' });
+    await screen.findByText('ana@wisemapping.com');
+
+    fireEvent.click(screen.getAllByRole('link', { name: 'Revert' })[0]);
+
+    expect(await screen.findByText('Revert refused')).toBeTruthy();
+    expect(onClose).not.toHaveBeenCalled();
+    expect(reloadPage).not.toHaveBeenCalled();
+  });
+
+  test('a second click while reverting sends nothing more', async () => {
+    const { revertHistory } = setup(history);
+    revertHistory.mockReturnValue(new Promise(() => undefined));
+    await screen.findByText('ana@wisemapping.com');
+
+    fireEvent.click(screen.getAllByRole('link', { name: 'Revert' })[0]);
+    await waitFor(() => expect(revertHistory).toHaveBeenCalledTimes(1));
+    fireEvent.click(screen.getAllByRole('link', { name: 'Revert' })[1]);
+
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    expect(revertHistory).toHaveBeenCalledTimes(1);
   });
 
   test('close button closes the dialog', () => {

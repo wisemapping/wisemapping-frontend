@@ -316,3 +316,27 @@ describe('Editor flush', () => {
     error.mockRestore();
   });
 });
+
+describe('Editor.stopSaving', () => {
+  it('saves the pending changes, then neither autosaves nor saves on unload', async () => {
+    // Reverting to an older version from the editor reloads the page: the save on unload
+    // used to push the map back over the revert.
+    jest.useFakeTimers();
+    const { component, fire } = buildComponent();
+    const editor = editorFor(component);
+    editor.registerEvents(jest.fn(), visible, {} as WidgetBuilder);
+    fire('modelUpdate');
+
+    await editor.stopSaving();
+    expect(component.save).toHaveBeenCalledTimes(1);
+    expect(component.save).toHaveBeenCalledWith(false, { urgent: true });
+
+    jest.advanceTimersByTime(20000);
+    window.dispatchEvent(new Event('beforeunload'));
+    await Promise.resolve();
+
+    expect(component.save).toHaveBeenCalledTimes(1);
+    editor.dispose();
+    jest.useRealTimers();
+  });
+});
