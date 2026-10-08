@@ -1863,6 +1863,12 @@
       "value": " अन्य"
     }
   ],
+  "dialog.close": [
+    {
+      "type": 0,
+      "value": "डायलॉग बंद करें"
+    }
+  ],
   "duplicate.copy-title": [
     {
       "type": 1,

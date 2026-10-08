@@ -41,6 +41,7 @@ import ptMessages from '../../compiled-lang/pt.json';
 import itMessages from '../../compiled-lang/it.json';
 import hiMessages from '../../compiled-lang/hi.json';
 import arMessages from '../../compiled-lang/ar.json';
+import { readStorage, writeStorage } from '../../utils/storage';
 export class Locale {
   code: LocaleCode;
   label: string;
@@ -80,7 +81,7 @@ export default abstract class AppI18n {
       try {
         const localeFromUrl = localeFromStr(localeMatch[1]);
         // Store the locale from URL in localStorage so it persists
-        localStorage.setItem(AppI18n.LOCAL_STORAGE_KEY, localeFromUrl.code);
+        writeStorage(AppI18n.LOCAL_STORAGE_KEY, localeFromUrl.code);
         return localeFromUrl;
       } catch {
         // If locale from URL is invalid, fall through to default logic
@@ -94,8 +95,8 @@ export default abstract class AppI18n {
       result = accountLocale ?? this.getDefaultLocale();
 
       // If the local storage value is different, update ...
-      if (accountLocale && result.code !== localStorage.getItem(AppI18n.LOCAL_STORAGE_KEY)) {
-        localStorage.setItem(AppI18n.LOCAL_STORAGE_KEY, result.code);
+      if (accountLocale && result.code !== readStorage(AppI18n.LOCAL_STORAGE_KEY)) {
+        writeStorage(AppI18n.LOCAL_STORAGE_KEY, result.code);
       }
     } else {
       result = this.getDefaultLocale();
@@ -122,7 +123,7 @@ export default abstract class AppI18n {
   public static getDefaultLocale(): Locale {
     // Fetch local from local storage ...
     let result: Locale | null = null;
-    const userLocaleCode: string | null = localStorage.getItem(AppI18n.LOCAL_STORAGE_KEY);
+    const userLocaleCode: string | null = readStorage(AppI18n.LOCAL_STORAGE_KEY);
     if (userLocaleCode) {
       result = localeFromStr(userLocaleCode);
     }

@@ -15,15 +15,9 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import Typography from '@mui/material/Typography';
 import React, { ReactElement, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
@@ -33,6 +27,19 @@ import type { LayoutType } from '@wisemapping/mindplot';
 import NodeProperty from '../../../../classes/model/node-property';
 import Model from '../../../../classes/model/editor';
 import { trackEditorInteraction } from '../../../../utils/analytics';
+import {
+  OptionCard,
+  OptionCardContent,
+  OptionChooserContent,
+  OptionChooserDescription,
+  OptionChooserDialog,
+  OptionDescription,
+  OptionIcon,
+  OptionList,
+  OptionRow,
+  OptionText,
+  OptionTitle,
+} from '../shared/StyledOptionChooser';
 
 // Custom SVG icon for mindmap layout
 const MindmapIcon = (props: SvgIconProps) => (
@@ -79,7 +86,7 @@ const LayoutSelector = ({ closeModal, layoutModel, model }: LayoutSelectorProps)
         defaultMessage:
           'Horizontal layout with balanced branches on both sides. Best for traditional mind mapping and brainstorming.',
       }),
-      icon: <MindmapIcon sx={{ fontSize: 40, color: 'primary.main' }} />,
+      icon: <MindmapIcon />,
     },
     {
       id: 'tree' as LayoutType,
@@ -89,7 +96,7 @@ const LayoutSelector = ({ closeModal, layoutModel, model }: LayoutSelectorProps)
         defaultMessage:
           'Vertical hierarchy flowing top-to-bottom. Great for organizational charts and hierarchical structures.',
       }),
-      icon: <AccountTreeIcon sx={{ fontSize: 40, color: 'primary.main' }} />,
+      icon: <AccountTreeIcon />,
     },
   ];
 
@@ -124,80 +131,36 @@ const LayoutSelector = ({ closeModal, layoutModel, model }: LayoutSelectorProps)
   };
 
   return (
-    <Dialog
-      open={true}
-      onClose={handleCancel}
-      maxWidth="sm"
-      fullWidth
-      slotProps={{
-        paper: {
-          sx: {
-            minHeight: '300px',
-            border: '2px solid #ffa800',
-            boxShadow: 'none',
-          },
-        },
-      }}
-    >
+    <OptionChooserDialog open={true} onClose={handleCancel} maxWidth="sm" fullWidth>
       <DialogTitle>
         <FormattedMessage id="layout-selector.title" defaultMessage="Choose Layout" />
       </DialogTitle>
-      <DialogContent>
-        <Typography
-          variant="body2"
-          sx={{
-            color: 'text.secondary',
-            mb: 3,
-            lineHeight: 1.4,
-          }}
-        >
+      <OptionChooserContent dividers>
+        <OptionChooserDescription variant="body2">
           <FormattedMessage id="layout-selector.description" defaultMessage="Choose layout style" />
-        </Typography>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+        </OptionChooserDescription>
+        <OptionList>
           {layouts.map((layoutOption) => (
-            <Card
+            <OptionCard
               key={layoutOption.id}
-              sx={{
-                cursor: 'pointer',
-                border:
-                  selectedLayout === layoutOption.id ? '2px solid #1976d2' : '1px solid #e0e0e0',
-                '&:hover': {
-                  border: '2px solid #1976d2',
-                  boxShadow: 2,
-                },
-              }}
+              selected={selectedLayout === layoutOption.id}
               onClick={() => handleLayoutSelect(layoutOption.id)}
             >
-              <CardContent sx={{ p: 1.5, '&:last-child': { pb: 1.5 } }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    {layoutOption.icon}
-                  </Box>
-                  <Box sx={{ flex: 1 }}>
-                    <Typography
-                      variant="subtitle2"
-                      component="div"
-                      sx={{ fontWeight: 'bold', mb: 0.25, fontSize: '0.875rem' }}
-                    >
-                      {layoutOption.name}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        color: 'text.secondary',
-                        lineHeight: 1.2,
-                        fontSize: '0.75rem',
-                      }}
-                    >
+              <OptionCardContent>
+                <OptionRow>
+                  <OptionIcon>{layoutOption.icon}</OptionIcon>
+                  <OptionText>
+                    <OptionTitle variant="subtitle2">{layoutOption.name}</OptionTitle>
+                    <OptionDescription variant="body2">
                       {layoutOption.description}
-                    </Typography>
-                  </Box>
-                </Box>
-              </CardContent>
-            </Card>
+                    </OptionDescription>
+                  </OptionText>
+                </OptionRow>
+              </OptionCardContent>
+            </OptionCard>
           ))}
-        </Box>
-      </DialogContent>
+        </OptionList>
+      </OptionChooserContent>
       <DialogActions>
         <Button onClick={handleCancel}>
           <FormattedMessage id="layout-selector.cancel" defaultMessage="Cancel" />
@@ -206,7 +169,7 @@ const LayoutSelector = ({ closeModal, layoutModel, model }: LayoutSelectorProps)
           <FormattedMessage id="layout-selector.accept" defaultMessage="Accept" />
         </Button>
       </DialogActions>
-    </Dialog>
+    </OptionChooserDialog>
   );
 };
 

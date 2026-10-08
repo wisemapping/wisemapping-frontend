@@ -25,7 +25,7 @@ import Stack from '@mui/material/Stack';
 import Link from '@mui/material/Link';
 import { trackPageView } from '../../utils/analytics';
 import { ErrorBody } from './styled';
-import { isRouteErrorResponse, useRouteError, useNavigate } from 'react-router';
+import { isRouteErrorResponse, useRouteError, useNavigate, useLocation } from 'react-router';
 import { Link as RouterLink } from 'react-router';
 import { ErrorInfo } from '../../classes/client';
 import { logCriticalError } from '../../utils';
@@ -63,6 +63,7 @@ const safeSerialize = (error: unknown): string => {
 const ErrorPage = (): React.ReactElement => {
   const intl = useIntl();
   const navigate = useNavigate();
+  const location = useLocation();
   const error = useRouteError();
   const routeError = isRouteErrorResponse(error) ? error : undefined;
   const errorInfo = isErrorInfo(error) ? error : undefined;
@@ -245,7 +246,12 @@ const ErrorPage = (): React.ReactElement => {
               </>
             )}
             {isAccessError && (
-              <Button variant="contained" color="primary" component={RouterLink} to="/c/login">
+              <Button
+                variant="contained"
+                color="primary"
+                component={RouterLink}
+                to={`/c/login?redirect=${encodeURIComponent(location.pathname + location.search)}`}
+              >
                 <FormattedMessage id="error.go-to-login" defaultMessage="Sign In" />
               </Button>
             )}

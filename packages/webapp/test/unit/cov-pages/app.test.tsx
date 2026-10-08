@@ -64,6 +64,7 @@ jest.mock('../../../src/components/editor-page/loader', () => ({
   loader: (mode: string, bootstrap: boolean) => `map-loader:${mode}:${bootstrap}`,
 }));
 jest.mock('../../../src/loader', () => ({ loader: 'config-loader' }));
+jest.mock('../../../src/components/maps-page/loader', () => ({ mapsPageLoader: 'maps-loader' }));
 jest.mock('../../../src/components/common-page', () => {
   const { Outlet } = jest.requireActual('./mock-router');
   const ReactActual = jest.requireActual<typeof React>('react');
@@ -238,6 +239,8 @@ describe('App', () => {
     expect(await screen.findByText('maps-page')).toBeTruthy();
     expect(screen.getByTestId('common-page')).toBeTruthy();
     expect(errorElementName(leaf())).toBe('maps-page-error-fallback');
+    // The maps are loaded with the page's code, so the page renders once, with them.
+    expect(leaf().loader).toBe('maps-loader');
   });
 
   test('/c/admin is the admin console entry', async () => {

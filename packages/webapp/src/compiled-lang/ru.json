@@ -1897,6 +1897,12 @@
       "value": "count"
     }
   ],
+  "dialog.close": [
+    {
+      "type": 0,
+      "value": "Закрыть диалог"
+    }
+  ],
   "duplicate.copy-title": [
     {
       "type": 0,

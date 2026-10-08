@@ -1867,6 +1867,12 @@
       "value": "count"
     }
   ],
+  "dialog.close": [
+    {
+      "type": 0,
+      "value": "Chiudi la finestra"
+    }
+  ],
   "duplicate.copy-title": [
     {
       "type": 0,

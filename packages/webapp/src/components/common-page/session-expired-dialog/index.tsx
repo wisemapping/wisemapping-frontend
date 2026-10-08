@@ -24,10 +24,13 @@ import Alert from '@mui/material/Alert';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import AlertTitle from '@mui/material/AlertTitle';
+import { leaveTo } from '../../../utils/redirect';
 
 const SessionExpiredDialog = ({ open }: { open: boolean }): React.ReactElement => {
+  // Back to this page once signed in again (the login page only follows same-site paths).
   const handleOnClose = () => {
-    window.location.href = '/c/login';
+    const here = `${window.location.pathname}${window.location.search}`;
+    leaveTo(`/c/login?redirect=${encodeURIComponent(here)}`);
   };
 
   return (

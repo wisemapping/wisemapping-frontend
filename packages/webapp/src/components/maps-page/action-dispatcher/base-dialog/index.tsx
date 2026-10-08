@@ -20,9 +20,15 @@ import React, { useContext, useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { ErrorInfo } from '../../../../classes/client';
 import Dialog from '@mui/material/Dialog';
-import { StyledDialogActions, StyledDialogContent, StyledDialogTitle } from './style';
+import {
+  StyledCloseButton,
+  StyledDialogActions,
+  StyledDialogContent,
+  StyledDialogSubtitle,
+  StyledDialogTitle,
+} from './style';
 import GlobalError from '../../../form/global-error';
-import DialogContentText from '@mui/material/DialogContentText';
+import CloseIcon from '@mui/icons-material/Close';
 import Button from '@mui/material/Button';
 import { CSSObject } from '@emotion/react';
 import { KeyboardContext } from '../../../../classes/provider/keyboard-context';
@@ -31,7 +37,7 @@ import AsyncButton from '../../../form/async-button';
 export type DialogProps = {
   onClose: () => void;
   onSubmit?: (event: React.FormEvent<HTMLFormElement>) => void;
-  children: unknown;
+  children?: React.ReactNode;
   error?: ErrorInfo;
 
   title: string;
@@ -59,14 +65,13 @@ const BaseDialog = (props: DialogProps): React.ReactElement => {
     }
   };
 
-  const description = props.description ? (
-    <DialogContentText>{props.description}</DialogContentText>
-  ) : null;
+  const closeLabel = intl.formatMessage({ id: 'dialog.close', defaultMessage: 'Close dialog' });
   return (
     <div>
       <Dialog
         open={true}
-        onClose={onClose}
+        // Escape and the backdrop wait for the request too, as Cancel does.
+        onClose={isLoading ? undefined : onClose}
         maxWidth={maxWidth}
         fullWidth={!papercss}
         // `sx` rather than `css`: slotProps are spread onto the Paper as plain
@@ -76,14 +81,23 @@ const BaseDialog = (props: DialogProps): React.ReactElement => {
         slotProps={papercss ? { paper: { sx: papercss } } : undefined}
       >
         <form autoComplete="off" onSubmit={handleOnSubmit}>
-          <StyledDialogTitle>{props.title}</StyledDialogTitle>
+          <StyledDialogTitle>
+            {props.title}
+            {props.description && <StyledDialogSubtitle>{props.description}</StyledDialogSubtitle>}
+          </StyledDialogTitle>
+          <StyledCloseButton
+            aria-label={closeLabel}
+            title={closeLabel}
+            onClick={onClose}
+            disabled={isLoading}
+            size="small"
+          >
+            <CloseIcon fontSize="small" />
+          </StyledCloseButton>
 
-          <StyledDialogContent>
-            <>
-              {description}
-              <GlobalError error={props.error} />
-              {props.children}
-            </>
+          <StyledDialogContent dividers>
+            <GlobalError error={props.error} />
+            {props.children}
           </StyledDialogContent>
 
           <StyledDialogActions>

@@ -108,11 +108,19 @@ describe('Footer', () => {
 });
 
 describe('LoadingFallback', () => {
-  test('outside the editor shows a spinner', () => {
-    setLocation('/c/maps');
+  test('outside the editor and the map list shows a spinner', () => {
+    setLocation('/c/admin');
     renderWithProviders(<LoadingFallback />);
     expect(screen.getByText('Loading...')).toBeTruthy();
     expect(screen.getByRole('progressbar')).toBeTruthy();
+  });
+
+  test.each(['/c/maps', '/c/maps/'])('on the map list %s shows its skeleton', (path) => {
+    // The same skeleton the map list keeps up while it loads: one skeleton, then the page.
+    setLocation(path);
+    renderWithProviders(<LoadingFallback />);
+    expect(screen.queryByText('Loading...')).toBeNull();
+    expect(document.querySelectorAll('.MuiSkeleton-root').length).toBeGreaterThan(0);
   });
 
   test.each(['/c/maps/12', '/c/maps/12/edit'])(

@@ -18,6 +18,7 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import type { PaletteMode } from '@mui/material';
+import { readStorage, writeStorage } from '../utils/storage';
 
 interface ThemeContextType {
   mode: PaletteMode;
@@ -34,7 +35,7 @@ interface ThemeProviderProps {
 export const AppThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const [mode, setMode] = useState<PaletteMode>(() => {
     // Check localStorage first, then system preference
-    const savedMode = localStorage.getItem('themeMode') as PaletteMode;
+    const savedMode = readStorage('themeMode') as PaletteMode;
     if (savedMode) {
       return savedMode;
     }
@@ -50,17 +51,17 @@ export const AppThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => 
   const toggleMode = () => {
     const newMode = mode === 'light' ? 'dark' : 'light';
     setMode(newMode);
-    localStorage.setItem('themeMode', newMode);
+    writeStorage('themeMode', newMode);
   };
 
   const initializeThemeFromSystem = () => {
     // Only initialize if no preference has been set
-    if (!localStorage.getItem('themeMode')) {
+    if (!readStorage('themeMode')) {
       const systemPrefersDark =
         window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
       const systemMode = systemPrefersDark ? 'dark' : 'light';
       setMode(systemMode);
-      localStorage.setItem('themeMode', systemMode);
+      writeStorage('themeMode', systemMode);
     }
   };
 
@@ -69,7 +70,7 @@ export const AppThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => 
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const handleChange = (e: MediaQueryListEvent) => {
       // Only auto-switch if user hasn't set a preference
-      if (!localStorage.getItem('themeMode')) {
+      if (!readStorage('themeMode')) {
         setMode(e.matches ? 'dark' : 'light');
       }
     };

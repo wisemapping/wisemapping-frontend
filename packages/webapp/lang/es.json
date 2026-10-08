@@ -1480,5 +1480,8 @@
   },
   "maps.select-map": {
     "defaultMessage": "Seleccionar {title}"
+  },
+  "dialog.close": {
+    "defaultMessage": "Cerrar el diálogo"
   }
 }

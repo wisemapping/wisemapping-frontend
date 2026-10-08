@@ -19,16 +19,34 @@
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import withEmotionStyles from '../../../HOCs/withEmotionStyles';
+import IconButton from '@mui/material/IconButton';
+import { styled } from '@mui/material/styles';
 
-export const StyledDialogContent = withEmotionStyles({
-  padding: '0px 39px',
-})(DialogContent);
+// The paddings, corners and shadow come from the theme's shared dialog look
+// (editor/src/theme/dialog.ts); these only lay out the parts of this dialog.
 
-export const StyledDialogTitle = withEmotionStyles({
-  padding: '39px 39px 10px 39px',
-})(DialogTitle);
+/** Title and subtitle, leaving room for the close button. */
+export const StyledDialogTitle = styled(DialogTitle)(({ theme }) => ({
+  paddingRight: theme.spacing(7),
+}));
 
-export const StyledDialogActions = withEmotionStyles({
-  padding: '39px 39px 39px 39px',
-})(DialogActions);
+/** A span: it sits inside the title's heading. */
+export const StyledDialogSubtitle = styled('span')(({ theme }) => ({
+  display: 'block',
+  marginTop: theme.spacing(0.5),
+  color: theme.palette.text.secondary,
+  fontSize: '0.875rem',
+  fontWeight: 400,
+  lineHeight: 1.5,
+}));
+
+export const StyledCloseButton = styled(IconButton)(({ theme }) => ({
+  position: 'absolute',
+  top: theme.spacing(1.5),
+  right: theme.spacing(1.5),
+  color: theme.palette.text.secondary,
+}));
+
+export const StyledDialogContent = styled(DialogContent)({});
+
+export const StyledDialogActions = styled(DialogActions)({});
