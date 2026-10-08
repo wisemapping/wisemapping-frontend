@@ -136,7 +136,7 @@ interface AdminMap {
   spamType?: string;
   spamDetectedDate?: string;
   spamDescription?: string;
-  isCreatorSuspended?: boolean;
+  creatorSuspended?: boolean;
   collaboratorCount: number;
 }
 
@@ -928,7 +928,7 @@ const MapsManagement = (): ReactElement => {
                     >
                       {getPublicChip(map.public)}
                       {getLockedChip(map.isLocked, map.isLockedBy)}
-                      {getSuspendedUserChip(map.isCreatorSuspended || false)}
+                      {getSuspendedUserChip(map.creatorSuspended || false)}
                     </Box>
                   </TableCell>
                   <TableCell>
@@ -1008,7 +1008,7 @@ const MapsManagement = (): ReactElement => {
                           </IconButton>
                         </span>
                       </Tooltip>
-                      {!map.isCreatorSuspended && (
+                      {!map.creatorSuspended && (
                         <Tooltip
                           title={intl.formatMessage({
                             id: 'admin.maps.suspend-user',

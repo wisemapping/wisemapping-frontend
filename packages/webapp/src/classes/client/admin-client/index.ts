@@ -106,7 +106,8 @@ export interface AdminMap {
   spamType?: string;
   spamDetectedDate?: string;
   spamDescription?: string;
-  isCreatorSuspended?: boolean;
+  // AdminRestMap.isCreatorSuspended() has no @JsonProperty: Jackson sends "creatorSuspended".
+  creatorSuspended?: boolean;
   collaboratorCount: number;
 }
 

@@ -44,7 +44,7 @@ const busyMap = makeAdminMap({
   isLockedBy: 'eve',
   spam: true,
   spamType: 'LINKS',
-  isCreatorSuspended: true,
+  creatorSuspended: true,
   createdBy: 'spammer@example.com',
   createdById: 60,
 });
@@ -630,7 +630,7 @@ describe('MapsManagement', () => {
     const owner = makeUser({ id: 50, email: 'owner@example.com' });
     const ownerMaps = [
       makeAdminMap({ id: 21, title: 'Owner first', public: true }),
-      makeAdminMap({ id: 22, title: 'Owner second', spam: true, isCreatorSuspended: true }),
+      makeAdminMap({ id: 22, title: 'Owner second', spam: true, creatorSuspended: true }),
     ];
 
     const openOwner = async () => {

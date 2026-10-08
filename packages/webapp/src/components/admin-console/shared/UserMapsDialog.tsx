@@ -264,7 +264,7 @@ const UserMapsDialog = ({
                           {getPublicChip && getPublicChip(map.public)}
                           {getLockedChip && getLockedChip(map.isLocked, map.isLockedBy)}
                           {getSuspendedUserChip &&
-                            getSuspendedUserChip(map.isCreatorSuspended || false)}
+                            getSuspendedUserChip(map.creatorSuspended || false)}
                           {!getPublicChip && (
                             <Chip
                               label={map.public ? 'Public' : 'Private'}
