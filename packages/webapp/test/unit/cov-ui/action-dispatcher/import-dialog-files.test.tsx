@@ -66,6 +66,15 @@ describe('ImportDialog files', () => {
     }));
   });
 
+  test('a file name with dots keeps everything but its extension', async () => {
+    // The title used to stop at the first dot: "Plan v1.2 final.mm" became "Plan v1".
+    setup();
+
+    selectFile(new File(['<map/>'], 'Plan v1.2 final.wxml', { type: 'text/xml' }));
+
+    await waitFor(() => expect(nameInput().value).toBe('Plan v1.2 final'));
+  });
+
   test('imports a WiseMapping file as XML, named after the file', async () => {
     const { importMap } = setup();
 
