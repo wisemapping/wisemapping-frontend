@@ -29,6 +29,10 @@ export const useStyles = () => {
     root: {
       width: '100%',
     },
+    /** The single cell of the "no maps" and "could not load" rows. */
+    messageCell: {
+      textAlign: 'center',
+    },
     paper: {
       marginTop: '30px',
       marginBottom: theme.spacing(2),

@@ -2253,12 +2253,6 @@
       "value": "Informazioni Base"
     }
   ],
-  "info.button": [
-    {
-      "type": 0,
-      "value": "Accetta"
-    }
-  ],
   "info.creation-time": [
     {
       "type": 0,
@@ -2269,18 +2263,6 @@
     {
       "type": 0,
       "value": "Creatore"
-    }
-  ],
-  "info.description": [
-    {
-      "type": 0,
-      "value": "Descrizione"
-    }
-  ],
-  "info.description-msg": [
-    {
-      "type": 0,
-      "value": "Pubblicando la mappa la rendi visibile a tutti su Internet."
     }
   ],
   "info.modified-time": [
@@ -2295,28 +2277,34 @@
       "value": "Ultima Modifica Di"
     }
   ],
-  "info.name": [
+  "info.no-description": [
     {
       "type": 0,
-      "value": "Nome"
+      "value": "Nessuna descrizione"
     }
   ],
-  "info.public-visibility": [
+  "info.private": [
     {
       "type": 0,
-      "value": "Pubblicamente Visibile"
+      "value": "Privata"
     }
   ],
-  "info.sharing": [
+  "info.public": [
     {
       "type": 0,
-      "value": "Condivisione"
+      "value": "Pubblica"
     }
   ],
   "info.starred": [
     {
       "type": 0,
       "value": "Preferiti"
+    }
+  ],
+  "info.subtitle": [
+    {
+      "type": 0,
+      "value": "Dettagli di questa mappa e delle persone che ci lavorano."
     }
   ],
   "info.title": [
@@ -2647,18 +2635,6 @@
     {
       "type": 0,
       "value": "Non è stato possibile caricare le tue mappe. Riprova più tardi."
-    }
-  ],
-  "maps.modified": [
-    {
-      "type": 0,
-      "value": "Modificato"
-    }
-  ],
-  "maps.modified-by": [
-    {
-      "type": 0,
-      "value": "Modificato Da"
     }
   ],
   "maps.modified-by-desc": [
@@ -3211,28 +3187,22 @@
       "value": "Condividi con persone"
     }
   ],
+  "share.emails-placeholder": [
+    {
+      "type": 0,
+      "value": "Aggiungi persone tramite e-mail, separate da virgole"
+    }
+  ],
   "share.message": [
     {
       "type": 0,
       "value": "Messaggio"
     }
   ],
-  "share.table.actions": [
+  "share.people-with-access": [
     {
       "type": 0,
-      "value": "Azioni"
-    }
-  ],
-  "share.table.collaborator": [
-    {
-      "type": 0,
-      "value": "Collaboratore"
-    }
-  ],
-  "share.table.role": [
-    {
-      "type": 0,
-      "value": "Ruolo"
+      "value": "Persone con accesso"
     }
   ],
   "theme.dark": [

@@ -2283,12 +2283,6 @@
       "value": "Основна інформація"
     }
   ],
-  "info.button": [
-    {
-      "type": 0,
-      "value": "Прийняти"
-    }
-  ],
   "info.creation-time": [
     {
       "type": 0,
@@ -2299,18 +2293,6 @@
     {
       "type": 0,
       "value": "Створювач"
-    }
-  ],
-  "info.description": [
-    {
-      "type": 0,
-      "value": "Опис"
-    }
-  ],
-  "info.description-msg": [
-    {
-      "type": 0,
-      "value": "Опублікувавши карту, ви робите її видимою для всіх в Інтернеті."
     }
   ],
   "info.modified-time": [
@@ -2325,28 +2307,34 @@
       "value": "Остання зміна"
     }
   ],
-  "info.name": [
+  "info.no-description": [
     {
       "type": 0,
-      "value": "Назва"
+      "value": "Немає опису"
     }
   ],
-  "info.public-visibility": [
+  "info.private": [
     {
       "type": 0,
-      "value": "Публічно видима"
+      "value": "Приватна"
     }
   ],
-  "info.sharing": [
+  "info.public": [
     {
       "type": 0,
-      "value": "Спільне використання"
+      "value": "Загальнодоступна"
     }
   ],
   "info.starred": [
     {
       "type": 0,
       "value": "Відмічена"
+    }
+  ],
+  "info.subtitle": [
+    {
+      "type": 0,
+      "value": "Відомості про цю карту та людей, які над нею працюють."
     }
   ],
   "info.title": [
@@ -2677,18 +2665,6 @@
     {
       "type": 0,
       "value": "Не вдалося завантажити ваші карти. Спробуйте пізніше."
-    }
-  ],
-  "maps.modified": [
-    {
-      "type": 0,
-      "value": "Змінено"
-    }
-  ],
-  "maps.modified-by": [
-    {
-      "type": 0,
-      "value": "Змінено"
     }
   ],
   "maps.modified-by-desc": [
@@ -3241,28 +3217,22 @@
       "value": "Поділитися з людьми"
     }
   ],
+  "share.emails-placeholder": [
+    {
+      "type": 0,
+      "value": "Додайте людей за адресою електронної пошти через кому"
+    }
+  ],
   "share.message": [
     {
       "type": 0,
       "value": "Повідомлення"
     }
   ],
-  "share.table.actions": [
+  "share.people-with-access": [
     {
       "type": 0,
-      "value": "Дії"
-    }
-  ],
-  "share.table.collaborator": [
-    {
-      "type": 0,
-      "value": "Співавтор"
-    }
-  ],
-  "share.table.role": [
-    {
-      "type": 0,
-      "value": "Роль"
+      "value": "Люди з доступом"
     }
   ],
   "theme.dark": [

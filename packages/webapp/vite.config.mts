@@ -21,6 +21,7 @@ import path from 'path';
 import { buildStaticUrls, generateSitemapXml } from './src/components/sitemap/utils';
 import { resolveBootstrapConfig } from './src/utils/bootstrap-config-source';
 import { createRequire } from 'module';
+import { readFileSync } from 'fs';
 
 const requireJson = createRequire(import.meta.url);
 
@@ -99,7 +100,10 @@ export default defineConfig(({ mode }) => {
       sitemapMiddleware(),
       htmlTemplatePlugin({
         GOOGLE_ADDS_ENABLED: process.env.GOOGLE_ADDS_ENABLED || false,
-        NEW_RELIC_ENABLED: process.env.NEW_RELIC_ENABLED || false,
+        NEW_RELIC_SNIPPET:
+          process.env.NEW_RELIC_ENABLED && !['false', '0'].includes(process.env.NEW_RELIC_ENABLED)
+            ? readFileSync(path.resolve(import.meta.dirname, 'newrelic-snippet.html'), 'utf8')
+            : '',
       }),
     ],
     resolve: {

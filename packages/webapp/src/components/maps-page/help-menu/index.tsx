@@ -27,10 +27,10 @@ import FeedbackOutlined from '@mui/icons-material/FeedbackOutlined';
 import EmojiPeopleOutlined from '@mui/icons-material/EmailOutlined';
 import EmailOutlined from '@mui/icons-material/EmailOutlined';
 import Fab from '@mui/material/Fab';
-import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Tooltip from '@mui/material/Tooltip';
+import { HelpMenuList } from './styled';
 
 const HelpMenu = (): React.ReactElement => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -68,7 +68,7 @@ const HelpMenu = (): React.ReactElement => {
           <Help sx={{ fontSize: '18px' }} />
         </Fab>
       </Tooltip>
-      <Menu
+      <HelpMenuList
         id="appbar-profile"
         anchorEl={anchorEl}
         keepMounted
@@ -88,7 +88,6 @@ const HelpMenu = (): React.ReactElement => {
           href="https://www.wisemapping.com/termsofuse.html"
           target="help"
           onClick={handleClose}
-          sx={{ color: 'text.secondary' }}
         >
           <ListItemIcon>
             <PolicyOutlined fontSize="small" />
@@ -101,7 +100,6 @@ const HelpMenu = (): React.ReactElement => {
           href="https://www.wisemapping.com/privacy"
           target="help"
           onClick={handleClose}
-          sx={{ color: 'text.secondary' }}
         >
           <ListItemIcon>
             <PrivacyTipOutlined fontSize="small" />
@@ -115,7 +113,6 @@ const HelpMenu = (): React.ReactElement => {
           target="_blank"
           rel="noopener noreferrer"
           onClick={handleClose}
-          sx={{ color: 'text.secondary' }}
         >
           <ListItemIcon>
             <FavoriteOutlined fontSize="small" />
@@ -123,24 +120,14 @@ const HelpMenu = (): React.ReactElement => {
           <FormattedMessage id="footer.donations" defaultMessage="Donate" />
         </MenuItem>
 
-        <MenuItem
-          component="a"
-          href="mailto:team@wisemapping.com"
-          onClick={handleClose}
-          sx={{ color: 'text.secondary' }}
-        >
+        <MenuItem component="a" href="mailto:team@wisemapping.com" onClick={handleClose}>
           <ListItemIcon>
             <EmailOutlined fontSize="small" />
           </ListItemIcon>
           <FormattedMessage id="footer.contactus" defaultMessage="Contact Us" />
         </MenuItem>
 
-        <MenuItem
-          component="a"
-          href="mailto:feedback@wisemapping.com"
-          onClick={handleClose}
-          sx={{ color: 'text.secondary' }}
-        >
+        <MenuItem component="a" href="mailto:feedback@wisemapping.com" onClick={handleClose}>
           <ListItemIcon>
             <FeedbackOutlined fontSize="small" />
           </ListItemIcon>
@@ -152,14 +139,13 @@ const HelpMenu = (): React.ReactElement => {
           href="https://www.wisemapping.com/aboutus.html"
           target="help"
           onClick={handleClose}
-          sx={{ color: 'text.secondary' }}
         >
           <ListItemIcon>
             <EmojiPeopleOutlined fontSize="small" />
           </ListItemIcon>
           <FormattedMessage id="footer.aboutus" defaultMessage="About Us" />
         </MenuItem>
-      </Menu>
+      </HelpMenuList>
     </>
   );
 };

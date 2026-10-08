@@ -18,119 +18,123 @@
 
 import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-
-import { ErrorInfo } from '../../../../classes/client';
-import BaseDialog from '../base-dialog';
-import { SimpleDialogProps } from '..';
-import {
-  StyledScrollContainer,
-  InfoSection,
-  SectionTitle,
-  InfoRow,
-  InfoLabel,
-  InfoValue,
-  StyledDivider,
-} from './styled';
+import Chip from '@mui/material/Chip';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import PublicIcon from '@mui/icons-material/Public';
+import StarIcon from '@mui/icons-material/Star';
 import dayjs from 'dayjs';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
-import { useFetchMapById } from '../../../../classes/middleware';
 
-// Load fromNow plugin
+import BaseDialog from '../base-dialog';
+import { SimpleDialogProps } from '..';
+import UserAvatar from '../user-avatar';
+import { useFetchMapById } from '../../../../classes/middleware';
+import {
+  DetailLabel,
+  DetailList,
+  DetailRow,
+  DetailValue,
+  MapDescription,
+  MapName,
+  SectionTitle,
+  StatusChips,
+} from './styled';
+
 dayjs.extend(LocalizedFormat);
+
+// A date the backend did not send (or while the map loads) is shown as a dash, not as today.
+const formatDate = (value?: string): string => (value ? dayjs(value).format('LLL') : '—');
+
+const Person = ({ name }: { name?: string }): React.ReactElement =>
+  name ? (
+    <>
+      <UserAvatar name={name} />
+      {name}
+    </>
+  ) : (
+    <>—</>
+  );
 
 const InfoDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
   const { data: map } = useFetchMapById(mapId);
-  const [error, setError] = React.useState<ErrorInfo>();
-
   const intl = useIntl();
-
-  const handleOnClose = (): void => {
-    onClose();
-    setError(undefined);
-  };
 
   return (
     <BaseDialog
-      onClose={handleOnClose}
-      error={error}
+      onClose={onClose}
       title={intl.formatMessage({ id: 'info.title', defaultMessage: 'Info' })}
       description={intl.formatMessage({
-        id: 'info.description-msg',
-        defaultMessage: 'By publishing the map you make it visible to everyone on the Internet.',
+        id: 'info.subtitle',
+        defaultMessage: 'Details about this map and the people who work on it.',
       })}
-      submitButton={intl.formatMessage({ id: 'info.button', defaultMessage: 'Accept' })}
     >
-      <StyledScrollContainer>
-        <InfoSection>
-          <SectionTitle variant="body1">
-            <FormattedMessage id="info.basic-info" defaultMessage="Basic Info" />
-          </SectionTitle>
+      <MapName>{map?.title}</MapName>
+      <MapDescription empty={!map?.description}>
+        {map?.description || (
+          <FormattedMessage id="info.no-description" defaultMessage="No description" />
+        )}
+      </MapDescription>
 
-          <InfoRow>
-            <InfoLabel variant="caption">
-              <FormattedMessage id="info.name" defaultMessage="Name" />:
-            </InfoLabel>
-            <InfoValue variant="body2">{map?.title}</InfoValue>
-          </InfoRow>
+      <StatusChips>
+        {map?.public ? (
+          <Chip
+            size="small"
+            color="primary"
+            variant="outlined"
+            icon={<PublicIcon />}
+            label={intl.formatMessage({ id: 'info.public', defaultMessage: 'Public' })}
+          />
+        ) : (
+          <Chip
+            size="small"
+            variant="outlined"
+            icon={<LockOutlinedIcon />}
+            label={intl.formatMessage({ id: 'info.private', defaultMessage: 'Private' })}
+          />
+        )}
+        {map?.starred && (
+          <Chip
+            size="small"
+            variant="outlined"
+            icon={<StarIcon />}
+            label={intl.formatMessage({ id: 'info.starred', defaultMessage: 'Starred' })}
+          />
+        )}
+      </StatusChips>
 
-          <InfoRow>
-            <InfoLabel variant="caption">
-              <FormattedMessage id="info.description" defaultMessage="Description" />:
-            </InfoLabel>
-            <InfoValue variant="body2">{map?.description}</InfoValue>
-          </InfoRow>
-
-          <InfoRow>
-            <InfoLabel variant="caption">
-              <FormattedMessage id="info.creator" defaultMessage="Creator" />:
-            </InfoLabel>
-            <InfoValue variant="body2">{map?.createdBy}</InfoValue>
-          </InfoRow>
-
-          <InfoRow>
-            <InfoLabel variant="caption">
-              <FormattedMessage id="info.creation-time" defaultMessage="Creation Date" />:
-            </InfoLabel>
-            <InfoValue variant="body2">{dayjs(map?.creationTime).format('LLL')}</InfoValue>
-          </InfoRow>
-
-          <InfoRow>
-            <InfoLabel variant="caption">
-              <FormattedMessage id="info.modified-tny" defaultMessage="Last Modified By" />:
-            </InfoLabel>
-            <InfoValue variant="body2">{map?.lastModificationBy}</InfoValue>
-          </InfoRow>
-
-          <InfoRow>
-            <InfoLabel variant="caption">
-              <FormattedMessage id="info.modified-time" defaultMessage="Last Modified Date" />:
-            </InfoLabel>
-            <InfoValue variant="body2">{dayjs(map?.lastModificationTime).format('LLL')}</InfoValue>
-          </InfoRow>
-
-          <InfoRow>
-            <InfoLabel variant="caption">
-              <FormattedMessage id="info.starred" defaultMessage="Starred" />:
-            </InfoLabel>
-            <InfoValue variant="body2">{Boolean(map?.starred).toString()}</InfoValue>
-          </InfoRow>
-        </InfoSection>
-
-        <StyledDivider />
-
-        <InfoSection>
-          <SectionTitle variant="body1">
-            <FormattedMessage id="info.sharing" defaultMessage="Sharing" />
-          </SectionTitle>
-
-          <InfoRow>
-            <InfoLabel variant="caption">
-              <FormattedMessage id="info.public-visibility" defaultMessage="Publicly Visible" />:
-            </InfoLabel>
-            <InfoValue variant="body2">{Boolean(map?.public).toString()}</InfoValue>
-          </InfoRow>
-        </InfoSection>
-      </StyledScrollContainer>
+      <SectionTitle>
+        <FormattedMessage id="info.basic-info" defaultMessage="Basic Info" />
+      </SectionTitle>
+      <DetailList>
+        <DetailRow>
+          <DetailLabel>
+            <FormattedMessage id="info.creator" defaultMessage="Creator" />
+          </DetailLabel>
+          <DetailValue>
+            <Person name={map?.createdBy} />
+          </DetailValue>
+        </DetailRow>
+        <DetailRow>
+          <DetailLabel>
+            <FormattedMessage id="info.creation-time" defaultMessage="Creation Date" />
+          </DetailLabel>
+          <DetailValue>{formatDate(map?.creationTime)}</DetailValue>
+        </DetailRow>
+        <DetailRow>
+          <DetailLabel>
+            <FormattedMessage id="info.modified-tny" defaultMessage="Last Modified By" />
+          </DetailLabel>
+          <DetailValue>
+            <Person name={map?.lastModificationBy} />
+          </DetailValue>
+        </DetailRow>
+        <DetailRow>
+          <DetailLabel>
+            <FormattedMessage id="info.modified-time" defaultMessage="Last Modified Date" />
+          </DetailLabel>
+          <DetailValue>{formatDate(map?.lastModificationTime)}</DetailValue>
+        </DetailRow>
+      </DetailList>
     </BaseDialog>
   );
 };

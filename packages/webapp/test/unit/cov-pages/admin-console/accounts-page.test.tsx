@@ -369,7 +369,8 @@ describe('AccountManagement', () => {
     await waitFor(() =>
       expect(lastParams()).toMatchObject({ filterAuthType: 'GOOGLE_OAUTH2', page: 0 }),
     );
-  });
+    // The real 500 ms debounce and four rounds of results: over 5 s in a loaded full run.
+  }, 15000);
 
   test('a page that no longer exists falls back to the last one', async () => {
     // Deleting the only user of the last page left the table on an empty page, its

@@ -260,35 +260,17 @@
   "info.basic-info": {
     "defaultMessage": "基本信息"
   },
-  "info.button": {
-    "defaultMessage": "接受"
-  },
   "info.creation-time": {
     "defaultMessage": "创建日期"
   },
   "info.creator": {
     "defaultMessage": "创建者"
   },
-  "info.description": {
-    "defaultMessage": "描述"
-  },
-  "info.description-msg": {
-    "defaultMessage": "通过发布思维导图，您使其对互联网上的每个人都可见。"
-  },
   "info.modified-time": {
     "defaultMessage": "最后修改日期"
   },
   "info.modified-tny": {
     "defaultMessage": "最后修改者"
-  },
-  "info.name": {
-    "defaultMessage": "名称"
-  },
-  "info.public-visibility": {
-    "defaultMessage": "公开可见"
-  },
-  "info.sharing": {
-    "defaultMessage": "分享"
   },
   "info.starred": {
     "defaultMessage": "收藏"
@@ -418,12 +400,6 @@
   },
   "maps.import-desc": {
     "defaultMessage": "从其他工具导入"
-  },
-  "maps.modified": {
-    "defaultMessage": "已修改"
-  },
-  "maps.modified-by": {
-    "defaultMessage": "修改者"
   },
   "maps.modified-by-desc": {
     "defaultMessage": "{by} 于 {on} 修改"
@@ -1319,15 +1295,6 @@
   "login.redirecting": {
     "defaultMessage": "重定向中..."
   },
-  "share.table.collaborator": {
-    "defaultMessage": "协作者"
-  },
-  "share.table.role": {
-    "defaultMessage": "角色"
-  },
-  "share.table.actions": {
-    "defaultMessage": "操作"
-  },
   "error.go-home": {
     "defaultMessage": "返回首页"
   },
@@ -1483,5 +1450,23 @@
   },
   "dialog.close": {
     "defaultMessage": "关闭对话框"
+  },
+  "share.emails-placeholder": {
+    "defaultMessage": "通过电子邮件添加人员，用逗号分隔"
+  },
+  "share.people-with-access": {
+    "defaultMessage": "有权访问的人员"
+  },
+  "info.subtitle": {
+    "defaultMessage": "有关此导图及其协作者的详细信息。"
+  },
+  "info.no-description": {
+    "defaultMessage": "无描述"
+  },
+  "info.public": {
+    "defaultMessage": "公开"
+  },
+  "info.private": {
+    "defaultMessage": "私有"
   }
 }

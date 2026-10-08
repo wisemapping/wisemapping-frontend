@@ -79,6 +79,7 @@ import FacebookLookup from './FacebookLookup';
 import { User, UserFormData } from './types';
 import { useAdminPage, useClampedPage } from '../shared/useAdminPage';
 import { errorMessage } from '../shared/errorMessage';
+import { loadErrorAlertStyles } from '../styles';
 
 const emptyUserForm: UserFormData = {
   firstname: '',
@@ -792,7 +793,7 @@ const AccountManagement = (): ReactElement => {
       {/* Users Table */}
       {/* Inline, so the search, filters and Refresh stay to recover with. */}
       {error && (
-        <Alert severity="error" sx={{ mb: 2 }}>
+        <Alert severity="error" sx={loadErrorAlertStyles}>
           {intl.formatMessage(
             { id: 'admin.error.load-users', defaultMessage: 'Failed to load users: {message}' },
             {

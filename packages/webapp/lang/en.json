@@ -1025,20 +1025,11 @@
   "info.basic-info": {
     "defaultMessage": "Basic Info"
   },
-  "info.button": {
-    "defaultMessage": "Accept"
-  },
   "info.creation-time": {
     "defaultMessage": "Creation Date"
   },
   "info.creator": {
     "defaultMessage": "Creator"
-  },
-  "info.description": {
-    "defaultMessage": "Description"
-  },
-  "info.description-msg": {
-    "defaultMessage": "By publishing the map you make it visible to everyone on the Internet."
   },
   "info.modified-time": {
     "defaultMessage": "Last Modified Date"
@@ -1046,17 +1037,20 @@
   "info.modified-tny": {
     "defaultMessage": "Last Modified By"
   },
-  "info.name": {
-    "defaultMessage": "Name"
+  "info.no-description": {
+    "defaultMessage": "No description"
   },
-  "info.public-visibility": {
-    "defaultMessage": "Publicly Visible"
+  "info.private": {
+    "defaultMessage": "Private"
   },
-  "info.sharing": {
-    "defaultMessage": "Sharing"
+  "info.public": {
+    "defaultMessage": "Public"
   },
   "info.starred": {
     "defaultMessage": "Starred"
+  },
+  "info.subtitle": {
+    "defaultMessage": "Details about this map and the people who work on it."
   },
   "info.title": {
     "defaultMessage": "Info"
@@ -1216,12 +1210,6 @@
   },
   "maps.load-error": {
     "defaultMessage": "Your maps could not be loaded. Please try again later."
-  },
-  "maps.modified": {
-    "defaultMessage": "Modified"
-  },
-  "maps.modified-by": {
-    "defaultMessage": "Modified By"
   },
   "maps.modified-by-desc": {
     "defaultMessage": "Modified by {by} on {on}"
@@ -1460,17 +1448,14 @@
   "share.delete-title": {
     "defaultMessage": "Share with people"
   },
+  "share.emails-placeholder": {
+    "defaultMessage": "Add people by email, separated by commas"
+  },
   "share.message": {
     "defaultMessage": "Message"
   },
-  "share.table.actions": {
-    "defaultMessage": "Actions"
-  },
-  "share.table.collaborator": {
-    "defaultMessage": "Collaborator"
-  },
-  "share.table.role": {
-    "defaultMessage": "Role"
+  "share.people-with-access": {
+    "defaultMessage": "People with access"
   },
   "theme.dark": {
     "defaultMessage": "Dark"

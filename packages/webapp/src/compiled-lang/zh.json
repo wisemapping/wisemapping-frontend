@@ -2246,12 +2246,6 @@
       "value": "基本信息"
     }
   ],
-  "info.button": [
-    {
-      "type": 0,
-      "value": "接受"
-    }
-  ],
   "info.creation-time": [
     {
       "type": 0,
@@ -2262,18 +2256,6 @@
     {
       "type": 0,
       "value": "创建人"
-    }
-  ],
-  "info.description": [
-    {
-      "type": 0,
-      "value": "描述"
-    }
-  ],
-  "info.description-msg": [
-    {
-      "type": 0,
-      "value": "通过发布思维导图，您让互联网上的每个人都能看到它。"
     }
   ],
   "info.modified-time": [
@@ -2288,28 +2270,34 @@
       "value": "最后修改人"
     }
   ],
-  "info.name": [
+  "info.no-description": [
     {
       "type": 0,
-      "value": "名称"
+      "value": "无描述"
     }
   ],
-  "info.public-visibility": [
+  "info.private": [
     {
       "type": 0,
-      "value": "公开可见"
+      "value": "私有"
     }
   ],
-  "info.sharing": [
+  "info.public": [
     {
       "type": 0,
-      "value": "分享"
+      "value": "公开"
     }
   ],
   "info.starred": [
     {
       "type": 0,
       "value": "收藏"
+    }
+  ],
+  "info.subtitle": [
+    {
+      "type": 0,
+      "value": "有关此导图及其协作者的详细信息。"
     }
   ],
   "info.title": [
@@ -2640,18 +2628,6 @@
     {
       "type": 0,
       "value": "无法加载您的导图。请稍后再试。"
-    }
-  ],
-  "maps.modified": [
-    {
-      "type": 0,
-      "value": "修改"
-    }
-  ],
-  "maps.modified-by": [
-    {
-      "type": 0,
-      "value": "修改人"
     }
   ],
   "maps.modified-by-desc": [
@@ -3204,28 +3180,22 @@
       "value": "与人分享"
     }
   ],
+  "share.emails-placeholder": [
+    {
+      "type": 0,
+      "value": "通过电子邮件添加人员，用逗号分隔"
+    }
+  ],
   "share.message": [
     {
       "type": 0,
       "value": "消息"
     }
   ],
-  "share.table.actions": [
+  "share.people-with-access": [
     {
       "type": 0,
-      "value": "操作"
-    }
-  ],
-  "share.table.collaborator": [
-    {
-      "type": 0,
-      "value": "协作人"
-    }
-  ],
-  "share.table.role": [
-    {
-      "type": 0,
-      "value": "角色"
+      "value": "有权访问的人员"
     }
   ],
   "theme.dark": [

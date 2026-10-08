@@ -69,6 +69,7 @@ import EditMapDialog, { MapFormData } from './EditMapDialog';
 import { copyText } from '../../../utils/clipboard';
 import { useAdminPage, useClampedPage } from '../shared/useAdminPage';
 import { errorMessage } from '../shared/errorMessage';
+import { loadErrorAlertStyles } from '../styles';
 
 // XML formatting utility
 const formatXml = (xml: string): string => {
@@ -771,7 +772,7 @@ const MapsManagement = (): ReactElement => {
       {/* Maps Table */}
       {/* Inline, so the search, filters and Refresh stay to recover with. */}
       {error && (
-        <Alert severity="error" sx={{ mb: 2 }}>
+        <Alert severity="error" sx={loadErrorAlertStyles}>
           {intl.formatMessage(
             { id: 'admin.error.load-maps', defaultMessage: 'Failed to load maps: {message}' },
             {

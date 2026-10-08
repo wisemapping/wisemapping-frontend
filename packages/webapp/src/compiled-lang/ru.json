@@ -2283,12 +2283,6 @@
       "value": "Основная информация"
     }
   ],
-  "info.button": [
-    {
-      "type": 0,
-      "value": "Принять"
-    }
-  ],
   "info.creation-time": [
     {
       "type": 0,
@@ -2299,18 +2293,6 @@
     {
       "type": 0,
       "value": "Автор"
-    }
-  ],
-  "info.description": [
-    {
-      "type": 0,
-      "value": "Описание"
-    }
-  ],
-  "info.description-msg": [
-    {
-      "type": 0,
-      "value": "После публикация карта станет видима для любого, у кого есть ссылка."
     }
   ],
   "info.modified-time": [
@@ -2325,28 +2307,34 @@
       "value": "Последний редактировал"
     }
   ],
-  "info.name": [
+  "info.no-description": [
     {
       "type": 0,
-      "value": "Имя"
+      "value": "Нет описания"
     }
   ],
-  "info.public-visibility": [
+  "info.private": [
     {
       "type": 0,
-      "value": "Доступ по ссылке"
+      "value": "Личная"
     }
   ],
-  "info.sharing": [
+  "info.public": [
     {
       "type": 0,
-      "value": "Видимость"
+      "value": "Общедоступная"
     }
   ],
   "info.starred": [
     {
       "type": 0,
       "value": "Важная"
+    }
+  ],
+  "info.subtitle": [
+    {
+      "type": 0,
+      "value": "Сведения об этой карте и о людях, которые над ней работают."
     }
   ],
   "info.title": [
@@ -2677,18 +2665,6 @@
     {
       "type": 0,
       "value": "Не удалось загрузить ваши карты. Повторите попытку позже."
-    }
-  ],
-  "maps.modified": [
-    {
-      "type": 0,
-      "value": "Изменена"
-    }
-  ],
-  "maps.modified-by": [
-    {
-      "type": 0,
-      "value": "Редактор"
     }
   ],
   "maps.modified-by-desc": [
@@ -3241,28 +3217,22 @@
       "value": "Общий доступ"
     }
   ],
+  "share.emails-placeholder": [
+    {
+      "type": 0,
+      "value": "Добавьте людей по адресу электронной почты через запятую"
+    }
+  ],
   "share.message": [
     {
       "type": 0,
       "value": "Сообщение"
     }
   ],
-  "share.table.actions": [
+  "share.people-with-access": [
     {
       "type": 0,
-      "value": "Действия"
-    }
-  ],
-  "share.table.collaborator": [
-    {
-      "type": 0,
-      "value": "Соавтор"
-    }
-  ],
-  "share.table.role": [
-    {
-      "type": 0,
-      "value": "Роль"
+      "value": "Люди с доступом"
     }
   ],
   "theme.dark": [

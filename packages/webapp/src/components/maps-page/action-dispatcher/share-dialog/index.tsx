@@ -22,23 +22,25 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ErrorInfo, Permission } from '../../../../classes/client';
 import { SimpleDialogProps } from '..';
 import BaseDialog from '../base-dialog';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
 import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
-import Paper from '@mui/material/Paper';
-import TextField from '@mui/material/TextField';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Typography from '@mui/material/Typography';
-import { useStyles } from './style';
-import RoleIcon from '../../role-icon';
 import Tooltip from '@mui/material/Tooltip';
-import { Interpolation, Theme } from '@emotion/react';
+import UserAvatar from '../user-avatar';
+import {
+  InviteBox,
+  InviteControls,
+  InviteField,
+  InviteSpacer,
+  PeopleList,
+  PersonEmail,
+  PersonName,
+  PersonRole,
+  PersonRow,
+  PersonText,
+  SectionTitle,
+} from './styled';
 import { ClientContext } from '../../../../classes/provider/client-context';
 import AsyncButton from '../../../form/async-button';
 
@@ -69,21 +71,23 @@ const EmailsField = React.memo(function EmailsField({
   disabled,
   onChange,
 }: ShareFieldProps): React.ReactElement {
-  const classes = useStyles();
+  const intl = useIntl();
   return (
-    <TextField
+    <InviteField
       id="emails"
       name="emails"
       required={true}
       size="small"
       type="email"
       variant="outlined"
-      placeholder="Add collaborator email"
+      placeholder={intl.formatMessage({
+        id: 'share.emails-placeholder',
+        defaultMessage: 'Add people by email, separated by commas',
+      })}
       label={label}
       onChange={onChange}
       value={value}
       disabled={disabled}
-      css={[classes.fullWidthInMobile, classes.email]}
     />
   );
 });
@@ -94,13 +98,12 @@ const MessageField = React.memo(function MessageField({
   disabled,
   onChange,
 }: ShareFieldProps): React.ReactElement {
-  const classes = useStyles();
   return (
-    <TextField
+    <InviteField
       multiline
       rows={3}
-      css={classes.textArea}
-      variant="filled"
+      size="small"
+      variant="outlined"
       name="message"
       onChange={onChange}
       value={value}
@@ -109,11 +112,11 @@ const MessageField = React.memo(function MessageField({
     />
   );
 });
+
 const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
   const intl = useIntl();
   const client = useContext(ClientContext);
   const queryClient = useQueryClient();
-  const classes = useStyles();
   const [showMessage, setShowMessage] = React.useState<boolean>(false);
   const [model, setModel] = React.useState<ShareModel>(defaultModel);
   const [error, setError] = React.useState<ErrorInfo>();
@@ -123,8 +126,9 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
       return client.deleteMapPermission(mapId, email);
     },
     onSuccess: () => {
+      // The invitation being typed is kept: only the list of people changed.
       queryClient.invalidateQueries({ queryKey: [`perm-${mapId}`] });
-      setModel(defaultModel);
+      setError(undefined);
     },
     onError: (error: ErrorInfo) => {
       setError(error);
@@ -149,6 +153,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [`perm-${mapId}`] });
       setModel(defaultModel);
+      setError(undefined);
     },
     onError: (error: ErrorInfo) => {
       setError(error);
@@ -176,7 +181,8 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
 
   const handleOnAddClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
     event.stopPropagation();
-    addMutation.mutate(model);
+    // A message typed and then switched off is not sent.
+    addMutation.mutate({ ...model, message: showMessage ? model.message : '' });
     event.stopPropagation();
   };
 
@@ -200,12 +206,20 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
     queryFn: () => client.fetchMapPermissions(mapId),
   });
 
-  const formatName = (perm: Permission): string => {
-    return perm.name ? `${perm.name}<${perm.email}>` : perm.email;
-  };
+  const roleLabel = (role: Permission['role']): string =>
+    role === 'owner'
+      ? intl.formatMessage({ id: 'role.owner', defaultMessage: 'Owner' })
+      : role === 'editor'
+        ? intl.formatMessage({ id: 'role.editor', defaultMessage: 'Editor' })
+        : intl.formatMessage({ id: 'role.viewer', defaultMessage: 'Viewer' });
+  const deleteLabel = intl.formatMessage({
+    id: 'share.delete',
+    defaultMessage: 'Delete collaborator',
+  });
 
   // very basic email validation, just make sure the basic syntax is fine
-  const isValid = splitEmail(model.emails).every((str) => /\S+@\S+\.\S+/.test((str || '').trim()));
+  const emails = splitEmail(model.emails);
+  const isValid = emails.length > 0 && emails.every((str) => /\S+@\S+\.\S+/.test(str));
 
   return (
     <div>
@@ -219,11 +233,10 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
           id: 'share.delete-description',
           defaultMessage: "Add collaborators. They'll get instant email access to edit together.",
         })}
-        maxWidth="md"
-        papercss={classes.paper}
+        maxWidth="sm"
         error={error}
       >
-        <div css={classes.actionContainer as Interpolation<Theme>}>
+        <InviteBox>
           <EmailsField
             label={intl.formatMessage({ id: 'common.emails', defaultMessage: 'Emails' })}
             onChange={handleOnChange}
@@ -231,56 +244,46 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
             disabled={addMutation.isPending}
           />
 
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={model.canEdit}
-                onChange={handleOnChange}
-                name="canEdit"
-                color="primary"
-                disabled={addMutation.isPending}
-              />
-            }
-            label={
-              <Typography variant="subtitle2">
-                <FormattedMessage id="share.can-edit" defaultMessage="Can edit" />
-              </Typography>
-            }
-            css={classes.role}
-          />
-
-          <FormControlLabel
-            value="start"
-            onChange={(event, value) => {
-              setShowMessage(value);
-            }}
-            style={{ fontSize: '5px' }}
-            control={<Checkbox color="primary" disabled={addMutation.isPending} />}
-            label={
-              <Typography variant="subtitle2">
+          <InviteControls>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={model.canEdit}
+                  onChange={handleOnChange}
+                  name="canEdit"
+                  color="primary"
+                  size="small"
+                  disabled={addMutation.isPending}
+                />
+              }
+              label={<FormattedMessage id="share.can-edit" defaultMessage="Can edit" />}
+            />
+            <FormControlLabel
+              onChange={(event, value) => {
+                setShowMessage(value);
+              }}
+              control={<Checkbox color="primary" size="small" disabled={addMutation.isPending} />}
+              label={
                 <FormattedMessage id="share.add-message" defaultMessage="Customize share message" />
-              </Typography>
-            }
-            labelPlacement="end"
-            css={classes.checkbox}
-          />
-
-          <AsyncButton
-            color="primary"
-            type="button"
-            variant="contained"
-            disableElevation={true}
-            onClick={handleOnAddClick}
-            disabled={!isValid}
-            isLoading={addMutation.isPending}
-            loadingText={intl.formatMessage({
-              id: 'share.adding-button',
-              defaultMessage: 'Sharing...',
-            })}
-            css={classes.shareButton}
-          >
-            {intl.formatMessage({ id: 'share.add-button', defaultMessage: 'Share' })}
-          </AsyncButton>
+              }
+            />
+            <InviteSpacer />
+            <AsyncButton
+              color="primary"
+              type="button"
+              variant="contained"
+              disableElevation={true}
+              onClick={handleOnAddClick}
+              disabled={!isValid}
+              isLoading={addMutation.isPending}
+              loadingText={intl.formatMessage({
+                id: 'share.adding-button',
+                defaultMessage: 'Sharing...',
+              })}
+            >
+              {intl.formatMessage({ id: 'share.add-button', defaultMessage: 'Share' })}
+            </AsyncButton>
+          </InviteControls>
 
           {showMessage && (
             <MessageField
@@ -293,71 +296,38 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
               })}
             />
           )}
-        </div>
+        </InviteBox>
 
         {!isLoading && permissions && permissions.length > 0 && (
-          <TableContainer
-            component={Paper}
-            elevation={1}
-            variant="outlined"
-            css={classes.tableContainer as Interpolation<Theme>}
-          >
-            <Table size="small" aria-label="collaborators table">
-              <TableHead css={classes.tableHead as Interpolation<Theme>}>
-                <TableRow>
-                  <TableCell>
-                    <FormattedMessage id="share.table.collaborator" defaultMessage="Collaborator" />
-                  </TableCell>
-                  <TableCell align="center">
-                    <FormattedMessage id="share.table.role" defaultMessage="Role" />
-                  </TableCell>
-                  <TableCell align="center">
-                    <FormattedMessage id="share.table.actions" defaultMessage="Actions" />
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {permissions.map((permission) => (
-                  <TableRow
-                    key={permission.email}
-                    hover
-                    css={classes.tableRow as Interpolation<Theme>}
-                  >
-                    <TableCell
-                      component="th"
-                      scope="row"
-                      css={classes.emailCell as Interpolation<Theme>}
-                    >
-                      {formatName(permission)}
-                    </TableCell>
-                    <TableCell align="center">
-                      <RoleIcon role={permission.role} />
-                    </TableCell>
-                    <TableCell align="center">
-                      <Tooltip
-                        title={
-                          <FormattedMessage
-                            id="share.delete"
-                            defaultMessage="Delete collaborator"
-                          />
-                        }
+          <>
+            <SectionTitle id="share-people-title">
+              <FormattedMessage id="share.people-with-access" defaultMessage="People with access" />
+            </SectionTitle>
+            <PeopleList aria-labelledby="share-people-title">
+              {permissions.map((permission) => (
+                <PersonRow key={permission.email}>
+                  <UserAvatar name={permission.name || permission.email} />
+                  <PersonText>
+                    <PersonName>{permission.name || permission.email}</PersonName>
+                    {permission.name && <PersonEmail>{permission.email}</PersonEmail>}
+                  </PersonText>
+                  <PersonRole>{roleLabel(permission.role)}</PersonRole>
+                  <Tooltip title={deleteLabel}>
+                    <span>
+                      <IconButton
+                        aria-label={deleteLabel}
+                        disabled={permission.role === 'owner' || deleteMutation.isPending}
+                        onClick={(e) => handleOnDeleteClick(e, permission.email)}
+                        size="small"
                       >
-                        <span>
-                          <IconButton
-                            disabled={permission.role === 'owner' || deleteMutation.isPending}
-                            onClick={(e) => handleOnDeleteClick(e, permission.email)}
-                            size="small"
-                          >
-                            <DeleteIcon fontSize="small" color="action" />
-                          </IconButton>
-                        </span>
-                      </Tooltip>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                        <DeleteOutlineIcon fontSize="small" />
+                      </IconButton>
+                    </span>
+                  </Tooltip>
+                </PersonRow>
+              ))}
+            </PeopleList>
+          </>
         )}
       </BaseDialog>
     </div>

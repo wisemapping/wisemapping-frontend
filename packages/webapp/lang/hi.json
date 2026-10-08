@@ -260,35 +260,17 @@
   "info.basic-info": {
     "defaultMessage": "मूल जानकारी"
   },
-  "info.button": {
-    "defaultMessage": "स्वीकार करें"
-  },
   "info.creation-time": {
     "defaultMessage": "निर्माण तिथि"
   },
   "info.creator": {
     "defaultMessage": "निर्माता"
   },
-  "info.description": {
-    "defaultMessage": "विवरण"
-  },
-  "info.description-msg": {
-    "defaultMessage": "मानचित्र प्रकाशित करके आप इसे इंटरनेट पर सभी के लिए दृश्यमान बनाते हैं।"
-  },
   "info.modified-time": {
     "defaultMessage": "अंतिम संशोधन तिथि"
   },
   "info.modified-tny": {
     "defaultMessage": "अंतिम संशोधन द्वारा"
-  },
-  "info.name": {
-    "defaultMessage": "नाम"
-  },
-  "info.public-visibility": {
-    "defaultMessage": "सार्वजनिक रूप से दृश्यमान"
-  },
-  "info.sharing": {
-    "defaultMessage": "साझाकरण"
   },
   "info.starred": {
     "defaultMessage": "पसंदीदा"
@@ -418,12 +400,6 @@
   },
   "maps.import-desc": {
     "defaultMessage": "अन्य टूल्स से आयात करें"
-  },
-  "maps.modified": {
-    "defaultMessage": "संशोधित"
-  },
-  "maps.modified-by": {
-    "defaultMessage": "द्वारा संशोधित"
   },
   "maps.modified-by-desc": {
     "defaultMessage": "{by} द्वारा {on} पर संशोधित"
@@ -1319,15 +1295,6 @@
   "login.redirecting": {
     "defaultMessage": "पुनर्निर्देशन..."
   },
-  "share.table.collaborator": {
-    "defaultMessage": "सहयोगी"
-  },
-  "share.table.role": {
-    "defaultMessage": "भूमिका"
-  },
-  "share.table.actions": {
-    "defaultMessage": "क्रियाएँ"
-  },
   "error.go-home": {
     "defaultMessage": "होम पर जाएं"
   },
@@ -1483,5 +1450,23 @@
   },
   "dialog.close": {
     "defaultMessage": "डायलॉग बंद करें"
+  },
+  "share.emails-placeholder": {
+    "defaultMessage": "ईमेल से लोगों को जोड़ें, अल्पविराम से अलग करें"
+  },
+  "share.people-with-access": {
+    "defaultMessage": "पहुँच वाले लोग"
+  },
+  "info.subtitle": {
+    "defaultMessage": "इस मैप और इस पर काम करने वाले लोगों का विवरण।"
+  },
+  "info.no-description": {
+    "defaultMessage": "कोई विवरण नहीं"
+  },
+  "info.public": {
+    "defaultMessage": "सार्वजनिक"
+  },
+  "info.private": {
+    "defaultMessage": "निजी"
   }
 }

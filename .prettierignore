@@ -18,3 +18,5 @@ packages/*/test/**/input/
 packages/*/test/**/samples/
 **/__goldens__/
 **/__snapshots__/
+# The New Relic browser loader, pasted as New Relic ships it (minified).
+packages/webapp/newrelic-snippet.html

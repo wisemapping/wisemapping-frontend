@@ -260,35 +260,17 @@
   "info.basic-info": {
     "defaultMessage": "Informações básicas"
   },
-  "info.button": {
-    "defaultMessage": "Aceitar"
-  },
   "info.creation-time": {
     "defaultMessage": "Data de criação"
   },
   "info.creator": {
     "defaultMessage": "Criador"
   },
-  "info.description": {
-    "defaultMessage": "Descrição"
-  },
-  "info.description-msg": {
-    "defaultMessage": "Ao publicar o mapa, você o torna visível para todos na Internet."
-  },
   "info.modified-time": {
     "defaultMessage": "Data da última modificação"
   },
   "info.modified-tny": {
     "defaultMessage": "Última modificação por"
-  },
-  "info.name": {
-    "defaultMessage": "Nome"
-  },
-  "info.public-visibility": {
-    "defaultMessage": "Visível publicamente"
-  },
-  "info.sharing": {
-    "defaultMessage": "Compartilhamento"
   },
   "info.starred": {
     "defaultMessage": "Favoritos"
@@ -418,12 +400,6 @@
   },
   "maps.import-desc": {
     "defaultMessage": "Importar de outras ferramentas"
-  },
-  "maps.modified": {
-    "defaultMessage": "Modificado"
-  },
-  "maps.modified-by": {
-    "defaultMessage": "Modificado por"
   },
   "maps.modified-by-desc": {
     "defaultMessage": "Modificado por {by} em {on}"
@@ -1319,15 +1295,6 @@
   "login.redirecting": {
     "defaultMessage": "Redirecionando..."
   },
-  "share.table.collaborator": {
-    "defaultMessage": "Colaborador"
-  },
-  "share.table.role": {
-    "defaultMessage": "Função"
-  },
-  "share.table.actions": {
-    "defaultMessage": "Ações"
-  },
   "error.go-home": {
     "defaultMessage": "Ir para o início"
   },
@@ -1483,5 +1450,23 @@
   },
   "dialog.close": {
     "defaultMessage": "Fechar a caixa de diálogo"
+  },
+  "share.emails-placeholder": {
+    "defaultMessage": "Adicione pessoas por e-mail, separadas por vírgulas"
+  },
+  "share.people-with-access": {
+    "defaultMessage": "Pessoas com acesso"
+  },
+  "info.subtitle": {
+    "defaultMessage": "Detalhes deste mapa e das pessoas que trabalham nele."
+  },
+  "info.no-description": {
+    "defaultMessage": "Sem descrição"
+  },
+  "info.public": {
+    "defaultMessage": "Público"
+  },
+  "info.private": {
+    "defaultMessage": "Privado"
   }
 }

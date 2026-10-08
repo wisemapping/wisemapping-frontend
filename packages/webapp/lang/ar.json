@@ -260,35 +260,17 @@
   "info.basic-info": {
     "defaultMessage": "المعلومات الأساسية"
   },
-  "info.button": {
-    "defaultMessage": "موافق"
-  },
   "info.creation-time": {
     "defaultMessage": "تاريخ الإنشاء"
   },
   "info.creator": {
     "defaultMessage": "المُنشئ"
   },
-  "info.description": {
-    "defaultMessage": "الوصف"
-  },
-  "info.description-msg": {
-    "defaultMessage": "بنشر الخريطة، تجعلها مرئية لجميع مستخدمي الإنترنت."
-  },
   "info.modified-time": {
     "defaultMessage": "تاريخ آخر تعديل"
   },
   "info.modified-tny": {
     "defaultMessage": "آخر تعديل بواسطة"
-  },
-  "info.name": {
-    "defaultMessage": "الاسم"
-  },
-  "info.public-visibility": {
-    "defaultMessage": "مرئية للعموم"
-  },
-  "info.sharing": {
-    "defaultMessage": "المشاركة"
   },
   "info.starred": {
     "defaultMessage": "مميزة بنجمة"
@@ -424,12 +406,6 @@
   },
   "maps.import-desc": {
     "defaultMessage": "استيراد من أدوات أخرى"
-  },
-  "maps.modified": {
-    "defaultMessage": "آخر تعديل"
-  },
-  "maps.modified-by": {
-    "defaultMessage": "آخر تعديل بواسطة"
   },
   "maps.modified-by-desc": {
     "defaultMessage": "آخر تعديل بواسطة {by} في {on}"
@@ -1382,15 +1358,6 @@
   "validation.title-required": {
     "defaultMessage": "العنوان مطلوب"
   },
-  "share.table.collaborator": {
-    "defaultMessage": "المتعاون"
-  },
-  "share.table.role": {
-    "defaultMessage": "الدور"
-  },
-  "share.table.actions": {
-    "defaultMessage": "الإجراءات"
-  },
   "error.go-home": {
     "defaultMessage": "الذهاب إلى الصفحة الرئيسية"
   },
@@ -1483,5 +1450,23 @@
   },
   "dialog.close": {
     "defaultMessage": "إغلاق مربع الحوار"
+  },
+  "share.emails-placeholder": {
+    "defaultMessage": "أضف أشخاصًا عبر البريد الإلكتروني، مفصولين بفواصل"
+  },
+  "share.people-with-access": {
+    "defaultMessage": "الأشخاص الذين لديهم حق الوصول"
+  },
+  "info.subtitle": {
+    "defaultMessage": "تفاصيل هذه الخريطة والأشخاص الذين يعملون عليها."
+  },
+  "info.no-description": {
+    "defaultMessage": "لا يوجد وصف"
+  },
+  "info.public": {
+    "defaultMessage": "عامة"
+  },
+  "info.private": {
+    "defaultMessage": "خاصة"
   }
 }

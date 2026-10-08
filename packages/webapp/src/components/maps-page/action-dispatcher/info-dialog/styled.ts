@@ -16,58 +16,75 @@
  *   limitations under the License.
  */
 
-import { styled } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
+import { styled } from '@mui/material/styles';
 
-export const StyledScrollContainer = styled(Paper)(({ theme }) => ({
-  maxHeight: 400,
-  overflowY: 'auto',
-  border: `1px solid ${theme.palette.divider}`,
-  borderRadius: theme.shape.borderRadius,
-}));
-
-export const InfoSection = styled(Box)(({ theme }) => ({
-  padding: theme.spacing(2),
-  '&:not(:last-child)': {
-    marginBottom: theme.spacing(2),
-  },
-}));
-
-export const SectionTitle = styled(Typography)(({ theme }) => ({
+export const MapName = styled(Typography)({
+  fontSize: '1rem',
   fontWeight: 600,
-  marginBottom: theme.spacing(2),
-  color: theme.palette.text.primary,
-}));
+  wordBreak: 'break-word',
+});
 
-export const InfoRow = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'flex-start',
-  padding: theme.spacing(1, 0),
-  gap: theme.spacing(2),
-  [theme.breakpoints.down('sm')]: {
-    flexDirection: 'column',
-    gap: theme.spacing(0.5),
-  },
-}));
-
-export const InfoLabel = styled(Typography)(({ theme }) => ({
-  minWidth: 150,
-  fontWeight: 500,
+export const MapDescription = styled(Typography, {
+  shouldForwardProp: (prop) => prop !== 'empty',
+})<{ empty: boolean }>(({ theme, empty }) => ({
+  marginTop: theme.spacing(0.5),
+  fontSize: '0.875rem',
   color: theme.palette.text.secondary,
-  flexShrink: 0,
-  [theme.breakpoints.down('sm')]: {
-    minWidth: 'auto',
-  },
-}));
-
-export const InfoValue = styled(Typography)(({ theme }) => ({
-  color: theme.palette.text.primary,
+  fontStyle: empty ? 'italic' : 'normal',
+  whiteSpace: 'pre-wrap',
   wordBreak: 'break-word',
 }));
 
-export const StyledDivider = styled(Divider)(({ theme }) => ({
-  margin: theme.spacing(2, 0),
+export const StatusChips = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexWrap: 'wrap',
+  gap: theme.spacing(1),
+  marginTop: theme.spacing(1.5),
+}));
+
+export const SectionTitle = styled(Typography)(({ theme }) => ({
+  marginTop: theme.spacing(3),
+  marginBottom: theme.spacing(0.5),
+  fontSize: '0.75rem',
+  fontWeight: 600,
+  letterSpacing: '0.04em',
+  textTransform: 'uppercase',
+  color: theme.palette.text.secondary,
+}));
+
+/** Label and value side by side, one fact per row. */
+export const DetailList = styled('dl')({
+  margin: 0,
+});
+
+export const DetailRow = styled(Box)(({ theme }) => ({
+  display: 'grid',
+  gridTemplateColumns: '160px 1fr',
+  alignItems: 'center',
+  columnGap: theme.spacing(2),
+  padding: theme.spacing(1, 0),
+  '& + &': {
+    borderTop: `1px solid ${theme.palette.divider}`,
+  },
+  [theme.breakpoints.down('sm')]: {
+    gridTemplateColumns: '1fr',
+    rowGap: theme.spacing(0.5),
+  },
+}));
+
+export const DetailLabel = styled('dt')(({ theme }) => ({
+  fontSize: '0.8125rem',
+  color: theme.palette.text.secondary,
+}));
+
+export const DetailValue = styled('dd')(({ theme }) => ({
+  margin: 0,
+  display: 'flex',
+  alignItems: 'center',
+  gap: theme.spacing(1),
+  minWidth: 0,
+  fontSize: '0.875rem',
+  overflowWrap: 'anywhere',
 }));

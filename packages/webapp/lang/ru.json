@@ -245,35 +245,17 @@
   "info.basic-info": {
     "defaultMessage": "Основная информация"
   },
-  "info.button": {
-    "defaultMessage": "Принять"
-  },
   "info.creation-time": {
     "defaultMessage": "Дата создания"
   },
   "info.creator": {
     "defaultMessage": "Автор"
   },
-  "info.description": {
-    "defaultMessage": "Описание"
-  },
-  "info.description-msg": {
-    "defaultMessage": "После публикация карта станет видима для любого, у кого есть ссылка."
-  },
   "info.modified-time": {
     "defaultMessage": "Последние изменения"
   },
   "info.modified-tny": {
     "defaultMessage": "Последний редактировал"
-  },
-  "info.name": {
-    "defaultMessage": "Имя"
-  },
-  "info.public-visibility": {
-    "defaultMessage": "Доступ по ссылке"
-  },
-  "info.sharing": {
-    "defaultMessage": "Видимость"
   },
   "info.starred": {
     "defaultMessage": "Важная"
@@ -370,12 +352,6 @@
   },
   "maps.import-desc": {
     "defaultMessage": "Загрузить из других редакторов"
-  },
-  "maps.modified": {
-    "defaultMessage": "Изменена"
-  },
-  "maps.modified-by": {
-    "defaultMessage": "Редактор"
   },
   "maps.modified-by-desc": {
     "defaultMessage": "Изменена {by} в {on}"
@@ -1319,15 +1295,6 @@
   "login.redirecting": {
     "defaultMessage": "Перенаправление..."
   },
-  "share.table.collaborator": {
-    "defaultMessage": "Соавтор"
-  },
-  "share.table.role": {
-    "defaultMessage": "Роль"
-  },
-  "share.table.actions": {
-    "defaultMessage": "Действия"
-  },
   "error.go-home": {
     "defaultMessage": "На главную"
   },
@@ -1483,5 +1450,23 @@
   },
   "dialog.close": {
     "defaultMessage": "Закрыть диалог"
+  },
+  "share.emails-placeholder": {
+    "defaultMessage": "Добавьте людей по адресу электронной почты через запятую"
+  },
+  "share.people-with-access": {
+    "defaultMessage": "Люди с доступом"
+  },
+  "info.subtitle": {
+    "defaultMessage": "Сведения об этой карте и о людях, которые над ней работают."
+  },
+  "info.no-description": {
+    "defaultMessage": "Нет описания"
+  },
+  "info.public": {
+    "defaultMessage": "Общедоступная"
+  },
+  "info.private": {
+    "defaultMessage": "Личная"
   }
 }

@@ -97,7 +97,7 @@ describe('ShareDialog errors', () => {
       } as unknown as Client,
     });
 
-    const row = (await screen.findByText('Sam<sam@wisemapping.com>')).closest('tr')!;
+    const row = (await screen.findByText('Sam')).closest('li')!;
     fireEvent.click(row.querySelector('button')!);
 
     expect(await screen.findByText('Permission denied')).toBeTruthy();
