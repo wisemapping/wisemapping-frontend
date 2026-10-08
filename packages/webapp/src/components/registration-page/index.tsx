@@ -48,6 +48,7 @@ import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import { SEOHead } from '../seo';
 import { getCanonicalUrl, getAlternateLanguageUrls } from '../../utils/seo-locale';
+import { startOAuthFlow } from '../../utils/oauth-flow';
 
 export type Model = {
   email: string;
@@ -153,7 +154,7 @@ const RegistrationForm = ({ onCaptchaReset }: { onCaptchaReset?: () => void }) =
       console.error(`${providerName} OAuth callback URL is null`);
       return;
     }
-    window.location.href = authUrl;
+    startOAuthFlow(authUrl);
   };
 
   return (

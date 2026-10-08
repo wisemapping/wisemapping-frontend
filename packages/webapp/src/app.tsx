@@ -97,17 +97,6 @@ const createRegistrationRoutes = () => {
     return [
       <Route key="registration" path="/c/registration" element={<RegistationPage />} />,
       <Route
-        key="registration-google"
-        path="/c/registration-google"
-        element={<OAuthCallbackPage />}
-      />,
-      <Route
-        key="registration-facebook"
-        path="/c/registration-facebook"
-        element={<OAuthCallbackPage />}
-      />,
-      <Route key="oauth-callback" path="/c/oauth-callback" element={<OAuthCallbackPage />} />,
-      <Route
         key="registration-success"
         path="/c/registration-success"
         element={<RegistrationSuccessPage />}
@@ -173,6 +162,10 @@ const buildRouter = () =>
           {/* Localized routes for login, registration, and forgot-password */}
           <Route path="/:locale/c/login" element={<LoginPage />} />
           {createRegistrationRoutes()}
+          {/* OAuth sign-in comes back here whether or not registration is open. */}
+          <Route path="/c/oauth-callback" element={<OAuthCallbackPage />} />
+          <Route path="/c/registration-google" element={<OAuthCallbackPage />} />
+          <Route path="/c/registration-facebook" element={<OAuthCallbackPage />} />
           <Route path="/:locale/c/registration" element={<RegistationPage />} />
           <Route path="/c/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/:locale/c/forgot-password" element={<ForgotPasswordPage />} />

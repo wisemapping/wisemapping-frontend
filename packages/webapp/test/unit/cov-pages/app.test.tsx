@@ -209,16 +209,23 @@ describe('App', () => {
     expect(await screen.findByText(page)).toBeTruthy();
   });
 
-  test.each([
-    '/c/registration',
-    '/c/registration-google',
-    '/c/oauth-callback',
-    '/c/registration-success',
-    '/c/activation',
-  ])('%s is not served when registration is disabled', async (url) => {
-    renderAt(url, { registration: false });
-    expect(await screen.findByText('error-page')).toBeTruthy();
-  });
+  test.each(['/c/registration', '/c/registration-success', '/c/activation'])(
+    '%s is not served when registration is disabled',
+    async (url) => {
+      renderAt(url, { registration: false });
+      expect(await screen.findByText('error-page')).toBeTruthy();
+    },
+  );
+
+  // "Sign in with Google/Facebook" is offered whatever the registration setting, and the
+  // provider comes back to these pages: without them a closed registration broke OAuth sign-in.
+  test.each(['/c/oauth-callback', '/c/registration-google', '/c/registration-facebook'])(
+    '%s is served when registration is disabled',
+    async (url) => {
+      renderAt(url, { registration: false });
+      expect(await screen.findByText('oauth-callback-page')).toBeTruthy();
+    },
+  );
 
   test('the localized registration page is served even with registration disabled', async () => {
     renderAt('/es/c/registration', { registration: false });

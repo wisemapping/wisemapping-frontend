@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 
+import { inspect } from 'util';
 import AdminClient from '../../../src/classes/client/admin-client';
 import JwtTokenConfig from '../../../src/classes/jwt-token-config';
 import { stubBackend, Reply } from './helpers/axios-stub';
@@ -114,8 +115,6 @@ describe('AdminClient requests', () => {
     await expect(
       client.updateUserSuspension(3, { suspended: true, suspensionReason: 'spam' }),
     ).resolves.toEqual(user);
-    await expect(client.suspendAdminUser(3)).resolves.toEqual(user);
-    await expect(client.unsuspendAdminUser(3)).resolves.toEqual(user);
     await expect(client.activateAdminUser(3)).resolves.toBeUndefined();
     await expect(client.changeUserPassword(3, 'newpass')).resolves.toBeUndefined();
     await expect(client.getUserByFacebookId('fb/1')).resolves.toEqual(user);
@@ -128,8 +127,6 @@ describe('AdminClient requests', () => {
       ['POST', `${ADMIN}/users`],
       ['DELETE', `${ADMIN}/users/3`],
       ['PUT', `${ADMIN}/users/3/suspension`],
-      ['PUT', `${ADMIN}/users/3/suspend`],
-      ['PUT', `${ADMIN}/users/3/unsuspend`],
       ['PUT', `${ADMIN}/users/3/activate`],
       ['PUT', `${ADMIN}/users/3/password`],
       ['GET', `${ADMIN}/users/facebook/fb%2F1`],
@@ -141,11 +138,13 @@ describe('AdminClient requests', () => {
       suspended: true,
       suspensionReason: 'spam',
     });
-    expect(calls[8].data).toBe('newpass');
-    expect(calls[8].header('Content-Type')).toBe('text/plain');
+    expect(calls[6].data).toBe('newpass');
+    expect(calls[6].header('Content-Type')).toBe('text/plain');
   });
 
-  it('updateAdminMap renames public to isPublic for the backend', async () => {
+  it('updateAdminMap sends public under the name the backend reads', async () => {
+    // RestMap only has setPublic, so Jackson reads "public" and drops "isPublic": a map edited
+    // in the console used to become private, and could never be made public.
     const { client, calls } = newClient([{ data: { id: 4 } }]);
 
     await expect(
@@ -157,7 +156,7 @@ describe('AdminClient requests', () => {
       id: 4,
       title: 'T',
       description: 'D',
-      isPublic: true,
+      public: true,
       isLocked: false,
     });
   });
@@ -301,8 +300,6 @@ describe('AdminClient errors', () => {
     ['createAdminUser', (c) => c.createAdminUser({} as never)],
     ['deleteAdminUser', (c) => c.deleteAdminUser(1)],
     ['updateUserSuspension', (c) => c.updateUserSuspension(1, { suspended: false })],
-    ['suspendAdminUser', (c) => c.suspendAdminUser(1)],
-    ['unsuspendAdminUser', (c) => c.unsuspendAdminUser(1)],
     ['activateAdminUser', (c) => c.activateAdminUser(1)],
     ['changeUserPassword', (c) => c.changeUserPassword(1, 'p')],
     ['getUserByFacebookId', (c) => c.getUserByFacebookId('f')],
@@ -366,5 +363,20 @@ describe('AdminClient regular-client stand-ins', () => {
     await expect(client.revertHistory(1, 2)).resolves.toBeUndefined();
 
     expect(calls).toHaveLength(0);
+  });
+});
+
+describe('AdminClient error logging', () => {
+  it('a failed password change logs neither the new password nor the token', async () => {
+    JwtTokenConfig.storeToken('secret.admin.jwt');
+    const { client } = newClient([{ status: 400, data: { globalErrors: ['Too short'] } }]);
+
+    await expect(client.changeUserPassword(3, 'N3w-pass-value')).rejects.toBeDefined();
+
+    const logged = inspect(jest.mocked(console.error).mock.calls, { depth: 10 });
+    expect(console.error).toHaveBeenCalled();
+    expect(logged).not.toContain('N3w-pass-value');
+    expect(logged).not.toContain('secret.admin.jwt');
+    expect(logged).toContain('400');
   });
 });

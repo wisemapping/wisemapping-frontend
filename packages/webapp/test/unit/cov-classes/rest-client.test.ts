@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 
+import { inspect } from 'util';
 import { waitFor } from '@testing-library/react';
 import ReactGA from 'react-ga4';
 import RestClient from '../../../src/classes/client/rest-client';
@@ -180,17 +181,28 @@ describe('RestClient maps', () => {
     expect(calls[1].url).toBe(`${API}/api/restful/maps?title=Imp2&description=`);
   });
 
-  it('renameMap updates the title, then the description (blank when missing)', async () => {
+  it('renameMap updates the title, then the description (blank when cleared)', async () => {
     const { client, calls } = newClient();
 
     await client.renameMap(4, { title: 'New', description: 'Desc' });
-    await client.renameMap(4, { title: 'Other' });
+    await client.renameMap(4, { title: 'Other', description: '' });
 
     expect(calls.map((c) => [c.method, c.url, c.data])).toEqual([
       ['PUT', `${API}/api/restful/maps/4/title`, 'New'],
       ['PUT', `${API}/api/restful/maps/4/description`, 'Desc'],
       ['PUT', `${API}/api/restful/maps/4/title`, 'Other'],
       ['PUT', `${API}/api/restful/maps/4/description`, ' '],
+    ]);
+  });
+
+  it('renameMap without a description leaves the description alone', async () => {
+    // The editor's app bar renames with the title only; the map keeps its description.
+    const { client, calls } = newClient();
+
+    await client.renameMap(4, { title: 'Other' });
+
+    expect(calls.map((c) => [c.method, c.url, c.data])).toEqual([
+      ['PUT', `${API}/api/restful/maps/4/title`, 'Other'],
     ]);
   });
 
@@ -512,6 +524,20 @@ describe('RestClient login and logout', () => {
       code: 1,
     });
     expect(expired).not.toHaveBeenCalled();
+  });
+
+  it('a failed login logs neither the password nor the token', async () => {
+    JwtTokenConfig.storeToken('secret.jwt.value');
+    const { client } = newClient([{ status: 500, data: { globalErrors: ['Boom'] } }]);
+
+    await expect(client.login({ email: 'a', password: 'S3cret-pass!' })).rejects.toBeDefined();
+
+    const logged = inspect(jest.mocked(appLogger.error).mock.calls, { depth: 10 });
+    expect(appLogger.error).toHaveBeenCalled();
+    expect(logged).not.toContain('S3cret-pass!');
+    expect(logged).not.toContain('secret.jwt.value');
+    expect(logged).toContain('/api/restful/authenticate');
+    expect(logged).toContain('500');
   });
 
   it('login reports a 403 (account not active) with code 3', async () => {

@@ -2779,6 +2779,40 @@
       "value": "ログインに戻る"
     }
   ],
+  "registration.callback.confirm-signin.account": [
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": " を使って "
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": " として WiseMapping にサインインしようとしています。このサインインをご自身で開始した場合にのみ続けてください。"
+    }
+  ],
+  "registration.callback.confirm-signin.description": [
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": " を使って WiseMapping にサインインしようとしています。このサインインをご自身で開始した場合にのみ続けてください。"
+    }
+  ],
+  "registration.callback.confirm-signin.title": [
+    {
+      "type": 0,
+      "value": "サインインを続けますか？"
+    }
+  ],
   "registration.callback.confirm.description": [
     {
       "type": 0,
@@ -2797,6 +2831,12 @@
     {
       "type": 0,
       "value": "確認"
+    }
+  ],
+  "registration.callback.continue": [
+    {
+      "type": 0,
+      "value": "続ける"
     }
   ],
   "registration.callback.sync": [

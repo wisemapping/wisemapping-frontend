@@ -41,12 +41,17 @@ const metadata = (overrides: Partial<MapMetadata> = {}): MapMetadata => ({
 const fakeClient = (fetchMapMetadata: jest.Mock, fetchAccountInfo = jest.fn()): Client =>
   ({ fetchMapMetadata, fetchAccountInfo }) as unknown as Client;
 
-const runLoader = (pageMode: PageModeType, id: string | undefined, bootstrap = false) =>
+const runLoader = (
+  pageMode: PageModeType,
+  id: string | undefined,
+  bootstrap = false,
+  hid?: string,
+) =>
   editorLoader(
     pageMode,
     bootstrap,
   )({
-    params: id === undefined ? {} : { id },
+    params: id === undefined ? {} : hid === undefined ? { id } : { id, hid },
   } as unknown as LoaderFunctionArgs);
 
 let removeWebCrypto: () => void;
@@ -191,6 +196,35 @@ describe('editor page loader', () => {
     const response = await runLoader('edit', '5');
 
     await expect(response.json()).resolves.toMatchObject({ editorMode: 'viewonly-private' });
+  });
+
+  it('opens a map read-only for a user who is no collaborator', async () => {
+    // A public map opened at /edit by someone it is not shared with: the backend says role
+    // "none". An editable canvas would save to a read-only store and silently drop every edit.
+    useClient(jest.fn().mockResolvedValue(metadata({ role: 'none' })));
+
+    const response = await runLoader('edit', '5');
+
+    await expect(response.json()).resolves.toMatchObject({ editorMode: 'viewonly-public' });
+  });
+
+  it('opens a locked map of somebody else read-only through the public view', async () => {
+    useClient(jest.fn().mockResolvedValue(metadata({ role: 'none', isLocked: true })));
+
+    const response = await runLoader('edit', '5');
+
+    await expect(response.json()).resolves.toMatchObject({ editorMode: 'viewonly-public' });
+  });
+
+  it('does not bootstrap a history revision with the current map', async () => {
+    const fetchMapMetadata = jest.fn().mockResolvedValue(metadata({ xml: '<current/>' }));
+    useClient(fetchMapMetadata);
+
+    const data = await (await runLoader('view-private', '5', true, '55')).json();
+
+    // The editor then loads revision 55 from its own URL.
+    expect(data.bootstrapXML).toBeUndefined();
+    expect(fetchMapMetadata).toHaveBeenCalledWith(5, false);
   });
 
   it('opens the private view read-only', async () => {

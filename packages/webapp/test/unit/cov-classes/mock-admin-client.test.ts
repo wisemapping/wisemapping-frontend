@@ -177,8 +177,12 @@ describe('MockAdminClient user changes', () => {
   });
 
   it('suspend, unsuspend and activate change the user flags', async () => {
-    expect((await settle(client.suspendAdminUser(3))).isSuspended).toBe(true);
-    expect((await settle(client.unsuspendAdminUser(3))).isSuspended).toBe(false);
+    expect((await settle(client.updateUserSuspension(3, { suspended: true }))).isSuspended).toBe(
+      true,
+    );
+    expect((await settle(client.updateUserSuspension(3, { suspended: false }))).isSuspended).toBe(
+      false,
+    );
     await settle(client.activateAdminUser(12));
     await settle(client.changeUserPassword(12, 'p'));
 
@@ -193,8 +197,6 @@ describe('MockAdminClient user changes', () => {
       'updateUserSuspension',
       (c: MockAdminClient) => c.updateUserSuspension(999, { suspended: true }),
     ],
-    ['suspendAdminUser', (c: MockAdminClient) => c.suspendAdminUser(999)],
-    ['unsuspendAdminUser', (c: MockAdminClient) => c.unsuspendAdminUser(999)],
     ['activateAdminUser', (c: MockAdminClient) => c.activateAdminUser(999)],
     ['changeUserPassword', (c: MockAdminClient) => c.changeUserPassword(999, 'p')],
   ] as const)('%s rejects for an unknown user', async (_name, call) => {

@@ -494,6 +494,18 @@
   "registration.callback.back": {
     "defaultMessage": "返回登录"
   },
+  "registration.callback.confirm-signin.account": {
+    "defaultMessage": "您即将以 {email} 的身份通过 {provider} 登录 WiseMapping。仅当这次登录是您本人发起时才继续。"
+  },
+  "registration.callback.confirm-signin.description": {
+    "defaultMessage": "您即将通过 {provider} 登录 WiseMapping。仅当这次登录是您本人发起时才继续。"
+  },
+  "registration.callback.confirm-signin.title": {
+    "defaultMessage": "继续登录？"
+  },
+  "registration.callback.continue": {
+    "defaultMessage": "继续"
+  },
   "registration.callback.confirm.description": {
     "defaultMessage": "之前已注册了相同电子邮件的账户。您想将您的{provider}账户链接到该WiseMapping账户吗？"
   },

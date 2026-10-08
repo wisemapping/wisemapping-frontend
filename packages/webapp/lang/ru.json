@@ -539,6 +539,18 @@
   "registration.callback.back": {
     "defaultMessage": "Вернуться на страницу авторизации"
   },
+  "registration.callback.confirm-signin.account": {
+    "defaultMessage": "Вы собираетесь войти в WiseMapping через {provider} как {email}. Продолжайте, только если вы сами начали этот вход."
+  },
+  "registration.callback.confirm-signin.description": {
+    "defaultMessage": "Вы собираетесь войти в WiseMapping через {provider}. Продолжайте, только если вы сами начали этот вход."
+  },
+  "registration.callback.confirm-signin.title": {
+    "defaultMessage": "Продолжить вход?"
+  },
+  "registration.callback.continue": {
+    "defaultMessage": "Продолжить"
+  },
   "registration.callback.sync": {
     "defaultMessage": "Синхронизировать аккаунт"
   },

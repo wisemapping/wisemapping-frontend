@@ -494,6 +494,18 @@
   "registration.callback.back": {
     "defaultMessage": "ログインに戻る"
   },
+  "registration.callback.confirm-signin.account": {
+    "defaultMessage": "{provider} を使って {email} として WiseMapping にサインインしようとしています。このサインインをご自身で開始した場合にのみ続けてください。"
+  },
+  "registration.callback.confirm-signin.description": {
+    "defaultMessage": "{provider} を使って WiseMapping にサインインしようとしています。このサインインをご自身で開始した場合にのみ続けてください。"
+  },
+  "registration.callback.confirm-signin.title": {
+    "defaultMessage": "サインインを続けますか？"
+  },
+  "registration.callback.continue": {
+    "defaultMessage": "続ける"
+  },
   "registration.callback.confirm.description": {
     "defaultMessage": "同じメールアドレスのアカウントが以前に登録されています。{provider}アカウントをそのWiseMappingアカウントにリンクしますか？"
   },

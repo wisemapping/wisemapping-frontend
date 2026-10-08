@@ -19,6 +19,7 @@ import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import { buildStaticUrls, generateSitemapXml } from './src/components/sitemap/utils';
+import { resolveBootstrapConfig } from './src/utils/bootstrap-config-source';
 import { createRequire } from 'module';
 
 const requireJson = createRequire(import.meta.url);
@@ -84,26 +85,12 @@ export default defineConfig(({ mode }) => {
   // side effect: it copies NODE_ENV, BROWSER and BROWSER_ARGS from the .env files into process.env.
   loadEnv(mode, process.cwd(), '');
 
-  let bootstrapConfig;
-  const configType = process.env.APP_CONFIG_TYPE || 'file:mock';
-
-  switch (configType) {
-    case 'file:mock':
-      bootstrapConfig = requireJson('./config.mock.json');
-      break;
-    case 'file:prod':
-      bootstrapConfig = requireJson('./config.prod.json');
-      break;
-    case 'file:dev':
-      bootstrapConfig = requireJson('./config.dev.json');
-      break;
-    case 'remote':
-      bootstrapConfig = process.env.APP_CONFIG_JSON ? JSON.parse(process.env.APP_CONFIG_JSON) : {};
-      break;
-    default:
-      bootstrapConfig = requireJson('./config.mock.json');
-      break;
-  }
+  const bootstrapConfig = resolveBootstrapConfig({
+    env: process.env,
+    production: mode === 'production',
+    readJson: requireJson,
+    warn: (message) => console.warn(`\n⚠ ${message}\n`),
+  });
 
   return {
     plugins: [

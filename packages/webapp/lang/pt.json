@@ -494,6 +494,18 @@
   "registration.callback.back": {
     "defaultMessage": "Voltar ao login"
   },
+  "registration.callback.confirm-signin.account": {
+    "defaultMessage": "Você está prestes a entrar no WiseMapping com {provider} como {email}. Continue apenas se você mesmo iniciou este acesso."
+  },
+  "registration.callback.confirm-signin.description": {
+    "defaultMessage": "Você está prestes a entrar no WiseMapping com {provider}. Continue apenas se você mesmo iniciou este acesso."
+  },
+  "registration.callback.confirm-signin.title": {
+    "defaultMessage": "Continuar o início de sessão?"
+  },
+  "registration.callback.continue": {
+    "defaultMessage": "Continuar"
+  },
   "registration.callback.confirm.description": {
     "defaultMessage": "Uma conta com o mesmo e-mail foi registrada anteriormente. Deseja vincular sua conta do {provider} a essa conta do WiseMapping?"
   },

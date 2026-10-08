@@ -405,7 +405,9 @@ class MockClient implements Client {
       this.maps = this.maps.map((m) => {
         const result = m;
         if (m.id == id) {
-          result.description = basicInfo.description ? basicInfo.description : '';
+          if (basicInfo.description !== undefined) {
+            result.description = basicInfo.description;
+          }
           result.title = basicInfo.title;
         }
         return result;

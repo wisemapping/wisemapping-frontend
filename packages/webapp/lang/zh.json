@@ -572,6 +572,18 @@
   "registration.callback.back": {
     "defaultMessage": "回到登录"
   },
+  "registration.callback.confirm-signin.account": {
+    "defaultMessage": "您即将以 {email} 的身份通过 {provider} 登录 WiseMapping。仅当这次登录是您本人发起时才继续。"
+  },
+  "registration.callback.confirm-signin.description": {
+    "defaultMessage": "您即将通过 {provider} 登录 WiseMapping。仅当这次登录是您本人发起时才继续。"
+  },
+  "registration.callback.confirm-signin.title": {
+    "defaultMessage": "继续登录？"
+  },
+  "registration.callback.continue": {
+    "defaultMessage": "继续"
+  },
   "registration.callback.sync": {
     "defaultMessage": "同步账号"
   },

@@ -72,8 +72,8 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
       setModel(updatedModel);
       previousModelRef.current = updatedModel;
       // Invalidate queries to refresh data, but keep dialog open
+      // Also refreshes the map's metadata, which is cached under ['maps'].
       queryClient.invalidateQueries({ queryKey: ['maps'] });
-      queryClient.invalidateQueries({ queryKey: [`maps-metadata-${mapId}`] });
     },
     onError: (error) => {
       setError(error);

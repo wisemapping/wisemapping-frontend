@@ -2779,6 +2779,48 @@
       "value": "Back to login"
     }
   ],
+  "registration.callback.confirm-signin.account": [
+    {
+      "type": 0,
+      "value": "You are about to sign in to WiseMapping with "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": " as "
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": ". Continue only if you started this sign-in yourself."
+    }
+  ],
+  "registration.callback.confirm-signin.description": [
+    {
+      "type": 0,
+      "value": "You are about to sign in to WiseMapping with "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": ". Continue only if you started this sign-in yourself."
+    }
+  ],
+  "registration.callback.confirm-signin.title": [
+    {
+      "type": 0,
+      "value": "Continue signing in?"
+    }
+  ],
   "registration.callback.confirm.description": [
     {
       "type": 0,
@@ -2797,6 +2839,12 @@
     {
       "type": 0,
       "value": "Confirm"
+    }
+  ],
+  "registration.callback.continue": [
+    {
+      "type": 0,
+      "value": "Continue"
     }
   ],
   "registration.callback.sync": [

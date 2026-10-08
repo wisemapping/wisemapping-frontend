@@ -42,6 +42,8 @@ import { trackPageView } from '../../utils/analytics';
 import { appLogger as log } from '../../utils/logger';
 import { getCanonicalUrl, getAlternateLanguageUrls } from '../../utils/seo-locale';
 import CircularProgress from '@mui/material/CircularProgress';
+import { leaveTo, safeRedirectPath } from '../../utils/redirect';
+import { startOAuthFlow } from '../../utils/oauth-flow';
 
 export type Model = {
   email: string;
@@ -95,12 +97,13 @@ const LoginPage = (): React.ReactElement => {
 
     // Pass redirect URL via OAuth state parameter
     let finalAuthUrl = authUrl;
-    if (redirectUrl) {
+    const target = redirectUrl ? safeRedirectPath(redirectUrl) : undefined;
+    if (target) {
       const url = new URL(authUrl);
-      url.searchParams.set('state', redirectUrl);
+      url.searchParams.set('state', target);
       finalAuthUrl = url.toString();
     }
-    window.location.href = finalAuthUrl;
+    startOAuthFlow(finalAuthUrl, target);
   };
 
   useEffect(() => {
@@ -121,7 +124,7 @@ const LoginPage = (): React.ReactElement => {
     const checkAuthentication = async (): Promise<void> => {
       try {
         await client.fetchAccountInfo();
-        window.location.href = redirectUrl ?? '/c/maps/';
+        leaveTo(safeRedirectPath(redirectUrl));
       } catch {
         setIsCheckingAuth(false);
       }
@@ -135,10 +138,7 @@ const LoginPage = (): React.ReactElement => {
     onSuccess: () => {
       initializeThemeFromSystem();
 
-      let redirectUrl = new URLSearchParams(location.search).get('redirect');
-      redirectUrl = redirectUrl ? redirectUrl : '/c/maps/';
-
-      window.location.href = redirectUrl;
+      leaveTo(safeRedirectPath(new URLSearchParams(location.search).get('redirect')));
     },
     onError: (error: LoginErrorInfo) => {
       setLoginError(error);

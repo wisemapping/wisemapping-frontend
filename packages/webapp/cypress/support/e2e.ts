@@ -62,7 +62,14 @@ const isIgnored = (patterns: string[], args: unknown[]): boolean => {
 };
 
 // A cy.spy() is a sinon spy; expose just the bit of its surface we rely on.
-type ConsoleSpy = { getCalls?: () => Array<{ args: unknown[] }> };
+type ConsoleSpy = { getCalls: () => Array<{ args: unknown[] }> };
+
+// The spies are kept here, not read back from win.console: the Vite dev client wraps
+// console.error/warn after the page starts loading when it forwards the browser console to the
+// terminal (server.forwardConsole, on by default under AI agents). The wrapper still calls the
+// spy, but win.console.error is then no longer the spy, and a check that read it back found no
+// spy and silently passed.
+const consoleSpies = new WeakMap<Window, { error: ConsoleSpy; warn: ConsoleSpy }>();
 
 Cypress.on('window:before:load', (win) => {
   // Store original console methods
@@ -87,29 +94,29 @@ Cypress.on('window:before:load', (win) => {
   };
 
   // Spy on the wrapped methods to track real application errors
-  cy.spy(win.console, 'error');
-  cy.spy(win.console, 'warn');
+  consoleSpies.set(win, {
+    error: cy.spy(win.console, 'error') as unknown as ConsoleSpy,
+    warn: cy.spy(win.console, 'warn') as unknown as ConsoleSpy,
+  });
 });
 
 afterEach(() => {
-  // cy.request() tests don't boot an AUT window, so Cypress won't have spies set up.
-  // Use Cypress.state to check for an existing window and only assert when present.
-  cy.then(() => {
-    const win = Cypress.state('window') as Cypress.AUTWindow | undefined;
-    if (!win) {
+  cy.window({ log: false }).then((win) => {
+    const spies = consoleSpies.get(win);
+    if (!spies) {
+      // Only a test that never loaded a page (cy.request() tests) has no spies. Any other page
+      // without them would mean the check is not running, so it must not pass quietly.
+      expect(win.location.href, 'page without console spies').to.equal('about:blank');
       return;
     }
 
     const assertClean = (spy: ConsoleSpy, method: string, ignored: string[]) => {
-      if (typeof spy?.getCalls !== 'function') {
-        return;
-      }
       const unexpected = spy.getCalls().filter((call) => !isIgnored(ignored, call.args));
       const details = unexpected.map((call) => String(call.args[0])).join(' | ');
       expect(unexpected.length, `unexpected console.${method}: ${details}`).to.equal(0);
     };
 
-    assertClean(win.console.error as unknown as ConsoleSpy, 'error', IGNORED_ERROR_PATTERNS);
-    assertClean(win.console.warn as unknown as ConsoleSpy, 'warn', IGNORED_WARN_PATTERNS);
+    assertClean(spies.error, 'error', IGNORED_ERROR_PATTERNS);
+    assertClean(spies.warn, 'warn', IGNORED_WARN_PATTERNS);
   });
 });

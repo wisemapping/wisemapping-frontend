@@ -566,6 +566,18 @@
   "registration.callback.back": {
     "defaultMessage": "Zurück zur Anmeldung"
   },
+  "registration.callback.confirm-signin.account": {
+    "defaultMessage": "Du meldest dich gleich mit {provider} als {email} bei WiseMapping an. Fahre nur fort, wenn du diese Anmeldung selbst gestartet hast."
+  },
+  "registration.callback.confirm-signin.description": {
+    "defaultMessage": "Du meldest dich gleich mit {provider} bei WiseMapping an. Fahre nur fort, wenn du diese Anmeldung selbst gestartet hast."
+  },
+  "registration.callback.confirm-signin.title": {
+    "defaultMessage": "Anmeldung fortsetzen?"
+  },
+  "registration.callback.continue": {
+    "defaultMessage": "Weiter"
+  },
   "registration.callback.sync": {
     "defaultMessage": "Konto synchronisieren"
   },

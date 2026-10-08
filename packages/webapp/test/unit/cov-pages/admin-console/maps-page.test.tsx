@@ -729,12 +729,15 @@ describe('MapsManagement', () => {
       fireEvent.click(within(dialog).getAllByText('Suspended', { selector: '.MuiChip-label' })[0]);
       fireEvent.click(await screen.findByRole('menuitem', { name: 'Unsuspend user' }));
 
-      await waitFor(() => expect(client.unsuspendAdminUser).toHaveBeenCalledWith(50));
+      // The backend has /suspension only: the old /unsuspend call always failed with a 404.
+      await waitFor(() =>
+        expect(client.updateUserSuspension).toHaveBeenCalledWith(50, { suspended: false }),
+      );
       await waitFor(() => expect(client.getAdminUser).toHaveBeenCalledTimes(2));
 
       // Reloading the owner can fail too.
       client.getAdminUser.mockRejectedValue(new Error('gone'));
-      client.unsuspendAdminUser.mockRejectedValueOnce(new Error('denied'));
+      client.updateUserSuspension.mockRejectedValueOnce(new Error('denied'));
       fireEvent.click(within(dialog).getAllByText('Suspended', { selector: '.MuiChip-label' })[0]);
       fireEvent.click(await screen.findByRole('menuitem', { name: 'Unsuspend user' }));
       await waitFor(() =>

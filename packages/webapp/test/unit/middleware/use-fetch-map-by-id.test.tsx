@@ -21,6 +21,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useFetchMapById } from '../../../src/classes/middleware';
 import Client, { MapMetadata } from '../../../src/classes/client';
 import { ClientContext } from '../../../src/classes/provider/client-context';
+import { handleOnMutationSuccess } from '../../../src/components/maps-page/action-dispatcher';
 
 const metadata = {
   id: 7,
@@ -31,9 +32,10 @@ const metadata = {
   jsonProps: '{}',
 } as unknown as MapMetadata;
 
-const wrapperFor = (client: Client) => {
-  const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
-
+const wrapperFor = (
+  client: Client,
+  queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } }),
+) => {
   const Wrapper = ({ children }: { children: React.ReactNode }): React.ReactElement => (
     <QueryClientProvider client={queryClient}>
       <ClientContext.Provider value={client}>{children}</ClientContext.Provider>
@@ -71,5 +73,32 @@ describe('useFetchMapById', () => {
       title: 'A map',
       description: 'Its description',
     });
+  });
+
+  it('reads the map again after a map mutation, although the metadata is still fresh', async () => {
+    // The app keeps queries fresh for 5 minutes. Renaming a map invalidates ['maps'] only, so
+    // the rename dialog, opened again, used to show the old title, and saving it put it back.
+    const queryClient = new QueryClient({
+      defaultOptions: { queries: { retry: false, staleTime: 5 * 60 * 1000 } },
+    });
+    const fetchMapMetadata = jest
+      .fn()
+      .mockResolvedValueOnce(metadata)
+      .mockResolvedValueOnce({ ...metadata, title: 'Renamed' });
+    const client = { fetchMapMetadata } as unknown as Client;
+
+    const first = renderHook(() => useFetchMapById(7), {
+      wrapper: wrapperFor(client, queryClient),
+    });
+    await waitFor(() => expect(first.result.current.data?.title).toBe('A map'));
+    first.unmount();
+
+    handleOnMutationSuccess(jest.fn(), queryClient);
+
+    const second = renderHook(() => useFetchMapById(7), {
+      wrapper: wrapperFor(client, queryClient),
+    });
+    await waitFor(() => expect(second.result.current.data?.title).toBe('Renamed'));
+    expect(fetchMapMetadata).toHaveBeenCalledTimes(2);
   });
 });

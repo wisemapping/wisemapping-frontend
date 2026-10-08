@@ -87,14 +87,21 @@ describe('MockClient maps', () => {
   });
 
   it('renameMap changes title and description', async () => {
+    const before = (await client.fetchAllMaps()).find((m) => m.id === 2)?.description;
     await client.renameMap(1, { title: 'Renamed', description: 'New desc' });
     await client.renameMap(2, { title: 'Renamed 2' });
 
-    const maps = await client.fetchAllMaps();
+    let maps = await client.fetchAllMaps();
     expect(maps.find((m) => m.id === 1)).toMatchObject({
       title: 'Renamed',
       description: 'New desc',
     });
+    // Without a description, as the editor renames, the description is kept.
+    expect(before).toBeTruthy();
+    expect(maps.find((m) => m.id === 2)).toMatchObject({ title: 'Renamed 2', description: before });
+
+    await client.renameMap(2, { title: 'Renamed again', description: '' });
+    maps = await client.fetchAllMaps();
     expect(maps.find((m) => m.id === 2)?.description).toBe('');
   });
 

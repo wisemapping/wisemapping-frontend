@@ -500,6 +500,18 @@
   "registration.callback.back": {
     "defaultMessage": "العودة إلى تسجيل الدخول"
   },
+  "registration.callback.confirm-signin.account": {
+    "defaultMessage": "أنت على وشك تسجيل الدخول إلى WiseMapping باستخدام {provider} بصفتك {email}. تابع فقط إذا كنت أنت من بدأ عملية تسجيل الدخول هذه."
+  },
+  "registration.callback.confirm-signin.description": {
+    "defaultMessage": "أنت على وشك تسجيل الدخول إلى WiseMapping باستخدام {provider}. تابع فقط إذا كنت أنت من بدأ عملية تسجيل الدخول هذه."
+  },
+  "registration.callback.confirm-signin.title": {
+    "defaultMessage": "متابعة تسجيل الدخول؟"
+  },
+  "registration.callback.continue": {
+    "defaultMessage": "متابعة"
+  },
   "registration.callback.confirm.description": {
     "defaultMessage": "تم تسجيل حساب بنفس البريد الإلكتروني سابقًا. هل تريد ربط حساب {provider} بحساب WiseMapping ذاك؟"
   },

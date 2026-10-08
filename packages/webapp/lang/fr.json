@@ -569,6 +569,18 @@
   "registration.callback.back": {
     "defaultMessage": "Retour à la connexion"
   },
+  "registration.callback.confirm-signin.account": {
+    "defaultMessage": "Vous êtes sur le point de vous connecter à WiseMapping avec {provider} en tant que {email}. Ne continuez que si vous avez lancé cette connexion vous-même."
+  },
+  "registration.callback.confirm-signin.description": {
+    "defaultMessage": "Vous êtes sur le point de vous connecter à WiseMapping avec {provider}. Ne continuez que si vous avez lancé cette connexion vous-même."
+  },
+  "registration.callback.confirm-signin.title": {
+    "defaultMessage": "Poursuivre la connexion ?"
+  },
+  "registration.callback.continue": {
+    "defaultMessage": "Continuer"
+  },
   "registration.callback.sync": {
     "defaultMessage": "Synchroniser le compte"
   },
