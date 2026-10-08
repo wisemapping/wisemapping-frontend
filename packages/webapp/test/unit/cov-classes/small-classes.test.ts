@@ -49,6 +49,15 @@ describe('MapInfoImpl', () => {
     await expect(build({}).isStarred()).resolves.toBe(false);
   });
 
+  it('updateStarred puts the star back when saving it fails', async () => {
+    const updateStarred = jest.fn().mockRejectedValue({ msg: 'down' });
+    const info = build({ updateStarred }, false);
+
+    await expect(info.updateStarred(true)).rejects.toEqual({ msg: 'down' });
+
+    await expect(info.isStarred()).resolves.toBe(false);
+  });
+
   it('updateStarred saves through the client and is reflected right away', async () => {
     const updateStarred = jest.fn().mockResolvedValue(undefined);
     const info = build({ updateStarred }, false);

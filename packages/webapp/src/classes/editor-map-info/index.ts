@@ -58,9 +58,13 @@ class MapInfoImpl implements MapInfo {
   }
 
   updateStarred(value: boolean): Promise<void> {
-    // Update local starred value optimistically
+    // Update local starred value optimistically, and roll it back if the save fails
+    const previous = this.starred;
     this.starred = value;
-    return this.client.updateStarred(this.id, value);
+    return this.client.updateStarred(this.id, value).catch((error) => {
+      this.starred = previous;
+      throw error;
+    });
   }
 
   getCreatorFullName(): string {
