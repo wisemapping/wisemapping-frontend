@@ -245,35 +245,17 @@
   "info.basic-info": {
     "defaultMessage": "Allgemeine Informationen"
   },
-  "info.button": {
-    "defaultMessage": "Akzeptieren"
-  },
   "info.creation-time": {
     "defaultMessage": "Erstellungsdatum"
   },
   "info.creator": {
     "defaultMessage": "Ersteller"
   },
-  "info.description": {
-    "defaultMessage": "Beschreibung"
-  },
-  "info.description-msg": {
-    "defaultMessage": "Indem du die Mindmap veröffentlichst, machst du sie für jeden im Internet sichtbar."
-  },
   "info.modified-time": {
     "defaultMessage": "Zuletzt geändert am"
   },
   "info.modified-tny": {
     "defaultMessage": "Zuletzt geändert von"
-  },
-  "info.name": {
-    "defaultMessage": "Name"
-  },
-  "info.public-visibility": {
-    "defaultMessage": "Öffentlich sichtbar"
-  },
-  "info.sharing": {
-    "defaultMessage": "Teilen"
   },
   "info.starred": {
     "defaultMessage": "Favoriten"
@@ -1474,5 +1456,17 @@
   },
   "share.people-with-access": {
     "defaultMessage": "Personen mit Zugriff"
+  },
+  "info.subtitle": {
+    "defaultMessage": "Details zu dieser Mindmap und den Personen, die daran arbeiten."
+  },
+  "info.no-description": {
+    "defaultMessage": "Keine Beschreibung"
+  },
+  "info.public": {
+    "defaultMessage": "Öffentlich"
+  },
+  "info.private": {
+    "defaultMessage": "Privat"
   }
 }

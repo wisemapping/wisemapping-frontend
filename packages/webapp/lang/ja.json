@@ -260,35 +260,17 @@
   "info.basic-info": {
     "defaultMessage": "基本情報"
   },
-  "info.button": {
-    "defaultMessage": "受け入れる"
-  },
   "info.creation-time": {
     "defaultMessage": "作成日"
   },
   "info.creator": {
     "defaultMessage": "作成者"
   },
-  "info.description": {
-    "defaultMessage": "説明"
-  },
-  "info.description-msg": {
-    "defaultMessage": "マップを公開することで、インターネット上のすべての人に表示されます。"
-  },
   "info.modified-time": {
     "defaultMessage": "最終更新日"
   },
   "info.modified-tny": {
     "defaultMessage": "最終更新者"
-  },
-  "info.name": {
-    "defaultMessage": "名前"
-  },
-  "info.public-visibility": {
-    "defaultMessage": "公開表示"
-  },
-  "info.sharing": {
-    "defaultMessage": "共有"
   },
   "info.starred": {
     "defaultMessage": "お気に入り"
@@ -1474,5 +1456,17 @@
   },
   "share.people-with-access": {
     "defaultMessage": "アクセスできるユーザー"
+  },
+  "info.subtitle": {
+    "defaultMessage": "このマップと、作業しているユーザーの詳細です。"
+  },
+  "info.no-description": {
+    "defaultMessage": "説明なし"
+  },
+  "info.public": {
+    "defaultMessage": "公開"
+  },
+  "info.private": {
+    "defaultMessage": "非公開"
   }
 }

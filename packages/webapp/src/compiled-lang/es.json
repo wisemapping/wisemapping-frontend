@@ -2257,12 +2257,6 @@
       "value": "Información básica"
     }
   ],
-  "info.button": [
-    {
-      "type": 0,
-      "value": "Aceptar"
-    }
-  ],
   "info.creation-time": [
     {
       "type": 0,
@@ -2273,18 +2267,6 @@
     {
       "type": 0,
       "value": "Creador"
-    }
-  ],
-  "info.description": [
-    {
-      "type": 0,
-      "value": "Descripción"
-    }
-  ],
-  "info.description-msg": [
-    {
-      "type": 0,
-      "value": "Al publicar el mapa, lo haces visible para todos en Internet."
     }
   ],
   "info.modified-time": [
@@ -2299,28 +2281,34 @@
       "value": "Última modificación por"
     }
   ],
-  "info.name": [
+  "info.no-description": [
     {
       "type": 0,
-      "value": "Nombre"
+      "value": "Sin descripción"
     }
   ],
-  "info.public-visibility": [
+  "info.private": [
     {
       "type": 0,
-      "value": "Visible públicamente"
+      "value": "Privado"
     }
   ],
-  "info.sharing": [
+  "info.public": [
     {
       "type": 0,
-      "value": "Compartido"
+      "value": "Público"
     }
   ],
   "info.starred": [
     {
       "type": 0,
       "value": "Destacados"
+    }
+  ],
+  "info.subtitle": [
+    {
+      "type": 0,
+      "value": "Detalles de este mapa y de las personas que trabajan en él."
     }
   ],
   "info.title": [

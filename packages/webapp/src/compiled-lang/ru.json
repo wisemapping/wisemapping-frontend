@@ -2283,12 +2283,6 @@
       "value": "Основная информация"
     }
   ],
-  "info.button": [
-    {
-      "type": 0,
-      "value": "Принять"
-    }
-  ],
   "info.creation-time": [
     {
       "type": 0,
@@ -2299,18 +2293,6 @@
     {
       "type": 0,
       "value": "Автор"
-    }
-  ],
-  "info.description": [
-    {
-      "type": 0,
-      "value": "Описание"
-    }
-  ],
-  "info.description-msg": [
-    {
-      "type": 0,
-      "value": "После публикация карта станет видима для любого, у кого есть ссылка."
     }
   ],
   "info.modified-time": [
@@ -2325,28 +2307,34 @@
       "value": "Последний редактировал"
     }
   ],
-  "info.name": [
+  "info.no-description": [
     {
       "type": 0,
-      "value": "Имя"
+      "value": "Нет описания"
     }
   ],
-  "info.public-visibility": [
+  "info.private": [
     {
       "type": 0,
-      "value": "Доступ по ссылке"
+      "value": "Личная"
     }
   ],
-  "info.sharing": [
+  "info.public": [
     {
       "type": 0,
-      "value": "Видимость"
+      "value": "Общедоступная"
     }
   ],
   "info.starred": [
     {
       "type": 0,
       "value": "Важная"
+    }
+  ],
+  "info.subtitle": [
+    {
+      "type": 0,
+      "value": "Сведения об этой карте и о людях, которые над ней работают."
     }
   ],
   "info.title": [

@@ -260,35 +260,17 @@
   "info.basic-info": {
     "defaultMessage": "Informazioni Base"
   },
-  "info.button": {
-    "defaultMessage": "Accetta"
-  },
   "info.creation-time": {
     "defaultMessage": "Data di Creazione"
   },
   "info.creator": {
     "defaultMessage": "Creatore"
   },
-  "info.description": {
-    "defaultMessage": "Descrizione"
-  },
-  "info.description-msg": {
-    "defaultMessage": "Pubblicando la mappa la rendi visibile a tutti su Internet."
-  },
   "info.modified-time": {
     "defaultMessage": "Data Ultima Modifica"
   },
   "info.modified-tny": {
     "defaultMessage": "Ultima Modifica Di"
-  },
-  "info.name": {
-    "defaultMessage": "Nome"
-  },
-  "info.public-visibility": {
-    "defaultMessage": "Pubblicamente Visibile"
-  },
-  "info.sharing": {
-    "defaultMessage": "Condivisione"
   },
   "info.starred": {
     "defaultMessage": "Preferiti"
@@ -1474,5 +1456,17 @@
   },
   "share.people-with-access": {
     "defaultMessage": "Persone con accesso"
+  },
+  "info.subtitle": {
+    "defaultMessage": "Dettagli di questa mappa e delle persone che ci lavorano."
+  },
+  "info.no-description": {
+    "defaultMessage": "Nessuna descrizione"
+  },
+  "info.public": {
+    "defaultMessage": "Pubblica"
+  },
+  "info.private": {
+    "defaultMessage": "Privata"
   }
 }

@@ -251,35 +251,17 @@
   "info.basic-info": {
     "defaultMessage": "Información básica"
   },
-  "info.button": {
-    "defaultMessage": "Aceptar"
-  },
   "info.creation-time": {
     "defaultMessage": "Fecha de creación"
   },
   "info.creator": {
     "defaultMessage": "Creador"
   },
-  "info.description": {
-    "defaultMessage": "Descripción"
-  },
-  "info.description-msg": {
-    "defaultMessage": "Al publicar el mapa, lo haces visible para todos en Internet."
-  },
   "info.modified-time": {
     "defaultMessage": "Última fecha de modificación"
   },
   "info.modified-tny": {
     "defaultMessage": "Última modificación por"
-  },
-  "info.name": {
-    "defaultMessage": "Nombre"
-  },
-  "info.public-visibility": {
-    "defaultMessage": "Visible públicamente"
-  },
-  "info.sharing": {
-    "defaultMessage": "Compartido"
   },
   "info.starred": {
     "defaultMessage": "Destacados"
@@ -1474,5 +1456,17 @@
   },
   "share.people-with-access": {
     "defaultMessage": "Personas con acceso"
+  },
+  "info.subtitle": {
+    "defaultMessage": "Detalles de este mapa y de las personas que trabajan en él."
+  },
+  "info.no-description": {
+    "defaultMessage": "Sin descripción"
+  },
+  "info.public": {
+    "defaultMessage": "Público"
+  },
+  "info.private": {
+    "defaultMessage": "Privado"
   }
 }

@@ -422,7 +422,7 @@ describe('CreateDialog', () => {
 });
 
 describe('InfoDialog', () => {
-  test('lists the map details and its public visibility', () => {
+  test('shows the map, its status and its details', () => {
     const onClose = jest.fn();
     renderWithProviders(<InfoDialog mapId={7} onClose={onClose} />, { client: {} as Client });
 
@@ -430,9 +430,12 @@ describe('InfoDialog', () => {
     expect(screen.getByText('Summer trip')).toBeTruthy();
     expect(screen.getByText('ana@wisemapping.com')).toBeTruthy();
     expect(screen.getByText('diego@wisemapping.com')).toBeTruthy();
-    // Starred, then publicly visible.
-    expect(screen.getByText('true')).toBeTruthy();
-    expect(screen.getByText('false')).toBeTruthy();
+    // Starred and private, as status chips rather than "true" and "false".
+    expect(screen.getByText('Starred')).toBeTruthy();
+    expect(screen.getByText('Private')).toBeTruthy();
+    expect(screen.queryByText('Public')).toBeNull();
+    // Its own subtitle, not the publish dialog's.
+    expect(screen.getByText('Details about this map and the people who work on it.')).toBeTruthy();
     expect(mockUseFetchMapById).toHaveBeenCalledWith(7);
 
     // Info has nothing to submit: the only action closes it.
@@ -441,12 +444,25 @@ describe('InfoDialog', () => {
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
-  test('renders while the map is still loading', () => {
+  test('a public map says so', () => {
+    mockUseFetchMapById.mockReturnValue({
+      isLoading: false,
+      error: null,
+      data: { ...map, public: true, starred: false },
+    });
+    renderWithProviders(<InfoDialog mapId={7} onClose={jest.fn()} />, { client: {} as Client });
+
+    expect(screen.getByText('Public')).toBeTruthy();
+    expect(screen.queryByText('Starred')).toBeNull();
+  });
+
+  test('while the map loads, dates are dashes rather than today', () => {
     mockUseFetchMapById.mockReturnValue({ isLoading: true, error: null, data: undefined });
     renderWithProviders(<InfoDialog mapId={7} onClose={jest.fn()} />, { client: {} as Client });
 
     expect(screen.getByText('Basic Info')).toBeTruthy();
-    expect(screen.getAllByText('false')).toHaveLength(2);
+    expect(screen.getByText('No description')).toBeTruthy();
+    expect(screen.getAllByText('—')).toHaveLength(4);
   });
 });
 

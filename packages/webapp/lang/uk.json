@@ -260,35 +260,17 @@
   "info.basic-info": {
     "defaultMessage": "Основна інформація"
   },
-  "info.button": {
-    "defaultMessage": "Прийняти"
-  },
   "info.creation-time": {
     "defaultMessage": "Дата створення"
   },
   "info.creator": {
     "defaultMessage": "Створювач"
   },
-  "info.description": {
-    "defaultMessage": "Опис"
-  },
-  "info.description-msg": {
-    "defaultMessage": "Опублікувавши карту, ви робите її видимою для всіх в Інтернеті."
-  },
   "info.modified-time": {
     "defaultMessage": "Дата останньої зміни"
   },
   "info.modified-tny": {
     "defaultMessage": "Остання зміна"
-  },
-  "info.name": {
-    "defaultMessage": "Назва"
-  },
-  "info.public-visibility": {
-    "defaultMessage": "Публічно видима"
-  },
-  "info.sharing": {
-    "defaultMessage": "Спільне використання"
   },
   "info.starred": {
     "defaultMessage": "Відмічена"
@@ -1474,5 +1456,17 @@
   },
   "share.people-with-access": {
     "defaultMessage": "Люди з доступом"
+  },
+  "info.subtitle": {
+    "defaultMessage": "Відомості про цю карту та людей, які над нею працюють."
+  },
+  "info.no-description": {
+    "defaultMessage": "Немає опису"
+  },
+  "info.public": {
+    "defaultMessage": "Загальнодоступна"
+  },
+  "info.private": {
+    "defaultMessage": "Приватна"
   }
 }

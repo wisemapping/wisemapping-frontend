@@ -2238,12 +2238,6 @@
       "value": "基本情報"
     }
   ],
-  "info.button": [
-    {
-      "type": 0,
-      "value": "受け入れる"
-    }
-  ],
   "info.creation-time": [
     {
       "type": 0,
@@ -2254,18 +2248,6 @@
     {
       "type": 0,
       "value": "作成者"
-    }
-  ],
-  "info.description": [
-    {
-      "type": 0,
-      "value": "説明"
-    }
-  ],
-  "info.description-msg": [
-    {
-      "type": 0,
-      "value": "マップを公開することで、インターネット上のすべての人に表示されます。"
     }
   ],
   "info.modified-time": [
@@ -2280,28 +2262,34 @@
       "value": "最終更新者"
     }
   ],
-  "info.name": [
+  "info.no-description": [
     {
       "type": 0,
-      "value": "名前"
+      "value": "説明なし"
     }
   ],
-  "info.public-visibility": [
+  "info.private": [
     {
       "type": 0,
-      "value": "公開表示"
+      "value": "非公開"
     }
   ],
-  "info.sharing": [
+  "info.public": [
     {
       "type": 0,
-      "value": "共有"
+      "value": "公開"
     }
   ],
   "info.starred": [
     {
       "type": 0,
       "value": "お気に入り"
+    }
+  ],
+  "info.subtitle": [
+    {
+      "type": 0,
+      "value": "このマップと、作業しているユーザーの詳細です。"
     }
   ],
   "info.title": [

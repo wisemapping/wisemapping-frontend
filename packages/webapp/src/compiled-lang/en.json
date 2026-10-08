@@ -2249,12 +2249,6 @@
       "value": "Basic Info"
     }
   ],
-  "info.button": [
-    {
-      "type": 0,
-      "value": "Accept"
-    }
-  ],
   "info.creation-time": [
     {
       "type": 0,
@@ -2265,18 +2259,6 @@
     {
       "type": 0,
       "value": "Creator"
-    }
-  ],
-  "info.description": [
-    {
-      "type": 0,
-      "value": "Description"
-    }
-  ],
-  "info.description-msg": [
-    {
-      "type": 0,
-      "value": "By publishing the map you make it visible to everyone on the Internet."
     }
   ],
   "info.modified-time": [
@@ -2291,28 +2273,34 @@
       "value": "Last Modified By"
     }
   ],
-  "info.name": [
+  "info.no-description": [
     {
       "type": 0,
-      "value": "Name"
+      "value": "No description"
     }
   ],
-  "info.public-visibility": [
+  "info.private": [
     {
       "type": 0,
-      "value": "Publicly Visible"
+      "value": "Private"
     }
   ],
-  "info.sharing": [
+  "info.public": [
     {
       "type": 0,
-      "value": "Sharing"
+      "value": "Public"
     }
   ],
   "info.starred": [
     {
       "type": 0,
       "value": "Starred"
+    }
+  ],
+  "info.subtitle": [
+    {
+      "type": 0,
+      "value": "Details about this map and the people who work on it."
     }
   ],
   "info.title": [

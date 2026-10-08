@@ -2257,12 +2257,6 @@
       "value": "Allgemeine Informationen"
     }
   ],
-  "info.button": [
-    {
-      "type": 0,
-      "value": "Akzeptieren"
-    }
-  ],
   "info.creation-time": [
     {
       "type": 0,
@@ -2273,18 +2267,6 @@
     {
       "type": 0,
       "value": "Ersteller"
-    }
-  ],
-  "info.description": [
-    {
-      "type": 0,
-      "value": "Beschreibung"
-    }
-  ],
-  "info.description-msg": [
-    {
-      "type": 0,
-      "value": "Indem du die Mindmap veröffentlichst, machst du sie für jeden im Internet sichtbar."
     }
   ],
   "info.modified-time": [
@@ -2299,28 +2281,34 @@
       "value": "Zuletzt geändert von"
     }
   ],
-  "info.name": [
+  "info.no-description": [
     {
       "type": 0,
-      "value": "Name"
+      "value": "Keine Beschreibung"
     }
   ],
-  "info.public-visibility": [
+  "info.private": [
     {
       "type": 0,
-      "value": "Öffentlich sichtbar"
+      "value": "Privat"
     }
   ],
-  "info.sharing": [
+  "info.public": [
     {
       "type": 0,
-      "value": "Teilen"
+      "value": "Öffentlich"
     }
   ],
   "info.starred": [
     {
       "type": 0,
       "value": "Favoriten"
+    }
+  ],
+  "info.subtitle": [
+    {
+      "type": 0,
+      "value": "Details zu dieser Mindmap und den Personen, die daran arbeiten."
     }
   ],
   "info.title": [

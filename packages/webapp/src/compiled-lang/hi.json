@@ -2249,12 +2249,6 @@
       "value": "मूल जानकारी"
     }
   ],
-  "info.button": [
-    {
-      "type": 0,
-      "value": "स्वीकार करें"
-    }
-  ],
   "info.creation-time": [
     {
       "type": 0,
@@ -2265,18 +2259,6 @@
     {
       "type": 0,
       "value": "निर्माता"
-    }
-  ],
-  "info.description": [
-    {
-      "type": 0,
-      "value": "विवरण"
-    }
-  ],
-  "info.description-msg": [
-    {
-      "type": 0,
-      "value": "मानचित्र प्रकाशित करके आप इसे इंटरनेट पर सभी के लिए दृश्यमान बनाते हैं।"
     }
   ],
   "info.modified-time": [
@@ -2291,28 +2273,34 @@
       "value": "अंतिम संशोधन द्वारा"
     }
   ],
-  "info.name": [
+  "info.no-description": [
     {
       "type": 0,
-      "value": "नाम"
+      "value": "कोई विवरण नहीं"
     }
   ],
-  "info.public-visibility": [
+  "info.private": [
     {
       "type": 0,
-      "value": "सार्वजनिक रूप से दृश्यमान"
+      "value": "निजी"
     }
   ],
-  "info.sharing": [
+  "info.public": [
     {
       "type": 0,
-      "value": "साझाकरण"
+      "value": "सार्वजनिक"
     }
   ],
   "info.starred": [
     {
       "type": 0,
       "value": "पसंदीदा"
+    }
+  ],
+  "info.subtitle": [
+    {
+      "type": 0,
+      "value": "इस मैप और इस पर काम करने वाले लोगों का विवरण।"
     }
   ],
   "info.title": [

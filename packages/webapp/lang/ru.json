@@ -245,35 +245,17 @@
   "info.basic-info": {
     "defaultMessage": "Основная информация"
   },
-  "info.button": {
-    "defaultMessage": "Принять"
-  },
   "info.creation-time": {
     "defaultMessage": "Дата создания"
   },
   "info.creator": {
     "defaultMessage": "Автор"
   },
-  "info.description": {
-    "defaultMessage": "Описание"
-  },
-  "info.description-msg": {
-    "defaultMessage": "После публикация карта станет видима для любого, у кого есть ссылка."
-  },
   "info.modified-time": {
     "defaultMessage": "Последние изменения"
   },
   "info.modified-tny": {
     "defaultMessage": "Последний редактировал"
-  },
-  "info.name": {
-    "defaultMessage": "Имя"
-  },
-  "info.public-visibility": {
-    "defaultMessage": "Доступ по ссылке"
-  },
-  "info.sharing": {
-    "defaultMessage": "Видимость"
   },
   "info.starred": {
     "defaultMessage": "Важная"
@@ -1474,5 +1456,17 @@
   },
   "share.people-with-access": {
     "defaultMessage": "Люди с доступом"
+  },
+  "info.subtitle": {
+    "defaultMessage": "Сведения об этой карте и о людях, которые над ней работают."
+  },
+  "info.no-description": {
+    "defaultMessage": "Нет описания"
+  },
+  "info.public": {
+    "defaultMessage": "Общедоступная"
+  },
+  "info.private": {
+    "defaultMessage": "Личная"
   }
 }
