@@ -97,8 +97,11 @@ export default class RestClient implements Client {
           headers: { 'Content-Type': 'application/json' },
         })
         .then((response) => {
-          const data = response.data;
-          success(data);
+          // The backend sends the lock as "locked" (RestMindmapMetadata) and no id.
+          const { locked, ...data } = response.data as Omit<MapMetadata, 'isLocked'> & {
+            locked?: boolean;
+          };
+          success({ ...data, id, isLocked: Boolean(locked) });
         })
         .catch((error) => {
           const errorInfo = this.parseResponseOnError(error.response);

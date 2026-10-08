@@ -72,16 +72,32 @@ describe('RestClient request headers', () => {
 
 describe('RestClient maps', () => {
   it('fetchMapMetadata gets the metadata, with the xml flag when asked', async () => {
-    const meta = { id: 3, title: 't' };
+    const meta = { id: 3, title: 't', locked: false };
     const { client, calls } = newClient([{ data: meta }, { data: meta }]);
 
-    await expect(client.fetchMapMetadata(3)).resolves.toEqual(meta);
+    await expect(client.fetchMapMetadata(3)).resolves.toMatchObject({ id: 3, title: 't' });
     await client.fetchMapMetadata(3, true);
 
     expect(calls.map((c) => [c.method, c.url])).toEqual([
       ['GET', `${API}/api/restful/maps/3/metadata`],
       ['GET', `${API}/api/restful/maps/3/metadata?xml=true`],
     ]);
+  });
+
+  it('fetchMapMetadata reads the lock as the backend sends it, and fills in the id', async () => {
+    // RestMindmapMetadata serialises the lock as "locked" and sends no id. Reading "isLocked"
+    // made every map look unlocked: a second user got an editable map whose saves all failed.
+    const { client } = newClient([
+      { data: { title: 't', locked: true, isLockedBy: 'Ana', role: 'editor' } },
+      { data: { title: 't', locked: false, role: 'editor' } },
+    ]);
+
+    await expect(client.fetchMapMetadata(3)).resolves.toMatchObject({
+      id: 3,
+      isLocked: true,
+      isLockedBy: 'Ana',
+    });
+    await expect(client.fetchMapMetadata(3)).resolves.toMatchObject({ id: 3, isLocked: false });
   });
 
   it('fetchMapMetadata turns a 422 (spam map) into a 410 gone error', async () => {
