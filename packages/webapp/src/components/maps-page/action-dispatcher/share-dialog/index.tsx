@@ -126,8 +126,9 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
       return client.deleteMapPermission(mapId, email);
     },
     onSuccess: () => {
+      // The invitation being typed is kept: only the list of people changed.
       queryClient.invalidateQueries({ queryKey: [`perm-${mapId}`] });
-      setModel(defaultModel);
+      setError(undefined);
     },
     onError: (error: ErrorInfo) => {
       setError(error);
@@ -152,6 +153,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [`perm-${mapId}`] });
       setModel(defaultModel);
+      setError(undefined);
     },
     onError: (error: ErrorInfo) => {
       setError(error);
@@ -179,7 +181,8 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
 
   const handleOnAddClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
     event.stopPropagation();
-    addMutation.mutate(model);
+    // A message typed and then switched off is not sent.
+    addMutation.mutate({ ...model, message: showMessage ? model.message : '' });
     event.stopPropagation();
   };
 
@@ -215,7 +218,8 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
   });
 
   // very basic email validation, just make sure the basic syntax is fine
-  const isValid = splitEmail(model.emails).every((str) => /\S+@\S+\.\S+/.test((str || '').trim()));
+  const emails = splitEmail(model.emails);
+  const isValid = emails.length > 0 && emails.every((str) => /\S+@\S+\.\S+/.test(str));
 
   return (
     <div>

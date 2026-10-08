@@ -145,6 +145,62 @@ describe('ShareDialog', () => {
     );
   });
 
+  test('an empty emails field can not be shared', async () => {
+    // [].every(...) is true: Share was enabled with nothing typed, and after every share.
+    renderDialog();
+    await screen.findByText('Ana Ruiz');
+
+    expect((shareButton() as HTMLButtonElement).disabled).toBe(true);
+    fireEvent.change(emailsInput(), { target: { value: ' , ' } });
+    expect((shareButton() as HTMLButtonElement).disabled).toBe(true);
+  });
+
+  test('a message typed and then switched off is not sent', async () => {
+    renderDialog();
+    await screen.findByText('Ana Ruiz');
+    const customize = screen.getByRole('checkbox', { name: 'Customize share message' });
+
+    fireEvent.click(customize);
+    fireEvent.change(screen.getByRole('textbox', { name: 'Message' }), {
+      target: { value: 'Draft I changed my mind about' },
+    });
+    fireEvent.click(customize);
+    fireEvent.change(emailsInput(), { target: { value: 'sam@wisemapping.com' } });
+    fireEvent.click(shareButton());
+
+    await waitFor(() =>
+      expect(mockAddMapPermissions).toHaveBeenCalledWith(101, '', [
+        { email: 'sam@wisemapping.com', role: 'editor' },
+      ]),
+    );
+  });
+
+  test('removing a collaborator keeps the emails being typed', async () => {
+    renderDialog();
+    fireEvent.change(emailsInput(), { target: { value: 'sam@wisemapping.com' } });
+
+    const row = (await screen.findByText('Diego Martin')).closest('li') as HTMLElement;
+    fireEvent.click(within(row).getByRole('button', { name: 'Delete collaborator' }));
+    await waitFor(() => expect(mockDeleteMapPermission).toHaveBeenCalled());
+
+    await waitFor(() => expect(emailsInput().value).toBe('sam@wisemapping.com'));
+  });
+
+  test('an error goes away once a later share succeeds', async () => {
+    mockAddMapPermissions.mockRejectedValueOnce({ msg: 'You cannot share this map' });
+    renderDialog();
+    await screen.findByText('Ana Ruiz');
+
+    fireEvent.change(emailsInput(), { target: { value: 'sam@wisemapping.com' } });
+    fireEvent.click(shareButton());
+    expect(await screen.findByText('You cannot share this map')).toBeDefined();
+
+    fireEvent.change(emailsInput(), { target: { value: 'mo@wisemapping.com' } });
+    fireEvent.click(shareButton());
+
+    await waitFor(() => expect(screen.queryByText('You cannot share this map')).toBeNull());
+  });
+
   test('takes 200 characters typed in one burst, as Cypress types them', async () => {
     renderDialog();
     await screen.findByText('Ana Ruiz');
