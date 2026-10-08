@@ -483,6 +483,11 @@ export default class RestClient implements Client {
           headers: { 'Content-Type': 'text/plain' },
         })
         .then(() => {
+          // No description given (the editor renames with the title only): keep the current one.
+          if (basicInfo.description === undefined) {
+            return undefined;
+          }
+          // A cleared description is sent as a blank: the backend refuses an empty body.
           return this.axios.put(
             `${this.baseUrl}/api/restful/maps/${id}/description`,
             basicInfo.description || ' ',

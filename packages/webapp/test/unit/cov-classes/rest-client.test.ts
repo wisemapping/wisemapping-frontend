@@ -181,17 +181,28 @@ describe('RestClient maps', () => {
     expect(calls[1].url).toBe(`${API}/api/restful/maps?title=Imp2&description=`);
   });
 
-  it('renameMap updates the title, then the description (blank when missing)', async () => {
+  it('renameMap updates the title, then the description (blank when cleared)', async () => {
     const { client, calls } = newClient();
 
     await client.renameMap(4, { title: 'New', description: 'Desc' });
-    await client.renameMap(4, { title: 'Other' });
+    await client.renameMap(4, { title: 'Other', description: '' });
 
     expect(calls.map((c) => [c.method, c.url, c.data])).toEqual([
       ['PUT', `${API}/api/restful/maps/4/title`, 'New'],
       ['PUT', `${API}/api/restful/maps/4/description`, 'Desc'],
       ['PUT', `${API}/api/restful/maps/4/title`, 'Other'],
       ['PUT', `${API}/api/restful/maps/4/description`, ' '],
+    ]);
+  });
+
+  it('renameMap without a description leaves the description alone', async () => {
+    // The editor's app bar renames with the title only; the map keeps its description.
+    const { client, calls } = newClient();
+
+    await client.renameMap(4, { title: 'Other' });
+
+    expect(calls.map((c) => [c.method, c.url, c.data])).toEqual([
+      ['PUT', `${API}/api/restful/maps/4/title`, 'Other'],
     ]);
   });
 
