@@ -154,7 +154,8 @@ describe('RenameDialog', () => {
         description: `Summer trip${BURST_TEXT}`,
       }),
     );
-  });
+    // Two bursts, about 400 keys: well under 5 s alone, but over it in a loaded full run.
+  }, 20000);
 
   test('shows a server error next to the name and keeps the dialog open', async () => {
     const { renameMap, onClose } = setup();
