@@ -13,7 +13,7 @@
     <!-- Load fonts asynchronously with font-display: swap to prevent render blocking -->
     <link
       rel="preload"
-      href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&display=swap"
       as="style"
       onload="
         this.onload = null;
@@ -24,9 +24,28 @@
     <noscript>
       <link
         rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&display=swap"
       />
     </noscript>
+    <!-- Noto Sans JP (about 150 KB of font rules) only for Japanese and Chinese: same order as
+         AppI18n (URL prefix, saved choice, browser language). -->
+    <script>
+      (function () {
+        var prefix = /^\/(ja|zh|zh-CN)\//.exec(window.location.pathname);
+        var saved = null;
+        try {
+          saved = localStorage.getItem('user.locale');
+        } catch (e) {}
+        var locale = (prefix && prefix[1]) || saved || navigator.language || '';
+        if (/^(ja|zh)/i.test(locale)) {
+          var link = document.createElement('link');
+          link.rel = 'stylesheet';
+          link.href =
+            'https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap';
+          document.head.appendChild(link);
+        }
+      })();
+    </script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#000000" />
