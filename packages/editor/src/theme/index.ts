@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 import { createTheme, PaletteMode, Theme } from '@mui/material/styles';
+import { createDialogComponents } from './dialog';
 
 const createEditorTheme = (mode: PaletteMode): Theme => {
   const isLight = mode === 'light';
@@ -114,6 +115,7 @@ const createEditorTheme = (mode: PaletteMode): Theme => {
           }),
         },
       },
+      ...createDialogComponents(isLight),
       MuiCssBaseline: {
         styleOverrides: {
           body: {

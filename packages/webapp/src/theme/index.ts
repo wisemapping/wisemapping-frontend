@@ -17,6 +17,7 @@
  */
 
 import { createTheme, PaletteMode, Theme } from '@mui/material/styles';
+import { createDialogComponents } from '@wisemapping/editor/theme/dialog';
 
 const createAppTheme = (mode: PaletteMode): Theme => {
   const isLight = mode === 'light';
@@ -146,38 +147,7 @@ const createAppTheme = (mode: PaletteMode): Theme => {
           },
         },
       },
-      MuiDialog: {
-        styleOverrides: {
-          paper: ({ theme }) => ({
-            backgroundColor: theme.palette.background.paper,
-            color: theme.palette.text.primary,
-          }),
-        },
-      },
-      MuiDialogTitle: {
-        styleOverrides: {
-          root: ({ theme }) => ({
-            backgroundColor: theme.palette.background.paper,
-            color: theme.palette.text.primary,
-          }),
-        },
-      },
-      MuiDialogContent: {
-        styleOverrides: {
-          root: ({ theme }) => ({
-            backgroundColor: theme.palette.background.paper,
-            color: theme.palette.text.primary,
-          }),
-        },
-      },
-      MuiDialogActions: {
-        styleOverrides: {
-          root: ({ theme }) => ({
-            backgroundColor: theme.palette.background.paper,
-            color: theme.palette.text.primary,
-          }),
-        },
-      },
+      ...createDialogComponents(isLight),
     },
     typography: {
       fontFamily: ['Figtree', 'Noto Sans JP', 'Helvetica', 'system-ui', 'Arial', 'sans-serif'].join(

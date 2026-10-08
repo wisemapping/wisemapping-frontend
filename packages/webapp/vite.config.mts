@@ -110,6 +110,12 @@ export default defineConfig(({ mode }) => {
           replacement: path.resolve(import.meta.dirname, '../editor/src/$1'),
         },
         {
+          // The editor's theme modules, imported by path so that the webapp's theme does not pull
+          // in the whole editor (see editor/src/theme/dialog.ts).
+          find: /^@wisemapping\/editor\/theme\/(.*)/,
+          replacement: path.resolve(import.meta.dirname, '../editor/src/theme/$1'),
+        },
+        {
           find: /^@wisemapping\/editor$/,
           replacement: path.resolve(import.meta.dirname, '../editor/src/index.ts'),
         },

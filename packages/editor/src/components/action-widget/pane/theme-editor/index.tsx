@@ -15,19 +15,23 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import Typography from '@mui/material/Typography';
 import React, { ReactElement, useState, useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import NodeProperty from '../../../../classes/model/node-property';
 import { ThemeType } from '@wisemapping/mindplot';
+import {
+  OptionCard,
+  OptionCardContent,
+  OptionChooserContent,
+  OptionChooserDescription,
+  OptionChooserDialog,
+  OptionDescription,
+  OptionList,
+  OptionTitle,
+} from '../shared/StyledOptionChooser';
 
 const ThemeEditor = (props: {
   closeModal: () => void;
@@ -125,81 +129,32 @@ const ThemeEditor = (props: {
   };
 
   return (
-    <Dialog
-      open={true}
-      onClose={handleCancel}
-      maxWidth="sm"
-      fullWidth
-      slotProps={{
-        paper: {
-          sx: {
-            minHeight: '350px',
-            border: '2px solid #ffa800',
-            boxShadow: 'none',
-          },
-        },
-      }}
-    >
+    <OptionChooserDialog open={true} onClose={handleCancel} maxWidth="sm" fullWidth>
       <DialogTitle>
         <FormattedMessage id="theme-editor.title" defaultMessage="Choose Theme" />
       </DialogTitle>
-      <DialogContent
-        dividers
-        sx={{
-          maxHeight: '60vh',
-          overflowY: 'auto',
-        }}
-      >
-        <Typography
-          variant="body2"
-          sx={{
-            color: 'text.secondary',
-            mb: 3,
-            lineHeight: 1.4,
-          }}
-        >
+      <OptionChooserContent dividers>
+        <OptionChooserDescription variant="body2">
           <FormattedMessage
             id="theme-editor.description"
             defaultMessage="A theme defines the visual style of your mind map, including colors, fonts, and overall appearance. Choose a theme that best fits your content and audience."
           />
-        </Typography>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+        </OptionChooserDescription>
+        <OptionList>
           {themes.map((themeOption) => (
-            <Card
+            <OptionCard
               key={themeOption.id}
-              sx={{
-                cursor: 'pointer',
-                border: theme === themeOption.id ? '2px solid #1976d2' : '1px solid #e0e0e0',
-                '&:hover': {
-                  border: '2px solid #1976d2',
-                  boxShadow: 2,
-                },
-              }}
+              selected={theme === themeOption.id}
               onClick={() => handleThemeSelect(themeOption.id)}
             >
-              <CardContent sx={{ p: 1.5, '&:last-child': { pb: 1.5 } }}>
-                <Typography
-                  variant="subtitle2"
-                  component="div"
-                  sx={{ fontWeight: 'bold', mb: 0.25, fontSize: '0.875rem' }}
-                >
-                  {themeOption.name}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  sx={{
-                    color: 'text.secondary',
-                    lineHeight: 1.2,
-                    fontSize: '0.75rem',
-                  }}
-                >
-                  {themeOption.description}
-                </Typography>
-              </CardContent>
-            </Card>
+              <OptionCardContent>
+                <OptionTitle variant="subtitle2">{themeOption.name}</OptionTitle>
+                <OptionDescription variant="body2">{themeOption.description}</OptionDescription>
+              </OptionCardContent>
+            </OptionCard>
           ))}
-        </Box>
-      </DialogContent>
+        </OptionList>
+      </OptionChooserContent>
       <DialogActions>
         <Button onClick={handleCancel}>
           <FormattedMessage id="theme-editor.cancel" defaultMessage="Cancel" />
@@ -208,7 +163,7 @@ const ThemeEditor = (props: {
           <FormattedMessage id="theme-editor.accept" defaultMessage="Apply Theme" />
         </Button>
       </DialogActions>
-    </Dialog>
+    </OptionChooserDialog>
   );
 };
 
