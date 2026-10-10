@@ -53,7 +53,7 @@ describe('Header', () => {
 
   test('"none" shows only the logo, linking to login', () => {
     renderWithProviders(<Header type="none" />);
-    expect(hrefs('logo')).toEqual(['/c/login']);
+    expect(hrefs('WiseMapping logo')).toEqual(['/c/login']);
     expect(hrefs('Sign In')).toEqual([]);
     expect(hrefs('Sign Up')).toEqual([]);
   });
@@ -71,7 +71,7 @@ describe('Header', () => {
         <Header type="none" />
       </ThemeProvider>,
     );
-    expect(hrefs('logo')).toEqual(['/c/login']);
+    expect(hrefs('WiseMapping logo')).toEqual(['/c/login']);
   });
 
   test('SignInButton links to login', () => {

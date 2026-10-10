@@ -251,8 +251,15 @@ const MapsPage = (): ReactElement => {
       messages={userLocale.message}
     >
       <SEOHead
-        title="My Maps | WiseMapping"
-        description="Access and manage your mind maps in WiseMapping. Create, edit, share, and collaborate on your visual thinking projects. Organize your ideas with our powerful mind mapping tool."
+        title={intl.formatMessage({
+          id: 'seo.maps.title',
+          defaultMessage: 'My Maps | WiseMapping',
+        })}
+        description={intl.formatMessage({
+          id: 'seo.maps.description',
+          defaultMessage:
+            'Access and manage your mind maps in WiseMapping. Create, edit, share, and collaborate on your visual thinking projects. Organize your ideas with our powerful mind mapping tool.',
+        })}
         keywords="my maps, mind maps, visual thinking, collaboration, organize ideas, brainstorming, project management"
         canonicalUrl="/c/maps/"
         ogType="website"

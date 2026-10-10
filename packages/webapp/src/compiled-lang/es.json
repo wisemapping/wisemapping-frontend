@@ -155,6 +155,12 @@
       "value": "Información personal"
     }
   ],
+  "accountinfo.tabs": [
+    {
+      "type": 0,
+      "value": "Secciones de la cuenta"
+    }
+  ],
   "accountinfo.title": [
     {
       "type": 0,
@@ -1705,6 +1711,12 @@
       "value": "Formulario de inicio de sesión"
     }
   ],
+  "common.logo": [
+    {
+      "type": 0,
+      "value": "Logotipo de WiseMapping"
+    }
+  ],
   "common.maps-list": [
     {
       "type": 0,
@@ -2113,6 +2125,12 @@
     {
       "type": 0,
       "value": "Código Abierto"
+    }
+  ],
+  "footer.powered-by": [
+    {
+      "type": 0,
+      "value": "Con tecnología de WiseMapping"
     }
   ],
   "footer.privacypolicy": [
@@ -3147,6 +3165,66 @@
     {
       "type": 0,
       "value": "Espectador"
+    }
+  ],
+  "seo.activation.description": [
+    {
+      "type": 0,
+      "value": "Activa tu cuenta de WiseMapping para empezar a crear mapas mentales, organizar ideas y colaborar con otras personas. Completa la configuración en segundos."
+    }
+  ],
+  "seo.forgot-password-success.description": [
+    {
+      "type": 0,
+      "value": "Se ha enviado un correo de recuperación a tu bandeja de entrada. Revísalo para restablecer la contraseña de tu cuenta de WiseMapping y volver a tus mapas mentales."
+    }
+  ],
+  "seo.forgot-password.description": [
+    {
+      "type": 0,
+      "value": "Restablece la contraseña de tu cuenta de WiseMapping. Escribe tu correo electrónico y te enviaremos un enlace de recuperación."
+    }
+  ],
+  "seo.login.description": [
+    {
+      "type": 0,
+      "value": "Inicia sesión en tu cuenta de WiseMapping para acceder a tus mapas mentales, crear otros nuevos y colaborar con más personas. Herramienta gratuita de mapas mentales en línea."
+    }
+  ],
+  "seo.maps.description": [
+    {
+      "type": 0,
+      "value": "Accede a tus mapas mentales en WiseMapping y gestiónalos. Crea, edita, comparte y colabora en tus proyectos de pensamiento visual. Organiza tus ideas con una potente herramienta de mapas mentales."
+    }
+  ],
+  "seo.maps.title": [
+    {
+      "type": 0,
+      "value": "Mis mapas | WiseMapping"
+    }
+  ],
+  "seo.registration-success.description": [
+    {
+      "type": 0,
+      "value": "El registro de tu cuenta de WiseMapping se completó. Revisa tu correo para encontrar el enlace de activación, terminar la configuración y empezar a crear mapas mentales."
+    }
+  ],
+  "seo.registration-success.title": [
+    {
+      "type": 0,
+      "value": "Registro completado | WiseMapping"
+    }
+  ],
+  "seo.registration.description": [
+    {
+      "type": 0,
+      "value": "Crea tu cuenta gratuita de WiseMapping para empezar a crear mapas mentales, organizar ideas y colaborar con otras personas. Únete a miles de usuarios en todo el mundo."
+    }
+  ],
+  "seo.reset-password.description": [
+    {
+      "type": 0,
+      "value": "Establece una nueva contraseña para tu cuenta de WiseMapping."
     }
   ],
   "share.add-button": [

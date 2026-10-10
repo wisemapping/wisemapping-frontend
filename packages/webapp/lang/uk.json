@@ -1468,5 +1468,44 @@
   },
   "info.private": {
     "defaultMessage": "Приватна"
+  },
+  "seo.maps.title": {
+    "defaultMessage": "Мої карти | WiseMapping"
+  },
+  "seo.registration-success.title": {
+    "defaultMessage": "Реєстрацію виконано | WiseMapping"
+  },
+  "seo.maps.description": {
+    "defaultMessage": "Відкривайте свої ментальні карти в WiseMapping і керуйте ними. Створюйте, редагуйте, діліться й працюйте разом над проєктами візуального мислення. Впорядковуйте ідеї за допомогою потужного інструмента."
+  },
+  "seo.activation.description": {
+    "defaultMessage": "Активуйте обліковий запис WiseMapping, щоб створювати ментальні карти, впорядковувати ідеї та працювати разом з іншими. Налаштування займе кілька секунд."
+  },
+  "seo.forgot-password.description": {
+    "defaultMessage": "Скиньте пароль облікового запису WiseMapping. Введіть адресу електронної пошти, і ми надішлемо вам посилання для відновлення."
+  },
+  "seo.forgot-password-success.description": {
+    "defaultMessage": "Лист для відновлення надіслано на вашу пошту. Відкрийте його, щоб скинути пароль облікового запису WiseMapping і повернути доступ до своїх карт."
+  },
+  "seo.login.description": {
+    "defaultMessage": "Увійдіть в обліковий запис WiseMapping, щоб відкрити свої ментальні карти, створювати нові та працювати разом з іншими. Безкоштовний онлайн-інструмент для ментальних карт."
+  },
+  "seo.registration.description": {
+    "defaultMessage": "Створіть безкоштовний обліковий запис WiseMapping, щоб створювати ментальні карти, впорядковувати ідеї та працювати разом з іншими. Приєднуйтесь до тисяч користувачів у всьому світі."
+  },
+  "seo.registration-success.description": {
+    "defaultMessage": "Реєстрацію облікового запису WiseMapping виконано. Знайдіть у пошті посилання для активації, завершіть налаштування й почніть створювати ментальні карти."
+  },
+  "seo.reset-password.description": {
+    "defaultMessage": "Задайте новий пароль для облікового запису WiseMapping."
+  },
+  "common.logo": {
+    "defaultMessage": "Логотип WiseMapping"
+  },
+  "footer.powered-by": {
+    "defaultMessage": "На платформі WiseMapping"
+  },
+  "accountinfo.tabs": {
+    "defaultMessage": "Розділи налаштувань облікового запису"
   }
 }

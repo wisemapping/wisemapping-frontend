@@ -1468,5 +1468,44 @@
   },
   "info.private": {
     "defaultMessage": "Privado"
+  },
+  "seo.maps.title": {
+    "defaultMessage": "Mis mapas | WiseMapping"
+  },
+  "seo.registration-success.title": {
+    "defaultMessage": "Registro completado | WiseMapping"
+  },
+  "seo.maps.description": {
+    "defaultMessage": "Accede a tus mapas mentales en WiseMapping y gestiónalos. Crea, edita, comparte y colabora en tus proyectos de pensamiento visual. Organiza tus ideas con una potente herramienta de mapas mentales."
+  },
+  "seo.activation.description": {
+    "defaultMessage": "Activa tu cuenta de WiseMapping para empezar a crear mapas mentales, organizar ideas y colaborar con otras personas. Completa la configuración en segundos."
+  },
+  "seo.forgot-password.description": {
+    "defaultMessage": "Restablece la contraseña de tu cuenta de WiseMapping. Escribe tu correo electrónico y te enviaremos un enlace de recuperación."
+  },
+  "seo.forgot-password-success.description": {
+    "defaultMessage": "Se ha enviado un correo de recuperación a tu bandeja de entrada. Revísalo para restablecer la contraseña de tu cuenta de WiseMapping y volver a tus mapas mentales."
+  },
+  "seo.login.description": {
+    "defaultMessage": "Inicia sesión en tu cuenta de WiseMapping para acceder a tus mapas mentales, crear otros nuevos y colaborar con más personas. Herramienta gratuita de mapas mentales en línea."
+  },
+  "seo.registration.description": {
+    "defaultMessage": "Crea tu cuenta gratuita de WiseMapping para empezar a crear mapas mentales, organizar ideas y colaborar con otras personas. Únete a miles de usuarios en todo el mundo."
+  },
+  "seo.registration-success.description": {
+    "defaultMessage": "El registro de tu cuenta de WiseMapping se completó. Revisa tu correo para encontrar el enlace de activación, terminar la configuración y empezar a crear mapas mentales."
+  },
+  "seo.reset-password.description": {
+    "defaultMessage": "Establece una nueva contraseña para tu cuenta de WiseMapping."
+  },
+  "common.logo": {
+    "defaultMessage": "Logotipo de WiseMapping"
+  },
+  "footer.powered-by": {
+    "defaultMessage": "Con tecnología de WiseMapping"
+  },
+  "accountinfo.tabs": {
+    "defaultMessage": "Secciones de la cuenta"
   }
 }

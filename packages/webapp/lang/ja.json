@@ -1468,5 +1468,44 @@
   },
   "info.private": {
     "defaultMessage": "非公開"
+  },
+  "seo.maps.title": {
+    "defaultMessage": "マイマップ | WiseMapping"
+  },
+  "seo.registration-success.title": {
+    "defaultMessage": "登録が完了しました | WiseMapping"
+  },
+  "seo.maps.description": {
+    "defaultMessage": "WiseMapping でマインドマップを開いて管理できます。ビジュアル思考のプロジェクトを作成・編集・共有し、共同で進められます。強力なマインドマップツールでアイデアを整理しましょう。"
+  },
+  "seo.activation.description": {
+    "defaultMessage": "WiseMapping のアカウントを有効化して、マインドマップの作成、アイデアの整理、共同作業を始めましょう。設定は数秒で完了します。"
+  },
+  "seo.forgot-password.description": {
+    "defaultMessage": "WiseMapping アカウントのパスワードをリセットします。メールアドレスを入力すると、再設定用のリンクをお送りします。"
+  },
+  "seo.forgot-password-success.description": {
+    "defaultMessage": "パスワード再設定用のメールを受信トレイに送信しました。メールを確認して WiseMapping アカウントのパスワードをリセットし、マインドマップにアクセスしてください。"
+  },
+  "seo.login.description": {
+    "defaultMessage": "WiseMapping のアカウントにサインインして、マインドマップを開き、新しく作成し、共同で編集できます。無料のオンラインマインドマップツールです。"
+  },
+  "seo.registration.description": {
+    "defaultMessage": "無料の WiseMapping アカウントを作成して、マインドマップの作成、アイデアの整理、共同作業を始めましょう。世界中の何千人ものユーザーが利用しています。"
+  },
+  "seo.registration-success.description": {
+    "defaultMessage": "WiseMapping アカウントの登録が完了しました。メールに届いた有効化リンクから設定を完了し、マインドマップを作成しましょう。"
+  },
+  "seo.reset-password.description": {
+    "defaultMessage": "WiseMapping アカウントの新しいパスワードを設定します。"
+  },
+  "common.logo": {
+    "defaultMessage": "WiseMapping のロゴ"
+  },
+  "footer.powered-by": {
+    "defaultMessage": "WiseMapping 提供"
+  },
+  "accountinfo.tabs": {
+    "defaultMessage": "アカウント設定のセクション"
   }
 }

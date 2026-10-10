@@ -207,8 +207,14 @@ const ResetPasswordPage = (): React.ReactElement => {
   return (
     <>
       <SEOHead
-        title="Reset Password | WiseMapping"
-        description="Set a new password for your WiseMapping account."
+        title={intl.formatMessage({
+          id: 'reset-password.page-title',
+          defaultMessage: 'Reset Password | WiseMapping',
+        })}
+        description={intl.formatMessage({
+          id: 'seo.reset-password.description',
+          defaultMessage: 'Set a new password for your WiseMapping account.',
+        })}
         canonicalUrl={canonicalUrl}
         alternateLanguages={alternateLanguages}
         ogType="website"

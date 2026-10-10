@@ -93,7 +93,7 @@ describe('DrawerNav', () => {
 
   test('renders the logo', () => {
     renderNav();
-    expect(screen.getByAltText('logo')).toBeDefined();
+    expect(screen.getByAltText('WiseMapping logo')).toBeDefined();
   });
 
   test('shows the account name and email when the drawer is open', () => {

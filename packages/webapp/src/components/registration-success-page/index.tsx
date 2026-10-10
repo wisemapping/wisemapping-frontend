@@ -50,8 +50,15 @@ const RegistrationSuccessPage = (): React.ReactElement => {
   return (
     <>
       <SEOHead
-        title="Registration Successful | WiseMapping"
-        description="Your WiseMapping account registration was successful. Check your email for the activation link to complete your account setup and start creating mind maps."
+        title={intl.formatMessage({
+          id: 'seo.registration-success.title',
+          defaultMessage: 'Registration Successful | WiseMapping',
+        })}
+        description={intl.formatMessage({
+          id: 'seo.registration-success.description',
+          defaultMessage:
+            'Your WiseMapping account registration was successful. Check your email for the activation link to complete your account setup and start creating mind maps.',
+        })}
         keywords="registration success, account created, mind mapping, wise mapping, account activation"
         canonicalUrl={canonicalUrl}
         alternateLanguages={alternateLanguages}

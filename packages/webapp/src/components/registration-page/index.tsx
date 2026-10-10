@@ -438,8 +438,15 @@ const RegistationPage = (): React.ReactElement => {
   return (
     <>
       <SEOHead
-        title="Sign Up | WiseMapping"
-        description="Create your free WiseMapping account to start creating mind maps, organizing ideas, and collaborating with others. Join thousands of users worldwide."
+        title={intl.formatMessage({
+          id: 'registration.page-title',
+          defaultMessage: 'Registration | WiseMapping',
+        })}
+        description={intl.formatMessage({
+          id: 'seo.registration.description',
+          defaultMessage:
+            'Create your free WiseMapping account to start creating mind maps, organizing ideas, and collaborating with others. Join thousands of users worldwide.',
+        })}
         keywords="sign up, register, create account, mind mapping, free account, collaboration, brainstorming"
         canonicalUrl={canonicalUrl}
         alternateLanguages={alternateLanguages}
