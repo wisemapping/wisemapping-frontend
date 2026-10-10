@@ -16,9 +16,7 @@
  *   limitations under the License.
  */
 import React, { ReactElement, useEffect } from 'react';
-import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
-import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
 import ImageIcon from '@mui/icons-material/Image';
@@ -29,6 +27,13 @@ import NodeProperty from '../../../../classes/model/node-property';
 import { DesignerKeyboard } from '@wisemapping/mindplot';
 import TopicImageTab from './image-icon-tab';
 import { StyledEditorsTabs } from '../shared/StyledTabs';
+import {
+  PickerCloseButton,
+  PickerContent,
+  PickerEmojiArea,
+  PickerScrollArea,
+  PickerTabsBar,
+} from '../shared/StyledPicker';
 import { StyledEditorContainer } from '../shared/StyledEditorContainer';
 import { useTheme } from '../../../../contexts/ThemeContext';
 
@@ -79,30 +84,11 @@ const TopicImagePicker = ({
 
   return (
     <StyledEditorContainer>
-      <IconButton
-        onClick={triggerClose}
-        sx={{
-          position: 'absolute',
-          top: 0,
-          right: 0,
-          zIndex: 10,
-          width: 24,
-          height: 24,
-          '& .MuiSvgIcon-root': {
-            fontSize: '16px',
-          },
-        }}
-      >
+      <PickerCloseButton onClick={triggerClose}>
         <CloseIcon />
-      </IconButton>
+      </PickerCloseButton>
       {/* Tabs at the top */}
-      <Box
-        sx={{
-          borderBottom: 1,
-          borderColor: 'divider',
-          p: 0,
-        }}
-      >
+      <PickerTabsBar>
         <StyledEditorsTabs
           value={tabValue}
           onChange={handleTabChange}
@@ -121,39 +107,17 @@ const TopicImagePicker = ({
             iconPosition="start"
           />
         </StyledEditorsTabs>
-      </Box>
+      </PickerTabsBar>
 
       {/* Content area */}
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          backgroundColor: 'background.paper',
-        }}
-      >
+      <PickerContent>
         {tabValue === 0 && (
-          <Box
-            sx={{
-              width: '100%',
-              height: 'clamp(280px, 50vh, 350px)',
-              overflowY: 'auto',
-              overflowX: 'hidden',
-              backgroundColor: 'background.paper',
-            }}
-          >
+          <PickerScrollArea>
             <TopicImageTab iconModel={iconsGalleryModel} emojiModel={emojiModel} />
-          </Box>
+          </PickerScrollArea>
         )}
         {tabValue === 1 && (
-          <Box
-            sx={{
-              width: '100%',
-              height: 'clamp(280px, 50vh, 350px)',
-              overflow: 'hidden',
-              backgroundColor: 'background.paper',
-              '& .EmojiPickerReact': { '--epr-emoji-size': '22px' } as object,
-            }}
-          >
+          <PickerEmojiArea>
             <EmojiPicker
               onEmojiClick={handleEmojiSelect}
               lazyLoadEmojis={true}
@@ -169,9 +133,9 @@ const TopicImagePicker = ({
                 defaultMessage: 'Search emojis...',
               })}
             />
-          </Box>
+          </PickerEmojiArea>
         )}
-      </Box>
+      </PickerContent>
     </StyledEditorContainer>
   );
 };

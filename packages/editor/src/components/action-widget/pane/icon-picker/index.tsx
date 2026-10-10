@@ -21,10 +21,9 @@ import EmojiPicker, { EmojiClickData, EmojiStyle, Theme } from 'emoji-picker-rea
 import { DesignerKeyboard } from '@wisemapping/mindplot';
 import IconImageTab from './image-icon-tab';
 import Switch from '@mui/material/Switch';
-import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { FormattedMessage, useIntl } from 'react-intl';
-import Box from '@mui/material/Box';
+import { PickerRoot, PickerEmojiFrame, PickerShowImages } from './styled';
 
 type IconPickerProp = {
   triggerClose: () => void;
@@ -59,15 +58,9 @@ const IconPicker = ({ triggerClose, iconModel }: IconPickerProp): ReactElement =
   };
 
   return (
-    <Box style={{ padding: '5px', maxWidth: '100%' }}>
+    <PickerRoot>
       {checked && (
-        <Box
-          sx={{
-            width: 'clamp(240px, 85vw, 320px)',
-            height: 'clamp(280px, 50vh, 350px)',
-            overflow: 'hidden',
-          }}
-        >
+        <PickerEmojiFrame>
           <EmojiPicker
             onEmojiClick={handleEmojiSelect}
             lazyLoadEmojis={true}
@@ -83,16 +76,16 @@ const IconPicker = ({ triggerClose, iconModel }: IconPickerProp): ReactElement =
               defaultMessage: 'Search emojis...',
             })}
           />
-        </Box>
+        </PickerEmojiFrame>
       )}
       {!checked && <IconImageTab iconModel={iconModel} />}
-      <FormGroup sx={{ float: 'right' }}>
+      <PickerShowImages>
         <FormControlLabel
           label={<FormattedMessage id="icon-picker.show-images" defaultMessage="Show images" />}
           control={<Switch onChange={handleCheck} />}
         />
-      </FormGroup>
-    </Box>
+      </PickerShowImages>
+    </PickerRoot>
   );
 };
 export default IconPicker;
