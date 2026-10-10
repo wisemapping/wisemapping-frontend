@@ -201,7 +201,7 @@ const EditorContent = ({
             zoom: options.zoom,
           })}
 
-          <Notifier id="headerNotifier" theme={theme} />
+          <Notifier id="headerNotifier" />
 
           {!options.enableAppBar && (
             <CreatorInfoPane mapInfo={mapInfo} showInfo={!options.hideCreatorInfo} />

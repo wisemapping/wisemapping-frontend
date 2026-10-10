@@ -15,18 +15,17 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import styled from 'styled-components';
+import { styled } from '@mui/material/styles';
 import { times } from '../size';
 import LogoTextBlackSvg from '../../../images/logo-text-black.svg';
-import { Theme } from '@mui/material/styles';
 
-export const StyledFooter = styled.div`
+export const StyledFooter = styled('div')`
   height: ${times(10)};
   width: 100%;
   border: 1px solid black;
 `;
 
-export const StyledLogo = styled.div`
+export const StyledLogo = styled('div')`
   position: fixed;
   left: 20px;
   bottom: 10px;
@@ -35,7 +34,7 @@ export const StyledLogo = styled.div`
   height: 40px;
 `;
 
-export const Notifier = styled.div<{ theme: Theme }>`
+export const Notifier = styled('div')`
   border: 1px solid
     ${({ theme }) => (theme.palette.mode === 'dark' ? '#757575' : 'rgb(241, 163, 39)')};
   background-color: ${({ theme }) =>
@@ -54,7 +53,7 @@ export const Notifier = styled.div<{ theme: Theme }>`
   font-family: 'Montserrat', Arial, Helvetica, sans-serif;
 `;
 
-export const CloseButton = styled.div`
+export const CloseButton = styled('div')`
   position: absolute;
   top: 5px;
   right: 5px;
@@ -73,7 +72,7 @@ export const CloseButton = styled.div`
   }
 `;
 
-export const InfoDialog = styled.div<{ theme: Theme }>`
+export const InfoDialog = styled('div')`
   position: fixed;
   text-align: center;
   bottom: 20px;
@@ -89,7 +88,7 @@ export const InfoDialog = styled.div<{ theme: Theme }>`
   z-index: 10000;
 `;
 
-export const InfoDialogContent = styled.div`
+export const InfoDialogContent = styled('div')`
   padding-top: 5px;
   padding-bottom: 10px;
   padding-left: 5px;

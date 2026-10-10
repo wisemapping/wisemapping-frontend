@@ -8,8 +8,8 @@ Yarn 4 + Lerna monorepo (workspaces under `packages/*`), Node `>=24`. Versioning
 
 - `packages/web2d` — thin SVG abstraction layer; foundation for rendering.
 - `packages/mindplot` — vanilla ES6/TS canvas library that renders and edits mind maps. Depends on `web2d`. No React.
-- `packages/editor` — React component wrapper around `mindplot`. Built with Vite as a UMD+ESM library (`dist/editor.{es,umd}.js`). MUI v7 + Emotion + styled-components.
-- `packages/webapp` — the React application (Vite, react-router 7, MUI v7, react-query). Consumes `@wisemapping/editor`. Talks to the backend at `wisemapping-open-source` (separate repo); base API URL is configured via `API_URL` env var.
+- `packages/editor` — React component wrapper around `mindplot`. Built with Vite as a UMD+ESM library (`dist/editor.{es,umd}.js`). MUI v9 + Emotion.
+- `packages/webapp` — the React application (Vite, react-router 7, MUI v9, react-query). Consumes `@wisemapping/editor`. Talks to the backend at `wisemapping-open-source` (separate repo); base API URL is configured via `API_URL` env var.
 
 Top-level extras:
 
