@@ -58,6 +58,27 @@ yarn workspace @wisemapping/editor i18n:compile   # produce compiled-lang/*.json
 
 `i18n:compile` runs automatically as part of `build`. Adding a locale requires editing both `i18n:compile` scripts (editor + webapp) since the language list is hardcoded.
 
+## Styling (Material UI)
+
+`webapp` and `editor` use MUI v9 with its default engine, Emotion. Every style goes through one of these, chosen by scope (MUI's own guidance: [How to customize](https://mui.com/material-ui/customization/how-to-customize/), [Theme components](https://mui.com/material-ui/customization/theme-components/), [Dark mode](https://mui.com/material-ui/customization/dark-mode/)):
+
+| Scope                                                                               | Use                                                                                                                                                                                                                                                    |
+| ----------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| One instance, a one-off tweak                                                       | the `sx` prop, with theme tokens (`color: 'text.secondary'`, `mt: 2`, breakpoints)                                                                                                                                                                     |
+| A component reused, or styled from props                                            | `styled()` from `@mui/material/styles`, in the folder's `styled.ts`; `shouldForwardProp` keeps style-only props off the DOM                                                                                                                            |
+| Every instance of an MUI component, or a look shared by several (dialogs, cards...) | the theme: `components.MuiX.styleOverrides` and `variants` (not `ownerState` callbacks, which MUI deprecated). A look shared by the webapp and the editor is defined once in `packages/editor/src/theme/` and imported by path (see `theme/dialog.ts`) |
+| Dark and light                                                                      | theme tokens (`palette.*`); for a style that differs by mode use `theme.applyStyles('dark', {...})`, not `theme.palette.mode ===` in a component. New code does not read the mode                                                                      |
+
+Project rules (our decisions, not MUI's):
+
+- **One mechanism.** MUI documents Emotion's `css` prop and styled-components as valid, but we keep to `sx` and `styled()`. Do not add new `css=` props, `styled-components` (a second CSS-in-JS runtime in the bundle), the `withEmotionStyles` HOC or `useClasses`/`useStyles`; when touching a file that has them, migrate what you touch.
+- **Tokens, not literals.** Spacing through `theme.spacing` / the `sx` spacing shorthand, colours through `palette` (no hex in components, apart from brand assets), radii and shadows from the theme. No `style={{}}`.
+- **Styles live next to the component** in `styled.ts` (or `style.ts`), not inline in a 100-line JSX; an `sx` with more than a few rules becomes a `styled()` component.
+- **Imports by path** (`@mui/material/Button`, `@mui/icons-material/Delete`), never from the package barrel.
+- **Current MUI API**: `slotProps` (not `InputProps`/`inputProps`/`InputLabelProps`), `onKeyDown` (not `onKeyPress`), no `defaultProps` on components.
+
+User-visible text always goes through react-intl (see i18n above): no English literals in JSX, `title`/`label`/`placeholder`/`aria-label`/`alt` props, or error messages.
+
 ## Image-snapshot tests
 
 The web2d, mindplot and editor Cypress specs compare their screenshots with committed baselines through `@simonsmith/cypress-image-snapshot` (`cy.matchImageSnapshot('name')`). Baselines live in `packages/{web2d,mindplot,editor}/cypress/snapshots/<spec>/<name>.snap.png`; diffs go to `.../__diff_output__/` (git-ignored). **Baselines are rendered natively on macOS** (headless Chrome, via Cypress). Fonts and anti-aliasing differ between operating systems, so another OS does not match them.
