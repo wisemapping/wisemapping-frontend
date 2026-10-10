@@ -221,6 +221,9 @@
   "shortcut-help-pane.undo": {
     "defaultMessage": "Änderung rückgängig machen"
   },
+  "icon-picker.show-images": {
+    "defaultMessage": "Bilder anzeigen"
+  },
   "shortcut-help-pane.overwrite-edit-topic": {
     "defaultMessage": "Thementext überschreiben"
   },
@@ -319,6 +322,15 @@
   },
   "emoji-picker.search-placeholder": {
     "defaultMessage": "Emojis suchen..."
+  },
+  "icon-picker.search-placeholder": {
+    "defaultMessage": "Symbole suchen..."
+  },
+  "icon-picker.frequently-used": {
+    "defaultMessage": "Häufig verwendet"
+  },
+  "icon-picker.no-results": {
+    "defaultMessage": "Keine Symbole gefunden"
   },
   "editor-panel.tooltip-add-topic-image": {
     "defaultMessage": "Themenbild hinzufügen"
@@ -475,6 +487,12 @@
   },
   "icon-collection.connection.curved-polyline": {
     "defaultMessage": "Gebogene Polylinie"
+  },
+  "icon-picker.emojis": {
+    "defaultMessage": "Emojis"
+  },
+  "icon-picker.icons": {
+    "defaultMessage": "Symbol-Galerie"
   },
   "note.character.count": {
     "defaultMessage": "{remaining} übrig"

@@ -23,23 +23,113 @@ describe('Image Emoji Suite', () => {
     cy.waitEditorLoaded();
   });
 
-  it('Opens straight on the emoji picker, with no icon gallery', () => {
+  it('Add image icon to topic', () => {
     cy.focusTopicById(3);
     cy.onClickToolbarButton('Add Topic Image');
 
-    cy.getEmoji().first().should('be.visible');
-    cy.contains('Icons Gallery').should('not.exist');
-    cy.get('input[placeholder="Search icons..."]').should('not.exist');
+    // Icons Gallery tab should be open by default
+    cy.waitForIconsGalleryTab();
+
+    // Click on the first image icon to add it
+    cy.get('img').first().parent().click({ force: true });
+
+    cy.matchImageSnapshot('image-icon-added');
   });
 
-  it('Adds an emoji to a topic and keeps the picker open for another', () => {
+  it('Replace image icon with another image icon', () => {
+    // First add an image icon
     cy.focusTopicById(3);
     cy.onClickToolbarButton('Add Topic Image');
 
+    // Icons Gallery tab should be open by default
+    cy.waitForIconsGalleryTab();
+
+    // Add the first image icon
+    cy.get('img').first().parent().click({ force: true });
+
+    // Now replace it with a different image icon
+    cy.focusTopicById(3);
+    cy.onClickToolbarButton('Add Topic Image');
+
+    // Icons Gallery tab should still be open by default
+    cy.waitForIconsGalleryTab();
+
+    // Click on a different image (second one) to replace the first
+    cy.get('img')
+      .should('have.length.gt', 0)
+      .then(($imgs) => {
+        if ($imgs.length >= 2) {
+          cy.get('img').eq(1).parent().click({ force: true });
+        } else {
+          cy.get('img').eq(0).parent().click({ force: true });
+        }
+      });
+
+    cy.matchImageSnapshot('image-icon-replaced');
+  });
+
+  it('Switch between Icons Gallery and Emojis tabs', () => {
+    cy.focusTopicById(3);
+    cy.onClickToolbarButton('Add Topic Image');
+
+    // Icons Gallery tab should be open by default
+    cy.waitForIconsGalleryTab();
+
+    // Switch to Emojis tab
+    cy.contains('Emojis').should('be.visible').click();
+
+    // Verify emoji picker is now visible
+    cy.getEmoji().first().should('be.visible');
+
+    // Switch back to Icons Gallery tab
+    cy.contains('Icons Gallery').should('be.visible').click();
+
+    // Verify image icons are visible again
+    cy.get('img').should('have.length.gt', 0);
+
+    cy.matchImageSnapshot('tabs-switching-works');
+  });
+
+  it('Add emoji vs image icon have different representations', () => {
+    // Add a regular emoji first
+    cy.focusTopicById(3);
+    cy.onClickToolbarButton('Add Topic Image');
+
+    // Switch to Emojis tab
+    cy.contains('Emojis').should('be.visible').click();
+
+    // Click on a regular emoji
     cy.getEmoji().first().should('be.visible').click();
 
-    // The picker stays open so several emojis can be tried in a row.
-    cy.getEmoji().first().should('be.visible');
+    // Now add an image icon to another topic
+    cy.focusTopicById(4);
+    cy.onClickToolbarButton('Add Topic Image');
+
+    // Icons Gallery tab should be open by default
+    cy.waitForIconsGalleryTab();
+
+    // Add an image icon
+    cy.get('img').first().parent().click({ force: true });
+
+    cy.matchImageSnapshot('emoji-and-image-icon-comparison');
+  });
+
+  it('Verify image icon renders correctly in topic', () => {
+    cy.focusTopicById(3);
+    cy.onClickToolbarButton('Add Topic Image');
+
+    // Icons Gallery tab should be open by default
+    cy.waitForIconsGalleryTab();
+
+    // Click on a specific image icon to add it
+    cy.get('img').first().parent().click({ force: true });
+
+    // Verify the topic is visible
     cy.get('[test-id="3"]').should('be.visible');
+
+    // Look for any image-related elements that might have been added to the topic
+    cy.get('svg image, img').should('have.length.gt', 0);
+
+    cy.matchImageSnapshot('image-icon-renders-in-topic');
   });
 });

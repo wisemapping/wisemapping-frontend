@@ -227,6 +227,9 @@
   "shortcut-help-pane.undo": {
     "defaultMessage": "Deshacer cambios"
   },
+  "icon-picker.show-images": {
+    "defaultMessage": "Mostrar imágenes"
+  },
   "shortcut-help-pane.overwrite-edit-topic": {
     "defaultMessage": "Sobrescribir el texto del tópico"
   },
@@ -274,6 +277,15 @@
   },
   "emoji-picker.search-placeholder": {
     "defaultMessage": "Buscar emojis..."
+  },
+  "icon-picker.search-placeholder": {
+    "defaultMessage": "Buscar iconos..."
+  },
+  "icon-picker.frequently-used": {
+    "defaultMessage": "Usados frecuentemente"
+  },
+  "icon-picker.no-results": {
+    "defaultMessage": "No se encontraron iconos"
   },
   "canvas-style.grid-size-xs": {
     "defaultMessage": "Extra Pequeño"
@@ -475,6 +487,12 @@
   },
   "icon-collection.connection.curved-polyline": {
     "defaultMessage": "Polilínea curva"
+  },
+  "icon-picker.emojis": {
+    "defaultMessage": "Emojis"
+  },
+  "icon-picker.icons": {
+    "defaultMessage": "Galería de iconos"
   },
   "note.character.count": {
     "defaultMessage": "{remaining} restantes"

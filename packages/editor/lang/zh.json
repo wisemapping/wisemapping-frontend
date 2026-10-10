@@ -164,6 +164,18 @@
   "emoji-picker.search-placeholder": {
     "defaultMessage": "搜索表情..."
   },
+  "icon-picker.search-placeholder": {
+    "defaultMessage": "搜索图标..."
+  },
+  "icon-picker.frequently-used": {
+    "defaultMessage": "常用"
+  },
+  "icon-picker.no-results": {
+    "defaultMessage": "找不到图标"
+  },
+  "icon-picker.show-images": {
+    "defaultMessage": "显示图像"
+  },
   "link.help_text": {
     "defaultMessage": "地址无效"
   },
@@ -475,6 +487,12 @@
   },
   "icon-collection.connection.curved-polyline": {
     "defaultMessage": "曲线折线"
+  },
+  "icon-picker.emojis": {
+    "defaultMessage": "表情符号"
+  },
+  "icon-picker.icons": {
+    "defaultMessage": "图标库"
   },
   "note.character.count": {
     "defaultMessage": "剩余 {remaining}"

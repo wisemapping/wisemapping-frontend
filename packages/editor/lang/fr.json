@@ -221,6 +221,9 @@
   "shortcut-help-pane.undo": {
     "defaultMessage": "Annuler la modification"
   },
+  "icon-picker.show-images": {
+    "defaultMessage": "Afficher les images"
+  },
   "shortcut-help-pane.overwrite-edit-topic": {
     "defaultMessage": "Remplacer le texte du nœud"
   },
@@ -319,6 +322,15 @@
   },
   "emoji-picker.search-placeholder": {
     "defaultMessage": "Rechercher des emojis..."
+  },
+  "icon-picker.search-placeholder": {
+    "defaultMessage": "Rechercher des icônes..."
+  },
+  "icon-picker.frequently-used": {
+    "defaultMessage": "Fréquemment utilisés"
+  },
+  "icon-picker.no-results": {
+    "defaultMessage": "Aucune icône trouvée"
   },
   "editor-panel.tooltip-add-topic-image": {
     "defaultMessage": "Ajouter une image au nœud"
@@ -475,6 +487,12 @@
   },
   "icon-collection.connection.curved-polyline": {
     "defaultMessage": "Polyligne courbe"
+  },
+  "icon-picker.emojis": {
+    "defaultMessage": "Emojis"
+  },
+  "icon-picker.icons": {
+    "defaultMessage": "Galerie d'icônes"
   },
   "note.character.count": {
     "defaultMessage": "{remaining} restants"

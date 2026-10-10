@@ -107,6 +107,9 @@
   "editor.try-welcome-mobile": {
     "defaultMessage": "यह संपादन स्थान क्षमताओं को प्रदर्शित करता है!"
   },
+  "icon-picker.show-images": {
+    "defaultMessage": "छवियां दिखाएं"
+  },
   "link.help_text": {
     "defaultMessage": "पता मान्य नहीं है"
   },
@@ -320,6 +323,15 @@
   "emoji-picker.search-placeholder": {
     "defaultMessage": "इमोजी खोजें..."
   },
+  "icon-picker.search-placeholder": {
+    "defaultMessage": "आइकन खोजें..."
+  },
+  "icon-picker.frequently-used": {
+    "defaultMessage": "अक्सर उपयोग किए जाते हैं"
+  },
+  "icon-picker.no-results": {
+    "defaultMessage": "कोई आइकन नहीं मिला"
+  },
   "editor-panel.tooltip-add-topic-image": {
     "defaultMessage": "विषय छवि जोड़ें"
   },
@@ -475,6 +487,12 @@
   },
   "icon-collection.connection.curved-polyline": {
     "defaultMessage": "घुमावदार पॉलीलाइन"
+  },
+  "icon-picker.emojis": {
+    "defaultMessage": "इमोजी"
+  },
+  "icon-picker.icons": {
+    "defaultMessage": "आइकन गैलरी"
   },
   "note.character.count": {
     "defaultMessage": "{remaining} बचे"

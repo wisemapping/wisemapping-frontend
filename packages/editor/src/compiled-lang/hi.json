@@ -621,6 +621,42 @@
       "value": "गोलाकार कोने"
     }
   ],
+  "icon-picker.emojis": [
+    {
+      "type": 0,
+      "value": "इमोजी"
+    }
+  ],
+  "icon-picker.frequently-used": [
+    {
+      "type": 0,
+      "value": "अक्सर उपयोग किए जाते हैं"
+    }
+  ],
+  "icon-picker.icons": [
+    {
+      "type": 0,
+      "value": "आइकन गैलरी"
+    }
+  ],
+  "icon-picker.no-results": [
+    {
+      "type": 0,
+      "value": "कोई आइकन नहीं मिला"
+    }
+  ],
+  "icon-picker.search-placeholder": [
+    {
+      "type": 0,
+      "value": "आइकन खोजें..."
+    }
+  ],
+  "icon-picker.show-images": [
+    {
+      "type": 0,
+      "value": "छवियां दिखाएं"
+    }
+  ],
   "layout-selector.accept": [
     {
       "type": 0,

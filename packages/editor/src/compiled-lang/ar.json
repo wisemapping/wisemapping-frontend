@@ -621,6 +621,42 @@
       "value": "دائري الزوايا"
     }
   ],
+  "icon-picker.emojis": [
+    {
+      "type": 0,
+      "value": "الرموز التعبيرية"
+    }
+  ],
+  "icon-picker.frequently-used": [
+    {
+      "type": 0,
+      "value": "الأكثر استخدامًا"
+    }
+  ],
+  "icon-picker.icons": [
+    {
+      "type": 0,
+      "value": "معرض الأيقونات"
+    }
+  ],
+  "icon-picker.no-results": [
+    {
+      "type": 0,
+      "value": "لا توجد أيقونات"
+    }
+  ],
+  "icon-picker.search-placeholder": [
+    {
+      "type": 0,
+      "value": "ابحث عن الأيقونات..."
+    }
+  ],
+  "icon-picker.show-images": [
+    {
+      "type": 0,
+      "value": "إظهار الصور"
+    }
+  ],
   "layout-selector.accept": [
     {
       "type": 0,

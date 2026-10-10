@@ -302,6 +302,24 @@
   "icon-collection.shape.rounded": {
     "defaultMessage": "Rounded"
   },
+  "icon-picker.emojis": {
+    "defaultMessage": "Emojis"
+  },
+  "icon-picker.frequently-used": {
+    "defaultMessage": "Frequently Used"
+  },
+  "icon-picker.icons": {
+    "defaultMessage": "Icons Gallery"
+  },
+  "icon-picker.no-results": {
+    "defaultMessage": "No icons found"
+  },
+  "icon-picker.search-placeholder": {
+    "defaultMessage": "Search icons..."
+  },
+  "icon-picker.show-images": {
+    "defaultMessage": "Show images"
+  },
   "layout-selector.accept": {
     "defaultMessage": "Accept"
   },

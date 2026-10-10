@@ -30,6 +30,10 @@ type DesignerHandle = {
 const designerOf = (win: Cypress.AUTWindow): DesignerHandle | undefined =>
   designerOfPage<DesignerHandle>(win);
 
+type IconGroup = { id: string; icons: string[] };
+
+const ICON_GROUPS = 'src/components/action-widget/pane/icon-picker/image-icon-tab/iconGroups.json';
+
 /**
  * The topic icons (SvgImageIcon) on the canvas. Link and note icons are <image> elements too,
  * but they carry a test-id.
@@ -95,6 +99,31 @@ describe('Image URL Validation Suite', () => {
     });
     canvasIcons().each(($image, index) => {
       assertIconUrlLoads(hrefOf($image[0]), `canvas icon #${index}`);
+    });
+  });
+
+  it('The Icons Gallery shows every icon of iconGroups.json with a loadable URL', () => {
+    cy.visit('/map-render/html/editor.html');
+    cy.waitEditorLoaded();
+
+    cy.focusTopicById(3);
+    cy.onClickToolbarButton('Add Icon');
+    cy.contains('Icons Gallery').should('be.visible').click();
+
+    cy.readFile(ICON_GROUPS).then((iconGroups: IconGroup[]) => {
+      const icons = iconGroups.flatMap((group) => group.icons);
+      expect(icons, 'icons in iconGroups.json').to.have.length.greaterThan(0);
+
+      // The gallery: the search field and, below it, one <img> per icon, in iconGroups order
+      // (no "Frequently Used" row, since Cypress clears local storage before each test).
+      cy.get('input[placeholder="Search icons..."]')
+        .closest('.MuiTextField-root')
+        .parent()
+        .find('img')
+        .should('have.length', icons.length)
+        .each(($img, index) => {
+          assertIconUrlLoads($img.attr('src') ?? '', icons[index]);
+        });
     });
   });
 
