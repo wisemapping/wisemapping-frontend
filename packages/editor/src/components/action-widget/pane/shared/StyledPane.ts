@@ -17,6 +17,7 @@
  */
 
 import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
@@ -72,4 +73,20 @@ export const PaneButtonRow = styled(Box)(({ theme }) => ({
   display: 'flex',
   gap: theme.spacing(1),
   justifyContent: 'center',
+}));
+
+/** Controls side by side, centred in both directions. */
+export const PaneControlRow = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  gap: theme.spacing(1),
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
+
+/** A vertical rule between two groups of controls in a row. */
+export const PaneDivider = styled(Divider)(({ theme }) => ({
+  marginLeft: theme.spacing(1),
+  marginRight: theme.spacing(1),
+  height: '32px',
+  alignSelf: 'center',
 }));

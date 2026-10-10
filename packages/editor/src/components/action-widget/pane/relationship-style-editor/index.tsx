@@ -17,10 +17,7 @@
  */
 
 import React, { ReactElement } from 'react';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import Divider from '@mui/material/Divider';
 import CloseIcon from '@mui/icons-material/Close';
 import RemoveIcon from '@mui/icons-material/Remove';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -35,6 +32,15 @@ import {
 import NodeProperty from '../../../../classes/model/node-property';
 import { StrokeStyle } from '@wisemapping/mindplot';
 import ColorPicker from '../color-picker';
+import {
+  PaneCard,
+  PaneCenteredRow,
+  PaneCloseButton,
+  PaneControlRow,
+  PaneDivider,
+  PaneSection,
+  PaneSectionTitle,
+} from '../shared/StyledPane';
 import { trackRelationshipAction } from '../../../../utils/analytics';
 
 const ActionButton = styled(IconButton)<{ selected?: boolean }>(({ selected, theme }) => ({
@@ -84,59 +90,33 @@ const RelationshipStyleEditor = (props: RelationshipStyleEditorProps): ReactElem
   };
 
   return (
-    <Box
-      sx={{
-        pt: 1.5,
-        px: 1.5,
-        pb: 1,
-        minWidth: '280px',
-        maxWidth: '320px',
-        backgroundColor: 'background.paper',
-        borderRadius: '8px',
-        border: '1px solid',
-        borderColor: 'divider',
-        position: 'relative',
-      }}
-    >
-      <IconButton
-        onClick={props.closeModal}
-        sx={{
-          position: 'absolute',
-          top: 4,
-          right: 4,
-          zIndex: 1,
-          width: 24,
-          height: 24,
-          '& .MuiSvgIcon-root': {
-            fontSize: '16px',
-          },
-        }}
-      >
+    <PaneCard>
+      <PaneCloseButton onClick={props.closeModal}>
         <CloseIcon />
-      </IconButton>
+      </PaneCloseButton>
 
       {/* Relationship Color */}
-      <Box sx={{ mb: 2 }}>
-        <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
+      <PaneSection>
+        <PaneSectionTitle variant="subtitle2" gutterBottom>
           <FormattedMessage
             id="relationship-style-editor.color"
             defaultMessage="Relationship Color"
           />
-        </Typography>
-        <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
+        </PaneSectionTitle>
+        <PaneCenteredRow>
           <ColorPicker closeModal={() => {}} colorModel={props.colorModel} />
-        </Box>
-      </Box>
+        </PaneCenteredRow>
+      </PaneSection>
 
       {/* Line Style & Arrows */}
-      <Box sx={{ mb: 2 }}>
-        <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
+      <PaneSection>
+        <PaneSectionTitle variant="subtitle2" gutterBottom>
           <FormattedMessage
             id="relationship-style-editor.line-arrows"
             defaultMessage="Line Style & Arrows"
           />
-        </Typography>
-        <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', justifyContent: 'center' }}>
+        </PaneSectionTitle>
+        <PaneControlRow>
           <ActionButton
             onClick={() => handleStrokeStyleChange(StrokeStyle.SOLID)}
             selected={props.strokeStyleModel.getValue() === StrokeStyle.SOLID}
@@ -180,11 +160,7 @@ const RelationshipStyleEditor = (props: RelationshipStyleEditorProps): ReactElem
             <FiberManualRecordIcon />
           </ActionButton>
 
-          <Divider
-            orientation="vertical"
-            flexItem
-            sx={{ mx: 1, height: '32px', alignSelf: 'center' }}
-          />
+          <PaneDivider orientation="vertical" flexItem />
 
           <ActionButton
             onClick={handleEndArrowToggle}
@@ -214,9 +190,9 @@ const RelationshipStyleEditor = (props: RelationshipStyleEditorProps): ReactElem
           >
             <RelationshipEndArrowIcon />
           </ActionButton>
-        </Box>
-      </Box>
-    </Box>
+        </PaneControlRow>
+      </PaneSection>
+    </PaneCard>
   );
 };
 
