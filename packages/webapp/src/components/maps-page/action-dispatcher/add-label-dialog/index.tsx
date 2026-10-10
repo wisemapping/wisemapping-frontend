@@ -120,7 +120,7 @@ const AddLabelDialog = ({ onAdd }: AddLabelFormProps): React.ReactElement => {
             defaultMessage: 'Label title',
           })}
           onChange={(e) => setNewLabelTitle(e.target.value)}
-          onKeyPress={(e) => {
+          onKeyDown={(e) => {
             if (e.key === 'Enter') {
               handleSubmitNew();
             }

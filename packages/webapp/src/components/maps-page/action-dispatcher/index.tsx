@@ -44,7 +44,7 @@ type ActionDialogProps = {
   action?: ActionType;
   mapsId: number[];
   onClose: (success?: boolean) => void;
-  fromEditor: boolean;
+  fromEditor?: boolean;
   pageMode?: PageModeType;
   /** The designer of the editor the action comes from, if any. */
   designer?: Designer;
@@ -56,7 +56,7 @@ const ActionDispatcher = ({
   mapsId,
   action,
   onClose,
-  fromEditor,
+  fromEditor = false,
   pageMode,
   designer,
   beforeRevert,
@@ -124,10 +124,6 @@ const ActionDispatcher = ({
       {action === 'label' && <LabelDialog onClose={handleOnClose} mapsId={mapsId} />}
     </span>
   );
-};
-
-ActionDispatcher.defaultProps = {
-  fromEditor: false,
 };
 
 export const handleOnMutationSuccess = (onClose: () => void, queryClient: QueryClient): void => {
