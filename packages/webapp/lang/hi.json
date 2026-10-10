@@ -1468,5 +1468,44 @@
   },
   "info.private": {
     "defaultMessage": "निजी"
+  },
+  "seo.maps.title": {
+    "defaultMessage": "मेरे मैप | WiseMapping"
+  },
+  "seo.registration-success.title": {
+    "defaultMessage": "पंजीकरण सफल | WiseMapping"
+  },
+  "seo.maps.description": {
+    "defaultMessage": "WiseMapping में अपने माइंड मैप खोलें और प्रबंधित करें। अपने विज़ुअल थिंकिंग प्रोजेक्ट बनाएँ, संपादित करें, साझा करें और मिलकर काम करें। शक्तिशाली माइंड मैपिंग टूल से अपने विचार व्यवस्थित करें।"
+  },
+  "seo.activation.description": {
+    "defaultMessage": "माइंड मैप बनाने, विचार व्यवस्थित करने और दूसरों के साथ काम करने के लिए अपना WiseMapping खाता सक्रिय करें। सेटअप कुछ ही सेकंड में पूरा होता है।"
+  },
+  "seo.forgot-password.description": {
+    "defaultMessage": "अपने WiseMapping खाते का पासवर्ड रीसेट करें। अपना ईमेल पता दर्ज करें, हम आपको पासवर्ड पुनर्प्राप्ति लिंक भेजेंगे।"
+  },
+  "seo.forgot-password-success.description": {
+    "defaultMessage": "पासवर्ड पुनर्प्राप्ति ईमेल आपके इनबॉक्स में भेज दिया गया है। अपने WiseMapping खाते का पासवर्ड रीसेट करने और अपने माइंड मैप तक फिर पहुँचने के लिए ईमेल देखें।"
+  },
+  "seo.login.description": {
+    "defaultMessage": "अपने माइंड मैप खोलने, नए बनाने और दूसरों के साथ काम करने के लिए अपने WiseMapping खाते में साइन इन करें। मुफ़्त ऑनलाइन माइंड मैपिंग टूल।"
+  },
+  "seo.registration.description": {
+    "defaultMessage": "माइंड मैप बनाने, विचार व्यवस्थित करने और दूसरों के साथ काम करने के लिए अपना मुफ़्त WiseMapping खाता बनाएँ। दुनिया भर के हज़ारों उपयोगकर्ताओं से जुड़ें।"
+  },
+  "seo.registration-success.description": {
+    "defaultMessage": "आपके WiseMapping खाते का पंजीकरण सफल रहा। सेटअप पूरा करने और माइंड मैप बनाना शुरू करने के लिए अपने ईमेल में सक्रियण लिंक देखें।"
+  },
+  "seo.reset-password.description": {
+    "defaultMessage": "अपने WiseMapping खाते के लिए नया पासवर्ड सेट करें।"
+  },
+  "common.logo": {
+    "defaultMessage": "WiseMapping लोगो"
+  },
+  "footer.powered-by": {
+    "defaultMessage": "WiseMapping द्वारा संचालित"
+  },
+  "accountinfo.tabs": {
+    "defaultMessage": "खाता सेटिंग अनुभाग"
   }
 }

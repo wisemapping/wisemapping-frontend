@@ -17,19 +17,26 @@
  */
 
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { StyledFooter } from './styled';
 import poweredByIcon from './pwrdby-white.svg';
 import ThemeToggle from '../../common/theme-toggle';
 
 const Footer = (): React.ReactElement => {
+  const intl = useIntl();
   return (
     <StyledFooter>
       <div>
         <div style={{ padding: 0, margin: 0 }}>
           <a href="http://www.wisemapping.org/">
-            <img src={poweredByIcon} alt="Powered By WiseMapping" />
+            <img
+              src={poweredByIcon}
+              alt={intl.formatMessage({
+                id: 'footer.powered-by',
+                defaultMessage: 'Powered by WiseMapping',
+              })}
+            />
           </a>
           <div className="copyright">
             <FormattedMessage

@@ -50,8 +50,15 @@ const ForgotPasswordSuccessPage = (): React.ReactElement => {
   return (
     <>
       <SEOHead
-        title="Password Recovery Email Sent | WiseMapping"
-        description="A password recovery email has been sent to your inbox. Check your email to reset your WiseMapping account password and regain access to your mind maps."
+        title={intl.formatMessage({
+          id: 'forgotsuccess.page-title',
+          defaultMessage: 'Password Recovered | WiseMapping',
+        })}
+        description={intl.formatMessage({
+          id: 'seo.forgot-password-success.description',
+          defaultMessage:
+            'A password recovery email has been sent to your inbox. Check your email to reset your WiseMapping account password and regain access to your mind maps.',
+        })}
         keywords="password recovery, reset password, forgot password, account recovery, wise mapping"
         canonicalUrl={canonicalUrl}
         alternateLanguages={alternateLanguages}

@@ -1468,5 +1468,44 @@
   },
   "info.private": {
     "defaultMessage": "Privat"
+  },
+  "seo.maps.title": {
+    "defaultMessage": "Meine Mindmaps | WiseMapping"
+  },
+  "seo.registration-success.title": {
+    "defaultMessage": "Registrierung erfolgreich | WiseMapping"
+  },
+  "seo.maps.description": {
+    "defaultMessage": "Greife in WiseMapping auf deine Mindmaps zu und verwalte sie. Erstelle, bearbeite und teile Mindmaps und arbeite gemeinsam an deinen Projekten. Ordne deine Ideen mit einem leistungsstarken Mindmap-Werkzeug."
+  },
+  "seo.activation.description": {
+    "defaultMessage": "Aktiviere dein WiseMapping-Konto, um Mindmaps zu erstellen, Ideen zu ordnen und mit anderen zusammenzuarbeiten. Die Einrichtung dauert nur Sekunden."
+  },
+  "seo.forgot-password.description": {
+    "defaultMessage": "Setze das Passwort deines WiseMapping-Kontos zurück. Gib deine E-Mail-Adresse ein, und wir senden dir einen Link zur Wiederherstellung."
+  },
+  "seo.forgot-password-success.description": {
+    "defaultMessage": "Eine E-Mail zur Wiederherstellung wurde an dein Postfach gesendet. Prüfe sie, um das Passwort deines WiseMapping-Kontos zurückzusetzen und wieder auf deine Mindmaps zuzugreifen."
+  },
+  "seo.login.description": {
+    "defaultMessage": "Melde dich bei deinem WiseMapping-Konto an, um auf deine Mindmaps zuzugreifen, neue zu erstellen und mit anderen zusammenzuarbeiten. Kostenloses Online-Mindmap-Werkzeug."
+  },
+  "seo.registration.description": {
+    "defaultMessage": "Erstelle dein kostenloses WiseMapping-Konto, um Mindmaps zu erstellen, Ideen zu ordnen und mit anderen zusammenzuarbeiten. Schließ dich Tausenden von Nutzern weltweit an."
+  },
+  "seo.registration-success.description": {
+    "defaultMessage": "Die Registrierung deines WiseMapping-Kontos war erfolgreich. Prüfe deine E-Mails auf den Aktivierungslink, um die Einrichtung abzuschließen und Mindmaps zu erstellen."
+  },
+  "seo.reset-password.description": {
+    "defaultMessage": "Lege ein neues Passwort für dein WiseMapping-Konto fest."
+  },
+  "common.logo": {
+    "defaultMessage": "WiseMapping-Logo"
+  },
+  "footer.powered-by": {
+    "defaultMessage": "Bereitgestellt von WiseMapping"
+  },
+  "accountinfo.tabs": {
+    "defaultMessage": "Kontobereiche"
   }
 }

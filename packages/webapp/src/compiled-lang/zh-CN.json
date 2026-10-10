@@ -155,6 +155,12 @@
       "value": "个人信息"
     }
   ],
+  "accountinfo.tabs": [
+    {
+      "type": 0,
+      "value": "账户设置分类"
+    }
+  ],
   "accountinfo.title": [
     {
       "type": 0,
@@ -1709,6 +1715,12 @@
       "value": "登录表单"
     }
   ],
+  "common.logo": [
+    {
+      "type": 0,
+      "value": "WiseMapping 标志"
+    }
+  ],
   "common.maps-list": [
     {
       "type": 0,
@@ -2102,6 +2114,12 @@
     {
       "type": 0,
       "value": "开源"
+    }
+  ],
+  "footer.powered-by": [
+    {
+      "type": 0,
+      "value": "由 WiseMapping 提供支持"
     }
   ],
   "footer.privacypolicy": [
@@ -3136,6 +3154,66 @@
     {
       "type": 0,
       "value": "查看者"
+    }
+  ],
+  "seo.activation.description": [
+    {
+      "type": 0,
+      "value": "激活您的 WiseMapping 账户，开始创建导图、整理想法并与他人协作。几秒钟即可完成设置。"
+    }
+  ],
+  "seo.forgot-password-success.description": [
+    {
+      "type": 0,
+      "value": "密码找回邮件已发送到您的收件箱。请查收邮件，重置 WiseMapping 账户密码，重新访问您的导图。"
+    }
+  ],
+  "seo.forgot-password.description": [
+    {
+      "type": 0,
+      "value": "重置您的 WiseMapping 账户密码。输入电子邮箱，我们会向您发送密码找回链接。"
+    }
+  ],
+  "seo.login.description": [
+    {
+      "type": 0,
+      "value": "登录您的 WiseMapping 账户，访问导图、创建新导图并与他人协作。免费的在线思维导图工具。"
+    }
+  ],
+  "seo.maps.description": [
+    {
+      "type": 0,
+      "value": "在 WiseMapping 中访问和管理您的导图。创建、编辑、分享并协作完成您的可视化思维项目，用强大的思维导图工具整理想法。"
+    }
+  ],
+  "seo.maps.title": [
+    {
+      "type": 0,
+      "value": "我的导图 | WiseMapping"
+    }
+  ],
+  "seo.registration-success.description": [
+    {
+      "type": 0,
+      "value": "您的 WiseMapping 账户注册成功。请查收邮件中的激活链接，完成设置并开始创建导图。"
+    }
+  ],
+  "seo.registration-success.title": [
+    {
+      "type": 0,
+      "value": "注册成功 | WiseMapping"
+    }
+  ],
+  "seo.registration.description": [
+    {
+      "type": 0,
+      "value": "创建免费的 WiseMapping 账户，开始创建导图、整理想法并与他人协作。加入全球数以千计的用户。"
+    }
+  ],
+  "seo.reset-password.description": [
+    {
+      "type": 0,
+      "value": "为您的 WiseMapping 账户设置新密码。"
     }
   ],
   "share.add-button": [

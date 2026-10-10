@@ -114,6 +114,21 @@ describe('root loader', () => {
     expect(set).toHaveBeenCalledWith({ userId: expect.stringMatching(/^[0-9a-f]{64}$/) });
   });
 
+  it('shares the account it fetched with the account query', async () => {
+    // The page asked for the account again right after the loader had: two /account requests
+    // on every load.
+    await initAppConfig({ analyticsAccount: 'G-XYZ' });
+    JwtTokenConfig.storeToken('tok');
+    const fetchAccountInfo = jest.fn().mockResolvedValue({ email: 'me@x.y' });
+    jest.spyOn(AppConfig, 'getClient').mockReturnValue(fakeClient(jest.fn(), fetchAccountInfo));
+
+    await rootLoader();
+    await flushPromises();
+    await queryClient.fetchQuery({ queryKey: ['account'], queryFn: fetchAccountInfo });
+
+    expect(fetchAccountInfo).toHaveBeenCalledTimes(1);
+  });
+
   it('still loads when the account can not be fetched', async () => {
     await initAppConfig({ analyticsAccount: 'G-XYZ' });
     JwtTokenConfig.storeToken('tok');

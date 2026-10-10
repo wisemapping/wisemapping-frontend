@@ -344,7 +344,13 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
     >
       <TabContext value={activeTab}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 2 }}>
-          <TabList onChange={handleTabChange} aria-label="account settings tabs">
+          <TabList
+            onChange={handleTabChange}
+            aria-label={intl.formatMessage({
+              id: 'accountinfo.tabs',
+              defaultMessage: 'Account settings sections',
+            })}
+          >
             <Tab
               icon={<PersonIcon />}
               iconPosition="start"

@@ -147,8 +147,15 @@ const ForgotPasswordPage = (): React.ReactElement => {
   return (
     <>
       <SEOHead
-        title="Forgot Password | WiseMapping"
-        description="Reset your WiseMapping account password. Enter your email address and we'll send you a password recovery link."
+        title={intl.formatMessage({
+          id: 'forgot.page-title',
+          defaultMessage: 'Forgot Password | WiseMapping',
+        })}
+        description={intl.formatMessage({
+          id: 'seo.forgot-password.description',
+          defaultMessage:
+            "Reset your WiseMapping account password. Enter your email address and we'll send you a password recovery link.",
+        })}
         keywords="forgot password, reset password, password recovery, account recovery, wise mapping"
         canonicalUrl={canonicalUrl}
         alternateLanguages={alternateLanguages}

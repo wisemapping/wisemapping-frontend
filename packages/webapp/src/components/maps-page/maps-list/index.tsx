@@ -20,11 +20,11 @@ import React, { useEffect, useMemo, CSSProperties, useContext, useRef } from 're
 
 import { useStyles } from './styled';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import Client, { ErrorInfo, Label, MapInfo } from '../../../classes/client';
+import { ErrorInfo, MapInfo } from '../../../classes/client';
 import ActionChooser, { ActionType } from '../action-chooser';
 import ActionDispatcher from '../action-dispatcher';
 import dayjs from 'dayjs';
-import { Filter, LabelFilter } from '..';
+import { Filter } from '..';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { trackToolbarAction } from '../../../utils/analytics';
 
@@ -66,44 +66,22 @@ import Typography from '@mui/material/Typography';
 import CardHeader from '@mui/material/CardHeader';
 import { ClientContext } from '../../../classes/provider/client-context';
 import { CardSkeleton, MapsListSkeleton } from './MapsListSkeleton';
+import {
+  ChangeLabelMutationFunctionParam,
+  Order,
+  getChangeLabelMutationFunction,
+  getComparator,
+  isLabelFilter,
+  mapsFilter,
+  stableSort,
+} from './model';
+
+// The label dialog imports these from here.
+export type { ChangeLabelMutationFunctionParam };
+export { getChangeLabelMutationFunction };
 
 dayjs.extend(LocalizedFormat);
 dayjs.extend(relativeTime);
-
-function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
-
-type Order = 'asc' | 'desc';
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function getComparator<Key extends keyof any>(
-  order: Order,
-  orderBy: Key,
-): (
-  a: { [key in Key]: number | string | boolean | Label[] | undefined },
-  b: { [key in Key]: number | string | Label[] | boolean },
-) => number {
-  return order === 'desc'
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
-  const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) return order;
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map((el) => el[0]);
-}
 
 interface HeadCell {
   id: keyof MapInfo;
@@ -252,64 +230,6 @@ type ActionPanelState = {
 interface MapsListProps {
   filter: Filter;
 }
-
-const isLabelFilter = (filter: Filter): filter is LabelFilter => filter.type === 'label';
-
-const mapsFilter = (filter: Filter, search: string): ((mapInfo: MapInfo) => boolean) => {
-  return (mapInfo: MapInfo) => {
-    // Check for filter condition
-    let result: boolean;
-    switch (filter.type) {
-      case 'all':
-        result = true;
-        break;
-      case 'starred':
-        result = mapInfo.starred;
-        break;
-      case 'owned':
-        result = mapInfo.role == 'owner';
-        break;
-      case 'shared':
-        result = mapInfo.role != 'owner';
-        break;
-      case 'label':
-        result =
-          !mapInfo.labels ||
-          mapInfo.labels.some((label) => label.id === (filter as LabelFilter).label.id);
-        break;
-      case 'public':
-        result = mapInfo.public;
-        break;
-      default:
-        result = false;
-    }
-
-    // Does it match search filter criteria...
-    if (search && result) {
-      result = mapInfo.title.toLowerCase().indexOf(search.toLowerCase()) != -1;
-    }
-
-    return result;
-  };
-};
-
-export type ChangeLabelMutationFunctionParam = { maps: MapInfo[]; label: Label; checked: boolean };
-
-export const getChangeLabelMutationFunction =
-  (client: Client) =>
-  async ({ maps, label, checked }: ChangeLabelMutationFunctionParam): Promise<void> => {
-    if (!label.id) {
-      label.id = await client.createLabel(label.title, label.color);
-    }
-    if (checked) {
-      const toAdd = maps.filter((m) => !m.labels.find((l) => l.id === label.id));
-      await Promise.all(toAdd.map((m) => client.addLabelToMap(label.id, m.id)));
-    } else {
-      const toRemove = maps.filter((m) => m.labels.find((l) => l.id === label.id));
-      await Promise.all(toRemove.map((m) => client.deleteLabelFromMap(label.id, m.id)));
-    }
-    return Promise.resolve();
-  };
 
 export const MapsList = (props: MapsListProps): React.ReactElement => {
   const classes = useStyles();

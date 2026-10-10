@@ -19,7 +19,7 @@
 import { StyledNav, StyledDiv, Logo } from './styled';
 
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { Link } from 'react-router';
 import Button from '@mui/material/Button';
 import { useTheme } from '@mui/material/styles';
@@ -33,6 +33,7 @@ interface HeaderProps {
 }
 
 export const Header = ({ type }: HeaderProps): React.ReactElement => {
+  const intl = useIntl();
   const theme = useTheme();
   let signUpButton: string | JSX.Element | undefined;
   let text: string | JSX.Element | undefined;
@@ -77,7 +78,10 @@ export const Header = ({ type }: HeaderProps): React.ReactElement => {
       >
         <Logo>
           <Link to="/c/login" className="header-logo">
-            <img src={String(theme.palette.mode === 'dark' ? logoWhiteText : logo)} alt="logo" />
+            <img
+              src={String(theme.palette.mode === 'dark' ? logoWhiteText : logo)}
+              alt={intl.formatMessage({ id: 'common.logo', defaultMessage: 'WiseMapping logo' })}
+            />
           </Link>
         </Logo>
         {text}

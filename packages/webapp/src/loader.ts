@@ -22,6 +22,7 @@ import { createJsonResponse } from './utils/response';
 import JwtTokenConfig from './classes/jwt-token-config';
 import { setAnalyticsUserEmail } from './utils/analytics';
 import { appLogger as log } from './utils/logger';
+import queryClient from './queryClient';
 
 export const loader = async (): Promise<Response> => {
   // Ensure configuration is loaded before continuing.
@@ -42,8 +43,10 @@ export const loader = async (): Promise<Response> => {
     if (token && !JwtTokenConfig.isTokenExpired(token)) {
       // Fetch account info and set user ID asynchronously
       // Don't await to avoid blocking the loader
-      AppConfig.getClient()
-        .fetchAccountInfo()
+      // Through the ['account'] query, which the page reads next: one request, not two.
+      const client = AppConfig.getClient();
+      queryClient
+        .fetchQuery({ queryKey: ['account'], queryFn: () => client.fetchAccountInfo() })
         .then((accountInfo) => {
           setAnalyticsUserEmail(accountInfo.email);
         })

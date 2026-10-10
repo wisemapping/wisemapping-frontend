@@ -20,32 +20,24 @@ import { QueryClient } from '@tanstack/react-query';
 import type { ErrorInfo } from './classes/client';
 
 /**
- * HTTP status codes that should not trigger retries
- */
-const NON_RETRYABLE_STATUS_CODES = [401, 403, 404] as const;
-
-/**
- * Determines if a query should be retried based on the error.
- * Prevents retries on authentication errors (401, 403) and 404 errors.
+ * Whether a failed query is worth trying again: only when the next attempt may succeed. That
+ * is a network failure (no status), a server error (5xx) or a rate limit (429). Any other
+ * response is the server's answer and will be the same next time: retrying a deleted (410) or
+ * spam (422) map only delayed its error page by the 1 + 2 + 4 s of back-off. Auth errors are
+ * never retried either.
  *
  * @param failureCount - Number of times the query has failed
  * @param error - The error object from the failed query
- * @returns false if the error should not be retried, true if retry should continue
  */
 export const shouldRetryQuery = (failureCount: number, error: unknown): boolean => {
   const errorInfo = error as ErrorInfo | undefined;
-
-  // Don't retry on authentication errors or 404 errors
-  if (
-    (errorInfo?.status &&
-      NON_RETRYABLE_STATUS_CODES.includes(errorInfo.status as 401 | 403 | 404)) ||
-    errorInfo?.isAuth
-  ) {
+  if (errorInfo?.isAuth) {
     return false;
   }
 
-  // Default retry behavior for other errors (retry up to 3 times)
-  return failureCount < 3;
+  const status = errorInfo?.status;
+  const mayPassNextTime = !status || status >= 500 || status === 429;
+  return mayPassNextTime && failureCount < 3;
 };
 
 export const queryClient = new QueryClient({

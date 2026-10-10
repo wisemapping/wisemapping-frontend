@@ -155,6 +155,12 @@
       "value": "Persönliche Informationen"
     }
   ],
+  "accountinfo.tabs": [
+    {
+      "type": 0,
+      "value": "Kontobereiche"
+    }
+  ],
   "accountinfo.title": [
     {
       "type": 0,
@@ -1713,6 +1719,12 @@
       "value": "Anmeldeformular"
     }
   ],
+  "common.logo": [
+    {
+      "type": 0,
+      "value": "WiseMapping-Logo"
+    }
+  ],
   "common.maps-list": [
     {
       "type": 0,
@@ -2113,6 +2125,12 @@
     {
       "type": 0,
       "value": "Open Source"
+    }
+  ],
+  "footer.powered-by": [
+    {
+      "type": 0,
+      "value": "Bereitgestellt von WiseMapping"
     }
   ],
   "footer.privacypolicy": [
@@ -3147,6 +3165,66 @@
     {
       "type": 0,
       "value": "Betrachter"
+    }
+  ],
+  "seo.activation.description": [
+    {
+      "type": 0,
+      "value": "Aktiviere dein WiseMapping-Konto, um Mindmaps zu erstellen, Ideen zu ordnen und mit anderen zusammenzuarbeiten. Die Einrichtung dauert nur Sekunden."
+    }
+  ],
+  "seo.forgot-password-success.description": [
+    {
+      "type": 0,
+      "value": "Eine E-Mail zur Wiederherstellung wurde an dein Postfach gesendet. Prüfe sie, um das Passwort deines WiseMapping-Kontos zurückzusetzen und wieder auf deine Mindmaps zuzugreifen."
+    }
+  ],
+  "seo.forgot-password.description": [
+    {
+      "type": 0,
+      "value": "Setze das Passwort deines WiseMapping-Kontos zurück. Gib deine E-Mail-Adresse ein, und wir senden dir einen Link zur Wiederherstellung."
+    }
+  ],
+  "seo.login.description": [
+    {
+      "type": 0,
+      "value": "Melde dich bei deinem WiseMapping-Konto an, um auf deine Mindmaps zuzugreifen, neue zu erstellen und mit anderen zusammenzuarbeiten. Kostenloses Online-Mindmap-Werkzeug."
+    }
+  ],
+  "seo.maps.description": [
+    {
+      "type": 0,
+      "value": "Greife in WiseMapping auf deine Mindmaps zu und verwalte sie. Erstelle, bearbeite und teile Mindmaps und arbeite gemeinsam an deinen Projekten. Ordne deine Ideen mit einem leistungsstarken Mindmap-Werkzeug."
+    }
+  ],
+  "seo.maps.title": [
+    {
+      "type": 0,
+      "value": "Meine Mindmaps | WiseMapping"
+    }
+  ],
+  "seo.registration-success.description": [
+    {
+      "type": 0,
+      "value": "Die Registrierung deines WiseMapping-Kontos war erfolgreich. Prüfe deine E-Mails auf den Aktivierungslink, um die Einrichtung abzuschließen und Mindmaps zu erstellen."
+    }
+  ],
+  "seo.registration-success.title": [
+    {
+      "type": 0,
+      "value": "Registrierung erfolgreich | WiseMapping"
+    }
+  ],
+  "seo.registration.description": [
+    {
+      "type": 0,
+      "value": "Erstelle dein kostenloses WiseMapping-Konto, um Mindmaps zu erstellen, Ideen zu ordnen und mit anderen zusammenzuarbeiten. Schließ dich Tausenden von Nutzern weltweit an."
+    }
+  ],
+  "seo.reset-password.description": [
+    {
+      "type": 0,
+      "value": "Lege ein neues Passwort für dein WiseMapping-Konto fest."
     }
   ],
   "share.add-button": [

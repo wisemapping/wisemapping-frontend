@@ -1468,5 +1468,44 @@
   },
   "info.private": {
     "defaultMessage": "Privado"
+  },
+  "seo.maps.title": {
+    "defaultMessage": "Meus mapas | WiseMapping"
+  },
+  "seo.registration-success.title": {
+    "defaultMessage": "Cadastro concluído | WiseMapping"
+  },
+  "seo.maps.description": {
+    "defaultMessage": "Acesse e gerencie seus mapas mentais no WiseMapping. Crie, edite, compartilhe e colabore em seus projetos de pensamento visual. Organize suas ideias com uma poderosa ferramenta de mapas mentais."
+  },
+  "seo.activation.description": {
+    "defaultMessage": "Ative sua conta do WiseMapping para começar a criar mapas mentais, organizar ideias e colaborar com outras pessoas. Conclua a configuração em segundos."
+  },
+  "seo.forgot-password.description": {
+    "defaultMessage": "Redefina a senha da sua conta do WiseMapping. Informe seu e-mail e enviaremos um link de recuperação."
+  },
+  "seo.forgot-password-success.description": {
+    "defaultMessage": "Um e-mail de recuperação foi enviado para sua caixa de entrada. Confira-o para redefinir a senha da sua conta do WiseMapping e voltar aos seus mapas mentais."
+  },
+  "seo.login.description": {
+    "defaultMessage": "Entre na sua conta do WiseMapping para acessar seus mapas mentais, criar novos e colaborar com outras pessoas. Ferramenta gratuita de mapas mentais online."
+  },
+  "seo.registration.description": {
+    "defaultMessage": "Crie sua conta gratuita do WiseMapping para começar a criar mapas mentais, organizar ideias e colaborar com outras pessoas. Junte-se a milhares de usuários no mundo todo."
+  },
+  "seo.registration-success.description": {
+    "defaultMessage": "O cadastro da sua conta do WiseMapping foi concluído. Confira o e-mail com o link de ativação para finalizar a configuração e começar a criar mapas mentais."
+  },
+  "seo.reset-password.description": {
+    "defaultMessage": "Defina uma nova senha para a sua conta do WiseMapping."
+  },
+  "common.logo": {
+    "defaultMessage": "Logotipo do WiseMapping"
+  },
+  "footer.powered-by": {
+    "defaultMessage": "Desenvolvido com WiseMapping"
+  },
+  "accountinfo.tabs": {
+    "defaultMessage": "Seções da conta"
   }
 }

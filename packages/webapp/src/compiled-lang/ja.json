@@ -155,6 +155,12 @@
       "value": "個人情報"
     }
   ],
+  "accountinfo.tabs": [
+    {
+      "type": 0,
+      "value": "アカウント設定のセクション"
+    }
+  ],
   "accountinfo.title": [
     {
       "type": 0,
@@ -1705,6 +1711,12 @@
       "value": "ログインフォーム"
     }
   ],
+  "common.logo": [
+    {
+      "type": 0,
+      "value": "WiseMapping のロゴ"
+    }
+  ],
   "common.maps-list": [
     {
       "type": 0,
@@ -2094,6 +2106,12 @@
     {
       "type": 0,
       "value": "オープンソース"
+    }
+  ],
+  "footer.powered-by": [
+    {
+      "type": 0,
+      "value": "WiseMapping 提供"
     }
   ],
   "footer.privacypolicy": [
@@ -3120,6 +3138,66 @@
     {
       "type": 0,
       "value": "閲覧者"
+    }
+  ],
+  "seo.activation.description": [
+    {
+      "type": 0,
+      "value": "WiseMapping のアカウントを有効化して、マインドマップの作成、アイデアの整理、共同作業を始めましょう。設定は数秒で完了します。"
+    }
+  ],
+  "seo.forgot-password-success.description": [
+    {
+      "type": 0,
+      "value": "パスワード再設定用のメールを受信トレイに送信しました。メールを確認して WiseMapping アカウントのパスワードをリセットし、マインドマップにアクセスしてください。"
+    }
+  ],
+  "seo.forgot-password.description": [
+    {
+      "type": 0,
+      "value": "WiseMapping アカウントのパスワードをリセットします。メールアドレスを入力すると、再設定用のリンクをお送りします。"
+    }
+  ],
+  "seo.login.description": [
+    {
+      "type": 0,
+      "value": "WiseMapping のアカウントにサインインして、マインドマップを開き、新しく作成し、共同で編集できます。無料のオンラインマインドマップツールです。"
+    }
+  ],
+  "seo.maps.description": [
+    {
+      "type": 0,
+      "value": "WiseMapping でマインドマップを開いて管理できます。ビジュアル思考のプロジェクトを作成・編集・共有し、共同で進められます。強力なマインドマップツールでアイデアを整理しましょう。"
+    }
+  ],
+  "seo.maps.title": [
+    {
+      "type": 0,
+      "value": "マイマップ | WiseMapping"
+    }
+  ],
+  "seo.registration-success.description": [
+    {
+      "type": 0,
+      "value": "WiseMapping アカウントの登録が完了しました。メールに届いた有効化リンクから設定を完了し、マインドマップを作成しましょう。"
+    }
+  ],
+  "seo.registration-success.title": [
+    {
+      "type": 0,
+      "value": "登録が完了しました | WiseMapping"
+    }
+  ],
+  "seo.registration.description": [
+    {
+      "type": 0,
+      "value": "無料の WiseMapping アカウントを作成して、マインドマップの作成、アイデアの整理、共同作業を始めましょう。世界中の何千人ものユーザーが利用しています。"
+    }
+  ],
+  "seo.reset-password.description": [
+    {
+      "type": 0,
+      "value": "WiseMapping アカウントの新しいパスワードを設定します。"
     }
   ],
   "share.add-button": [

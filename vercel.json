@@ -206,7 +206,7 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=86400, s-maxage=86400"
+          "value": "public, max-age=0, s-maxage=86400, must-revalidate"
         }
       ]
     },
@@ -215,138 +215,12 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=86400, s-maxage=86400"
+          "value": "public, max-age=0, s-maxage=86400, must-revalidate"
         }
       ]
     },
     {
-      "source": "/:asset*.js",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, s-maxage=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/:asset*.css",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, s-maxage=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/:fontAsset*.woff",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, s-maxage=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/:fontAsset*.woff2",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, s-maxage=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/:fontAsset*.ttf",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, s-maxage=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/:fontAsset*.eot",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, s-maxage=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/:fontAsset*.otf",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, s-maxage=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/:imageAsset*.png",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, s-maxage=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/:imageAsset*.jpg",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, s-maxage=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/:imageAsset*.jpeg",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, s-maxage=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/:imageAsset*.gif",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, s-maxage=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/:imageAsset*.svg",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, s-maxage=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/:imageAsset*.ico",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, s-maxage=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/:imageAsset*.webp",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, s-maxage=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/:imageAsset*.avif",
+      "source": "/assets/:path*",
       "headers": [
         {
           "key": "Cache-Control",

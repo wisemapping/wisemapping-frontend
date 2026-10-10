@@ -1468,5 +1468,44 @@
   },
   "info.private": {
     "defaultMessage": "Privée"
+  },
+  "seo.maps.title": {
+    "defaultMessage": "Mes cartes | WiseMapping"
+  },
+  "seo.registration-success.title": {
+    "defaultMessage": "Inscription réussie | WiseMapping"
+  },
+  "seo.maps.description": {
+    "defaultMessage": "Accédez à vos cartes mentales dans WiseMapping et gérez-les. Créez, modifiez, partagez et collaborez sur vos projets de pensée visuelle. Organisez vos idées avec un puissant outil de cartes mentales."
+  },
+  "seo.activation.description": {
+    "defaultMessage": "Activez votre compte WiseMapping pour créer des cartes mentales, organiser vos idées et collaborer avec d'autres. Terminez la configuration en quelques secondes."
+  },
+  "seo.forgot-password.description": {
+    "defaultMessage": "Réinitialisez le mot de passe de votre compte WiseMapping. Saisissez votre adresse e-mail et nous vous enverrons un lien de récupération."
+  },
+  "seo.forgot-password-success.description": {
+    "defaultMessage": "Un e-mail de récupération a été envoyé dans votre boîte de réception. Consultez-le pour réinitialiser le mot de passe de votre compte WiseMapping et retrouver vos cartes mentales."
+  },
+  "seo.login.description": {
+    "defaultMessage": "Connectez-vous à votre compte WiseMapping pour accéder à vos cartes mentales, en créer de nouvelles et collaborer avec d'autres. Outil de cartes mentales gratuit en ligne."
+  },
+  "seo.registration.description": {
+    "defaultMessage": "Créez votre compte WiseMapping gratuit pour créer des cartes mentales, organiser vos idées et collaborer avec d'autres. Rejoignez des milliers d'utilisateurs dans le monde."
+  },
+  "seo.registration-success.description": {
+    "defaultMessage": "L'inscription de votre compte WiseMapping est réussie. Consultez vos e-mails pour trouver le lien d'activation, terminer la configuration et commencer à créer des cartes mentales."
+  },
+  "seo.reset-password.description": {
+    "defaultMessage": "Définissez un nouveau mot de passe pour votre compte WiseMapping."
+  },
+  "common.logo": {
+    "defaultMessage": "Logo WiseMapping"
+  },
+  "footer.powered-by": {
+    "defaultMessage": "Propulsé par WiseMapping"
+  },
+  "accountinfo.tabs": {
+    "defaultMessage": "Sections du compte"
   }
 }

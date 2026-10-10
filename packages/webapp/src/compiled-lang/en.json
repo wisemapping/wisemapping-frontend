@@ -155,6 +155,12 @@
       "value": "Personal Info"
     }
   ],
+  "accountinfo.tabs": [
+    {
+      "type": 0,
+      "value": "Account settings sections"
+    }
+  ],
   "accountinfo.title": [
     {
       "type": 0,
@@ -1705,6 +1711,12 @@
       "value": "Login form"
     }
   ],
+  "common.logo": [
+    {
+      "type": 0,
+      "value": "WiseMapping logo"
+    }
+  ],
   "common.maps-list": [
     {
       "type": 0,
@@ -2105,6 +2117,12 @@
     {
       "type": 0,
       "value": "Open Source"
+    }
+  ],
+  "footer.powered-by": [
+    {
+      "type": 0,
+      "value": "Powered by WiseMapping"
     }
   ],
   "footer.privacypolicy": [
@@ -3139,6 +3157,66 @@
     {
       "type": 0,
       "value": "Viewer"
+    }
+  ],
+  "seo.activation.description": [
+    {
+      "type": 0,
+      "value": "Activate your WiseMapping account to start creating mind maps, organizing ideas, and collaborating with others. Complete your account setup in seconds."
+    }
+  ],
+  "seo.forgot-password-success.description": [
+    {
+      "type": 0,
+      "value": "A password recovery email has been sent to your inbox. Check your email to reset your WiseMapping account password and regain access to your mind maps."
+    }
+  ],
+  "seo.forgot-password.description": [
+    {
+      "type": 0,
+      "value": "Reset your WiseMapping account password. Enter your email address and we'll send you a password recovery link."
+    }
+  ],
+  "seo.login.description": [
+    {
+      "type": 0,
+      "value": "Sign in to your WiseMapping account to access your mind maps, create new ones, and collaborate with others. Free online mind mapping tool."
+    }
+  ],
+  "seo.maps.description": [
+    {
+      "type": 0,
+      "value": "Access and manage your mind maps in WiseMapping. Create, edit, share, and collaborate on your visual thinking projects. Organize your ideas with our powerful mind mapping tool."
+    }
+  ],
+  "seo.maps.title": [
+    {
+      "type": 0,
+      "value": "My Maps | WiseMapping"
+    }
+  ],
+  "seo.registration-success.description": [
+    {
+      "type": 0,
+      "value": "Your WiseMapping account registration was successful. Check your email for the activation link to complete your account setup and start creating mind maps."
+    }
+  ],
+  "seo.registration-success.title": [
+    {
+      "type": 0,
+      "value": "Registration Successful | WiseMapping"
+    }
+  ],
+  "seo.registration.description": [
+    {
+      "type": 0,
+      "value": "Create your free WiseMapping account to start creating mind maps, organizing ideas, and collaborating with others. Join thousands of users worldwide."
+    }
+  ],
+  "seo.reset-password.description": [
+    {
+      "type": 0,
+      "value": "Set a new password for your WiseMapping account."
     }
   ],
   "share.add-button": [

@@ -155,6 +155,12 @@
       "value": "المعلومات الشخصية"
     }
   ],
+  "accountinfo.tabs": [
+    {
+      "type": 0,
+      "value": "أقسام إعدادات الحساب"
+    }
+  ],
   "accountinfo.title": [
     {
       "type": 0,
@@ -1709,6 +1715,12 @@
       "value": "نموذج تسجيل الدخول"
     }
   ],
+  "common.logo": [
+    {
+      "type": 0,
+      "value": "شعار WiseMapping"
+    }
+  ],
   "common.maps-list": [
     {
       "type": 0,
@@ -2156,6 +2168,12 @@
     {
       "type": 0,
       "value": "المصدر المفتوح"
+    }
+  ],
+  "footer.powered-by": [
+    {
+      "type": 0,
+      "value": "مدعوم من WiseMapping"
     }
   ],
   "footer.privacypolicy": [
@@ -3190,6 +3208,66 @@
     {
       "type": 0,
       "value": "قارئ"
+    }
+  ],
+  "seo.activation.description": [
+    {
+      "type": 0,
+      "value": "فعّل حسابك في WiseMapping لتبدأ بإنشاء الخرائط الذهنية وتنظيم الأفكار والتعاون مع الآخرين. أكمل الإعداد في ثوانٍ."
+    }
+  ],
+  "seo.forgot-password-success.description": [
+    {
+      "type": 0,
+      "value": "أُرسلت رسالة الاستعادة إلى بريدك الوارد. افتحها لإعادة تعيين كلمة مرور حسابك في WiseMapping والعودة إلى خرائطك الذهنية."
+    }
+  ],
+  "seo.forgot-password.description": [
+    {
+      "type": 0,
+      "value": "أعد تعيين كلمة مرور حسابك في WiseMapping. أدخل بريدك الإلكتروني وسنرسل إليك رابط الاستعادة."
+    }
+  ],
+  "seo.login.description": [
+    {
+      "type": 0,
+      "value": "سجّل الدخول إلى حسابك في WiseMapping للوصول إلى خرائطك الذهنية وإنشاء خرائط جديدة والتعاون مع الآخرين. أداة مجانية للخرائط الذهنية عبر الإنترنت."
+    }
+  ],
+  "seo.maps.description": [
+    {
+      "type": 0,
+      "value": "افتح خرائطك الذهنية في WiseMapping وأدِرها. أنشئ مشاريع التفكير البصري وعدّلها وشاركها وتعاون عليها. نظّم أفكارك بأداة قوية للخرائط الذهنية."
+    }
+  ],
+  "seo.maps.title": [
+    {
+      "type": 0,
+      "value": "خرائطي | WiseMapping"
+    }
+  ],
+  "seo.registration-success.description": [
+    {
+      "type": 0,
+      "value": "اكتمل تسجيل حسابك في WiseMapping. افتح بريدك الإلكتروني للعثور على رابط التفعيل وإكمال الإعداد وبدء إنشاء الخرائط الذهنية."
+    }
+  ],
+  "seo.registration-success.title": [
+    {
+      "type": 0,
+      "value": "تم التسجيل بنجاح | WiseMapping"
+    }
+  ],
+  "seo.registration.description": [
+    {
+      "type": 0,
+      "value": "أنشئ حسابك المجاني في WiseMapping لتبدأ بإنشاء الخرائط الذهنية وتنظيم الأفكار والتعاون مع الآخرين. انضم إلى آلاف المستخدمين حول العالم."
+    }
+  ],
+  "seo.reset-password.description": [
+    {
+      "type": 0,
+      "value": "عيّن كلمة مرور جديدة لحسابك في WiseMapping."
     }
   ],
   "share.add-button": [

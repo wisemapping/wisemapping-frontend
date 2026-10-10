@@ -195,8 +195,15 @@ const LoginPage = (): React.ReactElement => {
   return (
     <>
       <SEOHead
-        title="Login | WiseMapping"
-        description="Sign in to your WiseMapping account to access your mind maps, create new ones, and collaborate with others. Free online mind mapping tool."
+        title={intl.formatMessage({
+          id: 'login.page-title',
+          defaultMessage: 'Login | WiseMapping',
+        })}
+        description={intl.formatMessage({
+          id: 'seo.login.description',
+          defaultMessage:
+            'Sign in to your WiseMapping account to access your mind maps, create new ones, and collaborate with others. Free online mind mapping tool.',
+        })}
         keywords="login, sign in, mind mapping, wise mapping, account access, collaboration"
         canonicalUrl={canonicalUrl}
         alternateLanguages={alternateLanguages}

@@ -26,6 +26,7 @@ import { useTheme } from '../../../contexts/ThemeContext';
 import StyleListItem from './filter-list-item';
 import type { AccountInfo } from '../../../classes/client';
 import type { Filter, GenericFilter, LabelFilter } from '../index';
+import { useIntl } from 'react-intl';
 
 export interface ToolbarButtonInfo {
   filter: GenericFilter | LabelFilter;
@@ -58,6 +59,7 @@ const DrawerNav = ({
   onFilterClick,
   onLabelDelete,
 }: DrawerNavProps): ReactElement => {
+  const intl = useIntl();
   const { mode } = useTheme();
   return (
     <>
@@ -74,7 +76,7 @@ const DrawerNav = ({
       >
         <img
           src={mode === 'dark' ? logoIconWhite : logoIconBlack}
-          alt="logo"
+          alt={intl.formatMessage({ id: 'common.logo', defaultMessage: 'WiseMapping logo' })}
           style={{ height: '32px', width: 'auto' }}
         />
       </div>

@@ -78,8 +78,15 @@ const ActivationPage = (): React.ReactElement => {
   return (
     <>
       <SEOHead
-        title="Account Activation | WiseMapping"
-        description="Activate your WiseMapping account to start creating mind maps, organizing ideas, and collaborating with others. Complete your account setup in seconds."
+        title={intl.formatMessage({
+          id: 'activation.page-title',
+          defaultMessage: 'Account Activation | WiseMapping',
+        })}
+        description={intl.formatMessage({
+          id: 'seo.activation.description',
+          defaultMessage:
+            'Activate your WiseMapping account to start creating mind maps, organizing ideas, and collaborating with others. Complete your account setup in seconds.',
+        })}
         keywords="account activation, activate account, mind mapping, wise mapping, account setup"
         canonicalUrl={canonicalUrl}
         alternateLanguages={alternateLanguages}
