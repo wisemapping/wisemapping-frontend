@@ -538,7 +538,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                   defaultMessage: 'Search ...',
                 })}
                 css={[classes.searchInputRoot, classes.searchInputInput]}
-                inputProps={{ 'aria-label': 'search' }}
+                slotProps={{ input: { 'aria-label': 'search' } }}
                 onChange={handleOnSearchChange}
                 // startAdornment={<SearchIcon />}
               />
@@ -604,16 +604,14 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                               defaultMessage: 'Starred',
                             })}
                           >
-                            <div className="hola" onClick={(e) => e.stopPropagation()}>
-                              <IconButton size="small" onClick={(e) => handleStarred(e, row.id)}>
-                                <StarRateRoundedIcon
-                                  color="action"
-                                  style={{
-                                    color: row.starred ? 'yellow' : 'gray',
-                                  }}
-                                />
-                              </IconButton>
-                            </div>
+                            <IconButton size="small" onClick={(e) => handleStarred(e, row.id)}>
+                              <StarRateRoundedIcon
+                                color="action"
+                                style={{
+                                  color: row.starred ? 'yellow' : 'gray',
+                                }}
+                              />
+                            </IconButton>
                           </Tooltip>
                         }
                         action={
