@@ -17,7 +17,7 @@
  */
 
 import React, { memo } from 'react';
-import { LabelContainer, LabelText } from './styled';
+import { LabelContainer, LabelText } from '../label/styled';
 
 import { Label } from '../../../../classes/client';
 import LabelTwoTone from '@mui/icons-material/LabelTwoTone';

@@ -16,9 +16,9 @@
  *   limitations under the License.
  */
 
-import styled from 'styled-components';
+import { styled } from '@mui/material/styles';
 
-export const LabelContainer = styled.div`
+export const LabelContainer = styled('div')`
   display: inline-flex;
   flex-direction: row;
   margin: 2px;
@@ -37,7 +37,7 @@ export const LabelContainer = styled.div`
   }
 `;
 
-export const LabelText = styled.span`
+export const LabelText = styled('span')`
   margin-left: 4px;
   margin-right: 0px;
   font-family: 'Figtree', 'Noto Sans JP', 'Helvetica', 'system-ui', 'Arial', 'sans-serif';

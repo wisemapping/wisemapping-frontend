@@ -16,9 +16,9 @@
  *   limitations under the License.
  */
 
-import styled from 'styled-components';
+import { styled } from '@mui/material/styles';
 
-export const ErrorBody = styled.div`
+export const ErrorBody = styled('div')`
   margin: auto;
   width: 90%;
   padding: 10px;

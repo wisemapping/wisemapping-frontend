@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import styled from 'styled-components';
+import { styled } from '@mui/material/styles';
 import LabelTwoTone from '@mui/icons-material/LabelTwoTone';
 
-export const NewLabelColor = styled(LabelTwoTone)``;
+export const NewLabelColor = styled(LabelTwoTone)({});

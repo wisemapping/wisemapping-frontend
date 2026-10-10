@@ -16,9 +16,9 @@
  *   limitations under the License.
  */
 
-import styled from 'styled-components';
+import { styled } from '@mui/material/styles';
 
-export const StyledNav = styled.nav`
+export const StyledNav = styled('nav')`
   height: 90px;
   position: sticky;
   top: -16px;
@@ -72,7 +72,7 @@ export const StyledNav = styled.nav`
   }
 `;
 
-export const StyledDiv = styled.nav`
+export const StyledDiv = styled('nav')`
   height: 74px;
   padding: 10px;
   position: sticky;
@@ -85,7 +85,7 @@ export const StyledDiv = styled.nav`
   grid-template-columns: 150px 1fr 160px 20px;
 `;
 
-export const Logo = styled.span`
+export const Logo = styled('span')`
   grid-column-start: 1;
   margin-left: 20px;
   margin-top: 0px;
