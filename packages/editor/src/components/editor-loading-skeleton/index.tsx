@@ -17,243 +17,93 @@
  */
 
 import React from 'react';
-import Box from '@mui/material/Box';
-import Skeleton from '@mui/material/Skeleton';
-import { useEditorLoadingStyles } from './styled';
+import {
+  AppBarCenter,
+  AppBarLeft,
+  AppBarRight,
+  AppBarSkeleton,
+  ButtonSkeleton,
+  CanvasSkeleton,
+  CentralNodeSkeleton,
+  FormattingToolbarSkeleton,
+  LeftNodes,
+  LoadingContainer,
+  RightNodes,
+  SideNodes,
+  SkeletonBlock,
+  ToolbarActionSkeleton,
+  ZoomToolbarSkeleton,
+} from './styled';
 
 /**
  * Loading skeleton that mimics the editor layout for smooth transition
  */
 const EditorLoadingSkeleton: React.FC = () => {
-  const styles = useEditorLoadingStyles();
-
   return (
-    <Box sx={styles.container}>
+    <LoadingContainer>
       {/* Top AppBar Header Skeleton */}
-      <Box sx={styles.appBar}>
+      <AppBarSkeleton>
         {/* Left side - Back button, Logo, Title */}
-        <Box sx={styles.appBarLeft}>
-          <Skeleton
-            animation="wave"
-            variant="circular"
-            width={32}
-            height={32}
-            sx={styles.skeletonBase}
-          />
-          <Skeleton
-            animation="wave"
-            variant="rectangular"
-            width={120}
-            height={32}
-            sx={styles.skeletonButton}
-          />
-          <Skeleton
-            animation="wave"
-            variant="text"
-            width={180}
-            height={28}
-            sx={styles.skeletonBase}
-          />
-        </Box>
+        <AppBarLeft>
+          <SkeletonBlock animation="wave" variant="circular" width={32} height={32} />
+          <ButtonSkeleton animation="wave" variant="rectangular" width={120} height={32} />
+          <SkeletonBlock animation="wave" variant="text" width={180} height={28} />
+        </AppBarLeft>
 
         {/* Center - Actions */}
-        <Box sx={styles.appBarCenter}>
-          <Skeleton
-            animation="wave"
-            variant="circular"
-            width={36}
-            height={36}
-            sx={styles.skeletonBase}
-            style={{ marginRight: 8 }}
-          />
-          <Skeleton
-            animation="wave"
-            variant="circular"
-            width={36}
-            height={36}
-            sx={styles.skeletonBase}
-            style={{ marginRight: 8 }}
-          />
-          <Skeleton
-            animation="wave"
-            variant="circular"
-            width={36}
-            height={36}
-            sx={styles.skeletonBase}
-            style={{ marginRight: 8 }}
-          />
-          <Skeleton
-            animation="wave"
-            variant="circular"
-            width={36}
-            height={36}
-            sx={styles.skeletonBase}
-            style={{ marginRight: 8 }}
-          />
-          <Skeleton
-            animation="wave"
-            variant="circular"
-            width={36}
-            height={36}
-            sx={styles.skeletonBase}
-          />
-        </Box>
+        <AppBarCenter>
+          <ToolbarActionSkeleton animation="wave" variant="circular" width={36} height={36} />
+          <ToolbarActionSkeleton animation="wave" variant="circular" width={36} height={36} />
+          <ToolbarActionSkeleton animation="wave" variant="circular" width={36} height={36} />
+          <ToolbarActionSkeleton animation="wave" variant="circular" width={36} height={36} />
+          <SkeletonBlock animation="wave" variant="circular" width={36} height={36} />
+        </AppBarCenter>
 
         {/* Right side - Account, Help, Export, Theme */}
-        <Box sx={styles.appBarRight}>
-          <Skeleton
-            animation="wave"
-            variant="circular"
-            width={36}
-            height={36}
-            sx={styles.skeletonBase}
-          />
-          <Skeleton
-            animation="wave"
-            variant="circular"
-            width={36}
-            height={36}
-            sx={styles.skeletonBase}
-          />
-          <Skeleton
-            animation="wave"
-            variant="circular"
-            width={36}
-            height={36}
-            sx={styles.skeletonBase}
-          />
-          <Skeleton
-            animation="wave"
-            variant="circular"
-            width={36}
-            height={36}
-            sx={styles.skeletonBase}
-          />
-        </Box>
-      </Box>
+        <AppBarRight>
+          <SkeletonBlock animation="wave" variant="circular" width={36} height={36} />
+          <SkeletonBlock animation="wave" variant="circular" width={36} height={36} />
+          <SkeletonBlock animation="wave" variant="circular" width={36} height={36} />
+          <SkeletonBlock animation="wave" variant="circular" width={36} height={36} />
+        </AppBarRight>
+      </AppBarSkeleton>
 
       {/* Canvas Area with Central Node Skeleton */}
-      <Box sx={styles.canvas}>
+      <CanvasSkeleton>
         {/* Central Topic Skeleton */}
-        <Skeleton
-          animation="wave"
-          variant="rectangular"
-          width={200}
-          height={60}
-          sx={{
-            ...styles.centralNode,
-            ...styles.skeletonBase,
-            '@keyframes pulse': {
-              '0%, 100%': { opacity: 0.3 },
-              '50%': { opacity: 0.5 },
-            },
-          }}
-        />
+        <CentralNodeSkeleton animation="wave" variant="rectangular" width={200} height={60} />
 
         {/* Surrounding nodes skeleton - subtle branches */}
-        <Box sx={styles.sideNodes}>
-          <Box sx={styles.leftNodes}>
-            <Skeleton
-              animation="wave"
-              variant="rectangular"
-              width={120}
-              height={40}
-              sx={styles.skeletonButton}
-            />
-            <Skeleton
-              animation="wave"
-              variant="rectangular"
-              width={120}
-              height={40}
-              sx={styles.skeletonButton}
-            />
-            <Skeleton
-              animation="wave"
-              variant="rectangular"
-              width={100}
-              height={36}
-              sx={styles.skeletonButton}
-            />
-          </Box>
-          <Box sx={styles.rightNodes}>
-            <Skeleton
-              animation="wave"
-              variant="rectangular"
-              width={120}
-              height={40}
-              sx={styles.skeletonButton}
-            />
-            <Skeleton
-              animation="wave"
-              variant="rectangular"
-              width={120}
-              height={40}
-              sx={styles.skeletonButton}
-            />
-            <Skeleton
-              animation="wave"
-              variant="rectangular"
-              width={100}
-              height={36}
-              sx={styles.skeletonButton}
-            />
-          </Box>
-        </Box>
-      </Box>
+        <SideNodes>
+          <LeftNodes>
+            <ButtonSkeleton animation="wave" variant="rectangular" width={120} height={40} />
+            <ButtonSkeleton animation="wave" variant="rectangular" width={120} height={40} />
+            <ButtonSkeleton animation="wave" variant="rectangular" width={100} height={36} />
+          </LeftNodes>
+          <RightNodes>
+            <ButtonSkeleton animation="wave" variant="rectangular" width={120} height={40} />
+            <ButtonSkeleton animation="wave" variant="rectangular" width={120} height={40} />
+            <ButtonSkeleton animation="wave" variant="rectangular" width={100} height={36} />
+          </RightNodes>
+        </SideNodes>
+      </CanvasSkeleton>
 
       {/* Right Vertical Toolbar Skeleton */}
-      <Box sx={styles.rightToolbar}>
+      <FormattingToolbarSkeleton>
         {[...Array(8)].map((_, i) => (
-          <Skeleton
-            key={i}
-            animation="wave"
-            variant="rectangular"
-            width={32}
-            height={32}
-            sx={styles.skeletonButton}
-          />
+          <ButtonSkeleton key={i} animation="wave" variant="rectangular" width={32} height={32} />
         ))}
-      </Box>
+      </FormattingToolbarSkeleton>
 
       {/* Bottom Visualization Toolbar Skeleton */}
-      <Box sx={styles.visualizationToolbar}>
-        <Skeleton
-          animation="wave"
-          variant="rectangular"
-          width={32}
-          height={32}
-          sx={styles.skeletonButton}
-        />
-        <Skeleton
-          animation="wave"
-          variant="rectangular"
-          width={32}
-          height={32}
-          sx={styles.skeletonButton}
-        />
-        <Skeleton
-          animation="wave"
-          variant="rectangular"
-          width={60}
-          height={32}
-          sx={styles.skeletonButton}
-        />
-        <Skeleton
-          animation="wave"
-          variant="rectangular"
-          width={32}
-          height={32}
-          sx={styles.skeletonButton}
-        />
-        <Skeleton
-          animation="wave"
-          variant="rectangular"
-          width={32}
-          height={32}
-          sx={styles.skeletonButton}
-        />
-      </Box>
-    </Box>
+      <ZoomToolbarSkeleton>
+        <ButtonSkeleton animation="wave" variant="rectangular" width={32} height={32} />
+        <ButtonSkeleton animation="wave" variant="rectangular" width={32} height={32} />
+        <ButtonSkeleton animation="wave" variant="rectangular" width={60} height={32} />
+        <ButtonSkeleton animation="wave" variant="rectangular" width={32} height={32} />
+        <ButtonSkeleton animation="wave" variant="rectangular" width={32} height={32} />
+      </ZoomToolbarSkeleton>
+    </LoadingContainer>
   );
 };
 
