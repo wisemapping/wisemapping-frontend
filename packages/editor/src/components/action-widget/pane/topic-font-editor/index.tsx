@@ -17,22 +17,15 @@
  */
 
 import React, { ReactElement, useState, useEffect } from 'react';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
 import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import Divider from '@mui/material/Divider';
 import CloseIcon from '@mui/icons-material/Close';
 import TextIncreaseOutlinedIcon from '@mui/icons-material/TextIncreaseOutlined';
 import TextDecreaseOutlinedIcon from '@mui/icons-material/TextDecreaseOutlined';
 import FormatBoldOutlinedIcon from '@mui/icons-material/FormatBoldOutlined';
 import FormatItalicIcon from '@mui/icons-material/FormatItalic';
 import NotInterestedOutlined from '@mui/icons-material/NotInterestedOutlined';
-import Button from '@mui/material/Button';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { styled } from '@mui/material/styles';
 import type { SelectChangeEvent } from '@mui/material/Select';
 
 import NodeProperty from '../../../../classes/model/node-property';
@@ -40,26 +33,24 @@ import { SwitchValueDirection } from '../../../../classes/model/value-stepper';
 import ColorPicker from '../color-picker';
 import Editor from '../../../../classes/model/editor';
 import { trackFontFormatAction } from '../../../../utils/analytics';
-import { StyledEditorContainer } from '../shared/StyledEditorContainer';
-
-const ActionButton = styled(IconButton)<{ selected?: boolean }>(({ selected, theme }) => ({
-  padding: '8px',
-  width: '32px',
-  height: '32px',
-  border: selected
-    ? `2px solid ${theme.palette.primary.main}`
-    : `2px solid ${theme.palette.divider}`,
-  borderRadius: '4px',
-  backgroundColor: selected
-    ? theme.palette.mode === 'dark'
-      ? 'rgba(144, 202, 249, 0.08)'
-      : 'rgba(25, 118, 210, 0.08)'
-    : 'transparent',
-  '&:hover': {
-    borderColor: theme.palette.primary.main,
-    backgroundColor: theme.palette.action.hover,
-  },
-}));
+import {
+  PaneCenteredRow,
+  PaneCloseButton,
+  PaneControlRow,
+  PaneDivider,
+  PaneSection,
+  PaneSectionTitle,
+} from '../shared/StyledPane';
+import {
+  ActionButton,
+  FontFallbackLabel,
+  FontOptionLabel,
+  FontPaneContainer,
+  FontSelect,
+  ResetButton,
+  ResetSection,
+  fontMenuProps,
+} from './styled';
 
 interface TopicFontEditorProps {
   closeModal: () => void;
@@ -109,10 +100,11 @@ const TopicFontEditor = (props: TopicFontEditorProps): ReactElement => {
     };
   }, [model, mapLoaded, fontFamilyModel, fontWeightModel, fontStyleModel]);
 
-  const handleFontFamilyChange = (event: SelectChangeEvent) => {
+  // The styled select does not carry Select's generic: the value is read as a string here.
+  const handleFontFamilyChange = (event: SelectChangeEvent<unknown>) => {
     const setValue = props.fontFamilyModel.setValue;
     if (setValue) {
-      const value = event.target.value === '' ? undefined : event.target.value;
+      const value = event.target.value === '' ? undefined : String(event.target.value);
       setValue(value);
     }
   };
@@ -159,74 +151,25 @@ const TopicFontEditor = (props: TopicFontEditorProps): ReactElement => {
   };
 
   return (
-    <StyledEditorContainer
-      sx={{
-        pt: 2,
-        px: 2,
-        pb: 1,
-      }}
-    >
-      <IconButton
-        onClick={props.closeModal}
-        sx={{
-          position: 'absolute',
-          top: 4,
-          right: 4,
-          zIndex: 1,
-          width: 24,
-          height: 24,
-          '& .MuiSvgIcon-root': {
-            fontSize: '16px',
-          },
-        }}
-      >
+    <FontPaneContainer>
+      <PaneCloseButton onClick={props.closeModal}>
         <CloseIcon />
-      </IconButton>
+      </PaneCloseButton>
       {/* Font Family */}
-      <Box sx={{ mb: 2 }}>
-        <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
+      <PaneSection>
+        <PaneSectionTitle variant="subtitle2" gutterBottom>
           <FormattedMessage id="topic-font-editor.font-family" defaultMessage="Font Family" />
-        </Typography>
+        </PaneSectionTitle>
         <FormControl variant="outlined" fullWidth size="small">
-          <Select
+          <FontSelect
+            currentFamily={currentFont}
             value={currentFont || ''}
             onChange={handleFontFamilyChange}
             displayEmpty
-            sx={{
-              fontSize: '0.656rem',
-              fontFamily: currentFont || 'inherit',
-              '& .MuiSelect-select': {
-                py: 1.25,
-                px: 1.5,
-              },
-              '& .MuiOutlinedInput-notchedOutline': {
-                borderColor: 'divider',
-              },
-              '&:hover .MuiOutlinedInput-notchedOutline': {
-                borderColor: 'text.secondary',
-              },
-              '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                borderColor: 'primary.main',
-              },
-            }}
-            MenuProps={{
-              slotProps: {
-                paper: {
-                  sx: {
-                    maxHeight: 300,
-                    '& .MuiMenuItem-root': {
-                      py: 1,
-                      px: 2,
-                    },
-                  },
-                },
-              },
-            }}
+            MenuProps={fontMenuProps}
           >
             <MenuItem value="">
-              <Typography
-                sx={{ fontStyle: 'italic', color: 'text.secondary', fontSize: '0.656rem' }}
-              >
+              <FontFallbackLabel>
                 {currentFont === undefined
                   ? intl.formatMessage({
                       id: 'editor-panel.font-family-default',
@@ -236,7 +179,7 @@ const TopicFontEditor = (props: TopicFontEditorProps): ReactElement => {
                       id: 'editor-panel.font-family-mixed',
                       defaultMessage: 'Mixed',
                     })}
-              </Typography>
+              </FontFallbackLabel>
             </MenuItem>
             {[
               'Arial',
@@ -264,41 +207,34 @@ const TopicFontEditor = (props: TopicFontEditorProps): ReactElement => {
               .sort()
               .map((f) => (
                 <MenuItem value={f} key={f}>
-                  <Typography
-                    sx={{
-                      fontFamily: f,
-                      fontSize: '0.656rem',
-                    }}
-                  >
-                    {f}
-                  </Typography>
+                  <FontOptionLabel family={f}>{f}</FontOptionLabel>
                 </MenuItem>
               ))}
-          </Select>
+          </FontSelect>
         </FormControl>
-      </Box>
+      </PaneSection>
       {/* Font Color */}
-      <Box sx={{ mb: 2 }}>
-        <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
+      <PaneSection>
+        <PaneSectionTitle variant="subtitle2" gutterBottom>
           <FormattedMessage id="topic-font-editor.font-color" defaultMessage="Font Color" />
-        </Typography>
-        <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
+        </PaneSectionTitle>
+        <PaneCenteredRow>
           <ColorPicker
             closeModal={() => {}}
             colorModel={props.fontColorModel}
             hideNoneOption={true}
           />
-        </Box>
-      </Box>
+        </PaneCenteredRow>
+      </PaneSection>
       {/* Font Size & Font Style */}
-      <Box sx={{ mb: 2 }}>
-        <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
+      <PaneSection>
+        <PaneSectionTitle variant="subtitle2" gutterBottom>
           <FormattedMessage
             id="topic-font-editor.font-size-style"
             defaultMessage="Font Size & Style"
           />
-        </Typography>
-        <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', justifyContent: 'center' }}>
+        </PaneSectionTitle>
+        <PaneControlRow>
           <ActionButton
             onClick={handleFontSizeIncrease}
             aria-label={intl.formatMessage({
@@ -326,11 +262,7 @@ const TopicFontEditor = (props: TopicFontEditorProps): ReactElement => {
             <TextDecreaseOutlinedIcon />
           </ActionButton>
 
-          <Divider
-            orientation="vertical"
-            flexItem
-            sx={{ mx: 1, height: '32px', alignSelf: 'center' }}
-          />
+          <PaneDivider orientation="vertical" flexItem />
 
           <ActionButton
             onClick={handleBoldToggle}
@@ -376,31 +308,26 @@ const TopicFontEditor = (props: TopicFontEditorProps): ReactElement => {
           >
             <FormatItalicIcon />
           </ActionButton>
-        </Box>
-      </Box>
+        </PaneControlRow>
+      </PaneSection>
       {/* Reset to Default Button - At bottom */}
       {hasCustomFont && (
-        <Box sx={{ mt: 2, pt: 2, borderTop: '1px solid', borderColor: 'divider' }}>
-          <Button
+        <ResetSection>
+          <ResetButton
             variant="outlined"
             size="small"
             startIcon={<NotInterestedOutlined />}
             onClick={handleResetToDefault}
             fullWidth
-            sx={{
-              textTransform: 'none',
-              fontSize: '0.75rem',
-              py: 0.75,
-            }}
           >
             <FormattedMessage
               id="topic-font-editor.reset-to-default"
               defaultMessage="Reset to Default"
             />
-          </Button>
-        </Box>
+          </ResetButton>
+        </ResetSection>
       )}
-    </StyledEditorContainer>
+    </FontPaneContainer>
   );
 };
 
