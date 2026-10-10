@@ -186,6 +186,16 @@ describe('RenameDialog', () => {
     expect(renameMap).not.toHaveBeenCalled();
   });
 
+  test('the invalid map id error stays while the user types', async () => {
+    // The error was state set once by an effect, and typing cleared it.
+    setup(Number.NaN);
+    expect(await screen.findByText('Invalid map ID')).toBeTruthy();
+
+    fireEvent.change(textbox(/Name/), { target: { value: 'Something' } });
+
+    expect(screen.getByText('Invalid map ID')).toBeTruthy();
+  });
+
   test('cancel closes without renaming', async () => {
     const { renameMap, onClose } = setup();
     await screen.findByDisplayValue('Travel plans');

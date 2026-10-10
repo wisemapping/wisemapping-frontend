@@ -128,18 +128,15 @@ const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElem
 
   const { data: map } = useFetchMapById(mapId);
 
-  // Validate mapId - show error if invalid (0 is a valid ID)
-  useEffect(() => {
-    if (mapId == null || Number.isNaN(mapId)) {
-      setError({
-        msg: intl.formatMessage({
-          id: 'error.invalid-map-id',
-          defaultMessage: 'Invalid map ID',
-        }),
-      });
-      return;
-    }
-  }, [mapId, intl]);
+  // An invalid id (0 is a valid one) is an error for as long as it is invalid: derived, so typing
+  // in the form can not clear it.
+  const invalidMapIdError: ErrorInfo | undefined =
+    mapId == null || Number.isNaN(mapId)
+      ? {
+          msg: intl.formatMessage({ id: 'error.invalid-map-id', defaultMessage: 'Invalid map ID' }),
+        }
+      : undefined;
+  const shownError = error ?? invalidMapIdError;
 
   useEffect(() => {
     if (map) {
@@ -179,7 +176,7 @@ const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElem
       <BaseDialog
         onClose={handleOnClose}
         onSubmit={handleOnSubmit}
-        error={error}
+        error={shownError}
         isLoading={mutation.isPending}
         title={intl.formatMessage({ id: 'duplicate.title', defaultMessage: 'Duplicate' })}
         description={intl.formatMessage({
@@ -201,7 +198,7 @@ const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElem
             })}
             value={model.title}
             onChange={handleOnChange}
-            error={error}
+            error={shownError}
             fullWidth={true}
             required={true}
             minLength={1}
@@ -217,7 +214,7 @@ const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElem
             })}
             value={model.description || ''}
             onChange={handleOnChange}
-            error={error}
+            error={shownError}
             required={false}
             fullWidth={true}
             maxLength={MAP_DESCRIPTION_MAX_LENGTH}

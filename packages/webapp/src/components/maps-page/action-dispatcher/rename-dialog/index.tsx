@@ -114,18 +114,15 @@ const RenameDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement
 
   const { data: map } = useFetchMapById(mapId);
 
-  // Validate mapId - show error if invalid (0 is a valid ID)
-  useEffect(() => {
-    if (mapId == null || Number.isNaN(mapId)) {
-      setError({
-        msg: intl.formatMessage({
-          id: 'error.invalid-map-id',
-          defaultMessage: 'Invalid map ID',
-        }),
-      });
-      return;
-    }
-  }, [mapId, intl]);
+  // An invalid id (0 is a valid one) is an error for as long as it is invalid: derived, so typing
+  // in the form can not clear it.
+  const invalidMapIdError: ErrorInfo | undefined =
+    mapId == null || Number.isNaN(mapId)
+      ? {
+          msg: intl.formatMessage({ id: 'error.invalid-map-id', defaultMessage: 'Invalid map ID' }),
+        }
+      : undefined;
+  const shownError = error ?? invalidMapIdError;
 
   useEffect(() => {
     // Only set model from map data on initial load
@@ -140,7 +137,7 @@ const RenameDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement
       <BaseDialog
         onClose={handleOnClose}
         onSubmit={handleOnSubmit}
-        error={error}
+        error={shownError}
         isLoading={mutation.isPending}
         title={intl.formatMessage({ id: 'rename.title', defaultMessage: 'Rename' })}
         description={intl.formatMessage({
@@ -159,7 +156,7 @@ const RenameDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement
             })}
             value={model.title}
             onChange={handleOnChange}
-            error={error}
+            error={shownError}
             fullWidth={true}
             maxLength={MAP_TITLE_MAX_LENGTH}
           />
