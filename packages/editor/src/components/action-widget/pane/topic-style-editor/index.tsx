@@ -18,9 +18,6 @@
 
 import React, { ReactElement, useState } from 'react';
 import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { FormattedMessage } from 'react-intl';
 import { StyledEditorsTabs } from '../shared/StyledTabs';
@@ -38,6 +35,15 @@ import NodeProperty from '../../../../classes/model/node-property';
 import { TopicShapeType, LineType, StrokeStyle } from '@wisemapping/mindplot';
 import ColorPicker from '../color-picker';
 import IconCollection from './IconCollection';
+import { PaneCenteredRow, PaneSectionTitle } from '../shared/StyledPane';
+import {
+  StyleCloseButton,
+  StylePaneBody,
+  StyleSubsectionTitle,
+  StyleTabContent,
+  TabCaption,
+  TabsBar,
+} from './styled';
 
 // Custom SVG icons for connection styles
 const ThickCurvedIcon = () => (
@@ -160,18 +166,7 @@ function TabPanel(props: TabPanelProps) {
       aria-labelledby={`styling-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box
-          sx={{
-            pt: 1,
-            pb: 1,
-            px: 0,
-            width: '100%',
-          }}
-        >
-          {children}
-        </Box>
-      )}
+      {value === index && <StylePaneBody>{children}</StylePaneBody>}
     </div>
   );
 }
@@ -195,12 +190,12 @@ const borderStyles = [
   },
   {
     type: StrokeStyle.DASHED,
-    icon: <Box sx={{ fontSize: '10px', fontWeight: 700, lineHeight: 1 }}>- -</Box>,
+    icon: <TabCaption>- -</TabCaption>,
     label: <FormattedMessage id="icon-collection.border.dashed" defaultMessage="Dashed" />,
   },
   {
     type: StrokeStyle.DOTTED,
-    icon: <Box sx={{ fontSize: '10px', fontWeight: 700, lineHeight: 1 }}>· ·</Box>,
+    icon: <TabCaption>· ·</TabCaption>,
     label: <FormattedMessage id="icon-collection.border.dotted" defaultMessage="Dotted" />,
   },
 ];
@@ -347,23 +342,10 @@ const TopicStyleEditor = (props: TopicStyleEditorProps): ReactElement => {
 
   return (
     <StyledEditorContainer>
-      <IconButton
-        onClick={props.closeModal}
-        sx={{
-          position: 'absolute',
-          top: 0,
-          right: 0,
-          zIndex: 1,
-          width: 24,
-          height: 24,
-          '& .MuiSvgIcon-root': {
-            fontSize: '16px',
-          },
-        }}
-      >
+      <StyleCloseButton onClick={props.closeModal}>
         <CloseIcon />
-      </IconButton>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider', p: 0 }}>
+      </StyleCloseButton>
+      <TabsBar>
         <StyledEditorsTabs
           value={activeTab}
           onChange={handleTabChange}
@@ -388,15 +370,15 @@ const TopicStyleEditor = (props: TopicStyleEditorProps): ReactElement => {
             aria-controls="styling-tabpanel-2"
           />
         </StyledEditorsTabs>
-      </Box>
+      </TabsBar>
 
       <TabPanel value={activeTab} index={0}>
         {/* Shape Tab */}
-        <Box sx={{ px: 1, py: 0, width: '100%' }}>
-          <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
+        <StyleTabContent>
+          <PaneSectionTitle variant="subtitle2" gutterBottom>
             <FormattedMessage id="unified-styling.shape-type" defaultMessage="Shape Type" />
-          </Typography>
-          <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
+          </PaneSectionTitle>
+          <PaneCenteredRow>
             <IconCollection
               styles={[
                 {
@@ -457,112 +439,100 @@ const TopicStyleEditor = (props: TopicStyleEditorProps): ReactElement => {
               onSelect={handleShapeChange}
               ariaLabelSuffix=" shape"
             />
-          </Box>
+          </PaneCenteredRow>
 
           {/* Style Topic Color - Only shown when shape is not default, not line, and not none */}
           {props.shapeModel.getValue() !== undefined &&
             props.shapeModel.getValue() !== 'line' &&
             props.shapeModel.getValue() !== 'none' && (
               <>
-                <Typography
-                  variant="subtitle2"
-                  gutterBottom
-                  sx={{ mt: 1, fontSize: '0.75rem', mb: 1 }}
-                >
+                <StyleSubsectionTitle variant="subtitle2" gutterBottom>
                   <FormattedMessage
                     id="unified-styling.background-color"
                     defaultMessage="Background Color"
                   />
-                </Typography>
-                <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
+                </StyleSubsectionTitle>
+                <PaneCenteredRow>
                   <ColorPicker
                     closeModal={() => {}}
                     colorModel={props.fillColorModel}
                     hideNoneOption={true}
                   />
-                </Box>
+                </PaneCenteredRow>
               </>
             )}
-        </Box>
+        </StyleTabContent>
       </TabPanel>
 
       <TabPanel value={activeTab} index={1}>
         {/* Border Tab */}
-        <Box sx={{ px: 1, py: 0, width: '100%' }}>
-          <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
+        <StyleTabContent>
+          <PaneSectionTitle variant="subtitle2" gutterBottom>
             <FormattedMessage id="unified-styling.border-style" defaultMessage="Border Style" />
-          </Typography>
-          <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
+          </PaneSectionTitle>
+          <PaneCenteredRow>
             <IconCollection
               styles={borderStyles}
               selectedValue={props.borderStyleModel.getValue()}
               onSelect={handleBorderStyleChange}
               ariaLabelSuffix=" Line"
             />
-          </Box>
+          </PaneCenteredRow>
 
           {/* Border Color - Only shown when border style is not default */}
           {props.borderStyleModel.getValue() !== undefined && (
             <>
-              <Typography
-                variant="subtitle2"
-                gutterBottom
-                sx={{ mt: 1, fontSize: '0.75rem', mb: 1 }}
-              >
+              <StyleSubsectionTitle variant="subtitle2" gutterBottom>
                 <FormattedMessage id="unified-styling.border-color" defaultMessage="Border Color" />
-              </Typography>
-              <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
+              </StyleSubsectionTitle>
+              <PaneCenteredRow>
                 <ColorPicker
                   closeModal={() => {}}
                   colorModel={props.borderColorModel}
                   hideNoneOption={true}
                 />
-              </Box>
+              </PaneCenteredRow>
             </>
           )}
-        </Box>
+        </StyleTabContent>
       </TabPanel>
 
       <TabPanel value={activeTab} index={2}>
         {/* Connector Tab */}
-        <Box sx={{ px: 1, py: 0, width: '100%' }}>
-          <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
+        <StyleTabContent>
+          <PaneSectionTitle variant="subtitle2" gutterBottom>
             <FormattedMessage
               id="unified-styling.connector-style"
               defaultMessage="Connector Style"
             />
-          </Typography>
-          <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
+          </PaneSectionTitle>
+          <PaneCenteredRow>
             <IconCollection
               styles={connectionStyles}
               selectedValue={props.connectionStyleModel.getValue()}
               onSelect={handleConnectionStyleChange}
             />
-          </Box>
+          </PaneCenteredRow>
 
           {/* Connection Color - Only shown when connector style is not default */}
           {props.connectionStyleModel.getValue() !== undefined && (
             <>
-              <Typography
-                variant="subtitle2"
-                gutterBottom
-                sx={{ mt: 1, fontSize: '0.75rem', mb: 1 }}
-              >
+              <StyleSubsectionTitle variant="subtitle2" gutterBottom>
                 <FormattedMessage
                   id="unified-styling.connection-style"
                   defaultMessage="Connection Style"
                 />
-              </Typography>
-              <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
+              </StyleSubsectionTitle>
+              <PaneCenteredRow>
                 <ColorPicker
                   closeModal={() => {}}
                   colorModel={props.connectionColorModel}
                   hideNoneOption={true}
                 />
-              </Box>
+              </PaneCenteredRow>
             </>
           )}
-        </Box>
+        </StyleTabContent>
       </TabPanel>
     </StyledEditorContainer>
   );
