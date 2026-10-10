@@ -16,13 +16,8 @@
  *   limitations under the License.
  */
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
 import Popover from '@mui/material/Popover';
-import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import FormatIndentIncreaseIcon from '@mui/icons-material/FormatIndentIncrease';
 import FormatIndentDecreaseIcon from '@mui/icons-material/FormatIndentDecrease';
@@ -42,6 +37,20 @@ import EmojiPicker, { EmojiClickData, EmojiStyle, Theme } from 'emoji-picker-rea
 import { HtmlSanitizer } from '@wisemapping/mindplot';
 import { attachNoteEditing, NoteEditing } from './note-editing';
 import { safeLinkUrl } from './markdown-rules';
+import {
+  CloseNoteButton,
+  EmojiPopoverBox,
+  FooterBar,
+  HeaderControl,
+  HeaderSelect,
+  NoteEditable,
+  NoteEditorFrame,
+  NoteFrame,
+  ToolbarFrame,
+  ToolbarRow,
+  ToolButton,
+  ToolGroup,
+} from './styled';
 
 type RichTextNoteEditorProps = {
   closeModal: () => void;
@@ -318,96 +327,19 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
   }, []);
 
   return (
-    <Box
-      sx={{
-        pl: 0,
-        pr: 0,
-        pb: 0.375,
-        width: '650px',
-        height: '470px',
-        backgroundColor: theme.palette.background.paper,
-        borderRadius: 2,
-        boxShadow:
-          theme.palette.mode === 'dark'
-            ? '0 4px 12px rgba(255, 255, 255, 0.1)'
-            : '0 4px 12px rgba(0, 0, 0, 0.1)',
-        position: 'relative',
-      }}
-    >
-      <IconButton
-        onClick={closeModal}
-        sx={{
-          position: 'absolute',
-          top: 8,
-          right: 8,
-          zIndex: 10,
-          width: 32,
-          height: 32,
-          backgroundColor: theme.palette.background.paper,
-          '&:hover': {
-            backgroundColor: theme.palette.action.hover,
-          },
-          '& .MuiSvgIcon-root': {
-            fontSize: '20px',
-          },
-        }}
-      >
+    <NoteEditorFrame>
+      <CloseNoteButton onClick={closeModal}>
         <CloseIcon />
-      </IconButton>
+      </CloseNoteButton>
       {/* Toolbar */}
-      <Box
-        sx={{
-          m: 0,
-          p: 0,
-          minHeight: '60px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          border: `1px solid ${theme.palette.divider}`,
-          borderBottom: 'none',
-          borderRadius: '8px 8px 0 0',
-          backgroundColor: theme.palette.background.default,
-          boxShadow:
-            theme.palette.mode === 'dark'
-              ? '0 2px 4px rgba(255, 255, 255, 0.05)'
-              : '0 2px 4px rgba(0, 0, 0, 0.05)',
-        }}
-      >
+      <ToolbarFrame>
         {/* Single Row - All Options */}
-        <Box
-          sx={{
-            display: 'flex',
-            gap: 1,
-            alignItems: 'center',
-            flexWrap: 'nowrap',
-            overflowX: 'auto',
-          }}
-        >
-          <FormControl size="small" sx={{ minWidth: 150, flexShrink: 0 }}>
-            <Select
+        <ToolbarRow>
+          <HeaderControl size="small">
+            <HeaderSelect
               defaultValue="normal"
-              onChange={(e) => setHeader(e.target.value)}
+              onChange={(e) => setHeader(String(e.target.value))}
               displayEmpty
-              sx={{
-                fontSize: '14px',
-                backgroundColor: theme.palette.background.paper,
-                borderColor: theme.palette.divider,
-                '&:hover': {
-                  borderColor: theme.palette.text.secondary,
-                },
-                '&.Mui-focused': {
-                  borderColor: theme.palette.divider,
-                },
-                '& .MuiOutlinedInput-notchedOutline': {
-                  borderColor: theme.palette.divider,
-                },
-                '&:hover .MuiOutlinedInput-notchedOutline': {
-                  borderColor: theme.palette.text.secondary,
-                },
-                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                  borderColor: theme.palette.divider,
-                },
-              }}
             >
               <MenuItem value="normal" sx={{ fontSize: '12px' }}>
                 Normal
@@ -436,150 +368,86 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
               <MenuItem value="pre" sx={{ fontSize: '10px', fontFamily: 'monospace' }}>
                 Code Block
               </MenuItem>
-            </Select>
-          </FormControl>
+            </HeaderSelect>
+          </HeaderControl>
 
-          <ButtonGroup size="small" variant="outlined" sx={{ flexShrink: 0 }}>
-            <Button
+          <ToolGroup size="small" variant="outlined">
+            <ToolButton
               onClick={insertLink}
               title={intl.formatMessage({
                 id: 'rich-text-editor.insert-link',
                 defaultMessage: 'Insert Link',
               })}
-              sx={{
-                minWidth: '36px',
-                borderColor: theme.palette.divider,
-                '&:hover': {
-                  borderColor: theme.palette.text.secondary,
-                  backgroundColor: theme.palette.action.hover,
-                },
-              }}
             >
               🔗
-            </Button>
-            <Button
+            </ToolButton>
+            <ToolButton
               onClick={handleIconPickerOpen}
               title={intl.formatMessage({
                 id: 'rich-text-editor.insert-icon',
                 defaultMessage: 'Insert Icon',
               })}
-              sx={{
-                minWidth: '36px',
-                borderColor: theme.palette.divider,
-                '&:hover': {
-                  borderColor: theme.palette.text.secondary,
-                  backgroundColor: theme.palette.action.hover,
-                },
-              }}
             >
               😀
-            </Button>
-          </ButtonGroup>
+            </ToolButton>
+          </ToolGroup>
 
-          <ButtonGroup size="small" variant="outlined" sx={{ flexShrink: 0 }}>
-            <Button
+          <ToolGroup size="small" variant="outlined">
+            <ToolButton
               onClick={() => execCommand('bold')}
               title={intl.formatMessage({ id: 'rich-text-editor.bold', defaultMessage: 'Bold' })}
-              sx={{
-                minWidth: '36px',
-                borderColor: theme.palette.divider,
-                '&:hover': {
-                  borderColor: theme.palette.text.secondary,
-                  backgroundColor: theme.palette.action.hover,
-                },
-              }}
             >
               <strong>B</strong>
-            </Button>
-            <Button
+            </ToolButton>
+            <ToolButton
               onClick={() => execCommand('italic')}
               title={intl.formatMessage({
                 id: 'rich-text-editor.italic',
                 defaultMessage: 'Italic',
               })}
-              sx={{
-                minWidth: '36px',
-                borderColor: theme.palette.divider,
-                '&:hover': {
-                  borderColor: theme.palette.text.secondary,
-                  backgroundColor: theme.palette.action.hover,
-                },
-              }}
             >
               <em>I</em>
-            </Button>
-            <Button
+            </ToolButton>
+            <ToolButton
               onClick={() => execCommand('underline')}
               title={intl.formatMessage({
                 id: 'rich-text-editor.underline',
                 defaultMessage: 'Underline',
               })}
-              sx={{
-                minWidth: '36px',
-                borderColor: theme.palette.divider,
-                '&:hover': {
-                  borderColor: theme.palette.text.secondary,
-                  backgroundColor: theme.palette.action.hover,
-                },
-              }}
             >
               <u>U</u>
-            </Button>
-            <Button
+            </ToolButton>
+            <ToolButton
               onClick={() => execCommand('strikeThrough')}
               title={intl.formatMessage({
                 id: 'rich-text-editor.strikethrough',
                 defaultMessage: 'Strikethrough',
               })}
-              sx={{
-                minWidth: '36px',
-                borderColor: theme.palette.divider,
-                '&:hover': {
-                  borderColor: theme.palette.text.secondary,
-                  backgroundColor: theme.palette.action.hover,
-                },
-              }}
             >
               <s>S</s>
-            </Button>
-          </ButtonGroup>
+            </ToolButton>
+          </ToolGroup>
 
-          <ButtonGroup size="small" variant="outlined" sx={{ flexShrink: 0 }}>
-            <Button
+          <ToolGroup size="small" variant="outlined">
+            <ToolButton
               onClick={() => execCommand('insertUnorderedList')}
               title={intl.formatMessage({
                 id: 'rich-text-editor.bullet-list',
                 defaultMessage: 'Bullet List',
               })}
-              sx={{
-                minWidth: '36px',
-                borderColor: theme.palette.divider,
-                '&:hover': {
-                  borderColor: theme.palette.text.secondary,
-                  backgroundColor: theme.palette.action.hover,
-                },
-              }}
             >
               •
-            </Button>
-            <Button
+            </ToolButton>
+            <ToolButton
               onClick={() => execCommand('insertOrderedList')}
               title={intl.formatMessage({
                 id: 'rich-text-editor.numbered-list',
                 defaultMessage: 'Numbered List',
               })}
-              sx={{
-                minWidth: '36px',
-                borderColor: theme.palette.divider,
-                '&:hover': {
-                  borderColor: theme.palette.text.secondary,
-                  backgroundColor: theme.palette.action.hover,
-                },
-              }}
             >
               1.
-            </Button>
-            <Button
+            </ToolButton>
+            <ToolButton
               // Keeps the selection in the note.
               onMouseDown={(e) => e.preventDefault()}
               onClick={() => indent(true)}
@@ -587,55 +455,26 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
                 id: 'rich-text-editor.outdent',
                 defaultMessage: 'Decrease Indent (Shift+Tab)',
               })}
-              sx={{
-                minWidth: '36px',
-                borderColor: theme.palette.divider,
-                '&:hover': {
-                  borderColor: theme.palette.text.secondary,
-                  backgroundColor: theme.palette.action.hover,
-                },
-              }}
             >
               <FormatIndentDecreaseIcon fontSize="small" />
-            </Button>
-            <Button
+            </ToolButton>
+            <ToolButton
               onMouseDown={(e) => e.preventDefault()}
               onClick={() => indent(false)}
               title={intl.formatMessage({
                 id: 'rich-text-editor.indent',
                 defaultMessage: 'Increase Indent (Tab)',
               })}
-              sx={{
-                minWidth: '36px',
-                borderColor: theme.palette.divider,
-                '&:hover': {
-                  borderColor: theme.palette.text.secondary,
-                  backgroundColor: theme.palette.action.hover,
-                },
-              }}
             >
               <FormatIndentIncreaseIcon fontSize="small" />
-            </Button>
-          </ButtonGroup>
-        </Box>
-      </Box>
+            </ToolButton>
+          </ToolGroup>
+        </ToolbarRow>
+      </ToolbarFrame>
 
       {/* Editor */}
-      <Box
-        sx={{
-          position: 'relative',
-          height: '350px',
-          border: `1px solid ${theme.palette.divider}`,
-          borderTop: 'none',
-          borderRadius: '0 0 8px 8px',
-          backgroundColor: theme.palette.background.paper,
-          boxShadow:
-            theme.palette.mode === 'dark'
-              ? 'inset 0 1px 3px rgba(255, 255, 255, 0.1)'
-              : 'inset 0 1px 3px rgba(0, 0, 0, 0.1)',
-        }}
-      >
-        <Box
+      <NoteFrame>
+        <NoteEditable
           ref={editorRef}
           contentEditable
           onInput={handleContentChange}
@@ -644,56 +483,17 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
           onKeyUp={(e) => e.stopPropagation()}
           onKeyPress={(e) => e.stopPropagation()}
           suppressContentEditableWarning={true}
-          sx={{
-            height: '100%',
-            p: 2.5,
-            overflow: 'auto',
-            fontFamily: 'Arial, sans-serif',
-            fontSize: '14px',
-            '& ul, & ol': { pl: 3, my: 0.5 },
-            '& li > ul, & li > ol, & ul > ul, & ol > ol': { my: 0 },
-            '& ul ul': { listStyleType: 'circle' },
-            '& ul ul ul': { listStyleType: 'square' },
-            '& ol ol': { listStyleType: 'lower-alpha' },
-            '& ol ol ol': { listStyleType: 'lower-roman' },
-            '& a': { color: theme.palette.primary.main, textDecoration: 'underline' },
-            '&::-webkit-scrollbar': {
-              width: '8px',
-            },
-            '&::-webkit-scrollbar-track': {
-              backgroundColor: theme.palette.mode === 'dark' ? '#404040' : '#f1f1f1',
-              borderRadius: '4px',
-            },
-            '&::-webkit-scrollbar-thumb': {
-              backgroundColor: theme.palette.mode === 'dark' ? '#606060' : '#c1c1c1',
-              borderRadius: '4px',
-              '&:hover': {
-                backgroundColor: theme.palette.mode === 'dark' ? '#707070' : '#a8a8a8',
-              },
-            },
-          }}
         />
-      </Box>
+      </NoteFrame>
 
       {/* Character Counter and Save/Delete Buttons */}
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          px: 2,
-          py: 1.5,
-          borderTop: '1px solid',
-          borderColor: 'divider',
-          backgroundColor: 'background.default',
-        }}
-      >
+      <FooterBar>
         {/* Character Counter */}
         <CharacterCounter initialCount={initialCount} handleRef={counterRef} />
 
         {/* Save and Delete Buttons */}
         <SaveAndDelete model={noteModel} closeModal={closeModal} submitHandler={submitHandler} />
-      </Box>
+      </FooterBar>
 
       {/* Emoji Picker Popover */}
       <Popover
@@ -709,13 +509,7 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
           horizontal: 'left',
         }}
       >
-        <Box
-          sx={{
-            width: 'clamp(240px, 85vw, 320px)',
-            height: 'clamp(280px, 50vh, 350px)',
-            overflow: 'hidden',
-          }}
-        >
+        <EmojiPopoverBox>
           <EmojiPicker
             onEmojiClick={handleEmojiSelect}
             lazyLoadEmojis={true}
@@ -731,9 +525,9 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
               defaultMessage: 'Search emojis...',
             })}
           />
-        </Box>
+        </EmojiPopoverBox>
       </Popover>
-    </Box>
+    </NoteEditorFrame>
   );
 };
 
