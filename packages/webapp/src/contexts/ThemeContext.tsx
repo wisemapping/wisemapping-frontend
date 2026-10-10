@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode, useMemo } from 'react';
 import type { PaletteMode } from '@mui/material';
 import { readStorage, writeStorage } from '../utils/storage';
 
@@ -65,6 +65,11 @@ export const AppThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => 
     }
   };
 
+  // One object per mode: a new one on every render re-rendered every consumer with the parent.
+  // The functions only read and set what they own, so they are as stable as the mode.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const value = useMemo(() => ({ mode, toggleMode, initializeThemeFromSystem }), [mode]);
+
   // Listen for system theme changes
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
@@ -79,11 +84,7 @@ export const AppThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => 
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
-  return (
-    <ThemeContext.Provider value={{ mode, toggleMode, initializeThemeFromSystem }}>
-      {children}
-    </ThemeContext.Provider>
-  );
+  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 };
 
 export const useTheme = (): ThemeContextType => {
