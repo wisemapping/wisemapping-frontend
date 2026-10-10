@@ -153,10 +153,8 @@ describe('Storybook Editor Components - Tests', () => {
     it('should render icon selection interface', () => {
       visitStory('editor-topiciconeditor--default');
 
-      // Should have tabs (Emojis and Icons Gallery)
-      cy.get('[role="tablist"]', { timeout: 10000 }).should('be.visible');
-
-      // Emoji picker should be rendered by default (first tab)
+      // The emoji picker is the whole editor: no tabs, no icon gallery
+      cy.get('[role="tablist"]').should('not.exist');
       cy.get(
         '.epr-emoji-category-label, .epr-search, input[placeholder*="Search"], input[placeholder*="search"]',
         { timeout: 5000 },
@@ -166,27 +164,18 @@ describe('Storybook Editor Components - Tests', () => {
     it('should display emoji variant', () => {
       visitStory('editor-topiciconeditor--with-emoji');
 
-      // Tabs should be visible
-      cy.get('[role="tablist"]', { timeout: 10000 }).should('be.visible');
-
-      // Emoji tab should be active - look for emoji picker elements
+      // Look for emoji picker elements
       cy.get(
         '.epr-emoji-category-label, .epr-search, input[placeholder*="Search"], input[placeholder*="search"]',
         { timeout: 5000 },
       ).should('exist');
     });
 
-    it('should display image variant', () => {
+    it('should still open on the emoji picker for a topic with an older gallery icon', () => {
       visitStory('editor-topiciconeditor--with-image');
 
-      // Tabs should be visible
-      cy.get('[role="tablist"]', { timeout: 10000 }).should('be.visible');
-
-      // Switch to Icons Gallery tab (second tab)
-      cy.get('[role="tab"]').eq(1).click();
-
-      // Image icons should be visible
-      cy.get('img, [role="button"]', { timeout: 5000 }).should('exist');
+      cy.get('[role="tablist"]').should('not.exist');
+      cy.get('.epr-emoji-category-label, .epr-search', { timeout: 5000 }).should('exist');
     });
   });
 
@@ -223,41 +212,6 @@ describe('Storybook Editor Components - Tests', () => {
 
       // Verify component remains interactive (color buttons still exist)
       cy.get('button[aria-label*="#"]').should('exist');
-    });
-  });
-
-  describe('IconPicker', () => {
-    it('should render icon selection grid', () => {
-      visitStory('editor-iconpicker--default');
-
-      // Should have emoji picker visible by default
-      cy.get(
-        '.epr-emoji-category-label, .epr-search, input[placeholder*="Search"], input[placeholder*="search"]',
-        { timeout: 10000 },
-      ).should('exist');
-    });
-
-    it('should display emoji picker variant', () => {
-      visitStory('editor-iconpicker--with-emoji');
-
-      // Emoji picker should be visible
-      cy.get(
-        '.epr-emoji-category-label, .epr-search, input[placeholder*="Search"], input[placeholder*="search"]',
-        { timeout: 10000 },
-      ).should('exist');
-    });
-
-    it('should trigger action when icon is selected', () => {
-      visitStory('editor-iconpicker--default');
-
-      // Wait for emoji picker to load
-      cy.get('.epr-emoji-category-label, .epr-search', { timeout: 10000 }).should('exist');
-
-      // Toggle to show images using the switch (force click because input has opacity: 0)
-      cy.contains('Show images', { timeout: 5000 }).should('exist').click({ force: true });
-
-      // Verify that the emoji picker is no longer visible (switched to images)
-      cy.get('.epr-emoji-category-label').should('not.exist');
     });
   });
 

@@ -107,9 +107,6 @@
   "editor.try-welcome-mobile": {
     "defaultMessage": "Questo spazio di modifica mostra alcune delle capacità dell'editor di mappe mentali!"
   },
-  "icon-picker.show-images": {
-    "defaultMessage": "Mostra immagini"
-  },
   "link.help_text": {
     "defaultMessage": "L'indirizzo non è valido"
   },
@@ -323,15 +320,6 @@
   "emoji-picker.search-placeholder": {
     "defaultMessage": "Cerca emoji..."
   },
-  "icon-picker.search-placeholder": {
-    "defaultMessage": "Cerca icone..."
-  },
-  "icon-picker.frequently-used": {
-    "defaultMessage": "Usati frequentemente"
-  },
-  "icon-picker.no-results": {
-    "defaultMessage": "Nessuna icona trovata"
-  },
   "editor-panel.tooltip-add-topic-image": {
     "defaultMessage": "Aggiungi immagine argomento"
   },
@@ -487,12 +475,6 @@
   },
   "icon-collection.connection.curved-polyline": {
     "defaultMessage": "Polilinea curva"
-  },
-  "icon-picker.emojis": {
-    "defaultMessage": "Emoji"
-  },
-  "icon-picker.icons": {
-    "defaultMessage": "Galleria icone"
   },
   "note.character.count": {
     "defaultMessage": "{remaining} rimanenti"

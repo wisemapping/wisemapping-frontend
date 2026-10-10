@@ -38,102 +38,13 @@ describe('Topic Icon Suite', () => {
     cy.matchImageSnapshot('add-new-emoji-icon');
   });
 
-  it('Switch to Icons Gallery tab and verify images load', () => {
-    cy.focusTopicById(3);
-    cy.onClickToolbarButton('Add Icon');
-
-    // Emojis tab should be open by default
-    cy.waitForEmojiTab();
-
-    // Switch to Icons Gallery tab
-    cy.contains('Icons Gallery').should('be.visible').click();
-
-    // Verify image icons load correctly
-    cy.waitForIconsGalleryTab();
-
-    cy.matchImageSnapshot('icons-gallery-tab-loaded');
-  });
-
-  it('Add image icon from Icons Gallery tab', () => {
-    cy.focusTopicById(3);
-    cy.onClickToolbarButton('Add Icon');
-
-    // Switch to Icons Gallery tab
-    cy.contains('Icons Gallery').should('be.visible').click();
-
-    // Wait for image icons to load dynamically
-    cy.waitForIconsGalleryTab();
-
-    // Enhanced validation: Check that ALL images have valid src attributes
-    cy.get('img').each(($img) => {
-      cy.wrap($img)
-        .should('have.attr', 'src')
-        .and('not.be.empty')
-        .and('not.include', 'undefined')
-        .and('not.include', '../assets/');
-    });
-
-    // Test clicking on an image icon to verify functionality
-    cy.get('img').first().parent().click({ force: true });
-
-    cy.matchImageSnapshot('image-icon-added-from-gallery');
-  });
-
-  it('Verify no network errors when loading image icons from Icons Gallery', () => {
-    // Monitor network requests for 404 errors
-    cy.intercept('**/*.svg', (req) => {
-      req.continue((res) => {
-        if (res.statusCode === 404) {
-          throw new Error(`404 error loading SVG: ${req.url}`);
-        }
-      });
-    }).as('svgRequests');
-
-    cy.intercept('**/*.png', (req) => {
-      req.continue((res) => {
-        if (res.statusCode === 404) {
-          throw new Error(`404 error loading PNG: ${req.url}`);
-        }
-      });
-    }).as('pngRequests');
-
-    cy.focusTopicById(3);
-    cy.onClickToolbarButton('Add Icon');
-
-    // Switch to Icons Gallery tab
-    cy.contains('Icons Gallery').should('be.visible').click();
-
-    // Wait for all images to load dynamically
-    cy.waitForIconsGalleryTab();
-    cy.get('img').each(($img) => {
-      cy.wrap($img).should('have.attr', 'src').and('not.be.empty');
-    });
-
-    cy.matchImageSnapshot('no-network-errors-icons-gallery');
-  });
-
-  it('Replace emoji icon with image icon', () => {
-    // First add an emoji icon
+  it('Offers emojis only: the icon gallery is gone for new icons', () => {
     cy.focusTopicById(3);
     cy.onClickToolbarButton('Add Icon');
 
     cy.waitForEmojiTab();
-    cy.getEmoji().first().should('be.visible').click();
-
-    // Now add an image icon to the same topic to replace the emoji
-    cy.focusTopicById(3);
-    cy.onClickToolbarButton('Add Icon');
-
-    // Switch to Icons Gallery tab
-    cy.contains('Icons Gallery').should('be.visible').click();
-
-    // Wait for image icons to load dynamically
-    cy.waitForIconsGalleryTab();
-
-    // Add an image icon to replace the emoji
-    cy.get('img').first().parent().click({ force: true });
-
-    cy.matchImageSnapshot('emoji-replaced-with-image-icon');
+    cy.contains('Icons Gallery').should('not.exist');
+    cy.get('input[placeholder="Search icons..."]').should('not.exist');
   });
 
   it('Replace emoji with different emoji', () => {

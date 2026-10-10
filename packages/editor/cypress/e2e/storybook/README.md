@@ -72,10 +72,9 @@ The smoke test verifies all these stories load successfully:
 4. **RichTextNoteEditor** - Default + WithExistingNote stories
 5. **TopicIconEditor** - Default + WithEmoji + WithImage stories
 6. **ColorPicker** - Default + WithSelectedColor stories
-7. **IconPicker** - Default + WithEmoji + WithImage stories
-8. **TopicImagePicker** - Default + WithEmoji + WithImage stories
-9. **CanvasStyleEditor** - Default story
-10. **KeyboardShortcutHelp** - Default story
+7. **TopicImagePicker** - Default + WithEmoji + WithImage stories
+8. **CanvasStyleEditor** - Default story
+9. **KeyboardShortcutHelp** - Default story
 
 ## Why Simple Smoke Tests?
 

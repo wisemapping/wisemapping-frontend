@@ -107,9 +107,6 @@
   "editor.try-welcome-mobile": {
     "defaultMessage": "この編集スペースでは、マインドマップエディターの機能の一部をご紹介しています！"
   },
-  "icon-picker.show-images": {
-    "defaultMessage": "画像を表示"
-  },
   "link.help_text": {
     "defaultMessage": "アドレスが無効です"
   },
@@ -323,15 +320,6 @@
   "emoji-picker.search-placeholder": {
     "defaultMessage": "絵文字を検索..."
   },
-  "icon-picker.search-placeholder": {
-    "defaultMessage": "アイコンを検索..."
-  },
-  "icon-picker.frequently-used": {
-    "defaultMessage": "よく使う"
-  },
-  "icon-picker.no-results": {
-    "defaultMessage": "アイコンが見つかりません"
-  },
   "editor-panel.tooltip-add-topic-image": {
     "defaultMessage": "トピック画像を追加"
   },
@@ -487,12 +475,6 @@
   },
   "icon-collection.connection.curved-polyline": {
     "defaultMessage": "曲線ポリライン"
-  },
-  "icon-picker.emojis": {
-    "defaultMessage": "絵文字"
-  },
-  "icon-picker.icons": {
-    "defaultMessage": "アイコンギャラリー"
   },
   "note.character.count": {
     "defaultMessage": "{remaining} 残り"

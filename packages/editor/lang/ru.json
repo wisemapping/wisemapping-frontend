@@ -104,9 +104,6 @@
   "editor-panel.tooltip-add-relationship": {
     "defaultMessage": "Добавить связь"
   },
-  "icon-picker.show-images": {
-    "defaultMessage": "Показать изображения"
-  },
   "link.help_text": {
     "defaultMessage": "Адрес недействителен"
   },
@@ -274,15 +271,6 @@
   },
   "emoji-picker.search-placeholder": {
     "defaultMessage": "Поиск эмодзи..."
-  },
-  "icon-picker.search-placeholder": {
-    "defaultMessage": "Поиск значков..."
-  },
-  "icon-picker.frequently-used": {
-    "defaultMessage": "Часто используемые"
-  },
-  "icon-picker.no-results": {
-    "defaultMessage": "Значки не найдены"
   },
   "common.close": {
     "defaultMessage": "Закрыть"
@@ -487,12 +475,6 @@
   },
   "icon-collection.connection.curved-polyline": {
     "defaultMessage": "Кривая ломаная"
-  },
-  "icon-picker.emojis": {
-    "defaultMessage": "Эмодзи"
-  },
-  "icon-picker.icons": {
-    "defaultMessage": "Галерея иконок"
   },
   "note.character.count": {
     "defaultMessage": "{remaining} осталось"

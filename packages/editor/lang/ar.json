@@ -116,9 +116,6 @@
   "editor.try-welcome-mobile": {
     "defaultMessage": "تعرض هذه المساحة بعض إمكانيات محرر الخرائط الذهنية!"
   },
-  "icon-picker.show-images": {
-    "defaultMessage": "إظهار الصور"
-  },
   "link.help_text": {
     "defaultMessage": "العنوان غير صالح"
   },
@@ -326,15 +323,6 @@
   "emoji-picker.search-placeholder": {
     "defaultMessage": "ابحث عن الرموز التعبيرية..."
   },
-  "icon-picker.search-placeholder": {
-    "defaultMessage": "ابحث عن الأيقونات..."
-  },
-  "icon-picker.frequently-used": {
-    "defaultMessage": "الأكثر استخدامًا"
-  },
-  "icon-picker.no-results": {
-    "defaultMessage": "لا توجد أيقونات"
-  },
   "common.close": {
     "defaultMessage": "إغلاق"
   },
@@ -511,12 +499,6 @@
   },
   "icon-collection.connection.default-tooltip": {
     "defaultMessage": "افتراضي - سيتم اختيار نمط الاتصال تلقائيًا بناءً على السمة"
-  },
-  "icon-picker.emojis": {
-    "defaultMessage": "الرموز التعبيرية"
-  },
-  "icon-picker.icons": {
-    "defaultMessage": "معرض الأيقونات"
   },
   "note.character.count": {
     "defaultMessage": "{remaining} متبقي"

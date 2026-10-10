@@ -621,42 +621,6 @@
       "value": "Arrondi"
     }
   ],
-  "icon-picker.emojis": [
-    {
-      "type": 0,
-      "value": "Emojis"
-    }
-  ],
-  "icon-picker.frequently-used": [
-    {
-      "type": 0,
-      "value": "Fréquemment utilisés"
-    }
-  ],
-  "icon-picker.icons": [
-    {
-      "type": 0,
-      "value": "Galerie d'icônes"
-    }
-  ],
-  "icon-picker.no-results": [
-    {
-      "type": 0,
-      "value": "Aucune icône trouvée"
-    }
-  ],
-  "icon-picker.search-placeholder": [
-    {
-      "type": 0,
-      "value": "Rechercher des icônes..."
-    }
-  ],
-  "icon-picker.show-images": [
-    {
-      "type": 0,
-      "value": "Afficher les images"
-    }
-  ],
   "layout-selector.accept": [
     {
       "type": 0,

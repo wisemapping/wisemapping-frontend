@@ -153,7 +153,7 @@ describe('Outline View Suite', () => {
     cy.getEmoji().first().should('be.visible').click();
 
     // Wait for the emoji picker to close (replaces cy.wait(300))
-    // After clicking an emoji, the picker stays open (as per icon-picker/index.tsx line 58)
+    // After clicking an emoji, the picker stays open (see EmojiChooser and TopicImagePicker)
     // So we need to click elsewhere or press Escape to close it
     cy.get('body').type('{esc}');
 

@@ -110,9 +110,6 @@
   "editor.try-welcome-mobile": {
     "defaultMessage": "Цей простір редагування демонструє деякі можливості редактора карт розуму!"
   },
-  "icon-picker.show-images": {
-    "defaultMessage": "Показати зображення"
-  },
   "link.help_text": {
     "defaultMessage": "Адреса недійсна"
   },
@@ -317,15 +314,6 @@
   "emoji-picker.search-placeholder": {
     "defaultMessage": "Пошук емодзі..."
   },
-  "icon-picker.search-placeholder": {
-    "defaultMessage": "Пошук значків..."
-  },
-  "icon-picker.frequently-used": {
-    "defaultMessage": "Часто використовувані"
-  },
-  "icon-picker.no-results": {
-    "defaultMessage": "Значки не знайдено"
-  },
   "common.close": {
     "defaultMessage": "Закрити"
   },
@@ -487,12 +475,6 @@
   },
   "icon-collection.connection.curved-polyline": {
     "defaultMessage": "Крива ламана"
-  },
-  "icon-picker.emojis": {
-    "defaultMessage": "Емодзі"
-  },
-  "icon-picker.icons": {
-    "defaultMessage": "Галерея іконок"
   },
   "note.character.count": {
     "defaultMessage": "{remaining} залишилося"

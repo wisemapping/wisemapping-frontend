@@ -107,9 +107,6 @@
   "editor.try-welcome-mobile": {
     "defaultMessage": "这个编辑空间展示了思维导图编辑器的一些功能！"
   },
-  "icon-picker.show-images": {
-    "defaultMessage": "显示图像"
-  },
   "link.help_text": {
     "defaultMessage": "地址无效"
   },
@@ -323,15 +320,6 @@
   "emoji-picker.search-placeholder": {
     "defaultMessage": "搜索表情..."
   },
-  "icon-picker.search-placeholder": {
-    "defaultMessage": "搜索图标..."
-  },
-  "icon-picker.frequently-used": {
-    "defaultMessage": "常用"
-  },
-  "icon-picker.no-results": {
-    "defaultMessage": "未找到图标"
-  },
   "editor-panel.tooltip-add-topic-image": {
     "defaultMessage": "添加主题图像"
   },
@@ -487,12 +475,6 @@
   },
   "icon-collection.connection.curved-polyline": {
     "defaultMessage": "曲线折线"
-  },
-  "icon-picker.emojis": {
-    "defaultMessage": "表情符号"
-  },
-  "icon-picker.icons": {
-    "defaultMessage": "图标库"
   },
   "note.character.count": {
     "defaultMessage": "剩余 {remaining}"
