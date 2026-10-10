@@ -305,6 +305,12 @@
       "value": "Falha na ativação"
     }
   ],
+  "activation.invalid-link": [
+    {
+      "type": 0,
+      "value": "Link de ativação inválido"
+    }
+  ],
   "activation.loading.desc": [
     {
       "type": 0,
@@ -2773,6 +2779,22 @@
     {
       "type": 0,
       "value": "Sair"
+    }
+  ],
+  "oauth.error": [
+    {
+      "type": 0,
+      "value": "Erro de OAuth: "
+    },
+    {
+      "type": 1,
+      "value": "error"
+    }
+  ],
+  "oauth.missing-code": [
+    {
+      "type": 0,
+      "value": "A resposta do login não incluiu um código nem um token."
     }
   ],
   "publish.checkbox": [

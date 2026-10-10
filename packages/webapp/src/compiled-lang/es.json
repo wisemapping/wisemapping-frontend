@@ -305,6 +305,12 @@
       "value": "Error de activación"
     }
   ],
+  "activation.invalid-link": [
+    {
+      "type": 0,
+      "value": "Enlace de activación no válido"
+    }
+  ],
   "activation.loading.desc": [
     {
       "type": 0,
@@ -2781,6 +2787,22 @@
     {
       "type": 0,
       "value": "Cerrar sesión"
+    }
+  ],
+  "oauth.error": [
+    {
+      "type": 0,
+      "value": "Error de OAuth: "
+    },
+    {
+      "type": 1,
+      "value": "error"
+    }
+  ],
+  "oauth.missing-code": [
+    {
+      "type": 0,
+      "value": "La respuesta del inicio de sesión no incluyó un código ni un token."
     }
   ],
   "publish.checkbox": [

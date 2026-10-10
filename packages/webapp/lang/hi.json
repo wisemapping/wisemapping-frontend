@@ -1507,5 +1507,14 @@
   },
   "accountinfo.tabs": {
     "defaultMessage": "खाता सेटिंग अनुभाग"
+  },
+  "activation.invalid-link": {
+    "defaultMessage": "अमान्य सक्रियण लिंक"
+  },
+  "oauth.error": {
+    "defaultMessage": "OAuth त्रुटि: {error}"
+  },
+  "oauth.missing-code": {
+    "defaultMessage": "साइन इन के उत्तर में कोई कोड या टोकन नहीं था।"
   }
 }

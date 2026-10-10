@@ -1507,5 +1507,14 @@
   },
   "accountinfo.tabs": {
     "defaultMessage": "Seções da conta"
+  },
+  "activation.invalid-link": {
+    "defaultMessage": "Link de ativação inválido"
+  },
+  "oauth.error": {
+    "defaultMessage": "Erro de OAuth: {error}"
+  },
+  "oauth.missing-code": {
+    "defaultMessage": "A resposta do login não incluiu um código nem um token."
   }
 }

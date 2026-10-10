@@ -305,6 +305,12 @@
       "value": "激活失败"
     }
   ],
+  "activation.invalid-link": [
+    {
+      "type": 0,
+      "value": "激活链接无效"
+    }
+  ],
   "activation.loading.desc": [
     {
       "type": 0,
@@ -2770,6 +2776,22 @@
     {
       "type": 0,
       "value": "注销"
+    }
+  ],
+  "oauth.error": [
+    {
+      "type": 0,
+      "value": "OAuth 错误："
+    },
+    {
+      "type": 1,
+      "value": "error"
+    }
+  ],
+  "oauth.missing-code": [
+    {
+      "type": 0,
+      "value": "登录响应中没有代码或令牌。"
     }
   ],
   "publish.checkbox": [

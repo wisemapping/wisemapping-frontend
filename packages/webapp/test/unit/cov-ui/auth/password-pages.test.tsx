@@ -240,6 +240,7 @@ describe('ActivationPage', () => {
   test('falls back to a generic reason', async () => {
     setup('/c/activation?code=old', () => Promise.reject({}));
 
-    expect(await screen.findByText('Activation failed')).toBeTruthy();
+    // No reason from the server: the page's own explanation, which is translated.
+    expect(await screen.findByText(/We couldn't activate your account/)).toBeTruthy();
   });
 });

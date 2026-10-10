@@ -305,6 +305,12 @@
       "value": "Activation Failed"
     }
   ],
+  "activation.invalid-link": [
+    {
+      "type": 0,
+      "value": "Invalid activation link"
+    }
+  ],
   "activation.loading.desc": [
     {
       "type": 0,
@@ -2773,6 +2779,22 @@
     {
       "type": 0,
       "value": "Sign Out"
+    }
+  ],
+  "oauth.error": [
+    {
+      "type": 0,
+      "value": "OAuth error: "
+    },
+    {
+      "type": 1,
+      "value": "error"
+    }
+  ],
+  "oauth.missing-code": [
+    {
+      "type": 0,
+      "value": "The sign-in response did not include a code or a token."
     }
   ],
   "publish.checkbox": [

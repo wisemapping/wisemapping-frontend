@@ -305,6 +305,12 @@
       "value": "सक्रियण विफल"
     }
   ],
+  "activation.invalid-link": [
+    {
+      "type": 0,
+      "value": "अमान्य सक्रियण लिंक"
+    }
+  ],
   "activation.loading.desc": [
     {
       "type": 0,
@@ -2773,6 +2779,22 @@
     {
       "type": 0,
       "value": "साइन आउट करें"
+    }
+  ],
+  "oauth.error": [
+    {
+      "type": 0,
+      "value": "OAuth त्रुटि: "
+    },
+    {
+      "type": 1,
+      "value": "error"
+    }
+  ],
+  "oauth.missing-code": [
+    {
+      "type": 0,
+      "value": "साइन इन के उत्तर में कोई कोड या टोकन नहीं था।"
     }
   ],
   "publish.checkbox": [

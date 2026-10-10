@@ -305,6 +305,12 @@
       "value": "Aktivierung fehlgeschlagen"
     }
   ],
+  "activation.invalid-link": [
+    {
+      "type": 0,
+      "value": "Ungültiger Aktivierungslink"
+    }
+  ],
   "activation.loading.desc": [
     {
       "type": 0,
@@ -2781,6 +2787,22 @@
     {
       "type": 0,
       "value": "Abmelden"
+    }
+  ],
+  "oauth.error": [
+    {
+      "type": 0,
+      "value": "OAuth-Fehler: "
+    },
+    {
+      "type": 1,
+      "value": "error"
+    }
+  ],
+  "oauth.missing-code": [
+    {
+      "type": 0,
+      "value": "Die Anmeldeantwort enthielt weder einen Code noch ein Token."
     }
   ],
   "publish.checkbox": [

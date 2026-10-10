@@ -305,6 +305,12 @@
       "value": "Ошибка активации"
     }
   ],
+  "activation.invalid-link": [
+    {
+      "type": 0,
+      "value": "Недействительная ссылка активации"
+    }
+  ],
   "activation.loading.desc": [
     {
       "type": 0,
@@ -2807,6 +2813,22 @@
     {
       "type": 0,
       "value": "Выход"
+    }
+  ],
+  "oauth.error": [
+    {
+      "type": 0,
+      "value": "Ошибка OAuth: "
+    },
+    {
+      "type": 1,
+      "value": "error"
+    }
+  ],
+  "oauth.missing-code": [
+    {
+      "type": 0,
+      "value": "В ответе на вход нет ни кода, ни токена."
     }
   ],
   "publish.checkbox": [

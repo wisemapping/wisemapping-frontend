@@ -1507,5 +1507,14 @@
   },
   "accountinfo.tabs": {
     "defaultMessage": "أقسام إعدادات الحساب"
+  },
+  "activation.invalid-link": {
+    "defaultMessage": "رابط التفعيل غير صالح"
+  },
+  "oauth.error": {
+    "defaultMessage": "خطأ OAuth: {error}"
+  },
+  "oauth.missing-code": {
+    "defaultMessage": "لم تتضمن استجابة تسجيل الدخول رمزًا ولا توكن."
   }
 }

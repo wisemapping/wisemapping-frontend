@@ -305,6 +305,12 @@
       "value": "Attivazione non riuscita"
     }
   ],
+  "activation.invalid-link": [
+    {
+      "type": 0,
+      "value": "Link di attivazione non valido"
+    }
+  ],
   "activation.loading.desc": [
     {
       "type": 0,
@@ -2777,6 +2783,22 @@
     {
       "type": 0,
       "value": "Esci"
+    }
+  ],
+  "oauth.error": [
+    {
+      "type": 0,
+      "value": "Errore OAuth: "
+    },
+    {
+      "type": 1,
+      "value": "error"
+    }
+  ],
+  "oauth.missing-code": [
+    {
+      "type": 0,
+      "value": "La risposta di accesso non conteneva né un codice né un token."
     }
   ],
   "publish.checkbox": [

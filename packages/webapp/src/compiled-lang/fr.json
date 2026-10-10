@@ -305,6 +305,12 @@
       "value": "Échec de l'activation"
     }
   ],
+  "activation.invalid-link": [
+    {
+      "type": 0,
+      "value": "Lien d'activation invalide"
+    }
+  ],
   "activation.loading.desc": [
     {
       "type": 0,
@@ -2773,6 +2779,22 @@
     {
       "type": 0,
       "value": "Se déconnecter"
+    }
+  ],
+  "oauth.error": [
+    {
+      "type": 0,
+      "value": "Erreur OAuth : "
+    },
+    {
+      "type": 1,
+      "value": "error"
+    }
+  ],
+  "oauth.missing-code": [
+    {
+      "type": 0,
+      "value": "La réponse de connexion ne contenait ni code ni jeton."
     }
   ],
   "publish.checkbox": [

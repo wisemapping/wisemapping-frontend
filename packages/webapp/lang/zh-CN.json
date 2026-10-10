@@ -1507,5 +1507,14 @@
   },
   "accountinfo.tabs": {
     "defaultMessage": "账户设置分类"
+  },
+  "activation.invalid-link": {
+    "defaultMessage": "激活链接无效"
+  },
+  "oauth.error": {
+    "defaultMessage": "OAuth 错误：{error}"
+  },
+  "oauth.missing-code": {
+    "defaultMessage": "登录响应中没有代码或令牌。"
   }
 }
