@@ -15,8 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-/* eslint-disable import/prefer-default-export */
-// eslint-disable-next-line import/prefer-default-export
 import StraightLine from '../../../src/components/StraightLine';
 import Workspace from '../../../src/components/Workspace';
 import type { StrokeArgs } from './Reference';

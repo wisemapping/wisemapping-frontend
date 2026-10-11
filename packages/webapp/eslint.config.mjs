@@ -54,16 +54,6 @@ export default defineConfig([
       react: {
         version: '19.0.0',
       },
-
-      'import/resolver': {
-        node: {
-          extensions: ['.js', '.ts'],
-        },
-
-        webpack: {
-          config: './webpack.common.js',
-        },
-      },
     },
 
     rules: {
