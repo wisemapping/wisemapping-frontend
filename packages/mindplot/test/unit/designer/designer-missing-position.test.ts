@@ -123,7 +123,7 @@ describe('Topics without a position', () => {
   // pans the canvas to it.
   it.each([
     ['under a parent', [1]],
-    ['floating', null],
+    ['floating', undefined],
   ])(
     'can be added %s: focusing one does not pan to an undefined position',
     async (_label, parents) => {

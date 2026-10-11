@@ -36,9 +36,9 @@ class RelationshipModel {
 
   private _targetTopicId: number;
 
-  private _srcCtrlPoint: PositionType | null;
+  private _srcCtrlPoint: PositionType | undefined;
 
-  private _destCtrlPoint: PositionType | null;
+  private _destCtrlPoint: PositionType | undefined;
 
   private _endArrow: boolean;
 
@@ -49,16 +49,14 @@ class RelationshipModel {
   private _strokeStyle: StrokeStyle;
 
   constructor(sourceTopicId: number, targetTopicId: number) {
-    $assert(sourceTopicId != null, 'from node type can not be null');
-    $assert(targetTopicId != null, 'to node type can not be null');
     $assert(Number.isFinite(sourceTopicId), 'sourceTopicId is not a number');
     $assert(Number.isFinite(targetTopicId), 'targetTopicId is not a number');
 
     this._id = RelationshipModel._nextUUID();
     this._sourceTargetId = sourceTopicId;
     this._targetTopicId = targetTopicId;
-    this._srcCtrlPoint = null;
-    this._destCtrlPoint = null;
+    this._srcCtrlPoint = undefined;
+    this._destCtrlPoint = undefined;
     this._endArrow = true;
     this._startArrow = false;
     this._strokeColor = undefined;
@@ -74,23 +72,22 @@ class RelationshipModel {
   }
 
   getId(): number {
-    $assert(this._id != null, 'id is null');
     return this._id;
   }
 
-  getSrcCtrlPoint(): PositionType | null {
+  getSrcCtrlPoint(): PositionType | undefined {
     return this._srcCtrlPoint;
   }
 
-  setSrcCtrlPoint(srcCtrlPoint: PositionType): void {
+  setSrcCtrlPoint(srcCtrlPoint: PositionType | undefined): void {
     this._srcCtrlPoint = srcCtrlPoint;
   }
 
-  getDestCtrlPoint(): PositionType | null {
+  getDestCtrlPoint(): PositionType | undefined {
     return this._destCtrlPoint;
   }
 
-  setDestCtrlPoint(destCtrlPoint: PositionType): void {
+  setDestCtrlPoint(destCtrlPoint: PositionType | undefined): void {
     this._destCtrlPoint = destCtrlPoint;
   }
 

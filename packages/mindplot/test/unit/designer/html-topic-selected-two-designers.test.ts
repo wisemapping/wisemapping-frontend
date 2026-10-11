@@ -24,7 +24,7 @@ jest.mock('../../../src/components/export/PDFExporter', () => ({
   default: class MockPDFExporter {},
 }));
 
-type PlusButtons = { _rightPlus: HTMLElement | null; _bottomPlus: HTMLElement | null };
+type PlusButtons = { _rightPlus: HTMLElement | undefined; _bottomPlus: HTMLElement | undefined };
 
 describe('HTMLTopicSelected with two designers on the page (BL4-22)', () => {
   const spyCreate = (harness: Harness) => ({

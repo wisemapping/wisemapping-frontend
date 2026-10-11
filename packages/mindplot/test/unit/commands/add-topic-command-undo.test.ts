@@ -126,7 +126,7 @@ describe('AddTopicCommand with a missing parent', () => {
     const after = save();
 
     expect(topic(child.getId()).getParent()?.getId()).toBe(3);
-    expect(topic(orphan.getId()).getParent()).toBeNull();
+    expect(topic(orphan.getId()).getParent()).toBeUndefined();
     expect(
       designer
         .getMindmap()

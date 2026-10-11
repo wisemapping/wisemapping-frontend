@@ -35,11 +35,11 @@ class RelationshipPivot {
 
   private _onTopicClick: (event: CustomEvent<Topic>) => void;
 
-  private _sourceTopic: Topic | null;
+  private _sourceTopic: Topic | undefined;
 
-  private _pivot: CurvedLine | null;
+  private _pivot: CurvedLine | undefined;
 
-  private _endArrow: Arrow | null;
+  private _endArrow: Arrow | undefined;
 
   private _lastUpdateTime: number = 0;
 
@@ -50,9 +50,9 @@ class RelationshipPivot {
     this._mouseMoveEvent = this.mouseMoveHandler.bind(this);
     this._onClickEvent = this.cleanOnMouseClick.bind(this);
     this._onTopicClick = this._connectOnFocus.bind(this);
-    this._sourceTopic = null;
-    this._pivot = null;
-    this._endArrow = null;
+    this._sourceTopic = undefined;
+    this._pivot = undefined;
+    this._endArrow = undefined;
   }
 
   start(sourceTopic: Topic, targetPos: PositionType): void {
@@ -125,8 +125,8 @@ class RelationshipPivot {
       }
       workspace.enableWorkspaceEvents(true);
 
-      this._sourceTopic = null;
-      this._pivot = null;
+      this._sourceTopic = undefined;
+      this._pivot = undefined;
     }
   }
 
@@ -218,7 +218,7 @@ class RelationshipPivot {
   }
 
   private _isActive() {
-    return this._pivot != null;
+    return this._pivot !== undefined;
   }
 }
 

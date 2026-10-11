@@ -27,19 +27,19 @@ const toUint8Array = (input: ArrayBuffer | Uint8Array): Uint8Array => {
   return new Uint8Array(input);
 };
 
-const decodeWithNodeBuffer = (input: ArrayBuffer | Uint8Array): string | null => {
+const decodeWithNodeBuffer = (input: ArrayBuffer | Uint8Array): string | undefined => {
   const globalWithBuffer = globalThis as unknown as { Buffer?: BufferCtor };
   if (globalWithBuffer.Buffer) {
     return globalWithBuffer.Buffer.from(toUint8Array(input)).toString('utf-8');
   }
-  return null;
+  return undefined;
 };
 
-const getTextDecoder = (): TextDecoder | null => {
+const getTextDecoder = (): TextDecoder | undefined => {
   if (typeof globalThis.TextDecoder !== 'undefined') {
     return new globalThis.TextDecoder('utf-8');
   }
-  return null;
+  return undefined;
 };
 
 export const decodeUtf8 = (input: ArrayBuffer | Uint8Array): string => {
@@ -49,18 +49,18 @@ export const decodeUtf8 = (input: ArrayBuffer | Uint8Array): string => {
   }
 
   const bufferDecoded = decodeWithNodeBuffer(input);
-  if (bufferDecoded !== null) {
+  if (bufferDecoded !== undefined) {
     return bufferDecoded;
   }
 
   throw new Error('UTF-8 decoding is not supported in this environment.');
 };
 
-export const tryDecodeUtf8 = (input: ArrayBuffer | Uint8Array): string | null => {
+export const tryDecodeUtf8 = (input: ArrayBuffer | Uint8Array): string | undefined => {
   try {
     return decodeUtf8(input);
   } catch (error) {
     console.warn('Failed to decode UTF-8 content:', error);
-    return null;
+    return undefined;
   }
 };

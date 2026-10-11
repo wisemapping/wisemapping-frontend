@@ -37,7 +37,7 @@ class Pela2TangoMigrator implements XMLMindmapSerializer {
   }
 
   loadFromDom(dom: Document, mapId: string): Mindmap {
-    $assert(mapId != null, 'mapId can not be null');
+    $assert(mapId, 'mapId can not be null');
     const mindmap = this._pelaSerializer.loadFromDom(dom, mapId);
     mindmap.setVersion(ModelCodeName.TANGO);
     // An empty map has no central topic: there is nothing to fix.

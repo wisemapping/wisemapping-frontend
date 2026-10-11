@@ -496,17 +496,17 @@ class TestSuite {
     );
 
     const graph2 = manager.plot('testSize3', { width: 1400, height: 400 });
-    this._plotPrediction(graph2, manager.predict(0, null, { x: -145, y: 400 }));
-    this._plotPrediction(graph2, manager.predict(9, null, { x: -330, y: 70 }));
-    this._plotPrediction(graph2, manager.predict(9, null, { x: -330, y: 120 }));
-    this._plotPrediction(graph2, manager.predict(0, null, { x: 15, y: 20 }));
+    this._plotPrediction(graph2, manager.predict(0, undefined, { x: -145, y: 400 }));
+    this._plotPrediction(graph2, manager.predict(9, undefined, { x: -330, y: 70 }));
+    this._plotPrediction(graph2, manager.predict(9, undefined, { x: -330, y: 120 }));
+    this._plotPrediction(graph2, manager.predict(0, undefined, { x: 15, y: 20 }));
     // TODO(gb): make asserts
 
     const graph3 = manager.plot('testSize4', { width: 1400, height: 400 });
-    this._plotPrediction(graph3, manager.predict(0, null, null));
-    this._plotPrediction(graph3, manager.predict(9, null, null));
-    this._plotPrediction(graph3, manager.predict(3, null, null));
-    this._plotPrediction(graph3, manager.predict(1, null, null));
+    this._plotPrediction(graph3, manager.predict(0, undefined, undefined));
+    this._plotPrediction(graph3, manager.predict(9, undefined, undefined));
+    this._plotPrediction(graph3, manager.predict(3, undefined, undefined));
+    this._plotPrediction(graph3, manager.predict(1, undefined, undefined));
     // TODO(gb): make asserts
 
     const yPosNode2 = manager.find(2).getPosition().y;
@@ -533,7 +533,7 @@ class TestSuite {
     manager.connectNode(0, 1, 0);
     manager.layout();
     const graph = manager.plot('testReconnectSingleNode1', { width: 1000, height: 400 });
-    const prediction = manager.predict(0, null, { x: -50, y: 0 });
+    const prediction = manager.predict(0, undefined, { x: -50, y: 0 });
     this._plotPrediction(graph, prediction);
 
     // Check prediction is to the left of the root node

@@ -370,13 +370,13 @@ class XMindImporter extends Importer {
       sheet = sheets.item(0);
     }
 
-    let rootTopic = sheet?.querySelector('topic');
+    let rootTopic = sheet?.querySelector('topic') ?? undefined;
     if (!rootTopic) {
       // Try to find topic by tag name (works with namespaces)
       const topics = sheet
         ? sheet.getElementsByTagName('topic')
         : doc.getElementsByTagName('topic');
-      rootTopic = topics.length > 0 ? topics[0] : null;
+      rootTopic = topics.item(0) ?? undefined;
     }
 
     if (!rootTopic) {
@@ -395,7 +395,7 @@ class XMindImporter extends Importer {
   }
 
   private detectLayoutFromXML(rootTopic: Element): LayoutType {
-    const structureClass = rootTopic.getAttribute('structure-class');
+    const structureClass = rootTopic.getAttribute('structure-class') ?? undefined;
     return this.mapStructureClassToLayout(structureClass) ?? 'mindmap';
   }
 
@@ -407,7 +407,7 @@ class XMindImporter extends Importer {
     }
 
     if (sheet.extensions) {
-      const layoutFromExtensions = sheet.extensions.reduce<LayoutType | null>(
+      const layoutFromExtensions = sheet.extensions.reduce<LayoutType | undefined>(
         (found, extension) => {
           if (found) {
             return found;
@@ -415,7 +415,7 @@ class XMindImporter extends Importer {
           const content = extension.content as { centralTopic?: string } | undefined;
           return this.mapStructureClassToLayout(content?.centralTopic);
         },
-        null,
+        undefined,
       );
 
       if (layoutFromExtensions) {
@@ -426,9 +426,9 @@ class XMindImporter extends Importer {
     return 'mindmap';
   }
 
-  private mapStructureClassToLayout(structureClass?: string | null): LayoutType | null {
+  private mapStructureClassToLayout(structureClass?: string): LayoutType | undefined {
     if (!structureClass) {
-      return null;
+      return undefined;
     }
 
     const normalized = structureClass.toLowerCase();
@@ -443,7 +443,7 @@ class XMindImporter extends Importer {
       return 'mindmap';
     }
 
-    return null;
+    return undefined;
   }
 
   private async detectInput(): Promise<DetectedInput> {
@@ -524,11 +524,11 @@ class XMindImporter extends Importer {
     return new Uint8Array(input);
   }
 
-  private tryDecodeToString(input: ArrayBuffer | Uint8Array): string | null {
+  private tryDecodeToString(input: ArrayBuffer | Uint8Array): string | undefined {
     return tryDecodeUtf8(input);
   }
 
-  private detectFromZip(data: Uint8Array | null): DetectedInput {
+  private detectFromZip(data: Uint8Array): DetectedInput {
     if (!data || data.length === 0) {
       throw new Error('Empty XMind ZIP payload');
     }
@@ -598,14 +598,14 @@ class XMindImporter extends Importer {
     throw new Error('Invalid XMind JSON content: root topic not found');
   }
 
-  private pickSheet(sheets: XMindSheet[]): XMindSheet | null {
+  private pickSheet(sheets: XMindSheet[]): XMindSheet | undefined {
     const sheetWithRoot = sheets.find((sheet) => sheet.class === 'sheet' && !!sheet.rootTopic);
     if (sheetWithRoot) {
       return sheetWithRoot;
     }
 
     const [first] = sheets;
-    return first?.rootTopic ? first : null;
+    return first?.rootTopic ? first : undefined;
   }
 
   private convertXMindColor(xmindColor: string): string {
@@ -665,7 +665,7 @@ class XMindImporter extends Importer {
    * Topic hyperlinks become links. Links to a topic of the file (xmind:#id) and to files attached
    * to it (xap:attachments/...) are skipped: they can not be opened from WiseMapping.
    */
-  private static addLink(topic: NodeModel, href: string | null | undefined): void {
+  private static addLink(topic: NodeModel, href: string | undefined): void {
     const url = href?.trim();
     if (url && !/^(xmind|xap):/i.test(url)) {
       topic.addFeature(FeatureModelFactory.createModel('link', { url }));
@@ -775,7 +775,8 @@ class XMindImporter extends Importer {
 
     XMindImporter.addLink(
       topic,
-      xmlTopic.getAttributeNS(XLINK_NAMESPACE, 'href') || xmlTopic.getAttribute('xlink:href'),
+      xmlTopic.getAttributeNS(XLINK_NAMESPACE, 'href') ||
+        (xmlTopic.getAttribute('xlink:href') ?? undefined),
     );
   }
 
@@ -883,20 +884,20 @@ class XMindImporter extends Importer {
     XMindImporter.addLink(topic, jsonTopic.href);
   }
 
-  private extractBackgroundColor(topic: XMindTopic): string | null {
+  private extractBackgroundColor(topic: XMindTopic): string | undefined {
     if (topic.style?.properties?.['svg:fill']) {
       return this.convertXMindColor(topic.style.properties['svg:fill']);
     }
-    return null;
+    return undefined;
   }
 
-  private extractBorderColor(topic: XMindTopic): string | null {
+  private extractBorderColor(topic: XMindTopic): string | undefined {
     // For now, use the same color as background for border
     // In the future, we could extract from border-line-color if available
     return this.extractBackgroundColor(topic);
   }
 
-  private buildNoteContent(topic: XMindTopic): string | null {
+  private buildNoteContent(topic: XMindTopic): string | undefined {
     const parts: string[] = [];
 
     // Add XMind note content if present
@@ -911,10 +912,10 @@ class XMindImporter extends Importer {
       parts.push(formattedLabels);
     }
 
-    return parts.length > 0 ? parts.join('\n') : null;
+    return parts.length > 0 ? parts.join('\n') : undefined;
   }
 
-  private buildXMLNoteContent(xmlTopic: Element): string | null {
+  private buildXMLNoteContent(xmlTopic: Element): string | undefined {
     const parts: string[] = [];
 
     // Handle XMind notes (main content at the top)
@@ -937,7 +938,7 @@ class XMindImporter extends Importer {
       parts.push(labels.map((label) => `🏷️ ${label}`).join(', '));
     }
 
-    return parts.length > 0 ? parts.join('\n') : null;
+    return parts.length > 0 ? parts.join('\n') : undefined;
   }
 
   private mapXMindIconToEmojiIcon(iconId: string): string {

@@ -48,7 +48,7 @@ class LinkModel extends FeatureModel {
   static _fixUrl(url: string): string {
     // Keep urls whose scheme is allowed. Anything else (no scheme, or a scheme such as
     // javascript:) gets the http:// prefix, so the resulting href can never run script.
-    let protocol: string | null = null;
+    let protocol: string | undefined;
     try {
       protocol = new URL(url).protocol;
     } catch {

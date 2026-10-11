@@ -67,7 +67,7 @@ describe('Mindmap branches', () => {
     expect(mindmap.getBranches()).toEqual([central, floating]);
 
     mindmap.disconnect(a);
-    expect(a.getParent()).toBeNull();
+    expect(a.getParent()).toBeUndefined();
     expect(central.getChildren()).toEqual([]);
     expect(mindmap.getBranches()).toEqual([central, floating, a]);
 

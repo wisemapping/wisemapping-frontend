@@ -180,7 +180,7 @@ describe('Relationship control point drag (BL-52)', () => {
 
     expect(relationship!.isSrcControlPointCustom()).toBe(true);
     expect(relationship!.isDestControlPointCustom()).toBe(false);
-    expect(relationship!.getModel().getSrcCtrlPoint()).not.toBeNull();
+    expect(relationship!.getModel().getSrcCtrlPoint()).toBeDefined();
 
     designer.undo();
     expect(relationship!.isSrcControlPointCustom()).toBe(false);

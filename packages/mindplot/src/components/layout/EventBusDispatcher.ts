@@ -23,7 +23,7 @@ import type LayoutManager from './LayoutManager';
 import type { LayoutEventBusType, LayoutEvents } from '../LayoutEventBusType';
 
 class EventBusDispatcher {
-  private _layoutManager: LayoutManager | null;
+  private _layoutManager: LayoutManager | undefined;
 
   // The bus of the designer whose layout this dispatcher drives.
   private _layoutEventBus: LayoutEventBus;
@@ -41,7 +41,7 @@ class EventBusDispatcher {
   constructor(layoutEventBus: LayoutEventBus) {
     this._layoutEventBus = layoutEventBus;
     this.registerBusEvents();
-    this._layoutManager = null;
+    this._layoutManager = undefined;
   }
 
   setLayoutManager(layoutManager: LayoutManager) {
@@ -183,7 +183,7 @@ class EventBusDispatcher {
    * fall back to the closest ancestor position, or the origin, so the layout gets real numbers.
    */
   private static _initialPosition(node: INodeModel): PositionType {
-    let model: INodeModel | null = node;
+    let model: INodeModel | undefined = node;
     while (model) {
       const position = model.getPosition();
       if (position) {

@@ -39,7 +39,7 @@ class KeyboardManager {
 
   private static active: object | undefined;
 
-  private static keydownListener: ((event: KeyboardEvent) => void) | null = null;
+  private static keydownListener: ((event: KeyboardEvent) => void) | undefined;
 
   private static listen(): void {
     if (this.keydownListener) return;
@@ -51,7 +51,7 @@ class KeyboardManager {
   private static unlisten(): void {
     if (this.keydownListener) {
       document.removeEventListener('keydown', this.keydownListener);
-      this.keydownListener = null;
+      this.keydownListener = undefined;
     }
   }
 

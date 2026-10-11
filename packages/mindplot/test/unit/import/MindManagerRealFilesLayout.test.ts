@@ -107,7 +107,7 @@ describe('mmap2json-2017 laid out', () => {
     const harness = await importedDesigner();
     const e = byText(harness, 'E');
     const connection = e.getOutgoingLine();
-    expect(connection).not.toBeNull();
+    expect(connection).toBeDefined();
 
     // The import sets no connStyle: the line is the one of the prism theme.
     expect(connection!.getLineType()).toBe(LineType.ARC);

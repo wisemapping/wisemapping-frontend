@@ -81,18 +81,18 @@ type TopicCornerCoordinates = {
 };
 
 abstract class Topic extends NodeGraph {
-  private _innerShape: TopicShape | null;
+  private _innerShape: TopicShape | undefined;
 
   private _relationships: Relationship[];
 
   private _isInWorkspace: boolean;
 
   /** The canvas the topic was added to. Each Designer has its own. */
-  private _workspace: Canvas | null;
+  private _workspace: Canvas | undefined;
 
   private _children: Topic[];
 
-  private _parent: Topic | null;
+  private _parent: Topic | undefined;
 
   private _outerShape: Rect | undefined;
 
@@ -106,7 +106,7 @@ abstract class Topic extends NodeGraph {
 
   private _connector!: ShirinkConnector;
 
-  private _outgoingLine!: TopicConnection | null;
+  private _outgoingLine: TopicConnection | undefined;
 
   private _themeVariant: ThemeVariant;
 
@@ -129,11 +129,11 @@ abstract class Topic extends NodeGraph {
   ) {
     super(model, options);
     this._children = [];
-    this._parent = null;
+    this._parent = undefined;
     this._relationships = [];
     this._isInWorkspace = false;
-    this._workspace = null;
-    this._innerShape = null;
+    this._workspace = undefined;
+    this._innerShape = undefined;
     this._themeVariant = themeVariant;
     this._orientation = orientation;
     this._topicEventDispatcher = options.topicEventDispatcher;
@@ -180,7 +180,7 @@ abstract class Topic extends NodeGraph {
     this.redraw(this.getThemeVariant(), false);
   }
 
-  getParent(): Topic | null {
+  getParent(): Topic | undefined {
     return this._parent;
   }
 
@@ -265,7 +265,7 @@ abstract class Topic extends NodeGraph {
     const innerShape = this.getInnerShape();
 
     innerShape.removeFrom(group);
-    this._innerShape = null;
+    this._innerShape = undefined;
 
     return innerShape;
   }
@@ -313,14 +313,14 @@ abstract class Topic extends NodeGraph {
    * Returns the topic bounding box corners using native HTML page coordinates (CSS pixels).
    * Coordinates are relative to the document (viewport + scroll offset).
    */
-  getAbsoluteCornerCoordinates(): TopicCornerCoordinates | null {
+  getAbsoluteCornerCoordinates(): TopicCornerCoordinates | undefined {
     if (typeof window === 'undefined') {
-      return null;
+      return undefined;
     }
 
     const nativeElement = this.get2DElement()?.getNode();
     if (!nativeElement || !nativeElement.isConnected) {
-      return null;
+      return undefined;
     }
 
     const rect = nativeElement.getBoundingClientRect();
@@ -380,7 +380,7 @@ abstract class Topic extends NodeGraph {
     return this._iconsGroup;
   }
 
-  private getIconGroup(): IconGroup | null {
+  private getIconGroup(): IconGroup | undefined {
     return this._iconsGroup;
   }
 
@@ -845,7 +845,7 @@ abstract class Topic extends NodeGraph {
     this.getLayoutEventBus().fireEvent('childShrinked', model);
   }
 
-  getShrinkConnector(): ShirinkConnector | null {
+  getShrinkConnector(): ShirinkConnector | undefined {
     let result = this._connector;
     if (!this._connector) {
       this._connector = new ShirinkConnector(this);
@@ -885,10 +885,10 @@ abstract class Topic extends NodeGraph {
     return this.getDesigner()?.getActionDispatcher() ?? ActionDispatcher.getInstance();
   }
 
-  getNoteValue(): string | null {
+  getNoteValue(): string | undefined {
     const model = this.getModel();
     const [note] = model.findFeatureByType('note');
-    return note ? note.getText() : null;
+    return note?.getText();
   }
 
   setNoteValue(value: string | undefined): void {
@@ -898,7 +898,7 @@ abstract class Topic extends NodeGraph {
     const dispatcher = () => this.getActionDispatcher();
     const [note] = model.findFeatureByType('note');
 
-    if (value == null) {
+    if (value === undefined) {
       // Nothing to clear when the topic has no note ...
       if (note) {
         dispatcher().removeFeatureFromTopic(topicId, note.getId());
@@ -930,7 +930,7 @@ abstract class Topic extends NodeGraph {
     const dispatcher = () => this.getActionDispatcher();
     const [link] = model.findFeatureByType('link');
 
-    if (value == null) {
+    if (value === undefined) {
       // Nothing to clear when the topic has no link ...
       if (link) {
         dispatcher().removeFeatureFromTopic(topicId, link.getId());
@@ -986,19 +986,19 @@ abstract class Topic extends NodeGraph {
     this.invariant();
   }
 
-  getOutgoingLine(): TopicConnection | null {
+  getOutgoingLine(): TopicConnection | undefined {
     return this._outgoingLine;
   }
 
   getIncomingLines(): TopicConnection[] {
     const children = this.getChildren();
     return children
-      .filter((node) => node.getOutgoingLine() != null)
+      .filter((node) => node.getOutgoingLine() !== undefined)
       .map((node) => node.getOutgoingLine()!);
   }
 
-  getOutgoingConnectedTopic(): Topic | null {
-    let result: Topic | null = null;
+  getOutgoingConnectedTopic(): Topic | undefined {
+    let result: Topic | undefined;
     const line = this.getOutgoingLine();
     if (line) {
       result = line.getParentTopic();
@@ -1008,7 +1008,7 @@ abstract class Topic extends NodeGraph {
 
   setBranchVisibility(value: boolean): void {
     let current: Topic = this;
-    let parent: Topic | null = this;
+    let parent: Topic | undefined = this;
     while (parent && !parent.isCentralTopic()) {
       current = parent;
       parent = current.getParent();
@@ -1169,7 +1169,7 @@ abstract class Topic extends NodeGraph {
     if (outgoingLine) {
       $assert(workspace, 'workspace can not be null');
 
-      this._outgoingLine = null;
+      this._outgoingLine = undefined;
 
       // Disconnect nodes ...
       const targetTopic = outgoingLine.getParentTopic();
@@ -1178,7 +1178,7 @@ abstract class Topic extends NodeGraph {
       // Update model ...
       const childModel = this.getModel();
       childModel.disconnect();
-      this._parent = null;
+      this._parent = undefined;
 
       // Remove graphical element from the workspace...
       outgoingLine.removeFromWorkspace(workspace);
@@ -1273,7 +1273,7 @@ abstract class Topic extends NodeGraph {
 
   getChildren(): Topic[] {
     let result = this._children;
-    if (result == null) {
+    if (result === undefined) {
       this._children = [];
       result = this._children;
     }
@@ -1294,7 +1294,7 @@ abstract class Topic extends NodeGraph {
       workspace.removeChild(line);
     }
     this._isInWorkspace = false;
-    this._workspace = null;
+    this._workspace = undefined;
     this.getLayoutEventBus().fireEvent('topicRemoved', this.getModel());
   }
 

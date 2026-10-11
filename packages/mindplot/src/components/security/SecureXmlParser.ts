@@ -38,9 +38,9 @@ class SecureXmlParser {
   /**
    * Safely parse XML content with security protections
    * @param xmlContent - The XML content to parse
-   * @returns Parsed XML document or null if parsing fails
+   * @returns Parsed XML document or undefined if parsing fails
    */
-  static parseSecureXml(xmlContent: string): Document | null {
+  static parseSecureXml(xmlContent: string): Document | undefined {
     try {
       // Validate input
       if (!xmlContent || typeof xmlContent !== 'string') {
@@ -79,7 +79,7 @@ class SecureXmlParser {
       return doc;
     } catch (error) {
       console.error('Secure XML parsing failed:', error);
-      return null;
+      return undefined;
     }
   }
 

@@ -24,8 +24,8 @@ type RelationshipHandle = {
   getModel(): {
     getFromNode(): number;
     getToNode(): number;
-    getSrcCtrlPoint(): { x: number; y: number } | null;
-    getDestCtrlPoint(): { x: number; y: number } | null;
+    getSrcCtrlPoint(): { x: number; y: number } | undefined;
+    getDestCtrlPoint(): { x: number; y: number } | undefined;
   };
 };
 
@@ -42,7 +42,8 @@ const controlPoints = () =>
       .find((r) => r.getModel().getFromNode() === 15 && r.getModel().getToNode() === 11);
     expect(relationship, 'relationship 15 -> 11').to.not.equal(undefined);
     const model = relationship!.getModel();
-    const copy = (point: { x: number; y: number } | null) => (point ? { ...point } : null);
+    const copy = (point: { x: number; y: number } | undefined) =>
+      point ? { ...point } : undefined;
     return { src: copy(model.getSrcCtrlPoint()), dest: copy(model.getDestCtrlPoint()) };
   });
 

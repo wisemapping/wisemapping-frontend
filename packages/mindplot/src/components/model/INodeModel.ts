@@ -104,7 +104,7 @@ abstract class INodeModel {
   abstract getFeatures(): FeatureModel[];
 
   setId(id?: number): void {
-    if (id === null || id === undefined) {
+    if (id === undefined) {
       // Assign a new one ...
       const newId = INodeModel._nextUUID();
       this.putProperty('id', newId);
@@ -383,7 +383,7 @@ abstract class INodeModel {
    * @return {Boolean} true if the node model has a parent assigned to it
    */
   isConnected(): boolean {
-    return this.getParent() != null;
+    return this.getParent() !== undefined;
   }
 
   abstract append(node: INodeModel): void;
@@ -447,7 +447,7 @@ abstract class INodeModel {
 
   abstract getChildren(): INodeModel[];
 
-  abstract getParent(): INodeModel | null;
+  abstract getParent(): INodeModel | undefined;
 
   abstract clone(): INodeModel;
 

@@ -43,7 +43,7 @@ type DesignerInternals = {
   _model: DesignerModel;
   _actionDispatcher: StandaloneActionDispatcher;
   _eventBussDispatcher: EventBusDispatcher;
-  _internalClipboard: string | null;
+  _internalClipboard: string | undefined;
 };
 
 type ActionDispatcherMock = {
@@ -67,7 +67,7 @@ const topicStub = (id: number, options: { shrunken?: boolean } = {}): Topic => {
 const designerWith = (
   options: {
     topics?: Topic[];
-    internalClipboard?: string | null;
+    internalClipboard?: string;
     predictedOrder?: number;
     predictedPosition?: PositionType;
   } = {},
@@ -104,7 +104,7 @@ const designerWith = (
     getLayoutManager: () =>
       ({ predict, getOrderAfter, getOrdersForNewChildren }) as unknown as LayoutManager,
   } as unknown as EventBusDispatcher;
-  internals._internalClipboard = options.internalClipboard ?? null;
+  internals._internalClipboard = options.internalClipboard;
 
   return { designer, actionDispatcher, predict };
 };
@@ -232,7 +232,7 @@ describe('Designer.pasteClipboardAsChild', () => {
     await designer.pasteClipboardAsChild(40);
 
     expect(predict).toHaveBeenCalledTimes(1);
-    expect(predict).toHaveBeenCalledWith(40, null, null);
+    expect(predict).toHaveBeenCalledWith(40, undefined, undefined);
     expect(actionDispatcher.addTopics).toHaveBeenCalledTimes(1);
 
     const [clones, parentIds] = actionDispatcher.addTopics.mock.calls[0] as [NodeModel[], number[]];
@@ -264,9 +264,9 @@ describe('Designer.pasteClipboard', () => {
     expect(actionDispatcher.addTopics).toHaveBeenCalledTimes(1);
     const [children, parentIds] = actionDispatcher.addTopics.mock.calls[0] as [
       NodeModel[],
-      number[] | null,
+      number[] | undefined,
     ];
-    expect(parentIds).toBeNull();
+    expect(parentIds).toBeUndefined();
     expect(children).toHaveLength(1);
     expect(children[0]!.getText()).toBe('Pasted Node');
   });

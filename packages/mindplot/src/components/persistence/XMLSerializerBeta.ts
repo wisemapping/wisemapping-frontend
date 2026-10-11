@@ -77,19 +77,19 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
   }
 
   _deserializeNode(domElem: Element, mindmap: Mindmap): NodeModel {
-    const type = domElem.getAttribute('central') != null ? 'CentralTopic' : 'MainTopic';
+    const type = domElem.getAttribute('central') !== null ? 'CentralTopic' : 'MainTopic';
     const topic = mindmap.createNode(type);
 
     // Load attributes...
     const text = domElem.getAttribute('text');
-    if (text != null) {
+    if (text !== null) {
       topic.setText(text);
     }
 
     // Topic text is always plain, no contentType needed
 
     const order = domElem.getAttribute('order');
-    if (order != null) {
+    if (order !== null) {
       const parsedOrder = parseInt(order, 10);
       if (Number.isFinite(parsedOrder)) {
         topic.setOrder(parsedOrder);
@@ -99,7 +99,7 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
     }
 
     let shape = domElem.getAttribute('shape');
-    if (shape != null) {
+    if (shape !== null) {
       // Hack for legacy mapping loading ...
       shape = shape === 'rectagle' ? 'rectangle' : shape;
       if (isTopicShapeType(shape)) {
@@ -110,12 +110,12 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
     }
 
     const isShrink = domElem.getAttribute('shrink');
-    if (isShrink != null) {
+    if (isShrink !== null) {
       topic.setChildrenShrunken(isShrink === 'true');
     }
 
     const fontStyle = domElem.getAttribute('fontStyle');
-    if (fontStyle != null) {
+    if (fontStyle !== null) {
       const font = fontStyle.split(';');
 
       if (font[0]) {
@@ -156,17 +156,17 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
     }
 
     const bgColor = domElem.getAttribute('bgColor');
-    if (bgColor != null) {
+    if (bgColor !== null) {
       topic.setBackgroundColor(bgColor);
     }
 
     const borderColor = domElem.getAttribute('brColor');
-    if (borderColor != null) {
+    if (borderColor !== null) {
       topic.setBorderColor(borderColor);
     }
 
     const position = domElem.getAttribute('position');
-    if (position != null) {
+    if (position !== null) {
       const pos = position.split(',');
       const x = Number.parseInt(pos[0] ?? '', 10);
       const y = Number.parseInt(pos[1] ?? '', 10);

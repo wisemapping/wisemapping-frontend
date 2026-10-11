@@ -24,7 +24,7 @@ import type CommandContext from '../CommandContext';
 class MoveControlPointCommand extends Command {
   private _ctrIndex: PivotType;
 
-  private _controlPoint: PositionType | null;
+  private _controlPoint: PositionType | undefined;
 
   private _modelId: number;
 
@@ -44,16 +44,16 @@ class MoveControlPointCommand extends Command {
     switch (this._ctrIndex) {
       case PivotType.Start:
         oldCtlPoint = model.getSrcCtrlPoint();
-        model.setSrcCtrlPoint(this._controlPoint!);
+        model.setSrcCtrlPoint(this._controlPoint);
         break;
       case PivotType.End:
         oldCtlPoint = model.getDestCtrlPoint();
-        model.setDestCtrlPoint(this._controlPoint!);
+        model.setDestCtrlPoint(this._controlPoint);
         break;
       default:
         throw new Error('Illegal state exception');
     }
-    this._controlPoint = oldCtlPoint ? { ...oldCtlPoint } : null;
+    this._controlPoint = oldCtlPoint ? { ...oldCtlPoint } : undefined;
 
     // Placed from its connection point, as on load, so that undo and redo give back the same curve ...
     relationship.applyModelControlPoint(this._ctrIndex);

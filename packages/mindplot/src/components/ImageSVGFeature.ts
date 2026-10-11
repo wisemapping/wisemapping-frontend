@@ -344,7 +344,7 @@ class ImageSVGFeature {
       // re-added), so decorate() recognizes it and doesn't add listeners on every redraw
       const svgText = this.getOrBuildSVGElement();
       if (!this._svgIcon || this._svgIconText !== svgText) {
-        this._svgIcon = this._createSVGIcon() || undefined;
+        this._svgIcon = this._createSVGIcon();
         this._svgIconText = svgText;
       }
       if (this._svgIcon) {
@@ -353,15 +353,15 @@ class ImageSVGFeature {
     }
   }
 
-  private _createSVGIcon(): Removable | null {
+  private _createSVGIcon(): Removable | undefined {
     const svgIconName = this.getGalleryIconName();
     if (!svgIconName) {
-      return null;
+      return undefined;
     }
 
     const svgText = this.getOrBuildSVGElement();
     if (!svgText) {
-      return null;
+      return undefined;
     }
 
     const topic = this._topic; // Capture topic reference for closure
@@ -370,8 +370,8 @@ class ImageSVGFeature {
       getElement(): Group {
         return topic.get2DElement(); // Return the topic's main group
       },
-      getGroup(): null {
-        return null;
+      getGroup(): undefined {
+        return undefined;
       },
       getSize(): SizeType | undefined {
         return ImageSVGFeature.iconSize(svgText);

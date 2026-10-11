@@ -51,9 +51,11 @@ describe('ActionDispatcherCommands (T5)', () => {
     expect(fromInstance).toBe(fromDesigner);
 
     // A1 dragged away from A, connected to nothing.
-    fromInstance.dragTopic(2, { x: 500, y: 300 }, undefined, null);
+    fromInstance.dragTopic(2, { x: 500, y: 300 }, undefined, undefined);
 
     expect(save()).toMatch(/<topic position="500,300"[^>]* id="2"\/>/);
-    expect(designer.getModel().findTopicById(2)?.getOutgoingConnectedTopic()).toBeNull();
+    const dragged = designer.getModel().findTopicById(2);
+    expect(dragged).toBeDefined();
+    expect(dragged?.getOutgoingConnectedTopic()).toBeUndefined();
   });
 });

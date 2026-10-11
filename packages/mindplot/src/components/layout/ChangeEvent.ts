@@ -20,14 +20,14 @@ import { $assert } from '../util/assert';
 class ChangeEvent {
   private _id: number;
 
-  private _position: { x: number; y: number } | null;
+  private _position: { x: number; y: number } | undefined;
 
   private _order: number | undefined;
 
   constructor(id: number) {
     $assert(!Number.isNaN(id), 'id can not be null');
     this._id = id;
-    this._position = null;
+    this._position = undefined;
     this._order = undefined;
   }
 
@@ -42,7 +42,7 @@ class ChangeEvent {
   }
 
   /** @return position */
-  getPosition(): { x: number; y: number } | null {
+  getPosition(): { x: number; y: number } | undefined {
     return this._position;
   }
 

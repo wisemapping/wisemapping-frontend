@@ -46,7 +46,7 @@ class Node {
   private _id: number;
 
   // Set by RootedTreeSet when the node is connected; a node starts as a root.
-  _parent: Node | null = null;
+  _parent: Node | undefined;
 
   private _sorter: ChildrenSorterStrategy;
 

@@ -120,4 +120,4 @@ export const createFreemindNode = (): FreemindNode => ({ kind: 'node', children:
 
 // For the default case of a switch on the kind: the element is never, so a kind that is not
 // handled fails to compile. At runtime, an element of an unknown kind is skipped.
-export const unknownFreemindElement = (_element: never): null => null;
+export const unknownFreemindElement = (_element: never): undefined => undefined;

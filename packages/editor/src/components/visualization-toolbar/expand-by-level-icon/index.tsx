@@ -26,8 +26,8 @@ import { formatTooltip } from '../utils';
 // Helper function to get topic depth/level
 const getTopicDepth = (topic: Topic): number => {
   let depth = 0;
-  let current: Topic | null = topic;
-  while (current && current.getParent() !== null) {
+  let current: Topic | undefined = topic;
+  while (current && current.getParent() !== undefined) {
     depth++;
     current = current.getParent();
   }

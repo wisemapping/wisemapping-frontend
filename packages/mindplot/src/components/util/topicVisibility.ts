@@ -29,7 +29,7 @@ import type Topic from '../Topic';
  */
 export default function getCollapsedAncestorIds(topic: Topic): number[] {
   const ids: number[] = [];
-  let current: Topic | null = topic.getParent();
+  let current: Topic | undefined = topic.getParent();
   while (current) {
     if (current.areChildrenShrunken()) {
       ids.push(current.getId());

@@ -109,15 +109,15 @@ class MDExporter extends Exporter {
 
   /**
    * The Markdown of an html note with lists: its lists, nested by indentation, and the text
-   * around them as paragraphs. Null for other notes, which are written on a single line.
+   * around them as paragraphs. Undefined for other notes, which are written on a single line.
    */
-  private noteMarkdown(note: NoteModel): string | null {
+  private noteMarkdown(note: NoteModel): string | undefined {
     if (note.getContentType() !== ContentType.HTML) {
-      return null;
+      return undefined;
     }
     const { body } = new DOMParser().parseFromString(note.getText(), 'text/html');
     if (!body.querySelector('li')) {
-      return null;
+      return undefined;
     }
 
     const blocks: string[] = [];

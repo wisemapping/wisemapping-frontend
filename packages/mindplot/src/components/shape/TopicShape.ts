@@ -23,7 +23,7 @@ import type SizeType from '../SizeType';
 interface TopicShape {
   setSize(width: number, height: number): void;
 
-  getSize(): SizeType | null;
+  getSize(): SizeType | undefined;
 
   setPosition(x: number, y: number): void;
 

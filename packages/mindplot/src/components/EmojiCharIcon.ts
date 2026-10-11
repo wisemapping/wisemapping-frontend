@@ -27,7 +27,7 @@ import type PositionType from './PositionType';
 class EmojiCharIcon implements Icon {
   private _group: Group;
 
-  private _iconGroup: IconGroup | null;
+  private _iconGroup: IconGroup | undefined;
 
   private _iconModel: EmojiIconModel;
 
@@ -59,7 +59,7 @@ class EmojiCharIcon implements Icon {
     if (!readOnly) {
       this._group.setCursor('pointer');
     }
-    this._iconGroup = null;
+    this._iconGroup = undefined;
   }
 
   getElement(): Group {

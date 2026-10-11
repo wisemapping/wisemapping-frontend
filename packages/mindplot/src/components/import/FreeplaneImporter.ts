@@ -129,7 +129,9 @@ class FreeplaneImporter extends Importer {
     const centralTopic = mindmap.createNode('CentralTopic', this.ids.next());
     this.mapNodeId(rootNode, centralTopic);
     centralTopic.setText(FreeplaneImporter.nodeText(rootNode) || 'Central Topic');
-    const centralShape = FreeplaneImporter.styleToShape(rootNode.getAttribute('STYLE'));
+    const centralShape = FreeplaneImporter.styleToShape(
+      rootNode.getAttribute('STYLE') ?? undefined,
+    );
     if (centralShape) {
       centralTopic.setShapeType(centralShape);
     }
@@ -158,7 +160,7 @@ class FreeplaneImporter extends Importer {
     topic.setOrder(order);
     // A background is only drawn by a shape, so a node with one and no shape is a rectangle.
     const shape =
-      FreeplaneImporter.styleToShape(freeplaneNode.getAttribute('STYLE')) ||
+      FreeplaneImporter.styleToShape(freeplaneNode.getAttribute('STYLE') ?? undefined) ||
       (freeplaneNode.getAttribute('BACKGROUND_COLOR') ? 'rectangle' : 'line');
     topic.setShapeType(shape);
     this.addStyle(topic, freeplaneNode);
@@ -204,7 +206,7 @@ class FreeplaneImporter extends Importer {
   }
 
   // The node STYLE, as written by Freeplane (and the Freeplane exporter).
-  private static styleToShape(style: string | null): TopicShapeType | undefined {
+  private static styleToShape(style: string | undefined): TopicShapeType | undefined {
     switch (style) {
       case 'bubble':
         return 'rounded rectangle';
@@ -271,7 +273,7 @@ class FreeplaneImporter extends Importer {
     }
   }
 
-  private buildNoteContent(freeplaneNode: Element): string | null {
+  private buildNoteContent(freeplaneNode: Element): string | undefined {
     const parts: string[] = [];
 
     // Handle Freeplane notes
@@ -286,7 +288,7 @@ class FreeplaneImporter extends Importer {
       }
     });
 
-    return parts.length > 0 ? parts.join('\n') : null;
+    return parts.length > 0 ? parts.join('\n') : undefined;
   }
 
   // HTML has no CDATA sections, it would drop them: their text is kept as (escaped) text.
@@ -375,7 +377,7 @@ class FreeplaneImporter extends Importer {
     const relationship = mindmap.createRelationship(srcTopicId, destTopicId);
 
     relationship.setStrokeStyle(
-      FreeplaneImporter.strokeStyle(arrowlinkElement.getAttribute('DASH')),
+      FreeplaneImporter.strokeStyle(arrowlinkElement.getAttribute('DASH') ?? undefined),
     );
 
     mindmap.addRelationship(relationship);
@@ -386,7 +388,7 @@ class FreeplaneImporter extends Importer {
    * those of its Dash enum: none (SOLID), "3 3" (CLOSE_DOTS), "7 7" (DASHES), "2 7" (DISTANT_DOTS)
    * and "2 7 7 7" (DOTS_AND_DASHES). Short dashes are dots; any longer one makes the line dashed.
    */
-  private static strokeStyle(dash: string | null): StrokeStyle {
+  private static strokeStyle(dash: string | undefined): StrokeStyle {
     const lengths = (dash || '')
       .trim()
       .split(/\s+/)

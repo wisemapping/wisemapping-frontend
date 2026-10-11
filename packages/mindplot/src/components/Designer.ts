@@ -99,7 +99,7 @@ export type DesignerEvents = {
 };
 
 class Designer extends EventDispispatcher<DesignerEvents> {
-  private _mindmap: Mindmap | null;
+  private _mindmap: Mindmap | undefined;
 
   private _options: DesignerOptions;
 
@@ -125,27 +125,27 @@ class Designer extends EventDispispatcher<DesignerEvents> {
   private _widgetManager: WidgetBuilder;
 
   // Internal clipboard storage for browsers that don't support clipboard API
-  private _internalClipboard: string | null = null;
+  private _internalClipboard: string | undefined;
 
   private _topicEventDispatcher: TopicEventDispatcher;
 
   // Set while one change of the selection runs (a click, select-all, a keyboard move): the designer
   // fires its 'onfocus' or 'onblur' event, and pans to the last topic selected, once at the end.
-  private _selectionBatch: { changed: boolean; panTo?: Topic } | null = null;
+  private _selectionBatch: { changed: boolean; panTo?: Topic } | undefined;
 
   private _selectionShadows: Map<Topic, HTMLTopicSelected> = new Map();
 
   // Removes the LayoutEventBus handlers of the selection shadows, set once a map is loaded ...
-  private _unsubscribeSelectionShadows: (() => void) | null = null;
+  private _unsubscribeSelectionShadows: (() => void) | undefined;
 
-  private _autoPanOnFocusListener: ((nodeModel: NodeModel) => void) | null = null;
+  private _autoPanOnFocusListener: ((nodeModel: NodeModel) => void) | undefined;
 
-  private _wheelListener: ((event: WheelEvent) => void) | null = null;
+  private _wheelListener: ((event: WheelEvent) => void) | undefined;
 
   // Re-lays out the map once a web font finishes loading (see _registerFontLoadRelayout).
-  private _fontLoadListener: (() => void) | null = null;
+  private _fontLoadListener: (() => void) | undefined;
 
-  private _fontLoadFrame: number | null = null;
+  private _fontLoadFrame: number | undefined;
 
   private _keyboard: DesignerKeyboard | undefined;
 
@@ -154,11 +154,13 @@ class Designer extends EventDispispatcher<DesignerEvents> {
   private _viewportInsets: ViewportInsets | (() => ViewportInsets) = {};
 
   // The last zoomToFit: its options and the viewport it left, to re-fit on a container resize ...
-  private _lastFit: {
-    options?: ZoomToFitOptions | undefined;
-    zoom: number;
-    origin: PositionType;
-  } | null = null;
+  private _lastFit:
+    | {
+        options?: ZoomToFitOptions | undefined;
+        zoom: number;
+        origin: PositionType;
+      }
+    | undefined;
 
   constructor(options: DesignerOptions) {
     super();
@@ -220,7 +222,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
 
     this._topicEventDispatcher = new TopicEventDispatcher(this.isReadOnly());
 
-    this._mindmap = null;
+    this._mindmap = undefined;
 
     // If not manager was specifed, use the readonly one.
     this._widgetManager = options.widgetManager;
@@ -260,11 +262,11 @@ class Designer extends EventDispispatcher<DesignerEvents> {
       return;
     }
     this._fontLoadListener = () => {
-      if (this._fontLoadFrame !== null) {
+      if (this._fontLoadFrame !== undefined) {
         return;
       }
       this._fontLoadFrame = requestAnimationFrame(() => {
-        this._fontLoadFrame = null;
+        this._fontLoadFrame = undefined;
         if (this._mindmap && !this._disposed) {
           this.redrawAllTopics();
           this._layoutEventBus.fireEvent('forceLayout');
@@ -450,7 +452,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
 
     // Unselect every other entity, unless the shortcut modifier (Cmd on a Mac, Ctrl elsewhere)
     // is held: the same key the topic toggles its selection on ...
-    if (event == null || !hasShortcutModifier(event)) {
+    if (event === undefined || !hasShortcutModifier(event)) {
       this._setFocusOfAll(false, currentObject);
     }
   }
@@ -502,7 +504,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     try {
       change();
     } finally {
-      this._selectionBatch = null;
+      this._selectionBatch = undefined;
     }
 
     if (batch.panTo) {
@@ -643,7 +645,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     ) {
       this.zoomToFit(fit.options);
     } else {
-      this._lastFit = null;
+      this._lastFit = undefined;
       this._canvas.adjustToContainer();
     }
   }
@@ -803,8 +805,8 @@ class Designer extends EventDispispatcher<DesignerEvents> {
    * browser denies access or has nothing of interest. Shared by every paste
    * flavour so they all agree on where the text comes from.
    */
-  private async _readClipboardText(): Promise<string | null> {
-    let text: string | null = null;
+  private async _readClipboardText(): Promise<string | undefined> {
+    let text: string | undefined;
 
     // Try to read from system clipboard first
     if (typeof navigator !== 'undefined' && navigator.clipboard?.read) {
@@ -868,7 +870,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
       });
 
       // Finally, add the node ...
-      this._actionDispatcher.addTopics(children, null);
+      this._actionDispatcher.addTopics(children);
     } else {
       // Text goes into the selected topics: with none, there is nothing to change or undo ...
       const topics = this.getModel().filterSelectedTopics();
@@ -929,7 +931,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     // sides, as adding them one by one would; elsewhere they follow each other
     // in clipboard order ...
     const layoutManager = this._eventBussDispatcher.getLayoutManager();
-    const predicted = layoutManager.predict(parentId, null, null);
+    const predicted = layoutManager.predict(parentId, undefined, undefined);
     const children = central.getChildren();
     const orders = layoutManager.getOrdersForNewChildren(parentId, children.length);
     const clones = children.map((child, index) => {
@@ -980,7 +982,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
 
     // Create a new node ...
     const layoutManager = this._eventBussDispatcher.getLayoutManager();
-    const result = layoutManager.predict(topic.getId(), null, mousePos || null);
+    const result = layoutManager.predict(topic.getId(), undefined, mousePos);
     childModel.setOrder(result.order);
 
     const { position } = result;
@@ -1022,7 +1024,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     let model: NodeModel;
     const parentTopic = topic.getOutgoingConnectedTopic();
 
-    if (parentTopic != null) {
+    if (parentTopic !== undefined) {
       // Create a new node ...
       model = topic.getModel();
       const mindmap = model.getMindmap();
@@ -1042,7 +1044,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
       } else {
         // If current topic has no order, fall back to layout manager prediction
         // This should not happen in normal cases, but handle it gracefully
-        const prediction = layoutManager.predict(parentTopic.getId(), null, null);
+        const prediction = layoutManager.predict(parentTopic.getId(), undefined, undefined);
         newOrder = prediction.order;
       }
 
@@ -1057,7 +1059,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
       // but we need an initial position. The layout system will position it
       // correctly based on the order we set.
       // Predict position - the layout system will use the order to position it correctly
-      const prediction = layoutManager.predict(parentTopic.getId(), null, null);
+      const prediction = layoutManager.predict(parentTopic.getId(), undefined, undefined);
       result.setPosition(prediction.position.x, prediction.position.y);
     }
 
@@ -1935,7 +1937,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     } else {
       // Ask the layout where a child of the new parent belongs, rather than
       // inventing a position the sorter would immediately override.
-      const predicted = layoutManager.predict(target.parent.getId(), null, null);
+      const predicted = layoutManager.predict(target.parent.getId(), undefined, undefined);
       dispatcher.dragTopic(topic.getId(), predicted.position, predicted.order, target.parent);
     }
 
@@ -2000,13 +2002,13 @@ class Designer extends EventDispispatcher<DesignerEvents> {
 
     if (this._unsubscribeSelectionShadows) {
       this._unsubscribeSelectionShadows();
-      this._unsubscribeSelectionShadows = null;
+      this._unsubscribeSelectionShadows = undefined;
     }
     HTMLTopicSelected.cleanupSelectionShadows(this);
 
     if (this._autoPanOnFocusListener) {
       this._layoutEventBus.removeEvent('topicSelected', this._autoPanOnFocusListener);
-      this._autoPanOnFocusListener = null;
+      this._autoPanOnFocusListener = undefined;
     }
     this._eventBussDispatcher.dispose();
 
@@ -2017,17 +2019,17 @@ class Designer extends EventDispispatcher<DesignerEvents> {
 
     if (this._wheelListener) {
       this.getContainer().removeEventListener('wheel', this._wheelListener);
-      this._wheelListener = null;
+      this._wheelListener = undefined;
     }
 
     if (this._fontLoadListener) {
       const { fonts } = document as { fonts?: Pick<FontFaceSet, 'removeEventListener'> };
       fonts?.removeEventListener('loadingdone', this._fontLoadListener);
-      this._fontLoadListener = null;
+      this._fontLoadListener = undefined;
     }
-    if (this._fontLoadFrame !== null) {
+    if (this._fontLoadFrame !== undefined) {
       cancelAnimationFrame(this._fontLoadFrame);
-      this._fontLoadFrame = null;
+      this._fontLoadFrame = undefined;
     }
 
     // Read-only designers have no drag manager ...

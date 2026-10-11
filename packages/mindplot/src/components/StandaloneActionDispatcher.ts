@@ -71,7 +71,7 @@ class StandaloneActionDispatcher extends ActionDispatcher implements ActionDispa
     this._actionRunner = new DesignerActionRunner(commandContext, this);
   }
 
-  addTopics(models: NodeModel[], parentTopicsId: number[] | null): void {
+  addTopics(models: NodeModel[], parentTopicsId?: number[]): void {
     const command = new AddTopicCommand(models, parentTopicsId);
     this.execute(command);
   }
@@ -92,7 +92,7 @@ class StandaloneActionDispatcher extends ActionDispatcher implements ActionDispa
     topicId: number,
     position: PositionType,
     order: number | undefined,
-    parentTopic: Topic | null,
+    parentTopic: Topic | undefined,
   ): void {
     const command = new DragTopicCommand(topicId, position, order, parentTopic);
     this.execute(command);
@@ -100,8 +100,8 @@ class StandaloneActionDispatcher extends ActionDispatcher implements ActionDispa
 
   /** */
   moveTopic(topicId: number, position: PositionType): void {
-    $assert(topicId != null, 'topicsId can not be null');
-    $assert(position != null, 'position can not be null');
+    $assert(typeof topicId === 'number', 'topicsId can not be null');
+    $assert(position, 'position can not be null');
 
     const commandFunc = (topic: Topic, pos: PositionType) => {
       const result = topic.getPosition();
@@ -145,7 +145,7 @@ class StandaloneActionDispatcher extends ActionDispatcher implements ActionDispa
   }
 
   changeTextToTopic(topicsIds: number[], text: string): void {
-    $assert(topicsIds != null, 'topicsIds can not be null');
+    $assert(topicsIds, 'topicsIds can not be null');
 
     const commandFunc = (topic: Topic, value: string | undefined) => {
       // Keep the model value (undefined when empty): getText() returns the theme placeholder.

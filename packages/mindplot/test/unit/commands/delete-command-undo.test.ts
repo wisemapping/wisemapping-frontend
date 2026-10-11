@@ -53,7 +53,7 @@ describe('DeleteCommand undo/redo', () => {
     expect(after).not.toContain('text="Floating"');
 
     designer.undo();
-    expect(topic(5).getParent()).toBeNull();
+    expect(topic(5).getParent()).toBeUndefined();
     expect(
       designer
         .getMindmap()
@@ -82,7 +82,7 @@ describe('DeleteCommand undo/redo', () => {
     const after = save();
 
     designer.undo();
-    expect(topic(5).getParent()).toBeNull();
+    expect(topic(5).getParent()).toBeUndefined();
     expect(topic(newId).getParent()?.getId()).toBe(1);
     expect(save()).toEqual(before);
 

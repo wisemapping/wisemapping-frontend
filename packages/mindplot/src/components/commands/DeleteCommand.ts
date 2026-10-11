@@ -33,11 +33,11 @@ class DeleteCommand extends Command {
 
   private _deletedRelModel: RelationshipModel[];
 
-  // One entry per deleted topic model, null for a floating topic.
-  private _parentTopicIds: (number | null)[];
+  // One entry per deleted topic model, undefined for a floating topic.
+  private _parentTopicIds: (number | undefined)[];
 
   constructor(topicIds: number[], relIds: number[]) {
-    $assert(relIds != null, 'topicIds can not be null');
+    $assert(relIds, 'topicIds can not be null');
 
     super();
     this._relIds = relIds;
@@ -75,7 +75,7 @@ class DeleteCommand extends Command {
         const clonedModel = model.clone();
         this._deletedTopicModels.push(clonedModel);
         const outTopic = topic.getOutgoingConnectedTopic();
-        this._parentTopicIds.push(outTopic != null ? outTopic.getId() : null);
+        this._parentTopicIds.push(outTopic?.getId());
 
         // Finally, delete the topic from the workspace...
         commandContext.deleteTopic(topic);
@@ -105,9 +105,9 @@ class DeleteCommand extends Command {
     this._deletedTopicModels.forEach((topicModel, index) => {
       const topic = commandContext.findTopic(topicModel.getId());
 
-      // _parentTopicIds runs parallel to _deletedTopicModels: null is a floating topic.
+      // _parentTopicIds runs parallel to _deletedTopicModels: undefined is a floating topic.
       const parentId = this._parentTopicIds[index];
-      if (parentId != null) {
+      if (parentId !== undefined) {
         commandContext.connect(topic, commandContext.findTopic(parentId));
       } else {
         // A floating topic is a branch of the mindmap, put it back there ...
@@ -143,7 +143,7 @@ class DeleteCommand extends Command {
     topics.forEach((topic: Topic) => {
       let parent = topic.getParent();
       let found = false;
-      while (parent != null && !found) {
+      while (parent !== undefined && !found) {
         found = topicIds.includes(parent.getId());
         if (found) {
           break;

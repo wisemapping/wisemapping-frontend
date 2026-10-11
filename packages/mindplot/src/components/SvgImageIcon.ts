@@ -97,7 +97,6 @@ class SvgImageIcon extends ImageIcon {
     // Icons can be stored with a descriptive name (e.g. 'home'): cycle from the icon it shows.
     const iconId = mapIconNameToAsset(storedIconId.toLowerCase());
     const familyIcons = SvgImageIcon._getFamilyIcons(iconId);
-    $assert(familyIcons !== null, `Family Icon not found: ${iconId}`);
 
     // The icon after it in its family, the first one after the last.
     const index = familyIcons.indexOf(iconId);
@@ -111,7 +110,7 @@ class SvgImageIcon extends ImageIcon {
   }
 
   private static _getFamilyIcons(iconId: string): string[] {
-    $assert(iconId != null, 'id must not be null');
+    $assert(typeof iconId === 'string', 'id must not be null');
     $assert(iconId.indexOf('_') !== -1, `Invalid icon id (it must contain '_'). Id: ${iconId}`);
 
     const iconFamilyId = iconId.substr(0, iconId.indexOf('_'));

@@ -75,7 +75,7 @@ jest.mock('../../src/components/DesignerKeyboard', () => ({
 const buildTopic = (position: { x: number; y: number }): Topic =>
   ({
     getId: () => 7,
-    getParent: () => null,
+    getParent: () => undefined,
     getPosition: () => position,
     getSize: () => ({ width: 100, height: 40 }),
     setOnFocus: jest.fn(),

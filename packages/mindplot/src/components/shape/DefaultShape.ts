@@ -68,7 +68,7 @@ abstract class DefaultTopicShape<T extends ElementClass<ElementPeer>> implements
 
   abstract setSize(width: number, height: number): void;
 
-  abstract getSize(): SizeType | null;
+  abstract getSize(): SizeType | undefined;
 
   abstract setPosition(x: number, y: number): void;
 }

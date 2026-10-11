@@ -35,8 +35,8 @@ class NoneTopicShape implements TopicShape {
     this._size = { width, height };
   }
 
-  getSize(): SizeType | null {
-    return this._size || null;
+  getSize(): SizeType | undefined {
+    return this._size;
   }
 
   setPosition(): void {

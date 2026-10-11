@@ -36,20 +36,20 @@ class DragManager {
 
   private _listeners: Partial<Record<DragEventType, DragListener>>;
 
-  private _mouseMoveListener?: ((event: Event) => void) | null;
+  private _mouseMoveListener: ((event: Event) => void) | undefined;
 
-  private _mouseUpListener?: ((event: Event) => void) | null;
+  private _mouseUpListener: ((event: Event) => void) | undefined;
 
   // Abandons the drag in progress: on window blur or Escape ...
-  private _cancelListener: ((event: Event) => void) | null;
+  private _cancelListener: ((event: Event) => void) | undefined;
 
-  private _keyDownListener: ((event: KeyboardEvent) => void) | null;
+  private _keyDownListener: ((event: KeyboardEvent) => void) | undefined;
 
   private _dragPivot: DragPivot;
 
-  private _mouseDownTime: number | null;
+  private _mouseDownTime: number | undefined;
 
-  private _mouseDownPosition: { x: number; y: number } | null;
+  private _mouseDownPosition: { x: number; y: number } | undefined;
 
   // Drag thresholds to prevent accidental dragging
 
@@ -62,10 +62,10 @@ class DragManager {
     this._listeners = {};
     this._isDragInProcess = false;
     this._eventDispatcher = eventDispatcher;
-    this._mouseDownTime = null;
-    this._mouseDownPosition = null;
-    this._cancelListener = null;
-    this._keyDownListener = null;
+    this._mouseDownTime = undefined;
+    this._mouseDownPosition = undefined;
+    this._cancelListener = undefined;
+    this._keyDownListener = undefined;
     this._dragPivot = DragTopic.init(this._workspace);
   }
 
@@ -253,10 +253,10 @@ class DragManager {
     }
 
     // Help GC
-    this._mouseMoveListener = null;
-    this._mouseUpListener = null;
-    this._cancelListener = null;
-    this._keyDownListener = null;
+    this._mouseMoveListener = undefined;
+    this._mouseUpListener = undefined;
+    this._cancelListener = undefined;
+    this._keyDownListener = undefined;
 
     workspace.enableWorkspaceEvents(true);
     // Change the cursor to the default.
@@ -287,8 +287,8 @@ class DragManager {
     }
 
     // Reset drag threshold trackers
-    this._mouseDownTime = null;
-    this._mouseDownPosition = null;
+    this._mouseDownTime = undefined;
+    this._mouseDownPosition = undefined;
   }
 
   /**

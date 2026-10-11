@@ -58,19 +58,19 @@ class Canvas {
 
   private _queueRenderEnabled: boolean;
 
-  private _mouseMoveListener: ((event: Event) => void) | null;
+  private _mouseMoveListener: ((event: Event) => void) | undefined;
 
-  private _mouseUpListener: (() => void) | null;
+  private _mouseUpListener: (() => void) | undefined;
 
   // Ends the pan in progress without treating it as a release (window blur, dispose) ...
-  private _cancelPan: (() => void) | null;
+  private _cancelPan: (() => void) | undefined;
 
-  private _mouseDownListener: ((event: Event) => void) | null;
+  private _mouseDownListener: ((event: Event) => void) | undefined;
 
-  // Stops observing the container size (registerEvents); null before or after.
-  private _stopResizeObserver: (() => void) | null;
+  // Stops observing the container size (registerEvents); undefined before or after.
+  private _stopResizeObserver: (() => void) | undefined;
 
-  private _resizeHandler: (() => void) | null = null;
+  private _resizeHandler: (() => void) | undefined;
 
   // Receives canvasPanned and canvasZoomed: the bus of the designer the canvas belongs to.
   private _layoutEventBus: LayoutEventBus;
@@ -109,11 +109,11 @@ class Canvas {
     this._renderQueue = [];
     this._eventsEnabled = false;
     this._queueRenderEnabled = delayRenderQueue;
-    this._mouseMoveListener = null;
-    this._mouseUpListener = null;
-    this._cancelPan = null;
-    this._mouseDownListener = null;
-    this._stopResizeObserver = null;
+    this._mouseMoveListener = undefined;
+    this._mouseUpListener = undefined;
+    this._cancelPan = undefined;
+    this._mouseDownListener = undefined;
+    this._stopResizeObserver = undefined;
   }
 
   /** Fits the viewport to the container's new size, keeping the zoom and the centre of the view. */
@@ -121,8 +121,8 @@ class Canvas {
     this.setZoom(this._zoom, false);
   }
 
-  /** Handles a container resize instead of adjustToContainer(), or null for the default. */
-  setResizeHandler(handler: (() => void) | null): void {
+  /** Handles a container resize instead of adjustToContainer(), or undefined for the default. */
+  setResizeHandler(handler: (() => void) | undefined): void {
     this._resizeHandler = handler;
   }
 
@@ -157,20 +157,20 @@ class Canvas {
 
     if (this._stopResizeObserver) {
       this._stopResizeObserver();
-      this._stopResizeObserver = null;
+      this._stopResizeObserver = undefined;
     }
 
     if (this._mouseDownListener) {
       this._screenManager.removeEvent('mousedown', this._mouseDownListener);
       this._screenManager.removeEvent('touchstart', this._mouseDownListener);
-      this._mouseDownListener = null;
+      this._mouseDownListener = undefined;
     }
     this._eventsEnabled = false;
 
     // Every listener added to the workspace and the shapes in it, in one go ...
     this._workspace.dispose();
     this._workspace._getHtmlContainer().remove();
-    this._screenManager.setWorkspace(null);
+    this._screenManager.setWorkspace(undefined);
   }
 
   isReadOnly(): boolean {
@@ -520,9 +520,9 @@ class Canvas {
             screenManager.removeEvent('touchend', mouseUpListener);
             screenManager.removeEvent('touchcancel', cancelPan);
             window.removeEventListener('blur', cancelPan);
-            this._mouseUpListener = null;
-            this._mouseMoveListener = null;
-            this._cancelPan = null;
+            this._mouseUpListener = undefined;
+            this._mouseMoveListener = undefined;
+            this._cancelPan = undefined;
             window.document.body.style.cursor = 'default';
 
             mWorkspace.enableWorkspaceEvents(true);

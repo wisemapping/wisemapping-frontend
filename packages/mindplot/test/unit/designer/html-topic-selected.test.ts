@@ -113,8 +113,8 @@ class FakeTopic {
     return [];
   }
 
-  _getTopicEventDispatcher(): null {
-    return null;
+  _getTopicEventDispatcher(): undefined {
+    return undefined;
   }
 }
 
@@ -150,7 +150,7 @@ const buildDesigner = (topics: FakeTopic[]) => {
   };
   // selectOnClick and onObjectFocusEvent change the selection through Designer's private batch.
   Object.assign(designer, {
-    _selectionBatch: null,
+    _selectionBatch: undefined,
     ensureNodeVisible: () => undefined,
     _setFocusOfAll(focus: boolean, except?: Topic) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

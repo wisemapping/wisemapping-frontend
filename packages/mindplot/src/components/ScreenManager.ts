@@ -26,7 +26,7 @@ class ScreenManager {
   private _clickEvents: EventListener[];
 
   // The workspace drawn in the container, which maps mouse positions (see setWorkspace).
-  private _workspace: Workspace2D | null = null;
+  private _workspace: Workspace2D | undefined;
 
   constructor(divElement: HTMLElement) {
     $assert(divElement, 'can not be null');
@@ -65,7 +65,7 @@ class ScreenManager {
    * (Workspace.clientToWorld), which applies the zoom, the pan and where the SVG really is on the
    * page (a container border or padding, a CSS transform). Null maps them from the container.
    */
-  setWorkspace(workspace: Workspace2D | null): void {
+  setWorkspace(workspace: Workspace2D | undefined): void {
     this._workspace = workspace;
   }
 
@@ -124,8 +124,8 @@ class ScreenManager {
 
   /** The viewport (client) position of a mouse or touch event. */
   getClientPosition(event: MouseEvent | TouchEvent): PositionType {
-    let x: number | null = null;
-    let y: number | null = null;
+    let x: number | undefined;
+    let y: number | undefined;
 
     if (this.mouseEvents.includes(event.type)) {
       x = (event as MouseEvent).clientX;
@@ -140,15 +140,15 @@ class ScreenManager {
       }
     }
 
-    if (x === null || y === null) {
+    if (x === undefined || y === undefined) {
       throw new Error(`Coordinated can not be null, eventType= ${event.type}`);
     }
     return { x, y };
   }
 
   getWorkspaceMousePosition(event: MouseEvent | TouchEvent): PositionType {
-    let x: number | null = null;
-    let y: number | null = null;
+    let x: number | undefined;
+    let y: number | undefined;
 
     if (this.mouseEvents.includes(event.type)) {
       // Retrieve current mouse position.
@@ -165,7 +165,7 @@ class ScreenManager {
     }
 
     // if value is zero assert throws error
-    if (x === null || y === null) {
+    if (x === undefined || y === undefined) {
       throw new Error(`Coordinated can not be null, eventType= ${event.type}`);
     }
 
@@ -234,8 +234,8 @@ class ScreenManager {
     };
   }
 
-  findInContainer(selector: string): HTMLElement | null {
-    return this._divContainer.querySelector(selector);
+  findInContainer(selector: string): HTMLElement | undefined {
+    return this._divContainer.querySelector<HTMLElement>(selector) ?? undefined;
   }
 }
 

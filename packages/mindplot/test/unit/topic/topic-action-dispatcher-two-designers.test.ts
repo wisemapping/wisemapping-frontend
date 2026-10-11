@@ -33,7 +33,8 @@ jest.mock('../../../src/components/export/PDFExporter', () => ({
   default: class MockPDFExporter {},
 }));
 
-const noteOf = (harness: Harness, id: number): string | null => harness.topic(id).getNoteValue();
+const noteOf = (harness: Harness, id: number): string | undefined =>
+  harness.topic(id).getNoteValue();
 const linkOf = (harness: Harness, id: number): string | undefined =>
   harness.topic(id).getLinkValue();
 
@@ -66,7 +67,7 @@ describe('Commands of a topic with two designers on the page (BL5-144)', () => {
 
     expect(noteOf(first, 1)).toBe('<p>note</p>');
     expect(linkOf(first, 1)).toBe('https://example.com');
-    expect(noteOf(second, 1)).toBeNull();
+    expect(noteOf(second, 1)).toBeUndefined();
     expect(linkOf(second, 1)).toBeUndefined();
 
     // The undo is on the first designer's stack ...
@@ -86,7 +87,7 @@ describe('Commands of a topic with two designers on the page (BL5-144)', () => {
     new NoteIcon(topic, note, false).remove();
     new LinkIcon(topic, link, false).remove();
 
-    expect(noteOf(first, 1)).toBeNull();
+    expect(noteOf(first, 1)).toBeUndefined();
     expect(linkOf(first, 1)).toBeUndefined();
     expect(noteOf(second, 1)).toBe('<p>note</p>');
     expect(linkOf(second, 1)).toBe('https://example.com');

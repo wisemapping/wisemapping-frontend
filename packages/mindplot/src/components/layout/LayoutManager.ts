@@ -78,7 +78,7 @@ class LayoutManager extends EventDispispatcher<LayoutManagerEvents> {
 
   constructor(rootNodeId: number, rootSize: SizeType, layoutType: LayoutType = 'mindmap') {
     super();
-    $assert(rootNodeId != null, 'rootNodeId can not be null');
+    $assert(typeof rootNodeId === 'number', 'rootNodeId can not be null');
     $assert(rootSize, 'rootSize can not be null');
 
     this._treeSet = new RootedTreeSet();
@@ -103,7 +103,7 @@ class LayoutManager extends EventDispispatcher<LayoutManagerEvents> {
   }
 
   updateNodeSize(id: number, size: SizeType): void {
-    $assert(id != null, 'id can not be null');
+    $assert(typeof id === 'number', 'id can not be null');
 
     const node = this._treeSet.find(id);
     const before = node.getSize();
@@ -115,8 +115,8 @@ class LayoutManager extends EventDispispatcher<LayoutManagerEvents> {
   }
 
   updateShrinkState(id: number, value: boolean): void {
-    $assert(id != null, 'id can not be null');
-    $assert(value != null, 'value can not be null');
+    $assert(typeof id === 'number', 'id can not be null');
+    $assert(typeof value === 'boolean', 'value can not be null');
 
     const node = this._treeSet.find(id);
     if (node.areChildrenShrunken() !== value) {
@@ -139,10 +139,10 @@ class LayoutManager extends EventDispispatcher<LayoutManagerEvents> {
    * @throws will throw an error if the position's y property is null or undefined
    */
   moveNode(id: number, position: PositionType) {
-    $assert(id != null, 'id cannot be null');
-    $assert(position != null, 'position cannot be null');
-    $assert(position.x != null, 'x can not be null');
-    $assert(position.y != null, 'y can not be null');
+    $assert(typeof id === 'number', 'id cannot be null');
+    $assert(position, 'position cannot be null');
+    $assert(typeof position.x === 'number', 'x can not be null');
+    $assert(typeof position.y === 'number', 'y can not be null');
 
     const node = this._treeSet.find(id);
     const before = node.getPosition();
@@ -160,7 +160,7 @@ class LayoutManager extends EventDispispatcher<LayoutManagerEvents> {
   }
 
   disconnectNode(id: number): void {
-    $assert(id != null, 'id can not be null');
+    $assert(typeof id === 'number', 'id can not be null');
     this._getCurrentLayout().disconnectNode(id);
     this._changedSinceLayout = true;
   }
@@ -174,9 +174,9 @@ class LayoutManager extends EventDispispatcher<LayoutManagerEvents> {
    * @return this
    */
   addNode(id: number, size: SizeType, position: PositionType) {
-    $assert(id != null, 'id can not be null');
+    $assert(typeof id === 'number', 'id can not be null');
     $assert(
-      position != null && Number.isFinite(position.x) && Number.isFinite(position.y),
+      position !== undefined && Number.isFinite(position.x) && Number.isFinite(position.y),
       'position must have finite x and y',
     );
     const result = this._getCurrentLayout().createNode(id, size, position, 'topic');
@@ -203,11 +203,11 @@ class LayoutManager extends EventDispispatcher<LayoutManagerEvents> {
 
   predict(
     parentId: number,
-    nodeId: number | null,
-    position: PositionType | null,
+    nodeId: number | undefined,
+    position: PositionType | undefined,
   ): SorterPrediction {
     const parent = this._treeSet.find(parentId);
-    const node = nodeId != null ? this._treeSet.find(nodeId) : null;
+    const node = nodeId !== undefined ? this._treeSet.find(nodeId) : undefined;
     const sorter = parent.getSorter();
 
     return sorter.predict(this._treeSet, parent, node, position);
@@ -239,7 +239,7 @@ class LayoutManager extends EventDispispatcher<LayoutManagerEvents> {
     };
     if (!global.Raphael) {
       console.warn('Raphael.js not found, exiting plot()');
-      return null;
+      return undefined;
     }
     $assert(containerId, 'containerId cannot be null');
     const squaresize = 10;

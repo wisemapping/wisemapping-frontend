@@ -86,7 +86,7 @@ describe('RootedTreeSet structure', () => {
   it('finds a node, or fails or answers null for an unknown id', () => {
     const set = build();
     expect(set.find(4).getId()).toBe(4);
-    expect(set.find(99, false)).toBeNull();
+    expect(set.find(99, false)).toBeUndefined();
     expect(() => set.find(99)).toThrow('node could not be found id:99');
   });
 
@@ -110,7 +110,7 @@ describe('RootedTreeSet structure', () => {
     set.disconnect(3);
     expect(ids(set.getTreeRoots())).toEqual([0, 5, 3]);
     expect(set.getChildren(set.find(1))).toEqual([]);
-    expect(set.getParent(set.find(3))).toBeNull();
+    expect(set.getParent(set.find(3))).toBeUndefined();
     expect(set.getParent(set.find(4))!.getId()).toBe(3);
     expect(() => set.disconnect(3)).toThrow('Node is not connected');
   });
@@ -119,8 +119,8 @@ describe('RootedTreeSet structure', () => {
     const set = build();
     set.remove(3);
     expect(set.getChildren(set.find(1))).toEqual([]);
-    expect(set.find(3, false)).toBeNull();
-    expect(set.find(4, false)).toBeNull();
+    expect(set.find(3, false)).toBeUndefined();
+    expect(set.find(4, false)).toBeUndefined();
     expect(set.validateTreeConsistency()).toEqual([]);
 
     // The ids can be used again.

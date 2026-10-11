@@ -185,8 +185,8 @@ describe('XMLSerializerTango relationships', () => {
     );
     const [relationship] = mindmap.getRelationships();
     expect(relationship!.getFromNode()).toBe(2);
-    expect(relationship!.getSrcCtrlPoint()).toBeNull();
-    expect(relationship!.getDestCtrlPoint()).toBeNull();
+    expect(relationship!.getSrcCtrlPoint()).toBeUndefined();
+    expect(relationship!.getDestCtrlPoint()).toBeUndefined();
     expect(error).toHaveBeenCalledTimes(2);
   });
 

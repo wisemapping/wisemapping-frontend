@@ -77,23 +77,23 @@ const moveSiblings = (topic: Topic, parent: Topic): Topic[] => {
 };
 
 /**
- * Resolves a requested move into a concrete target, or null when the move is
+ * Resolves a requested move into a concrete target, or undefined when the move is
  * not available -- the topic is already first among its siblings, say, or is
  * the central topic, which has nowhere to go.
  *
  * Pure, and with only a type-only import of Topic, so the whole decision table
  * is unit-testable against stubs rather than needing a live Designer.
  */
-export const resolveTopicMove = (topic: Topic, move: TopicMove): ReorderTarget | null => {
+export const resolveTopicMove = (topic: Topic, move: TopicMove): ReorderTarget | undefined => {
   // The central topic is the root: it has no siblings to reorder among and no
   // parent to detach from.
   if (topic.isCentralTopic()) {
-    return null;
+    return undefined;
   }
 
   const parent = topic.getParent();
   if (!parent) {
-    return null;
+    return undefined;
   }
 
   switch (move) {
@@ -105,7 +105,7 @@ export const resolveTopicMove = (topic: Topic, move: TopicMove): ReorderTarget |
       const neighbour = siblings[targetIndex];
       // Already at the end it is being asked to move towards.
       if (index < 0 || !neighbour) {
-        return null;
+        return undefined;
       }
       // Take the neighbour's order: the topic is detached and re-inserted with it,
       // which lands it just past the neighbour. Orders are not always the index
@@ -120,7 +120,7 @@ export const resolveTopicMove = (topic: Topic, move: TopicMove): ReorderTarget |
       if (!grandparent) {
         // The parent is the central topic, so there is no level to rise to --
         // detaching here would orphan the topic rather than promote it.
-        return null;
+        return undefined;
       }
       return { kind: 'reparent', parent: grandparent };
     }
@@ -132,13 +132,13 @@ export const resolveTopicMove = (topic: Topic, move: TopicMove): ReorderTarget |
       // Undefined for the first child, and for a topic not among the siblings (index -1).
       const above = siblings[siblings.indexOf(topic) - 1];
       if (!above) {
-        return null;
+        return undefined;
       }
       return { kind: 'reparent', parent: above };
     }
 
     default:
-      return null;
+      return undefined;
   }
 };
 

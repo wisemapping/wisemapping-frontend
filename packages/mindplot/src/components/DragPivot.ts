@@ -36,7 +36,7 @@ class DragPivot implements CanvasElement {
 
   private _isVisible: boolean;
 
-  private _targetTopic: Topic | null;
+  private _targetTopic: Topic | undefined;
 
   private _connectRect: Rect;
 
@@ -58,7 +58,7 @@ class DragPivot implements CanvasElement {
     this._curvedLine = this._buildCurvedLine();
     this._dragPivot = this._buildRect();
     this._connectRect = this._buildRect();
-    this._targetTopic = null;
+    this._targetTopic = undefined;
     this._isVisible = false;
     this._isInWorkspace = false;
   }
@@ -67,7 +67,7 @@ class DragPivot implements CanvasElement {
     return this._isVisible;
   }
 
-  getTargetTopic(): Topic | null {
+  getTargetTopic(): Topic | undefined {
     return this._targetTopic;
   }
 
@@ -205,9 +205,9 @@ class DragPivot implements CanvasElement {
   }
 
   // If the node is connected, validate that there is a line connecting both...
-  _getConnectionLine(): CurvedLine | null {
+  _getConnectionLine(): CurvedLine | undefined {
     // Always use straight line for drag preview
-    return this._targetTopic ? this._straightLine : null;
+    return this._targetTopic ? this._straightLine : undefined;
   }
 
   addToWorkspace(workspace: Canvas) {
@@ -254,13 +254,8 @@ class DragPivot implements CanvasElement {
     const connectToRect = this._connectRect;
     workspace.removeChild(connectToRect);
 
-    if (this._straightLine != null) {
-      workspace.removeChild(this._straightLine);
-    }
-
-    if (this._curvedLine != null) {
-      workspace.removeChild(this._curvedLine);
-    }
+    workspace.removeChild(this._straightLine);
+    workspace.removeChild(this._curvedLine);
 
     this._isInWorkspace = false;
   }
@@ -305,7 +300,7 @@ class DragPivot implements CanvasElement {
     $assert(this._targetTopic, 'There are not connected topic.');
 
     this.setVisibility(false);
-    this._targetTopic = null;
+    this._targetTopic = undefined;
   }
 
   /**
@@ -313,7 +308,7 @@ class DragPivot implements CanvasElement {
    */
   reset(): void {
     this.setVisibility(false);
-    this._targetTopic = null;
+    this._targetTopic = undefined;
     // Note: Don't reset _isInWorkspace - elements stay in workspace,
     // just hidden and disconnected
   }

@@ -53,11 +53,11 @@ jest.mock('../../../src/utils/analytics', () => ({
 type FakeTopic = {
   getId: () => number;
   getType: () => string;
-  getParent: () => FakeTopic | null;
+  getParent: () => FakeTopic | undefined;
   areChildrenShrunken: () => boolean;
 };
 
-const topic = (id: number, parent: FakeTopic | null, shrunken = false): FakeTopic => ({
+const topic = (id: number, parent: FakeTopic | undefined, shrunken = false): FakeTopic => ({
   getId: () => id,
   getType: () => (parent ? 'MainTopic' : 'CentralTopic'),
   getParent: () => parent,
@@ -67,7 +67,7 @@ const topic = (id: number, parent: FakeTopic | null, shrunken = false): FakeTopi
 const createModel = (
   options: { loaded?: boolean; collapsed?: boolean; maxDepth?: number } = {},
 ) => {
-  const central = topic(0, null, true);
+  const central = topic(0, undefined, true);
   const first = topic(1, central, options.collapsed ?? false);
   const second = topic(2, first);
   const third = topic(3, second);
@@ -459,7 +459,7 @@ describe('buildVisualizationToolbarConfig', () => {
   it('dispatches nothing when no topic is within the level', () => {
     const { model, designer, dispatcher } = createModel({ maxDepth: 3 });
     const fullModel = designer.getModel();
-    designer.getModel = () => ({ ...fullModel, getTopics: () => [topic(0, null)] });
+    designer.getModel = () => ({ ...fullModel, getTopics: () => [topic(0, undefined)] });
     const config = buildVisualizationToolbarConfig(
       model,
       new Capability('edition-owner', false),

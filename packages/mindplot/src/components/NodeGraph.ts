@@ -223,7 +223,7 @@ abstract class NodeGraph implements CanvasElement {
    * or the origin.
    */
   getPosition(): PositionType {
-    let model: NodeModel | null = this.getModel();
+    let model: NodeModel | undefined = this.getModel();
     while (model) {
       const position = model.getPosition();
       if (position) {

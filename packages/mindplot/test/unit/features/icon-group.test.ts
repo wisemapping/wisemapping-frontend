@@ -27,7 +27,7 @@ const buildIcon = (type: FeatureType, id: number): Icon & { label: string } => {
     label: `${type}-${id}`,
     getElement: () => element,
     setGroup: () => undefined,
-    getGroup: () => null,
+    getGroup: () => undefined,
     getSize: () => undefined,
     getPosition: () => element.getPosition(),
     addEvent: () => undefined,

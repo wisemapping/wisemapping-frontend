@@ -26,7 +26,7 @@ jest.mock('../../src/components/export/PDFExporter', () => ({
 type Stub = {
   getId(): number;
   getOrder(): number | undefined;
-  getParent(): Topic | null;
+  getParent(): Topic | undefined;
   getChildren(): Topic[];
   isCentralTopic(): boolean;
   getPosition(): { x: number; y: number };
@@ -38,14 +38,14 @@ const node = (
   options: { order?: number; central?: boolean; position?: { x: number; y: number } } = {},
 ) => {
   const state = {
-    parent: null as Stub | null,
+    parent: undefined as Stub | undefined,
     children: [] as Stub[],
   };
   const self: Stub & { _state: typeof state } = {
     _state: state,
     getId: () => id,
     getOrder: () => options.order,
-    getParent: () => state.parent as unknown as Topic | null,
+    getParent: () => state.parent as unknown as Topic | undefined,
     getChildren: () => state.children as unknown as Topic[],
     isCentralTopic: () => options.central ?? false,
     getPosition: () => options.position ?? { x: 10, y: 20 },
@@ -134,7 +134,7 @@ describe('Designer.moveTopicInTree', () => {
 
       expect(moved).toBe(true);
       // a1 hangs off `a`, so outdenting attaches it to root.
-      expect(predict).toHaveBeenCalledWith(1, null, null);
+      expect(predict).toHaveBeenCalledWith(1, undefined, undefined);
       expect(dragTopic).toHaveBeenCalledWith(5, { x: 100, y: 200 }, 7, tree.root);
     });
 
@@ -142,7 +142,7 @@ describe('Designer.moveTopicInTree', () => {
       const moved = designer.moveTopicInTree(tree.b as unknown as Topic, 'indent');
 
       expect(moved).toBe(true);
-      expect(predict).toHaveBeenCalledWith(2, null, null);
+      expect(predict).toHaveBeenCalledWith(2, undefined, undefined);
       expect(dragTopic).toHaveBeenCalledWith(3, { x: 100, y: 200 }, 7, tree.a);
     });
   });

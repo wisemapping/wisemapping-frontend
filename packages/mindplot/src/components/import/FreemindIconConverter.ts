@@ -149,7 +149,7 @@ const svgIdToFreeId: Record<string, string> = {
 };
 
 export default class FreemindIconConverter {
-  public static toWiseIcon(iconId: string): WiseIcon | null {
+  public static toWiseIcon(iconId: string): WiseIcon | undefined {
     const svgId = ownEntry(freeIdToSvgId, iconId);
     if (svgId) {
       return { type: 'icon', id: svgId };
@@ -163,7 +163,7 @@ export default class FreemindIconConverter {
     }
     // Maps exported by older WiseMapping versions hold the ids of the icons that became emoji.
     const legacyEmoji = legacyIconEmoji(iconId);
-    return legacyEmoji ? { type: 'eicon', id: legacyEmoji } : null;
+    return legacyEmoji ? { type: 'eicon', id: legacyEmoji } : undefined;
   }
 
   /**
@@ -174,8 +174,8 @@ export default class FreemindIconConverter {
     return ownEntry(svgIdToFreeId, iconId) ?? iconId;
   }
 
-  /** The FreeMind builtin icon of an emoji icon, null if FreeMind has no equivalent. */
-  public static toFreemindIcon(emoji: string): string | null {
-    return emojiToFreeId.get(withoutVariationSelector(emoji)) ?? null;
+  /** The FreeMind builtin icon of an emoji icon, undefined if FreeMind has no equivalent. */
+  public static toFreemindIcon(emoji: string): string | undefined {
+    return emojiToFreeId.get(withoutVariationSelector(emoji));
   }
 }

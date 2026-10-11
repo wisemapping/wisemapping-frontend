@@ -27,16 +27,16 @@ import type PositionType from './PositionType';
 abstract class ImageIcon implements Icon {
   private _image: Image;
 
-  private _group: IconGroup | null;
+  private _group: IconGroup | undefined;
 
   constructor(url: string) {
     // An empty url is an icon whose image is unknown (SvgImageIcon warns about it): it is drawn
     // as an empty image, so the topic and its map still load.
-    $assert(url !== undefined && url !== null, 'image url can not be null');
+    $assert(typeof url === 'string', 'image url can not be null');
     this._image = new Image();
     this._image.setHref(url);
     this._image.setSize(ImageIcon.SIZE, ImageIcon.SIZE);
-    this._group = null;
+    this._group = undefined;
   }
 
   getElement(): Image | Group {
@@ -51,7 +51,7 @@ abstract class ImageIcon implements Icon {
     this._group = group;
   }
 
-  getGroup(): IconGroup | null {
+  getGroup(): IconGroup | undefined {
     return this._group;
   }
 
