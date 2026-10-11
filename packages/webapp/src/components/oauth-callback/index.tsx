@@ -23,12 +23,11 @@ import AccountAccessLayout from '../layout/AccountAccessLayout';
 import AuthProgress from '../layout/auth-progress';
 import { Link as RouterLink, useLocation } from 'react-router';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 import { trackPageView, setAnalyticsUserEmail } from '../../utils/analytics';
 import { Oauth2CallbackResult, ErrorInfo } from '../../classes/client';
 import { useNavigate } from 'react-router';
 import GlobalError from '../form/global-error';
-import { buttonsStyle } from './style';
+import { CallbackButton } from './styled';
 import { ClientContext } from '../../classes/provider/client-context';
 import { logCriticalError } from '../../utils';
 import { useTheme } from '../../contexts/ThemeContext';
@@ -365,34 +364,32 @@ const OAuthCallbackPage = (): React.ReactElement => {
         {error && (
           <div key="error-state">
             <GlobalError error={error} />
-            <Button
+            <CallbackButton
               color="primary"
               size="medium"
               variant="contained"
               component={RouterLink}
               to="/c/login"
               disableElevation={true}
-              css={buttonsStyle}
             >
               <FormattedMessage id="registration.callback.back" defaultMessage="Back to login" />
-            </Button>
+            </CallbackButton>
           </div>
         )}
 
         {needConfirmSignIn && (
           <div key="confirm-signin">
-            <Button
+            <CallbackButton
               color="secondary"
               size="medium"
               variant="contained"
               component={RouterLink}
               to="/c/login"
               disableElevation={true}
-              css={buttonsStyle}
             >
               <FormattedMessage id="registration.callback.back" defaultMessage="Back to login" />
-            </Button>
-            <Button
+            </CallbackButton>
+            <CallbackButton
               onClick={() => {
                 setConfirmed(true);
                 processCallback(unconfirmed);
@@ -401,27 +398,25 @@ const OAuthCallbackPage = (): React.ReactElement => {
               size="medium"
               variant="contained"
               disableElevation={true}
-              css={buttonsStyle}
             >
               <FormattedMessage id="registration.callback.continue" defaultMessage="Continue" />
-            </Button>
+            </CallbackButton>
           </div>
         )}
 
         {needConfirmLinking && (
           <div key="confirm-sync">
-            <Button
+            <CallbackButton
               color="secondary"
               size="medium"
               variant="contained"
               component={RouterLink}
               to="/c/login"
               disableElevation={true}
-              css={buttonsStyle}
             >
               <FormattedMessage id="registration.callback.back" defaultMessage="Back to login" />
-            </Button>
-            <Button
+            </CallbackButton>
+            <CallbackButton
               onClick={() => {
                 confirmAccountSynching();
               }}
@@ -429,10 +424,9 @@ const OAuthCallbackPage = (): React.ReactElement => {
               size="medium"
               variant="contained"
               disableElevation={true}
-              css={buttonsStyle}
             >
               <FormattedMessage id="registration.callback.sync" defaultMessage="Sync account" />
-            </Button>
+            </CallbackButton>
           </div>
         )}
       </FormContainer>

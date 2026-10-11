@@ -4,8 +4,7 @@
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
  *   "powered by wisemapping" text requirement on every single page;
- *   you may not use this file except in compliance with the License.
- *   You may obtain a copy of the license at
+ *   you may obtain a copy of the license at
  *
  *       https://github.com/wisemapping/wisemapping-open-source/blob/main/LICENSE.md
  *
@@ -16,12 +15,15 @@
  *   limitations under the License.
  */
 
-import withEmotionStyles from '../../HOCs/withEmotionStyles';
-import Alert from '@mui/material/Alert';
+import Button from '@mui/material/Button';
+import { styled } from '@mui/material/styles';
 
-export const StyledAlert = withEmotionStyles({
-  padding: '10px 15px',
-  margin: '5px 0px ',
-})(Alert);
-
-export default StyledAlert;
+/** Deleting the account: an outlined button that fills with the error colour on hover. */
+export const DeleteAccountButton = styled(Button)(({ theme }) => ({
+  borderWidth: 2,
+  '&:hover': {
+    borderWidth: 2,
+    backgroundColor: theme.palette.error.light,
+    color: theme.palette.error.contrastText,
+  },
+}));

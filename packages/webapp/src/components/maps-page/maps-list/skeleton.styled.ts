@@ -17,7 +17,9 @@
  */
 
 import AppBar from '@mui/material/AppBar';
+import Paper from '@mui/material/Paper';
 import Skeleton from '@mui/material/Skeleton';
+import TableContainer from '@mui/material/TableContainer';
 import Toolbar from '@mui/material/Toolbar';
 import { alpha, styled } from '@mui/material/styles';
 
@@ -120,3 +122,19 @@ export const SkeletonButton = styled(SkeletonBlock)(({ theme }) => ({
 export const SkeletonText = styled(SkeletonBlock)({
   fontSize: '0.96rem',
 });
+
+/** The table's card, as wide as the maps list it stands for. */
+export const LoadingListPaper = styled(Paper)(({ theme }) => ({
+  backgroundColor: 'transparent',
+  marginTop: '30px',
+  marginLeft: '96px',
+  marginRight: '96px',
+  marginBottom: theme.spacing(2),
+}));
+
+export const LoadingTableContainer = styled(TableContainer)(({ theme }) => ({
+  backgroundColor: theme.palette.background.default,
+  border: '1px solid rgba(128, 128, 128, 0.2)',
+  borderRadius: '12px',
+  overflow: 'hidden',
+}));

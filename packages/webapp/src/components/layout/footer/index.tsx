@@ -30,7 +30,7 @@ const Footer = (): React.ReactElement => {
   return (
     <StyledFooter>
       <div>
-        <div style={{ padding: 0, margin: 0 }}>
+        <div>
           <a href="http://www.wisemapping.org/">
             <img
               src={poweredByIcon}
@@ -129,14 +129,7 @@ const Footer = (): React.ReactElement => {
           </div>
         </div>
 
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-            alignItems: 'flex-start',
-            marginTop: '10px',
-          }}
-        >
+        <div>
           <ThemeToggle showBackground={true} />
         </div>
       </div>

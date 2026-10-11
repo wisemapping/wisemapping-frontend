@@ -4,8 +4,7 @@
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
  *   "powered by wisemapping" text requirement on every single page;
- *   you may not use this file except in compliance with the License.
- *   You may obtain a copy of the license at
+ *   you may obtain a copy of the license at
  *
  *       https://github.com/wisemapping/wisemapping-open-source/blob/main/LICENSE.md
  *
@@ -16,17 +15,11 @@
  *   limitations under the License.
  */
 
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import useClasses from '../../../../theme/useStyles';
+import Button from '@mui/material/Button';
+import { styled } from '@mui/material/styles';
+import { mobileAppbarButton } from '../styled';
 
-export const useStyles = () =>
-  useClasses({
-    paper: {
-      maxWidth: '500px',
-      minWidth: '400px',
-    },
-    title: {
-      maxWidth: '100%',
-      wordBreak: 'break-all',
-    },
-  });
+/** Shows the current language; only its icon on phones. */
+export const LanguageButton = styled(Button)(({ theme }) => ({
+  [theme.breakpoints.down('sm')]: mobileAppbarButton,
+}));

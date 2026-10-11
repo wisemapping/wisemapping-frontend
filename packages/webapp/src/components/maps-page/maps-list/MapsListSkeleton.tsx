@@ -18,10 +18,8 @@
 
 import React from 'react';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Toolbar from '@mui/material/Toolbar';
 import { BodyCell, CompactCardHeader, MapCardRoot } from './shared.styled';
@@ -34,8 +32,10 @@ import {
   LoadingDrawerItem,
   LoadingDrawerList,
   LoadingDrawerLogo,
+  LoadingListPaper,
   LoadingMainContent,
   LoadingSearchToolbar,
+  LoadingTableContainer,
   LoadingToolbarCenter,
   LoadingToolbarLeft,
   LoadingToolbarRight,
@@ -191,16 +191,7 @@ export const MapsPageLoading = (): React.ReactElement => (
 
       {/* Main content area with skeleton table */}
       <Box sx={{ width: '100%', marginTop: '80px' }}>
-        <Paper
-          elevation={0}
-          sx={{
-            backgroundColor: 'transparent',
-            marginTop: '30px',
-            marginLeft: '96px',
-            marginRight: '96px',
-            marginBottom: 2,
-          }}
-        >
+        <LoadingListPaper elevation={0}>
           {/* Search Toolbar Skeleton */}
           <LoadingSearchToolbar variant="dense">
             <LoadingToolbarLeft>
@@ -221,21 +212,14 @@ export const MapsPageLoading = (): React.ReactElement => (
             </LoadingToolbarRight>
           </LoadingSearchToolbar>
 
-          <TableContainer
-            sx={{
-              backgroundColor: 'background.default',
-              border: '1px solid rgba(128, 128, 128, 0.2)',
-              borderRadius: '12px',
-              overflow: 'hidden',
-            }}
-          >
+          <LoadingTableContainer>
             <Table sx={{ backgroundColor: 'background.default' }}>
               <TableBody>
                 <MapsListSkeleton rowsPerPage={10} />
               </TableBody>
             </Table>
-          </TableContainer>
-        </Paper>
+          </LoadingTableContainer>
+        </LoadingListPaper>
       </Box>
     </LoadingMainContent>
   </LoadingContainer>

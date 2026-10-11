@@ -31,6 +31,7 @@ import {
 } from '../../../../classes/client';
 import Input from '../../../form/input';
 import BaseDialog from '../base-dialog';
+import { HiddenFileInput } from './styled';
 import { ClientContext } from '../../../../classes/provider/client-context';
 
 export type ImportModel = {
@@ -241,12 +242,11 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
           </Alert>
         )}
         <FormControl fullWidth={true}>
-          <input
+          <HiddenFileInput
             accept=".wxml,.mm,.mmx,.xmind,.mmap,.opml"
             id="contained-button-file"
             type="file"
             required={true}
-            style={{ display: 'none' }}
             onChange={handleOnFileChange}
           />
 
@@ -283,7 +283,7 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
               variant="outlined"
               color="primary"
               component="span"
-              style={{ margin: '10px 5px', width: '100%' }}
+              sx={{ margin: '10px 5px', width: '100%' }}
             >
               <FormattedMessage id="maps.choose-file" defaultMessage="Choose a file" />
             </Button>

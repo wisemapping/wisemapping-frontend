@@ -18,7 +18,6 @@
 
 import React, { ReactElement, useCallback, useMemo, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -33,6 +32,7 @@ import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import MemoTextField from '../shared/MemoTextField';
 import { UserFormData } from './types';
+import { FormFields } from './styled';
 import { Locales } from '../../../classes/app-i18n';
 
 type UserFormDialogProps = {
@@ -175,14 +175,7 @@ const UserFormDialog = ({
             {formErrors['general']}
           </Alert>
         )}
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 2,
-            mt: 1,
-          }}
-        >
+        <FormFields>
           <MemoTextField
             label={intl.formatMessage({ id: 'common.first-name', defaultMessage: 'First Name' })}
             value={formData.firstname}
@@ -213,7 +206,7 @@ const UserFormDialog = ({
           />
           {localeSelect}
           {allowSendEmailSwitch}
-        </Box>
+        </FormFields>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>

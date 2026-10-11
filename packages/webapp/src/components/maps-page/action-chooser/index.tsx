@@ -86,7 +86,7 @@ const ActionChooser = (props: ActionProps): React.ReactElement => {
       onClose={handleOnClose(undefined)}
       elevation={1}
     >
-      <MenuItem onClick={handleOnClose('open')} style={{ width: '220px' }}>
+      <MenuItem onClick={handleOnClose('open')} sx={{ width: '220px' }}>
         <ListItemIcon>
           <DescriptionOutlinedIcon />
         </ListItemIcon>

@@ -17,11 +17,23 @@
  */
 
 import Menu from '@mui/material/Menu';
+import Fab from '@mui/material/Fab';
 import { styled } from '@mui/material/styles';
 
 /** The help links read as secondary text, like the footer they mirror. */
 export const HelpMenuList = styled(Menu)(({ theme }) => ({
   '& .MuiMenuItem-root': {
     color: theme.palette.text.secondary,
+  },
+}));
+
+/** The small floating help button. */
+export const HelpFab = styled(Fab)(({ theme }) => ({
+  width: '28px',
+  height: '28px',
+  minHeight: '28px',
+  boxShadow: theme.shadows[3],
+  '&:hover': {
+    boxShadow: theme.shadows[6],
   },
 }));

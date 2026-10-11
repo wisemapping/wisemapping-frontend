@@ -16,11 +16,20 @@
  *   limitations under the License.
  */
 import React, { ErrorInfo, ReactElement, use, useEffect, useMemo } from 'react';
-import Drawer from '@mui/material/Drawer';
-import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import { useStyles } from './style';
+import {
+  DesktopDrawer,
+  DesktopDrawerToggle,
+  HelpButtonBox,
+  MobileDrawer,
+  MobileDrawerToggle,
+  PageAppBar,
+  PageContent,
+  PageRoot,
+  RightButtonGroup,
+  ToolbarButton,
+  ToolbarSpacer,
+} from './styled';
 import { MapsList } from './maps-list';
 import { createIntl, FormattedMessage, IntlProvider } from 'react-intl';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -38,7 +47,6 @@ import { useFetchAccount } from '../../classes/middleware';
 import MenuIcon from '@mui/icons-material/Menu';
 import ArrowRight from '@mui/icons-material/NavigateNext';
 import ArrowLeft from '@mui/icons-material/NavigateBefore';
-import Box from '@mui/material/Box';
 
 import AddCircleTwoTone from '@mui/icons-material/AddCircleTwoTone';
 import CloudUploadTwoTone from '@mui/icons-material/CloudUploadTwoTone';
@@ -60,7 +68,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import LabelDeleteConfirm from './maps-list/label-delete-confirm';
 import DrawerNav, { ToolbarButtonInfo } from './drawer-nav';
 import { trackMindmapListAction, trackPageView } from '../../utils/analytics';
-import { CSSObject, Interpolation, Theme } from '@emotion/react';
 import { ClientContext } from '../../classes/provider/client-context';
 import { SEOHead } from '../seo';
 import { readStorage, writeStorage, removeStorage } from '../../utils/storage';
@@ -90,7 +97,6 @@ const MapsPage = (): ReactElement => {
   const [desktopDrawerOpen, setDesktopDrawerOpen] = React.useState(
     () => readStorage('desktopDrawerOpen') === 'true',
   );
-  const classes = useStyles(desktopDrawerOpen);
 
   // Get theme-appropriate icon color - match text color
   const getIconColor = () => {
@@ -230,7 +236,7 @@ const MapsPage = (): ReactElement => {
     filterButtons.push({
       filter: { type: 'label', label: l },
       label: l.title,
-      icon: <LabelTwoTone style={{ color: l.color ? l.color : 'inherit' }} />,
+      icon: <LabelTwoTone sx={{ color: l.color ? l.color : 'inherit' }} />,
     }),
   );
 
@@ -281,46 +287,32 @@ const MapsPage = (): ReactElement => {
           },
         }}
       />
-      <div css={classes['root']}>
-        <AppBar
-          position="fixed"
-          css={[classes['appBar'], classes['appBarShift']]}
-          variant="outlined"
-          elevation={0}
-          component="header"
-        >
+      <PageRoot>
+        <PageAppBar position="fixed" expanded={desktopDrawerOpen} variant="outlined" elevation={0}>
           <Toolbar role="banner">
-            <IconButton
+            <MobileDrawerToggle
               aria-label={intl.formatMessage({
                 id: 'common.open-drawer',
                 defaultMessage: 'Open drawer',
               })}
               edge="start"
               onClick={handleMobileDrawerToggle}
-              sx={{ mr: 2, display: { sm: 'none' }, zIndex: 1300, position: 'relative' }}
               id="open-main-drawer"
             >
               <MenuIcon />
-            </IconButton>
-            <IconButton
+            </MobileDrawerToggle>
+            <DesktopDrawerToggle
               aria-label={intl.formatMessage({
                 id: 'common.open-drawer',
                 defaultMessage: 'Open drawer',
               })}
               edge="start"
               onClick={handleDesktopDrawerToggle}
-              sx={{
-                p: 0,
-                mr: 2,
-                display: { xs: 'none', sm: 'inherit' },
-                zIndex: 1300,
-                position: 'relative',
-              }}
               id="open-desktop-drawer"
             >
               {!desktopDrawerOpen && <ArrowRight />}
               {desktopDrawerOpen && <ArrowLeft />}
-            </IconButton>
+            </DesktopDrawerToggle>
             <Tooltip
               arrow={true}
               title={intl.formatMessage({
@@ -328,7 +320,7 @@ const MapsPage = (): ReactElement => {
                 defaultMessage: 'Create a new mindmap',
               })}
             >
-              <Button
+              <ToolbarButton
                 color="primary"
                 data-testid="create"
                 size="medium"
@@ -336,13 +328,12 @@ const MapsPage = (): ReactElement => {
                 type="button"
                 disableElevation={true}
                 startIcon={<AddCircleTwoTone />}
-                css={classes['newMapButton']}
                 onClick={() => setActiveDialog('create')}
               >
                 <span className="message">
                   <FormattedMessage id="action.new" defaultMessage="New map" />
                 </span>
-              </Button>
+              </ToolbarButton>
             </Tooltip>
 
             <Tooltip
@@ -352,20 +343,19 @@ const MapsPage = (): ReactElement => {
                 defaultMessage: 'Start a mindmap with ChatGPT-powered AI Copilot',
               })}
             >
-              <Button
+              <ToolbarButton
                 color="primary"
                 size="medium"
                 variant="outlined"
                 type="button"
                 disableElevation={true}
                 startIcon={<SmartToyTwoTone />}
-                css={classes['copilotButton']}
                 onClick={handleMindMapCopilotDialogOpen}
               >
                 <span className="message">
                   <FormattedMessage id="maps.copilot-button" defaultMessage="AI Copilot" />
                 </span>
-              </Button>
+              </ToolbarButton>
             </Tooltip>
 
             <Tooltip
@@ -375,20 +365,19 @@ const MapsPage = (): ReactElement => {
                 defaultMessage: 'Import from other tools',
               })}
             >
-              <Button
+              <ToolbarButton
                 color="primary"
                 size="medium"
                 variant="outlined"
                 type="button"
                 disableElevation={true}
                 startIcon={<CloudUploadTwoTone />}
-                css={classes['importButton']}
                 onClick={() => setActiveDialog('import')}
               >
                 <span className="message">
                   <FormattedMessage id="action.import" defaultMessage="Import" />
                 </span>
-              </Button>
+              </ToolbarButton>
             </Tooltip>
             <ActionDispatcher
               action={activeDialog}
@@ -430,14 +419,15 @@ const MapsPage = (): ReactElement => {
               </DialogActions>
             </Dialog>
 
-            <div css={classes['rightButtonGroup'] as Interpolation<Theme>}>
+            <RightButtonGroup>
               <ThemeToggleButton />
               <LanguageMenu />
               <AccountMenu />
-            </div>
+            </RightButtonGroup>
           </Toolbar>
-        </AppBar>
-        <Drawer
+        </PageAppBar>
+        <MobileDrawer
+          expanded={desktopDrawerOpen}
           container={container}
           variant={'temporary'}
           open={mobileDrawerOpen}
@@ -445,42 +435,26 @@ const MapsPage = (): ReactElement => {
           ModalProps={{
             keepMounted: true,
           }}
-          css={[classes['mobileDrawer'], { '& .MuiPaper-root': classes['drawerOpen'] }]}
         >
           {drawerItemsList}
-        </Drawer>
-        <Drawer
-          variant="permanent"
-          css={[
-            classes['drawer'] as CSSObject,
-            classes['drawerOpen'],
-            { '& .MuiPaper-root': classes['drawerOpen'] },
-          ]}
-        >
+        </MobileDrawer>
+        <DesktopDrawer variant="permanent" expanded={desktopDrawerOpen}>
           {drawerItemsList}
-        </Drawer>
-        <main css={classes['content']} role="main">
-          <div css={classes['toolbar']} />
+        </DesktopDrawer>
+        <PageContent role="main">
+          <ToolbarSpacer />
           <section
             aria-label={intl.formatMessage({ id: 'common.maps-list', defaultMessage: 'Maps list' })}
           >
             <MapsList filter={filter} />
           </section>
-        </main>
+        </PageContent>
 
         {/* Floating Help Button */}
-        <Box
-          sx={{
-            position: 'fixed',
-            bottom: '24px',
-            right: '24px',
-            zIndex: 1000,
-            display: { xs: 'none', sm: 'block' },
-          }}
-        >
+        <HelpButtonBox>
           <HelpMenu />
-        </Box>
-      </div>
+        </HelpButtonBox>
+      </PageRoot>
       {label && labelToDelete !== undefined && (
         <LabelDeleteConfirm
           onClose={() => setLabelToDelete(undefined)}

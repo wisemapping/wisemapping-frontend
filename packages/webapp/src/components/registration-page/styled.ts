@@ -4,8 +4,7 @@
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
  *   "powered by wisemapping" text requirement on every single page;
- *   you may not use this file except in compliance with the License.
- *   You may obtain a copy of the license at
+ *   you may obtain a copy of the license at
  *
  *       https://github.com/wisemapping/wisemapping-open-source/blob/main/LICENSE.md
  *
@@ -16,22 +15,22 @@
  *   limitations under the License.
  */
 
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import useClasses from '../../../../theme/useStyles';
+import Box from '@mui/material/Box';
+import { styled } from '@mui/material/styles';
 
-export const useStyles = () =>
-  useClasses({
-    select: {
-      height: '40px',
-      borderRadius: '9px',
-      width: '300px',
-      fontSize: '14px',
-      margin: '0px 40px',
-    },
-    menu: {
-      fontSize: '14px',
-    },
-    label: {
-      margin: '5px 0px',
-    },
-  });
+/** Sign up with Facebook or Google, side by side when they fit. */
+export const SocialButtons = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  gap: theme.spacing(2),
+  flexWrap: 'wrap',
+  justifyContent: 'center',
+}));
+
+export const RecaptchaBox = styled('div')({
+  paddingTop: '10px',
+  // override captcha size, without this the component is not shown horizontally centered
+  '& div div div': {
+    width: '100% !important',
+    height: '100% !important',
+  },
+});

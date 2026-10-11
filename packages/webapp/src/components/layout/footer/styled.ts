@@ -44,6 +44,8 @@ export const StyledFooter = styled('footer')(({ theme }) => ({
 
     '& > div:nth-of-type(1)': {
       gridColumn: '1',
+      padding: 0,
+      margin: 0,
     },
 
     '& > div:nth-of-type(2)': {
@@ -58,11 +60,15 @@ export const StyledFooter = styled('footer')(({ theme }) => ({
       gridColumn: '4',
     },
 
+    // The theme switch.
     '& > div:nth-of-type(5)': {
       gridColumn: '5',
       textAlign: 'right',
-      display: 'inline-block',
+      display: 'flex',
       visibility: 'visible',
+      justifyContent: 'flex-end',
+      alignItems: 'flex-start',
+      marginTop: '10px',
     },
   },
 

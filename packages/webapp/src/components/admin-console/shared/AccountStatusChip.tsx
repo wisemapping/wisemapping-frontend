@@ -18,7 +18,6 @@
 
 import React, { ReactElement, useState } from 'react';
 import { useIntl, IntlShape } from 'react-intl';
-import Chip from '@mui/material/Chip';
 import Tooltip from '@mui/material/Tooltip';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -29,6 +28,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
 import { AuthenticationType } from '../../../classes/client';
 import { useDate } from '../../../classes/app-i18n/dates';
+import { StatusChip } from './styled';
 
 /**
  * Translates suspension reason codes to user-friendly labels.
@@ -177,7 +177,7 @@ const AccountStatusChip = ({
       return (
         <Tooltip title={tooltip} disableInteractive>
           <span>
-            <Chip
+            <StatusChip
               label={intl.formatMessage({
                 id: 'admin.status-suspended',
                 defaultMessage: 'Suspended',
@@ -186,14 +186,6 @@ const AccountStatusChip = ({
               size="small"
               onClick={handleChipClick}
               clickable={interactive}
-              sx={{
-                cursor: interactive ? 'pointer' : 'default',
-                '&:hover': interactive
-                  ? {
-                      opacity: 0.8,
-                    }
-                  : {},
-              }}
             />
           </span>
         </Tooltip>
@@ -216,7 +208,7 @@ const AccountStatusChip = ({
       return (
         <Tooltip title={tooltip} disableInteractive>
           <span>
-            <Chip
+            <StatusChip
               label={intl.formatMessage({
                 id: 'admin.status-not-activated',
                 defaultMessage: 'Not Activated',
@@ -225,14 +217,6 @@ const AccountStatusChip = ({
               size="small"
               onClick={handleChipClick}
               clickable={interactive}
-              sx={{
-                cursor: interactive ? 'pointer' : 'default',
-                '&:hover': interactive
-                  ? {
-                      opacity: 0.8,
-                    }
-                  : {},
-              }}
             />
           </span>
         </Tooltip>
@@ -253,20 +237,12 @@ const AccountStatusChip = ({
     return (
       <Tooltip title={tooltip} disableInteractive>
         <span>
-          <Chip
+          <StatusChip
             label={intl.formatMessage({ id: 'admin.status-active', defaultMessage: 'Active' })}
             color="success"
             size="small"
             onClick={handleChipClick}
             clickable={interactive}
-            sx={{
-              cursor: interactive ? 'pointer' : 'default',
-              '&:hover': interactive
-                ? {
-                    opacity: 0.8,
-                  }
-                : {},
-            }}
           />
         </span>
       </Tooltip>

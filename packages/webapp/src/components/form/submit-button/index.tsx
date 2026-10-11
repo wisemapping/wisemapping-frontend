@@ -18,7 +18,7 @@
 
 import React from 'react';
 import { useIntl } from 'react-intl';
-import AsyncButton from '../async-button';
+import { StyledSubmitButton } from './styled';
 
 type SubmitButtonProps = {
   value: string;
@@ -32,7 +32,7 @@ const SubmitButton = ({ value, disabled, isLoading }: SubmitButtonProps): React.
   const loadingText = intl.formatMessage({ id: 'common.wait', defaultMessage: 'Please wait ...' });
 
   return (
-    <AsyncButton
+    <StyledSubmitButton
       color="primary"
       size="medium"
       variant="contained"
@@ -41,16 +41,9 @@ const SubmitButton = ({ value, disabled, isLoading }: SubmitButtonProps): React.
       disabled={disabled}
       isLoading={isLoading}
       loadingText={loadingText}
-      style={{
-        width: '300px',
-        height: '53px',
-        padding: '0px 20px',
-        margin: '7px 0px',
-        fontSize: '18px',
-      }}
     >
       {value}
-    </AsyncButton>
+    </StyledSubmitButton>
   );
 };
 

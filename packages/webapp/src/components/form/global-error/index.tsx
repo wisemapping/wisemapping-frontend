@@ -33,7 +33,7 @@ const GlobalError = (props: GlobalErrorProps): React.ReactElement | null => {
   const title = props.title;
 
   return hasError ? (
-    <Alert severity="error" variant="filled" style={{ marginBottom: '1rem' }}>
+    <Alert severity="error" variant="filled" sx={{ marginBottom: '1rem' }}>
       {title && <AlertTitle>{title}</AlertTitle>}
       {errorMsg}
     </Alert>

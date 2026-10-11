@@ -24,7 +24,7 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Link from '@mui/material/Link';
 import { trackPageView } from '../../utils/analytics';
-import { ErrorBody } from './styled';
+import { ErrorBody, ErrorContent } from './styled';
 import { isRouteErrorResponse, useRouteError, useNavigate, useLocation } from 'react-router';
 import { Link as RouterLink } from 'react-router';
 import { ErrorInfo } from '../../classes/client';
@@ -216,14 +216,7 @@ const ErrorPage = (): React.ReactElement => {
       <Header type="only-signup" />
 
       <ErrorBody>
-        <Box
-          sx={{
-            maxWidth: 600,
-            margin: '0 auto',
-            padding: { xs: 2, md: 4 },
-            textAlign: 'center',
-          }}
-        >
+        <ErrorContent>
           <Typography variant="h3" component="h1" gutterBottom>
             {headline}
           </Typography>
@@ -277,7 +270,7 @@ const ErrorPage = (): React.ReactElement => {
               />
             </Typography>
           </Box>
-        </Box>
+        </ErrorContent>
       </ErrorBody>
     </div>
   );

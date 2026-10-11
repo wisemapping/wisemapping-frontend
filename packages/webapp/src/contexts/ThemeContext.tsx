@@ -17,7 +17,7 @@
  */
 
 import React, { createContext, use, useState, useEffect, ReactNode, useMemo } from 'react';
-import type { PaletteMode } from '@mui/material';
+import type { PaletteMode } from '@mui/material/styles';
 import { readStorage, writeStorage } from '../utils/storage';
 
 interface ThemeContextType {

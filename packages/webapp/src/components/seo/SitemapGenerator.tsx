@@ -17,6 +17,7 @@
  */
 
 import React from 'react';
+import { HiddenSitemap } from './styled';
 
 interface SitemapGeneratorProps {
   publicMaps?: Array<{
@@ -73,9 +74,9 @@ const SitemapGenerator: React.FC<SitemapGeneratorProps> = ({ publicMaps: _public
   };
 
   return (
-    <div style={{ display: 'none' }}>
+    <HiddenSitemap>
       <pre>{generateSitemap()}</pre>
-    </div>
+    </HiddenSitemap>
   );
 };
 

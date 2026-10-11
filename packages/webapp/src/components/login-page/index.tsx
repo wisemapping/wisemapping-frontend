@@ -27,7 +27,6 @@ import FormContainer from '../layout/form-container';
 import Typography from '@mui/material/Typography';
 import FormControl from '@mui/material/FormControl';
 import Link from '@mui/material/Link';
-import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 import Separator from '../common/separator';
 import GoogleButton from '../common/google-button';
@@ -44,6 +43,8 @@ import { getCanonicalUrl, getAlternateLanguageUrls } from '../../utils/seo-local
 import AuthProgress from '../layout/auth-progress';
 import { leaveTo, safeRedirectPath } from '../../utils/redirect';
 import { startOAuthFlow, takeOAuthFlow } from '../../utils/oauth-flow';
+import { SocialButtons } from './styled';
+import { TermsNotice } from '../layout/styled';
 
 export type Model = {
   email: string;
@@ -211,9 +212,7 @@ const LoginPage = (): React.ReactElement => {
       />
       <AccountAccessLayout
         headerType={AppConfig.isRegistrationEnabled() ? 'only-signup' : 'none'}
-        contentSx={{
-          padding: { xs: '8px 16px', md: '16px 16px' },
-        }}
+        compact
       >
         <FormContainer>
           <header>
@@ -321,15 +320,7 @@ const LoginPage = (): React.ReactElement => {
                   defaultMessage: 'or',
                 })}
               />
-              <Box
-                sx={{
-                  display: 'flex',
-                  gap: 2,
-                  flexWrap: 'wrap',
-                  width: '100%',
-                  marginBottom: '-20px',
-                }}
-              >
+              <SocialButtons>
                 {AppConfig.isGoogleOauth2Enabled() && (
                   <GoogleButton
                     text={intl.formatMessage({
@@ -348,18 +339,10 @@ const LoginPage = (): React.ReactElement => {
                     onClick={() => handleOAuthLogin(AppConfig.getFacebookOauth2Url(), 'Facebook')}
                   />
                 )}
-              </Box>
+              </SocialButtons>
             </>
           )}
-          <Typography
-            variant="body2"
-            sx={{
-              fontSize: '12px',
-              mt: 3,
-              textAlign: 'center',
-              width: '100%',
-            }}
-          >
+          <TermsNotice gutter={3} variant="body2">
             <FormattedMessage
               id="common.terms-notice"
               defaultMessage="By continuing, you agree to our <termsLink>Terms of Service</termsLink> and <privacyLink>Privacy Policy</privacyLink>."
@@ -384,7 +367,7 @@ const LoginPage = (): React.ReactElement => {
                 ),
               }}
             />
-          </Typography>
+          </TermsNotice>
         </FormContainer>
       </AccountAccessLayout>
     </>

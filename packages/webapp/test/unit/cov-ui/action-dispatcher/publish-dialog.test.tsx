@@ -65,7 +65,7 @@ const sharingHidden = (): boolean => {
     node;
     node = node.parentElement
   ) {
-    if (node.style.display === 'none') {
+    if (window.getComputedStyle(node).display === 'none') {
       return true;
     }
   }

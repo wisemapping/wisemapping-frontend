@@ -32,8 +32,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogActions from '@mui/material/DialogActions';
 import Divider from '@mui/material/Divider';
-import { useTheme } from '@mui/material/styles';
-import { mobileAppbarButton } from '../style';
+import { LanguageButton } from './styled';
 import { ClientContext } from '../../../classes/provider/client-context';
 
 const LanguageMenu = (): React.ReactElement => {
@@ -44,8 +43,6 @@ const LanguageMenu = (): React.ReactElement => {
 
   const open = Boolean(anchorEl);
   const intl = useIntl();
-  const theme = useTheme();
-  const smMediaQuery = theme.breakpoints.down('sm');
 
   // Todo: For some reasons, in some situations locale is missing. More research needed.
   const mutation = useMutation({
@@ -82,19 +79,16 @@ const LanguageMenu = (): React.ReactElement => {
           defaultMessage: 'Change Language',
         })}
       >
-        <Button
+        <LanguageButton
           size="small"
           variant="outlined"
           disableElevation={true}
           color="primary"
-          css={{
-            [smMediaQuery]: mobileAppbarButton,
-          }}
           onClick={handleMenu}
-          startIcon={<TranslateTwoTone style={{ color: 'inherit' }} />}
+          startIcon={<TranslateTwoTone sx={{ color: 'inherit' }} />}
         >
           <span className="message">{userLocale.label}</span>
-        </Button>
+        </LanguageButton>
       </Tooltip>
       <Menu
         id="appbar-language"

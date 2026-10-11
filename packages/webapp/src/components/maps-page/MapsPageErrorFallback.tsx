@@ -18,14 +18,13 @@
 
 import { ReactElement, useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { isRouteErrorResponse, useNavigate, useRouteError } from 'react-router';
 import ErrorPage from '../error-page';
 import type { ErrorInfo } from '../../classes/client';
 import { trackPageView } from '../../utils/analytics';
+import { FallbackBackdrop, FallbackCard } from './error-fallback.styled';
 
 const isErrorInfo = (error: unknown): error is ErrorInfo =>
   typeof error === 'object' &&
@@ -76,32 +75,8 @@ const MapsPageErrorFallback = (): ReactElement => {
   };
 
   return (
-    <Box
-      sx={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: (theme) =>
-          theme.palette.mode === 'dark' ? 'rgba(0, 0, 0, 0.6)' : 'rgba(255, 255, 255, 0.85)',
-        padding: 3,
-      }}
-    >
-      <Stack
-        spacing={2}
-        sx={{
-          width: '100%',
-          maxWidth: 480,
-          backgroundColor: (theme) =>
-            theme.palette.mode === 'dark' ? 'rgba(30, 30, 30, 0.95)' : 'background.paper',
-          borderRadius: 2,
-          padding: 4,
-          boxShadow: (theme) =>
-            theme.palette.mode === 'dark'
-              ? 'rgba(0, 0, 0, 0.35) 0px 10px 30px'
-              : 'rgba(145, 158, 171, 0.2) 0px 10px 30px',
-        }}
-      >
+    <FallbackBackdrop>
+      <FallbackCard spacing={2}>
         <Typography variant="h4" component="h1">
           <FormattedMessage
             id="maps.auth-required-heading"
@@ -119,8 +94,8 @@ const MapsPageErrorFallback = (): ReactElement => {
         >
           <FormattedMessage id="maps.auth-required-login" defaultMessage="Go to login" />
         </Button>
-      </Stack>
-    </Box>
+      </FallbackCard>
+    </FallbackBackdrop>
   );
 };
 

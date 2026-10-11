@@ -16,8 +16,7 @@
  *   limitations under the License.
  */
 import React from 'react';
-import { useTheme } from '@mui/material/styles';
-import { containerStyle, lineStyle, textStyle } from './style';
+import { SeparatorLine, SeparatorRoot, SeparatorText } from './styled';
 
 type SeparatorProps = {
   responsive: boolean;
@@ -29,17 +28,11 @@ const Separator: React.FunctionComponent<SeparatorProps> = ({
   responsive,
   text,
   maxWidth = undefined,
-}: SeparatorProps) => {
-  const theme = useTheme();
-
-  return (
-    <div css={containerStyle(responsive, maxWidth, theme.breakpoints.down('md'))}>
-      {}
-      <div css={lineStyle(responsive, theme.breakpoints.up('md'))}></div>
-      {}
-      <div css={textStyle(responsive, theme.breakpoints.up('md'))}>{text}</div>
-    </div>
-  );
-};
+}: SeparatorProps) => (
+  <SeparatorRoot responsive={responsive} maxWidth={maxWidth}>
+    <SeparatorLine responsive={responsive} />
+    <SeparatorText responsive={responsive}>{text}</SeparatorText>
+  </SeparatorRoot>
+);
 
 export default Separator;

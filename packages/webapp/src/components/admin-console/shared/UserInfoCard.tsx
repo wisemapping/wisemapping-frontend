@@ -35,6 +35,7 @@ import StorageIcon from '@mui/icons-material/Storage';
 import { AuthenticationType } from '../../../classes/client';
 import AccountStatusChip, { getSuspensionReasonLabel } from './AccountStatusChip';
 import { useDate } from '../../../classes/app-i18n/dates';
+import { InfoGrid } from './styled';
 
 interface UserInfoCardProps {
   user: {
@@ -133,17 +134,7 @@ const UserInfoCard = ({
           })}
         </Typography>
         <Divider sx={{ mb: 2 }} />
-        <Box
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: {
-              xs: '1fr',
-              sm: '1fr 1fr',
-              md: '1fr 1fr 1fr 1fr',
-            },
-            gap: 3,
-          }}
-        >
+        <InfoGrid>
           <Box>
             <Typography
               variant="caption"
@@ -251,7 +242,7 @@ const UserInfoCard = ({
               {isLoadingMaps ? <CircularProgress size={16} /> : totalMaps || 0}
             </Typography>
           </Box>
-        </Box>
+        </InfoGrid>
         {user.isSuspended && user.suspensionReason && (
           <Alert severity="warning" sx={{ mt: 2 }}>
             <Typography

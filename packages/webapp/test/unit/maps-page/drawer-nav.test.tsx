@@ -71,8 +71,8 @@ const renderNav = (overrides: Partial<React.ComponentProps<typeof DrawerNav>> = 
     />,
   );
 
-// These components style themselves through `withEmotionStyles((theme) => ...)`,
-// which Emotion resolves against the theme in context -- so they have to be
+// These components style themselves through `styled(...)(({ theme }) => ...)`,
+// which resolves against the theme in context -- so they have to be
 // mounted under a ThemeProvider. Wrapping via RTL's `wrapper` option keeps the
 // provider in place across `rerender` too.
 const wrapper = ({ children }: { children: React.ReactNode }): React.ReactElement => (

@@ -18,7 +18,6 @@
 
 import { ReactElement, useState } from 'react';
 import { useIntl } from 'react-intl';
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import TextField from '@mui/material/TextField';
@@ -27,6 +26,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import LinkOffIcon from '@mui/icons-material/LinkOff';
 import { User } from './types';
+import { LookupBar } from './styled';
 
 type FacebookLookupProps = {
   /** Finds the account of a Facebook user id; rejects when there is none. */
@@ -69,18 +69,7 @@ const FacebookLookup = ({ onLookup, onRemove }: FacebookLookupProps): ReactEleme
   };
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        gap: 2,
-        alignItems: 'flex-start',
-        flexWrap: 'wrap',
-        pt: 1,
-        pb: 1,
-        borderTop: '1px dashed',
-        borderColor: 'divider',
-      }}
-    >
+    <LookupBar>
       <TextField
         label={intl.formatMessage({
           id: 'admin.facebook.id-label',
@@ -100,7 +89,7 @@ const FacebookLookup = ({ onLookup, onRemove }: FacebookLookupProps): ReactEleme
           input: {
             startAdornment: (
               <InputAdornment position="start">
-                <FacebookIcon fontSize="small" sx={{ color: '#1877F2' }} />
+                <FacebookIcon fontSize="small" sx={{ color: 'facebook.main' }} />
               </InputAdornment>
             ),
             endAdornment: isFacebookLookupLoading ? (
@@ -116,7 +105,7 @@ const FacebookLookup = ({ onLookup, onRemove }: FacebookLookupProps): ReactEleme
         variant="outlined"
         onClick={handleFacebookLookup}
         disabled={!facebookIdInput.trim() || isFacebookLookupLoading}
-        sx={{ alignSelf: 'center', borderColor: '#1877F2', color: '#1877F2' }}
+        sx={{ alignSelf: 'center', borderColor: 'facebook.main', color: 'facebook.main' }}
       >
         {intl.formatMessage({
           id: 'admin.facebook.lookup-button',
@@ -150,7 +139,7 @@ const FacebookLookup = ({ onLookup, onRemove }: FacebookLookupProps): ReactEleme
           {facebookLookupResult.email}&gt;
         </Alert>
       )}
-    </Box>
+    </LookupBar>
   );
 };
 

@@ -42,6 +42,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import UserInfoCard from './UserInfoCard';
 import SpamStatusChip from './SpamStatusChip';
+import { MapLink } from '../styled';
 import type { AdminUser, AdminMap } from '../../../classes/client/admin-client';
 
 interface UserMapsDialogProps {
@@ -201,25 +202,16 @@ const UserMapsDialog = ({
                   {maps.map((map) => (
                     <TableRow key={map.id} hover>
                       <TableCell>
-                        <Typography
+                        <MapLink
                           variant="body2"
                           color="primary"
                           component="a"
                           href={`/c/maps/${map.id}/public`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          sx={{
-                            fontWeight: 'medium',
-                            textDecoration: 'none',
-                            cursor: 'pointer',
-
-                            '&:hover': {
-                              textDecoration: 'underline',
-                            },
-                          }}
                         >
                           #{map.id}
-                        </Typography>
+                        </MapLink>
                       </TableCell>
                       <TableCell>
                         <Box

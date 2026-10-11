@@ -69,7 +69,8 @@ import EditMapDialog, { MapFormData } from './EditMapDialog';
 import { copyText } from '../../../utils/clipboard';
 import { useAdminPage, useClampedPage } from '../shared/useAdminPage';
 import { errorMessage } from '../shared/errorMessage';
-import { loadErrorAlertStyles } from '../styles';
+import { CellButton, FilterBar, MapLink, PaginationBar, SectionHeader } from '../styled';
+import { XmlInput } from './styled';
 import { useDate } from '../../../classes/app-i18n/dates';
 
 // XML formatting utility
@@ -688,14 +689,7 @@ const MapsManagement = (): ReactElement => {
 
   return (
     <Box>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          mb: 3,
-        }}
-      >
+      <SectionHeader>
         <Typography variant="h5" component="h2">
           {intl.formatMessage({
             id: 'admin.maps.page-title',
@@ -708,16 +702,9 @@ const MapsManagement = (): ReactElement => {
         >
           <RefreshIcon />
         </IconButton>
-      </Box>
+      </SectionHeader>
       {/* Search and Filters */}
-      <Box
-        sx={{
-          display: 'flex',
-          gap: 2,
-          mb: 3,
-          flexWrap: 'wrap',
-        }}
-      >
+      <FilterBar gutter={3}>
         <MapSearchField onSearch={setDebouncedSearchTerm} isFetching={isFetching} />
 
         <FormControl sx={{ minWidth: 120 }}>
@@ -828,11 +815,11 @@ const MapsManagement = (): ReactElement => {
             </MenuItem>
           </Select>
         </FormControl>
-      </Box>
+      </FilterBar>
       {/* Maps Table */}
       {/* Inline, so the search, filters and Refresh stay to recover with. */}
       {error && (
-        <Alert severity="error" sx={loadErrorAlertStyles}>
+        <Alert severity="error" sx={{ mb: 2 }}>
           {intl.formatMessage(
             { id: 'admin.error.load-maps', defaultMessage: 'Failed to load maps: {message}' },
             {
@@ -939,25 +926,16 @@ const MapsManagement = (): ReactElement => {
               maps.map((map) => (
                 <TableRow key={map.id} hover>
                   <TableCell>
-                    <Typography
+                    <MapLink
                       variant="body2"
                       color="primary"
                       component="a"
                       href={`/c/maps/${map.id}/public`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      sx={{
-                        fontWeight: 'medium',
-                        textDecoration: 'none',
-                        cursor: 'pointer',
-
-                        '&:hover': {
-                          textDecoration: 'underline',
-                        },
-                      }}
                     >
                       #{map.id}
-                    </Typography>
+                    </MapLink>
                   </TableCell>
                   <TableCell>
                     <Box
@@ -994,20 +972,14 @@ const MapsManagement = (): ReactElement => {
                     </Typography>
                   </TableCell>
                   <TableCell>
-                    <Button
+                    <CellButton
                       variant="text"
                       color="primary"
                       size="small"
                       onClick={() => handleViewOwnerMaps(map.createdById, map.createdBy)}
-                      sx={{
-                        minWidth: 'auto',
-                        padding: '4px 8px',
-                        textTransform: 'none',
-                        fontWeight: 'medium',
-                      }}
                     >
                       {map.createdBy}
-                    </Button>
+                    </CellButton>
                   </TableCell>
                   <TableCell align="center">
                     <Typography variant="body2">{map.collaboratorCount}</Typography>
@@ -1165,15 +1137,7 @@ const MapsManagement = (): ReactElement => {
       </TableContainer>
       {/* Pagination */}
       {totalPages > 1 && (
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            mt: 3,
-            gap: 2,
-          }}
-        >
+        <PaginationBar>
           <Pagination
             count={totalPages}
             page={currentPage}
@@ -1186,7 +1150,7 @@ const MapsManagement = (): ReactElement => {
             disabled={isFetching}
           />
           {isFetching && <CircularProgress size={24} />}
-        </Box>
+        </PaginationBar>
       )}
       {/* Edit Map Dialog */}
       <EditMapDialog
@@ -1281,24 +1245,8 @@ const MapsManagement = (): ReactElement => {
                   id: 'admin.maps.xml-viewer.no-content',
                   defaultMessage: 'No XML content available',
                 })}
-                slotProps={{
-                  input: {
-                    readOnly: true,
-                    sx: {
-                      fontFamily: 'monospace',
-                      fontSize: '0.875rem',
-                      backgroundColor: (theme) =>
-                        theme.palette.mode === 'dark'
-                          ? theme.palette.grey[900]
-                          : theme.palette.grey[50],
-                      '& .MuiInputBase-input': {
-                        color: (theme) => theme.palette.text.primary,
-                        whiteSpace: 'pre',
-                        overflow: 'auto',
-                      },
-                    },
-                  },
-                }}
+                slots={{ input: XmlInput }}
+                slotProps={{ input: { readOnly: true } }}
               />
             </Box>
           )}

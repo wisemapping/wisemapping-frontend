@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 
+import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 
 export const ErrorBody = styled('div')`
@@ -23,3 +24,16 @@ export const ErrorBody = styled('div')`
   width: 90%;
   padding: 10px;
 `;
+
+/** The message and its actions, centred in a readable column. */
+export const ErrorContent = styled(Box)(({ theme }) => ({
+  maxWidth: 600,
+  margin: '0 auto',
+  [theme.breakpoints.up('xs')]: {
+    padding: theme.spacing(2),
+  },
+  [theme.breakpoints.up('md')]: {
+    padding: theme.spacing(4),
+  },
+  textAlign: 'center',
+}));

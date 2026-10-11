@@ -26,11 +26,10 @@ import FavoriteOutlined from '@mui/icons-material/FavoriteOutlined';
 import FeedbackOutlined from '@mui/icons-material/FeedbackOutlined';
 import EmojiPeopleOutlined from '@mui/icons-material/EmailOutlined';
 import EmailOutlined from '@mui/icons-material/EmailOutlined';
-import Fab from '@mui/material/Fab';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Tooltip from '@mui/material/Tooltip';
-import { HelpMenuList } from './styled';
+import { HelpFab, HelpMenuList } from './styled';
 
 const HelpMenu = (): React.ReactElement => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement>();
@@ -51,22 +50,9 @@ const HelpMenu = (): React.ReactElement => {
         arrow={true}
         title={intl.formatMessage({ id: 'help.support', defaultMessage: 'Support' })}
       >
-        <Fab
-          color="primary"
-          aria-haspopup="true"
-          onClick={handleMenu}
-          sx={{
-            width: '28px',
-            height: '28px',
-            minHeight: '28px',
-            boxShadow: 3,
-            '&:hover': {
-              boxShadow: 6,
-            },
-          }}
-        >
+        <HelpFab color="primary" aria-haspopup="true" onClick={handleMenu}>
           <Help sx={{ fontSize: '18px' }} />
-        </Fab>
+        </HelpFab>
       </Tooltip>
       <HelpMenuList
         id="appbar-profile"

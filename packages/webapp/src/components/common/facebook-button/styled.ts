@@ -4,8 +4,7 @@
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
  *   "powered by wisemapping" text requirement on every single page;
- *   you may not use this file except in compliance with the License.
- *   You may obtain a copy of the license at
+ *   you may obtain a copy of the license at
  *
  *       https://github.com/wisemapping/wisemapping-open-source/blob/main/LICENSE.md
  *
@@ -16,13 +15,18 @@
  *   limitations under the License.
  */
 
-import { css } from '@emotion/react';
+import Button from '@mui/material/Button';
+import { styled } from '@mui/material/styles';
 
-export const recaptchaContainerStyle = css({
-  paddingTop: '10px',
-  // override captcha size, without this the component is not shown horizontally centered
-  '& div div div': {
-    width: '100% !important',
-    height: '100% !important',
+export const StyledFacebookButton = styled(Button)(({ theme }) => ({
+  color: theme.palette.facebook.contrastText,
+  fontWeight: '300',
+  backgroundColor: theme.palette.facebook.main,
+  border: `1px solid ${theme.palette.facebook.main}`,
+  flex: '1 1 auto',
+  minWidth: '200px',
+  '&:hover': {
+    backgroundColor: theme.palette.facebook.dark,
+    border: `1px solid ${theme.palette.facebook.dark}`,
   },
-});
+}));

@@ -24,8 +24,6 @@ import { Link } from 'react-router';
 import Button from '@mui/material/Button';
 import { useTheme } from '@mui/material/styles';
 
-import logo from './logo-small.svg';
-import logoWhiteText from './logo-small-white-text.svg';
 import { JSX } from '@emotion/react/jsx-runtime';
 
 interface HeaderProps {
@@ -66,20 +64,12 @@ export const Header = ({ type }: HeaderProps): React.ReactElement => {
   }
 
   return (
-    <StyledNav
-      style={{
-        background: `linear-gradient(${theme.palette.background.default}, ${theme.palette.background.default}30)`,
-      }}
-    >
-      <StyledDiv
-        style={{
-          background: theme.palette.background.default,
-        }}
-      >
+    <StyledNav>
+      <StyledDiv>
         <Logo>
           <Link to="/c/login" className="header-logo">
             <img
-              src={String(theme.palette.mode === 'dark' ? logoWhiteText : logo)}
+              src={theme.logo}
               alt={intl.formatMessage({ id: 'common.logo', defaultMessage: 'WiseMapping logo' })}
             />
           </Link>

@@ -40,12 +40,12 @@ import Separator from '../common/separator';
 import GoogleButton from '../common/google-button';
 import FacebookButton from '../common/facebook-button';
 import { Link as RouterLink } from 'react-router';
-import { recaptchaContainerStyle } from './style';
+import { RecaptchaBox, SocialButtons } from './styled';
+import { TermsNotice } from '../layout/styled';
 import { ClientContext } from '../../classes/provider/client-context';
 import { logCriticalError } from '../../utils';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
-import Box from '@mui/material/Box';
 import { SEOHead } from '../seo';
 import { getCanonicalUrl, getAlternateLanguageUrls } from '../../utils/seo-locale';
 import { startOAuthFlow } from '../../utils/oauth-flow';
@@ -195,7 +195,7 @@ const RegistrationForm = ({ onCaptchaReset }: { onCaptchaReset?: () => void }) =
               />
             </Typography>
           </header>
-          <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'center' }}>
+          <SocialButtons>
             {AppConfig.isFacebookOauth2Enabled() && (
               <FacebookButton
                 text={intl.formatMessage({
@@ -214,16 +214,8 @@ const RegistrationForm = ({ onCaptchaReset }: { onCaptchaReset?: () => void }) =
                 onClick={() => handleOAuthRegister(AppConfig.getGoogleOauth2Url(), 'Google')}
               />
             )}
-          </Box>
-          <Typography
-            variant="body2"
-            sx={{
-              fontSize: '12px',
-              mt: 2,
-              textAlign: 'center',
-              width: '100%',
-            }}
-          >
+          </SocialButtons>
+          <TermsNotice gutter={2} variant="body2">
             <FormattedMessage
               id="common.terms-notice"
               defaultMessage="By continuing, you agree to our <termsLink>Terms of Service</termsLink> and <privacyLink>Privacy Policy</privacyLink>."
@@ -248,7 +240,7 @@ const RegistrationForm = ({ onCaptchaReset }: { onCaptchaReset?: () => void }) =
                 ),
               }}
             />
-          </Typography>
+          </TermsNotice>
         </Grid>
         <Grid size={{ md: 2, xs: 12 }}>
           <Separator
@@ -262,7 +254,7 @@ const RegistrationForm = ({ onCaptchaReset }: { onCaptchaReset?: () => void }) =
         </Grid>
         <Grid size={{ md: 5, xs: 12 }}>
           <main>
-            <FormControl css={{ maxWidth: maxFormWidth }}>
+            <FormControl sx={{ maxWidth: maxFormWidth }}>
               <form
                 onSubmit={handleOnSubmit}
                 role="form"
@@ -342,13 +334,13 @@ const RegistrationForm = ({ onCaptchaReset }: { onCaptchaReset?: () => void }) =
 
                   {AppConfig.isRecaptcha2Enabled() && (
                     <>
-                      <div css={recaptchaContainerStyle}>
+                      <RecaptchaBox>
                         <GoogleReCaptchaCheckbox
                           onChange={handleRecaptchaChange}
                           onError={handleRecaptchaError}
                           onExpired={handleRecaptchaExpired}
                         />
-                      </div>
+                      </RecaptchaBox>
                       <Typography
                         variant="body2"
                         sx={{ fontSize: '11px', textAlign: 'center', color: 'text.secondary' }}
@@ -472,12 +464,7 @@ const RegistationPage = (): React.ReactElement => {
           },
         }}
       />
-      <AccountAccessLayout
-        headerType="only-signin"
-        contentSx={{
-          padding: { xs: '8px 16px', md: '16px 16px' },
-        }}
-      >
+      <AccountAccessLayout headerType="only-signin" compact>
         {(() => {
           if (!AppConfig.isRecaptcha2Enabled()) {
             return <RegistrationForm />;

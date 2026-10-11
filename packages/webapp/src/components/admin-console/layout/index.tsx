@@ -23,14 +23,11 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Alert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
-import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
-import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import Card from '@mui/material/Card';
@@ -39,10 +36,8 @@ import PersonIcon from '@mui/icons-material/Person';
 import SettingsIcon from '@mui/icons-material/Settings';
 import MapIcon from '@mui/icons-material/Map';
 import AdminIcon from '@mui/icons-material/AdminPanelSettings';
-import { adminConsoleStyles } from '../styles';
+import { AdminAppBar, AdminDrawer, LoadingBox, MainContent, NavigationButton } from './styled';
 import { useAdminPermissions } from '../../../classes/hooks/useAdminPermissions';
-
-const drawerWidth = 240;
 
 interface MenuItem {
   id: string;
@@ -96,16 +91,9 @@ const AdminLayout = (): ReactElement => {
 
   if (loading) {
     return (
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          minHeight: '400px',
-        }}
-      >
+      <LoadingBox>
         <CircularProgress />
-      </Box>
+      </LoadingBox>
     );
   }
 
@@ -126,7 +114,7 @@ const AdminLayout = (): ReactElement => {
   return (
     <Box sx={{ display: 'flex' }}>
       {/* App Bar */}
-      <AppBar position="fixed" sx={adminConsoleStyles.appBar}>
+      <AdminAppBar position="fixed">
         <Toolbar>
           <AdminIcon sx={{ mr: 2 }} />
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
@@ -142,9 +130,9 @@ const AdminLayout = (): ReactElement => {
             })}
           </Typography>
         </Toolbar>
-      </AppBar>
+      </AdminAppBar>
       {/* Left Navigation Panel */}
-      <Drawer variant="permanent" sx={adminConsoleStyles.drawer}>
+      <AdminDrawer variant="permanent">
         <Box sx={{ p: 3 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
             <AdminIcon color="primary" sx={{ mr: 1 }} />
@@ -179,11 +167,10 @@ const AdminLayout = (): ReactElement => {
         <List sx={{ pt: 1 }}>
           {menuItems.map((item) => (
             <ListItem key={item.id} disablePadding sx={{ mb: 0.5 }}>
-              <ListItemButton
+              <NavigationButton
                 component={NavLink}
                 to={item.path}
                 selected={location.pathname === item.path}
-                sx={adminConsoleStyles.navigationButton}
               >
                 <ListItemIcon sx={{ minWidth: 40 }}>{item.icon}</ListItemIcon>
                 <ListItemText
@@ -194,21 +181,13 @@ const AdminLayout = (): ReactElement => {
                     },
                   }}
                 />
-              </ListItemButton>
+              </NavigationButton>
             </ListItem>
           ))}
         </List>
-      </Drawer>
+      </AdminDrawer>
       {/* Main Content Area */}
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
-          overflow: 'auto',
-          mt: '64px', // Account for AppBar height
-        }}
-      >
+      <MainContent component="main">
         <Container maxWidth="xl" sx={{ p: 3 }}>
           <Card elevation={2}>
             <CardContent sx={{ p: 3 }}>
@@ -216,7 +195,7 @@ const AdminLayout = (): ReactElement => {
             </CardContent>
           </Card>
         </Container>
-      </Box>
+      </MainContent>
     </Box>
   );
 };

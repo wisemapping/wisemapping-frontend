@@ -30,7 +30,7 @@ import {
 import GlobalError from '../../../form/global-error';
 import CloseIcon from '@mui/icons-material/Close';
 import Button from '@mui/material/Button';
-import { CSSObject } from '@emotion/react';
+import type { SxProps, Theme } from '@mui/material/styles';
 import { KeyboardContext } from '../../../../classes/provider/keyboard-context';
 import AsyncButton from '../../../form/async-button';
 
@@ -46,7 +46,8 @@ export type DialogProps = {
   submitButton?: string | undefined;
   actionUrl?: string;
   maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | false;
-  papercss?: CSSObject | undefined;
+  /** Sizes the dialog's paper; without it the dialog takes the full `maxWidth`. */
+  paperSx?: SxProps<Theme> | undefined;
   isDangerousAction?: boolean;
   isLoading?: boolean;
 };
@@ -56,7 +57,7 @@ const BaseDialog = (props: DialogProps): React.ReactElement => {
   const intl = useIntl();
   // Hotkeys stay disabled while any dialog is open: released on unmount.
   useEffect(() => disableHotkeys(), [disableHotkeys]);
-  const { onClose, onSubmit, maxWidth = 'sm', papercss, isLoading = false } = props;
+  const { onClose, onSubmit, maxWidth = 'sm', paperSx, isLoading = false } = props;
 
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -73,12 +74,8 @@ const BaseDialog = (props: DialogProps): React.ReactElement => {
         // Escape and the backdrop wait for the request too, as Cancel does.
         onClose={isLoading ? undefined : onClose}
         maxWidth={maxWidth}
-        fullWidth={!papercss}
-        // `sx` rather than `css`: slotProps are spread onto the Paper as plain
-        // props, and Emotion only processes `css` at a JSX call site -- so the
-        // old spelling type-checked only through the styled wrapper and never
-        // actually sized anything.
-        slotProps={papercss ? { paper: { sx: papercss } } : undefined}
+        fullWidth={!paperSx}
+        slotProps={paperSx ? { paper: { sx: paperSx } } : undefined}
       >
         <form autoComplete="off" onSubmit={handleOnSubmit}>
           <StyledDialogTitle>

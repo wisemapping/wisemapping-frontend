@@ -79,7 +79,7 @@ import FacebookLookup from './FacebookLookup';
 import { User, UserFormData } from './types';
 import { useAdminPage, useClampedPage } from '../shared/useAdminPage';
 import { errorMessage } from '../shared/errorMessage';
-import { loadErrorAlertStyles } from '../styles';
+import { FilterBar, PaginationBar } from '../styled';
 import { useDate } from '../../../classes/app-i18n/dates';
 
 const emptyUserForm: UserFormData = {
@@ -710,14 +710,7 @@ const AccountManagement = (): ReactElement => {
               defaultMessage: 'Search & Filters',
             })}
           </Typography>
-          <Box
-            sx={{
-              display: 'flex',
-              gap: 2,
-              mb: facebookEnabled && isFacebookFilterExpanded ? 1 : 2,
-              flexWrap: 'wrap',
-            }}
-          >
+          <FilterBar gutter={facebookEnabled && isFacebookFilterExpanded ? 1 : 2}>
             <UserSearchField onSearch={setDebouncedSearchTerm} isFetching={isFetching} />
 
             <FormControl sx={{ minWidth: 150 }}>
@@ -794,7 +787,7 @@ const AccountManagement = (): ReactElement => {
                   size="small"
                   onClick={() => setIsFacebookFilterExpanded((v) => !v)}
                   sx={{
-                    color: isFacebookFilterExpanded ? '#1877F2' : 'text.secondary',
+                    color: isFacebookFilterExpanded ? 'facebook.main' : 'text.secondary',
                     alignSelf: 'center',
                   }}
                 >
@@ -807,7 +800,7 @@ const AccountManagement = (): ReactElement => {
                 </IconButton>
               </Tooltip>
             )}
-          </Box>
+          </FilterBar>
 
           {facebookEnabled && (
             <Collapse in={isFacebookFilterExpanded}>
@@ -823,7 +816,7 @@ const AccountManagement = (): ReactElement => {
       {/* Users Table */}
       {/* Inline, so the search, filters and Refresh stay to recover with. */}
       {error && (
-        <Alert severity="error" sx={loadErrorAlertStyles}>
+        <Alert severity="error" sx={{ mb: 2 }}>
           {intl.formatMessage(
             { id: 'admin.error.load-users', defaultMessage: 'Failed to load users: {message}' },
             {
@@ -995,7 +988,7 @@ const AccountManagement = (): ReactElement => {
                             id: 'admin.facebook.remove-button',
                             defaultMessage: 'Remove Facebook Account',
                           })}
-                          sx={{ color: '#1877F2' }}
+                          sx={{ color: 'facebook.main' }}
                         >
                           <LinkOffIcon />
                         </IconButton>
@@ -1020,15 +1013,7 @@ const AccountManagement = (): ReactElement => {
       </TableContainer>
       {/* Pagination */}
       {totalPages > 1 && (
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            mt: 3,
-            gap: 2,
-          }}
-        >
+        <PaginationBar>
           <Pagination
             count={totalPages}
             page={currentPage}
@@ -1041,7 +1026,7 @@ const AccountManagement = (): ReactElement => {
             disabled={isFetching}
           />
           {isFetching && <CircularProgress size={24} />}
-        </Box>
+        </PaginationBar>
       )}
       {/* Edit User Dialog */}
       <UserFormDialog
@@ -1364,7 +1349,7 @@ const AccountManagement = (): ReactElement => {
         fullWidth
       >
         <DialogTitle sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <FacebookIcon sx={{ color: '#1877F2' }} />
+          <FacebookIcon sx={{ color: 'facebook.main' }} />
           {intl.formatMessage({
             id: 'admin.facebook.remove-dialog-title',
             defaultMessage: 'Remove Facebook Account',

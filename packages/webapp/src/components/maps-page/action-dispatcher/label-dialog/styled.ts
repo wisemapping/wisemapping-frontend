@@ -4,8 +4,7 @@
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
  *   "powered by wisemapping" text requirement on every single page;
- *   you may not use this file except in compliance with the License.
- *   You may obtain a copy of the license at
+ *   you may obtain a copy of the license at
  *
  *       https://github.com/wisemapping/wisemapping-open-source/blob/main/LICENSE.md
  *
@@ -16,11 +15,17 @@
  *   limitations under the License.
  */
 
-import MenuItem from '@mui/material/MenuItem';
-import withEmotionStyles from '../../HOCs/withEmotionStyles';
+import Typography from '@mui/material/Typography';
+import { styled, SxProps, Theme } from '@mui/material/styles';
 
-export const StyledMenuItem = withEmotionStyles({
-  root: {
-    width: '300px',
-  },
-})(MenuItem);
+export const paperSx: SxProps<Theme> = {
+  maxWidth: '500px',
+  minWidth: '400px',
+};
+
+/** The title of the map being labelled, broken anywhere to fit. */
+export const MapTitle = styled(Typography)({
+  marginTop: '10px',
+  maxWidth: '100%',
+  wordBreak: 'break-all',
+});

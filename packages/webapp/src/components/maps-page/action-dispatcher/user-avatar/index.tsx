@@ -17,7 +17,7 @@
  */
 
 import React from 'react';
-import { StyledUserAvatar, tintFor } from './styled';
+import { StyledUserAvatar } from './styled';
 
 /** Up to two initials: "Ana Ruiz" is AR, "ana@wisemapping.com" is A. */
 export const initialsOf = (name: string): string => {
@@ -38,7 +38,7 @@ type UserAvatarProps = {
 
 /** A person's initials in a colour of their own. Decorative: the name is shown next to it. */
 const UserAvatar = ({ name }: UserAvatarProps): React.ReactElement => (
-  <StyledUserAvatar tint={tintFor(name)} aria-hidden="true">
+  <StyledUserAvatar tintKey={name} aria-hidden="true">
     {initialsOf(name)}
   </StyledUserAvatar>
 );

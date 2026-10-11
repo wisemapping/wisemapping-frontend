@@ -44,6 +44,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import { useFetchAccount } from '../../../../classes/middleware';
 import { ClientContext } from '../../../../classes/provider/client-context';
 import AppI18n, { LocaleCode, Locales } from '../../../../classes/app-i18n';
+import { DeleteAccountButton } from './styled';
 
 type AccountInfoDialogProps = {
   onClose: () => void;
@@ -499,25 +500,17 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
                     </Box>
                   </Alert>
 
-                  <Button
+                  <DeleteAccountButton
                     variant="outlined"
                     color="error"
                     startIcon={<DeleteForeverIcon />}
                     onClick={handleDeleteAccountClick}
-                    sx={{
-                      borderWidth: 2,
-                      '&:hover': {
-                        borderWidth: 2,
-                        backgroundColor: 'error.light',
-                        color: 'error.contrastText',
-                      },
-                    }}
                   >
                     <FormattedMessage
                       id="accountinfo.deleteaccount"
                       defaultMessage="Delete Account"
                     />
-                  </Button>
+                  </DeleteAccountButton>
                 </Box>
               ) : (
                 <Box>

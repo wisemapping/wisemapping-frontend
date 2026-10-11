@@ -46,9 +46,9 @@ const ThemeToggleButton: React.FC = () => {
         onClick={toggleMode}
         startIcon={
           !isDark ? (
-            <Brightness7 style={{ color: 'inherit' }} />
+            <Brightness7 sx={{ color: 'inherit' }} />
           ) : (
-            <Brightness4 style={{ color: 'inherit' }} />
+            <Brightness4 sx={{ color: 'inherit' }} />
           )
         }
       >

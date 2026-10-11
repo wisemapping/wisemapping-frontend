@@ -16,15 +16,16 @@
  *   limitations under the License.
  */
 
-import withEmotionStyles from '../../HOCs/withEmotionStyles';
 import Container from '@mui/material/Container';
+import { styled } from '@mui/material/styles';
 
-const FormContainer = withEmotionStyles({
+/** The narrow, centred column of the sign-in and sign-up forms. */
+const FormContainer = styled(Container)({
   padding: '20px 10px 0px 20px',
   maxWidth: '380px !important',
   textAlign: 'center',
   width: '100%',
   margin: '0 auto',
-})(Container);
+});
 
 export default FormContainer;

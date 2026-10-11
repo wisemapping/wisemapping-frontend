@@ -22,22 +22,27 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ErrorInfo } from '../../../../classes/client';
 import BaseDialog from '../base-dialog';
 import { SimpleDialogProps } from '..';
-import { useStyles } from './style';
+import {
+  EmbedCode,
+  paperSx,
+  PublicUrlField,
+  SharingLabel,
+  SharingPanel,
+  SharingTab,
+  SharingTabPanel,
+  SwitchBox,
+  SwitchProgress,
+} from './styled';
 
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
-import Tab from '@mui/material/Tab';
-import TabPanel from '@mui/lab/TabPanel';
 import Typography from '@mui/material/Typography';
-import TextareaAutosize from '@mui/material/TextareaAutosize';
-import TextField from '@mui/material/TextField';
 import AppConfig from '../../../../classes/app-config';
 import Box from '@mui/material/Box';
 import Tooltip from '@mui/material/Tooltip';
-import CircularProgress from '@mui/material/CircularProgress';
 import { useFetchMapById } from '../../../../classes/middleware';
 import { ClientContext } from '../../../../classes/provider/client-context';
 import { copyText } from '../../../../utils/clipboard';
@@ -52,7 +57,6 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
   const [copied, setCopied] = React.useState<boolean>(false);
   const queryClient = useQueryClient();
   const intl = useIntl();
-  const classes = useStyles();
   const previousModelRef = useRef<boolean>(map?.public ?? false);
 
   // Sync model state when map data changes (e.g., after refetch or initial load). Adjusted while
@@ -131,9 +135,9 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
           defaultMessage: 'Make your map public. Anyone with the link can view it.',
         })}
         maxWidth="md"
-        papercss={classes['paper']}
+        paperSx={paperSx}
       >
-        <Box css={classes['checkboxContainer']}>
+        <SwitchBox>
           <FormControl fullWidth={true}>
             <FormControlLabel
               control={
@@ -145,19 +149,7 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
                     color="primary"
                     disabled={mutation.isPending}
                   />
-                  {mutation.isPending && (
-                    <CircularProgress
-                      size={24}
-                      sx={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: '50%',
-                        marginTop: '-12px',
-                        marginLeft: '-12px',
-                        color: (theme) => theme.palette.primary.main,
-                      }}
-                    />
-                  )}
+                  {mutation.isPending && <SwitchProgress size={24} />}
                 </Box>
               }
               label={
@@ -175,37 +167,35 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
               }
             />
           </FormControl>
-        </Box>
+        </SwitchBox>
 
-        <div style={!model ? { display: 'none' } : {}}>
+        <SharingPanel shown={model}>
           <TabContext value={activeTab}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <TabList onChange={handleTabChange}>
-                <Tab
+                <SharingTab
                   label={intl.formatMessage({
                     id: 'publish.public-url',
                     defaultMessage: 'Public URL',
                   })}
                   value="1"
-                  css={classes['tab']}
                 />
-                <Tab
+                <SharingTab
                   label={intl.formatMessage({
                     id: 'publish.embedded',
                     defaultMessage: 'Embedded',
                   })}
                   value="2"
-                  css={classes['tab']}
                 />
               </TabList>
             </Box>
-            <TabPanel value="2" css={classes['tabPanel']}>
-              <Typography variant="subtitle2" css={classes['label']}>
+            <SharingTabPanel value="2">
+              <SharingLabel variant="subtitle2">
                 <FormattedMessage
                   id="publish.embedded-msg"
                   defaultMessage="Click the code below to copy it to your clipboard:"
                 />
-              </Typography>
+              </SharingLabel>
               <Tooltip
                 title={intl.formatMessage({
                   id: 'publish.copied',
@@ -216,8 +206,7 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
                 leaveDelay={1500}
                 arrow
               >
-                <TextareaAutosize
-                  css={classes['textarea']}
+                <EmbedCode
                   readOnly={true}
                   spellCheck={false}
                   minRows={4}
@@ -226,14 +215,14 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
                   onClick={() => handleCopyToClipboard(embedCode)}
                 />
               </Tooltip>
-            </TabPanel>
-            <TabPanel value="1" css={classes['tabPanel']}>
-              <Typography variant="subtitle2" css={classes['label']}>
+            </SharingTabPanel>
+            <SharingTabPanel value="1">
+              <SharingLabel variant="subtitle2">
                 <FormattedMessage
                   id="publish.public-url-msg"
                   defaultMessage="Click the link below to copy it to your clipboard:"
                 />
-              </Typography>
+              </SharingLabel>
               <Tooltip
                 title={intl.formatMessage({
                   id: 'publish.copied',
@@ -244,11 +233,10 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
                 leaveDelay={1500}
                 arrow
               >
-                <TextField
+                <PublicUrlField
                   fullWidth
                   value={publicUrl}
                   onClick={() => handleCopyToClipboard(publicUrl)}
-                  css={classes['urlInput']}
                   variant="outlined"
                   size="small"
                   slotProps={{
@@ -258,9 +246,9 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
                   }}
                 />
               </Tooltip>
-            </TabPanel>
+            </SharingTabPanel>
           </TabContext>
-        </div>
+        </SharingPanel>
       </BaseDialog>
     </div>
   );

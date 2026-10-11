@@ -18,11 +18,53 @@
 
 import { createTheme, PaletteMode, Theme } from '@mui/material/styles';
 import { createDialogComponents } from '@wisemapping/editor/theme/dialog';
+import logo from '../components/layout/header/logo-small.svg';
+import logoWhiteText from '../components/layout/header/logo-small-white-text.svg';
+
+/** A brand colour: its base, its hover shade and the text drawn on it. */
+type BrandColor = { main: string; dark: string; contrastText: string };
+type CodeBlockColors = { background: string; text: string };
+type UrlFieldColors = { background: string; hoverBackground: string; text: string };
+type AvatarColors = { text: string; tints: [string, ...string[]] };
+type ThemeToggleColors = { border: string; background: string };
+
+declare module '@mui/material/styles' {
+  interface Theme {
+    /** The WiseMapping logo whose text reads on this mode's background. */
+    logo: string;
+  }
+  interface ThemeOptions {
+    logo?: string;
+  }
+  interface Palette {
+    /** Facebook's brand blue, for the Facebook sign-in and account controls. */
+    facebook: BrandColor;
+    /** A block of code to copy, such as the publish dialog's embed snippet. */
+    codeBlock: CodeBlockColors;
+    /** A link to copy, such as the publish dialog's public URL. */
+    urlField: UrlFieldColors;
+    /** The initials avatars of the people a map is shared with. */
+    avatar: AvatarColors;
+    /** The line and the "or" badge between the sign-in form and the social buttons. */
+    separator: string;
+    /** The light/dark switch of the footer. */
+    themeToggle: ThemeToggleColors;
+  }
+  interface PaletteOptions {
+    facebook?: BrandColor;
+    codeBlock?: CodeBlockColors;
+    urlField?: UrlFieldColors;
+    avatar?: AvatarColors;
+    separator?: string;
+    themeToggle?: ThemeToggleColors;
+  }
+}
 
 const createAppTheme = (mode: PaletteMode): Theme => {
   const isLight = mode === 'light';
 
   return createTheme({
+    logo: String(isLight ? logo : logoWhiteText),
     palette: {
       mode,
       primary: {
@@ -44,6 +86,30 @@ const createAppTheme = (mode: PaletteMode): Theme => {
       text: {
         primary: isLight ? '#333333' : '#ffffff',
         secondary: isLight ? '#666666' : '#b3b3b3',
+      },
+      facebook: {
+        main: '#1877f2',
+        dark: '#166fe5',
+        contrastText: '#ffffff',
+      },
+      codeBlock: {
+        background: '#f5f5f5',
+        text: '#2c3e50',
+      },
+      urlField: {
+        background: '#f0f7ff',
+        hoverBackground: '#e3f2fd',
+        text: '#1976d2',
+      },
+      avatar: {
+        text: '#ffffff',
+        // Soft tints that read on light and dark paper; a person always gets the same one.
+        tints: ['#f59e0b', '#10b981', '#3b82f6', '#8b5cf6', '#ec4899', '#14b8a6', '#f97316'],
+      },
+      separator: '#dce2e6',
+      themeToggle: {
+        border: '#cc8400',
+        background: '#ffcc80',
       },
     },
     components: {

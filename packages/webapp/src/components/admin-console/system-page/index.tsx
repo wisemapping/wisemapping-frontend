@@ -40,6 +40,8 @@ import AssessmentIcon from '@mui/icons-material/Assessment';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
+import { SectionHeader } from '../styled';
+import { InfoCard, InfoCards, StatTile } from './styled';
 
 // Byte multiples, in steps of 1024, as Intl unit identifiers.
 const BYTE_UNITS = ['byte', 'kilobyte', 'megabyte', 'gigabyte', 'terabyte'];
@@ -210,7 +212,7 @@ const SystemInformation = (): ReactElement => {
   return (
     <Box sx={{ p: 3 }}>
       {/* Header */}
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+      <SectionHeader>
         <Typography variant="h5" component="h1">
           {intl.formatMessage({ id: 'admin.system.title', defaultMessage: 'System Information' })}
         </Typography>
@@ -221,7 +223,7 @@ const SystemInformation = (): ReactElement => {
             {intl.formatMessage({ id: 'common.refresh', defaultMessage: 'Refresh' })}
           </Button>
         </Tooltip>
-      </Box>
+      </SectionHeader>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
         {/* System Health */}
         <Box>
@@ -293,9 +295,9 @@ const SystemInformation = (): ReactElement => {
         </Box>
 
         {/* Application and Database Information */}
-        <Box sx={{ display: 'flex', gap: 3, flexWrap: 'wrap' }}>
+        <InfoCards>
           {/* Application Information */}
-          <Box sx={{ flex: '1 1 300px' }}>
+          <InfoCard>
             <Card>
               <CardHeader
                 avatar={<ComputerIcon color="primary" />}
@@ -339,10 +341,10 @@ const SystemInformation = (): ReactElement => {
                 )}
               </CardContent>
             </Card>
-          </Box>
+          </InfoCard>
 
           {/* Database Information */}
-          <Box sx={{ flex: '1 1 300px' }}>
+          <InfoCard>
             <Card>
               <CardHeader
                 avatar={<StorageIcon color="primary" />}
@@ -423,13 +425,13 @@ const SystemInformation = (): ReactElement => {
                 )}
               </CardContent>
             </Card>
-          </Box>
-        </Box>
+          </InfoCard>
+        </InfoCards>
 
         {/* JVM and Memory Information */}
-        <Box sx={{ display: 'flex', gap: 3, flexWrap: 'wrap' }}>
+        <InfoCards>
           {/* JVM Information */}
-          <Box sx={{ flex: '1 1 300px' }}>
+          <InfoCard>
             <Card>
               <CardHeader
                 avatar={<MemoryIcon color="primary" />}
@@ -535,10 +537,10 @@ const SystemInformation = (): ReactElement => {
                 )}
               </CardContent>
             </Card>
-          </Box>
+          </InfoCard>
 
           {/* Memory Information */}
-          <Box sx={{ flex: '1 1 300px' }}>
+          <InfoCard>
             <Card>
               <CardHeader
                 avatar={<MemoryIcon color="primary" />}
@@ -630,8 +632,8 @@ const SystemInformation = (): ReactElement => {
                 )}
               </CardContent>
             </Card>
-          </Box>
-        </Box>
+          </InfoCard>
+        </InfoCards>
 
         {/* Mindmap Listing Performance */}
         <Box>
@@ -856,16 +858,7 @@ const SystemInformation = (): ReactElement => {
             <CardContent>
               {systemInfo?.statistics && (
                 <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-                  <Box
-                    sx={{
-                      flex: '1 1 200px',
-                      textAlign: 'center',
-                      p: 2,
-                      border: 1,
-                      borderColor: 'divider',
-                      borderRadius: 1,
-                    }}
-                  >
+                  <StatTile>
                     <Typography variant="h4" color="primary">
                       {intl.formatNumber(systemInfo.statistics.totalUsers || 0)}
                     </Typography>
@@ -880,17 +873,8 @@ const SystemInformation = (): ReactElement => {
                         defaultMessage: 'Total Users',
                       })}
                     </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      flex: '1 1 200px',
-                      textAlign: 'center',
-                      p: 2,
-                      border: 1,
-                      borderColor: 'divider',
-                      borderRadius: 1,
-                    }}
-                  >
+                  </StatTile>
+                  <StatTile>
                     <Typography variant="h4" color="primary">
                       {intl.formatNumber(systemInfo.statistics.totalMindmaps || 0)}
                     </Typography>
@@ -905,7 +889,7 @@ const SystemInformation = (): ReactElement => {
                         defaultMessage: 'Total Mindmaps',
                       })}
                     </Typography>
-                  </Box>
+                  </StatTile>
                 </Box>
               )}
               {systemInfo?.statistics?.error && (

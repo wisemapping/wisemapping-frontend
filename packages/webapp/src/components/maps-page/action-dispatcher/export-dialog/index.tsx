@@ -19,14 +19,18 @@
 import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import BaseDialog from '../base-dialog';
-import { useStyles } from './style';
+import {
+  FormatOption,
+  FormatSelect,
+  GroupLabel,
+  ImageFormatOption,
+  ZoomToFitLabel,
+} from './styled';
 import Alert from '@mui/material/Alert';
 import FormControl from '@mui/material/FormControl';
 import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
+import { SelectChangeEvent } from '@mui/material/Select';
 import {
   Designer,
   TextExporterFactory,
@@ -76,8 +80,6 @@ const ExportDialog = ({
 
   const [zoomToFit, setZoomToFit] = React.useState<boolean>(true);
   const exportTheme: ThemeType = 'prism';
-
-  const classes = useStyles();
 
   const handleOnExportFormatChange = (event: SelectChangeEvent<ExportFormat>) => {
     setExportFormat(event.target.value);
@@ -254,8 +256,7 @@ const ExportDialog = ({
         <FormControl component="fieldset">
           <RadioGroup name="export" value={exportGroup} onChange={handleOnGroupChange}>
             <FormControl>
-              <FormControlLabel
-                css={classes['label']}
+              <GroupLabel
                 value="image"
                 disabled={!enableImgExport}
                 control={<Radio color="primary" />}
@@ -265,31 +266,27 @@ const ExportDialog = ({
                     'Image (SVG, PNG, JPEG, PDF): Get a graphic representation of your map including all colors and shapes.',
                 })}
                 color="secondary"
-                style={{ fontSize: '9px' }}
+                sx={{ fontSize: '9px' }}
               />
               {exportGroup == 'image' && (
                 <>
-                  <Select
+                  <FormatSelect
                     onChange={handleOnExportFormatChange}
                     variant="outlined"
                     value={exportFormat}
-                    css={classes['select']}
                   >
-                    <MenuItem value="svg" css={classes['menu']}>
+                    <ImageFormatOption value="svg">
                       Scalable Vector Graphics (SVG)
-                    </MenuItem>
-                    <MenuItem value="png" css={classes['menu']}>
+                    </ImageFormatOption>
+                    <ImageFormatOption value="png">
                       Portable Network Graphics (PNG)
-                    </MenuItem>
-                    <MenuItem value="jpg" css={classes['menu']}>
-                      JPEG Image (JPEG)
-                    </MenuItem>
-                    <MenuItem value="pdf" css={classes['menu']}>
+                    </ImageFormatOption>
+                    <ImageFormatOption value="jpg">JPEG Image (JPEG)</ImageFormatOption>
+                    <ImageFormatOption value="pdf">
                       Portable Document Format (PDF)
-                    </MenuItem>
-                  </Select>
-                  <FormControlLabel
-                    css={classes['select']}
+                    </ImageFormatOption>
+                  </FormatSelect>
+                  <ZoomToFitLabel
                     control={<Checkbox checked={zoomToFit} onChange={handleOnZoomToFit} />}
                     label={intl.formatMessage({
                       id: 'export.img-center',
@@ -301,8 +298,7 @@ const ExportDialog = ({
             </FormControl>
 
             <FormControl>
-              <FormControlLabel
-                css={classes['label']}
+              <GroupLabel
                 value="document"
                 control={<Radio color="primary" />}
                 label={intl.formatMessage({
@@ -313,28 +309,22 @@ const ExportDialog = ({
                 color="secondary"
               />
               {exportGroup == 'document' && (
-                <Select
+                <FormatSelect
                   onChange={handleOnExportFormatChange}
                   variant="outlined"
                   value={exportFormat}
-                  css={classes['select']}
                 >
-                  <MenuItem css={classes['select']} value="txt">
-                    Plain Text File (TXT)
-                  </MenuItem>
-                  <MenuItem css={classes['select']} value="md">
-                    Markdown (MD)
-                  </MenuItem>
-                  {/* <MenuItem className={classes.select} value="xls">
+                  <FormatOption value="txt">Plain Text File (TXT)</FormatOption>
+                  <FormatOption value="md">Markdown (MD)</FormatOption>
+                  {/* <FormatOption value="xls">
                                         Microsoft Excel (XLS)
-                                    </MenuItem> */}
-                </Select>
+                                    </FormatOption> */}
+                </FormatSelect>
               )}
             </FormControl>
 
             <FormControl>
-              <FormControlLabel
-                css={classes['label']}
+              <GroupLabel
                 value="mindmap-tool"
                 control={<Radio color="primary" />}
                 label={intl.formatMessage({
@@ -345,25 +335,18 @@ const ExportDialog = ({
                 color="secondary"
               />
               {exportGroup == 'mindmap-tool' && (
-                <Select
+                <FormatSelect
                   onChange={handleOnExportFormatChange}
                   variant="outlined"
-                  css={classes['select']}
                   value={exportFormat}
                 >
-                  <MenuItem css={classes['select']} value="wxml">
-                    WiseMapping (WXML)
-                  </MenuItem>
-                  <MenuItem css={classes['select']} value="mm">
-                    Freemind 1.0.1 (MM)
-                  </MenuItem>
-                  <MenuItem css={classes['select']} value="mmx">
-                    Freeplane (MM)
-                  </MenuItem>
-                  {/* <MenuItem className={classes.select} value="mmap">
+                  <FormatOption value="wxml">WiseMapping (WXML)</FormatOption>
+                  <FormatOption value="mm">Freemind 1.0.1 (MM)</FormatOption>
+                  <FormatOption value="mmx">Freeplane (MM)</FormatOption>
+                  {/* <FormatOption value="mmap">
                                         MindManager (MMAP)
-                                    </MenuItem> */}
-                </Select>
+                                    </FormatOption> */}
+                </FormatSelect>
               )}
             </FormControl>
           </RadioGroup>
