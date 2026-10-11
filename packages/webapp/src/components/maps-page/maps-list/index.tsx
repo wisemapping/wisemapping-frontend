@@ -16,14 +16,14 @@
  *   limitations under the License.
  */
 
-import React, { useEffect, useMemo, CSSProperties, useContext } from 'react';
+import React, { useMemo, CSSProperties, useContext } from 'react';
 
 import { useStyles } from './styled';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ErrorInfo, MapInfo } from '../../../classes/client';
 import ActionChooser, { ActionType } from '../action-chooser';
 import ActionDispatcher from '../action-dispatcher';
-import dayjs from 'dayjs';
+import { useDate } from '../../../classes/app-i18n/dates';
 import { Filter } from '..';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { trackToolbarAction } from '../../../utils/analytics';
@@ -52,11 +52,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import StarRateRoundedIcon from '@mui/icons-material/StarRateRounded';
 import SearchIcon from '@mui/icons-material/Search';
 
-import relativeTime from 'dayjs/plugin/relativeTime';
 import { LabelsCell } from './labels-cell';
-import LocalizedFormat from 'dayjs/plugin/localizedFormat';
-import AppI18n from '../../../classes/app-i18n';
-import { useFetchAccount } from '../../../classes/middleware';
 import LabelTwoTone from '@mui/icons-material/LabelTwoTone';
 import { CSSObject, Interpolation, Theme } from '@emotion/react';
 import Box from '@mui/material/Box';
@@ -75,9 +71,6 @@ export { getChangeLabelMutationFunction };
 
 // A stable empty list: `data = []` would be a new array on every render while loading.
 const NO_MAPS: MapInfo[] = [];
-
-dayjs.extend(LocalizedFormat);
-dayjs.extend(relativeTime);
 
 interface HeadCell {
   id: keyof MapInfo;
@@ -233,11 +226,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
   const intl = useIntl();
   const queryClient = useQueryClient();
 
-  const account = useFetchAccount();
-  const userLocale = AppI18n.getUserLocale(account?.locale);
-  useEffect(() => {
-    dayjs.locale(userLocale.code);
-  }, [userLocale.code]);
+  const date = useDate();
 
   const {
     data: mapsData = NO_MAPS,
@@ -597,12 +586,12 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                                 },
                                 {
                                   by: row.lastModificationBy,
-                                  on: dayjs(row.lastModificationTime).format('lll'),
+                                  on: date(row.lastModificationTime).format('lll'),
                                 },
                               )}
                               placement="bottom-start"
                             >
-                              <span>{dayjs(row.lastModificationTime).fromNow()}</span>
+                              <span>{date(row.lastModificationTime).fromNow()}</span>
                             </Tooltip>
                           </Typography>
                         }
@@ -741,7 +730,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                             },
                             {
                               by: row.lastModificationBy,
-                              on: dayjs(row.lastModificationTime).format('lll'),
+                              on: date(row.lastModificationTime).format('lll'),
                             },
                           )}
                           placement="bottom-start"
@@ -754,7 +743,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                                 'Figtree, "Noto Sans JP", Helvetica, "system-ui", Arial, sans-serif',
                             }}
                           >
-                            {dayjs(row.lastModificationTime).fromNow()}
+                            {date(row.lastModificationTime).fromNow()}
                           </Typography>
                         </Tooltip>
                       </TableCell>

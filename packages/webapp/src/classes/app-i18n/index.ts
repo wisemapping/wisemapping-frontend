@@ -15,19 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import 'dayjs/locale/fr';
-import 'dayjs/locale/en';
-import 'dayjs/locale/es';
-import 'dayjs/locale/de';
-import 'dayjs/locale/ru';
-import 'dayjs/locale/uk';
-import 'dayjs/locale/zh';
-import 'dayjs/locale/zh-cn';
-import 'dayjs/locale/ja';
-import 'dayjs/locale/pt';
-import 'dayjs/locale/it';
-import 'dayjs/locale/hi';
-import 'dayjs/locale/ar';
 import { readStorage, writeStorage } from '../../utils/storage';
 // Its messages are loaded on demand: see ./messages.
 export class Locale {
