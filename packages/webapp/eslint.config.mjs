@@ -1,5 +1,5 @@
 import { defineConfig, globalIgnores } from 'eslint/config';
-import react from 'eslint-plugin-react';
+import eslintReact from '@eslint-react/eslint-plugin';
 import tseslint from 'typescript-eslint';
 import reactHooks from 'eslint-plugin-react-hooks';
 import globals from 'globals';
@@ -12,7 +12,7 @@ export default defineConfig([
     extends: [
       js.configs.recommended,
       prettier,
-      react.configs.flat.recommended,
+      eslintReact.configs['recommended-typescript'],
       tseslint.configs.recommended,
     ],
 
@@ -35,30 +35,21 @@ export default defineConfig([
       },
     },
 
-    settings: {
-      react: {
-        version: '19.0.0',
-      },
-    },
-
     rules: {
       '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/explicit-module-boundary-types': 'error',
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'error',
+      // Checked by eslint-plugin-react-hooks above, the React team's own rules: off here so a
+      // problem is reported once.
+      '@eslint-react/rules-of-hooks': 'off',
+      '@eslint-react/exhaustive-deps': 'off',
 
       'no-restricted-imports': [
         'error',
         {
           patterns: ['@mui/*/*/*', '!@mui/material/test-utils/*'],
-        },
-      ],
-
-      'react/no-unknown-property': [
-        'error',
-        {
-          ignore: ['css'],
         },
       ],
     },

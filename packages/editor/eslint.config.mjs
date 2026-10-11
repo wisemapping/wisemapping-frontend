@@ -1,5 +1,5 @@
 import { defineConfig, globalIgnores } from 'eslint/config';
-import react from 'eslint-plugin-react';
+import eslintReact from '@eslint-react/eslint-plugin';
 import tseslint from 'typescript-eslint';
 import reactHooks from 'eslint-plugin-react-hooks';
 import globals from 'globals';
@@ -13,9 +13,7 @@ export default defineConfig([
     extends: [
       js.configs.recommended,
       prettier,
-      react.configs.flat.recommended,
-      // The automatic JSX runtime (tsconfig "jsx": "react-jsx"): JSX needs no React in scope.
-      react.configs.flat['jsx-runtime'],
+      eslintReact.configs['recommended-typescript'],
       tseslint.configs.recommended,
     ],
 
@@ -39,12 +37,6 @@ export default defineConfig([
       },
     },
 
-    settings: {
-      react: {
-        version: '19.0.0',
-      },
-    },
-
     rules: {
       ...cypress.configs.recommended.rules,
       '@typescript-eslint/no-explicit-any': 'error',
@@ -52,6 +44,10 @@ export default defineConfig([
       '@typescript-eslint/no-unused-vars': 'error',
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'error',
+      // Checked by eslint-plugin-react-hooks above, the React team's own rules: off here so a
+      // problem is reported once.
+      '@eslint-react/rules-of-hooks': 'off',
+      '@eslint-react/exhaustive-deps': 'off',
 
       'no-restricted-imports': [
         'error',

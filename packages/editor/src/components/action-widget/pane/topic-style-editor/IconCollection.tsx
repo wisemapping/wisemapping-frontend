@@ -77,7 +77,6 @@ const IconCollection = ({
     // If it's a FormattedMessage, extract the defaultMessage prop
     if (React.isValidElement(label)) {
       const props = label.props as { defaultMessage?: string };
-      // eslint-disable-next-line react/prop-types
       return props.defaultMessage || '';
     }
     return '';
