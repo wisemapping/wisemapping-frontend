@@ -69,15 +69,16 @@ export const findStaticImportChain = (entry: string, forbidden: string[]): strin
   return walk(entry, [path.relative(ROOT, entry)]);
 };
 
-describe('the entry bundle', () => {
-  // The editor and mindplot barrels can not be tree-shaken: a value import of either, from any
-  // module the entry loads, puts the whole editor (about 1.3 MB) in every page.
-  test('does not reach the editor or mindplot barrel', () => {
-    const chain = findStaticImportChain(path.resolve(ROOT, 'src/index.tsx'), [
-      '@wisemapping/editor',
-      '@wisemapping/mindplot',
-    ]);
-    expect(chain).toBeUndefined();
+// The editor and mindplot barrels can not be tree-shaken: a value import of either, from any
+// module a page loads, puts the whole editor (about 1.3 MB) in that page.
+const BARRELS = ['@wisemapping/editor', '@wisemapping/mindplot'];
+
+describe('the editor stays out of the pages that do not show a map', () => {
+  test.each([
+    ['the entry (every page)', 'src/index.tsx'],
+    ['the map list', 'src/components/maps-page/index.tsx'],
+  ])('%s does not reach the editor or mindplot barrel', (_, entry) => {
+    expect(findStaticImportChain(path.resolve(ROOT, entry), BARRELS)).toBeUndefined();
   });
 
   test('the walk finds a barrel import when there is one', () => {

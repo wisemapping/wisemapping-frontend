@@ -116,24 +116,25 @@ describe('ActionDispatcher', () => {
     ['label', [5, 6], 'label {"mapsId":[5,6]}'],
     ['delete', [5], 'delete {"mapId":5}'],
     ['delete', [5, 6], 'delete-multi {"mapsId":[5,6]}'],
-  ] as [ActionType, number[], string][])('"%s" on %j opens %s', (action, mapsId, marker) => {
+  ] as [ActionType, number[], string][])('"%s" on %j opens %s', async (action, mapsId, marker) => {
     dispatch(action, mapsId);
 
-    expect(screen.getByRole('button').textContent).toBe(marker);
+    // Import and export are loaded when opened (they bring the editor), the others are there.
+    expect((await screen.findByRole('button')).textContent).toBe(marker);
     expect(screen.getAllByRole('button')).toHaveLength(1);
     expect(trackMindmapListAction).toHaveBeenCalledWith(action, 'map_metadata');
   });
 
-  test('export allows images only from the editor', () => {
+  test('export allows images only from the editor', async () => {
     dispatch('export', [5]);
-    expect(screen.getByRole('button').textContent).toBe(
+    expect((await screen.findByRole('button')).textContent).toBe(
       'export {"mapId":5,"enableImgExport":false}',
     );
   });
 
-  test('export from the editor enables image formats', () => {
+  test('export from the editor enables image formats', async () => {
     dispatch('export', [5], { fromEditor: true });
-    expect(screen.getByRole('button').textContent).toBe(
+    expect((await screen.findByRole('button')).textContent).toBe(
       'export {"mapId":5,"enableImgExport":true}',
     );
   });
