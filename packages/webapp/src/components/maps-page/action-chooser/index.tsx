@@ -57,7 +57,7 @@ export type ActionType =
 
 interface ActionProps {
   onClose: (action: ActionType) => void;
-  anchor?: HTMLElement;
+  anchor?: HTMLElement | undefined;
   mapId: number;
 }
 

@@ -108,11 +108,11 @@ class MapInfoImpl implements MapInfo {
   }
 
   updateMetadata(metadata: {
-    locked?: boolean;
+    locked?: boolean | undefined;
     lockedMsg?: string | undefined;
-    zoom?: number;
-    starred?: boolean;
-    creatorFullName?: string;
+    zoom?: number | undefined;
+    starred?: boolean | undefined;
+    creatorFullName?: string | undefined;
   }): void {
     if (metadata.locked !== undefined) {
       this.locked = metadata.locked;

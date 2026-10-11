@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import { act, fireEvent, screen, waitFor } from '@testing-library/react';
 
 const mockExportAndEncode = jest.fn(() => Promise.resolve('blob:export'));
@@ -38,6 +37,7 @@ import ExportDialog from '../../../../src/components/maps-page/action-dispatcher
 import Client from '../../../../src/classes/client';
 import { trackExport } from '../../../../src/utils/analytics';
 import { renderWithProviders } from '../../helpers/render';
+import { defined } from '../../defined';
 
 const mockFetchMapMetadata = jest.fn(() => Promise.resolve({ title: 'Plan' }));
 const client = { fetchMapMetadata: mockFetchMapMetadata } as unknown as Client;
@@ -137,7 +137,7 @@ describe('ExportDialog options', () => {
     submit();
 
     await waitFor(() => expect(mockCreateImageExporter).toHaveBeenCalled());
-    const [format, svg, , , zoomToFit, background] = mockCreateImageExporter.mock.calls[0];
+    const [format, svg, , , zoomToFit, background] = defined(mockCreateImageExporter.mock.calls[0]);
     expect(format).toBe('png');
     expect(svg).toBe(own.svg);
     expect(zoomToFit).toBe(false);
@@ -156,7 +156,7 @@ describe('ExportDialog options', () => {
     submit();
 
     await waitFor(() => expect(mockCreateImageExporter).toHaveBeenCalled());
-    expect(mockCreateImageExporter.mock.calls[0][5]).toBe('#ffffff');
+    expect(defined(mockCreateImageExporter.mock.calls[0])[5]).toBe('#ffffff');
   });
 
   test('from the map list, a map in another theme is exported in the export theme', async () => {

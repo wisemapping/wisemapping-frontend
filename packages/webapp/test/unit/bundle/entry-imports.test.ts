@@ -40,16 +40,16 @@ const resolveImport = (from: string, specifier: string): string | undefined => {
   if (specifier.startsWith('.')) {
     return resolveFile(path.resolve(path.dirname(from), specifier));
   }
-  const editorPath = specifier.match(/^@wisemapping\/editor\/(.+)$/);
-  return editorPath ? resolveFile(path.resolve(EDITOR_SRC, editorPath[1])) : undefined;
+  const [, editorFile] = specifier.match(/^@wisemapping\/editor\/(.+)$/) ?? [];
+  return editorFile !== undefined ? resolveFile(path.resolve(EDITOR_SRC, editorFile)) : undefined;
 };
 
 // `import ... from 'x'`, `import 'x'` and `export ... from 'x'`, without the type-only ones.
 const STATIC_IMPORT = /^\s*(import|export)\s+(?!type\s)([^'";]*?\s+from\s+)?['"]([^'"]+)['"]/gm;
 
 const isTypeOnly = (clause: string | undefined): boolean => {
-  const named = clause?.match(/^\s*\{([^}]*)\}\s*from\s+$/);
-  return !!named && named[1].split(',').every((name) => /^\s*(type\s|$)/.test(name));
+  const [, names] = clause?.match(/^\s*\{([^}]*)\}\s*from\s+$/) ?? [];
+  return names !== undefined && names.split(',').every((name) => /^\s*(type\s|$)/.test(name));
 };
 
 export const findStaticImportChain = (entry: string, forbidden: string[]): string[] | undefined => {
@@ -59,7 +59,7 @@ export const findStaticImportChain = (entry: string, forbidden: string[]): strin
     seen.add(file);
     const source = fs.readFileSync(file, 'utf8');
     for (const [, , clause, specifier] of source.matchAll(STATIC_IMPORT)) {
-      if (isTypeOnly(clause)) continue;
+      if (specifier === undefined || isTypeOnly(clause)) continue;
       if (forbidden.includes(specifier)) return [...chain, specifier];
       const next = resolveImport(file, specifier);
       if (next && forbidden.includes(path.relative(ROOT, next))) {

@@ -85,10 +85,10 @@ const RenameDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement
     // Use mapId from props, not model.id, to ensure it's always valid. Only the fields that
     // changed are sent: the backend refuses the map's own, unchanged title as a duplicate.
     const validatedModel: RenameModel = { id: mapId };
-    if (model.title !== map?.title) {
+    if (model.title !== undefined && model.title !== map?.title) {
       validatedModel.title = model.title;
     }
-    if (model.description !== map?.description) {
+    if (model.description !== undefined && model.description !== map?.description) {
       validatedModel.description = model.description;
     }
 

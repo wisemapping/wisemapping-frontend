@@ -35,7 +35,7 @@ export type OAuthFlow = {
 };
 
 export const startOAuthFlow = (authUrl: string, redirect?: string | null): void => {
-  const flow: OAuthFlow = { startedAt: Date.now(), redirect: redirect || undefined };
+  const flow: OAuthFlow = { startedAt: Date.now(), ...(redirect ? { redirect } : {}) };
   try {
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify(flow));
   } catch {

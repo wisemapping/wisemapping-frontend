@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 
 // The dialogs and the row menu are covered by their own suites: replace them with
@@ -61,6 +60,7 @@ import type { Filter } from '../../../../src/components/maps-page';
 import Client, { Label, MapInfo } from '../../../../src/classes/client';
 import { renderWithWrapper } from '../providers';
 import { BURST_TEXT, typeInBurst } from '../../burst-typing';
+import { defined } from '../../defined';
 
 const research: Label = { id: 7, title: 'Research', color: '#ff0000' };
 const travel: Label = { id: 8, title: 'Travel', color: '#00ff00' };
@@ -219,7 +219,7 @@ describe('MapsList', () => {
   ])('the %s filter only lists the matching maps', async (_name, filter, expected) => {
     renderList(filter);
 
-    await screen.findAllByText(expected[0]);
+    await screen.findAllByText(defined(expected[0]));
     await waitFor(() => expect(tableTitles()).toEqual(expected));
   });
 
@@ -370,7 +370,9 @@ describe('MapsList', () => {
     );
     renderList({ type: 'all' }, buildClient(many));
     await screen.findAllByText('Map 12');
-    fireEvent.click(screen.getAllByRole('button', { name: 'Go to next page', hidden: true })[0]);
+    fireEvent.click(
+      defined(screen.getAllByRole('button', { name: 'Go to next page', hidden: true })[0]),
+    );
     expect(tableTitles()).toEqual(['Map 02', 'Map 01']);
 
     fireEvent.change(screen.getByRole('textbox', { name: 'search' }), {
@@ -454,9 +456,9 @@ describe('MapsList', () => {
     await screen.findAllByText('Alpha plan');
 
     // The first star icons belong to the cards (rendered before the table).
-    const cardStar = screen
-      .getAllByTestId('StarRateRoundedIcon')[0]
-      .closest('button') as HTMLElement;
+    const cardStar = defined(screen.getAllByTestId('StarRateRoundedIcon')[0]).closest(
+      'button',
+    ) as HTMLElement;
     fireEvent.click(cardStar);
 
     await waitFor(() => expect(errorSpy).toHaveBeenCalledWith({ msg: 'boom' }));
@@ -495,7 +497,7 @@ describe('MapsList', () => {
     await screen.findAllByText('Alpha plan');
 
     // The card's "Settings" button opens the same menu.
-    fireEvent.click(screen.getAllByRole('button', { name: 'Settings', hidden: true })[0]);
+    fireEvent.click(defined(screen.getAllByRole('button', { name: 'Settings', hidden: true })[0]));
     expect(screen.getByTestId('chooser-map').textContent).toBe('2');
 
     fireEvent.click(screen.getByText('chooser-dismiss'));
@@ -541,11 +543,13 @@ describe('MapsList', () => {
     expect(screen.getAllByText('1–10 of 12').length).toBeGreaterThan(0);
 
     // Desktop pagination in the toolbar, mobile pagination below the table.
-    fireEvent.click(screen.getAllByRole('button', { name: 'Go to next page', hidden: true })[0]);
+    fireEvent.click(
+      defined(screen.getAllByRole('button', { name: 'Go to next page', hidden: true })[0]),
+    );
     expect(tableTitles()).toEqual(['Map 02', 'Map 01']);
 
     fireEvent.click(
-      screen.getAllByRole('button', { name: 'Go to previous page', hidden: true })[1],
+      defined(screen.getAllByRole('button', { name: 'Go to previous page', hidden: true })[1]),
     );
     expect(tableTitles()).toHaveLength(10);
   });

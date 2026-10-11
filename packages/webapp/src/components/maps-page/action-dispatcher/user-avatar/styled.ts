@@ -20,14 +20,22 @@ import Avatar from '@mui/material/Avatar';
 import { styled } from '@mui/material/styles';
 
 // Soft tints that read on light and dark paper; a person always gets the same one.
-const TINTS = ['#f59e0b', '#10b981', '#3b82f6', '#8b5cf6', '#ec4899', '#14b8a6', '#f97316'];
+const TINTS: [string, ...string[]] = [
+  '#f59e0b',
+  '#10b981',
+  '#3b82f6',
+  '#8b5cf6',
+  '#ec4899',
+  '#14b8a6',
+  '#f97316',
+];
 
 export const tintFor = (key: string): string => {
   let hash = 0;
   for (let i = 0; i < key.length; i++) {
     hash = (hash * 31 + key.charCodeAt(i)) | 0;
   }
-  return TINTS[Math.abs(hash) % TINTS.length];
+  return TINTS[Math.abs(hash) % TINTS.length] ?? TINTS[0];
 };
 
 export const StyledUserAvatar = styled(Avatar, {

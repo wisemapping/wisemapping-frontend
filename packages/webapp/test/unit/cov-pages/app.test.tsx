@@ -112,6 +112,7 @@ import App from '../../../src/app';
 import AppConfig from '../../../src/classes/app-config';
 import Client from '../../../src/classes/client';
 import { lastMatch, RouteObject } from './mock-router';
+import { defined } from '../defined';
 
 const client = {
   fetchAccountInfo: jest.fn().mockResolvedValue({ email: 'ada@example.com' }),
@@ -129,7 +130,7 @@ const renderAt = (url: string, { registration = true } = {}) => {
 /** The route that matched the path (the leaf of the chain). */
 const leaf = (): RouteObject => {
   const chain = lastMatch.current?.chain ?? [];
-  return chain[chain.length - 1];
+  return defined(chain.at(-1));
 };
 
 const errorElementName = (route: RouteObject): string | undefined => {
@@ -183,8 +184,8 @@ describe('App', () => {
     expect(await screen.findByText('redirect:/c/login')).toBeTruthy();
     expect(ads.adsbygoogle.length).toBeGreaterThan(0);
     // Every page sits below the configuration loader.
-    expect(lastMatch.current?.chain[1].loader).toBe('config-loader');
-    expect(errorElementName(lastMatch.current!.chain[1])).toBe('error-page');
+    expect(defined(lastMatch.current?.chain[1]).loader).toBe('config-loader');
+    expect(errorElementName(defined(lastMatch.current?.chain[1]))).toBe('error-page');
   });
 
   test.each([

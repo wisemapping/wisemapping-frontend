@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 
 // `useFetchMapById` rebuilds its MapInfo object on every render, and the dialog

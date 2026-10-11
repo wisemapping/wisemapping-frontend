@@ -99,7 +99,7 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
     mutation.mutate(checked);
   };
 
-  const handleTabChange = (event: React.ChangeEvent<HTMLInputElement>, newValue: string) => {
+  const handleTabChange = (_event: React.SyntheticEvent, newValue: string) => {
     setActiveTab(newValue);
   };
 

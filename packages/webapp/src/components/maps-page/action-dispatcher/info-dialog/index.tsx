@@ -44,7 +44,7 @@ import {
 const formatDate = (date: (value: ConfigType) => Dayjs, value?: string): string =>
   value ? date(value).format('LLL') : '—';
 
-const Person = ({ name }: { name?: string }): React.ReactElement =>
+const Person = ({ name }: { name?: string | undefined }): React.ReactElement =>
   name ? (
     <>
       <UserAvatar name={name} />

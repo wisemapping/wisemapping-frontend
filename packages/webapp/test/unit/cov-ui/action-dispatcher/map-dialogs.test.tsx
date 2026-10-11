@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 
 // `useFetchMapById` is stubbed, as in test/unit/action-dispatcher: these suites are about the
@@ -46,6 +45,7 @@ import Client, {
 } from '../../../../src/classes/client';
 import { renderWithProviders } from '../../helpers/render';
 import { BURST_TEXT, typeInBurst } from '../../burst-typing';
+import { defined } from '../../defined';
 
 const map: MapInfo = {
   id: 7,
@@ -516,7 +516,7 @@ describe('HistoryDialog', () => {
     const { revertHistory, onClose } = setup(history);
     await screen.findByText('ana@wisemapping.com');
 
-    fireEvent.click(screen.getAllByRole('button', { name: 'Revert' })[1]);
+    fireEvent.click(defined(screen.getAllByRole('button', { name: 'Revert' })[1]));
 
     await waitFor(() => expect(revertHistory).toHaveBeenCalledWith(7, 32));
     await waitFor(() => expect(onClose).toHaveBeenCalledTimes(1));
@@ -536,7 +536,7 @@ describe('HistoryDialog', () => {
     jest.mocked(reloadPage).mockImplementation(() => order.push('reload'));
     await screen.findByText('ana@wisemapping.com');
 
-    fireEvent.click(screen.getAllByRole('button', { name: 'Revert' })[0]);
+    fireEvent.click(defined(screen.getAllByRole('button', { name: 'Revert' })[0]));
 
     await waitFor(() => expect(order).toEqual(['stop saving', 'revert', 'reload']));
   });
@@ -546,7 +546,7 @@ describe('HistoryDialog', () => {
     revertHistory.mockRejectedValue({ msg: 'Revert refused' });
     await screen.findByText('ana@wisemapping.com');
 
-    fireEvent.click(screen.getAllByRole('button', { name: 'Revert' })[0]);
+    fireEvent.click(defined(screen.getAllByRole('button', { name: 'Revert' })[0]));
 
     expect(await screen.findByText('Revert refused')).toBeTruthy();
     expect(onClose).not.toHaveBeenCalled();
@@ -558,9 +558,9 @@ describe('HistoryDialog', () => {
     revertHistory.mockReturnValue(new Promise(() => undefined));
     await screen.findByText('ana@wisemapping.com');
 
-    fireEvent.click(screen.getAllByRole('button', { name: 'Revert' })[0]);
+    fireEvent.click(defined(screen.getAllByRole('button', { name: 'Revert' })[0]));
     await waitFor(() => expect(revertHistory).toHaveBeenCalledTimes(1));
-    fireEvent.click(screen.getAllByRole('button', { name: 'Revert' })[1]);
+    fireEvent.click(defined(screen.getAllByRole('button', { name: 'Revert' })[1]));
 
     await new Promise((resolve) => setTimeout(resolve, 0));
     expect(revertHistory).toHaveBeenCalledTimes(1);

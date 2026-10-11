@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 
 jest.mock('react-router', () => jest.requireActual('../router-mock'));
@@ -36,6 +35,7 @@ import { appLogger } from '../../../../src/utils/logger';
 import { BURST_TEXT, typeInBurst } from '../../burst-typing';
 import { initAppConfig, installMatchMedia, renderPage, useConfig } from '../helpers';
 import { resetRouter, setLocation } from '../router-mock';
+import { defined } from '../../defined';
 
 const setup = (url = '/c/login', signedIn = false) => {
   setLocation(url);
@@ -203,9 +203,9 @@ describe('LoginPage', () => {
   test('offers sign-up in the header only while registration is open', async () => {
     useConfig({ registrationEnabled: true });
     setup();
-    expect((await screen.findAllByRole('link', { name: 'Sign Up' }))[0].getAttribute('href')).toBe(
-      '/c/registration',
-    );
+    expect(
+      defined((await screen.findAllByRole('link', { name: 'Sign Up' }))[0]).getAttribute('href'),
+    ).toBe('/c/registration');
   });
 
   test('no sign-up link when registration is closed', async () => {

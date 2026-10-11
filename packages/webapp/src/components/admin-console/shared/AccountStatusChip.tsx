@@ -60,12 +60,12 @@ export const getSuspensionReasonLabel = (reason: string, intl: IntlShape): strin
 interface AccountStatusChipProps {
   isActive: boolean;
   isSuspended: boolean;
-  suspensionReason?: string;
-  suspendedDate?: string;
+  suspensionReason?: string | undefined;
+  suspendedDate?: string | undefined;
   authenticationType?: AuthenticationType;
   // Optional callbacks for status changes
-  onSuspend?: () => void;
-  onUnsuspend?: () => void;
+  onSuspend?: (() => void) | undefined;
+  onUnsuspend?: (() => void) | undefined;
   onActivate?: () => void;
   // If true, clicking the chip will show a menu with actions
   interactive?: boolean;

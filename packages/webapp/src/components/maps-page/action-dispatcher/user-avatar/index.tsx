@@ -27,7 +27,7 @@ export const initialsOf = (name: string): string => {
     .filter(Boolean);
   return words
     .slice(0, 2)
-    .map((word) => word[0].toUpperCase())
+    .map((word) => word.charAt(0).toUpperCase())
     .join('');
 };
 

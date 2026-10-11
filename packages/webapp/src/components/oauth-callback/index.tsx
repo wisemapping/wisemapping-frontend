@@ -57,12 +57,13 @@ const readCallbackParams = (
     if (!subject || (email && email.toLowerCase() !== subject.toLowerCase())) {
       return 'invalid';
     }
+    const syncCode = searchParams.get('syncCode');
     return {
       kind: 'token',
       jwtToken,
       email: subject,
       oauthSync: searchParams.get('oauthSync') === 'true',
-      syncCode: searchParams.get('syncCode') || undefined,
+      ...(syncCode ? { syncCode } : {}),
     };
   }
   const code = searchParams.get('code');
@@ -127,7 +128,7 @@ const OAuthCallbackPage = (): React.ReactElement => {
       setCallbackResult({
         email: params.email,
         oauthSync: params.oauthSync,
-        syncCode: params.syncCode,
+        ...(params.syncCode !== undefined && { syncCode: params.syncCode }),
       });
       return;
     }

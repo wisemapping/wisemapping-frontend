@@ -47,7 +47,7 @@ function getHreflangCode(locale: string): string {
     return locale;
   }
   // For other locales, use the first part (e.g., en-US -> en)
-  return locale.split('-')[0];
+  return locale.split('-')[0] ?? locale;
 }
 
 /**

@@ -274,15 +274,16 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
   };
 
   const [activeDialog, setActiveDialog] = React.useState<ActiveDialog | undefined>(undefined);
-  const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof MapInfo) =>
+  const handleRequestSort = (_event: React.MouseEvent<unknown>, property: keyof MapInfo) =>
     requestSort(property);
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>): void =>
     selectAll(event.target.checked);
 
-  const handleRowClick = (event: React.MouseEvent<unknown>, id: number): void => toggleSelected(id);
+  const handleRowClick = (_event: React.MouseEvent<unknown>, id: number): void =>
+    toggleSelected(id);
 
-  const handleChangePage = (event: unknown, newPage: number) => changePage(newPage);
+  const handleChangePage = (_event: unknown, newPage: number) => changePage(newPage);
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) =>
     changeRowsPerPage(parseInt(event.target.value, 10));

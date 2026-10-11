@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { useIntl } from 'react-intl';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -51,8 +51,8 @@ interface UserMapsDialogProps {
   maps: AdminMap[];
   isLoadingUser: boolean;
   isLoadingMaps: boolean;
-  onSuspend?: () => void;
-  onUnsuspend?: () => void;
+  onSuspend?: (() => void) | undefined;
+  onUnsuspend?: (() => void) | undefined;
   onViewXml?: (map: AdminMap) => void;
   onEditMap?: (map: AdminMap) => void;
   onToggleSpam?: (mapId: number, currentSpamStatus: boolean) => void;

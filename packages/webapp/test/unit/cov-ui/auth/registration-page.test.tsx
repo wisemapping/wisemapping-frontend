@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 
 jest.mock('react-router', () => jest.requireActual('../router-mock'));
@@ -75,6 +74,7 @@ import { trackPageView } from '../../../../src/utils/analytics';
 import { initAppConfig, installMatchMedia, renderPage, useConfig } from '../helpers';
 import { resetRouter, routerState, setLocation } from '../router-mock';
 import { BURST_TEXT, typeInBurst } from '../../burst-typing';
+import { defined } from '../../defined';
 
 const setup = () => {
   setLocation('/c/registration');
@@ -220,7 +220,9 @@ describe('RegistrationPage', () => {
       submit();
 
       await waitFor(() => expect(client.registerNewUser).toHaveBeenCalled());
-      expect(client.registerNewUser.mock.calls[0][0]).toMatchObject({ recaptcha: 'captcha-token' });
+      expect(defined(client.registerNewUser.mock.calls[0])[0]).toMatchObject({
+        recaptcha: 'captcha-token',
+      });
     });
 
     test('an expired token is dropped and logged', async () => {
@@ -232,7 +234,7 @@ describe('RegistrationPage', () => {
       submit();
 
       await waitFor(() => expect(client.registerNewUser).toHaveBeenCalled());
-      expect(client.registerNewUser.mock.calls[0][0]).toMatchObject({ recaptcha: '' });
+      expect(defined(client.registerNewUser.mock.calls[0])[0]).toMatchObject({ recaptcha: '' });
       expect(logCriticalError).toHaveBeenCalledWith('reCAPTCHA token expired', expect.any(String));
     });
 

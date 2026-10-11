@@ -510,14 +510,15 @@ class MockAdminClient implements AdminClientInterface {
     log.debug('MockAdminClient: Updating user', userId, userData);
 
     const userIndex = this.adminUsers.findIndex((user) => user.id === userId);
-    if (userIndex === -1) {
+    const user = this.adminUsers[userIndex];
+    if (user === undefined) {
       return Promise.reject(new Error(`User with id ${userId} not found`));
     }
 
     const updatedUser = {
-      ...this.adminUsers[userIndex],
+      ...user,
       ...userData,
-      fullName: `${userData.firstname || this.adminUsers[userIndex].firstname} ${userData.lastname || this.adminUsers[userIndex].lastname}`,
+      fullName: `${userData.firstname || user.firstname} ${userData.lastname || user.lastname}`,
     };
 
     this.adminUsers[userIndex] = updatedUser;
@@ -635,10 +636,11 @@ class MockAdminClient implements AdminClientInterface {
     log.debug('MockAdminClient: Updating map', mapId, mapData);
 
     const mapIndex = this.adminMaps.findIndex((map) => map.id === mapId);
-    if (mapIndex === -1) {
+    const map = this.adminMaps[mapIndex];
+    if (map === undefined) {
       return Promise.reject(new Error('Map not found'));
     }
-    const updatedMap = { ...this.adminMaps[mapIndex], ...mapData };
+    const updatedMap = { ...map, ...mapData };
     this.adminMaps[mapIndex] = updatedMap;
     return Promise.resolve(updatedMap);
   }
@@ -647,12 +649,13 @@ class MockAdminClient implements AdminClientInterface {
     log.debug('MockAdminClient: Updating map spam status', mapId, spamData);
 
     const mapIndex = this.adminMaps.findIndex((map) => map.id === mapId);
-    if (mapIndex === -1) {
+    const map = this.adminMaps[mapIndex];
+    if (map === undefined) {
       return Promise.reject(new Error('Map not found'));
     }
 
     const updatedMap = {
-      ...this.adminMaps[mapIndex],
+      ...map,
       spam: spamData.spam,
       // Update spam-related fields when marking as spam
       ...(spamData.spam && {
@@ -771,19 +774,11 @@ class MockAdminClient implements AdminClientInterface {
         if (user) {
           user.isSuspended = suspensionData.suspended;
           if (suspensionData.suspended && suspensionData.suspensionReason) {
-            (
-              user as AdminUser & { suspensionReason?: string; suspendedDate?: string }
-            ).suspensionReason = suspensionData.suspensionReason;
-            (
-              user as AdminUser & { suspensionReason?: string; suspendedDate?: string }
-            ).suspendedDate = new Date().toISOString();
+            user.suspensionReason = suspensionData.suspensionReason;
+            user.suspendedDate = new Date().toISOString();
           } else if (!suspensionData.suspended) {
-            (
-              user as AdminUser & { suspensionReason?: string; suspendedDate?: string }
-            ).suspensionReason = undefined;
-            (
-              user as AdminUser & { suspensionReason?: string; suspendedDate?: string }
-            ).suspendedDate = undefined;
+            user.suspensionReason = undefined;
+            user.suspendedDate = undefined;
           }
           resolve({ ...user });
         } else {

@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 
 jest.mock('react-router', () => jest.requireActual('../router-mock'));
@@ -28,6 +27,7 @@ import Client, { AccountInfo, AuthenticationType } from '../../../../src/classes
 import { Locales } from '../../../../src/classes/app-i18n';
 import { renderWithProviders } from '../../helpers/render';
 import { resetRouter, routerState, setLocation } from '../router-mock';
+import { defined } from '../../defined';
 
 const account = (extra: Partial<AccountInfo> = {}): AccountInfo => ({
   firstname: 'Jane',
@@ -221,7 +221,7 @@ describe('HelpMenu', () => {
       'https://www.wisemapping.com/aboutus.html',
     ]);
 
-    fireEvent.click(within(menu).getAllByRole('menuitem')[1]);
+    fireEvent.click(defined(within(menu).getAllByRole('menuitem')[1]));
     await waitFor(() => expect(screen.queryByRole('menu')).toBeNull());
   });
 });

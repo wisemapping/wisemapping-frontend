@@ -22,12 +22,12 @@ import { ErrorInfo } from '../../../classes/client';
 
 type InputProps = {
   name: string;
-  error?: ErrorInfo;
+  error?: ErrorInfo | undefined;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   label: string;
   required?: boolean;
   type: string;
-  value?: string;
+  value?: string | undefined;
   autoComplete?: string;
   fullWidth?: boolean;
   disabled?: boolean;

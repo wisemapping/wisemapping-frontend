@@ -33,8 +33,10 @@ export type BootstrapConfigSource = {
   warn: (message: string) => void;
 };
 
+const MOCK_FILE = './config.mock.json';
+
 const FILES: Record<string, string> = {
-  'file:mock': './config.mock.json',
+  'file:mock': MOCK_FILE,
   'file:dev': './config.dev.json',
   'file:prod': './config.prod.json',
 };
@@ -59,7 +61,7 @@ export const resolveBootstrapConfig = ({
         'APP_CONFIG_TYPE is not set: this build uses the mock client (config.mock.json) and no backend.',
       );
     }
-    return readJson(FILES['file:mock']);
+    return readJson(MOCK_FILE);
   }
 
   if (type === 'remote') {

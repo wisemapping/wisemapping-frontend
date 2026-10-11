@@ -28,7 +28,7 @@ import { Label, LABEL_TITLE_MAX_LENGTH } from '../../../../classes/client';
 import { NewLabelColor } from './styled';
 import Tooltip from '@mui/material/Tooltip';
 
-const labelColors = [
+const labelColors: [string, ...string[]] = [
   '#00b327',
   '#0565ff',
   '#2d2dd6',
@@ -50,7 +50,7 @@ const AddLabelDialog = ({ onAdd }: AddLabelFormProps): React.ReactElement => {
   );
   const [newLabelTitle, setNewLabelTitle] = React.useState('');
 
-  const newLabelColor = labelColors[createLabelColorIndex];
+  const newLabelColor = labelColors[createLabelColorIndex] ?? labelColors[0];
   // The backend refuses a blank title.
   const title = newLabelTitle.trim();
 

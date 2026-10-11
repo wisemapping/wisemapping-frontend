@@ -36,17 +36,17 @@ import AsyncButton from '../../../form/async-button';
 
 export type DialogProps = {
   onClose: () => void;
-  onSubmit?: (event: React.FormEvent<HTMLFormElement>) => void;
+  onSubmit?: ((event: React.FormEvent<HTMLFormElement>) => void) | undefined;
   children?: React.ReactNode;
-  error?: ErrorInfo;
+  error?: ErrorInfo | undefined;
 
   title: string;
   description?: string;
 
-  submitButton?: string;
+  submitButton?: string | undefined;
   actionUrl?: string;
   maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | false;
-  papercss?: CSSObject;
+  papercss?: CSSObject | undefined;
   isDangerousAction?: boolean;
   isLoading?: boolean;
 };

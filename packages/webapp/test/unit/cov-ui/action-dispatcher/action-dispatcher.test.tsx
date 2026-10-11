@@ -93,7 +93,7 @@ const dispatch = (
       mapsId={mapsId}
       onClose={onClose}
       fromEditor={extra.fromEditor ?? false}
-      pageMode={extra.pageMode}
+      {...(extra.pageMode !== undefined && { pageMode: extra.pageMode })}
     />,
   );
   return { onClose, view };

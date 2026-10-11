@@ -41,6 +41,7 @@ jest.mock('react-router', () => {
 import AdminLayout from '../../../../src/components/admin-console/layout';
 import AdminConsole from '../../../../src/components/admin-console';
 import { renderWithWrapper } from '../providers';
+import { defined } from '../../defined';
 
 const renderLayout = (fetchAccountInfo: jest.Mock) =>
   renderWithWrapper(<AdminLayout />, { client: { fetchAccountInfo } });
@@ -98,8 +99,8 @@ describe('AdminLayout', () => {
       ['System', '/c/admin/system'],
     ]);
     // The entry for the current path is the selected one.
-    expect(links[1].className).toContain('Mui-selected');
-    expect(links[0].className).not.toContain('Mui-selected');
-    expect(within(links[1]).getByText('Maps')).toBeTruthy();
+    expect(defined(links[1]).className).toContain('Mui-selected');
+    expect(defined(links[0]).className).not.toContain('Mui-selected');
+    expect(within(defined(links[1])).getByText('Maps')).toBeTruthy();
   });
 });

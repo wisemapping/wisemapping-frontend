@@ -81,7 +81,7 @@ export default abstract class AppI18n {
     let localeCode = (navigator.languages && navigator.languages[0]) || navigator.language;
 
     // Just remove the variant ...
-    localeCode = localeCode.split('-')[0];
+    localeCode = localeCode.split('-')[0] ?? localeCode;
 
     let result = Locales.EN;
     try {

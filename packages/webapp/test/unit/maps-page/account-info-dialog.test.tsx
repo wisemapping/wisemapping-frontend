@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import AccountInfoDialog from '../../../src/components/maps-page/account-menu/account-info-dialog';
 import Client from '../../../src/classes/client';

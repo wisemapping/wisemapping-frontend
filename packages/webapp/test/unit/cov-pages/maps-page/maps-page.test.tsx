@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 
 // The list, the dialogs and the header menus have their own suites: stand-ins
@@ -68,6 +67,7 @@ jest.mock('../../../../src/contexts/ThemeContext', () => ({
 import MapsPage from '../../../../src/components/maps-page';
 import { Label } from '../../../../src/classes/client';
 import { renderWithWrapper } from '../providers';
+import { defined } from '../../defined';
 
 const research: Label = { id: 7, title: 'Research', color: '#ff0000' };
 const travel: Label = { id: 8, title: 'Travel', color: '' };
@@ -91,7 +91,7 @@ const renderPage = (client = buildClient()) => {
 const listFilter = (): string => screen.getByTestId('maps-list').textContent ?? '';
 
 /** The permanent (desktop) drawer: the temporary one is kept mounted but hidden. */
-const desktopNav = (): HTMLElement => screen.getAllByRole('navigation')[0];
+const desktopNav = (): HTMLElement => defined(screen.getAllByRole('navigation')[0]);
 
 describe('MapsPage', () => {
   beforeEach(() => {
@@ -235,7 +235,7 @@ describe('MapsPage', () => {
     const invalidate = jest.spyOn(queryClient, 'invalidateQueries');
     await within(desktopNav()).findByText('Research');
 
-    fireEvent.click(within(desktopNav()).getAllByRole('button', { name: 'Delete' })[0]);
+    fireEvent.click(defined(within(desktopNav()).getAllByRole('button', { name: 'Delete' })[0]));
 
     const dialog = await screen.findByRole('dialog');
     expect(within(dialog).getByText(/Research/)).toBeTruthy();
@@ -251,7 +251,7 @@ describe('MapsPage', () => {
     const { client } = renderPage();
     await within(desktopNav()).findByText('Research');
 
-    fireEvent.click(within(desktopNav()).getAllByRole('button', { name: 'Delete' })[1]);
+    fireEvent.click(defined(within(desktopNav()).getAllByRole('button', { name: 'Delete' })[1]));
     const dialog = await screen.findByRole('dialog');
     expect(within(dialog).getByText(/Travel/)).toBeTruthy();
 
@@ -269,7 +269,7 @@ describe('MapsPage', () => {
     renderPage(client);
     await within(desktopNav()).findByText('Research');
 
-    fireEvent.click(within(desktopNav()).getAllByRole('button', { name: 'Delete' })[0]);
+    fireEvent.click(defined(within(desktopNav()).getAllByRole('button', { name: 'Delete' })[0]));
     fireEvent.click(
       within(await screen.findByRole('dialog')).getByRole('button', { name: 'Delete' }),
     );

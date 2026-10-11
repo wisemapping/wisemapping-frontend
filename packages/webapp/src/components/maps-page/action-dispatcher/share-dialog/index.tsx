@@ -259,7 +259,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
               label={<FormattedMessage id="share.can-edit" defaultMessage="Can edit" />}
             />
             <FormControlLabel
-              onChange={(event, value) => {
+              onChange={(_event, value) => {
                 setShowMessage(value);
               }}
               control={<Checkbox color="primary" size="small" disabled={addMutation.isPending} />}

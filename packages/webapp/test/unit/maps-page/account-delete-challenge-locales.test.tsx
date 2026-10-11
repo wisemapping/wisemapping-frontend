@@ -76,6 +76,7 @@ import AccountInfoDialog from '../../../src/components/maps-page/account-menu/ac
 import Client from '../../../src/classes/client';
 import { ClientContext } from '../../../src/classes/provider/client-context';
 import { createAppTheme } from '../../../src/theme';
+import { defined } from '../defined';
 
 const root = path.resolve(__dirname, '../../..');
 const compiled = (locale: string): Record<string, unknown> =>
@@ -132,7 +133,7 @@ const renderDialog = (locale: string) => {
 // Opens the delete confirmation without relying on translated button names.
 const openDeleteConfirmation = async (): Promise<HTMLInputElement> => {
   const tabs = await screen.findAllByRole('tab');
-  fireEvent.click(tabs[1]);
+  fireEvent.click(defined(tabs[1]));
   fireEvent.click((await screen.findByTestId('DeleteForeverIcon')).closest('button')!);
   await waitFor(() =>
     expect(document.querySelector('input[name="deleteConfirmation"]')).not.toBeNull(),
@@ -144,9 +145,7 @@ const openDeleteConfirmation = async (): Promise<HTMLInputElement> => {
 const confirmButton = (): HTMLButtonElement =>
   document.querySelector('button.MuiButton-contained.MuiButton-colorError:not([type="submit"])')!;
 
-describe.each(Object.keys(phrases))('%s account deletion', (locale) => {
-  const phrase = phrases[locale];
-
+describe.each(Object.entries(phrases))('%s account deletion', (locale, phrase) => {
   test('the instruction and the field label show the phrase the check accepts', async () => {
     const { deleteAccount } = renderDialog(locale);
     const input = await openDeleteConfirmation();

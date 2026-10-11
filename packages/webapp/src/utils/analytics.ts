@@ -34,7 +34,7 @@ export const trackMindmapListAction = (
     ReactGA.event({
       category,
       action,
-      label,
+      ...(label !== undefined && { label }),
       nonInteraction: false,
     });
   } catch (error) {

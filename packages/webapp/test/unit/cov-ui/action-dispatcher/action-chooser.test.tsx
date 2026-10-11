@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import { fireEvent, screen } from '@testing-library/react';
 
 const mockUseFetchMapById = jest.fn();

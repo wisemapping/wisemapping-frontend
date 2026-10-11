@@ -34,7 +34,7 @@ import GoogleButton from '../common/google-button';
 import FacebookButton from '../common/facebook-button';
 import AppConfig from '../../classes/app-config';
 import { useMutation } from '@tanstack/react-query';
-import { ErrorInfo, LoginErrorInfo } from '../../classes/client';
+import { LoginErrorInfo } from '../../classes/client';
 import { ClientContext } from '../../classes/provider/client-context';
 import { SEOHead } from '../seo';
 import { useTheme } from '../../contexts/ThemeContext';
@@ -141,7 +141,8 @@ const LoginPage = (): React.ReactElement => {
     checkAuthentication();
   }, [client, location.search]);
 
-  const mutation = useMutation<void, ErrorInfo, Model>({
+  // The REST client rejects a login with a LoginErrorInfo.
+  const mutation = useMutation<void, LoginErrorInfo, Model>({
     mutationFn: (model: Model) => client.login({ ...model }),
     onSuccess: () => {
       initializeThemeFromSystem();

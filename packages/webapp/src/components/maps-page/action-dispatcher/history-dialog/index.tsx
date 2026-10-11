@@ -47,7 +47,7 @@ type HistoryDialogProps = SimpleDialogProps & {
    * Run before reverting, from the editor: saves its pending changes and stops it saving, or the
    * save on page unload would write the map back over the revert.
    */
-  beforeRevert?: () => Promise<void>;
+  beforeRevert?: (() => Promise<void>) | undefined;
 };
 
 const HistoryDialog = ({

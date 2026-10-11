@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { ReactElement, useState } from 'react';
+import { ReactElement, useState } from 'react';
 import { useIntl } from 'react-intl';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';

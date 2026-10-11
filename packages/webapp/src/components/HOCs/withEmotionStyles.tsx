@@ -17,7 +17,7 @@
  */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React, { ComponentType } from 'react';
-import type { CSSObject } from '@emotion/react';
+import type { CSSObject, Theme as EmotionTheme } from '@emotion/react';
 import type { Theme } from '@mui/material/styles';
 
 type Styles = CSSObject | ((theme: Theme) => CSSObject);
@@ -25,8 +25,8 @@ type Styles = CSSObject | ((theme: Theme) => CSSObject);
 // The wrapped component's props are forwarded untouched.
 type HocProps = { papercss?: CSSObject; [prop: string]: unknown };
 
-function withEmotionStyles<T>(styles: Styles) {
-  return (Component: ComponentType<T>) => {
+function withEmotionStyles(styles: Styles) {
+  return <T,>(Component: ComponentType<T>) => {
     const Styled = Component as ComponentType<HocProps>;
     const WithEmotionStyles = (hocProps: HocProps): React.ReactElement => {
       // `styles` may be a `(theme) => ({ ... })` callback. Spreading a function
@@ -35,7 +35,9 @@ function withEmotionStyles<T>(styles: Styles) {
       // not spread into an object literal.
       const css =
         typeof styles === 'function'
-          ? (theme: Theme) => ({ ...styles(theme), ...hocProps.papercss })
+          ? // Emotion types its theme as an empty interface; at runtime it is the MUI theme,
+            // which MUI's ThemeProvider hands to Emotion.
+            (theme: EmotionTheme) => ({ ...styles(theme as Theme), ...hocProps.papercss })
           : { ...styles, ...hocProps.papercss };
 
       return <Styled {...hocProps} css={css} />;
@@ -45,7 +47,10 @@ function withEmotionStyles<T>(styles: Styles) {
   };
 }
 
-function getDisplayName(WrappedComponent: { displayName?: string; name?: string }) {
+function getDisplayName(WrappedComponent: {
+  displayName?: string | undefined;
+  name?: string | undefined;
+}) {
   return WrappedComponent.displayName || WrappedComponent.name || 'Component';
 }
 

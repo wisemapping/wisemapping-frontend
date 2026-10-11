@@ -16,13 +16,13 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import AccountInfoDialog from '../../../../src/components/maps-page/account-menu/account-info-dialog';
 import Client, { AccountInfo, AuthenticationType } from '../../../../src/classes/client';
 import { Locales } from '../../../../src/classes/app-i18n';
 import { renderWithProviders } from '../../helpers/render';
 import { BURST_TEXT, typeInBurst } from '../../burst-typing';
+import { defined } from '../../defined';
 
 const CHALLENGE = 'DELETE MY ACCOUNT';
 
@@ -252,8 +252,8 @@ describe('AccountInfoDialog account settings', () => {
     expect(await screen.findByText('Are you absolutely sure?')).toBeTruthy();
     // The confirmation's own Cancel comes before the dialog's.
     const [cancelDeletion, cancelDialog] = screen.getAllByRole('button', { name: 'Cancel' });
-    expect(cancelDialog.getAttribute('type')).toBe('button');
-    fireEvent.click(cancelDeletion);
+    expect(defined(cancelDialog).getAttribute('type')).toBe('button');
+    fireEvent.click(defined(cancelDeletion));
 
     expect(await screen.findByText('All your mindmaps and their content')).toBeTruthy();
     expect(client.deleteAccount).not.toHaveBeenCalled();

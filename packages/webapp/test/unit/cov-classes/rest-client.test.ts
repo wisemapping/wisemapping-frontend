@@ -23,6 +23,7 @@ import RestClient from '../../../src/classes/client/rest-client';
 import JwtTokenConfig from '../../../src/classes/jwt-token-config';
 import { appLogger } from '../../../src/utils/logger';
 import { stubBackend, flushPromises, installWebCrypto, Reply } from './helpers/axios-stub';
+import { defined } from '../defined';
 
 const API = 'http://api.test';
 
@@ -66,8 +67,8 @@ describe('RestClient request headers', () => {
 
     await client.fetchHistory(1);
 
-    expect(calls[0].header('Authorization')).toBe('Bearer abc');
-    expect(calls[0].header('Accept-Language')).toBe('es');
+    expect(defined(calls[0]).header('Authorization')).toBe('Bearer abc');
+    expect(defined(calls[0]).header('Accept-Language')).toBe('es');
   });
 
   it('omits the Authorization header when nobody is signed in', async () => {
@@ -75,7 +76,7 @@ describe('RestClient request headers', () => {
 
     await client.fetchHistory(1);
 
-    expect(calls[0].header('Authorization')).toBeFalsy();
+    expect(defined(calls[0]).header('Authorization')).toBeFalsy();
   });
 });
 
@@ -144,7 +145,7 @@ describe('RestClient maps', () => {
 
     const maps = await client.fetchAllMaps();
 
-    expect(calls[0].url).toBe(`${API}/api/restful/maps/`);
+    expect(defined(calls[0]).url).toBe(`${API}/api/restful/maps/`);
     expect(maps).toEqual([
       {
         id: 1,
@@ -175,8 +176,8 @@ describe('RestClient maps', () => {
 
     await expect(client.createMap({ title: 'My map', description: 'a&b' })).resolves.toBe(42);
 
-    expect(calls[0].method).toBe('POST');
-    expect(calls[0].url).toBe(
+    expect(defined(calls[0]).method).toBe('POST');
+    expect(defined(calls[0]).url).toBe(
       `${API}/api/restful/maps?title=My%20map&description=a%26b&theme=prism`,
     );
   });
@@ -186,7 +187,7 @@ describe('RestClient maps', () => {
 
     await client.createMap({ title: 'T' });
 
-    expect(calls[0].url).toBe(`${API}/api/restful/maps?title=T&description=&theme=prism`);
+    expect(defined(calls[0]).url).toBe(`${API}/api/restful/maps?title=T&description=&theme=prism`);
   });
 
   it('importMap posts the XML content and returns the new id', async () => {
@@ -200,10 +201,10 @@ describe('RestClient maps', () => {
     ).resolves.toBe(7);
     await client.importMap({ title: 'Imp2', content: '<map/>' });
 
-    expect(calls[0].url).toBe(`${API}/api/restful/maps?title=Imp&description=d`);
-    expect(calls[0].data).toBe('<map/>');
-    expect(calls[0].header('Content-Type')).toBe('application/xml');
-    expect(calls[1].url).toBe(`${API}/api/restful/maps?title=Imp2&description=`);
+    expect(defined(calls[0]).url).toBe(`${API}/api/restful/maps?title=Imp&description=d`);
+    expect(defined(calls[0]).data).toBe('<map/>');
+    expect(defined(calls[0]).header('Content-Type')).toBe('application/xml');
+    expect(defined(calls[1]).url).toBe(`${API}/api/restful/maps?title=Imp2&description=`);
   });
 
   it('renameMap updates the title, then the description (blank when cleared)', async () => {
@@ -261,9 +262,9 @@ describe('RestClient maps', () => {
 
     await expect(client.duplicateMap(2, { title: 'Copy' })).resolves.toBe(99);
 
-    expect(calls[0].method).toBe('POST');
-    expect(calls[0].url).toBe(`${API}/api/restful/maps/2`);
-    expect(JSON.parse(calls[0].data as string)).toEqual({ title: 'Copy' });
+    expect(defined(calls[0]).method).toBe('POST');
+    expect(defined(calls[0]).url).toBe(`${API}/api/restful/maps/2`);
+    expect(JSON.parse(defined(calls[0]).data as string)).toEqual({ title: 'Copy' });
   });
 
   it('deleteMap and deleteMaps call the delete endpoints', async () => {
@@ -290,7 +291,7 @@ describe('RestClient maps', () => {
       data: 'true',
     });
     expect(calls[1]).toMatchObject({ method: 'PUT', url: `${API}/api/restful/maps/3/publish` });
-    expect(JSON.parse(calls[1].data as string)).toEqual({ isPublic: false });
+    expect(JSON.parse(defined(calls[1]).data as string)).toEqual({ isPublic: false });
   });
 
   it('fetchHistory maps the change list and revertHistory posts to the revision', async () => {
@@ -323,7 +324,7 @@ describe('RestClient sharing', () => {
     await expect(client.fetchMapPermissions(3)).resolves.toEqual([
       { id: 1, email: 'a@b.c', name: 'A', role: 'editor' },
     ]);
-    expect(calls[0].url).toBe(`${API}/api/restful/maps/3/collabs`);
+    expect(defined(calls[0]).url).toBe(`${API}/api/restful/maps/3/collabs`);
   });
 
   it('addMapPermissions puts the message and collaborations', async () => {
@@ -333,7 +334,7 @@ describe('RestClient sharing', () => {
     await client.addMapPermissions(3, 'hello', perms);
 
     expect(calls[0]).toMatchObject({ method: 'PUT', url: `${API}/api/restful/maps/3/collabs/` });
-    expect(JSON.parse(calls[0].data as string)).toEqual({
+    expect(JSON.parse(defined(calls[0]).data as string)).toEqual({
       message: 'hello',
       collaborations: perms,
     });
@@ -367,8 +368,8 @@ describe('RestClient labels', () => {
 
     await expect(client.createLabel('Work', '#fff')).resolves.toBe(12);
 
-    expect(calls[0].url).toBe(`${API}/api/restful/labels`);
-    expect(JSON.parse(calls[0].data as string)).toEqual({
+    expect(defined(calls[0]).url).toBe(`${API}/api/restful/labels`);
+    expect(JSON.parse(defined(calls[0]).data as string)).toEqual({
       title: 'Work',
       color: '#fff',
       iconName: 'smile',
@@ -484,7 +485,7 @@ describe('RestClient account', () => {
     await client.registerNewUser(user);
 
     expect(calls[0]).toMatchObject({ method: 'POST', url: `${API}/api/restful/users/` });
-    expect(JSON.parse(calls[0].data as string)).toEqual(user);
+    expect(JSON.parse(defined(calls[0]).data as string)).toEqual(user);
   });
 
   it('activateAccount puts the activation code', async () => {
@@ -502,7 +503,7 @@ describe('RestClient account', () => {
     const { client, calls } = newClient([{ data: { action: 'OAUTH2_USER' } }]);
 
     await expect(client.resetPassword('a+b@c.d')).resolves.toEqual({ action: 'OAUTH2_USER' });
-    expect(calls[0].url).toBe(`${API}/api/restful/users/resetPassword?email=a%2Bb%40c.d`);
+    expect(defined(calls[0]).url).toBe(`${API}/api/restful/users/resetPassword?email=a%2Bb%40c.d`);
   });
 
   it('resetPasswordFromToken posts the token and the new password', async () => {
@@ -510,8 +511,11 @@ describe('RestClient account', () => {
 
     await client.resetPasswordFromToken('tok', 'newpass');
 
-    expect(calls[0].url).toBe(`${API}/api/restful/users/resetPasswordToken`);
-    expect(JSON.parse(calls[0].data as string)).toEqual({ token: 'tok', password: 'newpass' });
+    expect(defined(calls[0]).url).toBe(`${API}/api/restful/users/resetPasswordToken`);
+    expect(JSON.parse(defined(calls[0]).data as string)).toEqual({
+      token: 'tok',
+      password: 'newpass',
+    });
   });
 });
 
@@ -525,10 +529,13 @@ describe('RestClient login and logout', () => {
     await flushPromises();
 
     expect(calls[0]).toMatchObject({ method: 'POST', url: `${API}/api/restful/authenticate` });
-    expect(JSON.parse(calls[0].data as string)).toEqual({ email: 'me@x.y', password: 'p' });
+    expect(JSON.parse(defined(calls[0]).data as string)).toEqual({
+      email: 'me@x.y',
+      password: 'p',
+    });
     expect(JwtTokenConfig.retreiveToken()).toBe('jwt-123');
     // The account info request already carries the new token.
-    expect(calls[1].header('Authorization')).toBe('Bearer jwt-123');
+    expect(defined(calls[1]).header('Authorization')).toBe('Bearer jwt-123');
     // The digest resolves on Node's thread pool, not in a microtask: wait for the call itself.
     await waitFor(() =>
       expect(set).toHaveBeenCalledWith({ userId: expect.stringMatching(/^[0-9a-f]{64}$/) }),
@@ -643,7 +650,7 @@ describe('RestClient OAuth callbacks', () => {
       url: `${API}/api/restful/oauth2/${path}?code=the-code`,
     });
     expect(JwtTokenConfig.retreiveToken()).toBe('J');
-    expect(calls[1].url).toBe(`${API}/api/restful/account`);
+    expect(defined(calls[1]).url).toBe(`${API}/api/restful/account`);
   });
 
   it.each(['processGoogleCallback', 'processFacebookCallback'] as const)(
@@ -679,8 +686,8 @@ describe('RestClient OAuth callbacks', () => {
 
       await client[method]('c');
 
-      expect(calls[0].data).toBe('null');
-      expect(calls[0].header('Content-Type')).toBe('application/json');
+      expect(defined(calls[0]).data).toBe('null');
+      expect(defined(calls[0]).header('Content-Type')).toBe('application/json');
     },
   );
 
@@ -706,7 +713,9 @@ describe('RestClient OAuth callbacks', () => {
 
     await client.confirmAccountSync('a@b.c');
 
-    expect(calls[0].url).toBe(`${API}/api/restful/oauth2/confirmaccountsync?email=a%40b.c`);
+    expect(defined(calls[0]).url).toBe(
+      `${API}/api/restful/oauth2/confirmaccountsync?email=a%40b.c`,
+    );
   });
 
   it('confirmAccountSync tolerates account failures and rejects with server errors', async () => {

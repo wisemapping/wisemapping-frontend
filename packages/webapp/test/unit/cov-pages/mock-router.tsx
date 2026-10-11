@@ -28,7 +28,7 @@
 import React, { createContext, useContext } from 'react';
 
 export type RouteObject = {
-  path?: string;
+  path?: string | undefined;
   element?: React.ReactNode;
   errorElement?: React.ReactNode;
   loader?: unknown;
@@ -37,7 +37,7 @@ export type RouteObject = {
 
 type Match = { chain: RouteObject[]; params: Record<string, string> };
 
-export const lastMatch: { current?: Match } = {};
+export const lastMatch: { current?: Match | undefined } = {};
 
 export const Route = (): null => null;
 
@@ -73,9 +73,11 @@ const matchPath = (pattern: string, pathname: string): Record<string, string> | 
   const have = segments(pathname);
   if (want.length !== have.length) return undefined;
   const params: Record<string, string> = {};
-  for (let i = 0; i < want.length; i++) {
-    if (want[i].startsWith(':')) params[want[i].slice(1)] = have[i];
-    else if (want[i] !== have[i]) return undefined;
+  for (const [i, segment] of want.entries()) {
+    const actual = have[i];
+    if (actual === undefined) return undefined;
+    if (segment.startsWith(':')) params[segment.slice(1)] = actual;
+    else if (segment !== actual) return undefined;
   }
   return params;
 };

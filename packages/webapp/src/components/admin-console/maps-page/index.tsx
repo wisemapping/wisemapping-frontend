@@ -137,9 +137,9 @@ interface AdminMap {
   starred: boolean;
   labels: string[];
   spam?: boolean;
-  spamType?: string;
-  spamDetectedDate?: string;
-  spamDescription?: string;
+  spamType?: string | undefined;
+  spamDetectedDate?: string | undefined;
+  spamDescription?: string | undefined;
   creatorSuspended?: boolean;
   collaboratorCount: number;
 }
@@ -1089,7 +1089,7 @@ const MapsManagement = (): ReactElement => {
           <Pagination
             count={totalPages}
             page={currentPage}
-            onChange={(event, page) => setCurrentPage(page)}
+            onChange={(_event, page) => setCurrentPage(page)}
             color="primary"
             variant="outlined"
             shape="rounded"

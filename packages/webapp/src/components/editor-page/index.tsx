@@ -93,9 +93,9 @@ const buildPersistenceManagerForEditor = (
 
 export type EditorPropsType = {
   mapId: number;
-  hid?: number;
+  hid?: number | undefined;
   pageMode: PageModeType;
-  zoom?: number;
+  zoom?: number | undefined;
 };
 
 const ActionDispatcher = React.lazy(() => import('../maps-page/action-dispatcher'));
@@ -177,8 +177,8 @@ const LoadedEditorPage = ({
     enableAppBar: enableAppBar,
     zoom: editorMetadata.zoom,
     hideCreatorInfo: hideCreatorInfoParam === 'true',
-    initialThemeVariant: themeParam === 'dark' || themeParam === 'light' ? themeParam : undefined,
-    bootstrapXML: editorMetadata.bootstrapXML,
+    ...((themeParam === 'dark' || themeParam === 'light') && { initialThemeVariant: themeParam }),
+    ...(editorMetadata.bootstrapXML !== undefined && { bootstrapXML: editorMetadata.bootstrapXML }),
   };
 
   const persistence: PersistenceManager = buildPersistenceManagerForEditor(

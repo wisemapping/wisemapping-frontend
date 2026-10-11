@@ -22,8 +22,8 @@ import AsyncButton from '../async-button';
 
 type SubmitButtonProps = {
   value: string;
-  disabled?: boolean;
-  isLoading?: boolean;
+  disabled?: boolean | undefined;
+  isLoading?: boolean | undefined;
 };
 
 const SubmitButton = ({ value, disabled, isLoading }: SubmitButtonProps): React.ReactElement => {

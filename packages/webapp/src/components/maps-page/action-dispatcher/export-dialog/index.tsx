@@ -54,7 +54,7 @@ type ExportDialogProps = {
   enableImgExport: boolean;
   svgXml?: string;
   /** The designer of the editor the dialog was opened from; none from the map list. */
-  designer?: Designer;
+  designer?: Designer | undefined;
   onClose: () => void;
 };
 

@@ -138,7 +138,8 @@ export type AccountInfo = {
   firstname: string;
   lastname: string;
   email: string;
-  locale?: Locale;
+  // Undefined when the account has no locale, or one this frontend does not know.
+  locale?: Locale | undefined;
   authenticationType: AuthenticationType;
   isAdmin: boolean;
 };

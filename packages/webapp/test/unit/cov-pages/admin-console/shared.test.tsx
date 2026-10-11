@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 
 import AccountStatusChip, {
@@ -29,6 +28,7 @@ import { AuthenticationType } from '../../../../src/classes/client';
 import { intl } from '../../mocks/react-intl';
 import { renderWithWrapper } from '../providers';
 import { makeAdminMap, makeUser } from './fixtures';
+import { defined } from '../../defined';
 
 const formatDate = (date: string): string => `on-${date.slice(0, 10)}`;
 
@@ -371,10 +371,10 @@ describe('UserMapsDialog', () => {
     expect(screen.getByText('page-locked-eve')).toBeTruthy();
     expect(screen.queryByText('Public')).toBeNull();
 
-    fireEvent.click(screen.getAllByRole('button', { name: 'View XML' })[0]);
+    fireEvent.click(defined(screen.getAllByRole('button', { name: 'View XML' })[0]));
     expect(onViewXml).toHaveBeenCalledWith(maps[0]);
 
-    fireEvent.click(screen.getAllByRole('button', { name: 'Edit' })[1]);
+    fireEvent.click(defined(screen.getAllByRole('button', { name: 'Edit' })[1]));
     expect(onEditMap).toHaveBeenCalledWith(maps[1]);
 
     fireEvent.click(screen.getByRole('button', { name: 'mark-not-spam' }));
@@ -382,7 +382,7 @@ describe('UserMapsDialog', () => {
     fireEvent.click(screen.getByRole('button', { name: 'mark-spam' }));
     expect(onToggleSpam).toHaveBeenCalledWith(31, false);
 
-    fireEvent.click(screen.getAllByRole('button', { name: 'Delete' })[0]);
+    fireEvent.click(defined(screen.getAllByRole('button', { name: 'Delete' })[0]));
     expect(onDeleteMap).toHaveBeenCalledWith(31, 'Starred map');
   });
 

@@ -22,8 +22,8 @@ import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 
 type GlobalErrorProps = {
-  error?: ErrorInfo;
-  title?: string;
+  error?: ErrorInfo | undefined;
+  title?: string | undefined;
 };
 
 const GlobalError = (props: GlobalErrorProps): React.ReactElement | null => {

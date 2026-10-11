@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import { act, fireEvent, screen, waitFor } from '@testing-library/react';
 
 type FakeImporter = { import: (title: string, description?: string) => Promise<string> };
@@ -36,6 +35,7 @@ import Client, {
 } from '../../../../src/classes/client';
 import { renderWithProviders } from '../../helpers/render';
 import { typeInBurst } from '../../burst-typing';
+import { defined } from '../../defined';
 
 const selectFile = (...files: File[]): void => {
   const input = document.getElementById('contained-button-file') as HTMLInputElement;
@@ -120,7 +120,7 @@ describe('ImportDialog files', () => {
     submit();
 
     await waitFor(() => expect(importMap).toHaveBeenCalled());
-    expect(importMap.mock.calls[0][0]).toMatchObject({
+    expect(defined(importMap.mock.calls[0])[0]).toMatchObject({
       title: nameInput().value,
       description: description.value,
     });
@@ -131,14 +131,14 @@ describe('ImportDialog files', () => {
 
     selectFile(new File([new Uint8Array([80, 75, 3, 4])], 'Board.xmind'));
     await waitFor(() => expect(mockCreateImporter).toHaveBeenCalled());
-    const [type, content] = mockCreateImporter.mock.calls[0];
+    const [type, content] = defined(mockCreateImporter.mock.calls[0]);
     expect(type).toBe('xmind');
     expect(content).toBeInstanceOf(ArrayBuffer);
     await act(() => new Promise((resolve) => setTimeout(resolve, 10)));
     submit();
 
     await waitFor(() => expect(importMap).toHaveBeenCalled());
-    expect(importMap.mock.calls[0][0]).toMatchObject({
+    expect(defined(importMap.mock.calls[0])[0]).toMatchObject({
       title: 'Board',
       contentType: 'application/vnd.xmind.workbook',
     });
@@ -199,7 +199,7 @@ describe('ImportDialog files', () => {
     await act(() => new Promise((resolve) => setTimeout(resolve, 10)));
     submit();
     await waitFor(() => expect(importMap).toHaveBeenCalled());
-    expect(importMap.mock.calls[0][0]).toMatchObject({ content: '<map name="Second"/>' });
+    expect(defined(importMap.mock.calls[0])[0]).toMatchObject({ content: '<map name="Second"/>' });
   });
 
   test('a cancelled picker changes nothing', () => {

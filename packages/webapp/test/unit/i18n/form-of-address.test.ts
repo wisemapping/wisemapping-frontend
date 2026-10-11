@@ -18,6 +18,7 @@
 
 import fs from 'fs';
 import path from 'path';
+import { defined } from '../defined';
 
 type Source = Record<string, { defaultMessage: string }>;
 
@@ -41,17 +42,19 @@ const INFORMAL: Record<string, RegExp> = {
 };
 const ALLOWED: Record<string, string[]> = { de: [], es: [] };
 
-describe.each(Object.keys(FORMAL))('%s messages', (lang) => {
+describe.each(Object.entries(FORMAL))('%s messages', (lang, formalMarkers) => {
   const messages = readLang(lang);
 
   test('address the user informally', () => {
-    const formal = Object.keys(messages)
-      .filter((id) => FORMAL[lang].test(messages[id].defaultMessage))
-      .filter((id) => !ALLOWED[lang].includes(id))
-      .map((id) => `${id}: ${messages[id].defaultMessage}`);
+    const allowed = ALLOWED[lang] ?? [];
+    const formal = Object.entries(messages)
+      .filter(([, { defaultMessage }]) => formalMarkers.test(defaultMessage))
+      .filter(([id]) => !allowed.includes(id))
+      .map(([id, { defaultMessage }]) => `${id}: ${defaultMessage}`);
     expect(formal).toEqual([]);
+    const informalMarkers = defined(INFORMAL[lang]);
     expect(
-      Object.values(messages).filter(({ defaultMessage }) => INFORMAL[lang].test(defaultMessage))
+      Object.values(messages).filter(({ defaultMessage }) => informalMarkers.test(defaultMessage))
         .length,
     ).toBeGreaterThan(20);
   });

@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import { act, fireEvent, screen, waitFor, within } from '@testing-library/react';
 
 import AccountManagement from '../../../../src/components/admin-console/accounts-page';

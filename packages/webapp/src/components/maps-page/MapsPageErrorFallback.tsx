@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { ReactElement, useEffect } from 'react';
+import { ReactElement, useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';

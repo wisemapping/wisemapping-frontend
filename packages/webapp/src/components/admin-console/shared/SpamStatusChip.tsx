@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { useIntl } from 'react-intl';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
@@ -28,10 +28,10 @@ import FlagIcon from '@mui/icons-material/Flag';
 
 interface SpamStatusChipProps {
   spam: boolean;
-  spamType?: string;
-  spamDescription?: string;
-  spamDetectedDate?: string;
-  onToggleSpam?: (newSpamStatus: boolean) => void;
+  spamType?: string | undefined;
+  spamDescription?: string | undefined;
+  spamDetectedDate?: string | undefined;
+  onToggleSpam?: ((newSpamStatus: boolean) => void) | undefined;
   formatDate: (dateString: string) => string;
   loading?: boolean;
   showToggleButton?: boolean;

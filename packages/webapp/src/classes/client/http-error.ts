@@ -17,10 +17,10 @@
  */
 
 export type HttpErrorSummary = {
-  message?: string;
-  method?: string;
-  url?: string;
-  status?: number;
+  message?: string | undefined;
+  method?: string | undefined;
+  url?: string | undefined;
+  status?: number | undefined;
   data?: unknown;
 };
 

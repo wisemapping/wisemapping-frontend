@@ -16,13 +16,13 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import LabelDialog from '../../../../src/components/maps-page/action-dispatcher/label-dialog';
 import AddLabelDialog from '../../../../src/components/maps-page/action-dispatcher/add-label-dialog';
 import Client, { Label, LABEL_TITLE_MAX_LENGTH, MapInfo } from '../../../../src/classes/client';
 import { renderWithProviders } from '../../helpers/render';
 import { BURST_TEXT, typeInBurst } from '../../burst-typing';
+import { defined } from '../../defined';
 
 const work: Label = { id: 1, title: 'Work', color: '#0565ff' };
 const home: Label = { id: 2, title: 'Home', color: '#ff6600' };
@@ -247,7 +247,7 @@ describe('AddLabelDialog', () => {
     const chips = container.querySelectorAll('.MuiChip-root');
     expect(chips).toHaveLength(COLORS.length);
 
-    fireEvent.click(chips[5]);
+    fireEvent.click(defined(chips[5]));
     fireEvent.change(titleInput, { target: { value: 'Ideas' } });
     fireEvent.click(addButton);
 

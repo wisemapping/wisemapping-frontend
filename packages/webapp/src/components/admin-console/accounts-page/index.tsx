@@ -340,8 +340,11 @@ const AccountManagement = (): ReactElement => {
 
   // Suspend user mutation
   const suspendUserMutation = useMutation({
-    mutationFn: ({ userId, reason }: { userId: number; reason?: string }) =>
-      client.updateUserSuspension(userId, { suspended: true, suspensionReason: reason }),
+    mutationFn: ({ userId, reason }: { userId: number; reason?: string | undefined }) =>
+      client.updateUserSuspension(userId, {
+        suspended: true,
+        ...(reason !== undefined && { suspensionReason: reason }),
+      }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['adminUsers'] });
       setIsSuspensionDialogOpen(false);
@@ -996,7 +999,7 @@ const AccountManagement = (): ReactElement => {
           <Pagination
             count={totalPages}
             page={currentPage}
-            onChange={(event, page) => setCurrentPage(page)}
+            onChange={(_event, page) => setCurrentPage(page)}
             color="primary"
             variant="outlined"
             shape="rounded"

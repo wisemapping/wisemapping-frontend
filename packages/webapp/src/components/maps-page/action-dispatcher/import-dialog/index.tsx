@@ -37,7 +37,8 @@ export type ImportModel = {
   title: string;
   description?: string;
   contentType?: string;
-  content?: null | string;
+  // Cleared (undefined) while a new file is read.
+  content?: string | undefined;
 };
 
 export type CreateProps = {
@@ -68,8 +69,8 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
   const intl = useIntl();
 
   const mutation = useMutation<number, ErrorInfo, ImportModel>({
-    mutationFn: (model: ImportModel) => {
-      return client.importMap(model);
+    mutationFn: ({ content, ...model }: ImportModel) => {
+      return client.importMap({ ...model, ...(content !== undefined && { content }) });
     },
     onSuccess: (mapId: number) => {
       window.location.href = `/c/maps/${mapId}/edit`;

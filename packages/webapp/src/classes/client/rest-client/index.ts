@@ -41,7 +41,7 @@ import { describeHttpError } from '../http-error';
 export default class RestClient implements Client {
   private baseUrl: string;
   private axios: AxiosInstance;
-  private _onSessionExpired: () => void;
+  private _onSessionExpired?: () => void;
 
   /**
    * The one place that reports an expired session, from the token the request carried:
@@ -178,7 +178,7 @@ export default class RestClient implements Client {
     return token ? `Bearer ${token}` : null;
   }
 
-  onSessionExpired(callback?: () => void): () => void {
+  onSessionExpired(callback?: () => void): (() => void) | undefined {
     if (callback) {
       this._onSessionExpired = callback;
     }
@@ -1001,8 +1001,10 @@ export default class RestClient implements Client {
             if (data.fieldErrors && Object.keys(data.fieldErrors).length > 0) {
               result.fields = data.fieldErrors;
               if (!result.msg) {
-                const key = Object.keys(data.fieldErrors)[0];
-                result.msg = data.fieldErrors[key];
+                const [firstFieldError] = Object.values<string>(data.fieldErrors);
+                if (firstFieldError !== undefined) {
+                  result.msg = firstFieldError;
+                }
               }
             }
           } else if (

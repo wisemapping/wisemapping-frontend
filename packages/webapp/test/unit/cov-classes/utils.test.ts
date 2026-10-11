@@ -18,6 +18,7 @@
 
 import { getCsrfToken, getCsrfTokenParameter, logCriticalError } from '../../../src/utils';
 import { appLogger } from '../../../src/utils/logger';
+import { defined } from '../defined';
 
 const addMeta = (name: string, content?: string): HTMLMetaElement => {
   const meta = document.createElement('meta');
@@ -74,7 +75,7 @@ describe('logCriticalError', () => {
   const reported = (): string => noticeError.mock.calls[0][0] as string;
   /** The JSON part of the reported message. */
   const reportedJson = (): Record<string, unknown> =>
-    JSON.parse(reported().split('. Exception: ')[1]);
+    JSON.parse(defined(reported().split('. Exception: ')[1]));
 
   it('serializes an Error with its name, message and stack', () => {
     const error = new TypeError('broken');

@@ -20,6 +20,7 @@ import { inspect } from 'util';
 import AdminClient from '../../../src/classes/client/admin-client';
 import JwtTokenConfig from '../../../src/classes/jwt-token-config';
 import { stubBackend, Reply } from './helpers/axios-stub';
+import { defined } from '../defined';
 
 const API = 'http://api.test';
 const ADMIN = `${API}/api/restful/admin`;
@@ -46,8 +47,8 @@ describe('AdminClient requests', () => {
 
     await client.getSystemHealth();
 
-    expect(calls[0].header('Authorization')).toBe('Bearer adm');
-    expect(calls[0].header('Accept-Language')).toBe('en');
+    expect(defined(calls[0]).header('Authorization')).toBe('Bearer adm');
+    expect(defined(calls[0]).header('Accept-Language')).toBe('en');
   });
 
   it('getAdminUsers lists users without a query string by default', async () => {
@@ -57,8 +58,8 @@ describe('AdminClient requests', () => {
     await expect(client.getAdminUsers()).resolves.toEqual(page);
     await client.getAdminUsers({});
 
-    expect(calls[0].url).toBe(`${ADMIN}/users`);
-    expect(calls[1].url).toBe(`${ADMIN}/users`);
+    expect(defined(calls[0]).url).toBe(`${ADMIN}/users`);
+    expect(defined(calls[1]).url).toBe(`${ADMIN}/users`);
   });
 
   it('getAdminUsers encodes every filter', async () => {
@@ -75,7 +76,7 @@ describe('AdminClient requests', () => {
       filterAuthType: 'DATABASE',
     });
 
-    expect(calls[0].url).toBe(
+    expect(defined(calls[0]).url).toBe(
       `${ADMIN}/users?page=2&pageSize=20&search=ana+li&sortBy=email&sortOrder=desc&filterActive=false&filterSuspended=true&filterAuthType=DATABASE`,
     );
   });
@@ -96,8 +97,8 @@ describe('AdminClient requests', () => {
       dateFilter: '7d',
     });
 
-    expect(calls[0].url).toBe(`${ADMIN}/maps`);
-    expect(calls[1].url).toBe(
+    expect(defined(calls[0]).url).toBe(`${ADMIN}/maps`);
+    expect(defined(calls[1]).url).toBe(
       `${ADMIN}/maps?page=1&pageSize=5&search=x&sortBy=title&sortOrder=asc&filterPublic=true&filterLocked=false&filterSpam=true&dateFilter=7d`,
     );
   });
@@ -133,13 +134,13 @@ describe('AdminClient requests', () => {
       ['DELETE', `${ADMIN}/users/3/facebook`],
       ['GET', `${ADMIN}/users/3/maps`],
     ]);
-    expect(JSON.parse(calls[1].data as string)).toEqual({ firstname: 'U' });
-    expect(JSON.parse(calls[4].data as string)).toEqual({
+    expect(JSON.parse(defined(calls[1]).data as string)).toEqual({ firstname: 'U' });
+    expect(JSON.parse(defined(calls[4]).data as string)).toEqual({
       suspended: true,
       suspensionReason: 'spam',
     });
-    expect(calls[6].data).toBe('newpass');
-    expect(calls[6].header('Content-Type')).toBe('text/plain');
+    expect(defined(calls[6]).data).toBe('newpass');
+    expect(defined(calls[6]).header('Content-Type')).toBe('text/plain');
   });
 
   it('updateAdminMap sends public under the name the backend reads', async () => {
@@ -152,7 +153,7 @@ describe('AdminClient requests', () => {
     ).resolves.toEqual({ id: 4 });
 
     expect(calls[0]).toMatchObject({ method: 'PUT', url: `${ADMIN}/maps/4` });
-    expect(JSON.parse(calls[0].data as string)).toEqual({
+    expect(JSON.parse(defined(calls[0]).data as string)).toEqual({
       id: 4,
       title: 'T',
       description: 'D',
@@ -167,7 +168,7 @@ describe('AdminClient requests', () => {
     await client.updateMapSpamStatus(4, { spam: true });
 
     expect(calls[0]).toMatchObject({ method: 'PUT', url: `${ADMIN}/maps/4/spam` });
-    expect(JSON.parse(calls[0].data as string)).toEqual({ isSpam: true });
+    expect(JSON.parse(defined(calls[0]).data as string)).toEqual({ isSpam: true });
   });
 
   it('deleteAdminMap, getAdminMapXml and getSystemInfo hit their endpoints', async () => {

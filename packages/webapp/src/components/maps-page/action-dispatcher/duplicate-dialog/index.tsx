@@ -36,7 +36,7 @@ import { ClientContext } from '../../../../classes/provider/client-context';
 export type DuplicateModel = {
   id: number;
   title: string;
-  description?: string;
+  description?: string | undefined;
 };
 
 const defaultModel: DuplicateModel = { title: '', description: '', id: -1 };
@@ -53,7 +53,7 @@ const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElem
       // Convert to BasicMapInfo format
       const basicInfo: BasicMapInfo = {
         title: title,
-        description: description,
+        ...(description !== undefined && { description }),
       };
       return client.duplicateMap(id, basicInfo);
     },

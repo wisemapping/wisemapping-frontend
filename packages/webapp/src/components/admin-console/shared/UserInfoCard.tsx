@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { useIntl } from 'react-intl';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -45,14 +45,14 @@ interface UserInfoCardProps {
     creationDate: string;
     isActive: boolean;
     isSuspended: boolean;
-    suspensionReason?: string;
-    suspendedDate?: string;
+    suspensionReason?: string | undefined;
+    suspendedDate?: string | undefined;
     authenticationType: AuthenticationType;
   };
   totalMaps?: number;
   isLoadingMaps?: boolean;
-  onSuspend?: () => void;
-  onUnsuspend?: () => void;
+  onSuspend?: (() => void) | undefined;
+  onUnsuspend?: (() => void) | undefined;
 }
 
 const UserInfoCard = ({

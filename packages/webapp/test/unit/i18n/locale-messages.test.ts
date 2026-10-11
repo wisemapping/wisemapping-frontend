@@ -103,11 +103,12 @@ describe.each(locales)('%s messages', (lang) => {
   });
 
   test('translates every English message', () => {
-    const untranslated = Object.keys(en).filter(
-      (id) =>
-        messages[id]?.defaultMessage === en[id].defaultMessage &&
-        !SAME_AS_ENGLISH[id]?.includes(lang),
-    );
+    const untranslated = Object.entries(en)
+      .filter(
+        ([id, { defaultMessage }]) =>
+          messages[id]?.defaultMessage === defaultMessage && !SAME_AS_ENGLISH[id]?.includes(lang),
+      )
+      .map(([id]) => id);
     expect(untranslated).toEqual([]);
   });
 });
@@ -120,9 +121,9 @@ const TRADITIONAL_ONLY =
 describe.each(['zh', 'zh-CN'])('%s messages', (lang) => {
   test('are written in Simplified characters', () => {
     const messages = readLang(lang);
-    const traditional = Object.keys(messages)
-      .filter((id) => TRADITIONAL_ONLY.test(messages[id].defaultMessage))
-      .map((id) => `${id}: ${messages[id].defaultMessage}`);
+    const traditional = Object.entries(messages)
+      .filter(([, { defaultMessage }]) => TRADITIONAL_ONLY.test(defaultMessage))
+      .map(([id, { defaultMessage }]) => `${id}: ${defaultMessage}`);
     expect(traditional).toEqual([]);
   });
 });

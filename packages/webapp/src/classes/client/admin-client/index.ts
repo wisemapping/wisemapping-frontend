@@ -50,8 +50,9 @@ export interface AdminUser {
   allowSendEmail: boolean;
   authenticationType: AuthenticationType;
   isAdmin?: boolean;
-  suspendedDate?: string;
-  suspensionReason?: string;
+  // Cleared (undefined) when the user is unsuspended.
+  suspendedDate?: string | undefined;
+  suspensionReason?: string | undefined;
 }
 
 export interface AdminUsersResponse {
@@ -65,26 +66,26 @@ export interface AdminUsersResponse {
 }
 
 export interface AdminUsersParams {
-  page?: number;
-  pageSize?: number;
-  search?: string;
-  sortBy?: string;
-  sortOrder?: 'asc' | 'desc';
-  filterActive?: boolean;
-  filterSuspended?: boolean;
-  filterAuthType?: string;
+  page?: number | undefined;
+  pageSize?: number | undefined;
+  search?: string | undefined;
+  sortBy?: string | undefined;
+  sortOrder?: 'asc' | 'desc' | undefined;
+  filterActive?: boolean | undefined;
+  filterSuspended?: boolean | undefined;
+  filterAuthType?: string | undefined;
 }
 
 export interface AdminMapsParams {
-  page?: number;
-  pageSize?: number;
-  search?: string;
-  sortBy?: string;
-  sortOrder?: 'asc' | 'desc';
-  filterPublic?: boolean;
-  filterLocked?: boolean;
-  filterSpam?: boolean;
-  dateFilter?: string;
+  page?: number | undefined;
+  pageSize?: number | undefined;
+  search?: string | undefined;
+  sortBy?: string | undefined;
+  sortOrder?: 'asc' | 'desc' | undefined;
+  filterPublic?: boolean | undefined;
+  filterLocked?: boolean | undefined;
+  filterSpam?: boolean | undefined;
+  dateFilter?: string | undefined;
 }
 
 export interface AdminMap {
@@ -103,9 +104,10 @@ export interface AdminMap {
   starred: boolean;
   labels: string[];
   spam?: boolean;
-  spamType?: string;
-  spamDetectedDate?: string;
-  spamDescription?: string;
+  // Cleared (undefined) when the map is marked as not spam.
+  spamType?: string | undefined;
+  spamDetectedDate?: string | undefined;
+  spamDescription?: string | undefined;
   // AdminRestMap.isCreatorSuspended() has no @JsonProperty: Jackson sends "creatorSuspended".
   creatorSuspended?: boolean;
   collaboratorCount: number;
@@ -208,7 +210,7 @@ export interface AdminClientInterface {
 export default class AdminClient implements AdminClientInterface {
   private baseUrl: string;
   private axios: AxiosInstance;
-  private _onSessionExpired: () => void;
+  private _onSessionExpired: () => void = () => {};
 
   private checkResponseForSessionExpired = <T>(error: {
     response?: AxiosResponse<T>;
@@ -507,9 +509,7 @@ export default class AdminClient implements AdminClientInterface {
   }
 
   private sessionExpired(): void {
-    if (this._onSessionExpired) {
-      this._onSessionExpired();
-    }
+    this._onSessionExpired();
   }
 
   // Implement all Client interface methods
