@@ -18,6 +18,21 @@
 
 import '@testing-library/cypress/add-commands';
 
-// Registers cy.injectAxe() / cy.configureAxe() / cy.checkA11y(), used by
-// cypress/e2e/accessibility.cy.ts.
-import 'cypress-axe';
+import axe from 'axe-core';
+
+// Runs axe-core in the page under test and yields its violations (cypress/e2e/accessibility.cy.ts).
+// axe ships its own source (axe.source) to be injected into the page it scans: run from the spec's
+// frame, it would scan that frame instead.
+Cypress.Commands.add('scanA11y', () =>
+  cy.window({ log: false }).then((win) => {
+    const page = win as typeof win & { axe?: typeof axe };
+    if (!page.axe) {
+      page.eval(axe.source);
+    }
+    const pageAxe = page.axe;
+    if (!pageAxe) {
+      throw new Error('axe-core could not be loaded into the page');
+    }
+    return pageAxe.run(win.document).then((results) => results.violations);
+  }),
+);

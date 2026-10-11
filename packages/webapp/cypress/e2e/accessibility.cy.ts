@@ -17,12 +17,11 @@
  */
 
 /// <reference types="cypress" />
-/// <reference types="cypress-axe" />
 
 import type { Result } from 'axe-core';
 
 /*
- * Automated accessibility scan (axe-core via cypress-axe).
+ * Automated accessibility scan (axe-core, through cy.scanA11y in cypress/support).
  *
  * ---------------------------------------------------------------------------
  * THIS SPEC IS INTENTIONALLY REPORTING-ONLY. IT MUST NOT FAIL THE RUN.
@@ -30,16 +29,14 @@ import type { Result } from 'axe-core';
  * The codebase has never been scanned by axe, so there is a pre-existing
  * backlog of violations. The pre-push hook runs `yarn lint && yarn test`, so a
  * spec that asserted on those findings would block every push until the whole
- * backlog is fixed. Instead, every scan below passes `skipFailures = true` to
- * cy.checkA11y() and prints what it found through a non-throwing reporter.
+ * backlog is fixed. Instead, every scan below prints what it found through a
+ * non-throwing reporter.
  *
  * Turning enforcement on is a deliberate follow-up, to be done once the
  * findings currently printed by this spec have been triaged and either fixed
- * or explicitly excluded. At that point drop `SKIP_FAILURES` (or narrow it to
- * a `runOnly`/`rules` allowlist of the rules already clean) so regressions
- * start failing the build.
+ * or explicitly excluded. At that point assert on the violations (or on an
+ * allowlist of the rules already clean) so regressions start failing the build.
  */
-const SKIP_FAILURES = true;
 
 /**
  * Non-throwing reporter. cy.log() only writes to the in-browser command log,
@@ -123,13 +120,7 @@ describe('Accessibility (axe-core, reporting-only)', () => {
           cy.waitForPageLoaded();
           page.waitUntilReady?.();
 
-          cy.injectAxe();
-          cy.checkA11y(
-            undefined,
-            undefined,
-            reportViolations(`${page.name} [${mode}]`),
-            SKIP_FAILURES,
-          );
+          cy.scanA11y().then(reportViolations(`${page.name} [${mode}]`));
         });
       });
     });
