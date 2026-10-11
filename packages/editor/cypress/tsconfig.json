@@ -1,4 +1,6 @@
 {
+  // Type checks the Cypress specs, support files and configs (`tsc -p cypress`, part of `yarn lint`).
+  "extends": "../../../tsconfig.strict.json",
   "compilerOptions": {
     "sourceMap": false,
     "ignoreDeprecations": "6.0"
