@@ -154,8 +154,11 @@ class Designer extends EventDispispatcher<DesignerEvents> {
   private _viewportInsets: ViewportInsets | (() => ViewportInsets) = {};
 
   // The last zoomToFit: its options and the viewport it left, to re-fit on a container resize ...
-  private _lastFit: { options?: ZoomToFitOptions; zoom: number; origin: PositionType } | null =
-    null;
+  private _lastFit: {
+    options?: ZoomToFitOptions | undefined;
+    zoom: number;
+    origin: PositionType;
+  } | null = null;
 
   constructor(options: DesignerOptions) {
     super();
@@ -366,7 +369,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     });
 
     // Also fired when the drag is cancelled (Escape, window blur): the topic must then stay put.
-    dragManager.addEvent('enddragging', (event: MouseEvent, dragTopic: DragTopic) => {
+    dragManager.addEvent('enddragging', (_event: MouseEvent, dragTopic: DragTopic) => {
       designerModel.getTopics().forEach((topic) => topic.setMouseEventsEnabled(true));
       if (!dragTopic.isCancelled()) {
         dragTopic.applyChanges(workspace);

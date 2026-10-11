@@ -112,7 +112,7 @@ abstract class Topic extends NodeGraph {
 
   private _orientation: OrientationType;
 
-  private _topicEventDispatcher?: TopicEventDispatcher;
+  private _topicEventDispatcher?: TopicEventDispatcher | undefined;
 
   // Values last applied to the text shape: a redraw skips the setters of unchanged ones,
   // as setting the text rebuilds its tspans. Only the topic sets them.

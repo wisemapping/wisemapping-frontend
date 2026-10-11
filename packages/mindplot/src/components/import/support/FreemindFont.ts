@@ -20,10 +20,10 @@ import type NodeModel from '../../model/NodeModel';
 
 /** The attributes of a FreeMind or Freeplane <font> element. */
 export type FreemindFontAttributes = {
-  name?: string | null;
-  size?: string | null;
-  bold?: string | null;
-  italic?: string | null;
+  name?: string | null | undefined;
+  size?: string | null | undefined;
+  bold?: string | null | undefined;
+  italic?: string | null | undefined;
 };
 
 // The WiseMapping font sizes and the FreeMind size each one is exported as.

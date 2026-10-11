@@ -23,7 +23,7 @@ import LayoutManager from '../../../src/components/layout/LayoutManager';
 
 type Stub = {
   id: number;
-  order?: number;
+  order?: number | undefined;
   parent: Stub | null;
   children: Stub[];
   central: boolean;

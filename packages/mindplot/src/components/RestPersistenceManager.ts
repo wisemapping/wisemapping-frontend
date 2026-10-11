@@ -38,7 +38,12 @@ class RESTPersistenceManager extends PersistenceManager {
 
   private jwt: string | undefined;
 
-  constructor(options: { documentUrl: string; revertUrl: string; lockUrl: string; jwt?: string }) {
+  constructor(options: {
+    documentUrl: string;
+    revertUrl: string;
+    lockUrl: string;
+    jwt?: string | undefined;
+  }) {
     $assert(options.documentUrl, 'documentUrl can not be null');
     $assert(options.revertUrl, 'revertUrl can not be null');
     $assert(options.lockUrl, 'lockUrl can not be null');
