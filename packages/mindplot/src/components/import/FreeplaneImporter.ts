@@ -236,11 +236,12 @@ class FreeplaneImporter extends Importer {
 
     const font = freeplaneNode.querySelector(':scope > font');
     if (font) {
+      // getAttribute's null (attribute missing) is undefined in the model.
       applyFreemindFont(topic, {
-        name: font.getAttribute('NAME'),
-        size: font.getAttribute('SIZE'),
-        bold: font.getAttribute('BOLD'),
-        italic: font.getAttribute('ITALIC'),
+        name: font.getAttribute('NAME') ?? undefined,
+        size: font.getAttribute('SIZE') ?? undefined,
+        bold: font.getAttribute('BOLD') ?? undefined,
+        italic: font.getAttribute('ITALIC') ?? undefined,
       });
     }
   }
