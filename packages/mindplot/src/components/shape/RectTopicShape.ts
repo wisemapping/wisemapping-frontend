@@ -29,7 +29,7 @@ class RectTopicShape extends DefaultTopicShape<Rect> {
     this.getShape().setSize(width, height);
   }
 
-  getSize(): SizeType | null {
+  getSize(): SizeType | undefined {
     return this.getShape().getSize();
   }
 

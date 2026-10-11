@@ -110,9 +110,9 @@ describe('W-BROADCAST: no subtree walk on append, setSize or setCoordSize', () =
 
   it('the broadcast API is gone', () => {
     const proto = ElementPeer.prototype as unknown as Record<string, unknown>;
-    expect(proto.attachChangeEventListener).toBeUndefined();
-    expect(proto.getChangeEventListeners).toBeUndefined();
-    expect(proto.updateStrokeStyle).toBeUndefined();
+    expect(proto['attachChangeEventListener']).toBeUndefined();
+    expect(proto['getChangeEventListeners']).toBeUndefined();
+    expect(proto['updateStrokeStyle']).toBeUndefined();
   });
 });
 

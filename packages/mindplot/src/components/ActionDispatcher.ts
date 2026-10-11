@@ -44,15 +44,15 @@ type ActionDispatcherEvents = { modelUpdate: ModelUpdateEvent };
  */
 export interface ActionDispatcherCommands {
   addRelationship: (model: RelationshipModel) => void;
-  /** @param parentTopicsId the parent of each model, by index; null adds them all unconnected */
-  addTopics: (models: NodeModel[], parentTopicsId: number[] | null) => void;
+  /** @param parentTopicsId the parent of each model, by index; undefined adds them all unconnected */
+  addTopics: (models: NodeModel[], parentTopicsId?: number[]) => void;
   deleteEntities: (topicsIds: number[], relIds: number[]) => void;
-  /** @param parentTopic null disconnects the topic, at the given position */
+  /** @param parentTopic undefined disconnects the topic, at the given position */
   dragTopic: (
     topicId: number,
     position: PositionType,
     order: number | undefined,
-    parentTopic: Topic | null,
+    parentTopic: Topic | undefined,
   ) => void;
   moveTopic: (topicId: number, position: PositionType) => void;
   moveControlPoint: (model: RelationshipModel, ctrlPoint: PositionType, index: PivotType) => void;

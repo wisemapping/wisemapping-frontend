@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { useIntl } from 'react-intl';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -34,6 +34,8 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import StorageIcon from '@mui/icons-material/Storage';
 import { AuthenticationType } from '../../../classes/client';
 import AccountStatusChip, { getSuspensionReasonLabel } from './AccountStatusChip';
+import { useDate } from '../../../classes/app-i18n/dates';
+import { InfoGrid } from './styled';
 
 interface UserInfoCardProps {
   user: {
@@ -45,14 +47,14 @@ interface UserInfoCardProps {
     creationDate: string;
     isActive: boolean;
     isSuspended: boolean;
-    suspensionReason?: string;
-    suspendedDate?: string;
+    suspensionReason?: string | undefined;
+    suspendedDate?: string | undefined;
     authenticationType: AuthenticationType;
   };
   totalMaps?: number;
   isLoadingMaps?: boolean;
-  onSuspend?: () => void;
-  onUnsuspend?: () => void;
+  onSuspend?: (() => void) | undefined;
+  onUnsuspend?: (() => void) | undefined;
 }
 
 const UserInfoCard = ({
@@ -63,10 +65,9 @@ const UserInfoCard = ({
   onUnsuspend,
 }: UserInfoCardProps): ReactElement => {
   const intl = useIntl();
+  const date = useDate();
 
-  const formatDate = (dateString: string): string => {
-    return new Date(dateString).toLocaleDateString();
-  };
+  const formatDate = (dateString: string): string => date(dateString).format('L');
 
   const getAuthIcon = (authenticationType: AuthenticationType): ReactElement => {
     switch (authenticationType) {
@@ -133,17 +134,7 @@ const UserInfoCard = ({
           })}
         </Typography>
         <Divider sx={{ mb: 2 }} />
-        <Box
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: {
-              xs: '1fr',
-              sm: '1fr 1fr',
-              md: '1fr 1fr 1fr 1fr',
-            },
-            gap: 3,
-          }}
-        >
+        <InfoGrid>
           <Box>
             <Typography
               variant="caption"
@@ -251,7 +242,7 @@ const UserInfoCard = ({
               {isLoadingMaps ? <CircularProgress size={16} /> : totalMaps || 0}
             </Typography>
           </Box>
-        </Box>
+        </InfoGrid>
         {user.isSuspended && user.suspensionReason && (
           <Alert severity="warning" sx={{ mt: 2 }}>
             <Typography
@@ -260,11 +251,13 @@ const UserInfoCard = ({
                 fontWeight: 'medium',
               }}
             >
-              {intl.formatMessage({
-                id: 'admin.user-info.suspension-reason',
-                defaultMessage: 'Suspension Reason:',
-              })}{' '}
-              {getSuspensionReasonLabel(user.suspensionReason, intl)}
+              {intl.formatMessage(
+                {
+                  id: 'admin.user-info.suspension-reason-value',
+                  defaultMessage: 'Suspension Reason: {reason}',
+                },
+                { reason: getSuspensionReasonLabel(user.suspensionReason, intl) },
+              )}
             </Typography>
             {user.suspendedDate && (
               <Typography

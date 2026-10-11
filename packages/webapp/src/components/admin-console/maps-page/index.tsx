@@ -17,7 +17,7 @@
  */
 
 import React, { ReactElement, useState, useEffect } from 'react';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Table from '@mui/material/Table';
@@ -69,7 +69,9 @@ import EditMapDialog, { MapFormData } from './EditMapDialog';
 import { copyText } from '../../../utils/clipboard';
 import { useAdminPage, useClampedPage } from '../shared/useAdminPage';
 import { errorMessage } from '../shared/errorMessage';
-import { loadErrorAlertStyles } from '../styles';
+import { CellButton, FilterBar, MapLink, PaginationBar, SectionHeader } from '../styled';
+import { XmlInput } from './styled';
+import { useDate } from '../../../classes/app-i18n/dates';
 
 // XML formatting utility
 const formatXml = (xml: string): string => {
@@ -137,9 +139,9 @@ interface AdminMap {
   starred: boolean;
   labels: string[];
   spam?: boolean;
-  spamType?: string;
-  spamDetectedDate?: string;
-  spamDescription?: string;
+  spamType?: string | undefined;
+  spamDetectedDate?: string | undefined;
+  spamDescription?: string | undefined;
   creatorSuspended?: boolean;
   collaboratorCount: number;
 }
@@ -149,8 +151,8 @@ type SortField =
 type SortDirection = 'asc' | 'desc';
 
 // Detect search type
-const getSearchType = (term: string): 'id' | 'email' | 'text' | null => {
-  if (!term || term.trim() === '') return null;
+const getSearchType = (term: string): 'id' | 'email' | 'text' | undefined => {
+  if (!term || term.trim() === '') return undefined;
   const trimmed = term.trim();
 
   // Check for ID search (starts with #)
@@ -252,6 +254,7 @@ const MapSearchField = React.memo(function MapSearchField({
 
 const MapsManagement = (): ReactElement => {
   const intl = useIntl();
+  const date = useDate();
   const client = AppConfig.getAdminClient();
   const queryClient = useQueryClient();
 
@@ -263,32 +266,30 @@ const MapsManagement = (): ReactElement => {
   const [filterLocked, setFilterLocked] = useState<string>('all');
   const [filterSpam, setFilterSpam] = useState<string>('all');
   const [dateFilter, setDateFilter] = useState<string>('1');
-  const [editingMap, setEditingMap] = useState<AdminMap | null>(null);
+  const [editingMap, setEditingMap] = useState<AdminMap>();
 
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   // A new key opens the edit dialog with a fresh form.
   const [editDialogKey, setEditDialogKey] = useState(0);
 
   // XML Viewer state
-  const [viewingMap, setViewingMap] = useState<AdminMap | null>(null);
+  const [viewingMap, setViewingMap] = useState<AdminMap>();
   const [isXmlViewerOpen, setIsXmlViewerOpen] = useState(false);
   const [xmlContent, setXmlContent] = useState<string>('');
-  const [isPendingXml, setIsLoadingXml] = useState(false);
+  const [isPendingXml, setIsPendingXml] = useState(false);
 
   // User suspension state
   const [isSuspensionDialogOpen, setIsSuspensionDialogOpen] = useState(false);
-  const [suspendingUser, setSuspendingUser] = useState<{ userId: number; userName: string } | null>(
-    null,
-  );
+  const [suspendingUser, setSuspendingUser] = useState<{ userId: number; userName: string }>();
 
   // Owner maps dialog state
   const [isOwnerMapsDialogOpen, setIsOwnerMapsDialogOpen] = useState(false);
-  const [selectedOwnerId, setSelectedOwnerId] = useState<number | null>(null);
+  const [selectedOwnerId, setSelectedOwnerId] = useState<number>();
   const [selectedOwnerName, setSelectedOwnerName] = useState<string>('');
-  const [selectedOwnerUser, setSelectedOwnerUser] = useState<AdminUser | null>(null);
+  const [selectedOwnerUser, setSelectedOwnerUser] = useState<AdminUser>();
   const [ownerMaps, setOwnerMaps] = useState<AdminMap[]>([]);
-  const [isPendingOwnerMaps, setIsLoadingOwnerMaps] = useState(false);
-  const [isPendingOwnerInfo, setIsLoadingOwnerInfo] = useState(false);
+  const [isPendingOwnerMaps, setIsPendingOwnerMaps] = useState(false);
+  const [isPendingOwnerInfo, setIsPendingOwnerInfo] = useState(false);
 
   // Fetch maps with pagination and filters
   const [currentPage, setCurrentPage] = useAdminPage([
@@ -348,7 +349,7 @@ const MapsManagement = (): ReactElement => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['adminMaps'] });
       setIsEditDialogOpen(false);
-      setEditingMap(null);
+      setEditingMap(undefined);
     },
     onError: (error: Error) => {
       console.error('Failed to update map:', error);
@@ -391,9 +392,9 @@ const MapsManagement = (): ReactElement => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['adminMaps'] });
       setIsSuspensionDialogOpen(false);
-      setSuspendingUser(null);
+      setSuspendingUser(undefined);
       // Refresh owner user info if in owner maps dialog
-      if (selectedOwnerId !== null) {
+      if (selectedOwnerId !== undefined) {
         loadOwnerInfo(selectedOwnerId);
       }
     },
@@ -409,7 +410,7 @@ const MapsManagement = (): ReactElement => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['adminMaps'] });
       // Refresh owner user info if in owner maps dialog
-      if (selectedOwnerId !== null) {
+      if (selectedOwnerId !== undefined) {
         loadOwnerInfo(selectedOwnerId);
       }
     },
@@ -493,21 +494,21 @@ const MapsManagement = (): ReactElement => {
   };
 
   const loadOwnerInfo = async (userId: number) => {
-    setIsLoadingOwnerInfo(true);
+    setIsPendingOwnerInfo(true);
     try {
       const userInfo = await client.getAdminUser(userId);
       setSelectedOwnerUser(userInfo);
     } catch (error) {
       console.error('Failed to fetch owner info:', error);
     } finally {
-      setIsLoadingOwnerInfo(false);
+      setIsPendingOwnerInfo(false);
     }
   };
 
   const handleViewXml = async (map: AdminMap) => {
     setViewingMap(map);
     setIsXmlViewerOpen(true);
-    setIsLoadingXml(true);
+    setIsPendingXml(true);
     setXmlContent('');
 
     try {
@@ -516,16 +517,21 @@ const MapsManagement = (): ReactElement => {
     } catch (error: unknown) {
       console.error('Failed to fetch map XML:', error);
       setXmlContent(
-        `Error loading XML: ${(error as Record<string, unknown>)?.message || 'Unknown error'}`,
+        intl.formatMessage(
+          { id: 'admin.maps.xml-viewer.error', defaultMessage: 'Error loading XML: {message}' },
+          {
+            message:
+              errorMessage(error) ||
+              intl.formatMessage({ id: 'admin.error.unknown', defaultMessage: 'Unknown error' }),
+          },
+        ),
       );
     } finally {
-      setIsLoadingXml(false);
+      setIsPendingXml(false);
     }
   };
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString();
-  };
+  const formatDate = (dateString: string) => date(dateString).format('L');
 
   const getPublicChip = (isPublic: boolean) => (
     <Tooltip
@@ -543,7 +549,11 @@ const MapsManagement = (): ReactElement => {
     >
       <Chip
         icon={isPublic ? <PublicIcon /> : <LockIcon />}
-        label={isPublic ? 'Public' : 'Private'}
+        label={
+          isPublic
+            ? intl.formatMessage({ id: 'admin.public', defaultMessage: 'Public' })
+            : intl.formatMessage({ id: 'admin.private', defaultMessage: 'Private' })
+        }
         color={isPublic ? 'success' : 'default'}
         size="small"
       />
@@ -559,7 +569,14 @@ const MapsManagement = (): ReactElement => {
                 id: 'admin.maps.locked-tooltip',
                 defaultMessage: 'Currently being edited by {user}',
               },
-              { user: lockedBy || 'unknown user' },
+              {
+                user:
+                  lockedBy ||
+                  intl.formatMessage({
+                    id: 'admin.maps.unknown-user',
+                    defaultMessage: 'unknown user',
+                  }),
+              },
             )
           : intl.formatMessage({
               id: 'admin.maps.unlocked-tooltip',
@@ -568,7 +585,21 @@ const MapsManagement = (): ReactElement => {
       }
     >
       <Chip
-        label={isLocked ? `Locked by ${lockedBy}` : 'Unlocked'}
+        label={
+          isLocked
+            ? intl.formatMessage(
+                { id: 'admin.maps.locked-by', defaultMessage: 'Locked by {user}' },
+                {
+                  user:
+                    lockedBy ||
+                    intl.formatMessage({
+                      id: 'admin.maps.unknown-user',
+                      defaultMessage: 'unknown user',
+                    }),
+                },
+              )
+            : intl.formatMessage({ id: 'admin.unlocked', defaultMessage: 'Unlocked' })
+        }
         color={isLocked ? 'warning' : 'default'}
         size="small"
       />
@@ -634,10 +665,10 @@ const MapsManagement = (): ReactElement => {
   const handleViewOwnerMaps = async (ownerId: number, ownerName: string) => {
     setSelectedOwnerId(ownerId);
     setSelectedOwnerName(ownerName);
-    setSelectedOwnerUser(null);
+    setSelectedOwnerUser(undefined);
     setIsOwnerMapsDialogOpen(true);
-    setIsLoadingOwnerMaps(true);
-    setIsLoadingOwnerInfo(true);
+    setIsPendingOwnerMaps(true);
+    setIsPendingOwnerInfo(true);
     setOwnerMaps([]);
 
     try {
@@ -651,21 +682,14 @@ const MapsManagement = (): ReactElement => {
     } catch (err) {
       console.error('Failed to load owner info/maps:', err);
     } finally {
-      setIsLoadingOwnerMaps(false);
-      setIsLoadingOwnerInfo(false);
+      setIsPendingOwnerMaps(false);
+      setIsPendingOwnerInfo(false);
     }
   };
 
   return (
     <Box>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          mb: 3,
-        }}
-      >
+      <SectionHeader>
         <Typography variant="h5" component="h2">
           {intl.formatMessage({
             id: 'admin.maps.page-title',
@@ -678,20 +702,15 @@ const MapsManagement = (): ReactElement => {
         >
           <RefreshIcon />
         </IconButton>
-      </Box>
+      </SectionHeader>
       {/* Search and Filters */}
-      <Box
-        sx={{
-          display: 'flex',
-          gap: 2,
-          mb: 3,
-          flexWrap: 'wrap',
-        }}
-      >
+      <FilterBar gutter={3}>
         <MapSearchField onSearch={setDebouncedSearchTerm} isFetching={isFetching} />
 
         <FormControl sx={{ minWidth: 120 }}>
-          <InputLabel>Public</InputLabel>
+          <InputLabel>
+            <FormattedMessage id="admin.public" defaultMessage="Public" />
+          </InputLabel>
           <Select
             value={filterPublic}
             label={intl.formatMessage({ id: 'admin.public', defaultMessage: 'Public' })}
@@ -699,14 +718,22 @@ const MapsManagement = (): ReactElement => {
             disabled={isFetching}
             endAdornment={isFetching ? <CircularProgress size={20} /> : null}
           >
-            <MenuItem value="all">All</MenuItem>
-            <MenuItem value="public">Public</MenuItem>
-            <MenuItem value="private">Private</MenuItem>
+            <MenuItem value="all">
+              <FormattedMessage id="admin.filter.all" defaultMessage="All" />
+            </MenuItem>
+            <MenuItem value="public">
+              <FormattedMessage id="admin.public" defaultMessage="Public" />
+            </MenuItem>
+            <MenuItem value="private">
+              <FormattedMessage id="admin.private" defaultMessage="Private" />
+            </MenuItem>
           </Select>
         </FormControl>
 
         <FormControl sx={{ minWidth: 120 }}>
-          <InputLabel>Locked</InputLabel>
+          <InputLabel>
+            <FormattedMessage id="admin.locked" defaultMessage="Locked" />
+          </InputLabel>
           <Select
             value={filterLocked}
             label={intl.formatMessage({ id: 'admin.locked', defaultMessage: 'Locked' })}
@@ -714,9 +741,15 @@ const MapsManagement = (): ReactElement => {
             disabled={isFetching}
             endAdornment={isFetching ? <CircularProgress size={20} /> : null}
           >
-            <MenuItem value="all">All</MenuItem>
-            <MenuItem value="locked">Locked</MenuItem>
-            <MenuItem value="unlocked">Unlocked</MenuItem>
+            <MenuItem value="all">
+              <FormattedMessage id="admin.filter.all" defaultMessage="All" />
+            </MenuItem>
+            <MenuItem value="locked">
+              <FormattedMessage id="admin.locked" defaultMessage="Locked" />
+            </MenuItem>
+            <MenuItem value="unlocked">
+              <FormattedMessage id="admin.unlocked" defaultMessage="Unlocked" />
+            </MenuItem>
           </Select>
         </FormControl>
 
@@ -737,9 +770,15 @@ const MapsManagement = (): ReactElement => {
             disabled={isFetching}
             endAdornment={isFetching ? <CircularProgress size={20} /> : null}
           >
-            <MenuItem value="all">All</MenuItem>
-            <MenuItem value="spam">Spam</MenuItem>
-            <MenuItem value="not-spam">Not Spam</MenuItem>
+            <MenuItem value="all">
+              <FormattedMessage id="admin.filter.all" defaultMessage="All" />
+            </MenuItem>
+            <MenuItem value="spam">
+              <FormattedMessage id="admin.maps.filter.spam" defaultMessage="Spam" />
+            </MenuItem>
+            <MenuItem value="not-spam">
+              <FormattedMessage id="admin.maps.filter.not-spam" defaultMessage="Not Spam" />
+            </MenuItem>
           </Select>
         </FormControl>
 
@@ -762,17 +801,25 @@ const MapsManagement = (): ReactElement => {
             disabled={isFetching}
             endAdornment={isFetching ? <CircularProgress size={20} /> : null}
           >
-            <MenuItem value="1">Last 1 Month</MenuItem>
-            <MenuItem value="3">Last 3 Months</MenuItem>
-            <MenuItem value="6">Last 6 Months</MenuItem>
-            <MenuItem value="all">All Time</MenuItem>
+            {[1, 3, 6].map((months) => (
+              <MenuItem key={months} value={String(months)}>
+                <FormattedMessage
+                  id="admin.maps.filter.last-months"
+                  defaultMessage="{count, plural, one {Last # Month} other {Last # Months}}"
+                  values={{ count: months }}
+                />
+              </MenuItem>
+            ))}
+            <MenuItem value="all">
+              <FormattedMessage id="admin.maps.filter.all-time" defaultMessage="All Time" />
+            </MenuItem>
           </Select>
         </FormControl>
-      </Box>
+      </FilterBar>
       {/* Maps Table */}
       {/* Inline, so the search, filters and Refresh stay to recover with. */}
       {error && (
-        <Alert severity="error" sx={loadErrorAlertStyles}>
+        <Alert severity="error" sx={{ mb: 2 }}>
           {intl.formatMessage(
             { id: 'admin.error.load-maps', defaultMessage: 'Failed to load maps: {message}' },
             {
@@ -805,19 +852,28 @@ const MapsManagement = (): ReactElement => {
                   direction={sortField === 'title' ? sortDirection : 'asc'}
                   onClick={() => handleSort('title')}
                 >
-                  Title
+                  <FormattedMessage id="admin.maps.table.title" defaultMessage="Title" />
                 </TableSortLabel>
               </TableCell>
-              <TableCell>Description</TableCell>
-              <TableCell>Created By</TableCell>
-              <TableCell align="center">Collaborators</TableCell>
+              <TableCell>
+                <FormattedMessage id="admin.maps.table.description" defaultMessage="Description" />
+              </TableCell>
+              <TableCell>
+                <FormattedMessage id="admin.maps.table.created-by" defaultMessage="Created By" />
+              </TableCell>
+              <TableCell align="center">
+                <FormattedMessage
+                  id="admin.maps.table.collaborators"
+                  defaultMessage="Collaborators"
+                />
+              </TableCell>
               <TableCell>
                 <TableSortLabel
                   active={sortField === 'creationTime'}
                   direction={sortField === 'creationTime' ? sortDirection : 'asc'}
                   onClick={() => handleSort('creationTime')}
                 >
-                  Created
+                  <FormattedMessage id="admin.maps.table.created" defaultMessage="Created" />
                 </TableSortLabel>
               </TableCell>
               <TableCell>
@@ -826,17 +882,21 @@ const MapsManagement = (): ReactElement => {
                   direction={sortField === 'lastModificationTime' ? sortDirection : 'asc'}
                   onClick={() => handleSort('lastModificationTime')}
                 >
-                  Modified
+                  <FormattedMessage id="admin.maps.table.modified" defaultMessage="Modified" />
                 </TableSortLabel>
               </TableCell>
-              <TableCell>Status</TableCell>
+              <TableCell>
+                <FormattedMessage id="admin.maps.table.status" defaultMessage="Status" />
+              </TableCell>
               <TableCell>
                 {intl.formatMessage({
                   id: 'admin.maps.table.spam',
                   defaultMessage: 'Spam',
                 })}
               </TableCell>
-              <TableCell align="center">Actions</TableCell>
+              <TableCell align="center">
+                <FormattedMessage id="admin.maps.table.actions" defaultMessage="Actions" />
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -866,25 +926,16 @@ const MapsManagement = (): ReactElement => {
               maps.map((map) => (
                 <TableRow key={map.id} hover>
                   <TableCell>
-                    <Typography
+                    <MapLink
                       variant="body2"
                       color="primary"
                       component="a"
                       href={`/c/maps/${map.id}/public`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      sx={{
-                        fontWeight: 'medium',
-                        textDecoration: 'none',
-                        cursor: 'pointer',
-
-                        '&:hover': {
-                          textDecoration: 'underline',
-                        },
-                      }}
                     >
                       #{map.id}
-                    </Typography>
+                    </MapLink>
                   </TableCell>
                   <TableCell>
                     <Box
@@ -912,24 +963,23 @@ const MapsManagement = (): ReactElement => {
                         color: 'text.secondary',
                       }}
                     >
-                      {map.description || 'No description'}
+                      {map.description || (
+                        <FormattedMessage
+                          id="admin.maps.no-description"
+                          defaultMessage="No description"
+                        />
+                      )}
                     </Typography>
                   </TableCell>
                   <TableCell>
-                    <Button
+                    <CellButton
                       variant="text"
                       color="primary"
                       size="small"
                       onClick={() => handleViewOwnerMaps(map.createdById, map.createdBy)}
-                      sx={{
-                        minWidth: 'auto',
-                        padding: '4px 8px',
-                        textTransform: 'none',
-                        fontWeight: 'medium',
-                      }}
                     >
                       {map.createdBy}
-                    </Button>
+                    </CellButton>
                   </TableCell>
                   <TableCell align="center">
                     <Typography variant="body2">{map.collaboratorCount}</Typography>
@@ -1017,7 +1067,17 @@ const MapsManagement = (): ReactElement => {
                         <span>
                           <IconButton
                             onClick={() => handleToggleSpamStatus(map.id, map.spam || false)}
-                            aria-label={map.spam ? 'mark-not-spam' : 'mark-spam'}
+                            aria-label={
+                              map.spam
+                                ? intl.formatMessage({
+                                    id: 'admin.maps.mark-as-not-spam',
+                                    defaultMessage: 'Mark as not spam',
+                                  })
+                                : intl.formatMessage({
+                                    id: 'admin.maps.mark-as-spam',
+                                    defaultMessage: 'Mark as spam',
+                                  })
+                            }
                             color={map.spam ? 'success' : 'warning'}
                             size="small"
                             disabled={updateSpamStatusMutation.isPending}
@@ -1077,19 +1137,11 @@ const MapsManagement = (): ReactElement => {
       </TableContainer>
       {/* Pagination */}
       {totalPages > 1 && (
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            mt: 3,
-            gap: 2,
-          }}
-        >
+        <PaginationBar>
           <Pagination
             count={totalPages}
             page={currentPage}
-            onChange={(event, page) => setCurrentPage(page)}
+            onChange={(_event, page) => setCurrentPage(page)}
             color="primary"
             variant="outlined"
             shape="rounded"
@@ -1098,7 +1150,7 @@ const MapsManagement = (): ReactElement => {
             disabled={isFetching}
           />
           {isFetching && <CircularProgress size={24} />}
-        </Box>
+        </PaginationBar>
       )}
       {/* Edit Map Dialog */}
       <EditMapDialog
@@ -1147,7 +1199,11 @@ const MapsManagement = (): ReactElement => {
                 mt: 1,
               }}
             >
-              {viewingMap.title} (ID: {viewingMap.id})
+              <FormattedMessage
+                id="admin.maps.xml-viewer.subtitle"
+                defaultMessage="{title} (ID: {id})"
+                values={{ title: viewingMap.title, id: viewingMap.id }}
+              />
             </Typography>
           )}
         </DialogTitle>
@@ -1189,24 +1245,8 @@ const MapsManagement = (): ReactElement => {
                   id: 'admin.maps.xml-viewer.no-content',
                   defaultMessage: 'No XML content available',
                 })}
-                slotProps={{
-                  input: {
-                    readOnly: true,
-                    sx: {
-                      fontFamily: 'monospace',
-                      fontSize: '0.875rem',
-                      backgroundColor: (theme) =>
-                        theme.palette.mode === 'dark'
-                          ? theme.palette.grey[900]
-                          : theme.palette.grey[50],
-                      '& .MuiInputBase-input': {
-                        color: (theme) => theme.palette.text.primary,
-                        whiteSpace: 'pre',
-                        overflow: 'auto',
-                      },
-                    },
-                  },
-                }}
+                slots={{ input: XmlInput }}
+                slotProps={{ input: { readOnly: true } }}
               />
             </Box>
           )}
@@ -1308,12 +1348,12 @@ const MapsManagement = (): ReactElement => {
         isLoadingMaps={isPendingOwnerMaps}
         onSuspend={() => {
           setIsOwnerMapsDialogOpen(false);
-          if (selectedOwnerId !== null) {
+          if (selectedOwnerId !== undefined) {
             handleSuspendUser(selectedOwnerId, selectedOwnerName);
           }
         }}
         onUnsuspend={() => {
-          if (selectedOwnerId !== null) {
+          if (selectedOwnerId !== undefined) {
             handleUnsuspendUserFromDialog(selectedOwnerId);
           }
         }}

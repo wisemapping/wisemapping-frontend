@@ -32,7 +32,7 @@ import { addMatchImageSnapshotPlugin } from '@simonsmith/cypress-image-snapshot/
  * anti-aliasing differently and does not match them.
  */
 const visualSnapshotMode = (): string => {
-  const mode = (process.env.VISUAL_SNAPSHOTS || 'verify').trim().toLowerCase();
+  const mode = (process.env['VISUAL_SNAPSHOTS'] || 'verify').trim().toLowerCase();
   if (mode !== 'verify' && mode !== 'update') {
     throw new Error(`VISUAL_SNAPSHOTS must be 'verify' or 'update', got '${mode}'`);
   }

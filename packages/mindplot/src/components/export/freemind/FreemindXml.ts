@@ -77,12 +77,12 @@ const readHtml = (element: Element): string | undefined => {
   return htmlElem.outerHTML;
 };
 
-const elementFromDom = (element: Element): FreemindElement | null => {
+const elementFromDom = (element: Element): FreemindElement | undefined => {
   switch (element.tagName) {
     case 'node': {
       const children = Array.from(element.children)
         .map(elementFromDom)
-        .filter((child): child is FreemindElement => child !== null);
+        .filter((child): child is FreemindElement => child !== undefined);
       return { kind: 'node', ...readAttributes(element, NODE_ATTRIBUTES), children };
     }
     case 'font':
@@ -110,7 +110,7 @@ const elementFromDom = (element: Element): FreemindElement | null => {
         html: readHtml(element),
       };
     default:
-      return null;
+      return undefined;
   }
 };
 
@@ -153,13 +153,13 @@ const writeAttributes = <T extends readonly string[]>(
   return elem;
 };
 
-// Appends the element to its parent and returns it, or null for an element of an unknown kind.
+// Appends the element to its parent and returns it, or undefined for an element of an unknown kind.
 const elementToXml = (
   element: FreemindElement,
   parent: Element,
   document: Document,
   isCentralTopic = false,
-): Element | null => {
+): Element | undefined => {
   let elem: Element;
   switch (element.kind) {
     case 'node': {

@@ -138,7 +138,7 @@ describe('ImageSVGFeature delete widget target (BL5-188)', () => {
       // The gallery icon is no feature of the topic: it used to answer getModel() with {}.
       expect('getModel' in removable).toBe(false);
       expect('setGroup' in removable).toBe(false);
-      expect(removable.getGroup()).toBeNull();
+      expect(removable.getGroup()).toBeUndefined();
     } finally {
       decorate.mockRestore();
     }

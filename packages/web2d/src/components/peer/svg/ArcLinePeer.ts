@@ -83,11 +83,9 @@ class ArcLinePeer extends ElementPeer<SVGPathElement> {
   }
 
   private _updatePath() {
-    if (this._x1 != null && this._y1 != null && this._x2 != null && this._y2 != null) {
-      const from = { x: this._x1, y: this._y1 };
-      const to = { x: this._x2, y: this._y2 };
-      this.attr('d', arcPathData(from, to, this._orientation));
-    }
+    const from = { x: this._x1, y: this._y1 };
+    const to = { x: this._x2, y: this._y2 };
+    this.attr('d', arcPathData(from, to, this._orientation));
   }
 }
 

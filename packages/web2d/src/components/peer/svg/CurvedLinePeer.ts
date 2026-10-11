@@ -62,8 +62,8 @@ class CurvedLinePeer extends ElementPeer<SVGPathElement> {
     this._updatePath();
   }
 
-  /** Sets the control point, relative to the start of the line. `null` is ignored. */
-  setSrcControlPoint(control: PositionType | null): void {
+  /** Sets the control point, relative to the start of the line. `undefined` is ignored. */
+  setSrcControlPoint(control: PositionType | undefined): void {
     if (!control) {
       return;
     }
@@ -75,8 +75,8 @@ class CurvedLinePeer extends ElementPeer<SVGPathElement> {
     }
   }
 
-  /** Sets the control point, relative to the end of the line. `null` is ignored. */
-  setDestControlPoint(control: PositionType | null): void {
+  /** Sets the control point, relative to the end of the line. `undefined` is ignored. */
+  setDestControlPoint(control: PositionType | undefined): void {
     if (!control) {
       return;
     }
@@ -138,10 +138,8 @@ class CurvedLinePeer extends ElementPeer<SVGPathElement> {
   }
 
   updateLine(avoidControlPointFix: boolean): void {
-    if (this._x1 != null && this._y1 != null && this._x2 != null && this._y2 != null) {
-      this._calculateAutoControlPoints(avoidControlPointFix);
-      this._renderPath();
-    }
+    this._calculateAutoControlPoints(avoidControlPointFix);
+    this._renderPath();
   }
 
   getWidth(): number {
@@ -157,10 +155,8 @@ class CurvedLinePeer extends ElementPeer<SVGPathElement> {
   }
 
   private _updatePath() {
-    if (this._x1 != null && this._y1 != null && this._x2 != null && this._y2 != null) {
-      this._calculateAutoControlPoints(false);
-      this._renderPath();
-    }
+    this._calculateAutoControlPoints(false);
+    this._renderPath();
   }
 
   /** Draws the line: a plain curve below width 1, a tapered filled shape from 1 (geometry/curve). */
@@ -192,7 +188,7 @@ class CurvedLinePeer extends ElementPeer<SVGPathElement> {
   }
 
   setDashed(length?: number, spacing?: number): void {
-    if (length != null && spacing != null) {
+    if (length !== undefined && spacing !== undefined) {
       this.attr('stroke-dasharray', `${length},${spacing}`);
     } else {
       // No dash removes the attribute: an empty value is invalid SVG.

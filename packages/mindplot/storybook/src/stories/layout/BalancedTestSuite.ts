@@ -215,7 +215,7 @@ class BalancedTestSuite extends TestSuite {
     const graph1 = manager.plot('testBalancedPredict1', { width: 1000, height: 400 });
 
     console.log('\tAdded as child of node 0 and dropped at (165, -70):');
-    const prediction1a = manager.predict(0, null, { x: 165, y: -70 });
+    const prediction1a = manager.predict(0, undefined, { x: 165, y: -70 });
     this._plotPrediction(graph1, prediction1a);
     $assert(
       prediction1a.position.y < manager.find(1).getPosition().y &&
@@ -225,7 +225,7 @@ class BalancedTestSuite extends TestSuite {
     $assert(prediction1a.order === 0, 'Prediction order should be 0');
 
     console.log('\tAdded as child of node 0 and dropped at (165, -10):');
-    const prediction1b = manager.predict(0, null, { x: 165, y: -10 });
+    const prediction1b = manager.predict(0, undefined, { x: 165, y: -10 });
     this._plotPrediction(graph1, prediction1b);
     $assert(
       prediction1b.position.y > manager.find(1).getPosition().y &&
@@ -236,7 +236,7 @@ class BalancedTestSuite extends TestSuite {
     $assert(prediction1b.order === 2, 'Prediction order should be 2');
 
     console.log('\tAdded as child of node 0 and dropped at (145, 15):');
-    const prediction1c = manager.predict(0, null, { x: 145, y: 15 });
+    const prediction1c = manager.predict(0, undefined, { x: 145, y: 15 });
     this._plotPrediction(graph1, prediction1c);
     $assert(
       prediction1c.position.y > manager.find(3).getPosition().y &&
@@ -247,7 +247,7 @@ class BalancedTestSuite extends TestSuite {
     $assert(prediction1c.order === 4, 'Prediction order should be 4');
 
     console.log('\tAdded as child of node 0 and dropped at (145, 70):');
-    const prediction1d = manager.predict(0, null, { x: 145, y: 70 });
+    const prediction1d = manager.predict(0, undefined, { x: 145, y: 70 });
     this._plotPrediction(graph1, prediction1d);
     $assert(
       prediction1d.position.y > manager.find(5).getPosition().y &&
@@ -260,7 +260,7 @@ class BalancedTestSuite extends TestSuite {
     const graph2 = manager.plot('testBalancedPredict2', { width: 1000, height: 400 });
 
     console.log('\tAdded as child of node 0 and dropped at (-145, -50):');
-    const prediction2a = manager.predict(0, null, { x: -145, y: -50 });
+    const prediction2a = manager.predict(0, undefined, { x: -145, y: -50 });
     this._plotPrediction(graph2, prediction2a);
     $assert(
       prediction2a.position.y < manager.find(2).getPosition().y &&
@@ -270,7 +270,7 @@ class BalancedTestSuite extends TestSuite {
     $assert(prediction2a.order === 1, 'Prediction order should be 1');
 
     console.log('\tAdded as child of node 0 and dropped at (-145, -10):');
-    const prediction2b = manager.predict(0, null, { x: -145, y: -10 });
+    const prediction2b = manager.predict(0, undefined, { x: -145, y: -10 });
     this._plotPrediction(graph2, prediction2b);
     $assert(
       prediction2b.position.y > manager.find(2).getPosition().y &&
@@ -281,7 +281,7 @@ class BalancedTestSuite extends TestSuite {
     $assert(prediction2b.order === 3, 'Prediction order should be 3');
 
     console.log('\tAdded as child of node 0 and dropped at (-145, 40):');
-    const prediction2c = manager.predict(0, null, { x: -145, y: 400 });
+    const prediction2c = manager.predict(0, undefined, { x: -145, y: 400 });
     this._plotPrediction(graph2, prediction2c);
     $assert(
       prediction2c.position.y > manager.find(4).getPosition().y &&
@@ -293,7 +293,7 @@ class BalancedTestSuite extends TestSuite {
     // Graph 3
     console.log('\tPredict nodes added with no position:');
     const graph3 = manager.plot('testBalancedPredict3', { width: 1000, height: 400 });
-    const prediction3 = manager.predict(0, null, null);
+    const prediction3 = manager.predict(0, undefined, undefined);
     this._plotPrediction(graph3, prediction3);
     $assert(
       prediction3.position.y > manager.find(4).getPosition().y &&
@@ -307,7 +307,7 @@ class BalancedTestSuite extends TestSuite {
     manager.connectNode(0, 6, prediction3.order);
     manager.layout();
     const graph4 = manager.plot('testBalancedPredict4', { width: 1000, height: 400 });
-    const prediction4 = manager.predict(0, null, null);
+    const prediction4 = manager.predict(0, undefined, undefined);
     this._plotPrediction(graph4, prediction4);
     $assert(
       prediction4.position.y > manager.find(5).getPosition().y &&
@@ -320,8 +320,8 @@ class BalancedTestSuite extends TestSuite {
     manager.removeNode(1).removeNode(2).removeNode(3).removeNode(4).removeNode(5);
     manager.layout();
     const graph5 = manager.plot('testBalancedPredict5', { width: 1000, height: 400 });
-    const prediction5a = manager.predict(0, null, null);
-    const prediction5b = manager.predict(0, null, { x: 40, y: 100 });
+    const prediction5a = manager.predict(0, undefined, undefined);
+    const prediction5b = manager.predict(0, undefined, { x: 40, y: 100 });
     this._plotPrediction(graph5, prediction5a);
     this._plotPrediction(graph5, prediction5b);
     $assert(

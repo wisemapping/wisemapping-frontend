@@ -16,7 +16,10 @@
  *   limitations under the License.
  */
 
+import IconButton from '@mui/material/IconButton';
 import { styled } from '@mui/material/styles';
+import ClearIcon from '@mui/icons-material/Clear';
+import LabelTwoTone from '@mui/icons-material/LabelTwoTone';
 
 export const LabelContainer = styled('div')`
   display: inline-flex;
@@ -42,3 +45,35 @@ export const LabelText = styled('span')`
   margin-right: 0px;
   font-family: 'Figtree', 'Noto Sans JP', 'Helvetica', 'system-ui', 'Arial', 'sans-serif';
 `;
+
+type LabelIconProps = {
+  /** The big label icon, rather than the small one of the maps list. */
+  big?: boolean;
+};
+
+const iconSize = ({ big }: LabelIconProps) =>
+  big ? { height: '0.9em', width: '0.9em' } : { height: '0.6em', width: '0.6em' };
+
+const notBig = (prop: PropertyKey): boolean => prop !== 'big';
+
+/** The label's tag, in the label's colour. */
+export const LabelIcon = styled(LabelTwoTone, { shouldForwardProp: notBig })<LabelIconProps>(
+  iconSize,
+);
+
+/** Removes the label; shown when the label is hovered. */
+export const DeleteLabelButton = styled(IconButton)({
+  padding: '0px',
+  marginLeft: '2px',
+  '&:hover': {
+    opacity: 0.8,
+  },
+}) as typeof IconButton;
+
+export const DeleteLabelIcon = styled(ClearIcon, { shouldForwardProp: notBig })<LabelIconProps>(
+  (props) => ({
+    ...iconSize(props),
+    color: 'rgba(255, 255, 255, 0.95)',
+    filter: 'drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3))',
+  }),
+);

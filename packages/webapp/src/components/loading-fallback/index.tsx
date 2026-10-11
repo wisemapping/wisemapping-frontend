@@ -18,7 +18,7 @@
 
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import Box from '@mui/material/Box';
+import { LoadingBox } from './styled';
 import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 import EditorLoadingSkeleton from '@wisemapping/editor/components/editor-loading-skeleton';
@@ -58,16 +58,7 @@ const LoadingFallback = (): React.ReactElement => {
   }
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        minHeight: '100vh',
-        gap: 2,
-      }}
-    >
+    <LoadingBox>
       <CircularProgress size={48} />
       <Typography
         variant="h6"
@@ -77,7 +68,7 @@ const LoadingFallback = (): React.ReactElement => {
       >
         <FormattedMessage id="common.loading" defaultMessage="Loading..." />
       </Typography>
-    </Box>
+    </LoadingBox>
   );
 };
 

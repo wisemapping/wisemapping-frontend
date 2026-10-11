@@ -17,17 +17,13 @@
  */
 import React, { ReactElement } from 'react';
 import { useIntl } from 'react-intl';
-import { alpha } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
-import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import ListItemText from '@mui/material/ListItemText';
 import Tooltip from '@mui/material/Tooltip';
 import ClearIcon from '@mui/icons-material/Clear';
-import withEmotionStyles from '../../HOCs/withEmotionStyles';
 import type { Filter, LabelFilter } from '../index';
+import { DeleteLabelButton, FilterItemRoot, FilterListItemButton } from './styled';
 
 export interface ListItemProps {
   icon: React.ReactElement;
@@ -37,46 +33,6 @@ export interface ListItemProps {
   onClick: (filter: Filter) => void;
   onDelete?: (id: number) => void;
 }
-
-// https://stackoverflow.com/questions/61486061/how-to-set-selected-and-hover-color-of-listitem-in-mui
-export const CustomListItem = withEmotionStyles((theme) => ({
-  position: 'relative',
-  '&.Mui-selected': {
-    backgroundColor:
-      theme.palette.mode === 'light'
-        ? alpha(theme.palette.common.white, 0.2)
-        : theme.palette.grey[800],
-    color:
-      theme.palette.mode === 'light'
-        ? theme.palette.primary.contrastText
-        : theme.palette.text.primary,
-    '& .MuiListItemIcon-root': {
-      color:
-        theme.palette.mode === 'light'
-          ? theme.palette.primary.contrastText
-          : theme.palette.text.primary,
-    },
-  },
-  '&.Mui-selected:hover': {
-    backgroundColor:
-      theme.palette.mode === 'light'
-        ? alpha(theme.palette.common.white, 0.25)
-        : theme.palette.grey[700],
-    color:
-      theme.palette.mode === 'light'
-        ? theme.palette.primary.contrastText
-        : theme.palette.text.primary,
-    '& .MuiListItemIcon-root': {
-      color:
-        theme.palette.mode === 'light'
-          ? theme.palette.primary.contrastText
-          : theme.palette.text.primary,
-    },
-  },
-  '&:hover ~ .MuiListItemSecondaryAction-root .label-delete-button': {
-    opacity: '1 !important',
-  },
-}))(ListItemButton);
 
 const StyleListItem = (props: ListItemProps): ReactElement => {
   const intl = useIntl();
@@ -108,15 +64,8 @@ const StyleListItem = (props: ListItemProps): ReactElement => {
   };
 
   return (
-    <Box
-      sx={{
-        position: 'relative',
-        '&:hover .label-delete-button': {
-          opacity: '1 !important',
-        },
-      }}
-    >
-      <CustomListItem
+    <FilterItemRoot>
+      <FilterListItemButton
         selected={isSelected}
         onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => handleOnClick(e, filter)}
       >
@@ -126,20 +75,12 @@ const StyleListItem = (props: ListItemProps): ReactElement => {
         <ListItemText primary={label} />
         {filter.type == 'label' && (
           <ListItemSecondaryAction>
-            <IconButton
+            <DeleteLabelButton
               edge="end"
               aria-label={intl.formatMessage({ id: 'common.delete', defaultMessage: 'Delete' })}
               onClick={(e) => handleOnDelete(e, filter)}
               size="small"
               className="label-delete-button"
-              sx={{
-                opacity: 0,
-                transition: 'opacity 0.2s ease',
-                padding: '4px',
-                '&:hover': {
-                  opacity: 1,
-                },
-              }}
             >
               <ClearIcon
                 sx={{
@@ -148,11 +89,11 @@ const StyleListItem = (props: ListItemProps): ReactElement => {
                   filter: 'drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3))',
                 }}
               />
-            </IconButton>
+            </DeleteLabelButton>
           </ListItemSecondaryAction>
         )}
-      </CustomListItem>
-    </Box>
+      </FilterListItemButton>
+    </FilterItemRoot>
   );
 };
 

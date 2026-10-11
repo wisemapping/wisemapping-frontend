@@ -23,7 +23,7 @@ import type SizeType from '../SizeType';
 interface TopicShape {
   setSize(width: number, height: number): void;
 
-  getSize(): SizeType | null;
+  getSize(): SizeType | undefined;
 
   setPosition(x: number, y: number): void;
 
@@ -39,7 +39,7 @@ interface TopicShape {
 
   removeFrom(group: Group): void;
 
-  setStroke(width: number | null, style: StrokeStyle | null, color: string): void;
+  setStroke(width: number | undefined, style: StrokeStyle | undefined, color: string): void;
 
   getShapeType(): TopicShapeType;
 }

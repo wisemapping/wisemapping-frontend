@@ -110,6 +110,25 @@ describe('FindInMapPanel results', () => {
     expect(revealNode.mock.calls[0][0].getId()).toBe(3);
   });
 
+  it('goes back to the first match each time the search changes', () => {
+    const { designer, closeModal, revealNode } = harness();
+    render(<FindInMapPanel designer={designer} closeModal={closeModal} />);
+    const lastRevealed = (): number | undefined => revealNode.mock.lastCall?.[0].getId();
+
+    search('node');
+    expect(revealNode).toHaveBeenCalledTimes(1);
+    expect(lastRevealed()).toBe(2);
+
+    fireEvent.click(screen.getByLabelText('Next match'));
+    expect(lastRevealed()).toBe(3);
+
+    // Same matches, new search: the first one again, and the next one from there.
+    search('nod');
+    expect(lastRevealed()).toBe(2);
+    fireEvent.click(screen.getByLabelText('Next match'));
+    expect(lastRevealed()).toBe(3);
+  });
+
   it('keeps the panel open while navigating with the next/previous buttons', () => {
     const { designer, closeModal } = harness();
     render(<FindInMapPanel designer={designer} closeModal={closeModal} />);

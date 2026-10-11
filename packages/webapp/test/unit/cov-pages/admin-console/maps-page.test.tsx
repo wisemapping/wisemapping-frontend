@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import { act, fireEvent, screen, waitFor, within } from '@testing-library/react';
 
 import MapsManagement from '../../../../src/components/admin-console/maps-page';
@@ -26,6 +25,7 @@ import type { AdminClientInterface } from '../../../../src/classes/client/admin-
 import { renderWithWrapper } from '../providers';
 import { BURST_TEXT, typeInBurst } from '../../burst-typing';
 import { buildAdminClient, makeAdminMap, makeUser, MockAdminClient, page } from './fixtures';
+import { defined } from '../../defined';
 
 const plainMap = makeAdminMap({
   id: 11,
@@ -283,24 +283,24 @@ describe('MapsManagement', () => {
     setup();
     await waitForRows();
 
-    await chooseOption(filterSelects()[0], 'Public');
+    await chooseOption(defined(filterSelects()[0]), 'Public');
     await waitFor(() => expect(lastParams()).toMatchObject({ filterPublic: true }));
     await waitForRows();
-    await chooseOption(filterSelects()[0], 'Private');
+    await chooseOption(defined(filterSelects()[0]), 'Private');
     await waitFor(() => expect(lastParams()).toMatchObject({ filterPublic: false }));
 
     await waitForRows();
-    await chooseOption(filterSelects()[1], 'Locked');
+    await chooseOption(defined(filterSelects()[1]), 'Locked');
     await waitFor(() => expect(lastParams()).toMatchObject({ filterLocked: true }));
     await waitForRows();
-    await chooseOption(filterSelects()[1], 'Unlocked');
+    await chooseOption(defined(filterSelects()[1]), 'Unlocked');
     await waitFor(() => expect(lastParams()).toMatchObject({ filterLocked: false }));
 
     await waitForRows();
-    await chooseOption(filterSelects()[2], 'Spam');
+    await chooseOption(defined(filterSelects()[2]), 'Spam');
     await waitFor(() => expect(lastParams()).toMatchObject({ filterSpam: true }));
     await waitForRows();
-    await chooseOption(filterSelects()[2], 'Not Spam');
+    await chooseOption(defined(filterSelects()[2]), 'Not Spam');
     await waitFor(() => expect(lastParams()).toMatchObject({ filterSpam: false }));
 
     await waitForRows();
@@ -319,7 +319,7 @@ describe('MapsManagement', () => {
       ['Map ID', 'id'],
       ['Created', 'creationTime'],
       ['Modified', 'lastModificationTime'],
-    ]) {
+    ] as const) {
       fireEvent.click(screen.getByRole('button', { name: header }));
       await waitFor(() => expect(lastParams()).toMatchObject({ sortBy: field, sortOrder: 'asc' }));
     }
@@ -369,8 +369,8 @@ describe('MapsManagement', () => {
         target: { value: 'Now described' },
       });
       const [visibility, lock] = within(dialog).getAllByRole('combobox');
-      await chooseOption(visibility, 'Public');
-      await chooseOption(lock, 'Locked');
+      await chooseOption(defined(visibility), 'Public');
+      await chooseOption(defined(lock), 'Locked');
       fireEvent.click(within(dialog).getByRole('button', { name: 'Save' }));
 
       await waitFor(() =>
@@ -568,13 +568,13 @@ describe('MapsManagement', () => {
       setup();
       await waitForRows();
 
-      fireEvent.click(within(rowOf('Plain map')).getByRole('button', { name: 'mark-spam' }));
+      fireEvent.click(within(rowOf('Plain map')).getByRole('button', { name: 'Mark as spam' }));
       expect(confirm).toHaveBeenCalledWith('Are you sure you want to mark as spam this map?');
       await waitFor(() =>
         expect(client.updateMapSpamStatus).toHaveBeenCalledWith(11, { spam: true }),
       );
 
-      fireEvent.click(within(rowOf('Busy map')).getByRole('button', { name: 'mark-not-spam' }));
+      fireEvent.click(within(rowOf('Busy map')).getByRole('button', { name: 'Mark as not spam' }));
       expect(confirm).toHaveBeenCalledWith('Are you sure you want to mark as not spam this map?');
       await waitFor(() =>
         expect(client.updateMapSpamStatus).toHaveBeenCalledWith(12, { spam: false }),
@@ -588,11 +588,11 @@ describe('MapsManagement', () => {
       setup();
       await waitForRows();
 
-      fireEvent.click(within(rowOf('Plain map')).getByRole('button', { name: 'mark-spam' }));
+      fireEvent.click(within(rowOf('Plain map')).getByRole('button', { name: 'Mark as spam' }));
       expect(client.updateMapSpamStatus).not.toHaveBeenCalled();
 
       confirm.mockReturnValue(true);
-      fireEvent.click(within(rowOf('Plain map')).getByRole('button', { name: 'mark-spam' }));
+      fireEvent.click(within(rowOf('Plain map')).getByRole('button', { name: 'Mark as spam' }));
       await waitFor(() =>
         expect(errorSpy).toHaveBeenCalledWith('Failed to update spam status:', expect.any(Error)),
       );
@@ -714,21 +714,21 @@ describe('MapsManagement', () => {
       await waitForRows();
 
       let dialog = await openOwner();
-      fireEvent.click(within(dialog).getByRole('button', { name: 'mark-not-spam' }));
+      fireEvent.click(within(dialog).getByRole('button', { name: 'Mark as not spam' }));
       await waitFor(() =>
         expect(client.updateMapSpamStatus).toHaveBeenCalledWith(22, { spam: false }),
       );
-      fireEvent.click(within(dialog).getAllByRole('button', { name: 'Delete' })[0]);
+      fireEvent.click(defined(within(dialog).getAllByRole('button', { name: 'Delete' })[0]));
       await waitFor(() => expect(client.deleteAdminMap).toHaveBeenCalledWith(21));
 
-      fireEvent.click(within(dialog).getAllByRole('button', { name: 'Edit' })[1]);
+      fireEvent.click(defined(within(dialog).getAllByRole('button', { name: 'Edit' })[1]));
       const edit = await screen.findByRole('dialog', { name: 'Edit Map' });
       expect((within(edit).getByLabelText('Title') as HTMLInputElement).value).toBe('Owner second');
       fireEvent.click(within(edit).getByRole('button', { name: 'Cancel' }));
       await waitFor(() => expect(screen.queryByRole('dialog', { name: 'Edit Map' })).toBeNull());
 
       dialog = screen.getByRole('dialog', { name: /Maps owned by/ });
-      fireEvent.click(within(dialog).getAllByRole('button', { name: 'View XML' })[0]);
+      fireEvent.click(defined(within(dialog).getAllByRole('button', { name: 'View XML' })[0]));
       expect(await screen.findByRole('dialog', { name: /Map XML Content/ })).toBeTruthy();
       await waitFor(() => expect(client.getAdminMapXml).toHaveBeenCalledWith(21));
     });
@@ -757,7 +757,9 @@ describe('MapsManagement', () => {
 
       const dialog = await openOwner();
       // The first "Suspended" chip is the owner's status in the info card.
-      fireEvent.click(within(dialog).getAllByText('Suspended', { selector: '.MuiChip-label' })[0]);
+      fireEvent.click(
+        defined(within(dialog).getAllByText('Suspended', { selector: '.MuiChip-label' })[0]),
+      );
       fireEvent.click(await screen.findByRole('menuitem', { name: 'Unsuspend user' }));
 
       // The backend has /suspension only: the old /unsuspend call always failed with a 404.
@@ -769,13 +771,17 @@ describe('MapsManagement', () => {
       // Reloading the owner can fail too.
       client.getAdminUser.mockRejectedValue(new Error('gone'));
       client.updateUserSuspension.mockRejectedValueOnce(new Error('denied'));
-      fireEvent.click(within(dialog).getAllByText('Suspended', { selector: '.MuiChip-label' })[0]);
+      fireEvent.click(
+        defined(within(dialog).getAllByText('Suspended', { selector: '.MuiChip-label' })[0]),
+      );
       fireEvent.click(await screen.findByRole('menuitem', { name: 'Unsuspend user' }));
       await waitFor(() =>
         expect(errorSpy).toHaveBeenCalledWith('Failed to unsuspend user:', expect.any(Error)),
       );
 
-      fireEvent.click(within(dialog).getAllByText('Suspended', { selector: '.MuiChip-label' })[0]);
+      fireEvent.click(
+        defined(within(dialog).getAllByText('Suspended', { selector: '.MuiChip-label' })[0]),
+      );
       fireEvent.click(await screen.findByRole('menuitem', { name: 'Unsuspend user' }));
       await waitFor(() =>
         expect(errorSpy).toHaveBeenCalledWith('Failed to fetch owner info:', expect.any(Error)),

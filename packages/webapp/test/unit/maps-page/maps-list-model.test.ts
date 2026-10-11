@@ -71,8 +71,11 @@ describe('getComparator and stableSort', () => {
   });
 
   test('a missing value compares as equal, so the order holds', () => {
-    const list = [map({ id: 1, description: undefined }), map({ id: 2, description: 'x' })];
-    expect(stableSort(list, getComparator('asc', 'description')).map((m) => m.id)).toEqual([1, 2]);
+    type Described = { id: number; description?: string };
+    const list: Described[] = [{ id: 1 }, { id: 2, description: 'x' }];
+    expect(
+      stableSort(list, getComparator<Described>('asc', 'description')).map((m) => m.id),
+    ).toEqual([1, 2]);
   });
 });
 

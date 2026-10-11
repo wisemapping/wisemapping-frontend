@@ -41,7 +41,7 @@ class Beta2PelaMigrator implements XMLMindmapSerializer {
   }
 
   loadFromDom(dom: Document, mapId: string): Mindmap {
-    $assert(mapId != null, 'mapId can not be null');
+    $assert(mapId, 'mapId can not be null');
     const mindmap = this._betaSerializer.loadFromDom(dom, mapId);
     mindmap.setVersion(ModelCodeName.PELA);
 

@@ -16,11 +16,11 @@
  *   limitations under the License.
  */
 
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, use } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import AccountAccessLayout from '../layout/AccountAccessLayout';
+import { ButtonLink } from '../layout/styled';
 import FormContainer from '../layout/form-container';
-import { Link as RouterLink } from 'react-router';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -32,10 +32,20 @@ import { getCanonicalUrl, getAlternateLanguageUrls } from '../../utils/seo-local
 
 const ActivationPage = (): React.ReactElement => {
   const intl = useIntl();
-  const client = useContext(ClientContext);
-  const [loading, setLoading] = useState(true);
+  const client = use(ClientContext);
+  // Read once, on arrival: the activation code is single-use.
+  const [code] = useState(
+    () => new URLSearchParams(window.location.search).get('code') ?? undefined,
+  );
+  const [loading, setLoading] = useState(Boolean(code));
   const [success, setSuccess] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [serverError, setServerError] = useState<string>();
+  const error = code
+    ? serverError
+    : intl.formatMessage({
+        id: 'activation.invalid-link',
+        defaultMessage: 'Invalid activation link',
+      });
 
   useEffect(() => {
     document.title = intl.formatMessage({
@@ -55,18 +65,9 @@ const ActivationPage = (): React.ReactElement => {
     typeof window !== 'undefined' ? window.location.origin : 'https://app.wisemapping.com';
 
   useEffect(() => {
-    const code = new URLSearchParams(window.location.search).get('code');
     if (!code) {
-      setError(
-        intl.formatMessage({
-          id: 'activation.invalid-link',
-          defaultMessage: 'Invalid activation link',
-        }),
-      );
-      setLoading(false);
       return;
     }
-
     client
       .activateAccount(code)
       .then(() => {
@@ -75,12 +76,10 @@ const ActivationPage = (): React.ReactElement => {
       })
       .catch((err) => {
         // The server's reason, or the page's own (translated) explanation.
-        setError(err.msg || null);
+        setServerError(err.msg || undefined);
         setLoading(false);
       });
-    // The message is read once, on arrival: the activation code is single-use.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [client]);
+  }, [client, code]);
 
   return (
     <>
@@ -119,12 +118,7 @@ const ActivationPage = (): React.ReactElement => {
                 />
               </Typography>
               <CircularProgress />
-              <Typography
-                style={{ marginTop: '1rem' }}
-                sx={{
-                  marginBottom: '16px',
-                }}
-              >
+              <Typography sx={{ marginTop: '1rem', marginBottom: '16px' }}>
                 <FormattedMessage
                   id="activation.loading.desc"
                   defaultMessage="Please wait while we activate your account..."
@@ -140,18 +134,18 @@ const ActivationPage = (): React.ReactElement => {
                 />
               </Typography>
 
-              <Alert severity="success" style={{ marginBottom: '1rem' }}>
+              <Alert severity="success" sx={{ marginBottom: '1rem' }}>
                 <FormattedMessage
                   id="activation.success.message"
                   defaultMessage="Your account has been activated. You can now sign in and start creating mind maps."
                 />
               </Alert>
 
-              <RouterLink to="/c/login" style={{ textDecoration: 'none' }}>
+              <ButtonLink to="/c/login">
                 <Button color="primary" size="medium" variant="contained" disableElevation={true}>
                   <FormattedMessage id="login.signin" defaultMessage="Sign In" />
                 </Button>
-              </RouterLink>
+              </ButtonLink>
             </>
           ) : (
             <>
@@ -159,7 +153,7 @@ const ActivationPage = (): React.ReactElement => {
                 <FormattedMessage id="activation.error.title" defaultMessage="Activation Failed" />
               </Typography>
 
-              <Alert severity="error" style={{ marginBottom: '1rem' }}>
+              <Alert severity="error" sx={{ marginBottom: '1rem' }}>
                 {error || (
                   <FormattedMessage
                     id="activation.error.message"
@@ -168,11 +162,11 @@ const ActivationPage = (): React.ReactElement => {
                 )}
               </Alert>
 
-              <RouterLink to="/c/login" style={{ textDecoration: 'none' }}>
+              <ButtonLink to="/c/login">
                 <Button color="primary" size="medium" variant="contained" disableElevation={true}>
                   <FormattedMessage id="login.signin" defaultMessage="Sign In" />
                 </Button>
-              </RouterLink>
+              </ButtonLink>
             </>
           )}
         </FormContainer>

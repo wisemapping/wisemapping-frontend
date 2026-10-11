@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import { act, fireEvent, screen, waitFor, within } from '@testing-library/react';
 
 import AccountManagement from '../../../../src/components/admin-console/accounts-page';
@@ -411,7 +410,7 @@ describe('AccountManagement', () => {
         target: { value: 'Lovelace' },
       });
       fireEvent.click(within(dialog).getByRole('switch'));
-      await chooseOption(within(dialog).getByRole('combobox'), 'Spanish');
+      await chooseOption(within(dialog).getByRole('combobox'), 'Español');
       fireEvent.click(within(dialog).getByRole('button', { name: 'Update User' }));
 
       await waitFor(() =>
@@ -918,7 +917,7 @@ describe('AccountManagement', () => {
   describe('Facebook data deletion', () => {
     const openLookup = async () => {
       fireEvent.click(screen.getByRole('button', { name: 'Facebook data deletion lookup' }));
-      return screen.findByLabelText('facebookId');
+      return screen.findByLabelText('Facebook user ID');
     };
 
     test('finds the account for a Facebook id and removes the association', async () => {
@@ -953,7 +952,7 @@ describe('AccountManagement', () => {
       await dialogClosed();
       // The lookup is reset.
       expect(screen.queryByText('Eff Bee')).toBeNull();
-      expect((screen.getByLabelText('facebookId') as HTMLInputElement).value).toBe('');
+      expect((screen.getByLabelText('Facebook user ID') as HTMLInputElement).value).toBe('');
     });
 
     test('the Facebook id field takes 200 characters typed in one burst, as Cypress types them', async () => {

@@ -23,7 +23,7 @@ export type FontStyle = {
   style?: string;
   weight?: string;
   size?: string;
-  color?: string | null;
+  color?: string | undefined;
 };
 
 /**

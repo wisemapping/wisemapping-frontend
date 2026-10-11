@@ -27,7 +27,7 @@ export type NewUser = {
   firstname: string;
   lastname: string;
   password: string;
-  recaptcha: string | null;
+  recaptcha: string;
   acceptedTerms: boolean;
 };
 
@@ -35,7 +35,7 @@ export type ImportMapInfo = {
   title: string;
   description?: string;
   contentType?: string;
-  content?: ArrayBuffer | null | string;
+  content?: ArrayBuffer | string;
 };
 
 export type Label = {
@@ -138,7 +138,8 @@ export type AccountInfo = {
   firstname: string;
   lastname: string;
   email: string;
-  locale?: Locale;
+  // Undefined when the account has no locale, or one this frontend does not know.
+  locale?: Locale | undefined;
   authenticationType: AuthenticationType;
   isAdmin: boolean;
 };

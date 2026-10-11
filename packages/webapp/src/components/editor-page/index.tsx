@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { useCallback, useContext, useEffect, useState, Suspense, useRef } from 'react';
+import React, { useCallback, use, useEffect, useState, Suspense, useRef } from 'react';
 import Editor, { useEditor, EditorLoadingSkeleton } from '@wisemapping/editor';
 import type { EditorOptions } from '@wisemapping/editor';
 
@@ -93,9 +93,9 @@ const buildPersistenceManagerForEditor = (
 
 export type EditorPropsType = {
   mapId: number;
-  hid?: number;
+  hid?: number | undefined;
   pageMode: PageModeType;
-  zoom?: number;
+  zoom?: number | undefined;
 };
 
 const ActionDispatcher = React.lazy(() => import('../maps-page/action-dispatcher'));
@@ -119,7 +119,7 @@ const LoadedEditorPage = ({
   hid,
   editorMetadata,
 }: EditorPropsType & { editorMetadata: EditorMetadata }): React.ReactElement => {
-  const [activeDialog, setActiveDialog] = useState<ActionType | null>(null);
+  const [activeDialog, setActiveDialog] = useState<ActionType>();
   const [sessionExpired, setSessionExpired] = useState<boolean>(false);
   const mapInfoRef = useRef<MapInfoImpl | undefined>(undefined);
 
@@ -127,8 +127,8 @@ const LoadedEditorPage = ({
   const userLocale = AppI18n.getUserLocale(account?.locale);
   const intlLocale = useLocaleMessages(userLocale.code);
   const theme = useMuiTheme(); // Get MUI theme object
-  const client = useContext(ClientContext);
-  const { hotkeyEnabled } = useContext(KeyboardContext);
+  const client = use(ClientContext);
+  const { hotkeyEnabled } = use(KeyboardContext);
 
   // Parse query parameters for hideCreatorInfo and theme
   const [searchParams] = useSearchParams();
@@ -177,8 +177,8 @@ const LoadedEditorPage = ({
     enableAppBar: enableAppBar,
     zoom: editorMetadata.zoom,
     hideCreatorInfo: hideCreatorInfoParam === 'true',
-    initialThemeVariant: themeParam === 'dark' || themeParam === 'light' ? themeParam : undefined,
-    bootstrapXML: editorMetadata.bootstrapXML,
+    ...((themeParam === 'dark' || themeParam === 'light') && { initialThemeVariant: themeParam }),
+    ...(editorMetadata.bootstrapXML !== undefined && { bootstrapXML: editorMetadata.bootstrapXML }),
   };
 
   const persistence: PersistenceManager = buildPersistenceManagerForEditor(
@@ -268,7 +268,7 @@ const LoadedEditorPage = ({
         <Suspense fallback={<></>}>
           <ActionDispatcher
             action={activeDialog}
-            onClose={() => setActiveDialog(null)}
+            onClose={() => setActiveDialog(undefined)}
             mapsId={[mapId]}
             fromEditor
             pageMode={pageMode}

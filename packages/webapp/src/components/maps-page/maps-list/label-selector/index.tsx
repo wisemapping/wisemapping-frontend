@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useContext, useMemo } from 'react';
+import React, { use, useMemo } from 'react';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Box from '@mui/material/Box';
@@ -33,7 +33,7 @@ export type LabelSelectorProps = {
 };
 
 export function LabelSelector({ onChange, maps }: LabelSelectorProps): React.ReactElement {
-  const client = useContext(ClientContext);
+  const client = use(ClientContext);
   const { data: labels = [] } = useQuery<unknown, ErrorInfo, Label[]>({
     queryKey: ['labels'],
     queryFn: async () => client.fetchLabels(),

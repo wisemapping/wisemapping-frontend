@@ -16,8 +16,8 @@
  *   limitations under the License.
  */
 
-import React, { ReactElement } from 'react';
-import { useIntl } from 'react-intl';
+import { ReactElement } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -42,17 +42,18 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import UserInfoCard from './UserInfoCard';
 import SpamStatusChip from './SpamStatusChip';
+import { MapLink } from '../styled';
 import type { AdminUser, AdminMap } from '../../../classes/client/admin-client';
 
 interface UserMapsDialogProps {
   open: boolean;
   onClose: () => void;
-  user: AdminUser | null;
+  user: AdminUser | undefined;
   maps: AdminMap[];
   isLoadingUser: boolean;
   isLoadingMaps: boolean;
-  onSuspend?: () => void;
-  onUnsuspend?: () => void;
+  onSuspend?: (() => void) | undefined;
+  onUnsuspend?: (() => void) | undefined;
   onViewXml?: (map: AdminMap) => void;
   onEditMap?: (map: AdminMap) => void;
   onToggleSpam?: (mapId: number, currentSpamStatus: boolean) => void;
@@ -201,25 +202,16 @@ const UserMapsDialog = ({
                   {maps.map((map) => (
                     <TableRow key={map.id} hover>
                       <TableCell>
-                        <Typography
+                        <MapLink
                           variant="body2"
                           color="primary"
                           component="a"
                           href={`/c/maps/${map.id}/public`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          sx={{
-                            fontWeight: 'medium',
-                            textDecoration: 'none',
-                            cursor: 'pointer',
-
-                            '&:hover': {
-                              textDecoration: 'underline',
-                            },
-                          }}
                         >
                           #{map.id}
-                        </Typography>
+                        </MapLink>
                       </TableCell>
                       <TableCell>
                         <Box
@@ -248,7 +240,12 @@ const UserMapsDialog = ({
                             color: 'text.secondary',
                           }}
                         >
-                          {map.description || 'No description'}
+                          {map.description || (
+                            <FormattedMessage
+                              id="admin.maps.no-description"
+                              defaultMessage="No description"
+                            />
+                          )}
                         </Typography>
                       </TableCell>
                       <TableCell>{formatDate(map.creationTime)}</TableCell>
@@ -267,7 +264,17 @@ const UserMapsDialog = ({
                             getSuspendedUserChip(map.creatorSuspended || false)}
                           {!getPublicChip && (
                             <Chip
-                              label={map.public ? 'Public' : 'Private'}
+                              label={
+                                map.public
+                                  ? intl.formatMessage({
+                                      id: 'admin.public',
+                                      defaultMessage: 'Public',
+                                    })
+                                  : intl.formatMessage({
+                                      id: 'admin.private',
+                                      defaultMessage: 'Private',
+                                    })
+                              }
                               color={map.public ? 'success' : 'default'}
                               size="small"
                             />

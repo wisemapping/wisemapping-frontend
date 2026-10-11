@@ -32,7 +32,7 @@
 class ThemeResolutionCache {
   private static _depth = 0;
 
-  private static _entries: Map<object, Map<string, unknown>> | null = null;
+  private static _entries: Map<object, Map<string, unknown>> | undefined;
 
   /** Runs fn as a redraw pass, or as part of the pass in progress. */
   static run<T>(fn: () => T): T {
@@ -45,7 +45,7 @@ class ThemeResolutionCache {
     } finally {
       ThemeResolutionCache._depth -= 1;
       if (ThemeResolutionCache._depth === 0) {
-        ThemeResolutionCache._entries = null;
+        ThemeResolutionCache._entries = undefined;
       }
     }
   }

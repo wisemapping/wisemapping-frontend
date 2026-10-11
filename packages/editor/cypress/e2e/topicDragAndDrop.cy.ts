@@ -32,7 +32,7 @@ import { designerIn } from '../support/designer';
 type TopicHandle = {
   getText(): string;
   getPosition(): { x: number; y: number };
-  getOutgoingConnectedTopic(): TopicHandle | null;
+  getOutgoingConnectedTopic(): TopicHandle | undefined;
 };
 
 type DesignerHandle = {
@@ -55,7 +55,7 @@ const topicState = (text: string) =>
   cy.window().then((win) => {
     const topic = topicByText(win, text);
     return {
-      parent: topic.getOutgoingConnectedTopic()?.getText() ?? null,
+      parent: topic.getOutgoingConnectedTopic()?.getText(),
       position: { ...topic.getPosition() },
     };
   });

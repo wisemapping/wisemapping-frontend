@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useContext } from 'react';
+import React, { use } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ErrorInfo, Permission } from '../../../../classes/client';
@@ -115,7 +115,7 @@ const MessageField = React.memo(function MessageField({
 
 const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
   const intl = useIntl();
-  const client = useContext(ClientContext);
+  const client = use(ClientContext);
   const queryClient = useQueryClient();
   const [showMessage, setShowMessage] = React.useState<boolean>(false);
   const [model, setModel] = React.useState<ShareModel>(defaultModel);
@@ -259,7 +259,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
               label={<FormattedMessage id="share.can-edit" defaultMessage="Can edit" />}
             />
             <FormControlLabel
-              onChange={(event, value) => {
+              onChange={(_event, value) => {
                 setShowMessage(value);
               }}
               control={<Checkbox color="primary" size="small" disabled={addMutation.isPending} />}

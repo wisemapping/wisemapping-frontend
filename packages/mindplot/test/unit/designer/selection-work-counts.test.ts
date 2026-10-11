@@ -100,17 +100,17 @@ const countEvents = (designer: Designer) => {
     topicUnselected: 0,
   };
   designer.addEvent('onfocus', () => {
-    fired.onfocus! += 1;
+    fired['onfocus']! += 1;
   });
   designer.addEvent('onblur', () => {
-    fired.onblur! += 1;
+    fired['onblur']! += 1;
   });
   const bus = designer.getLayoutEventBus();
   bus.addEvent('topicSelected', () => {
-    fired.topicSelected! += 1;
+    fired['topicSelected']! += 1;
   });
   bus.addEvent('topicUnselected', () => {
-    fired.topicUnselected! += 1;
+    fired['topicUnselected']! += 1;
   });
   return fired;
 };
@@ -155,9 +155,9 @@ describe('Selection work', () => {
     expect(topics.every((topic) => topic.isOnFocus())).toBe(true);
     expect(relationships.every((relationship) => relationship.isOnFocus())).toBe(true);
     // Each topic still reports its own selection, as before.
-    expect(fired.topicSelected).toBe(TOPICS - alreadySelected);
+    expect(fired['topicSelected']).toBe(TOPICS - alreadySelected);
     // Before: 511, one per topic and relationship selected.
-    expect(fired.onfocus).toBe(1);
+    expect(fired['onfocus']).toBe(1);
     // Before: 499, one per topic selected.
     expect(pans.mock.calls.length).toBeLessThanOrEqual(1);
     // Before: 63,005,749: each topic selected counted the selection, and each pan updated every
@@ -176,10 +176,10 @@ describe('Selection work', () => {
 
     expect(designer.getModel().filterSelectedTopics()).toHaveLength(0);
     expect(designer.getModel().filterSelectedRelationships()).toHaveLength(0);
-    expect(fired.topicUnselected).toBe(TOPICS);
+    expect(fired['topicUnselected']).toBe(TOPICS);
     // Fired once, when the selection became empty: as before.
-    expect(fired.onblur).toBe(1);
-    expect(fired.onfocus).toBe(0);
+    expect(fired['onblur']).toBe(1);
+    expect(fired['onfocus']).toBe(0);
     // Before: 257,000. Now a few per topic.
     expect(reads).toBeLessThan(10 * TOPICS);
   });
@@ -196,9 +196,9 @@ describe('Selection work', () => {
     expect(designer.getModel().filterSelectedTopics()).toHaveLength(0);
     expect(designer.getModel().filterSelectedRelationships()).toHaveLength(0);
     // Each topic still reports its own deselection, as before.
-    expect(fired.topicUnselected).toBe(TOPICS);
-    expect(fired.onblur).toBe(1);
-    expect(fired.onfocus).toBe(0);
+    expect(fired['topicUnselected']).toBe(TOPICS);
+    expect(fired['onblur']).toBe(1);
+    expect(fired['onfocus']).toBe(0);
     // Before: 257,500: each topic unselected counted the selection. Now a few per topic.
     expect(reads).toBeLessThan(10 * TOPICS);
   });
@@ -214,7 +214,7 @@ describe('Selection work', () => {
 
     expect(designer.getModel().filterSelectedTopics()).toEqual([topic(3)]);
     expect(designer.getModel().filterSelectedRelationships()).toHaveLength(0);
-    expect(fired.topicUnselected).toBe(TOPICS - 1);
+    expect(fired['topicUnselected']).toBe(TOPICS - 1);
     // The selection changed without becoming empty: one 'onfocus' (before: none, so the editor
     // kept showing every topic selected), no 'onblur'.
     expect(fired).toMatchObject({ onblur: 0, onfocus: 1, topicSelected: 0 });
@@ -245,7 +245,7 @@ describe('Selection work', () => {
     // One per change: the central topic, selected when the map loads, stays selected, so
     // unselecting topic 3 is an 'onfocus' too. It used to fire nothing, which left the editor
     // counting two topics (BL5-244).
-    expect(fired.onfocus).toBe(2);
+    expect(fired['onfocus']).toBe(2);
     // Before: 1,005: the designer's handlers counted the selected topics by reading every topic.
     expect(focusReads.count).toBeLessThan(TOPICS / 5);
   });
@@ -268,7 +268,7 @@ describe('Selection work', () => {
 
     // One per change, as above: each unselection leaves the central topic selected (it used to
     // fire nothing, so 2).
-    expect(fired.onfocus).toBe(4);
+    expect(fired['onfocus']).toBe(4);
     expect(designer.getModel().countSelectedRelationships()).toBe(0);
     // Before: 1,002: the designer's handlers listed the selected relationships by reading each one.
     expect(focusReads.count).toBeLessThan(RELATIONSHIPS / 5);

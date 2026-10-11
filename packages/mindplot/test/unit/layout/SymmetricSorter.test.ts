@@ -138,7 +138,7 @@ describe('SymmetricSorter.predict of a new child of an isolated topic', () => {
 
   it.each([-400, 400])('previews the side the layout uses for a topic at x=%i', (x) => {
     const manager = isolatedAt(x);
-    const predicted = manager.predict(5, null, null);
+    const predicted = manager.predict(5, undefined, undefined);
 
     manager.addNode(6, NODE_SIZE, { x: 0, y: 0 }).connectNode(5, 6, predicted.order);
     manager.layout();
@@ -196,7 +196,7 @@ describe('sorter predict signatures (BL5-33, BL5-34)', () => {
     manager.addNode(3, NODE_SIZE, { x: 0, y: 0 }).connectNode(0, 3, 1);
     manager.layout();
 
-    expect(() => manager.predict(1, 3, null)).toThrow(/position cannot be null/);
+    expect(() => manager.predict(1, 3, undefined)).toThrow(/position cannot be null/);
   });
 });
 

@@ -20,6 +20,7 @@ import MockAdminClient from '../../../src/classes/client/mock-admin-client';
 import { AdminUser } from '../../../src/classes/client/admin-client';
 import { AuthenticationType } from '../../../src/classes/client';
 import { appLogger } from '../../../src/utils/logger';
+import { defined } from '../defined';
 
 let client: MockAdminClient;
 
@@ -99,7 +100,7 @@ describe('MockAdminClient users listing', () => {
     ]);
 
     const desc = await client.getAdminUsers({ sortBy: 'email', sortOrder: 'desc', pageSize: 1 });
-    expect(desc.data[0].email).toBe('user@wisemapping.com');
+    expect(defined(desc.data[0]).email).toBe('user@wisemapping.com');
 
     // Missing values sort as empty strings.
     const bySuspension = await client.getAdminUsers({ sortBy: 'suspensionReason' });
@@ -257,10 +258,10 @@ describe('MockAdminClient maps', () => {
 
   it('sorts maps both ways', async () => {
     const asc = await client.getAdminMaps({ sortBy: 'title', pageSize: 1 });
-    expect(asc.data[0].title).toBe('Another Spam Map');
+    expect(defined(asc.data[0]).title).toBe('Another Spam Map');
 
     const desc = await client.getAdminMaps({ sortBy: 'title', sortOrder: 'desc', pageSize: 1 });
-    expect(desc.data[0].title).toBe('Technical Architecture');
+    expect(defined(desc.data[0]).title).toBe('Technical Architecture');
 
     const byLockOwner = await client.getAdminMaps({ sortBy: 'isLockedBy' });
     expect(byLockOwner.totalElements).toBe(12);

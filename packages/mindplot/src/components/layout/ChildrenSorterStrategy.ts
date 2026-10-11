@@ -57,8 +57,8 @@ abstract class ChildrenSorterStrategy {
   abstract predict(
     treeSet: RootedTreeSet,
     parent: Node,
-    node: Node | null,
-    position: PositionType | null,
+    node: Node | undefined,
+    position: PositionType | undefined,
   ): SorterPrediction;
 
   abstract verify(treeSet: RootedTreeSet, node: Node): void;
@@ -79,7 +79,7 @@ abstract class ChildrenSorterStrategy {
    */
   getOrdersForNewChildren(treeSet: RootedTreeSet, parent: Node, count: number): number[] {
     const orders: number[] = [];
-    let { order } = this.predict(treeSet, parent, null, null);
+    let { order } = this.predict(treeSet, parent, undefined, undefined);
     for (let i = 0; i < count; i++) {
       if (i > 0) {
         order = this.getOrderAfter(order);

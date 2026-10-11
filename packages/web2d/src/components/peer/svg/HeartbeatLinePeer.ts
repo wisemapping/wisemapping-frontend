@@ -33,9 +33,9 @@ class HeartbeatLinePeer extends ElementPeer<SVGPathElement> {
 
   private _strokeColor: string;
 
-  private _strokeStyle: StrokeStyle | null;
+  private _strokeStyle: StrokeStyle;
 
-  private _dashPattern: string | null;
+  private _dashPattern: string | undefined;
 
   private _x1: number;
 
@@ -56,7 +56,7 @@ class HeartbeatLinePeer extends ElementPeer<SVGPathElement> {
     this._strokeOpacity = 1;
     this._strokeColor = '#ff3366';
     this._strokeStyle = 'solid';
-    this._dashPattern = null;
+    this._dashPattern = undefined;
 
     this._x1 = 0;
     this._y1 = 0;
@@ -67,21 +67,21 @@ class HeartbeatLinePeer extends ElementPeer<SVGPathElement> {
   }
 
   override setStroke(
-    width: number | null,
-    style?: StrokeStyle | null,
-    color?: string | null,
+    width: number | undefined,
+    style?: StrokeStyle,
+    color?: string,
     opacity?: number,
   ): void {
     // The spike amplitude depends on the width, so a new width re-paths (W-STALEPATH).
-    const repath = width != null && width !== this._strokeWidth;
-    if (width != null) {
+    const repath = width !== undefined && width !== this._strokeWidth;
+    if (width !== undefined) {
       this._strokeWidth = width;
     }
 
     if (style) {
       this._strokeStyle = style;
       if (style === 'solid') {
-        this._dashPattern = null;
+        this._dashPattern = undefined;
       }
     }
 
@@ -89,7 +89,7 @@ class HeartbeatLinePeer extends ElementPeer<SVGPathElement> {
       this._strokeColor = color;
     }
 
-    if (opacity != null) {
+    if (opacity !== undefined) {
       this._strokeOpacity = opacity;
     }
 
@@ -100,10 +100,10 @@ class HeartbeatLinePeer extends ElementPeer<SVGPathElement> {
   }
 
   setDashPattern(length: number, spacing: number): void {
-    if (length != null && spacing != null) {
+    if (length !== undefined && spacing !== undefined) {
       this._dashPattern = `${length},${spacing}`;
     } else {
-      this._dashPattern = null;
+      this._dashPattern = undefined;
     }
     this._applyStroke();
   }
@@ -141,7 +141,7 @@ class HeartbeatLinePeer extends ElementPeer<SVGPathElement> {
 
     // The table dash scales with the drawn width (BL5-77).
     const dashArray =
-      this._strokeStyle && this._strokeStyle !== 'solid'
+      this._strokeStyle !== 'solid'
         ? ElementPeer.dashArray(this._strokeStyle, Math.max(1, this._strokeWidth))
         : undefined;
 
@@ -155,15 +155,12 @@ class HeartbeatLinePeer extends ElementPeer<SVGPathElement> {
   }
 
   private _updatePath(): void {
-    const d =
-      this._x1 != null && this._y1 != null && this._x2 != null && this._y2 != null
-        ? heartbeatPathData(
-            { x: this._x1, y: this._y1 },
-            { x: this._x2, y: this._y2 },
-            this._strokeWidth,
-          )
-        : null;
-    if (d === null) {
+    const d = heartbeatPathData(
+      { x: this._x1, y: this._y1 },
+      { x: this._x2, y: this._y2 },
+      this._strokeWidth,
+    );
+    if (d === undefined) {
       // Nothing to draw: clear the previous path rather than leave it on screen (W-STALEPATH).
       this.removeAttr('d');
       return;

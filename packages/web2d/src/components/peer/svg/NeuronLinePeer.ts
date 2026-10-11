@@ -32,9 +32,9 @@ class NeuronLinePeer extends ElementPeer<SVGPathElement> {
 
   private _strokeColor: string;
 
-  private _strokeStyle: StrokeStyle | null;
+  private _strokeStyle: StrokeStyle;
 
-  private _dashPattern: string | null;
+  private _dashPattern: string | undefined;
 
   private _x1: number;
 
@@ -49,8 +49,8 @@ class NeuronLinePeer extends ElementPeer<SVGPathElement> {
 
   private _hasTo: boolean;
 
-  // The seed and the segment count of the fixed shape, or null until it is fixed.
-  private _shape: { readonly seed: number; readonly steps: number } | null;
+  // The seed and the segment count of the fixed shape, or undefined until it is fixed.
+  private _shape: { readonly seed: number; readonly steps: number } | undefined;
 
   constructor() {
     super(ElementPeer.createNode('path'));
@@ -63,7 +63,7 @@ class NeuronLinePeer extends ElementPeer<SVGPathElement> {
     this._strokeOpacity = 1;
     this._strokeColor = '#9cf7ff';
     this._strokeStyle = 'solid';
-    this._dashPattern = null;
+    this._dashPattern = undefined;
 
     this._x1 = 0;
     this._y1 = 0;
@@ -71,25 +71,25 @@ class NeuronLinePeer extends ElementPeer<SVGPathElement> {
     this._y2 = 0;
     this._hasFrom = false;
     this._hasTo = false;
-    this._shape = null;
+    this._shape = undefined;
 
     this._applyStroke();
   }
 
   override setStroke(
-    width: number | null,
-    style?: StrokeStyle | null,
-    color?: string | null,
+    width: number | undefined,
+    style?: StrokeStyle,
+    color?: string,
     opacity?: number,
   ): void {
-    if (width != null) {
+    if (width !== undefined) {
       this._strokeWidth = width;
     }
 
     if (style) {
       this._strokeStyle = style;
       if (style === 'solid') {
-        this._dashPattern = null;
+        this._dashPattern = undefined;
       }
     }
 
@@ -97,7 +97,7 @@ class NeuronLinePeer extends ElementPeer<SVGPathElement> {
       this._strokeColor = color;
     }
 
-    if (opacity != null) {
+    if (opacity !== undefined) {
       this._strokeOpacity = opacity;
     }
 
@@ -105,10 +105,10 @@ class NeuronLinePeer extends ElementPeer<SVGPathElement> {
   }
 
   setDashPattern(length: number, spacing: number): void {
-    if (length != null && spacing != null) {
+    if (length !== undefined && spacing !== undefined) {
       this._dashPattern = `${length},${spacing}`;
     } else {
-      this._dashPattern = null;
+      this._dashPattern = undefined;
     }
     this._applyStroke();
   }
@@ -148,7 +148,7 @@ class NeuronLinePeer extends ElementPeer<SVGPathElement> {
 
     // The table dash scales with the drawn width (BL5-77).
     const dashArray =
-      this._strokeStyle && this._strokeStyle !== 'solid'
+      this._strokeStyle !== 'solid'
         ? ElementPeer.dashArray(this._strokeStyle, Math.max(1, this._strokeWidth))
         : undefined;
 
@@ -165,15 +165,10 @@ class NeuronLinePeer extends ElementPeer<SVGPathElement> {
     const from = { x: this._x1, y: this._y1 };
     const to = { x: this._x2, y: this._y2 };
     // The ends are checked before the seed is taken: a draw with coinciding ends must not fix it.
-    const drawable =
-      from.x != null &&
-      from.y != null &&
-      to.x != null &&
-      to.y != null &&
-      (from.x !== to.x || from.y !== to.y);
-    const shape = drawable ? this._shapeFor() : null;
-    const d = shape ? neuronPathData(from, to, shape.seed, shape.steps) : null;
-    if (d === null) {
+    const drawable = from.x !== to.x || from.y !== to.y;
+    const shape = drawable ? this._shapeFor() : undefined;
+    const d = shape ? neuronPathData(from, to, shape.seed, shape.steps) : undefined;
+    if (d === undefined) {
       // Nothing to draw: clear the previous path rather than leave it on screen (W-STALEPATH).
       this.removeAttr('d');
       return;
@@ -188,7 +183,7 @@ class NeuronLinePeer extends ElementPeer<SVGPathElement> {
    * dropping segments in jumps (BL5-119), and a static render stays deterministic.
    */
   private _shapeFor(): { readonly seed: number; readonly steps: number } {
-    if (this._shape !== null) {
+    if (this._shape !== undefined) {
       return this._shape;
     }
     const length = Math.hypot(this._x2 - this._x1, this._y2 - this._y1);

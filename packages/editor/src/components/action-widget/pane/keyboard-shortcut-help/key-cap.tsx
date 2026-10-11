@@ -68,7 +68,7 @@ const Joiner = ({ children }: { children: string }): ReactElement => (
 const ComboList = ({ combos }: { combos: Combo[] }): ReactElement => (
   <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', rowGap: 0.5 }}>
     {combos.map((combo, comboIndex) => (
-      // Index keys are safe here: the list is static data, never reordered.
+      // eslint-disable-next-line @eslint-react/no-array-index-key -- static data, never reordered
       <React.Fragment key={comboIndex}>
         {comboIndex > 0 && <Joiner>/</Joiner>}
         {combo.keys?.map((key, keyIndex) => (

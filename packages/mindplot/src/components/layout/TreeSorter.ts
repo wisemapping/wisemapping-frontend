@@ -30,8 +30,8 @@ class TreeSorter extends AbstractBasicSorter {
   predict(
     graph: RootedTreeSet,
     parent: Node,
-    node: Node | null,
-    position: PositionType | null,
+    node: Node | undefined,
+    position: PositionType | undefined,
   ): SorterPrediction {
     // If node is being added (not dragged)
     if (!node) {
@@ -177,7 +177,7 @@ class TreeSorter extends AbstractBasicSorter {
 
   detach(treeSet: RootedTreeSet, node: Node): void {
     const parent = treeSet.getParent(node);
-    $assert(parent != null, 'cannot detach node with null parent');
+    $assert(parent !== undefined, 'cannot detach node with null parent');
     const children = this._getSortedChildren(treeSet, parent);
     const order = node.getOrder();
     $assert(order !== undefined, 'Node must have an order to be detached');

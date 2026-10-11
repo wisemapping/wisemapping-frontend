@@ -29,9 +29,9 @@ class ChangeFeatureToTopicCommand extends Command {
   private _attributes: Record<string, string | undefined>;
 
   constructor(topicId: number, featureId: number, attributes: FeatureAttributes) {
-    $assert(topicId != null, 'topicId can not be null');
-    $assert(featureId != null, 'featureId can not be null');
-    $assert(attributes != null, 'attributes can not be null');
+    $assert(typeof topicId === 'number', 'topicId can not be null');
+    $assert(typeof featureId === 'number', 'featureId can not be null');
+    $assert(attributes, 'attributes can not be null');
 
     super();
     this._topicId = topicId;

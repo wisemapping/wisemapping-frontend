@@ -495,7 +495,7 @@ describe('DragManager drag pivot', () => {
     dragNode!.connectTo(parent);
 
     expect(firstManager.getDragPivot().getTargetTopic()).toBe(parent);
-    expect(secondManager.getDragPivot().getTargetTopic()).toBeNull();
+    expect(secondManager.getDragPivot().getTargetTopic()).toBeUndefined();
   });
 });
 

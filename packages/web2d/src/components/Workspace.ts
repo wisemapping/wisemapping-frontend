@@ -70,7 +70,7 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
         break;
       case 'stroke':
         this.setStroke(
-          toLength(args[0]) ?? null,
+          toLength(args[0]),
           toStrokeStyle(args[1]),
           toText(args[2]),
           toNumber(args[3]),
@@ -119,7 +119,7 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
   }
 
   addItAsChildTo(element: HTMLDivElement): void {
-    if (element == null) {
+    if (!element) {
       throw new Error('Workspace div container can not be null');
     }
     element.append(this._htmlContainer);
@@ -145,13 +145,13 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
    * pt (points; 1pt=1/72in)
    * pc (picas; 1pc=12pt)
    */
-  override setSize(width?: string | number | null, height?: string | number | null): void {
+  override setSize(width?: string | number, height?: string | number): void {
     // HTML container must have the size of the group element.
-    if (width != null) {
+    if (width !== undefined) {
       this._htmlContainer.style.width = String(width);
     }
 
-    if (height != null) {
+    if (height !== undefined) {
       this._htmlContainer.style.height = String(height);
     }
     // A missing width or height keeps the current one.
@@ -159,8 +159,8 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
   }
 
   /** The pixels of a size given in pixels or as a CSS length ('400px'). */
-  private static toPixels(value?: string | number | null): number | undefined {
-    return value == null ? undefined : Number.parseInt(String(value), 10);
+  private static toPixels(value?: string | number): number | undefined {
+    return value === undefined ? undefined : Number.parseInt(String(value), 10);
   }
 
   /**
@@ -209,8 +209,8 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
    */
   /* eslint-disable @typescript-eslint/no-unused-vars */
   override setStroke(
-    width: number | string | null,
-    style?: StrokeStyle | null,
+    width: number | string | undefined,
+    style?: StrokeStyle,
     color?: string,
     _opacity?: number,
   ): void {
@@ -250,7 +250,7 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
     }
 
     const elementType = element.getType();
-    if (elementType == null) {
+    if (!elementType) {
       throw new Error(`It seems not to be an element ->${element}`);
     }
 

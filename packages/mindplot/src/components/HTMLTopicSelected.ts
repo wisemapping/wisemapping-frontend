@@ -72,17 +72,17 @@ type OverlayGeometry = {
 };
 
 class HTMLTopicSelected {
-  private _overlayContainer: HTMLDivElement | null = null;
+  private _overlayContainer: HTMLDivElement | undefined;
 
-  private _overlay: HTMLDivElement | null = null;
+  private _overlay: HTMLDivElement | undefined;
 
-  private _helperContainer: HTMLDivElement | null;
+  private _helperContainer: HTMLDivElement | undefined;
 
-  private _helperElements: HelperElements | null = null;
+  private _helperElements: HelperElements | undefined;
 
-  private _rightPlus: HTMLDivElement | null = null;
+  private _rightPlus: HTMLDivElement | undefined;
 
-  private _bottomPlus: HTMLDivElement | null = null;
+  private _bottomPlus: HTMLDivElement | undefined;
 
   private _screenManager: ScreenManager;
 
@@ -92,16 +92,16 @@ class HTMLTopicSelected {
 
   private _topic: Topic;
 
-  private _onTopicFocus: (() => void) | null;
+  private _onTopicFocus: (() => void) | undefined;
 
-  private _onTopicBlur: (() => void) | null;
+  private _onTopicBlur: (() => void) | undefined;
 
   constructor(topic: Topic, containerElement: HTMLDivElement, screenManager: ScreenManager) {
     this._topic = topic;
     this._containerElement = containerElement;
     this._screenManager = screenManager;
     this._isVisible = false;
-    this._helperContainer = null;
+    this._helperContainer = undefined;
 
     // Create overlay container - insert it first so it's behind SVG
     this._overlayContainer = document.createElement('div');
@@ -197,7 +197,7 @@ class HTMLTopicSelected {
     }
 
     // Find central topic - try walking up parent chain first (for connected topics)
-    let centralTopic: Topic | null = this._topic.getParent();
+    let centralTopic: Topic | undefined = this._topic.getParent();
     while (centralTopic && !centralTopic.isCentralTopic()) {
       centralTopic = centralTopic.getParent();
     }
@@ -206,7 +206,7 @@ class HTMLTopicSelected {
     const designer = this._topic.getDesigner();
     if (!centralTopic && designer) {
       const allTopics = designer.getModel().getTopics();
-      centralTopic = allTopics.find((t) => t.isCentralTopic()) || null;
+      centralTopic = allTopics.find((t) => t.isCentralTopic());
     }
 
     // If we still couldn't find central topic, default to left
@@ -363,10 +363,10 @@ class HTMLTopicSelected {
     }
   }
 
-  private computeOverlayGeometry(topic: Topic): OverlayGeometry | null {
+  private computeOverlayGeometry(topic: Topic): OverlayGeometry | undefined {
     const corners = topic.getAbsoluteCornerCoordinates();
     if (!corners) {
-      return null;
+      return undefined;
     }
 
     const orientation = topic.getOrientation();
@@ -464,13 +464,13 @@ class HTMLTopicSelected {
     this._overlay.style.borderBottomRightRadius = borderRadius;
   }
 
-  private ensureHelperElements(): HelperElements | null {
+  private ensureHelperElements(): HelperElements | undefined {
     if (this._helperElements) {
       return this._helperElements;
     }
 
     if (!this._overlayContainer) {
-      return null;
+      return undefined;
     }
 
     const helperContainer = document.createElement('div');
@@ -660,7 +660,7 @@ class HTMLTopicSelected {
    */
   private setupHoverEffect(button: HTMLDivElement, baseColor: string, hoverColor: string): void {
     // Use a data attribute to track if hover is set up to avoid duplicate listeners
-    if (button.dataset.hoverSetup === 'true') {
+    if (button.dataset['hoverSetup'] === 'true') {
       // Update stored colors on the button for touch feedback
       const buttonWithColors = button as HTMLDivElement & {
         _baseColor?: string;
@@ -698,7 +698,7 @@ class HTMLTopicSelected {
       }
     });
 
-    button.dataset.hoverSetup = 'true';
+    button.dataset['hoverSetup'] = 'true';
   }
 
   /**
@@ -779,10 +779,10 @@ class HTMLTopicSelected {
 
   private ensurePlusButtons(): void {
     if (this._rightPlus && !this._rightPlus.parentElement) {
-      this._rightPlus = null;
+      this._rightPlus = undefined;
     }
     if (this._bottomPlus && !this._bottomPlus.parentElement) {
-      this._bottomPlus = null;
+      this._bottomPlus = undefined;
     }
 
     if (!this._rightPlus) {
@@ -1040,14 +1040,14 @@ class HTMLTopicSelected {
     }
   }
 
-  private withTopic<T>(callback: (topic: Topic) => T): T | null {
+  private withTopic<T>(callback: (topic: Topic) => T): T | undefined {
     try {
       if (!this._topic || !this._topic.getModel()) {
-        return null;
+        return undefined;
       }
       return callback(this._topic);
     } catch {
-      return null;
+      return undefined;
     }
   }
 
@@ -1099,8 +1099,8 @@ class HTMLTopicSelected {
     // Remove the listeners added to the topic, so a re-created shadow doesn't stack them
     const onTopicFocus = this._onTopicFocus;
     const onTopicBlur = this._onTopicBlur;
-    this._onTopicFocus = null;
-    this._onTopicBlur = null;
+    this._onTopicFocus = undefined;
+    this._onTopicBlur = undefined;
     try {
       if (onTopicFocus) {
         this._topic.removeEvent('ontfocus', onTopicFocus);
@@ -1118,8 +1118,8 @@ class HTMLTopicSelected {
     }
 
     // Clear references
-    this._overlayContainer = null;
-    this._overlay = null;
+    this._overlayContainer = undefined;
+    this._overlay = undefined;
 
     // Remove plus buttons from main container
     if (this._rightPlus && this._rightPlus.parentElement) {
@@ -1131,10 +1131,10 @@ class HTMLTopicSelected {
     }
 
     // Clear references
-    this._rightPlus = null;
-    this._bottomPlus = null;
-    this._helperContainer = null;
-    this._helperElements = null;
+    this._rightPlus = undefined;
+    this._bottomPlus = undefined;
+    this._helperContainer = undefined;
+    this._helperElements = undefined;
   }
 
   /**

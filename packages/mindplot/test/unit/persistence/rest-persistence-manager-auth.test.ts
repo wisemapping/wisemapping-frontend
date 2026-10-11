@@ -44,11 +44,11 @@ describe('RESTPersistenceManager authorization', () => {
 
   it('sends the token as a bearer authorization, with nothing after it', async () => {
     await build('tok').discardChanges('1');
-    expect(sentHeaders().Authorization).toBe('Bearer tok');
+    expect(sentHeaders()['Authorization']).toBe('Bearer tok');
   });
 
   it('sends no authorization without a token', async () => {
     await build().discardChanges('1');
-    expect(sentHeaders().Authorization).toBeUndefined();
+    expect(sentHeaders()['Authorization']).toBeUndefined();
   });
 });

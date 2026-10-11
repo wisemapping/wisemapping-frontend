@@ -30,8 +30,8 @@ class SymmetricSorter extends AbstractBasicSorter {
   predict(
     graph: RootedTreeSet,
     parent: Node,
-    node: Node | null,
-    position: PositionType | null,
+    node: Node | undefined,
+    position: PositionType | undefined,
   ): SorterPrediction {
     const self = this;
     const rootNode = graph.getRootNode(parent);
@@ -215,7 +215,7 @@ class SymmetricSorter extends AbstractBasicSorter {
    * @throws will throw an error if the node is in the wrong position */
   detach(treeSet: RootedTreeSet, node: Node) {
     const parent = treeSet.getParent(node);
-    $assert(parent != null, 'can not detach null parent');
+    $assert(parent !== undefined, 'can not detach null parent');
     const children = this._getSortedChildren(treeSet, parent);
     const order = node.getOrder();
     $assert(order !== undefined, 'Node must have an order to be detached');

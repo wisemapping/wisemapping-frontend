@@ -17,7 +17,7 @@
  */
 
 import React, { ReactElement, useCallback, useMemo, useState } from 'react';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -92,7 +92,9 @@ const EditMapDialog = ({
         }}
       >
         <FormControl fullWidth>
-          <InputLabel>Public Access</InputLabel>
+          <InputLabel>
+            <FormattedMessage id="admin.public-access" defaultMessage="Public Access" />
+          </InputLabel>
           <Select
             value={formData.public ? 'public' : 'private'}
             label={intl.formatMessage({
@@ -103,13 +105,19 @@ const EditMapDialog = ({
               setFormData((current) => ({ ...current, public: e.target.value === 'public' }))
             }
           >
-            <MenuItem value="private">Private</MenuItem>
-            <MenuItem value="public">Public</MenuItem>
+            <MenuItem value="private">
+              <FormattedMessage id="admin.private" defaultMessage="Private" />
+            </MenuItem>
+            <MenuItem value="public">
+              <FormattedMessage id="admin.public" defaultMessage="Public" />
+            </MenuItem>
           </Select>
         </FormControl>
 
         <FormControl fullWidth>
-          <InputLabel>Lock Status</InputLabel>
+          <InputLabel>
+            <FormattedMessage id="admin.lock-status" defaultMessage="Lock Status" />
+          </InputLabel>
           <Select
             value={formData.isLocked ? 'locked' : 'unlocked'}
             label={intl.formatMessage({
@@ -120,8 +128,12 @@ const EditMapDialog = ({
               setFormData((current) => ({ ...current, isLocked: e.target.value === 'locked' }))
             }
           >
-            <MenuItem value="unlocked">Unlocked</MenuItem>
-            <MenuItem value="locked">Locked</MenuItem>
+            <MenuItem value="unlocked">
+              <FormattedMessage id="admin.unlocked" defaultMessage="Unlocked" />
+            </MenuItem>
+            <MenuItem value="locked">
+              <FormattedMessage id="admin.locked" defaultMessage="Locked" />
+            </MenuItem>
           </Select>
         </FormControl>
       </Box>
@@ -133,7 +145,10 @@ const EditMapDialog = ({
     // Basic validation
     const errors: Record<string, string> = {};
     if (!formData.title.trim()) {
-      errors.title = 'Title is required';
+      errors['title'] = intl.formatMessage({
+        id: 'admin.validation.title-required',
+        defaultMessage: 'Title is required',
+      });
     }
 
     if (Object.keys(errors).length > 0) {
@@ -156,9 +171,9 @@ const EditMapDialog = ({
         })}
       </DialogTitle>
       <DialogContent>
-        {formErrors.general && (
+        {formErrors['general'] && (
           <Alert severity="error" sx={{ mb: 2 }}>
-            {formErrors.general}
+            {formErrors['general']}
           </Alert>
         )}
 
@@ -173,8 +188,8 @@ const EditMapDialog = ({
           variant="outlined"
           value={formData.title}
           onChange={handleTitleChange}
-          error={!!formErrors.title}
-          helperText={formErrors.title}
+          error={!!formErrors['title']}
+          helperText={formErrors['title']}
           slotProps={titleSlotProps}
           sx={fieldSx}
         />

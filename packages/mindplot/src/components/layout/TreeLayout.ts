@@ -36,7 +36,7 @@ class TreeLayout {
   }
 
   createNode(id: number, size: SizeType, position: PositionType, _type: string): Node {
-    $assert(id != null, 'id can not be null');
+    $assert(typeof id === 'number', 'id can not be null');
     // Tree layout uses TreeSorter for all nodes
     return new Node(id, size, position, TreeLayout.TREE_SORTER);
   }

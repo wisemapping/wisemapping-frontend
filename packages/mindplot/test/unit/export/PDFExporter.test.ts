@@ -87,8 +87,8 @@ describe('PDFExporter', () => {
     await new PDFExporter(svg()).export();
 
     const options = html2canvasMock.mock.calls[0]![1];
-    expect(options.useCORS).toBe(true);
-    expect(options.allowTaint).toBe(false);
+    expect(options['useCORS']).toBe(true);
+    expect(options['allowTaint']).toBe(false);
   });
 
   it('keeps the original size (converted to mm) when it fits on the page', async () => {

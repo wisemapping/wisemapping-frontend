@@ -15,6 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { Profiler } from 'react';
 import { render, screen, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import ZoomDisplay, {
@@ -125,6 +126,26 @@ describe('ZoomDisplay', () => {
     harness.fireUpdate();
 
     expect(screen.getByTestId('zoom-percent')).toHaveTextContent('50%');
+  });
+
+  it('does not re-render when the canvas reports an update that keeps the zoom', () => {
+    const harness = createHarness({ zoom: 1 });
+    const onRender = jest.fn();
+    render(
+      <Profiler id="zoom" onRender={onRender}>
+        <ZoomDisplay model={harness.model} />
+      </Profiler>,
+    );
+    const commits = onRender.mock.calls.length;
+
+    // A pan fires update on every mousemove without changing the zoom.
+    harness.fireUpdate();
+    harness.fireUpdate();
+    expect(onRender).toHaveBeenCalledTimes(commits);
+
+    harness.setZoom(2);
+    harness.fireUpdate();
+    expect(onRender).toHaveBeenCalledTimes(commits + 1);
   });
 
   it('subscribes to the canvas directly, not through the editor tree', () => {

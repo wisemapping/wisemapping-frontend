@@ -93,7 +93,7 @@ export const serializeSvg = (el: Element): string =>
   `${serializeElement(el, 0, true).join('\n')}\n`;
 
 const shouldUpdate = (): boolean => {
-  if (process.env.UPDATE_GOLDENS === '1' || process.env.UPDATE_GOLDENS === 'true') {
+  if (process.env['UPDATE_GOLDENS'] === '1' || process.env['UPDATE_GOLDENS'] === 'true') {
     return true;
   }
   // `jest -u` sets the snapshot state to "all".
@@ -106,7 +106,7 @@ export const expectGolden = (name: string, el: Element): void => {
   const actual = serializeSvg(el);
   const file = path.join(GOLDEN_DIR, `${name}.svg`);
   const exists = fs.existsSync(file);
-  if (shouldUpdate() || (!exists && !process.env.CI)) {
+  if (shouldUpdate() || (!exists && !process.env['CI'])) {
     fs.mkdirSync(GOLDEN_DIR, { recursive: true });
     if (!exists || fs.readFileSync(file, 'utf8') !== actual) {
       fs.writeFileSync(file, actual);

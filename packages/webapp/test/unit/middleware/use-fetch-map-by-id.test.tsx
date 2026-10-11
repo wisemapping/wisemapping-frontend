@@ -38,7 +38,7 @@ const wrapperFor = (
 ) => {
   const Wrapper = ({ children }: { children: React.ReactNode }): React.ReactElement => (
     <QueryClientProvider client={queryClient}>
-      <ClientContext.Provider value={client}>{children}</ClientContext.Provider>
+      <ClientContext value={client}>{children}</ClientContext>
     </QueryClientProvider>
   );
   return Wrapper;

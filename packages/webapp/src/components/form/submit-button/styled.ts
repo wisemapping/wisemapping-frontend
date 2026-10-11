@@ -4,8 +4,7 @@
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
  *   "powered by wisemapping" text requirement on every single page;
- *   you may not use this file except in compliance with the License.
- *   You may obtain a copy of the license at
+ *   you may obtain a copy of the license at
  *
  *       https://github.com/wisemapping/wisemapping-open-source/blob/main/LICENSE.md
  *
@@ -16,22 +15,14 @@
  *   limitations under the License.
  */
 
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import useClasses from '../../../../theme/useStyles';
+import { styled } from '@mui/material/styles';
+import AsyncButton from '../async-button';
 
-export const useStyles = () =>
-  useClasses({
-    select: {
-      height: '40px',
-      borderRadius: '9px',
-      width: '300px',
-      fontSize: '14px',
-      margin: '0px 40px',
-    },
-    menu: {
-      fontSize: '14px',
-    },
-    label: {
-      margin: '5px 0px',
-    },
-  });
+/** The big submit button of the sign-in and sign-up forms. */
+export const StyledSubmitButton = styled(AsyncButton)({
+  width: '300px',
+  height: '53px',
+  padding: '0px 20px',
+  margin: '7px 0px',
+  fontSize: '18px',
+});

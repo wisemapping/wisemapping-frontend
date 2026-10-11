@@ -334,11 +334,11 @@ class HtmlSanitizer {
   /**
    * Sanitizes URLs to prevent dangerous protocols
    * @param url - The URL to sanitize
-   * @returns Sanitized URL or null if dangerous
+   * @returns Sanitized URL or undefined if dangerous
    */
-  private static sanitizeUrl(url: string): string | null {
+  private static sanitizeUrl(url: string): string | undefined {
     if (!url || typeof url !== 'string') {
-      return null;
+      return undefined;
     }
 
     // Check for dangerous protocols
@@ -346,7 +346,7 @@ class HtmlSanitizer {
     const dangerousProtocols = Array.from(this.DANGEROUS_PROTOCOLS);
     const isDangerous = dangerousProtocols.some((protocol) => lowerUrl.startsWith(protocol));
     if (isDangerous) {
-      return null;
+      return undefined;
     }
 
     // Allow relative URLs and safe protocols
@@ -362,17 +362,17 @@ class HtmlSanitizer {
       return url;
     }
 
-    return null;
+    return undefined;
   }
 
   /**
    * Sanitizes CSS styles to prevent CSS injection
    * @param style - The CSS style string to sanitize
-   * @returns Sanitized CSS style or null if dangerous
+   * @returns Sanitized CSS style or undefined if dangerous
    */
-  private static sanitizeStyle(style: string): string | null {
+  private static sanitizeStyle(style: string): string | undefined {
     if (!style || typeof style !== 'string') {
-      return null;
+      return undefined;
     }
 
     // Remove dangerous CSS properties and values
@@ -388,7 +388,7 @@ class HtmlSanitizer {
 
     const hasDangerousPattern = dangerousPatterns.some((pattern) => pattern.test(style));
     if (hasDangerousPattern) {
-      return null;
+      return undefined;
     }
 
     return style;

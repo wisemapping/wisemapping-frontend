@@ -431,6 +431,15 @@
   "maps.search-action": {
     "defaultMessage": "Пошук..."
   },
+  "maps.search-label": {
+    "defaultMessage": "Пошук карт"
+  },
+  "maps.sorted-ascending": {
+    "defaultMessage": "за зростанням"
+  },
+  "maps.sorted-descending": {
+    "defaultMessage": "за спаданням"
+  },
   "maps.tooltip-open": {
     "defaultMessage": "Відкрити для редагування"
   },
@@ -656,6 +665,9 @@
   "admin.auth.ldap": {
     "defaultMessage": "LDAP"
   },
+  "admin.button.creating": {
+    "defaultMessage": "Створення..."
+  },
   "admin.button.update-user": {
     "defaultMessage": "Оновити користувача"
   },
@@ -701,6 +713,9 @@
   "admin.facebook.filter-tooltip": {
     "defaultMessage": "Пошук для видалення даних Facebook"
   },
+  "admin.facebook.id-label": {
+    "defaultMessage": "Ідентифікатор користувача Facebook"
+  },
   "admin.facebook.lookup-button": {
     "defaultMessage": "Знайти акаунт"
   },
@@ -724,6 +739,9 @@
   },
   "admin.facebook.removing": {
     "defaultMessage": "Видалення..."
+  },
+  "admin.filter.all": {
+    "defaultMessage": "Усі"
   },
   "admin.refresh": {
     "defaultMessage": "Оновити"
@@ -830,8 +848,8 @@
   "admin.user-info.status": {
     "defaultMessage": "Статус"
   },
-  "admin.user-info.suspension-reason": {
-    "defaultMessage": "Причина призупинення:"
+  "admin.user-info.suspension-reason-value": {
+    "defaultMessage": "Причина призупинення: {reason}"
   },
   "admin.user-info.title": {
     "defaultMessage": "Інформація про користувача"
@@ -859,6 +877,9 @@
   },
   "admin.validation.lastname-required": {
     "defaultMessage": "Прізвище обов'язкове"
+  },
+  "admin.validation.title-required": {
+    "defaultMessage": "Назва обов'язкова"
   },
   "admin.view-user-maps": {
     "defaultMessage": "Переглянути карти користувача"
@@ -896,11 +917,23 @@
   "admin.maps.edit-title": {
     "defaultMessage": "Редагування карти"
   },
+  "admin.maps.filter.all-time": {
+    "defaultMessage": "За весь час"
+  },
   "admin.maps.filter.date": {
     "defaultMessage": "Діапазон дат"
   },
+  "admin.maps.filter.last-months": {
+    "defaultMessage": "{count, plural, one {За останній # місяць} few {За останні # місяці} many {За останні # місяців} other {За останні # місяця}}"
+  },
+  "admin.maps.filter.not-spam": {
+    "defaultMessage": "Не спам"
+  },
   "admin.maps.filter.spam": {
     "defaultMessage": "Спам"
+  },
+  "admin.maps.locked-by": {
+    "defaultMessage": "Заблоковано користувачем {user}"
   },
   "admin.maps.locked-tooltip": {
     "defaultMessage": "Зараз редагується користувачем {user}"
@@ -910,6 +943,9 @@
   },
   "admin.maps.mark-as-spam": {
     "defaultMessage": "Позначити як спам"
+  },
+  "admin.maps.no-description": {
+    "defaultMessage": "Немає опису"
   },
   "admin.maps.no-maps": {
     "defaultMessage": "Карт не знайдено"
@@ -965,8 +1001,14 @@
   "admin.maps.table.actions": {
     "defaultMessage": "Дії"
   },
+  "admin.maps.table.collaborators": {
+    "defaultMessage": "Співавтори"
+  },
   "admin.maps.table.created": {
     "defaultMessage": "Створено"
+  },
+  "admin.maps.table.created-by": {
+    "defaultMessage": "Автор"
   },
   "admin.maps.table.description": {
     "defaultMessage": "Опис"
@@ -992,6 +1034,9 @@
   "admin.maps.title": {
     "defaultMessage": "Назва"
   },
+  "admin.maps.unknown-user": {
+    "defaultMessage": "невідомий користувач"
+  },
   "admin.maps.unlocked-tooltip": {
     "defaultMessage": "Зараз ніхто не редагує"
   },
@@ -1001,6 +1046,9 @@
   "admin.maps.xml-viewer.copy": {
     "defaultMessage": "Копіювати відформатований XML"
   },
+  "admin.maps.xml-viewer.error": {
+    "defaultMessage": "Помилка завантаження XML: {message}"
+  },
   "admin.maps.xml-viewer.info": {
     "defaultMessage": "Це необроблений XML-вміст карти розуму. Ви можете скопіювати його для резервного копіювання або аналізу."
   },
@@ -1009,6 +1057,9 @@
   },
   "admin.maps.xml-viewer.no-content": {
     "defaultMessage": "XML-вміст недоступний"
+  },
+  "admin.maps.xml-viewer.subtitle": {
+    "defaultMessage": "{title} (ID: {id})"
   },
   "admin.maps.xml-viewer.title": {
     "defaultMessage": "XML-вміст карти"
@@ -1036,6 +1087,9 @@
   },
   "admin.system.title": {
     "defaultMessage": "Системна інформація"
+  },
+  "admin.unlocked": {
+    "defaultMessage": "Не заблоковано"
   },
   "admin.system.refresh": {
     "defaultMessage": "Оновити"
@@ -1114,6 +1168,18 @@
   },
   "admin.system.health": {
     "defaultMessage": "Стан системи"
+  },
+  "admin.system.health.down": {
+    "defaultMessage": "Не працює"
+  },
+  "admin.system.health.unknown": {
+    "defaultMessage": "Невідомо"
+  },
+  "admin.system.health.up": {
+    "defaultMessage": "Працює"
+  },
+  "admin.system.health.warning": {
+    "defaultMessage": "Попередження"
   },
   "admin.system.jvm": {
     "defaultMessage": "JVM"
@@ -1262,9 +1328,6 @@
   "admin.console.title": {
     "defaultMessage": "Консоль адміністратора"
   },
-  "admin.current-suspension-reason": {
-    "defaultMessage": "Поточна причина призупинення:"
-  },
   "admin.change-password-button": {
     "defaultMessage": "Змінити пароль"
   },
@@ -1273,6 +1336,9 @@
   },
   "admin.password-error-mismatch": {
     "defaultMessage": "Паролі не збігаються"
+  },
+  "admin.private": {
+    "defaultMessage": "Приватний"
   },
   "admin.prompt.new-user-password": {
     "defaultMessage": "Введіть пароль для нового користувача:"
@@ -1391,6 +1457,21 @@
   "activation.success.title": {
     "defaultMessage": "Акаунт успішно активовано"
   },
+  "admin.accounts.activate-dialog.button": {
+    "defaultMessage": "Активувати користувача"
+  },
+  "admin.accounts.activate-dialog.confirm": {
+    "defaultMessage": "Ви впевнені, що хочете вручну активувати користувача «{email}»?"
+  },
+  "admin.accounts.activate-dialog.info": {
+    "defaultMessage": "Користувач зможе одразу увійти без підтвердження електронної пошти."
+  },
+  "admin.accounts.activate-dialog.pending": {
+    "defaultMessage": "Активація..."
+  },
+  "admin.accounts.activate-dialog.title": {
+    "defaultMessage": "Активувати користувача"
+  },
   "admin.accounts.add-user": {
     "defaultMessage": "Додати нового користувача"
   },
@@ -1400,8 +1481,32 @@
   "admin.accounts.create-user": {
     "defaultMessage": "Створити користувача"
   },
+  "admin.accounts.delete-dialog.button": {
+    "defaultMessage": "Видалити користувача"
+  },
+  "admin.accounts.delete-dialog.confirm": {
+    "defaultMessage": "Ви впевнені, що хочете видалити користувача «{email}»?"
+  },
+  "admin.accounts.delete-dialog.pending": {
+    "defaultMessage": "Видалення..."
+  },
+  "admin.accounts.delete-dialog.title": {
+    "defaultMessage": "Видалити користувача"
+  },
+  "admin.accounts.delete-dialog.warning": {
+    "defaultMessage": "Цю дію неможливо скасувати!"
+  },
   "admin.accounts.edit-user": {
     "defaultMessage": "Редагувати користувача"
+  },
+  "admin.accounts.filter.not-suspended": {
+    "defaultMessage": "Не призупинені"
+  },
+  "admin.accounts.filter.suspended-only": {
+    "defaultMessage": "Лише призупинені"
+  },
+  "admin.accounts.filter.suspension-all": {
+    "defaultMessage": "Усі (призупинені + активні)"
   },
   "admin.accounts.filters": {
     "defaultMessage": "Пошук і фільтри"
@@ -1421,8 +1526,53 @@
   "admin.accounts.subtitle": {
     "defaultMessage": "Керування акаунтами користувачів, дозволами та налаштуваннями"
   },
+  "admin.accounts.suspend-dialog.button": {
+    "defaultMessage": "Призупинити користувача"
+  },
+  "admin.accounts.suspend-dialog.confirm": {
+    "defaultMessage": "Ви впевнені, що хочете призупинити користувача «{email}»?"
+  },
+  "admin.accounts.suspend-dialog.pending": {
+    "defaultMessage": "Призупинення..."
+  },
+  "admin.accounts.suspend-dialog.title": {
+    "defaultMessage": "Призупинити користувача"
+  },
+  "admin.accounts.table.actions": {
+    "defaultMessage": "Дії"
+  },
+  "admin.accounts.table.auth": {
+    "defaultMessage": "Авторизація"
+  },
+  "admin.accounts.table.created": {
+    "defaultMessage": "Створено"
+  },
+  "admin.accounts.table.id": {
+    "defaultMessage": "ID"
+  },
+  "admin.accounts.table.name": {
+    "defaultMessage": "Ім'я"
+  },
+  "admin.accounts.table.status": {
+    "defaultMessage": "Статус"
+  },
   "admin.accounts.title": {
     "defaultMessage": "Керування користувачами"
+  },
+  "admin.accounts.unsuspend-dialog.button": {
+    "defaultMessage": "Відновити користувача"
+  },
+  "admin.accounts.unsuspend-dialog.confirm": {
+    "defaultMessage": "Ви впевнені, що хочете відновити користувача «{email}»?"
+  },
+  "admin.accounts.unsuspend-dialog.pending": {
+    "defaultMessage": "Відновлення..."
+  },
+  "admin.accounts.unsuspend-dialog.reason": {
+    "defaultMessage": "Поточна причина призупинення: {reason}"
+  },
+  "admin.accounts.unsuspend-dialog.title": {
+    "defaultMessage": "Відновити користувача"
   },
   "admin.action.mark-as-not-spam": {
     "defaultMessage": "позначити як не спам"

@@ -71,33 +71,33 @@ export const SVG_NAMESPACE = 'http://www.w3.org/2000/svg' as const;
 class ElementPeer<N extends SVGGraphicsElement = SVGGraphicsElement> {
   readonly _native: N;
 
-  private _parent: ElementPeer | null;
+  private _parent: ElementPeer | undefined;
 
   protected _size: SizeType;
 
   // Aborts every listener added with addEvent(): each one is registered with its signal. Created
   // with the first listener, and replaced by dispose().
-  private _listeners: AbortController | null;
+  private _listeners: AbortController | undefined;
 
   private _children: ElementPeer[];
 
-  private _stokeStyle: StrokeStyle | null;
+  private _stokeStyle: StrokeStyle | undefined;
 
   // Opacity set with setOpacity(). setVisibility() shows the element at this opacity.
   private _opacity: number;
 
   // The dash array last written from the style table, to rescale it when the width changes.
-  private _tableDash: string | null;
+  private _tableDash: string | undefined;
 
   constructor(svgElement: N) {
     this._native = svgElement;
     this._size = { width: 1, height: 1 };
-    this._listeners = null;
+    this._listeners = undefined;
     this._children = [];
-    this._parent = null;
-    this._stokeStyle = null;
+    this._parent = undefined;
+    this._stokeStyle = undefined;
     this._opacity = 1;
-    this._tableDash = null;
+    this._tableDash = undefined;
   }
 
   setChildren(children: ElementPeer[]): void {
@@ -108,11 +108,11 @@ class ElementPeer<N extends SVGGraphicsElement = SVGGraphicsElement> {
     return this._children;
   }
 
-  getParent(): ElementPeer | null {
+  getParent(): ElementPeer | undefined {
     return this._parent;
   }
 
-  setParent(parent: ElementPeer | null): void {
+  setParent(parent: ElementPeer | undefined): void {
     this._parent = parent;
   }
 
@@ -130,7 +130,7 @@ class ElementPeer<N extends SVGGraphicsElement = SVGGraphicsElement> {
     const children = this.getChildren();
     $assert(children.includes(elementPeer), `element could not be removed:${elementPeer}`);
 
-    elementPeer.setParent(null);
+    elementPeer.setParent(undefined);
     this.setChildren(children.filter((c) => c !== elementPeer));
     this._native.removeChild(elementPeer._native);
   }
@@ -163,7 +163,7 @@ class ElementPeer<N extends SVGGraphicsElement = SVGGraphicsElement> {
    */
   dispose(): void {
     this._listeners?.abort();
-    this._listeners = null;
+    this._listeners = undefined;
   }
 
   /** dispose() on this element and on every element appended to it, recursively. */
@@ -180,16 +180,16 @@ class ElementPeer<N extends SVGGraphicsElement = SVGGraphicsElement> {
    * The attributes are always written through attr(), which skips unchanged values: the kept size
    * is not used to skip them, so a size written around the peer is restored (BL5-64).
    */
-  setSize(width?: number | null, height?: number | null): void {
+  setSize(width?: number, height?: number): void {
     const writeAttributes = this.hasSizeAttributes();
-    if (width != null) {
+    if (width !== undefined) {
       this._size = { ...this._size, width };
       if (writeAttributes) {
         this.attr('width', formatLength(width));
       }
     }
 
-    if (height != null) {
+    if (height !== undefined) {
       this._size = { ...this._size, height };
       if (writeAttributes) {
         this.attr('height', formatLength(height));
@@ -206,47 +206,47 @@ class ElementPeer<N extends SVGGraphicsElement = SVGGraphicsElement> {
     return { width: this._size.width, height: this._size.height };
   }
 
-  setFill(color?: string | null, opacity?: number | null): void {
+  setFill(color?: string, opacity?: number): void {
     if (color) {
       this.attr('fill', color);
     }
-    if (opacity != null) {
+    if (opacity !== undefined) {
       this.attr('fill-opacity', String(opacity));
     }
   }
 
-  getFill(): { color: string | null; opacity: number } {
-    const color = this._native.getAttribute('fill');
+  getFill(): { color: string | undefined; opacity: number } {
+    const color = this._native.getAttribute('fill') ?? undefined;
     const opacity = this._native.getAttribute('fill-opacity');
     // An unset fill-opacity is 1 (SVG initial value).
     return { color, opacity: opacity === null ? 1 : Number(opacity) };
   }
 
   getStroke(): {
-    color: string | null;
-    style: StrokeStyle | null;
+    color: string | undefined;
+    style: StrokeStyle | undefined;
     opacity: number;
-    width: number | null;
+    width: number | undefined;
   } {
     const stoke = this._native;
     const opacity = stoke.getAttribute('stroke-opacity');
     const width = stoke.getAttribute('stroke-width');
     return {
-      color: stoke.getAttribute('stroke'),
+      color: stoke.getAttribute('stroke') ?? undefined,
       style: this._stokeStyle,
       // An unset stroke-opacity is 1 (SVG initial value).
       opacity: opacity === null ? 1 : Number(opacity),
-      width: width === null ? null : Number.parseFloat(width),
+      width: width === null ? undefined : Number.parseFloat(width),
     };
   }
 
   setStroke(
-    width: number | null,
-    style?: StrokeStyle | null,
-    color?: string | null,
+    width: number | undefined,
+    style?: StrokeStyle,
+    color?: string,
     opacity?: number,
   ): void {
-    if (width != null) {
+    if (width !== undefined) {
       this.attr('stroke-width', `${width}`);
     }
 
@@ -266,11 +266,11 @@ class ElementPeer<N extends SVGGraphicsElement = SVGGraphicsElement> {
       } else {
         this.removeAttr('stroke-linecap');
       }
-    } else if (width != null) {
+    } else if (width !== undefined) {
       this.rescaleTableDash();
     }
 
-    if (opacity != null) {
+    if (opacity !== undefined) {
       this.attr('stroke-opacity', String(opacity));
     }
   }
@@ -290,7 +290,7 @@ class ElementPeer<N extends SVGGraphicsElement = SVGGraphicsElement> {
     } else {
       this.removeAttr('stroke-dasharray');
     }
-    this._tableDash = dashArray || null;
+    this._tableDash = dashArray || undefined;
   }
 
   /**
@@ -301,7 +301,7 @@ class ElementPeer<N extends SVGGraphicsElement = SVGGraphicsElement> {
     const style = this._stokeStyle;
     if (
       style &&
-      this._tableDash !== null &&
+      this._tableDash !== undefined &&
       this._native.getAttribute('stroke-dasharray') === this._tableDash
     ) {
       this.writeTableDash(style);
@@ -429,10 +429,10 @@ class ElementPeer<N extends SVGGraphicsElement = SVGGraphicsElement> {
     dashdot: [10, 5, 1, 5],
   };
 
-  private static readonly DASH_LINE_CAPS: Readonly<Record<StrokeStyle, string | null>> = {
-    solid: null,
+  private static readonly DASH_LINE_CAPS: Readonly<Record<StrokeStyle, string | undefined>> = {
+    solid: undefined,
     dot: 'round',
-    dash: null,
+    dash: undefined,
     longdash: 'round',
     dashdot: 'round',
   };

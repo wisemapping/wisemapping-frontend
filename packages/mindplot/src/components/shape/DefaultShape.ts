@@ -34,7 +34,7 @@ abstract class DefaultTopicShape<T extends ElementClass<ElementPeer>> implements
     return this._type;
   }
 
-  setStroke(width: number | null, style: StrokeStyle | null, color: string): void {
+  setStroke(width: number | undefined, style: StrokeStyle | undefined, color: string): void {
     this._shape.setStroke(width, style, color);
   }
 
@@ -68,7 +68,7 @@ abstract class DefaultTopicShape<T extends ElementClass<ElementPeer>> implements
 
   abstract setSize(width: number, height: number): void;
 
-  abstract getSize(): SizeType | null;
+  abstract getSize(): SizeType | undefined;
 
   abstract setPosition(x: number, y: number): void;
 }

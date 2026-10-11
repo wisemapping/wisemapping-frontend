@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 
 jest.mock('react-router', () => jest.requireActual('../router-mock'));
@@ -42,6 +41,7 @@ import { leaveTo } from '../../../../src/utils/redirect';
 import { startOAuthFlow } from '../../../../src/utils/oauth-flow';
 import { installMatchMedia, renderPage } from '../helpers';
 import { resetRouter, routerState, setLocation } from '../router-mock';
+import { defined } from '../../defined';
 
 type CallbackClient = {
   processGoogleCallback: jest.Mock<Promise<Oauth2CallbackResult>, [string]>;
@@ -228,8 +228,10 @@ describe('OAuthCallbackPage flows', () => {
 
     await waitFor(() => expect(logCriticalError).toHaveBeenCalled());
     expect(warn).toHaveBeenCalledWith(expect.stringContaining('Session expired'));
-    expect(jest.mocked(logCriticalError).mock.calls[0][0]).toContain('Status: 401, Message: none');
-    expect(jest.mocked(logCriticalError).mock.calls[0][1]).toMatchObject({
+    expect(defined(jest.mocked(logCriticalError).mock.calls[0])[0]).toContain(
+      'Status: 401, Message: none',
+    );
+    expect(defined(jest.mocked(logCriticalError).mock.calls[0])[1]).toMatchObject({
       context: { redirectTarget: '/c/maps/', path: '/c/registration-google' },
     });
   });

@@ -40,11 +40,11 @@ class IconGroup {
 
   private _removeTip: ElementDeleteWidget;
 
-  private _iconSize: SizeType | null;
+  private _iconSize: SizeType | undefined;
 
   private _topicId: number;
 
-  private _topicGroup: Group | null = null;
+  private _topicGroup: Group | undefined;
 
   // Icons added with remove: only these get a delete widget.
   private _removableIcons = new WeakSet<Icon>();
@@ -61,7 +61,7 @@ class IconGroup {
       coordSizeHeight: 100,
     });
     this._removeTip = ElementDeleteWidget.getInstance(designer);
-    this._iconSize = null;
+    this._iconSize = undefined;
     this.seIconSize(iconSize, iconSize);
     this._registerListeners();
   }
@@ -135,7 +135,7 @@ class IconGroup {
   }
 
   private _findIconFromModel(iconModel: FeatureModel): Icon {
-    let result: Icon | null = null;
+    let result: Icon | undefined;
 
     this._icons.forEach((icon) => {
       const elModel = icon.getModel();
@@ -145,7 +145,7 @@ class IconGroup {
       }
     });
 
-    if (result == null) {
+    if (result === undefined) {
       throw new Error(`Icon can no be found:${iconModel.getId()} Icons:${this._icons}`);
     }
 

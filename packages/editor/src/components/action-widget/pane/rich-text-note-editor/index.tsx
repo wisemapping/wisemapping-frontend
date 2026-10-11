@@ -110,9 +110,9 @@ const CharacterCounter = ({
 const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps): ReactElement => {
   const initialValue = noteModel.getValue() || '';
   const editorRef = useRef<HTMLDivElement>(null);
-  const [iconPickerAnchor, setIconPickerAnchor] = useState<HTMLButtonElement | null>(null);
-  const savedRangeRef = useRef<Range | null>(null);
-  const editingRef = useRef<NoteEditing | null>(null);
+  const [iconPickerAnchor, setIconPickerAnchor] = useState<HTMLButtonElement>();
+  const savedRangeRef = useRef<Range | undefined>(undefined);
+  const editingRef = useRef<NoteEditing | undefined>(undefined);
   const counterRef = useRef<CharacterCounterHandle>(null);
   // Count visible text, as edits do; DOMParser is inert (no scripts or image loads).
   const [initialCount] = useState(
@@ -191,8 +191,8 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
   }, []);
 
   const handleIconPickerClose = useCallback(() => {
-    setIconPickerAnchor(null);
-    savedRangeRef.current = null;
+    setIconPickerAnchor(undefined);
+    savedRangeRef.current = undefined;
   }, []);
 
   const handleEmojiSelect = useCallback(
@@ -255,12 +255,14 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
       // The note comes from the map: it is sanitized before it is edited.
       editorRef.current.innerHTML = HtmlSanitizer.sanitize(initialValue || '');
       // Auto-focus the editor when it opens
-      setTimeout(() => {
+      const focusTimer = setTimeout(() => {
         if (editorRef.current) {
           editorRef.current.focus();
         }
       }, 100);
+      return () => clearTimeout(focusTimer);
     }
+    return undefined;
   }, [initialValue]);
 
   // Markdown, nested lists, line breaks and links (see note-editing).
@@ -270,7 +272,7 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
     editingRef.current = editing;
     return () => {
       editing.detach();
-      editingRef.current = null;
+      editingRef.current = undefined;
     };
   }, [handleContentChange]);
 

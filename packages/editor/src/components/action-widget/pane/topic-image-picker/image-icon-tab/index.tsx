@@ -782,12 +782,12 @@ const ImageIconTab: React.FC<ImageIconTabProps> = ({ iconModel, emojiModel }) =>
     icons: { component: React.ComponentType; name: string; category: string }[],
   ) => (
     <Grid container sx={{ gap: 0.25, justifyContent: 'flex-start' }}>
-      {icons.map((iconMapping, index) => {
+      {icons.map((iconMapping) => {
         const iconName = iconMapping.name;
         const isSelected = iconModel?.getValue() === iconName;
 
         return (
-          <Grid key={`${iconName}-${index}`} sx={{ display: 'inline-block' }}>
+          <Grid key={iconName} sx={{ display: 'inline-block' }}>
             <Tooltip title={iconName} placement="top">
               <StyledIconButton
                 className={isSelected ? 'selected' : ''}

@@ -380,6 +380,9 @@
   "outline.note": {
     "defaultMessage": "Note"
   },
+  "outline.untitled-map": {
+    "defaultMessage": "Untitled Map"
+  },
   "relationship-style-editor.color": {
     "defaultMessage": "Relationship Color"
   },

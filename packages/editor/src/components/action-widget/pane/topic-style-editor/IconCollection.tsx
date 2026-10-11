@@ -84,7 +84,7 @@ const IconCollection = ({
 
   return (
     <StyledGrid>
-      {styles.map((style, index) => {
+      {styles.map((style) => {
         const labelText = getLabelText(style.label);
         const tooltipContent = style.tooltip || style.label;
         // Use custom aria-label if provided, otherwise construct from label + suffix
@@ -94,7 +94,7 @@ const IconCollection = ({
         const isSelected = selectedValue === style.type;
 
         return (
-          <Tooltip key={style.type ?? `default-${index}`} title={tooltipContent}>
+          <Tooltip key={style.type ?? 'default'} title={tooltipContent}>
             <StyledButton
               selected={isSelected}
               onClick={() => onSelect(style.type)}

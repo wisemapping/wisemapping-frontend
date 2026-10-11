@@ -81,11 +81,11 @@ const withCloseSubmenuRender: ActionConfig = {
 };
 const submenuConfig: ActionConfig = {
   icon: <ThreeDRotation></ThreeDRotation>,
-  options: [config, null, config, null, withRenderConfig],
+  options: [config, undefined, config, undefined, withRenderConfig],
 };
 const notVisibleSubmenuConfig: ActionConfig = {
   icon: <ThreeDRotation></ThreeDRotation>,
-  options: [config, null, config, null, withRenderConfig],
+  options: [config, undefined, config, undefined, withRenderConfig],
   visible: false,
 };
 const submenuConfig2: ActionConfig = {
@@ -185,7 +185,7 @@ describe('Editor Toolbar Submenu', () => {
     expect(submenuButtons).toHaveLength(2);
   });
 
-  it('Shows a divider for each null', async () => {
+  it('Shows a divider for each undefined option', async () => {
     render(<ToolbarSubmenu configuration={submenuConfig}></ToolbarSubmenu>);
     const item = screen.getByRole('button');
 

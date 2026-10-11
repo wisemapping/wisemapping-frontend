@@ -16,22 +16,22 @@
  *   limitations under the License.
  */
 
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { useIntl } from 'react-intl';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import Typography from '@mui/material/Typography';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import FlagIcon from '@mui/icons-material/Flag';
+import { SpamReason } from './styled';
 
 interface SpamStatusChipProps {
   spam: boolean;
-  spamType?: string;
-  spamDescription?: string;
-  spamDetectedDate?: string;
-  onToggleSpam?: (newSpamStatus: boolean) => void;
+  spamType?: string | undefined;
+  spamDescription?: string | undefined;
+  spamDetectedDate?: string | undefined;
+  onToggleSpam?: ((newSpamStatus: boolean) => void) | undefined;
   formatDate: (dateString: string) => string;
   loading?: boolean;
   showToggleButton?: boolean;
@@ -122,20 +122,7 @@ const SpamStatusChip = ({
         {/* Spam Description */}
         {spam && spamDescription && (
           <Tooltip title={spamDescription} arrow>
-            <Typography
-              variant="caption"
-              sx={{
-                color: 'text.secondary',
-                fontSize: '0.7rem',
-                maxWidth: '200px',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
-                cursor: 'help',
-              }}
-            >
-              {spamDescription}
-            </Typography>
+            <SpamReason variant="caption">{spamDescription}</SpamReason>
           </Tooltip>
         )}
       </Box>
@@ -157,7 +144,17 @@ const SpamStatusChip = ({
           <span>
             <IconButton
               onClick={handleToggle}
-              aria-label={spam ? 'mark-not-spam' : 'mark-spam'}
+              aria-label={
+                spam
+                  ? intl.formatMessage({
+                      id: 'admin.maps.mark-as-not-spam',
+                      defaultMessage: 'Mark as not spam',
+                    })
+                  : intl.formatMessage({
+                      id: 'admin.maps.mark-as-spam',
+                      defaultMessage: 'Mark as spam',
+                    })
+              }
               color={spam ? 'success' : 'warning'}
               size="small"
               disabled={loading}

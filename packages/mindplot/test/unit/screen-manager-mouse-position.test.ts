@@ -172,7 +172,7 @@ describe('ScreenManager.getWorkspaceMousePosition through the workspace screen m
   it('maps from the container once the workspace is gone', () => {
     screenManager.setWorkspace(workspace);
     svgAt(110, 60);
-    screenManager.setWorkspace(null);
+    screenManager.setWorkspace(undefined);
     const event = new MouseEvent('mousemove', { clientX: 150, clientY: 80 });
 
     expect(screenManager.getWorkspaceMousePosition(event)).toEqual({ x: 50, y: 30 });

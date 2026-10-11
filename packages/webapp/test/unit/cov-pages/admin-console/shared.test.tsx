@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 
 import AccountStatusChip, {
@@ -29,6 +28,7 @@ import { AuthenticationType } from '../../../../src/classes/client';
 import { intl } from '../../mocks/react-intl';
 import { renderWithWrapper } from '../providers';
 import { makeAdminMap, makeUser } from './fixtures';
+import { defined } from '../../defined';
 
 const formatDate = (date: string): string => `on-${date.slice(0, 10)}`;
 
@@ -188,7 +188,7 @@ describe('SpamStatusChip', () => {
     expect(screen.getByText('Clean')).toBeTruthy();
     expect(screen.getByLabelText('Not marked as spam')).toBeTruthy();
 
-    fireEvent.click(screen.getByRole('button', { name: 'mark-spam' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Mark as spam' }));
     expect(onToggleSpam).toHaveBeenCalledWith(true);
   });
 
@@ -209,7 +209,7 @@ describe('SpamStatusChip', () => {
     expect(screen.getByLabelText('Detected as spam on on-2026-03-04')).toBeTruthy();
     expect(screen.getByText('Too many links')).toBeTruthy();
 
-    fireEvent.click(screen.getByRole('button', { name: 'mark-not-spam' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Mark as not spam' }));
     expect(onToggleSpam).toHaveBeenCalledWith(false);
   });
 
@@ -228,9 +228,9 @@ describe('SpamStatusChip', () => {
       <SpamStatusChip spam={false} onToggleSpam={onToggleSpam} formatDate={formatDate} loading />,
     );
 
-    expect((screen.getByRole('button', { name: 'mark-spam' }) as HTMLButtonElement).disabled).toBe(
-      true,
-    );
+    expect(
+      (screen.getByRole('button', { name: 'Mark as spam' }) as HTMLButtonElement).disabled,
+    ).toBe(true);
 
     rerender(
       <SpamStatusChip
@@ -240,7 +240,7 @@ describe('SpamStatusChip', () => {
         showToggleButton={false}
       />,
     );
-    expect(screen.queryByRole('button', { name: 'mark-spam' })).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Mark as spam' })).toBeNull();
   });
 });
 
@@ -371,18 +371,18 @@ describe('UserMapsDialog', () => {
     expect(screen.getByText('page-locked-eve')).toBeTruthy();
     expect(screen.queryByText('Public')).toBeNull();
 
-    fireEvent.click(screen.getAllByRole('button', { name: 'View XML' })[0]);
+    fireEvent.click(defined(screen.getAllByRole('button', { name: 'View XML' })[0]));
     expect(onViewXml).toHaveBeenCalledWith(maps[0]);
 
-    fireEvent.click(screen.getAllByRole('button', { name: 'Edit' })[1]);
+    fireEvent.click(defined(screen.getAllByRole('button', { name: 'Edit' })[1]));
     expect(onEditMap).toHaveBeenCalledWith(maps[1]);
 
-    fireEvent.click(screen.getByRole('button', { name: 'mark-not-spam' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Mark as not spam' }));
     expect(onToggleSpam).toHaveBeenCalledWith(32, true);
-    fireEvent.click(screen.getByRole('button', { name: 'mark-spam' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Mark as spam' }));
     expect(onToggleSpam).toHaveBeenCalledWith(31, false);
 
-    fireEvent.click(screen.getAllByRole('button', { name: 'Delete' })[0]);
+    fireEvent.click(defined(screen.getAllByRole('button', { name: 'Delete' })[0]));
     expect(onDeleteMap).toHaveBeenCalledWith(31, 'Starred map');
   });
 
@@ -397,7 +397,7 @@ describe('UserMapsDialog', () => {
 
   test('shows spinners while the user or the maps load', () => {
     const { rerender } = renderWithWrapper(
-      <UserMapsDialog {...baseProps} user={null} isLoadingUser isLoadingMaps />,
+      <UserMapsDialog {...baseProps} user={undefined} isLoadingUser isLoadingMaps />,
     );
     expect(screen.getByText('Loading user...')).toBeTruthy();
     expect(screen.queryByText('User Information')).toBeNull();

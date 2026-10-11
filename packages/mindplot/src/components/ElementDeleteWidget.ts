@@ -25,15 +25,15 @@ import type Designer from './Designer';
 
 class ElementDeleteWidget {
   // Shared by the nodes built without a designer (e.g. in tests).
-  private static _instance: ElementDeleteWidget | null = null;
+  private static _instance: ElementDeleteWidget | undefined;
 
   private static _instanceByDesigner = new WeakMap<Designer, ElementDeleteWidget>();
 
-  private _activeIcon: Removable | null;
+  private _activeIcon: Removable | undefined;
 
-  private _widget: Group | null;
+  private _widget: Group | undefined;
 
-  private _widgetGroup: Group | null;
+  private _widgetGroup: Group | undefined;
 
   private _debouncedClose: ReturnType<typeof debounce>;
 
@@ -41,9 +41,9 @@ class ElementDeleteWidget {
   private _decoratedIcons: WeakSet<Removable>;
 
   private constructor() {
-    this._activeIcon = null;
-    this._widget = null;
-    this._widgetGroup = null;
+    this._activeIcon = undefined;
+    this._widget = undefined;
+    this._widgetGroup = undefined;
     this._debouncedClose = debounce(() => this._closeNow(), 200);
     this._decoratedIcons = new WeakSet<Removable>();
   }
@@ -173,7 +173,7 @@ class ElementDeleteWidget {
       const widget = this._widget;
       const widgetGroup = this._widgetGroup;
 
-      this._activeIcon = null;
+      this._activeIcon = undefined;
       if (widget && widgetGroup) {
         try {
           widgetGroup.removeChild(widget);
@@ -182,8 +182,8 @@ class ElementDeleteWidget {
           console.warn('Widget could not be removed:', error);
         }
       }
-      this._widget = null;
-      this._widgetGroup = null;
+      this._widget = undefined;
+      this._widgetGroup = undefined;
     }
   }
 

@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 
 // The dialog only needs the exporter factories from the editor bundle.
@@ -45,6 +44,7 @@ import type { Designer } from '@wisemapping/editor';
 import ExportDialog from '../../../src/components/maps-page/action-dispatcher/export-dialog';
 import Client from '../../../src/classes/client';
 import { renderWithProviders } from '../helpers/render';
+import { defined } from '../defined';
 
 const client = {
   fetchMapMetadata: () => Promise.resolve({ title: 'Map' }),
@@ -113,8 +113,8 @@ describe('ExportDialog', () => {
     submit();
 
     await waitFor(() => expect(mockCreateImageExporter).toHaveBeenCalled());
-    expect(mockCreateImageExporter.mock.calls[0][0]).toBe('svg');
-    expect(mockCreateImageExporter.mock.calls[0][1]).toBe(own.svg);
+    expect(defined(mockCreateImageExporter.mock.calls[0])[0]).toBe('svg');
+    expect(defined(mockCreateImageExporter.mock.calls[0])[1]).toBe(own.svg);
   });
 
   test('from the map list, exports the selected map', async () => {
@@ -150,7 +150,7 @@ describe('ExportDialog', () => {
 
     await waitFor(() => expect(downloads).toEqual(['Map.mm']));
     // mmx is still the id of the format.
-    expect(mockCreateTextExporter.mock.calls[0][0]).toBe('mmx');
+    expect(defined(mockCreateTextExporter.mock.calls[0])[0]).toBe('mmx');
     click.mockRestore();
   });
 

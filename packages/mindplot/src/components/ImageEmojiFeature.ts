@@ -21,7 +21,6 @@ import type { Image, Group } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
 import ElementDeleteWidget from './ElementDeleteWidget';
 import type { Removable } from './Icon';
-import type IconGroup from './IconGroup';
 import type SizeType from './SizeType';
 import type PositionType from './PositionType';
 import type Topic from './Topic';
@@ -190,8 +189,8 @@ class ImageEmojiFeature {
       getElement(): Group {
         return topic.get2DElement(); // Return the topic's main group
       },
-      getGroup(): IconGroup | null {
-        return null;
+      getGroup(): undefined {
+        return undefined;
       },
       getSize(): SizeType | undefined {
         return emojiTextShape.measure();

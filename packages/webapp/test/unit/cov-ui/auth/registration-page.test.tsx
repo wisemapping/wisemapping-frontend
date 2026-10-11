@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 
 jest.mock('react-router', () => jest.requireActual('../router-mock'));
@@ -72,9 +71,10 @@ import RegistrationPage from '../../../../src/components/registration-page';
 import Client from '../../../../src/classes/client';
 import { logCriticalError } from '../../../../src/utils';
 import { trackPageView } from '../../../../src/utils/analytics';
-import { initAppConfig, installMatchMedia, renderPage, useConfig } from '../helpers';
+import { initAppConfig, installMatchMedia, renderPage, stubConfig } from '../helpers';
 import { resetRouter, routerState, setLocation } from '../router-mock';
 import { BURST_TEXT, typeInBurst } from '../../burst-typing';
+import { defined } from '../../defined';
 
 const setup = () => {
   setLocation('/c/registration');
@@ -176,7 +176,7 @@ describe('RegistrationPage', () => {
   });
 
   test('sends the user to login when registration is closed', () => {
-    useConfig({ registrationEnabled: false });
+    stubConfig({ registrationEnabled: false });
     setup();
 
     expect(routerState.navigate).toHaveBeenCalledWith('/c/login');
@@ -190,7 +190,7 @@ describe('RegistrationPage', () => {
   });
 
   test('offers sign-up with the enabled OAuth providers', () => {
-    useConfig({
+    stubConfig({
       googleOauth2Enabled: true,
       googleOauth2Url: 'https://accounts.example.com/auth',
       facebookOauth2Enabled: true,
@@ -208,7 +208,7 @@ describe('RegistrationPage', () => {
 
   describe('with reCAPTCHA', () => {
     beforeEach(() => {
-      useConfig({ recaptcha2Enabled: true, recaptcha2SiteKey: 'site-key' });
+      stubConfig({ recaptcha2Enabled: true, recaptcha2SiteKey: 'site-key' });
     });
 
     test('sends the captcha token with the registration', async () => {
@@ -220,7 +220,9 @@ describe('RegistrationPage', () => {
       submit();
 
       await waitFor(() => expect(client.registerNewUser).toHaveBeenCalled());
-      expect(client.registerNewUser.mock.calls[0][0]).toMatchObject({ recaptcha: 'captcha-token' });
+      expect(defined(client.registerNewUser.mock.calls[0])[0]).toMatchObject({
+        recaptcha: 'captcha-token',
+      });
     });
 
     test('an expired token is dropped and logged', async () => {
@@ -232,7 +234,7 @@ describe('RegistrationPage', () => {
       submit();
 
       await waitFor(() => expect(client.registerNewUser).toHaveBeenCalled());
-      expect(client.registerNewUser.mock.calls[0][0]).toMatchObject({ recaptcha: '' });
+      expect(defined(client.registerNewUser.mock.calls[0])[0]).toMatchObject({ recaptcha: '' });
       expect(logCriticalError).toHaveBeenCalledWith('reCAPTCHA token expired', expect.any(String));
     });
 
@@ -287,7 +289,7 @@ describe('RegistrationPage', () => {
     });
 
     test('without a site key the form is shown without the widget, and that is logged', () => {
-      useConfig({ recaptcha2SiteKey: undefined });
+      stubConfig({ recaptcha2SiteKey: undefined });
       setup();
 
       expect(screen.getByRole('form', { name: 'Registration form' })).toBeTruthy();

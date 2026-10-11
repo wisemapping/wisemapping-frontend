@@ -45,7 +45,7 @@ class DragTopic {
 
   // Every workspace has its own pivot (DragTopic.init), handed to the drag topics its DragManager
   // builds inside DragTopic.withPivot() ...
-  private static _scopedPivot: DragPivot | null = null;
+  private static _scopedPivot: DragPivot | undefined;
 
   constructor(dragShape: Group, draggedNode: NodeGraph, layoutManger: LayoutManager) {
     this._elem2d = dragShape;
@@ -162,7 +162,9 @@ class DragTopic {
    */
   isDraggedTopicRemoved(): boolean {
     const target = this.getConnectedToTopic();
-    return !this.getDraggedTopic().isInWorkspace() || (target != null && !target.isInWorkspace());
+    return (
+      !this.getDraggedTopic().isInWorkspace() || (target !== undefined && !target.isInWorkspace())
+    );
   }
 
   removeFromWorkspace(workspace: Canvas) {
@@ -228,7 +230,7 @@ class DragTopic {
 
     if (!this.isFreeLayoutOn()) {
       let order: number | undefined;
-      let parent: Topic | null = null;
+      let parent: Topic | undefined;
       const isDragConnected = this.isConnected();
       if (isDragConnected) {
         const targetTopic = this.getConnectedToTopic();
@@ -243,13 +245,13 @@ class DragTopic {
     }
   }
 
-  getConnectedToTopic(): Topic | null {
+  getConnectedToTopic(): Topic | undefined {
     const dragPivot = this._getDragPivot();
     return dragPivot.getTargetTopic();
   }
 
   isConnected(): boolean {
-    return this.getConnectedToTopic() != null;
+    return this.getConnectedToTopic() !== undefined;
   }
 
   isFreeLayoutOn(): false {

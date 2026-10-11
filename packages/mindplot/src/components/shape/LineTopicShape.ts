@@ -20,12 +20,12 @@ import type SizeType from '../SizeType';
 import DefaultTopicShape from './DefaultShape';
 
 class LineTopicShape extends DefaultTopicShape<StraightLine> {
-  private _size: SizeType | null;
+  private _size: SizeType | undefined;
 
   constructor(borderColor: string) {
     const shape = new StraightLine({ strokeWidth: 2, strokeColor: borderColor });
     super(shape, 'line');
-    this._size = null;
+    this._size = undefined;
   }
 
   setSize(width: number, height: number): void {
@@ -34,7 +34,7 @@ class LineTopicShape extends DefaultTopicShape<StraightLine> {
     this.getShape().setTo(width, height);
   }
 
-  getSize(): SizeType | null {
+  getSize(): SizeType | undefined {
     return this._size;
   }
 

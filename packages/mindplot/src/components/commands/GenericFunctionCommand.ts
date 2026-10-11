@@ -47,12 +47,10 @@ class GenericFunctionCommand<T> extends Command {
     if (!this._applied) {
       const topics = commandContext.findTopics(this._topicsIds);
 
-      if (topics != null) {
-        topics.forEach((topic: Topic) => {
-          const oldValue = this._commandFunc(topic, this._value);
-          this._oldValues.set(topic.getId(), oldValue);
-        });
-      }
+      topics.forEach((topic: Topic) => {
+        const oldValue = this._commandFunc(topic, this._value);
+        this._oldValues.set(topic.getId(), oldValue);
+      });
       this._applied = true;
     } else {
       throw new Error('Command can not be applied two times in a row.');

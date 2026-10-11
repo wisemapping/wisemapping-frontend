@@ -31,14 +31,14 @@ class BalancedSorter extends AbstractBasicSorter {
   predict(
     graph: RootedTreeSet,
     parent: Node,
-    node: Node | null,
-    position: PositionType | null,
+    node: Node | undefined,
+    position: PositionType | undefined,
   ): SorterPrediction {
     const rootNode = graph.getRootNode(parent);
 
     // If it is a dragged node...
     if (node) {
-      $assert(position != null, 'position cannot be null for predict in dragging');
+      $assert(position, 'position cannot be null for predict in dragging');
       const nodeDirection = this._getRelativeDirection(rootNode.getPosition(), node.getPosition());
       const positionDirection = this._getRelativeDirection(rootNode.getPosition(), position);
       const siblings = graph.getSiblings(node);
@@ -88,7 +88,7 @@ class BalancedSorter extends AbstractBasicSorter {
     const nodeOrder = node && graph.getParent(node) === parent ? node.getOrder() : undefined;
 
     // Try to fit within ...
-    let result: SorterPrediction | null = null;
+    let result: SorterPrediction | undefined;
     const newestPosition = position || { x: last.getPosition().x, y: last.getPosition().y + 1 };
     children.forEach((child, index) => {
       const cpos = child.getPosition();

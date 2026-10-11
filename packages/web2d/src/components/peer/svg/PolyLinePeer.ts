@@ -134,76 +134,68 @@ class PolyLinePeer extends ElementPeer<SVGPolylineElement> {
   }
 
   private _updateStraightPath() {
-    if (this._x1 != null && this._x2 != null && this._y1 != null && this._y2 != null) {
-      const path =
-        this._orientation === 'vertical'
-          ? PolyLineUtils.buildVerticalStraightPath(
-              this._breakDistance,
-              this._x1,
-              this._y1,
-              this._x2,
-              this._y2,
-            )
-          : PolyLineUtils.buildStraightPath(
-              this._breakDistance,
-              this._x1,
-              this._y1,
-              this._x2,
-              this._y2,
-            );
-      this.attr('points', path);
-    }
+    const path =
+      this._orientation === 'vertical'
+        ? PolyLineUtils.buildVerticalStraightPath(
+            this._breakDistance,
+            this._x1,
+            this._y1,
+            this._x2,
+            this._y2,
+          )
+        : PolyLineUtils.buildStraightPath(
+            this._breakDistance,
+            this._x1,
+            this._y1,
+            this._x2,
+            this._y2,
+          );
+    this.attr('points', path);
   }
 
   /** An elbow with both corners chamfered by MIDDLE_CURVED_CHAMFER (W-MIDCURVE). */
   private _updateMiddleCurvePath() {
-    if (this._x1 != null && this._x2 != null && this._y1 != null && this._y2 != null) {
-      const path = PolyLineUtils.buildChamferedElbowPath(
-        this._x1,
-        this._y1,
-        this._x2,
-        this._y2,
-        PolyLineUtils.MIDDLE_CURVED_CHAMFER,
-        this._orientation,
-      );
-      this.attr('points', path);
-    }
+    const path = PolyLineUtils.buildChamferedElbowPath(
+      this._x1,
+      this._y1,
+      this._x2,
+      this._y2,
+      PolyLineUtils.MIDDLE_CURVED_CHAMFER,
+      this._orientation,
+    );
+    this.attr('points', path);
   }
 
   /** An elbow that breaks at the middle, which is rounded to whole units. */
   private _updateMiddleStraightPath() {
-    if (this._x1 != null && this._x2 != null && this._y1 != null && this._y2 != null) {
-      const path = PolyLineUtils.buildMiddleStraightPath(
-        this._x1,
-        this._y1,
-        this._x2,
-        this._y2,
-        this._orientation,
-      );
-      this.attr('points', path);
-    }
+    const path = PolyLineUtils.buildMiddleStraightPath(
+      this._x1,
+      this._y1,
+      this._x2,
+      this._y2,
+      this._orientation,
+    );
+    this.attr('points', path);
   }
 
   private _updateCurvePath() {
-    if (this._x1 != null && this._x2 != null && this._y1 != null && this._y2 != null) {
-      const path =
-        this._orientation === 'vertical'
-          ? PolyLineUtils.buildVerticalCurvedPath(
-              this._breakDistance,
-              this._x1,
-              this._y1,
-              this._x2,
-              this._y2,
-            )
-          : PolyLineUtils.buildCurvedPath(
-              this._breakDistance,
-              this._x1,
-              this._y1,
-              this._x2,
-              this._y2,
-            );
-      this.attr('points', path);
-    }
+    const path =
+      this._orientation === 'vertical'
+        ? PolyLineUtils.buildVerticalCurvedPath(
+            this._breakDistance,
+            this._x1,
+            this._y1,
+            this._x2,
+            this._y2,
+          )
+        : PolyLineUtils.buildCurvedPath(
+            this._breakDistance,
+            this._x1,
+            this._y1,
+            this._x2,
+            this._y2,
+          );
+    this.attr('points', path);
   }
 }
 

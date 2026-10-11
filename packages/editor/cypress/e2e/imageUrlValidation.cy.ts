@@ -98,7 +98,7 @@ describe('Image URL Validation Suite', () => {
         });
     });
     canvasIcons().each(($image, index) => {
-      assertIconUrlLoads(hrefOf($image[0]), `canvas icon #${index}`);
+      assertIconUrlLoads(hrefOf($image.get(0)), `canvas icon #${index}`);
     });
   });
 
@@ -122,7 +122,7 @@ describe('Image URL Validation Suite', () => {
         .find('img')
         .should('have.length', icons.length)
         .each(($img, index) => {
-          assertIconUrlLoads($img.attr('src') ?? '', icons[index]);
+          assertIconUrlLoads($img.attr('src') ?? '', icons[index] ?? `icon #${index}`);
         });
     });
   });

@@ -20,7 +20,7 @@ import React, { useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import FormContainer from '../layout/form-container';
 import AccountAccessLayout from '../layout/AccountAccessLayout';
-import { Link as RouterLink } from 'react-router';
+import { ButtonLink } from '../layout/styled';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { trackPageView } from '../../utils/analytics';
@@ -93,12 +93,7 @@ const RegistrationSuccessPage = (): React.ReactElement => {
             />
           </Typography>
 
-          <Typography
-            style={{ marginBottom: '2rem' }}
-            sx={{
-              marginBottom: '16px',
-            }}
-          >
+          <Typography sx={{ marginBottom: '2rem' }}>
             <FormattedMessage
               id="registration.success.check-spam"
               defaultMessage="If you don't see the email, please check your spam folder."
@@ -112,17 +107,17 @@ const RegistrationSuccessPage = (): React.ReactElement => {
             />
           </Typography>
 
-          <RouterLink to="/c/login" style={{ textDecoration: 'none' }}>
+          <ButtonLink to="/c/login">
             <Button
               color="primary"
               size="medium"
               variant="contained"
               disableElevation={true}
-              style={{ marginTop: '1rem' }}
+              sx={{ marginTop: '1rem' }}
             >
               <FormattedMessage id="login.signin" defaultMessage="Sign In" />
             </Button>
-          </RouterLink>
+          </ButtonLink>
         </FormContainer>
       </AccountAccessLayout>
     </>

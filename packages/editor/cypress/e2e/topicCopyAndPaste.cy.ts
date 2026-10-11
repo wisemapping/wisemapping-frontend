@@ -31,11 +31,12 @@ type DesignerHost = HTMLElement & { getDesigner(): ClipboardDesigner };
 // Headless Chrome usually denies the system clipboard, so both fall back to the internal one.
 const copyAndPaste = () => {
   cy.get<DesignerHost>('mindplot-component').then(async ($host) => {
-    const designer = $host[0].getDesigner();
+    const host = $host.get(0);
+    const designer = host.getDesigner();
     await designer.copyToClipboard();
 
     // The paste offsets each pasted topic by a random amount: pin it so the snapshot is stable.
-    const win = $host[0].ownerDocument.defaultView as Window & typeof globalThis;
+    const win = host.ownerDocument.defaultView as Window & typeof globalThis;
     const { random } = win.Math;
     win.Math.random = () => 0.5;
     try {

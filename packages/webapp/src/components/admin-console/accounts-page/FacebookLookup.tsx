@@ -16,9 +16,8 @@
  *   limitations under the License.
  */
 
-import React, { ReactElement, useState } from 'react';
+import { ReactElement, useState } from 'react';
 import { useIntl } from 'react-intl';
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import TextField from '@mui/material/TextField';
@@ -27,6 +26,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import LinkOffIcon from '@mui/icons-material/LinkOff';
 import { User } from './types';
+import { LookupBar } from './styled';
 
 type FacebookLookupProps = {
   /** Finds the account of a Facebook user id; rejects when there is none. */
@@ -45,7 +45,7 @@ type FacebookLookupProps = {
 const FacebookLookup = ({ onLookup, onRemove }: FacebookLookupProps): ReactElement => {
   const intl = useIntl();
   const [facebookIdInput, setFacebookIdInput] = useState('');
-  const [facebookLookupResult, setFacebookLookupResult] = useState<User | null>(null);
+  const [facebookLookupResult, setFacebookLookupResult] = useState<User>();
   const [facebookLookupError, setFacebookLookupError] = useState('');
   const [isFacebookLookupLoading, setIsFacebookLookupLoading] = useState(false);
 
@@ -53,7 +53,7 @@ const FacebookLookup = ({ onLookup, onRemove }: FacebookLookupProps): ReactEleme
     const id = facebookIdInput.trim();
     if (!id) return;
     setIsFacebookLookupLoading(true);
-    setFacebookLookupResult(null);
+    setFacebookLookupResult(undefined);
     setFacebookLookupError('');
     onLookup(id)
       .then((user) => setFacebookLookupResult(user))
@@ -69,25 +69,17 @@ const FacebookLookup = ({ onLookup, onRemove }: FacebookLookupProps): ReactEleme
   };
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        gap: 2,
-        alignItems: 'flex-start',
-        flexWrap: 'wrap',
-        pt: 1,
-        pb: 1,
-        borderTop: '1px dashed',
-        borderColor: 'divider',
-      }}
-    >
+    <LookupBar>
       <TextField
-        label="facebookId"
+        label={intl.formatMessage({
+          id: 'admin.facebook.id-label',
+          defaultMessage: 'Facebook user ID',
+        })}
         placeholder="652098797767905"
         value={facebookIdInput}
         onChange={(e) => {
           setFacebookIdInput(e.target.value);
-          setFacebookLookupResult(null);
+          setFacebookLookupResult(undefined);
           setFacebookLookupError('');
         }}
         onKeyDown={(e) => e.key === 'Enter' && handleFacebookLookup()}
@@ -97,7 +89,7 @@ const FacebookLookup = ({ onLookup, onRemove }: FacebookLookupProps): ReactEleme
           input: {
             startAdornment: (
               <InputAdornment position="start">
-                <FacebookIcon fontSize="small" sx={{ color: '#1877F2' }} />
+                <FacebookIcon fontSize="small" sx={{ color: 'facebook.main' }} />
               </InputAdornment>
             ),
             endAdornment: isFacebookLookupLoading ? (
@@ -113,7 +105,7 @@ const FacebookLookup = ({ onLookup, onRemove }: FacebookLookupProps): ReactEleme
         variant="outlined"
         onClick={handleFacebookLookup}
         disabled={!facebookIdInput.trim() || isFacebookLookupLoading}
-        sx={{ alignSelf: 'center', borderColor: '#1877F2', color: '#1877F2' }}
+        sx={{ alignSelf: 'center', borderColor: 'facebook.main', color: 'facebook.main' }}
       >
         {intl.formatMessage({
           id: 'admin.facebook.lookup-button',
@@ -147,7 +139,7 @@ const FacebookLookup = ({ onLookup, onRemove }: FacebookLookupProps): ReactEleme
           {facebookLookupResult.email}&gt;
         </Alert>
       )}
-    </Box>
+    </LookupBar>
   );
 };
 

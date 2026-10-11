@@ -18,12 +18,12 @@
 import React, { ReactElement } from 'react';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
 
 import logoIconBlack from '../../../../images/logo-and-text-black.svg';
 import logoIconWhite from '../../../../images/logo-and-text-white.svg';
 import { useTheme } from '../../../contexts/ThemeContext';
 import StyleListItem from './filter-list-item';
+import { Logo, LogoBox, UserEmail, UserInfoBox, UserName } from './styled';
 import type { AccountInfo } from '../../../classes/client';
 import type { Filter, GenericFilter, LabelFilter } from '../index';
 import { useIntl } from 'react-intl';
@@ -63,68 +63,25 @@ const DrawerNav = ({
   const { mode } = useTheme();
   return (
     <>
-      <div
-        style={{
-          padding: '24px 16px 20px 16px',
-          marginBottom: '8px',
-          display: 'flex',
-          alignItems: 'center',
-          position: 'relative',
-          zIndex: 0,
-        }}
-        key="logo"
-      >
-        <img
+      <LogoBox key="logo">
+        <Logo
           src={mode === 'dark' ? logoIconWhite : logoIconBlack}
           alt={intl.formatMessage({ id: 'common.logo', defaultMessage: 'WiseMapping logo' })}
-          style={{ height: '32px', width: 'auto' }}
         />
-      </div>
+      </LogoBox>
 
       {/* User Info Box */}
       {account && drawerOpen && (
-        <Box
-          sx={{
-            padding: '16px',
-            margin: '0 8px 16px 8px',
-            backgroundColor: 'rgba(255, 255, 255, 0.05)',
-            borderRadius: '8px',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-          }}
-        >
+        <UserInfoBox>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-            <Typography
-              variant="body2"
-              sx={{
-                color: 'text.primary',
-                fontSize: '16px',
-                fontWeight: 500,
-                fontFamily: 'Figtree, "Noto Sans JP", Helvetica, "system-ui", Arial, sans-serif',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
-              }}
-            >
+            <UserName variant="body2">
               {account.firstname && account.lastname
                 ? `${account.firstname} ${account.lastname}`
                 : account.email}
-            </Typography>
-            <Typography
-              variant="caption"
-              sx={{
-                color: 'text.secondary',
-                fontSize: '14px',
-                fontFamily: 'Figtree, "Noto Sans JP", Helvetica, "system-ui", Arial, sans-serif',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
-                display: 'block',
-              }}
-            >
-              {account.email}
-            </Typography>
+            </UserName>
+            <UserEmail variant="caption">{account.email}</UserEmail>
           </Box>
-        </Box>
+        </UserInfoBox>
       )}
 
       <List component="nav">

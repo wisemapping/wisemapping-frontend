@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import ShareDialog from '../../../src/components/maps-page/action-dispatcher/share-dialog';
 import Client, { Permission } from '../../../src/classes/client';

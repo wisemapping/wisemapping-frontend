@@ -168,8 +168,8 @@ class Mindmap extends IMindmap {
   }
 
   createRelationship(sourceNodeId: number, targetNodeId: number): RelationshipModel {
-    $assert(sourceNodeId != null, 'from node cannot be null');
-    $assert(targetNodeId != null, 'to node cannot be null');
+    $assert(typeof sourceNodeId === 'number', 'from node cannot be null');
+    $assert(typeof targetNodeId === 'number', 'to node cannot be null');
 
     return new RelationshipModel(sourceNodeId, targetNodeId);
   }

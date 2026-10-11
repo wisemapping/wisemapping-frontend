@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import { fireEvent, screen } from '@testing-library/react';
 
 // react-router is ESM-only (see jest.config.js): stand in for the route-error hooks.

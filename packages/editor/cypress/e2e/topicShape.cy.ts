@@ -57,7 +57,7 @@ describe('Topic Shape Suite', () => {
                   .last()
                   .invoke('attr', 'rx')
                   .then((rx) => {
-                    if (rx !== null && rx !== undefined) {
+                    if (rx !== undefined) {
                       const rxValue = parseInt(rx);
                       expect(rxValue).to.be.a('number');
                       expect(rxValue).to.eq(0);

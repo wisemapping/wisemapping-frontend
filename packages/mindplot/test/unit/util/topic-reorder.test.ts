@@ -24,13 +24,13 @@ import LayoutManager from '../../../src/components/layout/LayoutManager';
 type Stub = {
   id: number;
   order?: number | undefined;
-  parent: Stub | null;
+  parent: Stub | undefined;
   children: Stub[];
   central: boolean;
   layout: LayoutType;
   getId(): number;
   getOrder(): number | undefined;
-  getParent(): Topic | null;
+  getParent(): Topic | undefined;
   getChildren(): Topic[];
   isCentralTopic(): boolean;
   getModel(): { getMindmap(): { getLayout(): LayoutType } };
@@ -49,13 +49,13 @@ const node = (
   const self: Stub = {
     id,
     order: options.order,
-    parent: null,
+    parent: undefined,
     children: [],
     central: options.central ?? false,
     layout: options.layout ?? 'tree',
     getId: () => self.id,
     getOrder: () => self.order,
-    getParent: () => self.parent as unknown as Topic | null,
+    getParent: () => self.parent as unknown as Topic | undefined,
     getChildren: () => self.children as unknown as Topic[],
     isCentralTopic: () => self.central,
     getModel: () => ({ getMindmap: () => ({ getLayout: () => self.layout }) }),
@@ -148,18 +148,18 @@ describe('resolveTopicMove', () => {
 
     it('refuses to move the first sibling up', () => {
       const { a } = buildTree();
-      expect(resolve(a, 'up')).toBeNull();
+      expect(resolve(a, 'up')).toBeUndefined();
     });
 
     it('refuses to move the last sibling down', () => {
       const { c } = buildTree();
-      expect(resolve(c, 'down')).toBeNull();
+      expect(resolve(c, 'down')).toBeUndefined();
     });
 
     it('refuses both directions for an only child', () => {
       const { a1 } = buildTree();
-      expect(resolve(a1, 'up')).toBeNull();
-      expect(resolve(a1, 'down')).toBeNull();
+      expect(resolve(a1, 'up')).toBeUndefined();
+      expect(resolve(a1, 'down')).toBeUndefined();
     });
 
     it('keeps the same parent when reordering', () => {
@@ -179,7 +179,7 @@ describe('resolveTopicMove', () => {
     it('refuses when the parent is the central topic', () => {
       const { b } = buildTree();
       // There is no level above root to rise to; detaching would orphan it.
-      expect(resolve(b, 'outdent')).toBeNull();
+      expect(resolve(b, 'outdent')).toBeUndefined();
     });
 
     it('works from a fourth level', () => {
@@ -207,12 +207,12 @@ describe('resolveTopicMove', () => {
 
     it('refuses for the first sibling, which has nothing above it', () => {
       const { a } = buildTree();
-      expect(resolve(a, 'indent')).toBeNull();
+      expect(resolve(a, 'indent')).toBeUndefined();
     });
 
     it('refuses for an only child', () => {
       const { a1 } = buildTree();
-      expect(resolve(a1, 'indent')).toBeNull();
+      expect(resolve(a1, 'indent')).toBeUndefined();
     });
   });
 
@@ -221,7 +221,7 @@ describe('resolveTopicMove', () => {
       'refuses %s, since the root has nowhere to go',
       (move) => {
         const { root } = buildTree();
-        expect(resolve(root, move)).toBeNull();
+        expect(resolve(root, move)).toBeUndefined();
       },
     );
   });
@@ -229,7 +229,7 @@ describe('resolveTopicMove', () => {
   describe('a detached topic', () => {
     it.each(['up', 'down', 'outdent', 'indent'] as TopicMove[])('refuses %s', (move) => {
       const orphan = node(99);
-      expect(resolve(orphan, move)).toBeNull();
+      expect(resolve(orphan, move)).toBeUndefined();
     });
   });
 
@@ -269,7 +269,7 @@ describe('resolveTopicMove', () => {
       const { r0, r1, r2 } = buildMindmap();
       [resolve(r0, 'down'), resolve(r1, 'up'), resolve(r1, 'down'), resolve(r2, 'up')].forEach(
         (target) => {
-          expect(target).not.toBeNull();
+          expect(target).toBeDefined();
           expect((target as { order: number }).order % 2).toBe(0);
         },
       );
@@ -277,10 +277,10 @@ describe('resolveTopicMove', () => {
 
     it('refuses to move past the end of its own side', () => {
       const { l0, l1, r0, r2 } = buildMindmap();
-      expect(resolve(l0, 'up')).toBeNull();
-      expect(resolve(l1, 'down')).toBeNull();
-      expect(resolve(r0, 'up')).toBeNull();
-      expect(resolve(r2, 'down')).toBeNull();
+      expect(resolve(l0, 'up')).toBeUndefined();
+      expect(resolve(l1, 'down')).toBeUndefined();
+      expect(resolve(r0, 'up')).toBeUndefined();
+      expect(resolve(r2, 'down')).toBeUndefined();
     });
 
     it('indents under the sibling above on the same side', () => {
@@ -291,7 +291,7 @@ describe('resolveTopicMove', () => {
 
     it('refuses to indent the first topic on a side', () => {
       const { l0 } = buildMindmap();
-      expect(resolve(l0, 'indent')).toBeNull();
+      expect(resolve(l0, 'indent')).toBeUndefined();
     });
 
     it.each([

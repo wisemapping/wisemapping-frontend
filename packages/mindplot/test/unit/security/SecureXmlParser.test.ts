@@ -25,7 +25,7 @@ describe('SecureXmlParser', () => {
       '<node TEXT="R&amp;D &lt;tag&gt; &quot;q&quot; &apos;a&apos;">caf&#233; &#x2713;</node>',
     );
 
-    expect(doc).not.toBeNull();
+    expect(doc).toBeDefined();
     expect(doc!.documentElement.getAttribute('TEXT')).toBe('R&D <tag> "q" \'a\'');
     expect(doc!.documentElement.textContent).toBe('café ✓');
   });
@@ -34,7 +34,7 @@ describe('SecureXmlParser', () => {
     const cdata = 'a <!-- not a comment --> <?pi not a pi?> &amp; &custom;';
     const doc = SecureXmlParser.parseSecureXml(`<note><![CDATA[${cdata}]]></note>`);
 
-    expect(doc).not.toBeNull();
+    expect(doc).toBeDefined();
     expect(doc!.documentElement.textContent).toBe(cdata);
   });
 
@@ -43,7 +43,7 @@ describe('SecureXmlParser', () => {
       '<?xml version="1.0"?><?xml-stylesheet href="x.xsl"?><map><!-- comment --><node/></map>',
     );
 
-    expect(doc).not.toBeNull();
+    expect(doc).toBeDefined();
     expect(doc!.documentElement.childNodes).toHaveLength(1);
     expect(doc!.documentElement.firstElementChild!.tagName).toBe('node');
   });
@@ -56,11 +56,11 @@ describe('SecureXmlParser', () => {
   <!ENTITY xxe SYSTEM "file:///etc/passwd">
 ]>
 <map><node TEXT="&xxe;"/></map>`;
-    expect(SecureXmlParser.parseSecureXml(xxe)).toBeNull();
+    expect(SecureXmlParser.parseSecureXml(xxe)).toBeUndefined();
 
     const bomb =
       '<!DOCTYPE lolz [<!ENTITY lol "lol"><!ENTITY lol2 "&lol;&lol;">]><lolz>&lol2;</lolz>';
-    expect(SecureXmlParser.parseSecureXml(bomb)).toBeNull();
+    expect(SecureXmlParser.parseSecureXml(bomb)).toBeUndefined();
   });
 
   test('ignores a DOCTYPE without entity declarations', () => {
@@ -68,14 +68,14 @@ describe('SecureXmlParser', () => {
       '<!DOCTYPE map SYSTEM "map.dtd"><map><node TEXT="ok"/></map>',
     );
 
-    expect(doc).not.toBeNull();
+    expect(doc).toBeDefined();
     expect(doc!.documentElement.tagName).toBe('map');
   });
 
   test('drops references to undeclared entities', () => {
     const doc = SecureXmlParser.parseSecureXml('<node>a&nbsp;b</node>');
 
-    expect(doc).not.toBeNull();
+    expect(doc).toBeDefined();
     expect(doc!.documentElement.textContent).toBe('ab');
   });
 
@@ -98,7 +98,7 @@ describe('SecureXmlParser', () => {
       `<map><node TEXT="root">${nodes.join('')}</node></map>`,
     );
 
-    expect(doc).not.toBeNull();
+    expect(doc).toBeDefined();
     expect(doc!.getElementsByTagName('node')).toHaveLength(4001);
   });
   describe('element cap', () => {
@@ -109,7 +109,7 @@ describe('SecureXmlParser', () => {
       const parse = jest.spyOn(DOMParser.prototype, 'parseFromString');
       const error = jest.spyOn(console, 'error').mockImplementation(() => undefined);
       try {
-        expect(SecureXmlParser.parseSecureXml(elements(200001))).toBeNull();
+        expect(SecureXmlParser.parseSecureXml(elements(200001))).toBeUndefined();
         expect(parse).not.toHaveBeenCalled();
         expect(error).toHaveBeenCalledWith(
           'Secure XML parsing failed:',
@@ -127,7 +127,7 @@ describe('SecureXmlParser', () => {
         `<r><!-- ${markup} --><note><![CDATA[${markup}]]></note></r>`,
       );
 
-      expect(doc).not.toBeNull();
+      expect(doc).toBeDefined();
       expect(doc!.documentElement.textContent).toBe(markup);
     });
   });
@@ -140,7 +140,7 @@ describe('SecureXmlParser', () => {
           '<map><node TEXT="a"><node TEXT="b"/></node></map>',
         );
 
-        expect(doc).not.toBeNull();
+        expect(doc).toBeDefined();
         expect(select.mock.calls.filter(([selector]) => selector === '*')).toHaveLength(1);
       } finally {
         select.mockRestore();
@@ -155,8 +155,8 @@ describe('SecureXmlParser', () => {
           `<map><node TEXT="${'a'.repeat(10001)}"/></map>`,
         );
 
-        expect(ok).not.toBeNull();
-        expect(tooLong).toBeNull();
+        expect(ok).toBeDefined();
+        expect(tooLong).toBeUndefined();
         expect(error).toHaveBeenCalledWith(
           'Secure XML parsing failed:',
           new Error('Attribute value too long'),
@@ -173,7 +173,7 @@ describe('SecureXmlParser', () => {
         const depth = 102;
         const xml = `${'<a>'.repeat(depth)}${'</a>'.repeat(depth)}`;
 
-        expect(SecureXmlParser.parseSecureXml(xml)).toBeNull();
+        expect(SecureXmlParser.parseSecureXml(xml)).toBeUndefined();
         expect(error).toHaveBeenCalledWith(
           'Secure XML parsing failed:',
           new Error('XML nesting too deep'),

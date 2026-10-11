@@ -39,7 +39,7 @@ class Point {
   }
 
   static fromString = (value: string): Point => {
-    let result: Point | null = null;
+    let result: Point | undefined;
     if (value) {
       const values = value.split(',');
       if (values.length === 2 && values[0] !== undefined && values[1] !== undefined) {

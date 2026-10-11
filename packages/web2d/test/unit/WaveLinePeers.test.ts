@@ -133,7 +133,7 @@ describe.each(KINDS)('%s', (_name, create) => {
     const peer = create();
     peer.setDashPattern(6, 2);
     expect(peer._native.getAttribute('stroke-dasharray')).toBe('6,2');
-    peer.setStroke(null, 'solid');
+    peer.setStroke(undefined, 'solid');
     expect(peer._native.getAttribute('stroke-dasharray')).toBeNull();
     peer.setDashPattern(undefined as unknown as number, 2);
     expect(peer._native.getAttribute('stroke-dasharray')).toBeNull();
@@ -180,7 +180,7 @@ describe('HeartbeatLinePeer', () => {
     const peer = draw(() => new HeartbeatLinePeer(), 0, 0, 200, 0);
     const before = d(peer);
     peer.setStroke(3, 'dash');
-    peer.setStroke(null, null, 'red');
+    peer.setStroke(undefined, undefined, 'red');
     expect(d(peer)).toBe(before);
   });
 
@@ -308,8 +308,8 @@ describe.each([
 
   it('has no control point methods (typing T5)', () => {
     const line = create() as unknown as Record<string, unknown>;
-    expect(line.setSrcControlPoint).toBeUndefined();
-    expect(line.getControlPoints).toBeUndefined();
-    expect(line.isSrcControlPointCustom).toBeUndefined();
+    expect(line['setSrcControlPoint']).toBeUndefined();
+    expect(line['getControlPoints']).toBeUndefined();
+    expect(line['isSrcControlPointCustom']).toBeUndefined();
   });
 });

@@ -35,7 +35,7 @@ import { designerIn } from '../support/designer';
  *   └── 15 Features             order 2
  */
 type TopicHandle = {
-  getParent(): { getId(): number } | null;
+  getParent(): { getId(): number } | undefined;
   getOrder(): number | undefined;
   getId(): number;
 };
@@ -43,7 +43,7 @@ type TopicHandle = {
 type DesignerHandle = {
   getModel(): {
     findTopicById(id: number): TopicHandle;
-    selectedTopic(): TopicHandle | null;
+    selectedTopic(): TopicHandle | undefined;
   };
 };
 
@@ -56,7 +56,7 @@ describe('Topic Keyboard Move Suite', () => {
     cy.window().then((win) => {
       const topic = designer(win).getModel().findTopicById(id);
       return {
-        parentId: topic.getParent()?.getId() ?? null,
+        parentId: topic.getParent()?.getId(),
         order: topic.getOrder(),
       };
     });

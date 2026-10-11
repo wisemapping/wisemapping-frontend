@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import { act, fireEvent, screen, waitFor } from '@testing-library/react';
 
 // The editor bundle pulls in the whole canvas. The dialog only needs the importer factory, which
@@ -36,6 +35,7 @@ jest.mock('@wisemapping/editor', () => ({
 import ImportDialog from '../../../src/components/maps-page/action-dispatcher/import-dialog';
 import Client from '../../../src/classes/client';
 import { renderWithProviders } from '../helpers/render';
+import { defined } from '../defined';
 
 const mockImportMap = jest.fn<Promise<number>, [unknown]>();
 const client = { importMap: mockImportMap } as unknown as Client;
@@ -137,7 +137,7 @@ describe('ImportDialog', () => {
     // Submitted directly: jsdom's constraint validation can't see the file in the required input.
     fireEvent.submit(screen.getByRole('button', { name: 'Import' }).closest('form')!);
     await waitFor(() => expect(mockImportMap).toHaveBeenCalled());
-    expect(mockImportMap.mock.calls[0][0]).toEqual({
+    expect(defined(mockImportMap.mock.calls[0])[0]).toEqual({
       title: 'alpha',
       description: 'My notes',
       contentType: 'application/xml',
@@ -171,12 +171,14 @@ describe('ImportDialog', () => {
       renderWithProviders(<ImportDialog onClose={jest.fn()} />, { client });
 
       await pickBoth();
-      await act(async () => imports[1].resolve('<map name="beta"/>'));
-      await act(async () => imports[0].resolve('<map name="alpha"/>'));
+      await act(async () => defined(imports[1]).resolve('<map name="beta"/>'));
+      await act(async () => defined(imports[0]).resolve('<map name="alpha"/>'));
 
       fireEvent.submit(screen.getByRole('button', { name: 'Import' }).closest('form')!);
       await waitFor(() => expect(mockImportMap).toHaveBeenCalled());
-      expect(mockImportMap.mock.calls[0][0]).toMatchObject({ content: '<map name="beta"/>' });
+      expect(defined(mockImportMap.mock.calls[0])[0]).toMatchObject({
+        content: '<map name="beta"/>',
+      });
     });
 
     test('does not show the error of the first import', async () => {
@@ -184,9 +186,9 @@ describe('ImportDialog', () => {
       renderWithProviders(<ImportDialog onClose={jest.fn()} />, { client });
 
       await pickBoth();
-      await act(async () => imports[1].resolve('<map name="beta"/>'));
+      await act(async () => defined(imports[1]).resolve('<map name="beta"/>'));
       const error = jest.spyOn(console, 'error').mockImplementation(() => undefined);
-      await act(async () => imports[0].reject(new Error('alpha is broken')));
+      await act(async () => defined(imports[0]).reject(new Error('alpha is broken')));
 
       expect(screen.queryByRole('alert')).toBeNull();
       error.mockRestore();
@@ -198,7 +200,7 @@ describe('ImportDialog', () => {
 
       selectFile(new File(['<map/>'], 'alpha.wxml', { type: 'text/xml' }));
       await waitFor(() => expect(mockCreateImporter).toHaveBeenCalledTimes(1));
-      await act(async () => imports[0].resolve('<map name="alpha"/>'));
+      await act(async () => defined(imports[0]).resolve('<map name="alpha"/>'));
       selectFile(new File(['<map/>'], 'beta.wxml', { type: 'text/xml' }));
       // beta is picked but not imported yet: there is nothing to save.
       fireEvent.submit(screen.getByRole('button', { name: 'Import' }).closest('form')!);
@@ -230,7 +232,7 @@ describe('ImportDialog', () => {
       selectFile(new File(['<map/>'], 'beta.wxml', { type: 'text/xml' }));
       await waitFor(() => expect(calls).toHaveLength(2));
 
-      expect(calls[1][0]).toBe('beta');
+      expect(defined(calls[1])[0]).toBe('beta');
       expect(screen.getByLabelText(/Name/)).toHaveProperty('value', 'beta');
     });
 
@@ -265,7 +267,7 @@ describe('ImportDialog', () => {
       selectFile(new File(['<map/>'], 'beta.wxml', { type: 'text/xml' }));
       await waitFor(() => expect(calls).toHaveLength(2));
 
-      expect(calls[1][0]).toBe('My map');
+      expect(defined(calls[1])[0]).toBe('My map');
       expect(screen.getByLabelText(/Name/)).toHaveProperty('value', 'My map');
     });
 

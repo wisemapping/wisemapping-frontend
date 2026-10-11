@@ -27,7 +27,7 @@ describe('Maps Page – Export Dialog', () => {
     cy.waitForPageLoaded();
     cy.get('tbody tr').should('have.length', 10);
     // Search to bring "El Mapa" into the visible card list
-    cy.get('input[aria-label="search"]').type('El Mapa');
+    cy.get('input[aria-label="Search maps"]').type('El Mapa');
     getMapRow('El Mapa').should('be.visible');
   });
 

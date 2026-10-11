@@ -39,7 +39,7 @@ class OriginalLayout {
   }
 
   createNode(id: number, size: SizeType, position: PositionType, type: string): Node {
-    $assert(id != null, 'id can not be null');
+    $assert(typeof id === 'number', 'id can not be null');
     const strategy: ChildrenSorterStrategy =
       type === 'root' ? OriginalLayout.BALANCED_SORTER : OriginalLayout.SYMMETRIC_SORTER;
     return new Node(id, size, position, strategy);

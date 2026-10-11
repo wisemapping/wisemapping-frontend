@@ -17,7 +17,7 @@
  */
 
 import React from 'react';
-import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, screen, waitFor } from '@testing-library/react';
 
 const mockUseFetchMapById = jest.fn();
 jest.mock('../../../../src/classes/middleware', () => ({
@@ -46,7 +46,7 @@ const map = (isPublic: boolean): MapInfo => ({
 const PUBLIC_URL = 'http://localhost/c/maps/12/public';
 
 const setup = (isPublic = false) => {
-  mockUseFetchMapById.mockReturnValue({ isLoading: false, error: null, data: map(isPublic) });
+  mockUseFetchMapById.mockReturnValue({ isLoading: false, error: undefined, data: map(isPublic) });
   const updateMapToPublic = jest.fn<Promise<void>, [number, boolean]>(() => Promise.resolve());
   const onClose = jest.fn();
   renderWithProviders(<PublishDialog mapId={12} onClose={onClose} />, {
@@ -65,7 +65,7 @@ const sharingHidden = (): boolean => {
     node;
     node = node.parentElement
   ) {
-    if (node.style.display === 'none') {
+    if (window.getComputedStyle(node).display === 'none') {
       return true;
     }
   }
@@ -192,13 +192,31 @@ describe('PublishDialog', () => {
   });
 
   test('while the map is loading it is shown as private', () => {
-    mockUseFetchMapById.mockReturnValue({ isLoading: true, error: null, data: undefined });
+    mockUseFetchMapById.mockReturnValue({ isLoading: true, error: undefined, data: undefined });
     renderWithProviders(<PublishDialog mapId={12} onClose={jest.fn()} />, {
       client: {} as Client,
     });
 
     expect(publicSwitch().checked).toBe(false);
     expect(sharingHidden()).toBe(true);
+  });
+
+  test('the switch follows the map once it has loaded', () => {
+    mockUseFetchMapById.mockReturnValue({ isLoading: true, error: undefined, data: undefined });
+    let rerenderDialog = (): void => undefined;
+    const Host = (): React.ReactElement => {
+      const [, forceRender] = React.useReducer((renders: number) => renders + 1, 0);
+      rerenderDialog = () => act(() => forceRender());
+      return <PublishDialog mapId={12} onClose={jest.fn()} />;
+    };
+    renderWithProviders(<Host />, { client: {} as Client });
+    expect(publicSwitch().checked).toBe(false);
+
+    mockUseFetchMapById.mockReturnValue({ isLoading: false, error: undefined, data: map(true) });
+    rerenderDialog();
+
+    expect(publicSwitch().checked).toBe(true);
+    expect(sharingHidden()).toBe(false);
   });
 
   test('close button closes the dialog', () => {

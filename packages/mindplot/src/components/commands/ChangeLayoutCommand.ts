@@ -22,7 +22,7 @@ import type { LayoutType } from '../layout/LayoutType';
 class ChangeLayoutCommand extends Command {
   private _newLayout: LayoutType;
 
-  private _oldLayout: LayoutType | null | undefined;
+  private _oldLayout: LayoutType | undefined;
 
   private _applied: boolean;
 

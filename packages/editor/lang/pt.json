@@ -772,5 +772,8 @@
   },
   "rich-text-editor.outdent": {
     "defaultMessage": "Diminuir recuo (Shift+Tab)"
+  },
+  "outline.untitled-map": {
+    "defaultMessage": "Mapa sem título"
   }
 }

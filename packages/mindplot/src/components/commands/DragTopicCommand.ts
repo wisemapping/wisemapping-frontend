@@ -23,7 +23,7 @@ import type Topic from '../Topic';
 class DragTopicCommand extends Command {
   private _topicsId: number;
 
-  private _parentId: number | null;
+  private _parentId: number | undefined;
 
   private _position: PositionType;
 
@@ -33,11 +33,11 @@ class DragTopicCommand extends Command {
     topicId: number,
     position: PositionType,
     order: number | undefined,
-    parentTopic: Topic | null,
+    parentTopic: Topic | undefined,
   ) {
     super();
     this._topicsId = topicId;
-    this._parentId = parentTopic ? parentTopic.getId() : null;
+    this._parentId = parentTopic?.getId();
 
     this._position = position;
     this._order = order;
@@ -62,23 +62,20 @@ class DragTopicCommand extends Command {
     // Set topic order ...
     if (this._order !== undefined) {
       topic.setOrder(this._order);
-    } else if (this._position != null) {
+    } else if (this._position) {
       commandContext.moveTopic(topic, this._position);
     } else {
       throw new Error('Illegal command state exception.');
     }
 
     // Finally, connect topic ...
-    if (this._parentId != null) {
+    if (this._parentId !== undefined) {
       const parentTopic = commandContext.findTopic(this._parentId);
       commandContext.connect(topic, parentTopic);
     }
 
     // Backup old parent id ...
-    this._parentId = null;
-    if (origParentTopic != null) {
-      this._parentId = origParentTopic.getId();
-    }
+    this._parentId = origParentTopic?.getId();
     topic.setVisibility(true);
 
     // Store for undo ...

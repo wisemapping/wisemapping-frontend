@@ -293,7 +293,7 @@ describe('MockClient account', () => {
       firstname: 'a',
       lastname: 'b',
       password: 'p',
-      recaptcha: null,
+      recaptcha: '',
       acceptedTerms: true,
     };
 
@@ -330,7 +330,7 @@ describe('MockClient admin helpers', () => {
   it('lists two admin users', async () => {
     const users = await client.getAdminUsers();
 
-    expect(users.map((u) => u.email)).toEqual(['admin@example.com', 'user@example.com']);
+    expect(users.map((u) => u['email'])).toEqual(['admin@example.com', 'user@example.com']);
   });
 
   it('updateAdminUser and createAdminUser build the full name', async () => {

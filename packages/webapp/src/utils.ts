@@ -25,20 +25,20 @@ declare global {
 import { ErrorInfo } from './classes/client';
 import { appLogger as log } from './utils/logger';
 
-export const getCsrfToken = (): string | null => {
+export const getCsrfToken = (): string | undefined => {
   const meta = document.head.querySelector('meta[name="_csrf"]');
   if (!meta) {
     return '';
   }
-  return meta.getAttribute('content');
+  return meta.getAttribute('content') ?? undefined;
 };
 
-export const getCsrfTokenParameter = (): string | null => {
+export const getCsrfTokenParameter = (): string | undefined => {
   const meta = document.head.querySelector('meta[name="_csrf_parameter"]');
   if (!meta) {
     return '';
   }
-  return meta.getAttribute('content');
+  return meta.getAttribute('content') ?? undefined;
 };
 
 const PII_KEYS =

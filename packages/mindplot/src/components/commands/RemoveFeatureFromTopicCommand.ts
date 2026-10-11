@@ -25,20 +25,20 @@ class RemoveFeatureFromTopicCommand extends Command {
 
   private _featureId: number;
 
-  private _oldFeature: FeatureModel | null;
+  private _oldFeature: FeatureModel | undefined;
 
   /**
    * @classdesc This command handles do/undo of removing a feature from a topic, e.g. an icon or
    * a note. For a reference of existing features, refer to {@link mindplot.TopicFeature}.
    */
   constructor(topicId: number, featureId: number) {
-    $assert(topicId != null, 'topicId can not be null');
-    $assert(featureId != null, 'featureId can not be null');
+    $assert(typeof topicId === 'number', 'topicId can not be null');
+    $assert(typeof featureId === 'number', 'featureId can not be null');
 
     super();
     this._topicId = topicId;
     this._featureId = featureId;
-    this._oldFeature = null;
+    this._oldFeature = undefined;
   }
 
   /**

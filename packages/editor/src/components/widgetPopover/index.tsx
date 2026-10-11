@@ -45,7 +45,7 @@ export const WidgetPopover = ({
 }: WidgetPopoverProps): React.ReactElement => {
   const [event, setEvent] = useState<WidgetEventType>('none');
   const [panelTitle, setPanelTitle] = useState<MessageDescriptor | undefined>(undefined);
-  const [achorElem, setAnchorElem] = useState<Element | undefined>(undefined);
+  const [anchorElem, setAnchorElem] = useState<Element | undefined>(undefined);
   const [editorComponent, setEditorComponent] = useState<React.ReactElement | undefined>(undefined);
   const [anchorOrigin, setAnchorOrigin] = useState<PopoverOrigin>({
     vertical: 'bottom',
@@ -126,7 +126,7 @@ export const WidgetPopover = ({
         <Popover
           id="popover"
           open={isOpen}
-          anchorEl={achorElem}
+          anchorEl={anchorElem}
           onClose={closeEditor}
           anchorOrigin={anchorOrigin}
           transformOrigin={transformOrigin}

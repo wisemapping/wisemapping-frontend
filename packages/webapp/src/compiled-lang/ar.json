@@ -341,6 +341,44 @@
       "value": "تم تفعيل الحساب بنجاح"
     }
   ],
+  "admin.accounts.activate-dialog.button": [
+    {
+      "type": 0,
+      "value": "تفعيل المستخدم"
+    }
+  ],
+  "admin.accounts.activate-dialog.confirm": [
+    {
+      "type": 0,
+      "value": "هل أنت متأكد أنك تريد تفعيل المستخدم \""
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": "\" يدويًا؟"
+    }
+  ],
+  "admin.accounts.activate-dialog.info": [
+    {
+      "type": 0,
+      "value": "سيتمكن المستخدم من تسجيل الدخول فورًا دون تأكيد بريده الإلكتروني."
+    }
+  ],
+  "admin.accounts.activate-dialog.pending": [
+    {
+      "type": 0,
+      "value": "جارٍ التفعيل..."
+    }
+  ],
+  "admin.accounts.activate-dialog.title": [
+    {
+      "type": 0,
+      "value": "تفعيل المستخدم"
+    }
+  ],
   "admin.accounts.add-user": [
     {
       "type": 0,
@@ -359,10 +397,66 @@
       "value": "إنشاء مستخدم"
     }
   ],
+  "admin.accounts.delete-dialog.button": [
+    {
+      "type": 0,
+      "value": "حذف المستخدم"
+    }
+  ],
+  "admin.accounts.delete-dialog.confirm": [
+    {
+      "type": 0,
+      "value": "هل أنت متأكد أنك تريد حذف المستخدم \""
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": "\"؟"
+    }
+  ],
+  "admin.accounts.delete-dialog.pending": [
+    {
+      "type": 0,
+      "value": "جارٍ الحذف..."
+    }
+  ],
+  "admin.accounts.delete-dialog.title": [
+    {
+      "type": 0,
+      "value": "حذف المستخدم"
+    }
+  ],
+  "admin.accounts.delete-dialog.warning": [
+    {
+      "type": 0,
+      "value": "لا يمكن التراجع عن هذا الإجراء!"
+    }
+  ],
   "admin.accounts.edit-user": [
     {
       "type": 0,
       "value": "تعديل المستخدم"
+    }
+  ],
+  "admin.accounts.filter.not-suspended": [
+    {
+      "type": 0,
+      "value": "غير معلّقين"
+    }
+  ],
+  "admin.accounts.filter.suspended-only": [
+    {
+      "type": 0,
+      "value": "المعلّقون فقط"
+    }
+  ],
+  "admin.accounts.filter.suspension-all": [
+    {
+      "type": 0,
+      "value": "الكل (المعلّقون + النشطون)"
     }
   ],
   "admin.accounts.filters": [
@@ -401,10 +495,120 @@
       "value": "إدارة حسابات المستخدمين والصلاحيات والإعدادات"
     }
   ],
+  "admin.accounts.suspend-dialog.button": [
+    {
+      "type": 0,
+      "value": "تعليق المستخدم"
+    }
+  ],
+  "admin.accounts.suspend-dialog.confirm": [
+    {
+      "type": 0,
+      "value": "هل أنت متأكد أنك تريد تعليق المستخدم \""
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": "\"؟"
+    }
+  ],
+  "admin.accounts.suspend-dialog.pending": [
+    {
+      "type": 0,
+      "value": "جارٍ التعليق..."
+    }
+  ],
+  "admin.accounts.suspend-dialog.title": [
+    {
+      "type": 0,
+      "value": "تعليق المستخدم"
+    }
+  ],
+  "admin.accounts.table.actions": [
+    {
+      "type": 0,
+      "value": "الإجراءات"
+    }
+  ],
+  "admin.accounts.table.auth": [
+    {
+      "type": 0,
+      "value": "المصادقة"
+    }
+  ],
+  "admin.accounts.table.created": [
+    {
+      "type": 0,
+      "value": "تاريخ الإنشاء"
+    }
+  ],
+  "admin.accounts.table.id": [
+    {
+      "type": 0,
+      "value": "المعرّف"
+    }
+  ],
+  "admin.accounts.table.name": [
+    {
+      "type": 0,
+      "value": "الاسم"
+    }
+  ],
+  "admin.accounts.table.status": [
+    {
+      "type": 0,
+      "value": "الحالة"
+    }
+  ],
   "admin.accounts.title": [
     {
       "type": 0,
       "value": "إدارة المستخدمين"
+    }
+  ],
+  "admin.accounts.unsuspend-dialog.button": [
+    {
+      "type": 0,
+      "value": "إلغاء تعليق المستخدم"
+    }
+  ],
+  "admin.accounts.unsuspend-dialog.confirm": [
+    {
+      "type": 0,
+      "value": "هل أنت متأكد أنك تريد إلغاء تعليق المستخدم \""
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": "\"؟"
+    }
+  ],
+  "admin.accounts.unsuspend-dialog.pending": [
+    {
+      "type": 0,
+      "value": "جارٍ إلغاء التعليق..."
+    }
+  ],
+  "admin.accounts.unsuspend-dialog.reason": [
+    {
+      "type": 0,
+      "value": "سبب التعليق الحالي: "
+    },
+    {
+      "type": 1,
+      "value": "reason"
+    }
+  ],
+  "admin.accounts.unsuspend-dialog.title": [
+    {
+      "type": 0,
+      "value": "إلغاء تعليق المستخدم"
     }
   ],
   "admin.action.mark-as-not-spam": [
@@ -453,6 +657,12 @@
     {
       "type": 0,
       "value": "LDAP"
+    }
+  ],
+  "admin.button.creating": [
+    {
+      "type": 0,
+      "value": "جارٍ الإنشاء..."
     }
   ],
   "admin.button.update-user": [
@@ -565,12 +775,6 @@
       "value": "وحدة تحكم المسؤول"
     }
   ],
-  "admin.current-suspension-reason": [
-    {
-      "type": 0,
-      "value": "سبب التعليق الحالي:"
-    }
-  ],
   "admin.delete": [
     {
       "type": 0,
@@ -651,6 +855,12 @@
       "value": "البحث لحذف بيانات Facebook"
     }
   ],
+  "admin.facebook.id-label": [
+    {
+      "type": 0,
+      "value": "معرّف مستخدم Facebook"
+    }
+  ],
   "admin.facebook.lookup-button": [
     {
       "type": 0,
@@ -707,6 +917,12 @@
       "value": "جارٍ الإزالة..."
     }
   ],
+  "admin.filter.all": [
+    {
+      "type": 0,
+      "value": "الكل"
+    }
+  ],
   "admin.lock-status": [
     {
       "type": 0,
@@ -755,16 +971,124 @@
       "value": "تعديل الخريطة"
     }
   ],
+  "admin.maps.filter.all-time": [
+    {
+      "type": 0,
+      "value": "كل الأوقات"
+    }
+  ],
   "admin.maps.filter.date": [
     {
       "type": 0,
       "value": "النطاق الزمني"
     }
   ],
+  "admin.maps.filter.last-months": [
+    {
+      "type": 6,
+      "value": "count",
+      "options": {
+        "zero": {
+          "value": [
+            {
+              "type": 0,
+              "value": "آخر "
+            },
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " شهر"
+            }
+          ]
+        },
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "آخر شهر"
+            }
+          ]
+        },
+        "two": {
+          "value": [
+            {
+              "type": 0,
+              "value": "آخر شهرين"
+            }
+          ]
+        },
+        "few": {
+          "value": [
+            {
+              "type": 0,
+              "value": "آخر "
+            },
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " أشهر"
+            }
+          ]
+        },
+        "many": {
+          "value": [
+            {
+              "type": 0,
+              "value": "آخر "
+            },
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " شهرًا"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "آخر "
+            },
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " شهر"
+            }
+          ]
+        }
+      },
+      "offset": 0,
+      "pluralType": "cardinal"
+    }
+  ],
+  "admin.maps.filter.not-spam": [
+    {
+      "type": 0,
+      "value": "ليس محتوى غير مرغوب فيه"
+    }
+  ],
   "admin.maps.filter.spam": [
     {
       "type": 0,
       "value": "غير مرغوب فيه"
+    }
+  ],
+  "admin.maps.locked-by": [
+    {
+      "type": 0,
+      "value": "مقفلة بواسطة "
+    },
+    {
+      "type": 1,
+      "value": "user"
     }
   ],
   "admin.maps.locked-tooltip": [
@@ -791,6 +1115,12 @@
     {
       "type": 0,
       "value": "تمييزها كمحتوى غير مرغوب فيه"
+    }
+  ],
+  "admin.maps.no-description": [
+    {
+      "type": 0,
+      "value": "بلا وصف"
     }
   ],
   "admin.maps.no-maps": [
@@ -929,10 +1259,22 @@
       "value": "الإجراءات"
     }
   ],
+  "admin.maps.table.collaborators": [
+    {
+      "type": 0,
+      "value": "المتعاونون"
+    }
+  ],
   "admin.maps.table.created": [
     {
       "type": 0,
       "value": "تاريخ الإنشاء"
+    }
+  ],
+  "admin.maps.table.created-by": [
+    {
+      "type": 0,
+      "value": "المنشئ"
     }
   ],
   "admin.maps.table.description": [
@@ -983,6 +1325,12 @@
       "value": "العنوان"
     }
   ],
+  "admin.maps.unknown-user": [
+    {
+      "type": 0,
+      "value": "مستخدم غير معروف"
+    }
+  ],
   "admin.maps.unlocked-tooltip": [
     {
       "type": 0,
@@ -1001,6 +1349,16 @@
       "value": "نسخ XML المنسّق"
     }
   ],
+  "admin.maps.xml-viewer.error": [
+    {
+      "type": 0,
+      "value": "خطأ في تحميل XML: "
+    },
+    {
+      "type": 1,
+      "value": "message"
+    }
+  ],
   "admin.maps.xml-viewer.info": [
     {
       "type": 0,
@@ -1017,6 +1375,24 @@
     {
       "type": 0,
       "value": "لا يتوفر محتوى XML"
+    }
+  ],
+  "admin.maps.xml-viewer.subtitle": [
+    {
+      "type": 1,
+      "value": "title"
+    },
+    {
+      "type": 0,
+      "value": " (المعرّف: "
+    },
+    {
+      "type": 1,
+      "value": "id"
+    },
+    {
+      "type": 0,
+      "value": ")"
     }
   ],
   "admin.maps.xml-viewer.title": [
@@ -1077,6 +1453,12 @@
     {
       "type": 0,
       "value": "كلمتا المرور غير متطابقتين"
+    }
+  ],
+  "admin.private": [
+    {
+      "type": 0,
+      "value": "خاص"
     }
   ],
   "admin.prompt.new-user-password": [
@@ -1297,6 +1679,30 @@
       "value": "حالة النظام"
     }
   ],
+  "admin.system.health.down": [
+    {
+      "type": 0,
+      "value": "متوقف"
+    }
+  ],
+  "admin.system.health.unknown": [
+    {
+      "type": 0,
+      "value": "غير معروف"
+    }
+  ],
+  "admin.system.health.up": [
+    {
+      "type": 0,
+      "value": "يعمل"
+    }
+  ],
+  "admin.system.health.warning": [
+    {
+      "type": 0,
+      "value": "تحذير"
+    }
+  ],
   "admin.system.jvm": [
     {
       "type": 0,
@@ -1477,6 +1883,12 @@
       "value": "معلومات النظام"
     }
   ],
+  "admin.unlocked": [
+    {
+      "type": 0,
+      "value": "غير مقفل"
+    }
+  ],
   "admin.unsuspend-user": [
     {
       "type": 0,
@@ -1501,10 +1913,14 @@
       "value": "الحالة"
     }
   ],
-  "admin.user-info.suspension-reason": [
+  "admin.user-info.suspension-reason-value": [
     {
       "type": 0,
-      "value": "سبب التعليق:"
+      "value": "سبب التعليق: "
+    },
+    {
+      "type": 1,
+      "value": "reason"
     }
   ],
   "admin.user-info.title": [
@@ -1575,6 +1991,12 @@
     {
       "type": 0,
       "value": "اسم العائلة مطلوب"
+    }
+  ],
+  "admin.validation.title-required": [
+    {
+      "type": 0,
+      "value": "العنوان مطلوب"
     }
   ],
   "admin.view-user-maps": [
@@ -2768,6 +3190,12 @@
       "value": "بحث..."
     }
   ],
+  "maps.search-label": [
+    {
+      "type": 0,
+      "value": "البحث في الخرائط"
+    }
+  ],
   "maps.select-all": [
     {
       "type": 0,
@@ -2782,6 +3210,18 @@
     {
       "type": 1,
       "value": "title"
+    }
+  ],
+  "maps.sorted-ascending": [
+    {
+      "type": 0,
+      "value": "مرتبة تصاعديًا"
+    }
+  ],
+  "maps.sorted-descending": [
+    {
+      "type": 0,
+      "value": "مرتبة تنازليًا"
     }
   ],
   "maps.tooltip-open": [

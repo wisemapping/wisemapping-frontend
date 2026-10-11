@@ -413,6 +413,15 @@
   "maps.search-action": {
     "defaultMessage": "Buscar ..."
   },
+  "maps.search-label": {
+    "defaultMessage": "Buscar mapas"
+  },
+  "maps.sorted-ascending": {
+    "defaultMessage": "orden ascendente"
+  },
+  "maps.sorted-descending": {
+    "defaultMessage": "orden descendente"
+  },
   "maps.tooltip-open": {
     "defaultMessage": "Abrir para edición"
   },
@@ -650,6 +659,9 @@
   "admin.auth.ldap": {
     "defaultMessage": "LDAP"
   },
+  "admin.button.creating": {
+    "defaultMessage": "Creando..."
+  },
   "admin.button.update-user": {
     "defaultMessage": "Actualizar usuario"
   },
@@ -695,6 +707,9 @@
   "admin.facebook.filter-tooltip": {
     "defaultMessage": "Búsqueda para eliminación de datos de Facebook"
   },
+  "admin.facebook.id-label": {
+    "defaultMessage": "ID de usuario de Facebook"
+  },
   "admin.facebook.lookup-button": {
     "defaultMessage": "Buscar cuenta"
   },
@@ -718,6 +733,9 @@
   },
   "admin.facebook.removing": {
     "defaultMessage": "Quitando..."
+  },
+  "admin.filter.all": {
+    "defaultMessage": "Todos"
   },
   "admin.refresh": {
     "defaultMessage": "Actualizar"
@@ -830,8 +848,8 @@
   "admin.user-info.status": {
     "defaultMessage": "Estado"
   },
-  "admin.user-info.suspension-reason": {
-    "defaultMessage": "Motivo de la suspensión:"
+  "admin.user-info.suspension-reason-value": {
+    "defaultMessage": "Motivo de la suspensión: {reason}"
   },
   "admin.user-info.title": {
     "defaultMessage": "Información del usuario"
@@ -859,6 +877,9 @@
   },
   "admin.validation.lastname-required": {
     "defaultMessage": "El apellido es obligatorio"
+  },
+  "admin.validation.title-required": {
+    "defaultMessage": "El título es obligatorio"
   },
   "admin.view-user-maps": {
     "defaultMessage": "Ver mapas del usuario"
@@ -896,11 +917,23 @@
   "admin.maps.edit-title": {
     "defaultMessage": "Editar mapa"
   },
+  "admin.maps.filter.all-time": {
+    "defaultMessage": "Todo el tiempo"
+  },
   "admin.maps.filter.date": {
     "defaultMessage": "Rango de fechas"
   },
+  "admin.maps.filter.last-months": {
+    "defaultMessage": "{count, plural, one {Último # mes} other {Últimos # meses}}"
+  },
+  "admin.maps.filter.not-spam": {
+    "defaultMessage": "No spam"
+  },
   "admin.maps.filter.spam": {
     "defaultMessage": "Spam"
+  },
+  "admin.maps.locked-by": {
+    "defaultMessage": "Bloqueado por {user}"
   },
   "admin.maps.locked-tooltip": {
     "defaultMessage": "{user} lo está editando en este momento"
@@ -910,6 +943,9 @@
   },
   "admin.maps.mark-as-spam": {
     "defaultMessage": "Marcar como spam"
+  },
+  "admin.maps.no-description": {
+    "defaultMessage": "Sin descripción"
   },
   "admin.maps.no-maps": {
     "defaultMessage": "No se encontraron mapas"
@@ -965,8 +1001,14 @@
   "admin.maps.table.actions": {
     "defaultMessage": "Acciones"
   },
+  "admin.maps.table.collaborators": {
+    "defaultMessage": "Colaboradores"
+  },
   "admin.maps.table.created": {
     "defaultMessage": "Creado"
+  },
+  "admin.maps.table.created-by": {
+    "defaultMessage": "Creado por"
   },
   "admin.maps.table.description": {
     "defaultMessage": "Descripción"
@@ -992,6 +1034,9 @@
   "admin.maps.title": {
     "defaultMessage": "Título"
   },
+  "admin.maps.unknown-user": {
+    "defaultMessage": "usuario desconocido"
+  },
   "admin.maps.unlocked-tooltip": {
     "defaultMessage": "Nadie lo está editando en este momento"
   },
@@ -1001,6 +1046,9 @@
   "admin.maps.xml-viewer.copy": {
     "defaultMessage": "Copiar XML formateado"
   },
+  "admin.maps.xml-viewer.error": {
+    "defaultMessage": "Error al cargar el XML: {message}"
+  },
   "admin.maps.xml-viewer.info": {
     "defaultMessage": "Este es el contenido XML sin procesar del mapa mental. Puedes copiarlo como copia de seguridad o para analizarlo."
   },
@@ -1009,6 +1057,9 @@
   },
   "admin.maps.xml-viewer.no-content": {
     "defaultMessage": "No hay contenido XML disponible"
+  },
+  "admin.maps.xml-viewer.subtitle": {
+    "defaultMessage": "{title} (ID: {id})"
   },
   "admin.maps.xml-viewer.title": {
     "defaultMessage": "Contenido XML del mapa"
@@ -1036,6 +1087,9 @@
   },
   "admin.system.title": {
     "defaultMessage": "Información del Sistema"
+  },
+  "admin.unlocked": {
+    "defaultMessage": "Desbloqueado"
   },
   "admin.system.refresh": {
     "defaultMessage": "Actualizar"
@@ -1114,6 +1168,18 @@
   },
   "admin.system.health": {
     "defaultMessage": "Estado del sistema"
+  },
+  "admin.system.health.down": {
+    "defaultMessage": "Caído"
+  },
+  "admin.system.health.unknown": {
+    "defaultMessage": "Desconocido"
+  },
+  "admin.system.health.up": {
+    "defaultMessage": "Activo"
+  },
+  "admin.system.health.warning": {
+    "defaultMessage": "Advertencia"
   },
   "admin.system.jvm": {
     "defaultMessage": "JVM"
@@ -1262,9 +1328,6 @@
   "admin.console.title": {
     "defaultMessage": "Consola de Administración"
   },
-  "admin.current-suspension-reason": {
-    "defaultMessage": "Motivo actual de la suspensión:"
-  },
   "admin.change-password-button": {
     "defaultMessage": "Cambiar contraseña"
   },
@@ -1273,6 +1336,9 @@
   },
   "admin.password-error-mismatch": {
     "defaultMessage": "Las contraseñas no coinciden"
+  },
+  "admin.private": {
+    "defaultMessage": "Privado"
   },
   "admin.prompt.new-user-password": {
     "defaultMessage": "Introduce la contraseña del nuevo usuario:"
@@ -1391,6 +1457,21 @@
   "activation.success.title": {
     "defaultMessage": "Cuenta activada correctamente"
   },
+  "admin.accounts.activate-dialog.button": {
+    "defaultMessage": "Activar usuario"
+  },
+  "admin.accounts.activate-dialog.confirm": {
+    "defaultMessage": "¿Seguro que quieres activar manualmente al usuario \"{email}\"?"
+  },
+  "admin.accounts.activate-dialog.info": {
+    "defaultMessage": "Esto permitirá que el usuario inicie sesión de inmediato sin confirmar su correo electrónico."
+  },
+  "admin.accounts.activate-dialog.pending": {
+    "defaultMessage": "Activando..."
+  },
+  "admin.accounts.activate-dialog.title": {
+    "defaultMessage": "Activar usuario"
+  },
   "admin.accounts.add-user": {
     "defaultMessage": "Añadir nuevo usuario"
   },
@@ -1400,8 +1481,32 @@
   "admin.accounts.create-user": {
     "defaultMessage": "Crear usuario"
   },
+  "admin.accounts.delete-dialog.button": {
+    "defaultMessage": "Eliminar usuario"
+  },
+  "admin.accounts.delete-dialog.confirm": {
+    "defaultMessage": "¿Seguro que quieres eliminar al usuario \"{email}\"?"
+  },
+  "admin.accounts.delete-dialog.pending": {
+    "defaultMessage": "Eliminando..."
+  },
+  "admin.accounts.delete-dialog.title": {
+    "defaultMessage": "Eliminar usuario"
+  },
+  "admin.accounts.delete-dialog.warning": {
+    "defaultMessage": "¡Esta acción no se puede deshacer!"
+  },
   "admin.accounts.edit-user": {
     "defaultMessage": "Editar usuario"
+  },
+  "admin.accounts.filter.not-suspended": {
+    "defaultMessage": "No suspendidos"
+  },
+  "admin.accounts.filter.suspended-only": {
+    "defaultMessage": "Solo suspendidos"
+  },
+  "admin.accounts.filter.suspension-all": {
+    "defaultMessage": "Todos (suspendidos + activos)"
   },
   "admin.accounts.filters": {
     "defaultMessage": "Búsqueda y filtros"
@@ -1421,8 +1526,53 @@
   "admin.accounts.subtitle": {
     "defaultMessage": "Administra las cuentas de usuario, los permisos y la configuración"
   },
+  "admin.accounts.suspend-dialog.button": {
+    "defaultMessage": "Suspender usuario"
+  },
+  "admin.accounts.suspend-dialog.confirm": {
+    "defaultMessage": "¿Seguro que quieres suspender al usuario \"{email}\"?"
+  },
+  "admin.accounts.suspend-dialog.pending": {
+    "defaultMessage": "Suspendiendo..."
+  },
+  "admin.accounts.suspend-dialog.title": {
+    "defaultMessage": "Suspender usuario"
+  },
+  "admin.accounts.table.actions": {
+    "defaultMessage": "Acciones"
+  },
+  "admin.accounts.table.auth": {
+    "defaultMessage": "Autenticación"
+  },
+  "admin.accounts.table.created": {
+    "defaultMessage": "Creado"
+  },
+  "admin.accounts.table.id": {
+    "defaultMessage": "ID"
+  },
+  "admin.accounts.table.name": {
+    "defaultMessage": "Nombre"
+  },
+  "admin.accounts.table.status": {
+    "defaultMessage": "Estado"
+  },
   "admin.accounts.title": {
     "defaultMessage": "Gestión de usuarios"
+  },
+  "admin.accounts.unsuspend-dialog.button": {
+    "defaultMessage": "Reactivar usuario"
+  },
+  "admin.accounts.unsuspend-dialog.confirm": {
+    "defaultMessage": "¿Seguro que quieres reactivar al usuario \"{email}\"?"
+  },
+  "admin.accounts.unsuspend-dialog.pending": {
+    "defaultMessage": "Reactivando..."
+  },
+  "admin.accounts.unsuspend-dialog.reason": {
+    "defaultMessage": "Motivo actual de la suspensión: {reason}"
+  },
+  "admin.accounts.unsuspend-dialog.title": {
+    "defaultMessage": "Reactivar usuario"
   },
   "admin.action.mark-as-not-spam": {
     "defaultMessage": "marcar como no spam"

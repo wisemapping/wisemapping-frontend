@@ -77,7 +77,7 @@ describe('Layout lookups', () => {
     expect(manager.find(3).getId()).toBe(3);
     expect(() => manager.addNode(3, SIZE, ORIGIN)).toThrow('node already exits');
     // A lookup that does not validate answers null, as before.
-    expect(new RootedTreeSet().find(1, false)).toBeNull();
+    expect(new RootedTreeSet().find(1, false)).toBeUndefined();
   });
 
   it('collects the changes of a layout without searching the pending ones', () => {

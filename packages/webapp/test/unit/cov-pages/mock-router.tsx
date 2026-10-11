@@ -25,10 +25,10 @@
  * is published in `lastMatch` so a test can inspect the loader and error element
  * the table attaches to a path.
  */
-import React, { createContext, useContext } from 'react';
+import React, { createContext, use } from 'react';
 
 export type RouteObject = {
-  path?: string;
+  path?: string | undefined;
   element?: React.ReactNode;
   errorElement?: React.ReactNode;
   loader?: unknown;
@@ -37,29 +37,35 @@ export type RouteObject = {
 
 type Match = { chain: RouteObject[]; params: Record<string, string> };
 
-export const lastMatch: { current?: Match } = {};
+export const lastMatch: { current?: Match | undefined } = {};
 
 export const Route = (): null => null;
 
+// The elements of a children tree, nested arrays flattened and empty slots dropped.
+const childElements = (node: React.ReactNode): React.ReactElement[] =>
+  Array.isArray(node)
+    ? node.flatMap((child: React.ReactNode) => childElements(child))
+    : React.isValidElement(node)
+      ? [node]
+      : [];
+
 export const createRoutesFromElements = (elements: React.ReactNode): RouteObject[] =>
-  React.Children.toArray(elements)
-    .filter(React.isValidElement)
-    .map((el) => {
-      const props = el.props as {
-        path?: string;
-        element?: React.ReactNode;
-        errorElement?: React.ReactNode;
-        loader?: unknown;
-        children?: React.ReactNode;
-      };
-      return {
-        path: props.path,
-        element: props.element,
-        errorElement: props.errorElement,
-        loader: props.loader,
-        children: createRoutesFromElements(props.children),
-      };
-    });
+  childElements(elements).map((el) => {
+    const props = el.props as {
+      path?: string;
+      element?: React.ReactNode;
+      errorElement?: React.ReactNode;
+      loader?: unknown;
+      children?: React.ReactNode;
+    };
+    return {
+      path: props.path,
+      element: props.element,
+      errorElement: props.errorElement,
+      loader: props.loader,
+      children: createRoutesFromElements(props.children),
+    };
+  });
 
 export const createBrowserRouter = (routes: RouteObject[]): { routes: RouteObject[] } => ({
   routes,
@@ -73,9 +79,11 @@ const matchPath = (pattern: string, pathname: string): Record<string, string> | 
   const have = segments(pathname);
   if (want.length !== have.length) return undefined;
   const params: Record<string, string> = {};
-  for (let i = 0; i < want.length; i++) {
-    if (want[i].startsWith(':')) params[want[i].slice(1)] = have[i];
-    else if (want[i] !== have[i]) return undefined;
+  for (const [i, segment] of want.entries()) {
+    const actual = have[i];
+    if (actual === undefined) return undefined;
+    if (segment.startsWith(':')) params[segment.slice(1)] = actual;
+    else if (segment !== actual) return undefined;
   }
   return params;
 };
@@ -99,11 +107,7 @@ const LevelContext = createContext<Level | undefined>(undefined);
 const renderLevel = (m: Match, index: number): React.ReactElement | null => {
   const route = m.chain[index];
   if (!route) return null;
-  return (
-    <LevelContext.Provider value={{ match: m, index }}>
-      {route.element ?? <Outlet />}
-    </LevelContext.Provider>
-  );
+  return <LevelContext value={{ match: m, index }}>{route.element ?? <Outlet />}</LevelContext>;
 };
 
 export const RouterProvider = ({
@@ -117,12 +121,13 @@ export const RouterProvider = ({
 };
 
 export function Outlet(): React.ReactElement | null {
-  const level = useContext(LevelContext);
+  const level = use(LevelContext);
   return level ? renderLevel(level.match, level.index + 1) : null;
 }
 
-export const useParams = (): Record<string, string> => useContext(LevelContext)?.match.params ?? {};
+export const useParams = (): Record<string, string> => use(LevelContext)?.match.params ?? {};
 
+/* eslint-disable @eslint-react/no-unnecessary-use-prefix -- stand-ins for the library hooks of the same name: the mocked module fixes these names */
 export const useSearchParams = (): [URLSearchParams] => [
   new URLSearchParams(window.location.search),
 ];
@@ -131,3 +136,4 @@ export const useLocation = (): { pathname: string; search: string } => ({
   pathname: window.location.pathname,
   search: window.location.search,
 });
+/* eslint-enable @eslint-react/no-unnecessary-use-prefix */

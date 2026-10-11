@@ -137,7 +137,7 @@ class SymmetricTestSuite extends TestSuite {
     const graph1 = manager.plot('testSymmetricPredict1', { width: 1000, height: 400 });
 
     console.log('\tAdded as child of node 9 and dropped at (-280, 45):');
-    const prediction1a = manager.predict(9, null, { x: -280, y: 45 });
+    const prediction1a = manager.predict(9, undefined, { x: -280, y: 45 });
     this._plotPrediction(graph1, prediction1a);
     $assert(
       prediction1a.position.x < manager.find(9).getPosition().x &&
@@ -147,7 +147,7 @@ class SymmetricTestSuite extends TestSuite {
     $assert(prediction1a.order === 0, 'Prediction order should be 0');
 
     console.log('\tAdded as child of node 1 and dropped at (155, -90):');
-    const prediction1b = manager.predict(1, null, { x: -155, y: -90 });
+    const prediction1b = manager.predict(1, undefined, { x: -155, y: -90 });
     this._plotPrediction(graph1, prediction1b);
     $assert(
       prediction1b.position.x > manager.find(1).getPosition().x &&
@@ -160,7 +160,7 @@ class SymmetricTestSuite extends TestSuite {
     const graph2 = manager.plot('testSymmetricPredict2', { width: 1000, height: 400 });
 
     console.log('\tAdded as child of node 5 and dropped at (380, -30):');
-    const prediction2d = manager.predict(5, null, { x: 380, y: -30 });
+    const prediction2d = manager.predict(5, undefined, { x: 380, y: -30 });
     this._plotPrediction(graph2, prediction2d);
 
     // Prediction calculator error - Known issue, skipping assertion
@@ -173,7 +173,7 @@ class SymmetricTestSuite extends TestSuite {
     // $assert(prediction2d.order === 0, 'Prediction order should be 0');
 
     console.log('\tAdded as child of node 5 and dropped at (375, 15):');
-    const prediction2a = manager.predict(5, null, { x: 375, y: 15 });
+    const prediction2a = manager.predict(5, undefined, { x: 375, y: 15 });
     this._plotPrediction(graph2, prediction2a);
 
     $assert(
@@ -185,7 +185,7 @@ class SymmetricTestSuite extends TestSuite {
     $assert(prediction2a.order === 1, 'Prediction order should be 1');
 
     console.log('\tAdded as child of node 5 and dropped at (375, 45):');
-    const prediction2b = manager.predict(5, null, { x: 375, y: 45 });
+    const prediction2b = manager.predict(5, undefined, { x: 375, y: 45 });
     this._plotPrediction(graph2, prediction2b);
     $assert(
       prediction2b.position.y > manager.find(8).getPosition().y &&
@@ -196,7 +196,7 @@ class SymmetricTestSuite extends TestSuite {
     $assert(prediction2b.order === 2, 'Prediction order should be 2');
 
     console.log('\tAdded as child of node 5 and dropped at (375, 45):');
-    const prediction2c = manager.predict(5, null, { x: 375, y: 65 });
+    const prediction2c = manager.predict(5, undefined, { x: 375, y: 65 });
     this._plotPrediction(graph2, prediction2c);
     $assert(
       prediction2c.position.y > manager.find(11).getPosition().y &&
@@ -209,7 +209,7 @@ class SymmetricTestSuite extends TestSuite {
     const graph3 = manager.plot('testSymmetricPredict3', { width: 1000, height: 400 });
 
     console.log('\tAdded as child of node 3 and dropped at (280, 45):');
-    const prediction3a = manager.predict(3, null, { x: 280, y: 45 });
+    const prediction3a = manager.predict(3, undefined, { x: 280, y: 45 });
     this._plotPrediction(graph3, prediction3a);
     $assert(
       prediction3a.position.y > manager.find(5).getPosition().y &&
@@ -220,7 +220,7 @@ class SymmetricTestSuite extends TestSuite {
     $assert(prediction3a.order === 2, 'Prediction order should be 2');
 
     console.log('\tAdded as child of node 3 and dropped at (255, 110):');
-    const prediction3b = manager.predict(3, null, { x: 255, y: 110 });
+    const prediction3b = manager.predict(3, undefined, { x: 255, y: 110 });
     this._plotPrediction(graph3, prediction3b);
     $assert(
       prediction3b.position.y > manager.find(6).getPosition().y &&
@@ -232,7 +232,7 @@ class SymmetricTestSuite extends TestSuite {
     // Graph 4
     console.log('\tAdded as child of node 2 and dropped at (-260, 0):');
     const graph4 = manager.plot('testSymmetricPredict4', { width: 1000, height: 400 });
-    const prediction4 = manager.predict(2, null, { x: -260, y: 0 });
+    const prediction4 = manager.predict(2, undefined, { x: -260, y: 0 });
     this._plotPrediction(graph4, prediction4);
     $assert(
       prediction4.position.y > manager.find(9).getPosition().y &&
@@ -245,7 +245,7 @@ class SymmetricTestSuite extends TestSuite {
     // Graph 5
     console.log('\tPredict nodes added with no position:');
     const graph5 = manager.plot('testSymmetricPredict5', { width: 1000, height: 400 });
-    const prediction5a = manager.predict(1, null, null);
+    const prediction5a = manager.predict(1, undefined, undefined);
     this._plotPrediction(graph5, prediction5a);
     $assert(
       prediction5a.position.y === manager.find(1).getPosition().y &&
@@ -254,7 +254,7 @@ class SymmetricTestSuite extends TestSuite {
     );
     $assert(prediction5a.order === 0, 'Prediction order should be 0');
 
-    const prediction5b = manager.predict(2, null, null);
+    const prediction5b = manager.predict(2, undefined, undefined);
     this._plotPrediction(graph5, prediction5b);
     $assert(
       prediction5b.position.y > manager.find(10).getPosition().y &&
@@ -264,7 +264,7 @@ class SymmetricTestSuite extends TestSuite {
     );
     $assert(prediction5b.order === 2, 'Prediction order should be 2');
 
-    const prediction5c = manager.predict(3, null, null);
+    const prediction5c = manager.predict(3, undefined, undefined);
     this._plotPrediction(graph5, prediction5c);
     $assert(
       prediction5c.position.y > manager.find(6).getPosition().y &&
@@ -274,7 +274,7 @@ class SymmetricTestSuite extends TestSuite {
     );
     $assert(prediction5c.order === 3, 'Prediction order should be 3');
 
-    const prediction5d = manager.predict(10, null, null);
+    const prediction5d = manager.predict(10, undefined, undefined);
     this._plotPrediction(graph5, prediction5d);
     $assert(
       prediction5d.position.y === manager.find(10).getPosition().y &&

@@ -17,15 +17,14 @@
  */
 
 import React from 'react';
-import Box from '@mui/material/Box';
 import Switch from '@mui/material/Switch';
 import Typography from '@mui/material/Typography';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { useTheme as useMuiTheme } from '@mui/material/styles';
 import Brightness4 from '@mui/icons-material/Brightness4';
 import Brightness7 from '@mui/icons-material/Brightness7';
 import { useTheme } from '../../../contexts/ThemeContext';
 import { useIntl } from 'react-intl';
+import { ToggleRoot } from './styled';
 
 interface ThemeToggleProps {
   showBackground?: boolean;
@@ -33,32 +32,16 @@ interface ThemeToggleProps {
 
 const ThemeToggle: React.FC<ThemeToggleProps> = ({ showBackground = false }) => {
   const { mode, toggleMode } = useTheme();
-  const muiTheme = useMuiTheme();
   const intl = useIntl();
 
   const isDark = mode === 'dark';
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 0.5,
-        pl: 1,
-        pr: 1.5,
-        py: 0.5,
-        borderRadius: '50px',
-        border: '1px solid #cc8400',
-        backgroundColor: showBackground ? '#ffcc80' : 'transparent',
-        minWidth: '120px',
-        height: '32px',
-        mr: 0.5,
-      }}
-    >
+    <ToggleRoot showBackground={showBackground}>
       <Brightness7
         sx={{
           fontSize: '0.9rem',
-          color: !isDark ? muiTheme.palette.primary.main : muiTheme.palette.text.disabled,
+          color: !isDark ? 'primary.main' : 'text.disabled',
         }}
       />
       <FormControlLabel
@@ -69,10 +52,10 @@ const ThemeToggle: React.FC<ThemeToggleProps> = ({ showBackground = false }) => 
             size="small"
             sx={{
               '& .MuiSwitch-switchBase.Mui-checked': {
-                color: muiTheme.palette.primary.main,
+                color: 'primary.main',
               },
               '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
-                backgroundColor: muiTheme.palette.primary.main,
+                backgroundColor: 'primary.main',
               },
             }}
           />
@@ -94,10 +77,10 @@ const ThemeToggle: React.FC<ThemeToggleProps> = ({ showBackground = false }) => 
       <Brightness4
         sx={{
           fontSize: '0.9rem',
-          color: isDark ? muiTheme.palette.primary.main : muiTheme.palette.text.disabled,
+          color: isDark ? 'primary.main' : 'text.disabled',
         }}
       />
-    </Box>
+    </ToggleRoot>
   );
 };
 

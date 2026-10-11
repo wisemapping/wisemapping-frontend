@@ -17,6 +17,7 @@
  */
 
 import React from 'react';
+import { HiddenSitemap } from './styled';
 
 interface SitemapGeneratorProps {
   publicMaps?: Array<{
@@ -28,7 +29,8 @@ interface SitemapGeneratorProps {
 
 const SitemapGenerator: React.FC<SitemapGeneratorProps> = ({ publicMaps: _publicMaps = [] }) => {
   const baseUrl = 'https://www.wisemapping.com';
-  const currentDate = new Date().toISOString().split('T')[0];
+  // Read once per mount, so rendering stays pure.
+  const [currentDate] = React.useState(() => new Date().toISOString().split('T')[0]);
 
   const staticPages = [
     {
@@ -72,9 +74,9 @@ const SitemapGenerator: React.FC<SitemapGeneratorProps> = ({ publicMaps: _public
   };
 
   return (
-    <div style={{ display: 'none' }}>
+    <HiddenSitemap>
       <pre>{generateSitemap()}</pre>
-    </div>
+    </HiddenSitemap>
   );
 };
 

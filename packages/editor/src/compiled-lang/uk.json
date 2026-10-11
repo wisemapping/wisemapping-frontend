@@ -781,6 +781,12 @@
       "value": "Нотатка"
     }
   ],
+  "outline.untitled-map": [
+    {
+      "type": 0,
+      "value": "Карта без назви"
+    }
+  ],
   "relationship-style-editor.color": [
     {
       "type": 0,

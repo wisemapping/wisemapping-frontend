@@ -19,6 +19,8 @@
 import { styled } from '@mui/material/styles';
 
 export const StyledNav = styled('nav')`
+  background: ${({ theme }) =>
+    `linear-gradient(${theme.palette.background.default}, ${theme.palette.background.default}30)`};
   height: 90px;
   position: sticky;
   top: -16px;
@@ -73,6 +75,7 @@ export const StyledNav = styled('nav')`
 `;
 
 export const StyledDiv = styled('nav')`
+  background: ${({ theme }) => theme.palette.background.default};
   height: 74px;
   padding: 10px;
   position: sticky;

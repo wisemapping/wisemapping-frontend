@@ -781,6 +781,12 @@
       "value": "Note"
     }
   ],
+  "outline.untitled-map": [
+    {
+      "type": 0,
+      "value": "Carte sans titre"
+    }
+  ],
   "relationship-style-editor.color": [
     {
       "type": 0,

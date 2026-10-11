@@ -45,8 +45,8 @@ const client = {} as unknown as Client;
 const renderPage = (): (() => void) => {
   let rerenderPage = (): void => undefined;
   const Page = (): React.ReactElement => {
-    const [, setRenders] = React.useState(0);
-    rerenderPage = () => act(() => setRenders((renders) => renders + 1));
+    const [, forceRender] = React.useReducer((renders: number) => renders + 1, 0);
+    rerenderPage = () => act(() => forceRender());
     return <OAuthCallbackPage />;
   };
   renderWithProviders(<Page />, { client });

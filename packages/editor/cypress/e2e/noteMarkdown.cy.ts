@@ -168,7 +168,7 @@ describe('Note Markdown and nested lists', () => {
     note()
       .find('li')
       .then(($items) => {
-        const left = (i: number) => $items[i].getBoundingClientRect().left;
+        const left = (i: number) => $items.get(i).getBoundingClientRect().left;
         // one, two: level 1; three: level 2; four: level 3.
         expect(left(1)).to.eq(left(0));
         expect(left(2)).to.be.greaterThan(left(1));

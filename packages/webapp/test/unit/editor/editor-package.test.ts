@@ -20,6 +20,7 @@
 // dependency lists the icons with Vite's import.meta.glob and pulls in jspdf, which uses the
 // Encoding API: neither works under jest/jsdom without the harness's help.
 import { TextImporterFactory, XMLSerializerFactory } from '@wisemapping/editor';
+import { defined } from '../defined';
 
 const WXML =
   '<map name="map" version="tango"><topic central="true" text="Central" id="1">' +
@@ -34,7 +35,8 @@ describe('@wisemapping/editor', () => {
       document,
       'Imported',
     );
-    expect(mindmap.getBranches()[0].getText()).toBe('Central');
-    expect(mindmap.getBranches()[0].getChildren()[0].getText()).toBe('Child');
+    const central = defined(mindmap.getBranches()[0]);
+    expect(central.getText()).toBe('Central');
+    expect(defined(central.getChildren()[0]).getText()).toBe('Child');
   });
 });

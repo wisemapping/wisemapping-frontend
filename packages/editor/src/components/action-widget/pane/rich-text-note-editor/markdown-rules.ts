@@ -54,9 +54,9 @@ const BLOCK_RULES: { pattern: RegExp; type: BlockRuleType }[] = [
  * `- `, `* ` or `+ ` start a bulleted list, `1. ` or `1) ` a numbered one and `# ` to `### ` a
  * heading. The marker must be all the line holds before the caret.
  */
-export const matchBlockRule = (lineText: string): BlockRule | null => {
+export const matchBlockRule = (lineText: string): BlockRule | undefined => {
   const rule = BLOCK_RULES.find(({ pattern }) => pattern.test(lineText));
-  return rule ? { type: rule.type } : null;
+  return rule ? { type: rule.type } : undefined;
 };
 
 /**
@@ -79,30 +79,30 @@ const group = (match: RegExpExecArray, index: number): string => match[index] ??
 const LINK_RULE = /(^|[^!])\[([^[\]]*\S[^[\]]*)\]\(([^()\s]+)\)$/;
 
 /**
- * The destination of a link written in a note, or null when it must not become a link. Only
+ * The destination of a link written in a note, or undefined when it must not become a link. Only
  * web and mail addresses are kept: `javascript:`, `data:`, relative paths and anything else are
  * refused. An address starting with `www.` is taken as https.
  */
-export const safeLinkUrl = (value: string): string | null => {
+export const safeLinkUrl = (value: string): string | undefined => {
   const candidate = value.trim();
   if (!candidate || /[\s<>"']/.test(candidate)) {
-    return null;
+    return undefined;
   }
   const absolute = /^www\./i.test(candidate) ? `https://${candidate}` : candidate;
   let url: URL;
   try {
     url = new URL(absolute);
   } catch {
-    return null;
+    return undefined;
   }
   if (url.protocol === 'mailto:') {
-    return /^mailto:[^@\s]+@[^@\s]+$/i.test(absolute) ? absolute : null;
+    return /^mailto:[^@\s]+@[^@\s]+$/i.test(absolute) ? absolute : undefined;
   }
   if ((url.protocol === 'http:' || url.protocol === 'https:') && url.hostname) {
     // The scheme must be the one written: no leading control characters or spaces were dropped.
-    return /^https?:\/\//i.test(absolute) ? absolute : null;
+    return /^https?:\/\//i.test(absolute) ? absolute : undefined;
   }
-  return null;
+  return undefined;
 };
 
 /**
@@ -110,13 +110,13 @@ export const safeLinkUrl = (value: string): string | null => {
  * `*italic*`, `_italic_`, `~~strike~~`, `` `code` `` or `[text](url)`. A link with an unsafe
  * destination is not matched, so it stays as text.
  */
-export const matchInlineRule = (text: string): InlineRule | null => {
+export const matchInlineRule = (text: string): InlineRule | undefined => {
   const link = LINK_RULE.exec(text);
   if (link) {
     const href = safeLinkUrl(group(link, 3));
     return href
       ? { type: 'a', start: link.index + group(link, 1).length, content: group(link, 2), href }
-      : null;
+      : undefined;
   }
 
   for (const { pattern, type } of INLINE_RULES) {
@@ -125,7 +125,7 @@ export const matchInlineRule = (text: string): InlineRule | null => {
       return { type, start: match.index + group(match, 1).length, content: group(match, 2) };
     }
   }
-  return null;
+  return undefined;
 };
 
 export const escapeHtml = (value: string): string =>
@@ -149,7 +149,7 @@ const INLINE_SPANS: { pattern: RegExp; type: InlineRuleType }[] = [
 
 /** Converts the inline Markdown of one line to escaped markup. */
 export const inlineMarkdownToHtml = (text: string): string => {
-  let first: { match: RegExpExecArray; type: InlineRuleType } | null = null;
+  let first: { match: RegExpExecArray; type: InlineRuleType } | undefined;
   for (const { pattern, type } of INLINE_SPANS) {
     const match = pattern.exec(text);
     if (match && (!first || match.index < first.match.index)) {

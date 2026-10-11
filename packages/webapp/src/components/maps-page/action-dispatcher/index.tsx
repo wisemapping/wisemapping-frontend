@@ -50,7 +50,7 @@ type ActionDialogProps = {
   fromEditor?: boolean;
   pageMode?: PageModeType;
   /** The designer of the editor the action comes from, if any. */
-  designer?: Designer;
+  designer?: Designer | undefined;
   /** From the editor: saves its pending changes and stops it saving before a revert. */
   beforeRevert?: () => Promise<void>;
 };
@@ -98,32 +98,38 @@ const ActionDispatcher = ({
     onClose(success);
   };
 
+  // The map that the actions on a single map act on.
+  const [mapId] = mapsId;
+  const singleMap = mapId !== undefined;
+
   return (
     <Suspense fallback={null}>
       {action === 'create' && <CreateDialog onClose={handleOnClose} />}
-      {action === 'delete' && mapsId.length == 1 && (
-        <DeleteDialog onClose={handleOnClose} mapId={mapsId[0]} />
+      {action === 'delete' && mapsId.length == 1 && singleMap && (
+        <DeleteDialog onClose={handleOnClose} mapId={mapId} />
       )}
       {action === 'delete' && mapsId.length > 1 && (
         <DeleteMultiselectDialog onClose={handleOnClose} mapsId={mapsId} />
       )}
-      {action === 'rename' && <RenameDialog onClose={handleOnClose} mapId={mapsId[0]} />}
-      {action === 'duplicate' && <DuplicateDialog onClose={handleOnClose} mapId={mapsId[0]} />}
-      {action === 'history' && (
-        <HistoryDialog onClose={handleOnClose} mapId={mapsId[0]} beforeRevert={beforeRevert} />
+      {action === 'rename' && singleMap && <RenameDialog onClose={handleOnClose} mapId={mapId} />}
+      {action === 'duplicate' && singleMap && (
+        <DuplicateDialog onClose={handleOnClose} mapId={mapId} />
+      )}
+      {action === 'history' && singleMap && (
+        <HistoryDialog onClose={handleOnClose} mapId={mapId} beforeRevert={beforeRevert} />
       )}
       {action === 'import' && <ImportDialog onClose={handleOnClose} />}
-      {action === 'publish' && <PublishDialog onClose={handleOnClose} mapId={mapsId[0]} />}
-      {action === 'info' && <InfoDialog onClose={handleOnClose} mapId={mapsId[0]} />}
-      {action === 'export' && (
+      {action === 'publish' && singleMap && <PublishDialog onClose={handleOnClose} mapId={mapId} />}
+      {action === 'info' && singleMap && <InfoDialog onClose={handleOnClose} mapId={mapId} />}
+      {action === 'export' && singleMap && (
         <ExportDialog
           onClose={handleOnClose}
-          mapId={mapsId[0]}
+          mapId={mapId}
           enableImgExport={fromEditor}
           designer={designer}
         />
       )}
-      {action === 'share' && <ShareDialog onClose={handleOnClose} mapId={mapsId[0]} />}
+      {action === 'share' && singleMap && <ShareDialog onClose={handleOnClose} mapId={mapId} />}
       {action === 'label' && <LabelDialog onClose={handleOnClose} mapsId={mapsId} />}
     </Suspense>
   );

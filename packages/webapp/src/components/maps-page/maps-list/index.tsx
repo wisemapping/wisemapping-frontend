@@ -16,53 +16,38 @@
  *   limitations under the License.
  */
 
-import React, { useMemo, CSSProperties, useContext } from 'react';
-
-import { useStyles } from './styled';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { ErrorInfo, MapInfo } from '../../../classes/client';
-import ActionChooser, { ActionType } from '../action-chooser';
-import ActionDispatcher from '../action-dispatcher';
-import { useDate } from '../../../classes/app-i18n/dates';
-import { Filter } from '..';
-import { FormattedMessage, useIntl } from 'react-intl';
-import { trackToolbarAction } from '../../../utils/analytics';
-
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import TableSortLabel from '@mui/material/TableSortLabel';
-import Toolbar from '@mui/material/Toolbar';
-import Paper from '@mui/material/Paper';
-import Checkbox from '@mui/material/Checkbox';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import Button from '@mui/material/Button';
-import InputBase from '@mui/material/InputBase';
-import Link from '@mui/material/Link';
-
-import DeleteOutlined from '@mui/icons-material/DeleteOutlined';
-
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import StarRateRoundedIcon from '@mui/icons-material/StarRateRounded';
-import SearchIcon from '@mui/icons-material/Search';
-
-import { LabelsCell } from './labels-cell';
-import LabelTwoTone from '@mui/icons-material/LabelTwoTone';
-import { CSSObject, Interpolation, Theme } from '@emotion/react';
-import Box from '@mui/material/Box';
+import React, { use, useCallback, useState } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { useQuery } from '@tanstack/react-query';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import CardHeader from '@mui/material/CardHeader';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableRow from '@mui/material/TableRow';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import type { Theme } from '@mui/material/styles';
+import { ErrorInfo, MapInfo } from '../../../classes/client';
 import { ClientContext } from '../../../classes/provider/client-context';
+import { trackToolbarAction } from '../../../utils/analytics';
+import { Filter } from '..';
+import ActionChooser, { ActionType } from '../action-chooser';
+import ActionDispatcher from '../action-dispatcher';
 import { CardSkeleton, MapsListSkeleton } from './MapsListSkeleton';
-import { ChangeLabelMutationFunctionParam, Order, getChangeLabelMutationFunction } from './model';
+import { MapCard } from './MapCard';
+import { MapRow } from './MapRow';
+import { MapsListToolbar } from './MapsListToolbar';
+import { MapsTableHead } from './MapsTableHead';
+import { ChangeLabelMutationFunctionParam, getChangeLabelMutationFunction } from './model';
+import {
+  ListPagination,
+  ListPaper,
+  ListRoot,
+  ListTable,
+  ListTableContainer,
+  PaginationDesktop,
+  PaginationMobile,
+} from './styled';
+import { useRemoveLabel, useStarMap } from './useMapMutations';
 import { useMapsListState } from './useMapsListState';
 
 // The label dialog imports these from here.
@@ -72,164 +57,23 @@ export { getChangeLabelMutationFunction };
 // A stable empty list: `data = []` would be a new array on every render while loading.
 const NO_MAPS: MapInfo[] = [];
 
-interface HeadCell {
-  id: keyof MapInfo;
-  label?: string;
-  // Accessible name for a column that shows no visible header text -- without
-  // it the column's sort button is a control with no name at all.
-  ariaLabel?: string;
-  numeric: boolean;
-  style?: CSSProperties;
-}
+/** Below `sm` the list shows cards; the styles of both views switch at the same breakpoint. */
+const narrowScreen = (theme: Theme): string => theme.breakpoints.down('sm');
 
-interface EnhancedTableProps {
-  classes: ReturnType<typeof useStyles>;
-  numSelected: number;
-  onRequestSort: (event: React.MouseEvent<unknown>, property: keyof MapInfo) => void;
-  onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  order: Order;
-  orderBy: string;
-  rowCount: number;
-}
-
-function EnhancedTableHead(props: EnhancedTableProps) {
-  const intl = useIntl();
-
-  const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
-
-  const createSortHandler = (property: keyof MapInfo) => (event: React.MouseEvent<unknown>) => {
-    onRequestSort(event, property);
-  };
-
-  const headCells: HeadCell[] = useMemo(
-    () => [
-      {
-        id: 'title',
-        numeric: false,
-        label: intl.formatMessage({ id: 'map.name', defaultMessage: 'Name' }),
-      },
-      {
-        id: 'labels',
-        numeric: false,
-        ariaLabel: intl.formatMessage({ id: 'map.labels', defaultMessage: 'Labels' }),
-      },
-      {
-        id: 'createdBy',
-        numeric: false,
-        label: intl.formatMessage({ id: 'map.creator', defaultMessage: 'Creator' }),
-        style: { width: '150px', whiteSpace: 'nowrap' },
-      },
-      {
-        id: 'lastModificationTime',
-        numeric: true,
-        label: intl.formatMessage({ id: 'map.last-update', defaultMessage: 'Last Update' }),
-        style: { width: '70px', whiteSpace: 'nowrap' },
-      },
-    ],
-    [intl],
-  );
-
-  return (
-    <TableHead>
-      <TableRow>
-        <TableCell
-          padding="checkbox"
-          key="select"
-          style={{ width: '20px' }}
-          css={classes.headerCell}
-        >
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            size="small"
-            slotProps={{
-              input: {
-                'aria-label': intl.formatMessage({
-                  id: 'maps.select-all',
-                  defaultMessage: 'Select all',
-                }),
-              },
-            }}
-            sx={(theme) => ({
-              color:
-                theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.26)',
-              '&.Mui-checked': {
-                color:
-                  theme.palette.mode === 'dark'
-                    ? 'rgba(255, 255, 255, 0.7)'
-                    : 'rgba(0, 0, 0, 0.54)',
-              },
-              '&.MuiCheckbox-indeterminate': {
-                color:
-                  theme.palette.mode === 'dark'
-                    ? 'rgba(255, 255, 255, 0.7)'
-                    : 'rgba(0, 0, 0, 0.54)',
-              },
-            })}
-          />
-        </TableCell>
-
-        {headCells.map((headCell) => {
-          return (
-            <TableCell
-              key={headCell.id}
-              sortDirection={orderBy === headCell.id ? order : false}
-              style={headCell.style}
-              css={classes.headerCell}
-            >
-              <TableSortLabel
-                active={orderBy === headCell.id}
-                direction={orderBy === headCell.id ? order : 'asc'}
-                onClick={createSortHandler(headCell.id)}
-                aria-label={headCell.label ? undefined : headCell.ariaLabel}
-              >
-                {headCell.label}
-
-                {orderBy === headCell.id && (
-                  <span css={classes.visuallyHidden as Interpolation<Theme>}>
-                    {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                  </span>
-                )}
-              </TableSortLabel>
-            </TableCell>
-          );
-        })}
-
-        <TableCell padding="checkbox" key="starred" css={classes.headerCell}>
-          <span css={classes.visuallyHidden as Interpolation<Theme>}>
-            {intl.formatMessage({ id: 'maps.tooltip-starred', defaultMessage: 'Starred' })}
-          </span>
-        </TableCell>
-        <TableCell padding="checkbox" key="action" css={classes.headerCell}>
-          <span css={classes.visuallyHidden as Interpolation<Theme>}>
-            {intl.formatMessage({ id: 'map.actions', defaultMessage: 'Actions' })}
-          </span>
-        </TableCell>
-      </TableRow>
-    </TableHead>
-  );
-}
-
-type ActionPanelState = {
-  el: HTMLElement | undefined;
-  mapId: number;
-};
+type RowMenu = { anchor: HTMLElement; mapId: number };
+type ActiveDialog = { actionType: ActionType; mapsId: number[] };
 
 interface MapsListProps {
   filter: Filter;
 }
 
-export const MapsList = (props: MapsListProps): React.ReactElement => {
-  const classes = useStyles();
-  const client = useContext(ClientContext);
-  const intl = useIntl();
-  const queryClient = useQueryClient();
-
-  const date = useDate();
+export const MapsList = ({ filter }: MapsListProps): React.ReactElement => {
+  const client = use(ClientContext);
+  // Read on the first render (`noSsr`): the page never paints the other view first.
+  const isMobile = useMediaQuery(narrowScreen, { noSsr: true });
 
   const {
-    data: mapsData = NO_MAPS,
+    data: maps = NO_MAPS,
     // Only until the first list arrives: a background refetch keeps showing the maps.
     isPending: isLoadingMaps,
     isError: mapsLoadFailed,
@@ -237,14 +81,6 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
     queryKey: ['maps'],
     queryFn: () => client.fetchAllMaps(),
   });
-
-  // While loading, or when loading failed, the list is empty, but "no maps" would be wrong.
-  const loadFailedMessage = (
-    <FormattedMessage
-      id="maps.load-error"
-      defaultMessage="Your maps could not be loaded. Please try again later."
-    />
-  );
 
   const {
     order,
@@ -260,567 +96,158 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
     changeSearch,
     toggleSelected,
     selectAll,
-    isSelected,
     clearSelection,
-  } = useMapsListState(props.filter, mapsData);
+  } = useMapsListState(filter, maps);
 
-  const [activeRowAction, setActiveRowAction] = React.useState<ActionPanelState | undefined>(
-    undefined,
+  const [rowMenu, setRowMenu] = useState<RowMenu | undefined>(undefined);
+  const [activeDialog, setActiveDialog] = useState<ActiveDialog | undefined>(undefined);
+
+  // Every row gets these same functions: see MapItemHandlers.
+  const { mutate: starMap } = useStarMap();
+  const { mutate: removeLabel } = useRemoveLabel();
+  const handleStar = useCallback(
+    (id: number, starred: boolean) => starMap({ id, starred }),
+    [starMap],
+  );
+  const handleRemoveLabel = useCallback(
+    (mapId: number, labelId: number) => removeLabel({ mapId, labelId }),
+    [removeLabel],
+  );
+  const handleOpenMenu = useCallback(
+    (mapId: number, anchor: HTMLElement) => setRowMenu({ mapId, anchor }),
+    [],
   );
 
-  type ActiveDialog = {
-    actionType: ActionType;
-    mapsId: number[];
-  };
-
-  const [activeDialog, setActiveDialog] = React.useState<ActiveDialog | undefined>(undefined);
-  const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof MapInfo) =>
-    requestSort(property);
-
-  const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>): void =>
-    selectAll(event.target.checked);
-
-  const handleRowClick = (event: React.MouseEvent<unknown>, id: number): void => toggleSelected(id);
-
-  const handleChangePage = (event: unknown, newPage: number) => changePage(newPage);
-
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) =>
-    changeRowsPerPage(parseInt(event.target.value, 10));
-
-  const handleActionClick = (mapId: number): ((event: React.MouseEvent<HTMLElement>) => void) => {
-    return (event: React.MouseEvent<HTMLElement>): void => {
-      setActiveRowAction({
-        mapId: mapId,
-        el: event.currentTarget,
-      });
-      event.preventDefault();
-      // The table row toggles its selection on click: opening the menu must not.
-      event.stopPropagation();
-    };
-  };
-
-  const starredMultation = useMutation<void, ErrorInfo, number>({
-    mutationFn: (id: number) => {
-      const map = filteredMaps.find((m) => m.id == id);
-      const starred = !map?.starred;
-
-      // Follow a optimistic update approach ...
-      queryClient.setQueryData<MapInfo[]>(['maps'], (currentMaps) => {
-        if (map) {
-          map.starred = starred;
-        }
-        return currentMaps || [];
-      });
-      return client.updateStarred(id, starred);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['maps'] });
-    },
-    onError: (error) => {
-      queryClient.invalidateQueries({ queryKey: ['maps'] });
-      console.error(error);
-    },
-  });
-
-  const handleStarred = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: number) => {
-    event.stopPropagation();
-    event.preventDefault();
-    starredMultation.mutate(id);
-  };
-
-  const handleActionMenuClose = (action: ActionType): void => {
-    if (action) {
-      const mapId = activeRowAction?.mapId;
-
-      setActiveDialog({
-        actionType: action as ActionType,
-        mapsId: [mapId] as number[],
-      });
+  const handleMenuClose = (action: ActionType): void => {
+    if (action && rowMenu) {
+      setActiveDialog({ actionType: action, mapsId: [rowMenu.mapId] });
     }
-    setActiveRowAction(undefined);
+    setRowMenu(undefined);
   };
 
-  const handleOnSearchChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    changeSearch(e.target.value);
-
-  const handleDeleteClick = () => {
-    trackToolbarAction('delete_selected', `count:${selected.length}`);
-    setActiveDialog({
-      actionType: 'delete',
-      mapsId: selected,
-    });
+  const openBulkDialog = (actionType: ActionType, event: string): void => {
+    trackToolbarAction(event, `count:${selected.length}`);
+    setActiveDialog({ actionType, mapsId: selected });
   };
 
-  const handleAddLabelClick = () => {
-    trackToolbarAction('add_label_selected', `count:${selected.length}`);
-    setActiveDialog({
-      actionType: 'label',
-      mapsId: selected,
-    });
-  };
+  const loadFailedMessage = (
+    <FormattedMessage
+      id="maps.load-error"
+      defaultMessage="Your maps could not be loaded. Please try again later."
+    />
+  );
+  const emptyMessage = (
+    <FormattedMessage
+      id="maps.empty-result"
+      defaultMessage="No matching mindmap found with the current filter criteria."
+    />
+  );
+  // While loading, or when loading failed, the list is empty, but "no maps" would be wrong.
+  const message = mapsLoadFailed
+    ? loadFailedMessage
+    : filteredMaps.length === 0
+      ? emptyMessage
+      : undefined;
 
-  const removeLabelMultation = useMutation<
-    void,
-    ErrorInfo,
-    { mapId: number; labelId: number },
-    number
-  >({
-    mutationFn: ({ mapId, labelId }) => {
-      return client.deleteLabelFromMap(labelId, mapId);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['maps'] });
-    },
-    onError: (error) => {
-      console.error(error);
-    },
-  });
+  const pagination = filteredMaps.length > rowsPerPage && (
+    <ListPagination
+      count={filteredMaps.length}
+      rowsPerPageOptions={[]}
+      rowsPerPage={rowsPerPage}
+      page={page}
+      onPageChange={(_event, newPage) => changePage(newPage)}
+      onRowsPerPageChange={(event) => changeRowsPerPage(parseInt(event.target.value, 10))}
+      component="div"
+    />
+  );
 
-  const handleRemoveLabel = (mapId: number, labelId: number) => {
-    removeLabelMultation.mutate({ mapId, labelId });
-  };
+  const cards = isLoadingMaps ? (
+    <div data-testid="maps-loading" aria-busy="true">
+      {Array.from({ length: 5 }).map((_, index) => (
+        <CardSkeleton
+          // eslint-disable-next-line @eslint-react/no-array-index-key -- identical placeholders in a fixed-length list that never reorders
+          key={index}
+        />
+      ))}
+    </div>
+  ) : message ? (
+    <Card>
+      <CardContent>{message}</CardContent>
+    </Card>
+  ) : (
+    pagedMaps.map((map) => (
+      <MapCard key={map.id} map={map} onStar={handleStar} onOpenMenu={handleOpenMenu} />
+    ))
+  );
+
+  const table = (
+    <ListTable size="small" stickyHeader>
+      <MapsTableHead
+        numSelected={selected.length}
+        rowCount={filteredMaps.length}
+        order={order}
+        orderBy={orderBy}
+        onSelectAll={selectAll}
+        onRequestSort={requestSort}
+      />
+      <TableBody data-testid={isLoadingMaps ? 'maps-loading' : undefined} aria-busy={isLoadingMaps}>
+        {isLoadingMaps ? (
+          <MapsListSkeleton rowsPerPage={rowsPerPage} />
+        ) : message ? (
+          <TableRow>
+            <TableCell colSpan={6} sx={{ textAlign: 'center' }}>
+              {message}
+            </TableCell>
+          </TableRow>
+        ) : (
+          pagedMaps.map((map) => (
+            <MapRow
+              key={map.id}
+              map={map}
+              selected={selected.includes(map.id)}
+              onToggleSelected={toggleSelected}
+              onStar={handleStar}
+              onOpenMenu={handleOpenMenu}
+              onRemoveLabel={handleRemoveLabel}
+            />
+          ))
+        )}
+      </TableBody>
+    </ListTable>
+  );
 
   return (
-    <div css={classes.root}>
-      {activeRowAction?.mapId !== undefined && (
-        <ActionChooser
-          anchor={activeRowAction?.el}
-          onClose={handleActionMenuClose}
-          mapId={activeRowAction.mapId}
-        />
+    <ListRoot>
+      {rowMenu && (
+        <ActionChooser anchor={rowMenu.anchor} onClose={handleMenuClose} mapId={rowMenu.mapId} />
       )}
-      <Paper css={classes.paper} elevation={0}>
-        <Toolbar css={classes.toolbar} variant="dense" sx={{ backgroundColor: 'transparent' }}>
-          <div css={classes.toolbarActions}>
-            {selected.length > 0 && (
-              <Tooltip
-                arrow={true}
-                title={intl.formatMessage({
-                  id: 'map.delete-selected',
-                  defaultMessage: 'Delete selected',
-                })}
-              >
-                <Button
-                  color="primary"
-                  size="medium"
-                  variant="outlined"
-                  type="button"
-                  disableElevation={true}
-                  onClick={handleDeleteClick}
-                  startIcon={<DeleteOutlined />}
-                >
-                  <span className="button-text">
-                    <FormattedMessage id="action.delete" defaultMessage="Delete" />
-                  </span>
-                </Button>
-              </Tooltip>
-            )}
+      <ListPaper elevation={0}>
+        <MapsListToolbar
+          selectedCount={selected.length}
+          onDeleteSelected={() => openBulkDialog('delete', 'delete_selected')}
+          onLabelSelected={() => openBulkDialog('label', 'add_label_selected')}
+          onSearchChange={changeSearch}
+          end={!isMobile && pagination && <PaginationDesktop>{pagination}</PaginationDesktop>}
+        />
 
-            {selected.length > 0 && (
-              <Tooltip
-                arrow={true}
-                title={intl.formatMessage({
-                  id: 'map.tooltip-add',
-                  defaultMessage: 'Add label to selected',
-                })}
-              >
-                <Button
-                  color="primary"
-                  size="medium"
-                  variant="outlined"
-                  type="button"
-                  style={{ marginLeft: '10px' }}
-                  disableElevation={true}
-                  startIcon={<LabelTwoTone />}
-                  onClick={handleAddLabelClick}
-                >
-                  <span className="button-text">
-                    <FormattedMessage id="action.label" defaultMessage="Add Label" />
-                  </span>
-                </Button>
-              </Tooltip>
-            )}
-          </div>
+        <ListTableContainer>
+          {/* Only the view the screen shows: the other one would be rendered for nothing. */}
+          {isMobile ? <div data-testid="maps-cards">{cards}</div> : table}
+        </ListTableContainer>
 
-          <div css={classes.searchContainer as Interpolation<Theme>}>
-            <div css={classes.search as Interpolation<Theme>}>
-              <div css={classes.searchIcon as Interpolation<Theme>}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder={intl.formatMessage({
-                  id: 'maps.search-action',
-                  defaultMessage: 'Search ...',
-                })}
-                css={[classes.searchInputRoot, classes.searchInputInput]}
-                slotProps={{ input: { 'aria-label': 'search' } }}
-                onChange={handleOnSearchChange}
-                // startAdornment={<SearchIcon />}
-              />
-            </div>
-          </div>
-
-          <div style={{ flex: '1 1 0', minWidth: 0, display: 'flex', justifyContent: 'flex-end' }}>
-            {/* Pagination on desktop */}
-            {filteredMaps.length > rowsPerPage && (
-              <Box css={classes.paginationDesktop as Interpolation<Theme>}>
-                <TablePagination
-                  css={classes.tablePagination as Interpolation<Theme>}
-                  count={filteredMaps.length}
-                  rowsPerPageOptions={[]}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                  component="div"
-                />
-              </Box>
-            )}
-          </div>
-        </Toolbar>
-
-        <TableContainer css={classes.tableContainer as Interpolation<Theme>}>
-          <Box css={classes.cards}>
-            {isLoadingMaps ? (
-              <Box data-testid="maps-loading" aria-busy="true">
-                {Array.from({ length: 5 }).map((_, index) => (
-                  <CardSkeleton key={index} />
-                ))}
-              </Box>
-            ) : mapsLoadFailed ? (
-              <Card>
-                <CardContent>{loadFailedMessage}</CardContent>
-              </Card>
-            ) : filteredMaps.length === 0 ? (
-              <Card>
-                <CardContent>
-                  <FormattedMessage
-                    id="maps.empty-result"
-                    defaultMessage="No matching mindmap found with the current filter criteria."
-                  />
-                </CardContent>
-              </Card>
-            ) : (
-              pagedMaps.map((row: MapInfo) => {
-                return (
-                  <Card key={row.id} css={{ maxWidth: '94vw', margin: '3vw' }}>
-                    <Link
-                      href={`/c/maps/${row.id}/edit`}
-                      underline="none"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <CardHeader
-                        css={classes.cardHeader}
-                        avatar={
-                          <Tooltip
-                            arrow={true}
-                            title={intl.formatMessage({
-                              id: 'maps.tooltip-starred',
-                              defaultMessage: 'Starred',
-                            })}
-                          >
-                            <IconButton size="small" onClick={(e) => handleStarred(e, row.id)}>
-                              <StarRateRoundedIcon
-                                color="action"
-                                style={{
-                                  color: row.starred ? 'yellow' : 'gray',
-                                }}
-                              />
-                            </IconButton>
-                          </Tooltip>
-                        }
-                        action={
-                          <Tooltip
-                            arrow={true}
-                            title={intl.formatMessage({
-                              id: 'map.more-actions',
-                              defaultMessage: 'More Actions',
-                            })}
-                          >
-                            <IconButton
-                              aria-label={intl.formatMessage({
-                                id: 'common.settings',
-                                defaultMessage: 'Settings',
-                              })}
-                              onClick={handleActionClick(row.id)}
-                            >
-                              <MoreVertIcon color="action" />
-                            </IconButton>
-                          </Tooltip>
-                        }
-                        title={
-                          <Typography
-                            css={classes.cardTitle}
-                            noWrap
-                            sx={{
-                              color: 'text.secondary',
-                              fontSize: '0.96rem',
-
-                              fontFamily:
-                                'Figtree, "Noto Sans JP", Helvetica, "system-ui", Arial, sans-serif',
-                            }}
-                          >
-                            {row.title}
-                          </Typography>
-                        }
-                        subheader={
-                          <Typography
-                            variant="subtitle2"
-                            sx={{
-                              fontSize: '0.75rem',
-                              fontFamily:
-                                'Figtree, "Noto Sans JP", Helvetica, "system-ui", Arial, sans-serif',
-                            }}
-                          >
-                            {intl.formatMessage({
-                              id: 'map.last-update',
-                              defaultMessage: 'Last Update',
-                            })}
-                            <span>: </span>
-                            <Tooltip
-                              arrow={true}
-                              title={intl.formatMessage(
-                                {
-                                  id: 'maps.modified-by-desc',
-                                  defaultMessage: 'Modified by {by} on {on}',
-                                },
-                                {
-                                  by: row.lastModificationBy,
-                                  on: date(row.lastModificationTime).format('lll'),
-                                },
-                              )}
-                              placement="bottom-start"
-                            >
-                              <span>{date(row.lastModificationTime).fromNow()}</span>
-                            </Tooltip>
-                          </Typography>
-                        }
-                      />
-                    </Link>
-                  </Card>
-                );
-              })
-            )}
-          </Box>
-          <Table css={classes.table} size="small" stickyHeader>
-            <EnhancedTableHead
-              classes={classes}
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={filteredMaps.length}
-            />
-
-            <TableBody
-              data-testid={isLoadingMaps ? 'maps-loading' : undefined}
-              aria-busy={isLoadingMaps}
-            >
-              {isLoadingMaps ? (
-                <MapsListSkeleton rowsPerPage={rowsPerPage} />
-              ) : mapsLoadFailed ? (
-                <TableRow>
-                  <TableCell colSpan={6} css={classes.messageCell}>
-                    {loadFailedMessage}
-                  </TableCell>
-                </TableRow>
-              ) : filteredMaps.length === 0 ? (
-                <TableRow>
-                  <TableCell colSpan={6} css={classes.messageCell}>
-                    <FormattedMessage
-                      id="maps.empty-result"
-                      defaultMessage="No matching mindmap found with the current filter criteria."
-                    />
-                  </TableCell>
-                </TableRow>
-              ) : (
-                pagedMaps.map((row: MapInfo) => {
-                  const isItemSelected = isSelected(row.id);
-
-                  return (
-                    <TableRow
-                      hover
-                      onClick={(event) => handleRowClick(event, row.id)}
-                      tabIndex={-1}
-                      key={row.id}
-                      selected={isItemSelected}
-                    >
-                      <TableCell padding="checkbox" css={classes.bodyCell}>
-                        <Checkbox
-                          checked={isItemSelected}
-                          size="small"
-                          sx={(theme) => ({
-                            color:
-                              theme.palette.mode === 'dark'
-                                ? 'rgba(255, 255, 255, 0.3)'
-                                : 'rgba(0, 0, 0, 0.26)',
-                            '&.Mui-checked': {
-                              color:
-                                theme.palette.mode === 'dark'
-                                  ? 'rgba(255, 255, 255, 0.7)'
-                                  : 'rgba(0, 0, 0, 0.54)',
-                            },
-                          })}
-                          slotProps={{
-                            input: {
-                              // Named after the map explicitly: the "Open for edition"
-                              // tooltip names the title link, so pointing at it read
-                              // the tooltip instead of the title.
-                              'aria-label': intl.formatMessage(
-                                { id: 'maps.select-map', defaultMessage: 'Select {title}' },
-                                { title: row.title },
-                              ),
-                            },
-                          }}
-                        />
-                      </TableCell>
-                      <TableCell css={classes.bodyCell}>
-                        <Tooltip
-                          arrow={true}
-                          title={intl.formatMessage({
-                            id: 'maps.tooltip-open',
-                            defaultMessage: 'Open for edition',
-                          })}
-                          placement="bottom-start"
-                        >
-                          <Link
-                            id={`map-title-${row.id}`}
-                            href={`/c/maps/${row.id}/edit`}
-                            color="textPrimary"
-                            underline="always"
-                            onClick={(e) => e.stopPropagation()}
-                            sx={{
-                              fontSize: '0.96rem',
-                              fontFamily:
-                                'Figtree, "Noto Sans JP", Helvetica, "system-ui", Arial, sans-serif',
-                            }}
-                          >
-                            {row.title}
-                          </Link>
-                        </Tooltip>
-                      </TableCell>
-                      <TableCell css={[classes.bodyCell, classes.labelsCell as CSSObject]}>
-                        <LabelsCell
-                          labels={row.labels}
-                          onDelete={(lbl) => {
-                            handleRemoveLabel(row.id, lbl.id);
-                          }}
-                        />
-                      </TableCell>
-                      <TableCell css={classes.bodyCell}>
-                        <Typography
-                          variant="body2"
-                          sx={{
-                            fontSize: '0.96rem',
-                            fontFamily:
-                              'Figtree, "Noto Sans JP", Helvetica, "system-ui", Arial, sans-serif',
-                          }}
-                        >
-                          {row.createdBy}
-                        </Typography>
-                      </TableCell>
-                      <TableCell css={classes.bodyCell}>
-                        <Tooltip
-                          arrow={true}
-                          title={intl.formatMessage(
-                            {
-                              id: 'maps.modified-by-desc',
-                              defaultMessage: 'Modified by {by} on {on}',
-                            },
-                            {
-                              by: row.lastModificationBy,
-                              on: date(row.lastModificationTime).format('lll'),
-                            },
-                          )}
-                          placement="bottom-start"
-                        >
-                          <Typography
-                            variant="body2"
-                            sx={{
-                              fontSize: '0.96rem',
-                              fontFamily:
-                                'Figtree, "Noto Sans JP", Helvetica, "system-ui", Arial, sans-serif',
-                            }}
-                          >
-                            {date(row.lastModificationTime).fromNow()}
-                          </Typography>
-                        </Tooltip>
-                      </TableCell>
-                      <TableCell padding="checkbox" css={classes.bodyCell}>
-                        <Tooltip
-                          arrow={true}
-                          title={intl.formatMessage({
-                            id: 'maps.tooltip-starred',
-                            defaultMessage: 'Starred',
-                          })}
-                        >
-                          <IconButton size="small" onClick={(e) => handleStarred(e, row.id)}>
-                            <StarRateRoundedIcon
-                              color="action"
-                              style={{
-                                color: row.starred ? 'yellow' : 'gray',
-                              }}
-                            />
-                          </IconButton>
-                        </Tooltip>
-                      </TableCell>
-                      <TableCell css={classes.bodyCell}>
-                        <Tooltip
-                          arrow={true}
-                          title={intl.formatMessage({
-                            id: 'map.more-actions',
-                            defaultMessage: 'More Actions',
-                          })}
-                        >
-                          <IconButton
-                            aria-label={intl.formatMessage({
-                              id: 'common.others',
-                              defaultMessage: 'Others',
-                            })}
-                            size="small"
-                            onClick={handleActionClick(row.id)}
-                          >
-                            <MoreHorizIcon color="action" />
-                          </IconButton>
-                        </Tooltip>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-
-        {/* Pagination on mobile only - below table */}
-        {filteredMaps.length > rowsPerPage && (
-          <Box css={classes.paginationMobile as Interpolation<Theme>}>
-            <TablePagination
-              css={classes.tablePagination as Interpolation<Theme>}
-              count={filteredMaps.length}
-              rowsPerPageOptions={[]}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              component="div"
-            />
-          </Box>
-        )}
-      </Paper>
+        {isMobile && pagination && <PaginationMobile>{pagination}</PaginationMobile>}
+      </ListPaper>
       <ActionDispatcher
         action={activeDialog?.actionType}
         onClose={(success) => {
           setActiveDialog(undefined);
-
-          // If it was a success action, reset the selection list ...
+          // A dialog that did its job leaves nothing selected.
           if (success) {
             clearSelection();
           }
         }}
         mapsId={activeDialog ? activeDialog.mapsId : []}
       />
-    </div>
+    </ListRoot>
   );
 };

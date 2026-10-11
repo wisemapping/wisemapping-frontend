@@ -73,7 +73,7 @@ const LOCALIZED_PAGES = [
  * Returns today's date in YYYY-MM-DD format
  */
 export function getCurrentDate(): string {
-  return new Date().toISOString().split('T')[0];
+  return new Date().toISOString().split('T')[0] ?? '';
 }
 
 /**
@@ -126,7 +126,7 @@ export function formatDate(dateString?: string): string {
     return getCurrentDate();
   }
   try {
-    return new Date(dateString).toISOString().split('T')[0];
+    return new Date(dateString).toISOString().split('T')[0] ?? '';
   } catch {
     return getCurrentDate();
   }
@@ -161,7 +161,7 @@ function getHreflangCode(locale: string): string {
     return locale;
   }
   // For other locales, use the first part (e.g., en-US -> en)
-  return locale.split('-')[0];
+  return locale.split('-')[0] ?? locale;
 }
 
 /**

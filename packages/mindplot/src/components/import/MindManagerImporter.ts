@@ -201,7 +201,7 @@ class MindManagerImporter extends Importer {
 
   private topicIdMap: Map<string, number>;
 
-  private styleGroup: Element | null = null;
+  private styleGroup: Element | undefined;
 
   // 1 or -1 when every main topic grows on the right or on the left of the central topic.
   private mainTopicsSide: number | undefined;
@@ -376,11 +376,16 @@ class MindManagerImporter extends Importer {
     }
   }
 
+  // An attribute of an element that may be missing: undefined if either is.
+  private static attr(element: Element | undefined, name: string): string | undefined {
+    return element?.getAttribute(name) ?? undefined;
+  }
+
   /**
    * MindManager colors are 4 bytes in hex, alpha first (ff96b3df). A transparent color is no
    * color. Colors written as #rrggbb are kept.
    */
-  private static toColor(color: string | null | undefined): string | undefined {
+  private static toColor(color: string | undefined): string | undefined {
     const value = color?.trim();
     if (!value) {
       return undefined;
@@ -455,9 +460,9 @@ class MindManagerImporter extends Importer {
    * ${kind}SubTopicDefaultsGroup of the Level (depth - 1) for its subtopics. The deepest level
    * that is defined applies below it.
    */
-  private defaultsGroup(kind: TopicKind, depth: number): Element | null {
+  private defaultsGroup(kind: TopicKind, depth: number): Element | undefined {
     if (!this.styleGroup) {
-      return null;
+      return undefined;
     }
     if (depth === 0) {
       return this.findChildByTagName(this.styleGroup, `${kind}TopicDefaultsGroup`);
@@ -466,7 +471,7 @@ class MindManagerImporter extends Importer {
       .map((group) => ({ group, level: Number(group.getAttribute('Level')) }))
       .filter(({ level }) => Number.isInteger(level) && level <= depth - 1)
       .sort((a, b) => b.level - a.level);
-    return levels[0]?.group ?? null;
+    return levels[0]?.group;
   }
 
   /**
@@ -476,11 +481,17 @@ class MindManagerImporter extends Importer {
    */
   private growthSide(rootTopic: Element): number | undefined {
     const attribute = 'SubTopicsGrowthDirection';
-    const own = this.findChildByTagName(rootTopic, 'SubTopicsShape')?.getAttribute(attribute);
+    const own = MindManagerImporter.attr(
+      this.findChildByTagName(rootTopic, 'SubTopicsShape'),
+      attribute,
+    );
     const defaults = this.defaultsGroup('Root', 0);
     const byDefault =
       defaults &&
-      this.findChildByTagName(defaults, 'DefaultSubTopicsShape')?.getAttribute(attribute);
+      MindManagerImporter.attr(
+        this.findChildByTagName(defaults, 'DefaultSubTopicsShape'),
+        attribute,
+      );
     switch ((own || byDefault)?.replace(MINDJET_URN, '')) {
       case 'Right':
         return 1;
@@ -519,17 +530,17 @@ class MindManagerImporter extends Importer {
     }
     const name = depth === 0 ? `${kind}FloatingTopicShape` : 'SubTopicShape';
     const defaults = this.defaultsGroup(kind, depth);
-    const own = this.findChildByTagName(topicElement, name)?.getAttribute(name);
+    const own = MindManagerImporter.attr(this.findChildByTagName(topicElement, name), name);
     const byDefault = defaults && this.findChildByTagName(defaults, `Default${name}`);
     return (
       MindManagerImporter.toShapeType(own) ??
-      MindManagerImporter.toShapeType(byDefault?.getAttribute(name))
+      MindManagerImporter.toShapeType(MindManagerImporter.attr(byDefault, name))
     );
   }
 
   // The shape of a SubTopicShape, LabelFloatingTopicShape or CalloutFloatingTopicShape
   // (urn:mindjet:RoundedRectangle, ...), undefined if it is not one.
-  private static toShapeType(shape: string | null | undefined): TopicShapeType | undefined {
+  private static toShapeType(shape: string | undefined): TopicShapeType | undefined {
     switch (shape?.replace(MINDJET_URN, '')) {
       case 'None':
         return 'none';
@@ -561,22 +572,20 @@ class MindManagerImporter extends Importer {
     }
   }
 
-  private findElementByTagName(parent: Element | Document, tagName: string): Element | null {
+  private findElementByTagName(parent: Element | Document, tagName: string): Element | undefined {
     // Try direct query first
     const element = parent.querySelector(tagName);
     if (element) return element;
 
     // If not found, search all elements by tag name
     const allElements = Array.from(parent.getElementsByTagName('*'));
-    return allElements.find((el) => el.localName === tagName || el.tagName === tagName) ?? null;
+    return allElements.find((el) => el.localName === tagName || el.tagName === tagName);
   }
 
   // Only direct children: a descendant search would pick up the data of nested topics.
-  private findChildByTagName(parent: Element, tagName: string): Element | null {
-    return (
-      Array.from(parent.children).find(
-        (child) => child.localName === tagName || child.tagName === tagName,
-      ) || null
+  private findChildByTagName(parent: Element, tagName: string): Element | undefined {
+    return Array.from(parent.children).find(
+      (child) => child.localName === tagName || child.tagName === tagName,
     );
   }
 
@@ -648,7 +657,9 @@ class MindManagerImporter extends Importer {
     if (priority) {
       topic.icons.push(priority.replace(MINDJET_URN, ''));
     }
-    topic.progressIcon = MindManagerImporter.progressIcon(task?.getAttribute('TaskPercentage'));
+    topic.progressIcon = MindManagerImporter.progressIcon(
+      MindManagerImporter.attr(task, 'TaskPercentage'),
+    );
 
     // Parse colors: <Color Value>, or the FillColor and LineColor of the document schema. A color
     // the topic does not set is the DefaultColor of the defaults group of its level.
@@ -661,10 +672,11 @@ class MindManagerImporter extends Importer {
         colorElement.getAttribute('Value') ||
         colorElement.textContent);
     topic.fillColor = MindManagerImporter.toColor(
-      ownFill || defaultColor?.getAttribute('FillColor'),
+      ownFill || MindManagerImporter.attr(defaultColor, 'FillColor'),
     );
     topic.lineColor = MindManagerImporter.toColor(
-      colorElement?.getAttribute('LineColor') || defaultColor?.getAttribute('LineColor'),
+      MindManagerImporter.attr(colorElement, 'LineColor') ||
+        MindManagerImporter.attr(defaultColor, 'LineColor'),
     );
 
     // Collapsed in the first view (ViewIndex 0), the one MindManager opens
@@ -711,7 +723,7 @@ class MindManagerImporter extends Importer {
    * The task progress icon closest to a TaskPercentage (0 to 100): task_0, task_25, task_50,
    * task_75 or task_100. Undefined if there is no percentage.
    */
-  private static progressIcon(percentage: string | null | undefined): string | undefined {
+  private static progressIcon(percentage: string | undefined): string | undefined {
     const value = percentage?.trim() ? Number(percentage) : NaN;
     if (!Number.isFinite(value)) {
       return undefined;
@@ -747,7 +759,9 @@ class MindManagerImporter extends Importer {
     const defaults = this.findElementByTagName(doc, 'RelationshipDefaultsGroup');
     const defaultLineStyle = defaults && this.findChildByTagName(defaults, 'DefaultLineStyle');
     const defaultStrokeStyle =
-      MindManagerImporter.toStrokeStyle(defaultLineStyle?.getAttribute('LineDashStyle')) ??
+      MindManagerImporter.toStrokeStyle(
+        MindManagerImporter.attr(defaultLineStyle, 'LineDashStyle'),
+      ) ??
       // MindManager draws relationships dashed by default.
       StrokeStyle.DASHED;
 
@@ -760,7 +774,7 @@ class MindManagerImporter extends Importer {
    * The stroke style of a LineDashStyle (urn:mindjet:Solid, RoundDot, SquareDot, Dash, DashDot,
    * LongDash, LongDashDot, LongDashDotDot), undefined if it is not one.
    */
-  private static toStrokeStyle(lineDashStyle: string | null | undefined): StrokeStyle | undefined {
+  private static toStrokeStyle(lineDashStyle: string | undefined): StrokeStyle | undefined {
     switch (lineDashStyle?.replace(MINDJET_URN, '')) {
       case 'Solid':
         return StrokeStyle.SOLID;
@@ -786,11 +800,11 @@ class MindManagerImporter extends Importer {
   }
 
   // The topic OId referenced by an end of a relationship.
-  private connectionEnd(relationshipElement: Element, index: string): string | null {
+  private connectionEnd(relationshipElement: Element, index: string): string | undefined {
     const group = this.connectionGroup(relationshipElement, index);
     const connection = group && this.findChildByTagName(group, 'Connection');
     const reference = connection && this.findChildByTagName(connection, 'ObjectReference');
-    return reference ? reference.getAttribute('OIdRef') : null;
+    return MindManagerImporter.attr(reference, 'OIdRef');
   }
 
   /**
@@ -800,7 +814,7 @@ class MindManagerImporter extends Importer {
    */
   private hasArrow(
     relationshipElement: Element,
-    defaults: Element | null,
+    defaults: Element | undefined,
     index: string,
   ): boolean | undefined {
     const group = this.connectionGroup(relationshipElement, index);
@@ -811,14 +825,15 @@ class MindManagerImporter extends Importer {
         (style) => style.getAttribute('Index') === index,
       );
     const shape =
-      own?.getAttribute('ConnectionShape') || byDefault?.getAttribute('ConnectionShape');
+      MindManagerImporter.attr(own, 'ConnectionShape') ||
+      MindManagerImporter.attr(byDefault, 'ConnectionShape');
     return shape ? shape.replace(MINDJET_URN, '') !== 'NoArrow' : undefined;
   }
 
   private addRelationship(
     mindmap: Mindmap,
     relationshipElement: Element,
-    defaults: Element | null,
+    defaults: Element | undefined,
     defaultStrokeStyle: StrokeStyle,
   ): void {
     const fromTopicId =
@@ -849,8 +864,9 @@ class MindManagerImporter extends Importer {
       relationship.setStrokeStyle(StrokeStyle.SOLID);
     } else {
       relationship.setStrokeStyle(
-        MindManagerImporter.toStrokeStyle(lineStyleElement?.getAttribute('LineDashStyle')) ??
-          defaultStrokeStyle,
+        MindManagerImporter.toStrokeStyle(
+          MindManagerImporter.attr(lineStyleElement, 'LineDashStyle'),
+        ) ?? defaultStrokeStyle,
       );
     }
 
@@ -858,8 +874,8 @@ class MindManagerImporter extends Importer {
     const color = this.findChildByTagName(relationshipElement, 'Color');
     const defaultColor = defaults && this.findChildByTagName(defaults, 'DefaultColor');
     const strokeColor =
-      MindManagerImporter.toColor(color?.getAttribute('LineColor')) ??
-      MindManagerImporter.toColor(defaultColor?.getAttribute('LineColor'));
+      MindManagerImporter.toColor(MindManagerImporter.attr(color, 'LineColor')) ??
+      MindManagerImporter.toColor(MindManagerImporter.attr(defaultColor, 'LineColor'));
     if (strokeColor) {
       relationship.setStrokeColor(strokeColor);
     }
@@ -909,7 +925,9 @@ class MindManagerImporter extends Importer {
       }
       const shape = this.findChildByTagName(labelElement, 'LabelFloatingTopicShape');
       label.shape =
-        MindManagerImporter.toShapeType(shape?.getAttribute('LabelFloatingTopicShape')) ?? 'none';
+        MindManagerImporter.toShapeType(
+          MindManagerImporter.attr(shape, 'LabelFloatingTopicShape'),
+        ) ?? 'none';
       const node = this.convertTopic(mindmap, label, index, index, 1);
       const offset = label.offset ?? { x: 0, y: 0 };
       node.setPosition(
@@ -925,11 +943,7 @@ class MindManagerImporter extends Importer {
   private static approximatePosition(node: INodeModel | undefined): { x: number; y: number } {
     let x = 0;
     let y = 0;
-    for (
-      let current: INodeModel | null | undefined = node;
-      current;
-      current = current.getParent()
-    ) {
+    for (let current: INodeModel | undefined = node; current; current = current.getParent()) {
       const position = current.getPosition();
       x += position?.x ?? 0;
       y += position?.y ?? 0;

@@ -33,7 +33,7 @@ class NodeModel extends INodeModel {
 
   private _features: FeatureModel[];
 
-  private _parent: NodeModel | null;
+  private _parent: NodeModel | undefined;
 
   constructor(type: NodeModelType, mindmap: Mindmap, id?: number) {
     super(mindmap);
@@ -45,7 +45,7 @@ class NodeModel extends INodeModel {
 
     this._children = [];
     this._features = [];
-    this._parent = null;
+    this._parent = undefined;
   }
 
   /**
@@ -93,7 +93,7 @@ class NodeModel extends INodeModel {
    * @return the feature with the given id
    */
   findFeatureById(id: number): FeatureModel {
-    $assert(id != null, 'id can not be null');
+    $assert(typeof id === 'number', 'id can not be null');
     const matches = this._features.filter((feature) => feature.getId() === id);
     const [result] = matches;
     $assert(result && matches.length === 1, `Feature could not be found:${id}`);
@@ -163,7 +163,7 @@ class NodeModel extends INodeModel {
   removeChild(child: NodeModel): void {
     $assert(child && child.isNodeModel(), 'Only NodeModel can be appended to Mindmap object.');
     this._children = this._children.filter((c) => c !== child);
-    child._parent = null;
+    child._parent = undefined;
     INodeModel.treeChanged();
   }
 
@@ -182,7 +182,7 @@ class NodeModel extends INodeModel {
     return this._children;
   }
 
-  getParent(): NodeModel | null {
+  getParent(): NodeModel | undefined {
     return this._parent;
   }
 

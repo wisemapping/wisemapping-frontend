@@ -781,6 +781,12 @@
       "value": "ノート"
     }
   ],
+  "outline.untitled-map": [
+    {
+      "type": 0,
+      "value": "無題のマップ"
+    }
+  ],
   "relationship-style-editor.color": [
     {
       "type": 0,

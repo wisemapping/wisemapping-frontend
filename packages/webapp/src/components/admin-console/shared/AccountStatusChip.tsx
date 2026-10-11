@@ -18,7 +18,6 @@
 
 import React, { ReactElement, useState } from 'react';
 import { useIntl, IntlShape } from 'react-intl';
-import Chip from '@mui/material/Chip';
 import Tooltip from '@mui/material/Tooltip';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -28,6 +27,8 @@ import BlockIcon from '@mui/icons-material/Block';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
 import { AuthenticationType } from '../../../classes/client';
+import { useDate } from '../../../classes/app-i18n/dates';
+import { StatusChip } from './styled';
 
 /**
  * Translates suspension reason codes to user-friendly labels.
@@ -60,12 +61,12 @@ export const getSuspensionReasonLabel = (reason: string, intl: IntlShape): strin
 interface AccountStatusChipProps {
   isActive: boolean;
   isSuspended: boolean;
-  suspensionReason?: string;
-  suspendedDate?: string;
+  suspensionReason?: string | undefined;
+  suspendedDate?: string | undefined;
   authenticationType?: AuthenticationType;
   // Optional callbacks for status changes
-  onSuspend?: () => void;
-  onUnsuspend?: () => void;
+  onSuspend?: (() => void) | undefined;
+  onUnsuspend?: (() => void) | undefined;
   onActivate?: () => void;
   // If true, clicking the chip will show a menu with actions
   interactive?: boolean;
@@ -88,7 +89,8 @@ const AccountStatusChip = ({
   interactive = false,
 }: AccountStatusChipProps): ReactElement => {
   const intl = useIntl();
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const date = useDate();
+  const [anchorEl, setAnchorEl] = useState<HTMLElement>();
   const menuOpen = Boolean(anchorEl);
 
   const handleChipClick = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -98,7 +100,7 @@ const AccountStatusChip = ({
   };
 
   const handleCloseMenu = () => {
-    setAnchorEl(null);
+    setAnchorEl(undefined);
   };
 
   const handleSuspend = () => {
@@ -122,9 +124,7 @@ const AccountStatusChip = ({
     }
   };
 
-  const formatDate = (dateString: string): string => {
-    return new Date(dateString).toLocaleDateString();
-  };
+  const formatDate = (dateString: string): string => date(dateString).format('L');
 
   // Check if user is OAuth (Google, Facebook, etc.) - they don't need email activation
   const isOAuthUser =
@@ -177,7 +177,7 @@ const AccountStatusChip = ({
       return (
         <Tooltip title={tooltip} disableInteractive>
           <span>
-            <Chip
+            <StatusChip
               label={intl.formatMessage({
                 id: 'admin.status-suspended',
                 defaultMessage: 'Suspended',
@@ -186,14 +186,6 @@ const AccountStatusChip = ({
               size="small"
               onClick={handleChipClick}
               clickable={interactive}
-              sx={{
-                cursor: interactive ? 'pointer' : 'default',
-                '&:hover': interactive
-                  ? {
-                      opacity: 0.8,
-                    }
-                  : {},
-              }}
             />
           </span>
         </Tooltip>
@@ -216,7 +208,7 @@ const AccountStatusChip = ({
       return (
         <Tooltip title={tooltip} disableInteractive>
           <span>
-            <Chip
+            <StatusChip
               label={intl.formatMessage({
                 id: 'admin.status-not-activated',
                 defaultMessage: 'Not Activated',
@@ -225,14 +217,6 @@ const AccountStatusChip = ({
               size="small"
               onClick={handleChipClick}
               clickable={interactive}
-              sx={{
-                cursor: interactive ? 'pointer' : 'default',
-                '&:hover': interactive
-                  ? {
-                      opacity: 0.8,
-                    }
-                  : {},
-              }}
             />
           </span>
         </Tooltip>
@@ -253,20 +237,12 @@ const AccountStatusChip = ({
     return (
       <Tooltip title={tooltip} disableInteractive>
         <span>
-          <Chip
+          <StatusChip
             label={intl.formatMessage({ id: 'admin.status-active', defaultMessage: 'Active' })}
             color="success"
             size="small"
             onClick={handleChipClick}
             clickable={interactive}
-            sx={{
-              cursor: interactive ? 'pointer' : 'default',
-              '&:hover': interactive
-                ? {
-                    opacity: 0.8,
-                  }
-                : {},
-            }}
           />
         </span>
       </Tooltip>

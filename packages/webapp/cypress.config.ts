@@ -20,13 +20,13 @@ import { defineConfig } from 'cypress';
 import setupNodeEvents from './cypress/plugins';
 
 export default defineConfig({
-  video: process.env.CYPRESS_VIDEO === 'true',
+  video: process.env['CYPRESS_VIDEO'] === 'true',
   expose: {
-    imageSnaphots: !!process.env.CYPRESS_imageSnaphots,
+    imageSnaphots: !!process.env['CYPRESS_imageSnaphots'],
   },
   e2e: {
     setupNodeEvents,
-    baseUrl: process.env.CYPRESS_BASE_URL || 'http://localhost:3000',
+    baseUrl: process.env['CYPRESS_BASE_URL'] || 'http://localhost:3000',
     // Add macOS compatibility options
     chromeWebSecurity: false,
   },

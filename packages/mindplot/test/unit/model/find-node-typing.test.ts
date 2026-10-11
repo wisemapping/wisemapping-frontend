@@ -48,8 +48,8 @@ describe('typed node lookups (T4)', () => {
     const found: Node = treeSet.find(1);
     expect(found.getId()).toBe(1);
     expect(() => treeSet.find(2)).toThrow('node could not be found');
-    // @ts-expect-error without validation a missing node is null
+    // @ts-expect-error without validation a missing node is undefined
     const missing: Node = treeSet.find(2, false);
-    expect(missing).toBeNull();
+    expect(missing).toBeUndefined();
   });
 });

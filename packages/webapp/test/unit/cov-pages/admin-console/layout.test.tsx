@@ -27,10 +27,15 @@ jest.mock('react-router', () => {
   return {
     useLocation: () => ({ pathname: window.location.pathname }),
     Outlet: () => ReactActual.createElement('div', null, 'admin-outlet'),
-    NavLink: ReactActual.forwardRef<HTMLAnchorElement, { to: string; children?: React.ReactNode }>(
-      ({ to, children, ...rest }, ref) =>
-        ReactActual.createElement('a', { ...rest, href: to, ref }, children),
-    ),
+    NavLink: ({
+      to,
+      children,
+      ...rest
+    }: {
+      to: string;
+      children?: React.ReactNode;
+      ref?: React.Ref<HTMLAnchorElement>;
+    }) => ReactActual.createElement('a', { ...rest, href: to }, children),
     Navigate: (props: { to: string; replace?: boolean }) => {
       mockNavigateElement(props);
       return null;
@@ -41,6 +46,7 @@ jest.mock('react-router', () => {
 import AdminLayout from '../../../../src/components/admin-console/layout';
 import AdminConsole from '../../../../src/components/admin-console';
 import { renderWithWrapper } from '../providers';
+import { defined } from '../../defined';
 
 const renderLayout = (fetchAccountInfo: jest.Mock) =>
   renderWithWrapper(<AdminLayout />, { client: { fetchAccountInfo } });
@@ -98,8 +104,8 @@ describe('AdminLayout', () => {
       ['System', '/c/admin/system'],
     ]);
     // The entry for the current path is the selected one.
-    expect(links[1].className).toContain('Mui-selected');
-    expect(links[0].className).not.toContain('Mui-selected');
-    expect(within(links[1]).getByText('Maps')).toBeTruthy();
+    expect(defined(links[1]).className).toContain('Mui-selected');
+    expect(defined(links[0]).className).not.toContain('Mui-selected');
+    expect(within(defined(links[1])).getByText('Maps')).toBeTruthy();
   });
 });

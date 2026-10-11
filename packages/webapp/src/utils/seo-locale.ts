@@ -47,16 +47,16 @@ function getHreflangCode(locale: string): string {
     return locale;
   }
   // For other locales, use the first part (e.g., en-US -> en)
-  return locale.split('-')[0];
+  return locale.split('-')[0] ?? locale;
 }
 
 /**
  * Extracts locale from current URL path
- * Returns the locale if found, null otherwise
+ * Returns the locale if found, undefined otherwise
  */
-export function getLocaleFromPath(): SupportedLocale | null {
+export function getLocaleFromPath(): SupportedLocale | undefined {
   if (typeof window === 'undefined') {
-    return null;
+    return undefined;
   }
 
   const path = window.location.pathname;
@@ -69,7 +69,7 @@ export function getLocaleFromPath(): SupportedLocale | null {
     }
   }
 
-  return null;
+  return undefined;
 }
 
 /**

@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useContext } from 'react';
+import React, { use } from 'react';
 import { useIntl } from 'react-intl';
 import { useMutation } from '@tanstack/react-query';
 import FormControl from '@mui/material/FormControl';
@@ -42,7 +42,7 @@ export type CreateProps = {
 
 const defaultModel: CreateModel = { title: '', description: '' };
 const CreateDialog = ({ onClose }: CreateProps): React.ReactElement => {
-  const client = useContext(ClientContext);
+  const client = use(ClientContext);
   const [model, setModel] = React.useState<CreateModel>(defaultModel);
   const [error, setError] = React.useState<ErrorInfo>();
   const intl = useIntl();

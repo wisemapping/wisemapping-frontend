@@ -64,12 +64,12 @@ class FreemindExporter extends Exporter {
   }
 
   /** Copies an HTML node to an XML document, without the XHTML namespace. */
-  private static htmlToXml(doc: Document, node: Node): Node | null {
+  private static htmlToXml(doc: Document, node: Node): Node | undefined {
     if (node.nodeType === Node.TEXT_NODE) {
       return doc.createTextNode(node.textContent || '');
     }
     if (node.nodeType !== Node.ELEMENT_NODE) {
-      return null;
+      return undefined;
     }
     const source = node as Element;
     const element = doc.createElement(source.tagName.toLowerCase());
@@ -290,17 +290,17 @@ class FreemindExporter extends Exporter {
   }
 
   /**
-   * The builtin icon of an icon feature, null to skip it. Emoji icons are exported as the equivalent
+   * The builtin icon of an icon feature, undefined to skip it. Emoji icons are exported as the equivalent
    * FreeMind builtin icon, if there is one.
    */
-  protected iconBuiltin(feature: FeatureModel): string | null {
+  protected iconBuiltin(feature: FeatureModel): string | undefined {
     if (feature.isOfType('icon')) {
       return FreemindIconConverter.svgToFreemindIcon(feature.getIconType());
     }
     if (feature.isOfType('eicon')) {
       return FreemindIconConverter.toFreemindIcon(feature.getIconType());
     }
-    return null;
+    return undefined;
   }
 
   // A FreeMind edge is the line that connects the node to its parent, the WiseMapping connection.

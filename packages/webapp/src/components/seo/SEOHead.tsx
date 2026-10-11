@@ -108,8 +108,8 @@ const SEOHead: React.FC<SEOProps> = ({
       <meta name="twitter:creator" content="@wisemapping" />
 
       {/* Language and Internationalization */}
-      {alternateLanguages.map((alt, index) => (
-        <link key={index} rel="alternate" hrefLang={alt.hreflang} href={alt.href} />
+      {alternateLanguages.map((alt) => (
+        <link key={alt.href} rel="alternate" hrefLang={alt.hreflang} href={alt.href} />
       ))}
 
       {/* Additional SEO Meta Tags */}

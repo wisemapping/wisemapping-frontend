@@ -69,7 +69,7 @@ const MapsAdminPage = React.lazy(() => import('./components/admin-console/maps-p
 const SystemPage = React.lazy(() => import('./components/admin-console/system-page'));
 
 const PageEditorWrapper = ({ mode }: { mode: PageModeType }) => {
-  const id = useParams().id;
+  const id = useParams()['id'];
   if (id === undefined) {
     throw 'Map could not be loaded';
   }
@@ -82,7 +82,7 @@ const PageEditorWrapper = ({ mode }: { mode: PageModeType }) => {
   const mapId: number = Number.parseInt(id);
 
   // Is a history view ?
-  const hidStr = useParams().hid;
+  const hidStr = useParams()['hid'];
   const hid = hidStr ? Number.parseInt(hidStr) : undefined;
 
   return (
@@ -315,8 +315,8 @@ const AppWithTheme = (): ReactElement => {
     root.style.colorScheme = mode;
     root.style.backgroundColor = theme.palette.background.default;
   }, [mode, theme]);
-  const [router, setRouter] = useState<ReturnType<typeof createBrowserRouter> | null>(null);
-  const [initializationError, setInitializationError] = useState<string | null>(null);
+  const [router, setRouter] = useState<ReturnType<typeof createBrowserRouter>>();
+  const [initializationError, setInitializationError] = useState<string>();
 
   useEffect(() => {
     let cancelled = false;
@@ -356,13 +356,13 @@ const AppWithTheme = (): ReactElement => {
             <div role="alert">{initializationError}</div>
           ) : (
             router && (
-              <ClientContext.Provider value={AppConfig.getClient()}>
+              <ClientContext value={AppConfig.getClient()}>
                 <QueryClientProvider client={queryClient}>
-                  <KeyboardContext.Provider value={keyboardContext}>
+                  <KeyboardContext value={keyboardContext}>
                     <RouterProvider router={router} />
-                  </KeyboardContext.Provider>
+                  </KeyboardContext>
                 </QueryClientProvider>
-              </ClientContext.Provider>
+              </ClientContext>
             )
           )}
         </ThemeProvider>

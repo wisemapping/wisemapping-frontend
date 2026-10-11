@@ -17,21 +17,7 @@
  */
 import React from 'react';
 import FacebookIcon from '../facebook-icon';
-import Button from '@mui/material/Button';
-import { styled } from '@mui/material/styles';
-
-const StyledFacebookButton = styled(Button)(() => ({
-  color: '#ffffff',
-  fontWeight: '300',
-  backgroundColor: '#1877f2',
-  border: `1px solid #1877f2`,
-  flex: '1 1 auto',
-  minWidth: '200px',
-  '&:hover': {
-    backgroundColor: '#166fe5',
-    border: `1px solid #166fe5`,
-  },
-}));
+import { StyledFacebookButton } from './styled';
 
 type FacebookButtonProps = {
   text: string;

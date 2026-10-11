@@ -53,11 +53,13 @@ export const applyMatrix = (m: Matrix, p: Vec): Vec => ({
   y: m.b * p.x + m.d * p.y + m.f,
 });
 
-/** The inverse of `m`, or null when it has none (it squashes the plane onto a line or a point). */
-export const invertMatrix = (m: Matrix): Matrix | null => {
+/**
+ * The inverse of `m`, or undefined when it has none (it squashes the plane onto a line or a point).
+ */
+export const invertMatrix = (m: Matrix): Matrix | undefined => {
   const det = m.a * m.d - m.b * m.c;
   if (Math.abs(det) < EPSILON) {
-    return null;
+    return undefined;
   }
   return {
     a: m.d / det,

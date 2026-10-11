@@ -33,8 +33,8 @@ class ToolbarNotifier {
 
   private static fadeOutTimer: number | undefined;
 
-  static get container(): HTMLElement | null {
-    return document.getElementById('headerNotifier');
+  static get container(): HTMLElement | undefined {
+    return document.getElementById('headerNotifier') ?? undefined;
   }
 
   static hide() {

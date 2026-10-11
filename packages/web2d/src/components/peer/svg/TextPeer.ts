@@ -61,7 +61,7 @@ class TextPeer extends ElementPeer<SVGTextElement> {
   // measurement could not tell when they change.
   private _fontApplied: boolean;
 
-  private _measureKey: string | null;
+  private _measureKey: string | undefined;
 
   private _measured: SizeType;
 
@@ -72,7 +72,7 @@ class TextPeer extends ElementPeer<SVGTextElement> {
     this._text = '';
     this._tspans = [];
     this._fontApplied = false;
-    this._measureKey = null;
+    this._measureKey = undefined;
     this._measured = { width: 0, height: 0 };
   }
 
@@ -154,16 +154,11 @@ class TextPeer extends ElementPeer<SVGTextElement> {
    * The text position in pixels, relative to `container` when given (the offset parent of an
    * absolutely positioned element placed over the text), else in document coordinates.
    */
-  getNativePosition(container?: Element | null): { left: number; top: number } {
+  getNativePosition(container?: Element): { left: number; top: number } {
     return getPosition(this._native, container);
   }
 
-  setFont(
-    fontName: string,
-    size?: number | null,
-    style?: FontStyleType | null,
-    weight?: FontWeightType | null,
-  ): void {
+  setFont(fontName: string, size?: number, style?: FontStyleType, weight?: FontWeightType): void {
     // Empty arguments keep the current value.
     if (fontName) {
       this.useFontName(fontName);
@@ -175,7 +170,7 @@ class TextPeer extends ElementPeer<SVGTextElement> {
     if (weight) {
       this._font.setWeight(weight);
     }
-    if (size != null) {
+    if (size !== undefined) {
       this._font.setSize(size);
     }
     this.updateFontStyle();
@@ -200,8 +195,8 @@ class TextPeer extends ElementPeer<SVGTextElement> {
     this.attr('fill', color);
   }
 
-  getColor(): string | null {
-    return this._native.getAttribute('fill');
+  getColor(): string | undefined {
+    return this._native.getAttribute('fill') ?? undefined;
   }
 
   setStyle(style: FontStyleType): void {
@@ -277,7 +272,7 @@ class TextPeer extends ElementPeer<SVGTextElement> {
       this._measureKey = key;
       this._measured = box;
     } else {
-      this._measureKey = null;
+      this._measureKey = undefined;
     }
     return { ...box };
   }

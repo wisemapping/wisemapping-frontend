@@ -380,6 +380,15 @@
   "maps.search-action": {
     "defaultMessage": "Suche ..."
   },
+  "maps.search-label": {
+    "defaultMessage": "Mindmaps durchsuchen"
+  },
+  "maps.sorted-ascending": {
+    "defaultMessage": "aufsteigend sortiert"
+  },
+  "maps.sorted-descending": {
+    "defaultMessage": "absteigend sortiert"
+  },
   "maps.tooltip-open": {
     "defaultMessage": "Zum Bearbeiten öffnen"
   },
@@ -647,6 +656,9 @@
   "admin.auth.ldap": {
     "defaultMessage": "LDAP"
   },
+  "admin.button.creating": {
+    "defaultMessage": "Wird erstellt..."
+  },
   "admin.button.update-user": {
     "defaultMessage": "Benutzer aktualisieren"
   },
@@ -695,6 +707,9 @@
   "admin.facebook.filter-tooltip": {
     "defaultMessage": "Suche für Facebook-Datenlöschung"
   },
+  "admin.facebook.id-label": {
+    "defaultMessage": "Facebook-Benutzer-ID"
+  },
   "admin.facebook.lookup-button": {
     "defaultMessage": "Konto suchen"
   },
@@ -718,6 +733,9 @@
   },
   "admin.facebook.removing": {
     "defaultMessage": "Wird entfernt..."
+  },
+  "admin.filter.all": {
+    "defaultMessage": "Alle"
   },
   "admin.refresh": {
     "defaultMessage": "Aktualisieren"
@@ -830,8 +848,8 @@
   "admin.user-info.status": {
     "defaultMessage": "Status"
   },
-  "admin.user-info.suspension-reason": {
-    "defaultMessage": "Sperrgrund:"
+  "admin.user-info.suspension-reason-value": {
+    "defaultMessage": "Sperrgrund: {reason}"
   },
   "admin.user-info.title": {
     "defaultMessage": "Benutzerinformationen"
@@ -859,6 +877,9 @@
   },
   "admin.validation.lastname-required": {
     "defaultMessage": "Nachname ist erforderlich"
+  },
+  "admin.validation.title-required": {
+    "defaultMessage": "Titel ist erforderlich"
   },
   "admin.view-user-maps": {
     "defaultMessage": "Mindmaps des Benutzers anzeigen"
@@ -896,11 +917,23 @@
   "admin.maps.edit-title": {
     "defaultMessage": "Mindmap bearbeiten"
   },
+  "admin.maps.filter.all-time": {
+    "defaultMessage": "Gesamter Zeitraum"
+  },
   "admin.maps.filter.date": {
     "defaultMessage": "Zeitraum"
   },
+  "admin.maps.filter.last-months": {
+    "defaultMessage": "{count, plural, one {Letzter # Monat} other {Letzte # Monate}}"
+  },
+  "admin.maps.filter.not-spam": {
+    "defaultMessage": "Kein Spam"
+  },
   "admin.maps.filter.spam": {
     "defaultMessage": "Spam"
+  },
+  "admin.maps.locked-by": {
+    "defaultMessage": "Gesperrt von {user}"
   },
   "admin.maps.locked-tooltip": {
     "defaultMessage": "Wird gerade von {user} bearbeitet"
@@ -910,6 +943,9 @@
   },
   "admin.maps.mark-as-spam": {
     "defaultMessage": "Als Spam markieren"
+  },
+  "admin.maps.no-description": {
+    "defaultMessage": "Keine Beschreibung"
   },
   "admin.maps.no-maps": {
     "defaultMessage": "Keine Mindmaps gefunden"
@@ -965,8 +1001,14 @@
   "admin.maps.table.actions": {
     "defaultMessage": "Aktionen"
   },
+  "admin.maps.table.collaborators": {
+    "defaultMessage": "Mitwirkende"
+  },
   "admin.maps.table.created": {
     "defaultMessage": "Erstellt"
+  },
+  "admin.maps.table.created-by": {
+    "defaultMessage": "Erstellt von"
   },
   "admin.maps.table.description": {
     "defaultMessage": "Beschreibung"
@@ -992,6 +1034,9 @@
   "admin.maps.title": {
     "defaultMessage": "Titel"
   },
+  "admin.maps.unknown-user": {
+    "defaultMessage": "unbekannter Benutzer"
+  },
   "admin.maps.unlocked-tooltip": {
     "defaultMessage": "Wird derzeit nicht bearbeitet"
   },
@@ -1001,6 +1046,9 @@
   "admin.maps.xml-viewer.copy": {
     "defaultMessage": "Formatiertes XML kopieren"
   },
+  "admin.maps.xml-viewer.error": {
+    "defaultMessage": "Fehler beim Laden des XML: {message}"
+  },
   "admin.maps.xml-viewer.info": {
     "defaultMessage": "Dies ist der unverarbeitete XML-Inhalt der Mindmap. Du kannst ihn zur Sicherung oder Analyse kopieren."
   },
@@ -1009,6 +1057,9 @@
   },
   "admin.maps.xml-viewer.no-content": {
     "defaultMessage": "Kein XML-Inhalt verfügbar"
+  },
+  "admin.maps.xml-viewer.subtitle": {
+    "defaultMessage": "{title} (ID: {id})"
   },
   "admin.maps.xml-viewer.title": {
     "defaultMessage": "XML-Inhalt der Mindmap"
@@ -1036,6 +1087,9 @@
   },
   "admin.system.title": {
     "defaultMessage": "Systeminformationen"
+  },
+  "admin.unlocked": {
+    "defaultMessage": "Entsperrt"
   },
   "admin.system.refresh": {
     "defaultMessage": "Aktualisieren"
@@ -1114,6 +1168,18 @@
   },
   "admin.system.health": {
     "defaultMessage": "Systemzustand"
+  },
+  "admin.system.health.down": {
+    "defaultMessage": "Ausgefallen"
+  },
+  "admin.system.health.unknown": {
+    "defaultMessage": "Unbekannt"
+  },
+  "admin.system.health.up": {
+    "defaultMessage": "In Betrieb"
+  },
+  "admin.system.health.warning": {
+    "defaultMessage": "Warnung"
   },
   "admin.system.jvm": {
     "defaultMessage": "JVM"
@@ -1262,9 +1328,6 @@
   "admin.console.title": {
     "defaultMessage": "Admin-Konsole"
   },
-  "admin.current-suspension-reason": {
-    "defaultMessage": "Aktueller Sperrgrund:"
-  },
   "admin.change-password-button": {
     "defaultMessage": "Passwort ändern"
   },
@@ -1273,6 +1336,9 @@
   },
   "admin.password-error-mismatch": {
     "defaultMessage": "Die Passwörter stimmen nicht überein"
+  },
+  "admin.private": {
+    "defaultMessage": "Privat"
   },
   "admin.prompt.new-user-password": {
     "defaultMessage": "Passwort für den neuen Benutzer eingeben:"
@@ -1391,6 +1457,21 @@
   "activation.success.title": {
     "defaultMessage": "Konto erfolgreich aktiviert"
   },
+  "admin.accounts.activate-dialog.button": {
+    "defaultMessage": "Benutzer aktivieren"
+  },
+  "admin.accounts.activate-dialog.confirm": {
+    "defaultMessage": "Möchtest du den Benutzer „{email}“ wirklich manuell aktivieren?"
+  },
+  "admin.accounts.activate-dialog.info": {
+    "defaultMessage": "Der Benutzer kann sich dann sofort anmelden, ohne seine E-Mail-Adresse zu bestätigen."
+  },
+  "admin.accounts.activate-dialog.pending": {
+    "defaultMessage": "Wird aktiviert..."
+  },
+  "admin.accounts.activate-dialog.title": {
+    "defaultMessage": "Benutzer aktivieren"
+  },
   "admin.accounts.add-user": {
     "defaultMessage": "Neuen Benutzer hinzufügen"
   },
@@ -1400,8 +1481,32 @@
   "admin.accounts.create-user": {
     "defaultMessage": "Benutzer erstellen"
   },
+  "admin.accounts.delete-dialog.button": {
+    "defaultMessage": "Benutzer löschen"
+  },
+  "admin.accounts.delete-dialog.confirm": {
+    "defaultMessage": "Möchtest du den Benutzer „{email}“ wirklich löschen?"
+  },
+  "admin.accounts.delete-dialog.pending": {
+    "defaultMessage": "Wird gelöscht..."
+  },
+  "admin.accounts.delete-dialog.title": {
+    "defaultMessage": "Benutzer löschen"
+  },
+  "admin.accounts.delete-dialog.warning": {
+    "defaultMessage": "Diese Aktion kann nicht rückgängig gemacht werden!"
+  },
   "admin.accounts.edit-user": {
     "defaultMessage": "Benutzer bearbeiten"
+  },
+  "admin.accounts.filter.not-suspended": {
+    "defaultMessage": "Nicht gesperrt"
+  },
+  "admin.accounts.filter.suspended-only": {
+    "defaultMessage": "Nur gesperrte"
+  },
+  "admin.accounts.filter.suspension-all": {
+    "defaultMessage": "Alle (gesperrt + aktiv)"
   },
   "admin.accounts.filters": {
     "defaultMessage": "Suche & Filter"
@@ -1421,8 +1526,53 @@
   "admin.accounts.subtitle": {
     "defaultMessage": "Benutzerkonten, Berechtigungen und Einstellungen verwalten"
   },
+  "admin.accounts.suspend-dialog.button": {
+    "defaultMessage": "Benutzer sperren"
+  },
+  "admin.accounts.suspend-dialog.confirm": {
+    "defaultMessage": "Möchtest du den Benutzer „{email}“ wirklich sperren?"
+  },
+  "admin.accounts.suspend-dialog.pending": {
+    "defaultMessage": "Wird gesperrt..."
+  },
+  "admin.accounts.suspend-dialog.title": {
+    "defaultMessage": "Benutzer sperren"
+  },
+  "admin.accounts.table.actions": {
+    "defaultMessage": "Aktionen"
+  },
+  "admin.accounts.table.auth": {
+    "defaultMessage": "Anmeldung"
+  },
+  "admin.accounts.table.created": {
+    "defaultMessage": "Erstellt"
+  },
+  "admin.accounts.table.id": {
+    "defaultMessage": "ID"
+  },
+  "admin.accounts.table.name": {
+    "defaultMessage": "Name"
+  },
+  "admin.accounts.table.status": {
+    "defaultMessage": "Status"
+  },
   "admin.accounts.title": {
     "defaultMessage": "Benutzerverwaltung"
+  },
+  "admin.accounts.unsuspend-dialog.button": {
+    "defaultMessage": "Benutzer entsperren"
+  },
+  "admin.accounts.unsuspend-dialog.confirm": {
+    "defaultMessage": "Möchtest du den Benutzer „{email}“ wirklich entsperren?"
+  },
+  "admin.accounts.unsuspend-dialog.pending": {
+    "defaultMessage": "Wird entsperrt..."
+  },
+  "admin.accounts.unsuspend-dialog.reason": {
+    "defaultMessage": "Aktueller Sperrgrund: {reason}"
+  },
+  "admin.accounts.unsuspend-dialog.title": {
+    "defaultMessage": "Benutzer entsperren"
   },
   "admin.action.mark-as-not-spam": {
     "defaultMessage": "als kein Spam markieren"

@@ -52,7 +52,7 @@ export const renderWithProviders = (
     <ThemeProvider theme={createAppTheme('light')}>
       <IntlProvider locale="en" messages={{}} onError={() => undefined}>
         <QueryClientProvider client={queryClient}>
-          <ClientContext.Provider value={client as Client}>{ui}</ClientContext.Provider>
+          <ClientContext value={client as Client}>{ui}</ClientContext>
         </QueryClientProvider>
       </IntlProvider>
     </ThemeProvider>,

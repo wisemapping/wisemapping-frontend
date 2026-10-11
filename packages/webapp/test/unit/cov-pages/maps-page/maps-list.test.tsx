@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 
 // The dialogs and the row menu are covered by their own suites: replace them with
@@ -61,6 +60,8 @@ import type { Filter } from '../../../../src/components/maps-page';
 import Client, { Label, MapInfo } from '../../../../src/classes/client';
 import { renderWithWrapper } from '../providers';
 import { BURST_TEXT, typeInBurst } from '../../burst-typing';
+import { defined } from '../../defined';
+import { installMatchMedia } from '../../cov-ui/helpers';
 
 const research: Label = { id: 7, title: 'Research', color: '#ff0000' };
 const travel: Label = { id: 8, title: 'Travel', color: '#00ff00' };
@@ -140,6 +141,27 @@ const rowFor = (title: string): HTMLElement => {
 const checkboxFor = (title: string): HTMLInputElement =>
   within(rowFor(title)).getByRole('checkbox') as HTMLInputElement;
 
+/**
+ * The screen width the list sees. jsdom has no matchMedia (useMediaQuery then answers "no
+ * match": the table); this one matches the list's narrow-screen query, a `max-width` one.
+ */
+const setNarrowScreen = (narrow: boolean): void => {
+  Object.defineProperty(window, 'matchMedia', {
+    configurable: true,
+    writable: true,
+    value: (query: string) => ({
+      matches: narrow && query.includes('max-width'),
+      media: query,
+      addEventListener: () => undefined,
+      removeEventListener: () => undefined,
+      addListener: () => undefined,
+      removeListener: () => undefined,
+    }),
+  });
+};
+
+afterEach(() => setNarrowScreen(false));
+
 describe('MapsList', () => {
   test('lists the maps from the client, latest modification first', async () => {
     const { client } = renderList();
@@ -178,7 +200,7 @@ describe('MapsList', () => {
     expect(
       screen.queryByText('No matching mindmap found with the current filter criteria.'),
     ).toBeNull();
-    expect(screen.getAllByTestId('maps-loading')).toHaveLength(2);
+    expect(screen.getAllByTestId('maps-loading')).toHaveLength(1);
 
     resolve(defaultMaps());
 
@@ -193,7 +215,7 @@ describe('MapsList', () => {
 
     expect(
       await screen.findAllByText('Your maps could not be loaded. Please try again later.'),
-    ).toHaveLength(2);
+    ).toHaveLength(1);
     expect(
       screen.queryByText('No matching mindmap found with the current filter criteria.'),
     ).toBeNull();
@@ -206,7 +228,7 @@ describe('MapsList', () => {
 
     expect(
       await screen.findAllByText('No matching mindmap found with the current filter criteria.'),
-    ).toHaveLength(2);
+    ).toHaveLength(1);
     expect(client.fetchAllMaps).toHaveBeenCalled();
   });
 
@@ -219,7 +241,7 @@ describe('MapsList', () => {
   ])('the %s filter only lists the matching maps', async (_name, filter, expected) => {
     renderList(filter);
 
-    await screen.findAllByText(expected[0]);
+    await screen.findAllByText(defined(expected[0]));
     await waitFor(() => expect(tableTitles()).toEqual(expected));
   });
 
@@ -229,7 +251,7 @@ describe('MapsList', () => {
     await waitFor(() =>
       expect(
         screen.getAllByText('No matching mindmap found with the current filter criteria.'),
-      ).toHaveLength(2),
+      ).toHaveLength(1),
     );
   });
 
@@ -261,30 +283,30 @@ describe('MapsList', () => {
     renderList();
     await screen.findAllByText('Alpha plan');
 
-    fireEvent.change(screen.getByRole('textbox', { name: 'search' }), {
+    fireEvent.change(screen.getByRole('textbox', { name: 'Search maps' }), {
       target: { value: 'GAMMA' },
     });
 
     expect(tableTitles()).toEqual(['Gamma ideas']);
 
-    fireEvent.change(screen.getByRole('textbox', { name: 'search' }), {
+    fireEvent.change(screen.getByRole('textbox', { name: 'Search maps' }), {
       target: { value: 'nothing like this' },
     });
     expect(
       screen.getAllByText('No matching mindmap found with the current filter criteria.'),
-    ).toHaveLength(2);
+    ).toHaveLength(1);
   });
 
   test('the search box takes 200 characters typed in one burst, as Cypress types them', async () => {
     renderList();
     await screen.findAllByText('Alpha plan');
-    const search = screen.getByRole('textbox', { name: 'search' }) as HTMLInputElement;
+    const search = screen.getByRole('textbox', { name: 'Search maps' }) as HTMLInputElement;
 
     expect(await typeInBurst(search, `gamma${BURST_TEXT}`)).toEqual([]);
 
     expect(
       screen.getAllByText('No matching mindmap found with the current filter criteria.'),
-    ).toHaveLength(2);
+    ).toHaveLength(1);
   });
 
   test('clicking a column header sorts by it, and clicking again reverses it', async () => {
@@ -345,7 +367,7 @@ describe('MapsList', () => {
     fireEvent.click(screen.getByRole('checkbox', { name: 'Select all' }));
     expect(checkboxFor('Beta notes').checked).toBe(true);
 
-    fireEvent.change(screen.getByRole('textbox', { name: 'search' }), {
+    fireEvent.change(screen.getByRole('textbox', { name: 'Search maps' }), {
       target: { value: 'gamma' },
     });
     expect(tableTitles()).toEqual(['Gamma ideas']);
@@ -370,10 +392,12 @@ describe('MapsList', () => {
     );
     renderList({ type: 'all' }, buildClient(many));
     await screen.findAllByText('Map 12');
-    fireEvent.click(screen.getAllByRole('button', { name: 'Go to next page', hidden: true })[0]);
+    fireEvent.click(
+      defined(screen.getAllByRole('button', { name: 'Go to next page', hidden: true })[0]),
+    );
     expect(tableTitles()).toEqual(['Map 02', 'Map 01']);
 
-    fireEvent.change(screen.getByRole('textbox', { name: 'search' }), {
+    fireEvent.change(screen.getByRole('textbox', { name: 'Search maps' }), {
       target: { value: 'Map 1' },
     });
 
@@ -447,16 +471,17 @@ describe('MapsList', () => {
   });
 
   test('the star on the mobile card works too, and a failure is logged', async () => {
+    setNarrowScreen(true);
     const client = buildClient();
     client.updateStarred.mockRejectedValue({ msg: 'boom' });
     const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => undefined);
     renderList({ type: 'all' }, client);
     await screen.findAllByText('Alpha plan');
 
-    // The first star icons belong to the cards (rendered before the table).
-    const cardStar = screen
-      .getAllByTestId('StarRateRoundedIcon')[0]
-      .closest('button') as HTMLElement;
+    // The first card is the latest map.
+    const cardStar = defined(screen.getAllByTestId('StarRateRoundedIcon')[0]).closest(
+      'button',
+    ) as HTMLElement;
     fireEvent.click(cardStar);
 
     await waitFor(() => expect(errorSpy).toHaveBeenCalledWith({ msg: 'boom' }));
@@ -491,11 +516,12 @@ describe('MapsList', () => {
   });
 
   test('dismissing the row menu opens no dialog', async () => {
+    setNarrowScreen(true);
     renderList();
     await screen.findAllByText('Alpha plan');
 
     // The card's "Settings" button opens the same menu.
-    fireEvent.click(screen.getAllByRole('button', { name: 'Settings', hidden: true })[0]);
+    fireEvent.click(defined(screen.getAllByRole('button', { name: 'Settings', hidden: true })[0]));
     expect(screen.getByTestId('chooser-map').textContent).toBe('2');
 
     fireEvent.click(screen.getByText('chooser-dismiss'));
@@ -540,14 +566,80 @@ describe('MapsList', () => {
     expect(tableTitles()[0]).toBe('Map 12');
     expect(screen.getAllByText('1–10 of 12').length).toBeGreaterThan(0);
 
-    // Desktop pagination in the toolbar, mobile pagination below the table.
-    fireEvent.click(screen.getAllByRole('button', { name: 'Go to next page', hidden: true })[0]);
+    // One pagination: in the toolbar on a wide screen.
+    expect(screen.getAllByRole('button', { name: 'Go to next page' })).toHaveLength(1);
+    fireEvent.click(screen.getByRole('button', { name: 'Go to next page' }));
     expect(tableTitles()).toEqual(['Map 02', 'Map 01']);
 
-    fireEvent.click(
-      screen.getAllByRole('button', { name: 'Go to previous page', hidden: true })[1],
-    );
+    fireEvent.click(screen.getByRole('button', { name: 'Go to previous page' }));
     expect(tableTitles()).toHaveLength(10);
+  });
+
+  test('on a narrow screen the cards are paginated below the list', async () => {
+    setNarrowScreen(true);
+    const many = Array.from({ length: 12 }, (_, i) =>
+      makeMap({
+        id: i + 1,
+        title: `Map ${String(i + 1).padStart(2, '0')}`,
+        lastModificationTime: `2026-01-${String(i + 1).padStart(2, '0')}T00:00:00Z`,
+      }),
+    );
+    renderList({ type: 'all' }, buildClient(many));
+    await screen.findAllByText('Map 12');
+
+    const cardTitles = () =>
+      within(screen.getByTestId('maps-cards'))
+        .getAllByRole('link')
+        .map((link) => link.querySelector('.MuiCardHeader-title')?.textContent);
+    expect(cardTitles()).toHaveLength(10);
+
+    expect(screen.getAllByRole('button', { name: 'Go to next page' })).toHaveLength(1);
+    fireEvent.click(screen.getByRole('button', { name: 'Go to next page' }));
+    expect(cardTitles()).toEqual(['Map 02', 'Map 01']);
+  });
+
+  describe('one view at a time', () => {
+    test('a wide screen gets the table and no cards', async () => {
+      renderList();
+      await screen.findAllByText('Alpha plan');
+
+      expect(screen.getByRole('table')).toBeTruthy();
+      expect(screen.queryByTestId('maps-cards')).toBeNull();
+      // Each map once: it used to be rendered twice, once hidden.
+      expect(screen.getAllByText('Alpha plan')).toHaveLength(1);
+    });
+
+    test("the app's matchMedia stub (no width query matches) gets the table", async () => {
+      installMatchMedia(false);
+      renderList();
+      await screen.findAllByText('Alpha plan');
+
+      expect(screen.getByRole('table')).toBeTruthy();
+      expect(screen.queryByTestId('maps-cards')).toBeNull();
+    });
+
+    test('a narrow screen gets the cards and no table', async () => {
+      setNarrowScreen(true);
+      renderList();
+      await screen.findAllByText('Alpha plan');
+
+      expect(screen.queryByRole('table')).toBeNull();
+      expect(screen.getByTestId('maps-cards')).toBeTruthy();
+      expect(screen.getAllByText('Alpha plan')).toHaveLength(1);
+      expect(screen.queryByRole('checkbox', { name: 'Select all' })).toBeNull();
+    });
+
+    test('the placeholders and the messages follow the view', async () => {
+      setNarrowScreen(true);
+      const client = buildClient([]);
+      renderList({ type: 'all' }, client);
+
+      expect(screen.getByTestId('maps-loading').closest('table')).toBeNull();
+      expect(
+        await screen.findAllByText('No matching mindmap found with the current filter criteria.'),
+      ).toHaveLength(1);
+      expect(screen.queryByRole('table')).toBeNull();
+    });
   });
 });
 

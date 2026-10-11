@@ -18,12 +18,9 @@
 
 import React, { memo } from 'react';
 import { useIntl } from 'react-intl';
-import { LabelContainer, LabelText } from './styled';
+import { DeleteLabelButton, DeleteLabelIcon, LabelContainer, LabelIcon, LabelText } from './styled';
 
 import { Label } from '../../../../classes/client';
-import LabelTwoTone from '@mui/icons-material/LabelTwoTone';
-import DeleteIcon from '@mui/icons-material/Clear';
-import IconButton from '@mui/material/IconButton';
 
 type LabelSize = 'small' | 'big';
 type LabelComponentProps = { label: Label; onDelete?: (label: Label) => void; size?: LabelSize };
@@ -34,13 +31,7 @@ const LabelComponent = ({
   size = 'small',
 }: LabelComponentProps): React.ReactElement<LabelComponentProps> => {
   const intl = useIntl();
-  const iconSize =
-    size === 'small'
-      ? {
-          height: '0.6em',
-          width: '0.6em',
-        }
-      : { height: '0.9em', width: '0.9em' };
+  const big = size === 'big';
 
   // Keep original label colors in both light and dark mode
   const getIconColor = () => {
@@ -49,10 +40,10 @@ const LabelComponent = ({
 
   return (
     <LabelContainer color={label.color}>
-      <LabelTwoTone htmlColor={getIconColor()} style={iconSize} />
+      <LabelIcon htmlColor={getIconColor()} big={big} />
       <LabelText>{label.title}</LabelText>
       {onDelete && (
-        <IconButton
+        <DeleteLabelButton
           color="default"
           size="small"
           aria-label={intl.formatMessage({ id: 'common.delete-tag', defaultMessage: 'Delete tag' })}
@@ -61,23 +52,10 @@ const LabelComponent = ({
             e.stopPropagation();
             onDelete(label);
           }}
-          sx={{
-            padding: '0px',
-            marginLeft: '2px',
-            '&:hover': {
-              opacity: 0.8,
-            },
-          }}
           className="delete-button"
         >
-          <DeleteIcon
-            style={iconSize}
-            sx={{
-              color: 'rgba(255, 255, 255, 0.95)',
-              filter: 'drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3))',
-            }}
-          />
-        </IconButton>
+          <DeleteLabelIcon big={big} />
+        </DeleteLabelButton>
       )}
     </LabelContainer>
   );

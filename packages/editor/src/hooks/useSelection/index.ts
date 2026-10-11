@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { useEffect, useState } from 'react';
+import { useMemo, useSyncExternalStore } from 'react';
 import type Model from '../../classes/model/editor';
 
 /**
@@ -70,6 +70,44 @@ const isSame = (a: SelectionSnapshot, b: SelectionSnapshot): boolean =>
   a.relationshipCount === b.relationshipCount &&
   a.isMapLoaded === b.isMapLoaded;
 
+const SELECTION_EVENTS = ['onfocus', 'onblur', 'modelUpdate', 'loadSuccess'] as const;
+
+type SelectionStore = {
+  subscribe: (onChange: () => void) => () => void;
+  getSnapshot: () => SelectionSnapshot;
+};
+
+const createSelectionStore = (model: Model | undefined): SelectionStore => {
+  // The last snapshot handed out: getSnapshot returns the same object while nothing observable
+  // changed, so a burst of designer events does not become a burst of renders.
+  let cached = read(model);
+  return {
+    subscribe: (onChange) => {
+      const designer = (() => {
+        try {
+          return model?.getDesigner();
+        } catch {
+          return undefined;
+        }
+      })();
+      if (!designer) {
+        return () => undefined;
+      }
+      SELECTION_EVENTS.forEach((event) => designer.addEvent(event, onChange));
+      return () => {
+        SELECTION_EVENTS.forEach((event) => designer.removeEvent(event, onChange));
+      };
+    },
+    getSnapshot: () => {
+      const next = read(model);
+      if (!isSame(cached, next)) {
+        cached = next;
+      }
+      return cached;
+    },
+  };
+};
+
 /**
  * Subscribes once to the designer's selection events and returns the selection
  * as React state.
@@ -86,46 +124,8 @@ const isSame = (a: SelectionSnapshot, b: SelectionSnapshot): boolean =>
  * without it, a snapshot taken before the map loaded would never be refreshed.
  */
 export const useSelection = (model: Model | undefined): SelectionSnapshot => {
-  const [selection, setSelection] = useState<SelectionSnapshot>(() => read(model));
-
-  useEffect(() => {
-    if (!model) {
-      setSelection(EMPTY_SELECTION);
-      return undefined;
-    }
-
-    const designer = (() => {
-      try {
-        return model.getDesigner();
-      } catch {
-        return undefined;
-      }
-    })();
-
-    if (!designer) {
-      return undefined;
-    }
-
-    const refresh = (): void => {
-      setSelection((previous) => {
-        const next = read(model);
-        // Bail out when nothing observable changed, so a burst of designer
-        // events does not become a burst of renders.
-        return isSame(previous, next) ? previous : next;
-      });
-    };
-
-    refresh();
-
-    const events = ['onfocus', 'onblur', 'modelUpdate', 'loadSuccess'] as const;
-    events.forEach((event) => designer.addEvent(event, refresh));
-
-    return () => {
-      events.forEach((event) => designer.removeEvent(event, refresh));
-    };
-  }, [model]);
-
-  return selection;
+  const store = useMemo(() => createSelectionStore(model), [model]);
+  return useSyncExternalStore(store.subscribe, store.getSnapshot, store.getSnapshot);
 };
 
 export default useSelection;

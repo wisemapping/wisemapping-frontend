@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 
 // `useFetchMapById` rebuilds its MapInfo object on every render, and the dialog
@@ -62,7 +61,7 @@ const submitButton = (): HTMLElement => screen.getByRole('button', { name: 'Dupl
 describe('DuplicateDialog', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    mockUseFetchMapById.mockReturnValue({ isLoading: false, error: null, data: map });
+    mockUseFetchMapById.mockReturnValue({ isLoading: false, error: undefined, data: map });
     mockDuplicateMap.mockResolvedValue(202);
   });
 
@@ -171,7 +170,7 @@ describe('DuplicateDialog', () => {
   });
 
   test('reports an invalid map id without calling the client', async () => {
-    mockUseFetchMapById.mockReturnValue({ isLoading: false, error: null, data: undefined });
+    mockUseFetchMapById.mockReturnValue({ isLoading: false, error: undefined, data: undefined });
 
     renderDialog(Number.NaN);
 

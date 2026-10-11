@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useContext, useEffect } from 'react';
+import React, { use } from 'react';
 import { useIntl } from 'react-intl';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
@@ -39,7 +39,7 @@ export type RenameModel = {
 
 const defaultModel: RenameModel = { title: '', description: '', id: -1 };
 const RenameDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
-  const client = useContext(ClientContext);
+  const client = use(ClientContext);
   const [model, setModel] = React.useState<RenameModel>(defaultModel);
   const [isInitialized, setIsInitialized] = React.useState<boolean>(false);
   const [error, setError] = React.useState<ErrorInfo>();
@@ -72,7 +72,7 @@ const RenameDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement
     setError(undefined);
 
     // Validate that mapId is valid (0 is a valid ID)
-    if (mapId == null || Number.isNaN(mapId)) {
+    if (Number.isNaN(mapId)) {
       setError({
         msg: intl.formatMessage({
           id: 'error.invalid-map-id',
@@ -85,10 +85,10 @@ const RenameDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement
     // Use mapId from props, not model.id, to ensure it's always valid. Only the fields that
     // changed are sent: the backend refuses the map's own, unchanged title as a duplicate.
     const validatedModel: RenameModel = { id: mapId };
-    if (model.title !== map?.title) {
+    if (model.title !== undefined && model.title !== map?.title) {
       validatedModel.title = model.title;
     }
-    if (model.description !== map?.description) {
+    if (model.description !== undefined && model.description !== map?.description) {
       validatedModel.description = model.description;
     }
 
@@ -116,21 +116,19 @@ const RenameDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement
 
   // An invalid id (0 is a valid one) is an error for as long as it is invalid: derived, so typing
   // in the form can not clear it.
-  const invalidMapIdError: ErrorInfo | undefined =
-    mapId == null || Number.isNaN(mapId)
-      ? {
-          msg: intl.formatMessage({ id: 'error.invalid-map-id', defaultMessage: 'Invalid map ID' }),
-        }
-      : undefined;
+  const invalidMapIdError: ErrorInfo | undefined = Number.isNaN(mapId)
+    ? {
+        msg: intl.formatMessage({ id: 'error.invalid-map-id', defaultMessage: 'Invalid map ID' }),
+      }
+    : undefined;
   const shownError = error ?? invalidMapIdError;
 
-  useEffect(() => {
-    // Only set model from map data on initial load
-    if (map && !isInitialized) {
-      setModel(map);
-      setIsInitialized(true);
-    }
-  }, [map, isInitialized]);
+  // Only set model from map data on initial load. Adjusted while rendering, not in an effect, so
+  // the form never shows a frame of empty fields once the map is there.
+  if (map && !isInitialized) {
+    setModel(map);
+    setIsInitialized(true);
+  }
 
   return (
     <div>

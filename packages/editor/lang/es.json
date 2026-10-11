@@ -772,5 +772,8 @@
   },
   "rich-text-editor.outdent": {
     "defaultMessage": "Reducir sangría (Mayús+Tab)"
+  },
+  "outline.untitled-map": {
+    "defaultMessage": "Mapa sin título"
   }
 }

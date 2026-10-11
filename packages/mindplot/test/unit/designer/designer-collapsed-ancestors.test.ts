@@ -26,7 +26,7 @@ const createTopicStub = (
   options: { parent?: TopicStub; shrunken?: boolean } = {},
 ): TopicStub => ({
   getId: () => id,
-  getParent: () => (options.parent ?? null) as Topic | null,
+  getParent: () => options.parent as Topic | undefined,
   areChildrenShrunken: () => options.shrunken ?? false,
 });
 

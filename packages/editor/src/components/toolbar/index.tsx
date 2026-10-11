@@ -107,7 +107,7 @@ type ToolbarSubmenuProps = {
 /**
  * Submenu button and popover
  * @param props.configuration the configuration
- * @returns submenu entry that contains one ToolbarMenuItem for each option. Inserts a divider for null options.
+ * @returns submenu entry that contains one ToolbarMenuItem for each option. Inserts a divider for undefined options.
  */
 export const ToolbarSubmenu = ({
   configuration,
@@ -195,14 +195,18 @@ export const ToolbarSubmenu = ({
               return (
                 <ToolbarMenuItem
                   vertical={!vertical}
+                  // eslint-disable-next-line @eslint-react/no-array-index-key -- a menu built once, never reordered
                   key={i}
-                  configuration={o as ActionConfig}
+                  configuration={o}
                   elevation={elevation ? elevation + 3 : 0}
                 />
               );
             } else {
               // Only render custom render functions when popover is open
-              return open ? <span key={i}>{o.render(() => setOpen(false))}</span> : null;
+              return open ? (
+                // eslint-disable-next-line @eslint-react/no-array-index-key -- a menu built once, never reordered
+                <span key={i}>{o.render(() => setOpen(false))}</span>
+              ) : null;
             }
           })}
         </div>
@@ -221,7 +225,7 @@ type ToolbarMenuItemProps = {
 /**
  * Wrapper for all menu entries
  * @param props.configuration the configuration
- * @returns menu item wich contains a submenu if options is set or a button if onClick is set or null otherwise.
+ * @returns menu item wich contains a submenu if options is set or a button if onClick is set or an empty fragment otherwise.
  */
 export const ToolbarMenuItem = ({
   configuration,
@@ -286,7 +290,7 @@ type ToolbarProps = {
 const Toolbar = ({ configurations, position }: ToolbarProps): ReactElement => {
   const pos: ToolbarPosition = position || defaultPosition;
   const theme = useTheme();
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   /**
    * Arrow-key navigation across the bar.
@@ -357,6 +361,7 @@ const Toolbar = ({ configurations, position }: ToolbarProps): ReactElement => {
       aria-orientation={pos.vertical ? 'vertical' : 'horizontal'}
     >
       {configurations.map((c, i) => {
+        // eslint-disable-next-line @eslint-react/no-array-index-key -- a toolbar built once, never reordered
         return <ToolbarMenuItem key={i} configuration={c} elevation={2} vertical={!pos.vertical} />;
       })}
     </AppBar>

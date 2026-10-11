@@ -772,5 +772,8 @@
   },
   "rich-text-editor.outdent": {
     "defaultMessage": "Зменшити відступ (Shift+Tab)"
+  },
+  "outline.untitled-map": {
+    "defaultMessage": "Карта без назви"
   }
 }

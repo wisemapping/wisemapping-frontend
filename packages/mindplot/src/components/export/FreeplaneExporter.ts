@@ -128,7 +128,7 @@ class FreeplaneExporter extends FreemindExporter {
    * Other emoji are written as Freeplane emoji icons (emoji-<code points>), which Freeplane names
    * without the emoji variation selector.
    */
-  protected override iconBuiltin(feature: FeatureModel): string | null {
+  protected override iconBuiltin(feature: FeatureModel): string | undefined {
     if (feature.isOfType('icon')) {
       const progress = FreeplaneExporter.SVG_BUILTINS.get(feature.getIconType());
       if (progress) {
@@ -149,7 +149,7 @@ class FreeplaneExporter extends FreemindExporter {
       .map((char) => char.codePointAt(0)!)
       .filter((codePoint) => codePoint !== 0xfe0f)
       .map((codePoint) => codePoint.toString(16).toUpperCase());
-    return codePoints.length > 0 ? `emoji-${codePoints.join('-')}` : null;
+    return codePoints.length > 0 ? `emoji-${codePoints.join('-')}` : undefined;
   }
 
   protected override buildArrowlink(

@@ -18,20 +18,21 @@
 
 import React from 'react';
 import Box from '@mui/material/Box';
-import type { SxProps, Theme } from '@mui/material/styles';
 import Header from './header';
 import Footer from './footer';
+import { LayoutContent } from './styled';
 
 type AccountAccessLayoutProps = {
   headerType: 'only-signup' | 'only-signin' | 'none';
   children: React.ReactNode;
-  contentSx?: SxProps<Theme>;
+  /** Less padding around the content, for the long sign-in and sign-up forms. */
+  compact?: boolean;
 };
 
 const AccountAccessLayout = ({
   headerType,
   children,
-  contentSx,
+  compact = false,
 }: AccountAccessLayoutProps): React.ReactElement => {
   return (
     <Box
@@ -42,20 +43,9 @@ const AccountAccessLayout = ({
       }}
     >
       <Header type={headerType} />
-      <Box
-        component="section"
-        sx={{
-          flex: 1,
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          padding: { xs: '32px 16px', md: '48px 16px' },
-          ...contentSx,
-        }}
-      >
+      <LayoutContent compact={compact}>
         <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>{children}</Box>
-      </Box>
+      </LayoutContent>
       <Footer />
     </Box>
   );

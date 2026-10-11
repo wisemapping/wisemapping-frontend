@@ -33,8 +33,10 @@ export type BootstrapConfigSource = {
   warn: (message: string) => void;
 };
 
+const MOCK_FILE = './config.mock.json';
+
 const FILES: Record<string, string> = {
-  'file:mock': './config.mock.json',
+  'file:mock': MOCK_FILE,
   'file:dev': './config.dev.json',
   'file:prod': './config.prod.json',
 };
@@ -45,12 +47,12 @@ export const resolveBootstrapConfig = ({
   readJson,
   warn,
 }: BootstrapConfigSource): unknown => {
-  const type = env.APP_CONFIG_TYPE;
+  const type = env['APP_CONFIG_TYPE'];
 
   if (!type) {
     if (production) {
       // Vercel sets VERCEL during its builds: that build is deployed.
-      if (env.VERCEL) {
+      if (env['VERCEL']) {
         throw new Error(
           'APP_CONFIG_TYPE is not set: refusing to deploy a build that uses the mock client. Set it to file:prod, file:dev or remote.',
         );
@@ -59,11 +61,11 @@ export const resolveBootstrapConfig = ({
         'APP_CONFIG_TYPE is not set: this build uses the mock client (config.mock.json) and no backend.',
       );
     }
-    return readJson(FILES['file:mock']);
+    return readJson(MOCK_FILE);
   }
 
   if (type === 'remote') {
-    const json = env.APP_CONFIG_JSON?.trim();
+    const json = env['APP_CONFIG_JSON']?.trim();
     if (!json) {
       throw new Error('APP_CONFIG_TYPE is remote but APP_CONFIG_JSON is empty.');
     }

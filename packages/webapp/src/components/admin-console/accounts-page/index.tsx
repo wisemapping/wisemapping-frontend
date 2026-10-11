@@ -17,7 +17,7 @@
  */
 
 import React, { ReactElement, useState, useEffect } from 'react';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Table from '@mui/material/Table';
@@ -79,7 +79,8 @@ import FacebookLookup from './FacebookLookup';
 import { User, UserFormData } from './types';
 import { useAdminPage, useClampedPage } from '../shared/useAdminPage';
 import { errorMessage } from '../shared/errorMessage';
-import { loadErrorAlertStyles } from '../styles';
+import { FilterBar, PaginationBar } from '../styled';
+import { useDate } from '../../../classes/app-i18n/dates';
 
 const emptyUserForm: UserFormData = {
   firstname: '',
@@ -149,6 +150,7 @@ const UserSearchField = React.memo(function UserSearchField({
 
 const AccountManagement = (): ReactElement => {
   const intl = useIntl();
+  const date = useDate();
   const client = AppConfig.getAdminClient();
   const queryClient = useQueryClient();
   const facebookEnabled = AppConfig.isFacebookOauth2Enabled();
@@ -161,7 +163,7 @@ const AccountManagement = (): ReactElement => {
   const [filterSuspended, setFilterSuspended] = useState<string>('all');
   const [filterAuthType, setFilterAuthType] = useState<string>('all');
 
-  const [editingUser, setEditingUser] = useState<User | null>(null);
+  const [editingUser, setEditingUser] = useState<User>();
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   // A new key opens the user and password dialogs with a fresh form.
@@ -169,35 +171,35 @@ const AccountManagement = (): ReactElement => {
 
   // Suspension dialog state
   const [isSuspensionDialogOpen, setIsSuspensionDialogOpen] = useState(false);
-  const [suspendingUser, setSuspendingUser] = useState<User | null>(null);
+  const [suspendingUser, setSuspendingUser] = useState<User>();
   const [suspensionReason, setSuspensionReason] = useState<string>('');
 
   // Delete confirmation dialog state
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  const [deletingUser, setDeletingUser] = useState<User | null>(null);
+  const [deletingUser, setDeletingUser] = useState<User>();
 
   // Unsuspend confirmation dialog state
   const [isUnsuspendDialogOpen, setIsUnsuspendDialogOpen] = useState(false);
-  const [unsuspendingUser, setUnsuspendingUser] = useState<User | null>(null);
+  const [unsuspendingUser, setUnsuspendingUser] = useState<User>();
 
   // Activate confirmation dialog state
   const [isActivateDialogOpen, setIsActivateDialogOpen] = useState(false);
-  const [activatingUser, setActivatingUser] = useState<User | null>(null);
+  const [activatingUser, setActivatingUser] = useState<User>();
 
   // User maps dialog state
   const [isUserMapsDialogOpen, setIsUserMapsDialogOpen] = useState(false);
-  const [viewingMapsUser, setViewingMapsUser] = useState<User | null>(null);
+  const [viewingMapsUser, setViewingMapsUser] = useState<User>();
 
   // Change password dialog state
   const [isPasswordDialogOpen, setIsPasswordDialogOpen] = useState(false);
-  const [changingPasswordUser, setChangingPasswordUser] = useState<User | null>(null);
+  const [changingPasswordUser, setChangingPasswordUser] = useState<User>();
 
   // Facebook data deletion state
   const [isFacebookFilterExpanded, setIsFacebookFilterExpanded] = useState(false);
   // A new key clears the lookup.
   const [facebookLookupKey, setFacebookLookupKey] = useState(0);
   const [isRemoveFacebookDialogOpen, setIsRemoveFacebookDialogOpen] = useState(false);
-  const [removingFacebookUser, setRemovingFacebookUser] = useState<User | null>(null);
+  const [removingFacebookUser, setRemovingFacebookUser] = useState<User>();
 
   // Suspension reasons
   const suspensionReasons = [
@@ -297,7 +299,7 @@ const AccountManagement = (): ReactElement => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['adminUsers'] });
       setIsEditDialogOpen(false);
-      setEditingUser(null);
+      setEditingUser(undefined);
     },
     onError: (error: Error) => {
       console.error('Failed to update user:', error);
@@ -331,7 +333,7 @@ const AccountManagement = (): ReactElement => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['adminUsers'] });
       setIsDeleteDialogOpen(false);
-      setDeletingUser(null);
+      setDeletingUser(undefined);
     },
     onError: (error: Error) => {
       console.error('Failed to delete user:', error);
@@ -340,12 +342,15 @@ const AccountManagement = (): ReactElement => {
 
   // Suspend user mutation
   const suspendUserMutation = useMutation({
-    mutationFn: ({ userId, reason }: { userId: number; reason?: string }) =>
-      client.updateUserSuspension(userId, { suspended: true, suspensionReason: reason }),
+    mutationFn: ({ userId, reason }: { userId: number; reason?: string | undefined }) =>
+      client.updateUserSuspension(userId, {
+        suspended: true,
+        ...(reason !== undefined && { suspensionReason: reason }),
+      }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['adminUsers'] });
       setIsSuspensionDialogOpen(false);
-      setSuspendingUser(null);
+      setSuspendingUser(undefined);
       setSuspensionReason('');
     },
     onError: (error: Error) => {
@@ -359,7 +364,7 @@ const AccountManagement = (): ReactElement => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['adminUsers'] });
       setIsUnsuspendDialogOpen(false);
-      setUnsuspendingUser(null);
+      setUnsuspendingUser(undefined);
     },
     onError: (error: Error) => {
       console.error('Failed to unsuspend user:', error);
@@ -372,7 +377,7 @@ const AccountManagement = (): ReactElement => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['adminUsers'] });
       setIsActivateDialogOpen(false);
-      setActivatingUser(null);
+      setActivatingUser(undefined);
     },
     onError: (error: Error) => {
       console.error('Failed to activate user:', error);
@@ -396,7 +401,7 @@ const AccountManagement = (): ReactElement => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['adminUsers'] });
       setIsRemoveFacebookDialogOpen(false);
-      setRemovingFacebookUser(null);
+      setRemovingFacebookUser(undefined);
       // Clear the lookup since the account changed
       setFacebookLookupKey((key) => key + 1);
     },
@@ -478,7 +483,7 @@ const AccountManagement = (): ReactElement => {
       .changeUserPassword(changingPasswordUser.id, password)
       .then(() => {
         setIsPasswordDialogOpen(false);
-        setChangingPasswordUser(null);
+        setChangingPasswordUser(undefined);
         return undefined;
       })
       .catch((error) => {
@@ -503,7 +508,7 @@ const AccountManagement = (): ReactElement => {
 
   const handleCancelDelete = () => {
     setIsDeleteDialogOpen(false);
-    setDeletingUser(null);
+    setDeletingUser(undefined);
   };
 
   const handleSuspendUser = (user: User) => {
@@ -525,7 +530,7 @@ const AccountManagement = (): ReactElement => {
 
   const handleCancelUnsuspend = () => {
     setIsUnsuspendDialogOpen(false);
-    setUnsuspendingUser(null);
+    setUnsuspendingUser(undefined);
   };
 
   const handleActivateUser = (user: User) => {
@@ -541,7 +546,7 @@ const AccountManagement = (): ReactElement => {
 
   const handleCancelActivate = () => {
     setIsActivateDialogOpen(false);
-    setActivatingUser(null);
+    setActivatingUser(undefined);
   };
 
   const handleConfirmSuspension = () => {
@@ -555,7 +560,7 @@ const AccountManagement = (): ReactElement => {
 
   const handleCancelSuspension = () => {
     setIsSuspensionDialogOpen(false);
-    setSuspendingUser(null);
+    setSuspendingUser(undefined);
     setSuspensionReason('');
   };
 
@@ -568,12 +573,10 @@ const AccountManagement = (): ReactElement => {
 
   const handleCloseUserMapsDialog = () => {
     setIsUserMapsDialogOpen(false);
-    setViewingMapsUser(null);
+    setViewingMapsUser(undefined);
   };
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString();
-  };
+  const formatDate = (dateString: string) => date(dateString).format('L');
 
   const getAuthIcon = (authenticationType: AuthenticationType) => {
     switch (authenticationType) {
@@ -707,18 +710,13 @@ const AccountManagement = (): ReactElement => {
               defaultMessage: 'Search & Filters',
             })}
           </Typography>
-          <Box
-            sx={{
-              display: 'flex',
-              gap: 2,
-              mb: facebookEnabled && isFacebookFilterExpanded ? 1 : 2,
-              flexWrap: 'wrap',
-            }}
-          >
+          <FilterBar gutter={facebookEnabled && isFacebookFilterExpanded ? 1 : 2}>
             <UserSearchField onSearch={setDebouncedSearchTerm} isFetching={isFetching} />
 
             <FormControl sx={{ minWidth: 150 }}>
-              <InputLabel id="admin-filter-auth-type-label">Auth Type</InputLabel>
+              <InputLabel id="admin-filter-auth-type-label">
+                <FormattedMessage id="admin.auth-type" defaultMessage="Auth Type" />
+              </InputLabel>
               <Select
                 labelId="admin-filter-auth-type-label"
                 value={filterAuthType}
@@ -727,15 +725,25 @@ const AccountManagement = (): ReactElement => {
                 disabled={isFetching}
                 endAdornment={isFetching ? <CircularProgress size={20} /> : null}
               >
-                <MenuItem value="all">All</MenuItem>
-                <MenuItem value="DATABASE">Database</MenuItem>
-                <MenuItem value="GOOGLE_OAUTH2">Google</MenuItem>
-                <MenuItem value="FACEBOOK_OAUTH2">Facebook</MenuItem>
+                <MenuItem value="all">
+                  <FormattedMessage id="admin.filter.all" defaultMessage="All" />
+                </MenuItem>
+                <MenuItem value="DATABASE">
+                  <FormattedMessage id="admin.auth.database" defaultMessage="Database" />
+                </MenuItem>
+                <MenuItem value="GOOGLE_OAUTH2">
+                  <FormattedMessage id="admin.auth.google" defaultMessage="Google" />
+                </MenuItem>
+                <MenuItem value="FACEBOOK_OAUTH2">
+                  <FormattedMessage id="admin.auth.facebook" defaultMessage="Facebook" />
+                </MenuItem>
               </Select>
             </FormControl>
 
             <FormControl sx={{ minWidth: 150 }}>
-              <InputLabel id="admin-filter-suspension-label">Suspension Status</InputLabel>
+              <InputLabel id="admin-filter-suspension-label">
+                <FormattedMessage id="admin.suspension-status" defaultMessage="Suspension Status" />
+              </InputLabel>
               <Select
                 labelId="admin-filter-suspension-label"
                 value={filterSuspended}
@@ -747,9 +755,24 @@ const AccountManagement = (): ReactElement => {
                 disabled={isFetching}
                 endAdornment={isFetching ? <CircularProgress size={20} /> : null}
               >
-                <MenuItem value="all">All (Suspended + Active)</MenuItem>
-                <MenuItem value="not-suspended">Not Suspended</MenuItem>
-                <MenuItem value="suspended">Suspended Only</MenuItem>
+                <MenuItem value="all">
+                  <FormattedMessage
+                    id="admin.accounts.filter.suspension-all"
+                    defaultMessage="All (Suspended + Active)"
+                  />
+                </MenuItem>
+                <MenuItem value="not-suspended">
+                  <FormattedMessage
+                    id="admin.accounts.filter.not-suspended"
+                    defaultMessage="Not Suspended"
+                  />
+                </MenuItem>
+                <MenuItem value="suspended">
+                  <FormattedMessage
+                    id="admin.accounts.filter.suspended-only"
+                    defaultMessage="Suspended Only"
+                  />
+                </MenuItem>
               </Select>
             </FormControl>
 
@@ -764,7 +787,7 @@ const AccountManagement = (): ReactElement => {
                   size="small"
                   onClick={() => setIsFacebookFilterExpanded((v) => !v)}
                   sx={{
-                    color: isFacebookFilterExpanded ? '#1877F2' : 'text.secondary',
+                    color: isFacebookFilterExpanded ? 'facebook.main' : 'text.secondary',
                     alignSelf: 'center',
                   }}
                 >
@@ -777,7 +800,7 @@ const AccountManagement = (): ReactElement => {
                 </IconButton>
               </Tooltip>
             )}
-          </Box>
+          </FilterBar>
 
           {facebookEnabled && (
             <Collapse in={isFacebookFilterExpanded}>
@@ -793,7 +816,7 @@ const AccountManagement = (): ReactElement => {
       {/* Users Table */}
       {/* Inline, so the search, filters and Refresh stay to recover with. */}
       {error && (
-        <Alert severity="error" sx={loadErrorAlertStyles}>
+        <Alert severity="error" sx={{ mb: 2 }}>
           {intl.formatMessage(
             { id: 'admin.error.load-users', defaultMessage: 'Failed to load users: {message}' },
             {
@@ -808,29 +831,35 @@ const AccountManagement = (): ReactElement => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
+              <TableCell>
+                <FormattedMessage id="admin.accounts.table.id" defaultMessage="ID" />
+              </TableCell>
               <TableCell>
                 <TableSortLabel
                   active={sortField === 'firstname'}
                   direction={sortField === 'firstname' ? sortDirection : 'asc'}
                   onClick={() => handleSort('firstname')}
                 >
-                  Name
+                  <FormattedMessage id="admin.accounts.table.name" defaultMessage="Name" />
                 </TableSortLabel>
               </TableCell>
-              <TableCell>Status</TableCell>
-              <TableCell align="center">Auth</TableCell>
+              <TableCell>
+                <FormattedMessage id="admin.accounts.table.status" defaultMessage="Status" />
+              </TableCell>
+              <TableCell align="center">
+                <FormattedMessage id="admin.accounts.table.auth" defaultMessage="Auth" />
+              </TableCell>
               <TableCell>
                 <TableSortLabel
                   active={sortField === 'creationDate'}
                   direction={sortField === 'creationDate' ? sortDirection : 'asc'}
                   onClick={() => handleSort('creationDate')}
                 >
-                  Created
+                  <FormattedMessage id="admin.accounts.table.created" defaultMessage="Created" />
                 </TableSortLabel>
               </TableCell>
               <TableCell align="center" sx={{ whiteSpace: 'nowrap' }}>
-                Actions
+                <FormattedMessage id="admin.accounts.table.actions" defaultMessage="Actions" />
               </TableCell>
             </TableRow>
           </TableHead>
@@ -959,7 +988,7 @@ const AccountManagement = (): ReactElement => {
                             id: 'admin.facebook.remove-button',
                             defaultMessage: 'Remove Facebook Account',
                           })}
-                          sx={{ color: '#1877F2' }}
+                          sx={{ color: 'facebook.main' }}
                         >
                           <LinkOffIcon />
                         </IconButton>
@@ -984,19 +1013,11 @@ const AccountManagement = (): ReactElement => {
       </TableContainer>
       {/* Pagination */}
       {totalPages > 1 && (
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            mt: 3,
-            gap: 2,
-          }}
-        >
+        <PaginationBar>
           <Pagination
             count={totalPages}
             page={currentPage}
-            onChange={(event, page) => setCurrentPage(page)}
+            onChange={(_event, page) => setCurrentPage(page)}
             color="primary"
             variant="outlined"
             shape="rounded"
@@ -1005,7 +1026,7 @@ const AccountManagement = (): ReactElement => {
             disabled={isFetching}
           />
           {isFetching && <CircularProgress size={24} />}
-        </Box>
+        </PaginationBar>
       )}
       {/* Edit User Dialog */}
       <UserFormDialog
@@ -1047,8 +1068,14 @@ const AccountManagement = (): ReactElement => {
           defaultMessage: 'Create User',
         })}
         initialData={emptyUserForm}
-        submitLabel="Create User"
-        pendingLabel="Creating..."
+        submitLabel={intl.formatMessage({
+          id: 'admin.accounts.create',
+          defaultMessage: 'Create User',
+        })}
+        pendingLabel={intl.formatMessage({
+          id: 'admin.button.creating',
+          defaultMessage: 'Creating...',
+        })}
         isPending={createUserMutation.isPending}
         onClose={() => setIsCreateDialogOpen(false)}
         onSubmit={handleCreateUserSubmit}
@@ -1060,13 +1087,24 @@ const AccountManagement = (): ReactElement => {
         maxWidth="sm"
         fullWidth
       >
-        <DialogTitle>Suspend User</DialogTitle>
+        <DialogTitle>
+          <FormattedMessage
+            id="admin.accounts.suspend-dialog.title"
+            defaultMessage="Suspend User"
+          />
+        </DialogTitle>
         <DialogContent>
           <Typography variant="body2" sx={{ mb: 2 }}>
-            Are you sure you want to suspend user &quot;{suspendingUser?.email}&quot;?
+            <FormattedMessage
+              id="admin.accounts.suspend-dialog.confirm"
+              defaultMessage='Are you sure you want to suspend user "{email}"?'
+              values={{ email: suspendingUser?.email }}
+            />
           </Typography>
           <FormControl fullWidth sx={{ mt: 2 }}>
-            <InputLabel>Suspension Reason</InputLabel>
+            <InputLabel>
+              <FormattedMessage id="admin.suspension-reason" defaultMessage="Suspension Reason" />
+            </InputLabel>
             <Select
               value={suspensionReason}
               onChange={(e) => setSuspensionReason(e.target.value)}
@@ -1085,7 +1123,7 @@ const AccountManagement = (): ReactElement => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCancelSuspension} disabled={suspendUserMutation.isPending}>
-            Cancel
+            <FormattedMessage id="admin.cancel" defaultMessage="Cancel" />
           </Button>
           <Button
             onClick={handleConfirmSuspension}
@@ -1093,7 +1131,17 @@ const AccountManagement = (): ReactElement => {
             variant="contained"
             disabled={suspendUserMutation.isPending}
           >
-            {suspendUserMutation.isPending ? 'Suspending...' : 'Suspend User'}
+            {suspendUserMutation.isPending ? (
+              <FormattedMessage
+                id="admin.accounts.suspend-dialog.pending"
+                defaultMessage="Suspending..."
+              />
+            ) : (
+              <FormattedMessage
+                id="admin.accounts.suspend-dialog.button"
+                defaultMessage="Suspend User"
+              />
+            )}
           </Button>
         </DialogActions>
       </Dialog>
@@ -1104,18 +1152,27 @@ const AccountManagement = (): ReactElement => {
         maxWidth="sm"
         fullWidth
       >
-        <DialogTitle>Delete User</DialogTitle>
+        <DialogTitle>
+          <FormattedMessage id="admin.accounts.delete-dialog.title" defaultMessage="Delete User" />
+        </DialogTitle>
         <DialogContent>
           <Alert severity="warning" sx={{ mb: 2 }}>
-            This action cannot be undone!
+            <FormattedMessage
+              id="admin.accounts.delete-dialog.warning"
+              defaultMessage="This action cannot be undone!"
+            />
           </Alert>
           <Typography variant="body2">
-            Are you sure you want to delete user &quot;{deletingUser?.email}&quot;?
+            <FormattedMessage
+              id="admin.accounts.delete-dialog.confirm"
+              defaultMessage='Are you sure you want to delete user "{email}"?'
+              values={{ email: deletingUser?.email }}
+            />
           </Typography>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCancelDelete} disabled={deleteUserMutation.isPending}>
-            Cancel
+            <FormattedMessage id="admin.cancel" defaultMessage="Cancel" />
           </Button>
           <Button
             onClick={handleConfirmDelete}
@@ -1123,7 +1180,17 @@ const AccountManagement = (): ReactElement => {
             variant="contained"
             disabled={deleteUserMutation.isPending}
           >
-            {deleteUserMutation.isPending ? 'Deleting...' : 'Delete User'}
+            {deleteUserMutation.isPending ? (
+              <FormattedMessage
+                id="admin.accounts.delete-dialog.pending"
+                defaultMessage="Deleting..."
+              />
+            ) : (
+              <FormattedMessage
+                id="admin.accounts.delete-dialog.button"
+                defaultMessage="Delete User"
+              />
+            )}
           </Button>
         </DialogActions>
       </Dialog>
@@ -1134,24 +1201,35 @@ const AccountManagement = (): ReactElement => {
         maxWidth="sm"
         fullWidth
       >
-        <DialogTitle>Unsuspend User</DialogTitle>
+        <DialogTitle>
+          <FormattedMessage
+            id="admin.accounts.unsuspend-dialog.title"
+            defaultMessage="Unsuspend User"
+          />
+        </DialogTitle>
         <DialogContent>
           <Typography variant="body2">
-            Are you sure you want to unsuspend user &quot;{unsuspendingUser?.email}&quot;?
+            <FormattedMessage
+              id="admin.accounts.unsuspend-dialog.confirm"
+              defaultMessage='Are you sure you want to unsuspend user "{email}"?'
+              values={{ email: unsuspendingUser?.email }}
+            />
           </Typography>
           {unsuspendingUser?.suspensionReason && (
             <Alert severity="info" sx={{ mt: 2 }}>
-              {intl.formatMessage({
-                id: 'admin.current-suspension-reason',
-                defaultMessage: 'Current suspension reason:',
-              })}{' '}
-              {getSuspensionReasonLabel(unsuspendingUser.suspensionReason, intl)}
+              <FormattedMessage
+                id="admin.accounts.unsuspend-dialog.reason"
+                defaultMessage="Current suspension reason: {reason}"
+                values={{
+                  reason: getSuspensionReasonLabel(unsuspendingUser.suspensionReason, intl),
+                }}
+              />
             </Alert>
           )}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCancelUnsuspend} disabled={unsuspendUserMutation.isPending}>
-            Cancel
+            <FormattedMessage id="admin.cancel" defaultMessage="Cancel" />
           </Button>
           <Button
             onClick={handleConfirmUnsuspend}
@@ -1159,7 +1237,17 @@ const AccountManagement = (): ReactElement => {
             variant="contained"
             disabled={unsuspendUserMutation.isPending}
           >
-            {unsuspendUserMutation.isPending ? 'Unsuspending...' : 'Unsuspend User'}
+            {unsuspendUserMutation.isPending ? (
+              <FormattedMessage
+                id="admin.accounts.unsuspend-dialog.pending"
+                defaultMessage="Unsuspending..."
+              />
+            ) : (
+              <FormattedMessage
+                id="admin.accounts.unsuspend-dialog.button"
+                defaultMessage="Unsuspend User"
+              />
+            )}
           </Button>
         </DialogActions>
       </Dialog>
@@ -1170,18 +1258,30 @@ const AccountManagement = (): ReactElement => {
         maxWidth="sm"
         fullWidth
       >
-        <DialogTitle>Activate User</DialogTitle>
+        <DialogTitle>
+          <FormattedMessage
+            id="admin.accounts.activate-dialog.title"
+            defaultMessage="Activate User"
+          />
+        </DialogTitle>
         <DialogContent>
           <Alert severity="info" sx={{ mb: 2 }}>
-            This will allow the user to login immediately without email confirmation.
+            <FormattedMessage
+              id="admin.accounts.activate-dialog.info"
+              defaultMessage="This will allow the user to login immediately without email confirmation."
+            />
           </Alert>
           <Typography variant="body2">
-            Are you sure you want to manually activate user &quot;{activatingUser?.email}&quot;?
+            <FormattedMessage
+              id="admin.accounts.activate-dialog.confirm"
+              defaultMessage='Are you sure you want to manually activate user "{email}"?'
+              values={{ email: activatingUser?.email }}
+            />
           </Typography>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCancelActivate} disabled={activateUserMutation.isPending}>
-            Cancel
+            <FormattedMessage id="admin.cancel" defaultMessage="Cancel" />
           </Button>
           <Button
             onClick={handleConfirmActivate}
@@ -1189,7 +1289,17 @@ const AccountManagement = (): ReactElement => {
             variant="contained"
             disabled={activateUserMutation.isPending}
           >
-            {activateUserMutation.isPending ? 'Activating...' : 'Activate User'}
+            {activateUserMutation.isPending ? (
+              <FormattedMessage
+                id="admin.accounts.activate-dialog.pending"
+                defaultMessage="Activating..."
+              />
+            ) : (
+              <FormattedMessage
+                id="admin.accounts.activate-dialog.button"
+                defaultMessage="Activate User"
+              />
+            )}
           </Button>
         </DialogActions>
       </Dialog>
@@ -1239,7 +1349,7 @@ const AccountManagement = (): ReactElement => {
         fullWidth
       >
         <DialogTitle sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <FacebookIcon sx={{ color: '#1877F2' }} />
+          <FacebookIcon sx={{ color: 'facebook.main' }} />
           {intl.formatMessage({
             id: 'admin.facebook.remove-dialog-title',
             defaultMessage: 'Remove Facebook Account',

@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import { fireEvent, screen } from '@testing-library/react';
 
 jest.mock('react-router', () => jest.requireActual('../router-mock'));
@@ -31,6 +30,7 @@ import { logCriticalError } from '../../../../src/utils';
 import { trackPageView } from '../../../../src/utils/analytics';
 import { renderWithProviders } from '../../helpers/render';
 import { resetRouter, routeErrorResponse, routerState, setLocation } from '../router-mock';
+import { defined } from '../../defined';
 
 const showError = (error: unknown) => {
   routerState.routeError = error;
@@ -170,7 +170,7 @@ describe('ErrorPage', () => {
     window.dispatchEvent(new ErrorEvent('error', { error: domError }));
     window.dispatchEvent(new ErrorEvent('error', { error: new Error('other') }));
     expect(logCriticalError).toHaveBeenCalledTimes(1);
-    expect(jest.mocked(logCriticalError).mock.calls[0][0]).toBe(
+    expect(defined(jest.mocked(logCriticalError).mock.calls[0])[0]).toBe(
       'ErrorPage - Unhandled DOM manipulation error (insertBefore)',
     );
 
@@ -181,7 +181,7 @@ describe('ErrorPage', () => {
     otherRejection.reason = 'nope';
     window.dispatchEvent(otherRejection);
     expect(logCriticalError).toHaveBeenCalledTimes(2);
-    expect(jest.mocked(logCriticalError).mock.calls[1][0]).toBe(
+    expect(defined(jest.mocked(logCriticalError).mock.calls[1])[0]).toBe(
       'ErrorPage - Unhandled promise rejection with DOM manipulation error (insertBefore)',
     );
 

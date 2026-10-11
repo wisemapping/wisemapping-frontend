@@ -32,7 +32,7 @@ import { User } from './types';
 type ChangePasswordDialogProps = {
   open: boolean;
   /** The account, read when the dialog mounts: give it a new `key` to reset the dialog. */
-  user: Pick<User, 'email' | 'authenticationType'> | null;
+  user: Pick<User, 'email' | 'authenticationType'> | undefined;
   onClose: () => void;
   /** Called with a valid password; resolves to the message to show when the change failed. */
   onSubmit: (password: string) => Promise<string | undefined>;

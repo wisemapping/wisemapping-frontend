@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 
 import LabelComponent from '../../../../src/components/maps-page/maps-list/label';
@@ -30,6 +29,7 @@ import {
 } from '../../../../src/components/maps-page/maps-list/MapsListSkeleton';
 import { Label, MapInfo } from '../../../../src/classes/client';
 import { renderWithWrapper } from '../providers';
+import { defined } from '../../defined';
 
 const research: Label = { id: 7, title: 'Research', color: '#ff0000' };
 const travel: Label = { id: 8, title: 'Travel', color: '#00ff00' };
@@ -85,7 +85,7 @@ describe('LabelsCell', () => {
     expect(screen.getByText('Research')).toBeTruthy();
     expect(screen.getByText('Travel')).toBeTruthy();
 
-    fireEvent.click(screen.getAllByRole('button', { name: 'Delete tag' })[1]);
+    fireEvent.click(defined(screen.getAllByRole('button', { name: 'Delete tag' })[1]));
     expect(onDelete).toHaveBeenCalledWith(travel);
     expect(onParentClick).not.toHaveBeenCalled();
   });

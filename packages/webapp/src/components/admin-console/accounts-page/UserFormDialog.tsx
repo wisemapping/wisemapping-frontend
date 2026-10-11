@@ -17,8 +17,7 @@
  */
 
 import React, { ReactElement, useCallback, useMemo, useState } from 'react';
-import { useIntl } from 'react-intl';
-import Box from '@mui/material/Box';
+import { FormattedMessage, useIntl } from 'react-intl';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -33,6 +32,8 @@ import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import MemoTextField from '../shared/MemoTextField';
 import { UserFormData } from './types';
+import { FormFields } from './styled';
+import { Locales } from '../../../classes/app-i18n';
 
 type UserFormDialogProps = {
   open: boolean;
@@ -86,7 +87,9 @@ const UserFormDialog = ({
   const localeSelect = useMemo(
     () => (
       <FormControl fullWidth>
-        <InputLabel>Locale</InputLabel>
+        <InputLabel>
+          <FormattedMessage id="common.locale" defaultMessage="Locale" />
+        </InputLabel>
         <Select
           value={formData.locale}
           label={intl.formatMessage({ id: 'common.locale', defaultMessage: 'Locale' })}
@@ -94,12 +97,12 @@ const UserFormDialog = ({
             setFormData((current) => ({ ...current, locale: e.target.value }))
           }
         >
-          <MenuItem value="en">English</MenuItem>
-          <MenuItem value="es">Spanish</MenuItem>
-          <MenuItem value="fr">French</MenuItem>
-          <MenuItem value="de">German</MenuItem>
-          <MenuItem value="it">Italian</MenuItem>
-          <MenuItem value="pt">Portuguese</MenuItem>
+          {/* Each language in its own name, as the language menus list them. */}
+          {Object.values(Locales).map((locale) => (
+            <MenuItem key={locale.code} value={locale.code}>
+              {locale.label}
+            </MenuItem>
+          ))}
         </Select>
       </FormControl>
     ),
@@ -129,24 +132,24 @@ const UserFormDialog = ({
     const errors: Record<string, string> = {};
 
     if (!formData.firstname.trim()) {
-      errors.firstname = intl.formatMessage({
+      errors['firstname'] = intl.formatMessage({
         id: 'admin.validation.firstname-required',
         defaultMessage: 'First name is required',
       });
     }
     if (!formData.lastname.trim()) {
-      errors.lastname = intl.formatMessage({
+      errors['lastname'] = intl.formatMessage({
         id: 'admin.validation.lastname-required',
         defaultMessage: 'Last name is required',
       });
     }
     if (!formData.email.trim()) {
-      errors.email = intl.formatMessage({
+      errors['email'] = intl.formatMessage({
         id: 'admin.validation.email-required',
         defaultMessage: 'Email is required',
       });
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      errors.email = intl.formatMessage({
+      errors['email'] = intl.formatMessage({
         id: 'admin.validation.email-invalid',
         defaultMessage: 'Invalid email format',
       });
@@ -167,25 +170,18 @@ const UserFormDialog = ({
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>
-        {formErrors.general && (
+        {formErrors['general'] && (
           <Alert severity="error" sx={{ mb: 2 }}>
-            {formErrors.general}
+            {formErrors['general']}
           </Alert>
         )}
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 2,
-            mt: 1,
-          }}
-        >
+        <FormFields>
           <MemoTextField
             label={intl.formatMessage({ id: 'common.first-name', defaultMessage: 'First Name' })}
             value={formData.firstname}
             onChange={handleFirstnameChange}
-            error={!!formErrors.firstname}
-            helperText={formErrors.firstname}
+            error={!!formErrors['firstname']}
+            helperText={formErrors['firstname']}
             fullWidth
             required
           />
@@ -193,8 +189,8 @@ const UserFormDialog = ({
             label={intl.formatMessage({ id: 'common.last-name', defaultMessage: 'Last Name' })}
             value={formData.lastname}
             onChange={handleLastnameChange}
-            error={!!formErrors.lastname}
-            helperText={formErrors.lastname}
+            error={!!formErrors['lastname']}
+            helperText={formErrors['lastname']}
             fullWidth
             required
           />
@@ -203,17 +199,19 @@ const UserFormDialog = ({
             type="email"
             value={formData.email}
             onChange={handleEmailChange}
-            error={!!formErrors.email}
-            helperText={formErrors.email}
+            error={!!formErrors['email']}
+            helperText={formErrors['email']}
             fullWidth
             required
           />
           {localeSelect}
           {allowSendEmailSwitch}
-        </Box>
+        </FormFields>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
+        <Button onClick={onClose}>
+          <FormattedMessage id="admin.cancel" defaultMessage="Cancel" />
+        </Button>
         <Button onClick={handleSubmit} variant="contained" disabled={isPending}>
           {isPending ? pendingLabel : submitLabel}
         </Button>

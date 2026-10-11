@@ -32,7 +32,7 @@ const hoverMenu = (onClick?: jest.Mock): ActionConfig => ({
   options: [
     { icon: <span>bold</span>, tooltip: 'Bold', onClick: jest.fn() },
     { icon: <span>hidden</span>, tooltip: 'Hidden', onClick: jest.fn(), visible: false },
-    null,
+    undefined,
   ],
 });
 

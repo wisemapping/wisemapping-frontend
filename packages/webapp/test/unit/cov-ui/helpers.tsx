@@ -65,11 +65,12 @@ export const installMatchMedia = (
 export type TestConfig = {
   registrationEnabled?: boolean;
   recaptcha2Enabled?: boolean;
-  recaptcha2SiteKey?: string;
+  // An undefined value is a config that lacks it.
+  recaptcha2SiteKey?: string | undefined;
   googleOauth2Enabled?: boolean;
-  googleOauth2Url?: string;
+  googleOauth2Url?: string | undefined;
   facebookOauth2Enabled?: boolean;
-  facebookOauth2Url?: string;
+  facebookOauth2Url?: string | undefined;
 };
 
 /** Loads a static application configuration, as the bootstrap script does. */
@@ -94,7 +95,7 @@ export const initAppConfig = async (config: TestConfig = {}): Promise<void> => {
 };
 
 /** Overrides single configuration values for one test (spies are restored after each test). */
-export const useConfig = (config: TestConfig): void => {
+export const stubConfig = (config: TestConfig): void => {
   const spy = <K extends keyof typeof AppConfig>(key: K, value: unknown): void => {
     jest.spyOn(AppConfig, key as never).mockImplementation((() => value) as never);
   };

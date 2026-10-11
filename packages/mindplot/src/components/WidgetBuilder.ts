@@ -36,7 +36,7 @@ const TOOLTIP_HIDE_DELAY = 1000; // milliseconds to wait before hiding tooltip
 abstract class WidgetBuilder {
   protected _listener: (event: WidgetEventType, topic?: Topic) => void;
 
-  private _showTimeout: number | null = null;
+  private _showTimeout: number | undefined;
 
   // Hides the tooltip it is given last, once the pointer has been away from it for a while.
   private _hideTooltip: ReturnType<typeof debounce<(tooltip: HTMLElement) => void>>;
@@ -200,7 +200,7 @@ abstract class WidgetBuilder {
           tooltip.style.display = 'block';
         }
 
-        this._showTimeout = null;
+        this._showTimeout = undefined;
       }, TOOLTIP_SHOW_DELAY);
 
       evt.stopPropagation();
@@ -210,7 +210,7 @@ abstract class WidgetBuilder {
       // Cancel pending show if mouse left before delay completed
       if (this._showTimeout) {
         clearTimeout(this._showTimeout);
-        this._showTimeout = null;
+        this._showTimeout = undefined;
       }
 
       // Schedule hiding with debounce delay

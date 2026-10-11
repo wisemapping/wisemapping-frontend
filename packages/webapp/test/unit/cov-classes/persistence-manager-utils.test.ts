@@ -19,6 +19,7 @@
 import { fetchMindmap } from '../../../src/components/editor-page/PersistenceManagerUtils';
 import JwtTokenConfig from '../../../src/classes/jwt-token-config';
 import { initAppConfig, resetAppConfig } from './helpers/app-config';
+import { defined } from '../defined';
 
 const MAP_XML =
   '<map name="12" version="tango"><topic central="true" text="Server topic" id="1"/></map>';
@@ -49,7 +50,7 @@ describe('fetchMindmap', () => {
       }),
     });
     expect(mindmap.getId()).toBe('12');
-    expect(mindmap.getBranches()[0].getText()).toBe('Server topic');
+    expect(defined(mindmap.getBranches()[0]).getText()).toBe('Server topic');
   });
 
   it('fails when the server refuses the document', async () => {
@@ -70,6 +71,6 @@ describe('fetchMindmap', () => {
 
     expect(fetchSpy).not.toHaveBeenCalled();
     expect(mindmap.getId()).toBe('7');
-    expect(mindmap.getBranches()[0].getText()).toBe('This is the map 7');
+    expect(defined(mindmap.getBranches()[0]).getText()).toBe('This is the map 7');
   });
 });

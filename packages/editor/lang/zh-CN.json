@@ -772,5 +772,8 @@
   },
   "rich-text-editor.outdent": {
     "defaultMessage": "减少缩进 (Shift+Tab)"
+  },
+  "outline.untitled-map": {
+    "defaultMessage": "未命名导图"
   }
 }

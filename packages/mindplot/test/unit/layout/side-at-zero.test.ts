@@ -86,7 +86,7 @@ describe('BalancedSorter.predict', () => {
   it('puts a position at the root x on the right, as _getRelativeDirection does', () => {
     const manager = new LayoutManager(0, ROOT_NODE_SIZE);
 
-    const predicted = manager.predict(0, null, { x: 0, y: 0 });
+    const predicted = manager.predict(0, undefined, { x: 0, y: 0 });
 
     expect(predicted.order).toBe(0);
     expect(predicted.position.x).toBeGreaterThan(0);
@@ -112,7 +112,7 @@ describe('BalancedSorter.predict', () => {
     expect(left.x).toBeGreaterThan(0);
     expect(left.x).toBeLessThan(500);
 
-    const predicted = manager.predict(0, null, { x: left.x, y: left.y - 200 });
+    const predicted = manager.predict(0, undefined, { x: left.x, y: left.y - 200 });
 
     expect(predicted.order).toBe(1);
     expect(predicted.position.x).toBe(left.x);
@@ -124,7 +124,7 @@ describe('BalancedSorter.predict', () => {
     expect(right.x).toBeLessThan(0);
     expect(right.x).toBeGreaterThan(-500);
 
-    const predicted = manager.predict(0, null, { x: right.x, y: right.y - 200 });
+    const predicted = manager.predict(0, undefined, { x: right.x, y: right.y - 200 });
 
     expect(predicted.order).toBe(0);
     expect(predicted.position.x).toBe(right.x);
@@ -170,7 +170,7 @@ describe('DragConnector: dragging at x === 0', () => {
     const dragTopic = {
       getPosition: () => ({ x, y: 0 }),
       getDraggedTopic: () => dragged,
-      getConnectedToTopic: () => null,
+      getConnectedToTopic: () => undefined,
     } as unknown as DragTopic;
     const model = { getTopics: () => topics } as unknown as DesignerModel;
     const connector = new DragConnector(model, {} as Canvas) as unknown as {
@@ -198,7 +198,7 @@ describe('DragTopic: drag shadow at x === 0', () => {
     const shape = { setPosition } as unknown as Group;
     const dragged = { getSize: () => ({ width: 80, height: 30 }) } as unknown as NodeGraph;
     const layout = { getOrientation: () => 'horizontal' } as unknown as LayoutManager;
-    const pivot = { getTargetTopic: () => null } as unknown as DragPivot;
+    const pivot = { getTargetTopic: () => undefined } as unknown as DragPivot;
 
     const dragTopic = DragTopic.withPivot(pivot, () => new DragTopic(shape, dragged, layout));
     dragTopic.setPosition(x, 0);

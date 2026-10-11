@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 import SvgIcon from '@mui/material/SvgIcon';
-import React from 'react';
 
 const GoogleIconSvg = () => {
   return (

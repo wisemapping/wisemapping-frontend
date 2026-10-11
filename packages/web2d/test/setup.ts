@@ -160,7 +160,7 @@ export class FakeResizeObserver {
 }
 
 const proto = window.SVGElement.prototype as unknown as Record<string, unknown>;
-proto.getBBox = fakeGetBBox;
-proto.getComputedTextLength = fakeGetComputedTextLength;
-proto.getScreenCTM = fakeGetScreenCTM;
+proto['getBBox'] = fakeGetBBox;
+proto['getComputedTextLength'] = fakeGetComputedTextLength;
+proto['getScreenCTM'] = fakeGetScreenCTM;
 (globalThis as unknown as { ResizeObserver: unknown }).ResizeObserver = FakeResizeObserver;

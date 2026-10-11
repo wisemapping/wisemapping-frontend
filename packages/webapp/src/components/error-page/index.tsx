@@ -24,7 +24,7 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Link from '@mui/material/Link';
 import { trackPageView } from '../../utils/analytics';
-import { ErrorBody } from './styled';
+import { ErrorBody, ErrorContent } from './styled';
 import { isRouteErrorResponse, useRouteError, useNavigate, useLocation } from 'react-router';
 import { Link as RouterLink } from 'react-router';
 import { ErrorInfo } from '../../classes/client';
@@ -68,13 +68,15 @@ const ErrorPage = (): React.ReactElement => {
   const routeError = isRouteErrorResponse(error) ? error : undefined;
   const errorInfo = isErrorInfo(error) ? error : undefined;
 
-  // If no error is thrown (catch-all route), treat as 404
-  const isNotFound = error == null || routeError?.status === 404;
+  // If no error is thrown (catch-all route), treat as 404. useRouteError returns unknown: undefined
+  // when nothing was thrown, null for a `throw null`.
+  const nothingThrown = error === undefined || error === null;
+  const isNotFound = nothingThrown || routeError?.status === 404;
   const isAccessError =
     (routeError && (routeError.status === 401 || routeError.status === 403)) ||
     Boolean(errorInfo?.isAuth);
 
-  if (isNotFound && error == null) {
+  if (isNotFound && nothingThrown) {
     logCriticalError('Page not found error (catch-all route).', '404');
   } else if (routeError?.status === 404) {
     logCriticalError('Page not found error.', '404');
@@ -214,14 +216,7 @@ const ErrorPage = (): React.ReactElement => {
       <Header type="only-signup" />
 
       <ErrorBody>
-        <Box
-          sx={{
-            maxWidth: 600,
-            margin: '0 auto',
-            padding: { xs: 2, md: 4 },
-            textAlign: 'center',
-          }}
-        >
+        <ErrorContent>
           <Typography variant="h3" component="h1" gutterBottom>
             {headline}
           </Typography>
@@ -275,7 +270,7 @@ const ErrorPage = (): React.ReactElement => {
               />
             </Typography>
           </Box>
-        </Box>
+        </ErrorContent>
       </ErrorBody>
     </div>
   );

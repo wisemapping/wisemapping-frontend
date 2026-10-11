@@ -17,7 +17,7 @@
  */
 
 import TranslateTwoTone from '@mui/icons-material/TranslateTwoTone';
-import React, { useContext } from 'react';
+import React, { use } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FormattedMessage, useIntl } from 'react-intl';
 import AppI18n, { LocaleCode, Locales } from '../../../classes/app-i18n';
@@ -32,22 +32,19 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogActions from '@mui/material/DialogActions';
 import Divider from '@mui/material/Divider';
-import { useTheme } from '@mui/material/styles';
-import { mobileAppbarButton } from '../style';
+import { LanguageButton } from './styled';
 import { ClientContext } from '../../../classes/provider/client-context';
 
 const LanguageMenu = (): React.ReactElement => {
   const queryClient = useQueryClient();
-  const client = useContext(ClientContext);
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [openHelpDialog, setHelpDialogOpen] = React.useState<boolean>(false);
+  const client = use(ClientContext);
+  const [anchorEl, setAnchorEl] = React.useState<HTMLElement>();
+  const [helpDialogOpen, setHelpDialogOpen] = React.useState<boolean>(false);
 
   const open = Boolean(anchorEl);
   const intl = useIntl();
-  const theme = useTheme();
-  const smMediaQuery = theme.breakpoints.down('sm');
 
-  // Todo: For some reasons, in some situations locale is null. More research needed.
+  // Todo: For some reasons, in some situations locale is missing. More research needed.
   const mutation = useMutation({
     mutationFn: (locale: LocaleCode) => client.updateAccountLanguage(locale ? locale : 'en'),
     onSuccess: () => {
@@ -64,7 +61,7 @@ const LanguageMenu = (): React.ReactElement => {
   };
 
   const handleClose = () => {
-    setAnchorEl(null);
+    setAnchorEl(undefined);
   };
 
   const handleOnClick = (localeCode: LocaleCode) => {
@@ -82,19 +79,16 @@ const LanguageMenu = (): React.ReactElement => {
           defaultMessage: 'Change Language',
         })}
       >
-        <Button
+        <LanguageButton
           size="small"
           variant="outlined"
           disableElevation={true}
           color="primary"
-          css={{
-            [smMediaQuery]: mobileAppbarButton,
-          }}
           onClick={handleMenu}
-          startIcon={<TranslateTwoTone style={{ color: 'inherit' }} />}
+          startIcon={<TranslateTwoTone sx={{ color: 'inherit' }} />}
         >
           <span className="message">{userLocale.label}</span>
-        </Button>
+        </LanguageButton>
       </Tooltip>
       <Menu
         id="appbar-language"
@@ -129,7 +123,7 @@ const LanguageMenu = (): React.ReactElement => {
           <FormattedMessage id="language.help" defaultMessage="Help to Translate" />
         </MenuItem>
       </Menu>
-      {openHelpDialog && <HelpUsToTranslateDialog onClose={() => setHelpDialogOpen(false)} />}
+      {helpDialogOpen && <HelpUsToTranslateDialog onClose={() => setHelpDialogOpen(false)} />}
     </span>
   );
 };

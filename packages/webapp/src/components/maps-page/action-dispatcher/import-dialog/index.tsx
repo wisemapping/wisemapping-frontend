@@ -20,7 +20,7 @@ import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
 import { ImportError, Importer, TextImporterFactory } from '@wisemapping/editor';
-import React, { useContext, useEffect } from 'react';
+import React, { use, useEffect } from 'react';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useMutation } from '@tanstack/react-query';
@@ -31,13 +31,15 @@ import {
 } from '../../../../classes/client';
 import Input from '../../../form/input';
 import BaseDialog from '../base-dialog';
+import { HiddenFileInput } from './styled';
 import { ClientContext } from '../../../../classes/provider/client-context';
 
 export type ImportModel = {
   title: string;
   description?: string;
   contentType?: string;
-  content?: null | string;
+  // Cleared (undefined) while a new file is read.
+  content?: string | undefined;
 };
 
 export type CreateProps = {
@@ -51,25 +53,25 @@ type ErrorFile = {
 
 const defaultModel: ImportModel = { title: '', description: '' };
 const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
-  const client = useContext(ClientContext);
+  const client = use(ClientContext);
   const [model, setModel] = React.useState<ImportModel>(defaultModel);
   const [error, setError] = React.useState<ErrorInfo>();
   const [errorFile, setErrorFile] = React.useState<ErrorFile>({ error: false, message: '' });
   // Counts the files picked: a read or import started for an earlier file is stale and ignored.
-  const fileRequest = React.useRef(0);
+  const fileRequestRef = React.useRef(0);
   // A file is read asynchronously: its read needs what the user has typed by then, not what the
   // form held when the file was picked.
-  const latestModel = React.useRef(model);
+  const latestModelRef = React.useRef(model);
   useEffect(() => {
-    latestModel.current = model;
+    latestModelRef.current = model;
   }, [model]);
   // The title last suggested from a file name: the next file replaces it, a typed title is kept.
-  const suggestedTitle = React.useRef('');
+  const suggestedTitleRef = React.useRef('');
   const intl = useIntl();
 
   const mutation = useMutation<number, ErrorInfo, ImportModel>({
-    mutationFn: (model: ImportModel) => {
-      return client.importMap(model);
+    mutationFn: ({ content, ...model }: ImportModel) => {
+      return client.importMap({ ...model, ...(content !== undefined && { content }) });
     },
     onSuccess: (mapId: number) => {
       window.location.href = `/c/maps/${mapId}/edit`;
@@ -134,8 +136,8 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
 
     if (file) {
       const extensionFile = file.name.split('.').pop()?.toLowerCase();
-      const request = ++fileRequest.current;
-      const isStale = () => request !== fileRequest.current;
+      const request = ++fileRequestRef.current;
+      const isStale = () => request !== fileRequestRef.current;
       // The previous file is no longer the one to save, even before this one is read.
       setModel((current) => ({ ...current, content: undefined }));
 
@@ -149,12 +151,12 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
         // Forget the previous file and suggest its name as the title, unless the user typed one.
         // The updates are functional (never a mutation of `model`) so that what the user types
         // meanwhile is kept.
-        const { title: typedTitle, description } = latestModel.current;
-        const keepTitle = typedTitle !== '' && typedTitle !== suggestedTitle.current;
+        const { title: typedTitle, description } = latestModelRef.current;
+        const keepTitle = typedTitle !== '' && typedTitle !== suggestedTitleRef.current;
         // The file name without its extension only: "Plan v1.2.mm" is "Plan v1.2".
         const title = keepTitle ? typedTitle : file.name.replace(/\.[^.]*$/, '');
         if (!keepTitle) {
-          suggestedTitle.current = title;
+          suggestedTitleRef.current = title;
         }
         setModel((current) => ({ ...current, title, content: undefined }));
 
@@ -240,12 +242,11 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
           </Alert>
         )}
         <FormControl fullWidth={true}>
-          <input
+          <HiddenFileInput
             accept=".wxml,.mm,.mmx,.xmind,.mmap,.opml"
             id="contained-button-file"
             type="file"
             required={true}
-            style={{ display: 'none' }}
             onChange={handleOnFileChange}
           />
 
@@ -282,7 +283,7 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
               variant="outlined"
               color="primary"
               component="span"
-              style={{ margin: '10px 5px', width: '100%' }}
+              sx={{ margin: '10px 5px', width: '100%' }}
             >
               <FormattedMessage id="maps.choose-file" defaultMessage="Choose a file" />
             </Button>

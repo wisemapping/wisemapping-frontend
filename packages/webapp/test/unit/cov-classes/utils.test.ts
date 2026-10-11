@@ -18,6 +18,7 @@
 
 import { getCsrfToken, getCsrfTokenParameter, logCriticalError } from '../../../src/utils';
 import { appLogger } from '../../../src/utils/logger';
+import { defined } from '../defined';
 
 const addMeta = (name: string, content?: string): HTMLMetaElement => {
   const meta = document.createElement('meta');
@@ -47,12 +48,12 @@ describe('CSRF helpers', () => {
     expect(getCsrfTokenParameter()).toBe('_csrf');
   });
 
-  it('return null for a meta tag without content', () => {
+  it('return undefined for a meta tag without content', () => {
     addMeta('_csrf');
     addMeta('_csrf_parameter');
 
-    expect(getCsrfToken()).toBeNull();
-    expect(getCsrfTokenParameter()).toBeNull();
+    expect(getCsrfToken()).toBeUndefined();
+    expect(getCsrfTokenParameter()).toBeUndefined();
   });
 });
 
@@ -74,7 +75,7 @@ describe('logCriticalError', () => {
   const reported = (): string => noticeError.mock.calls[0][0] as string;
   /** The JSON part of the reported message. */
   const reportedJson = (): Record<string, unknown> =>
-    JSON.parse(reported().split('. Exception: ')[1]);
+    JSON.parse(defined(reported().split('. Exception: ')[1]));
 
   it('serializes an Error with its name, message and stack', () => {
     const error = new TypeError('broken');
@@ -104,7 +105,7 @@ describe('logCriticalError', () => {
 
   it('serializes a debug object and redacts personal context keys', () => {
     const circular: Record<string, unknown> = {};
-    circular.self = circular;
+    circular['self'] = circular;
 
     logCriticalError('Map failed', {
       errorInfo: { msg: 'Gone', status: 410, fields: { name: 'x' } },
@@ -142,9 +143,9 @@ describe('logCriticalError', () => {
 
   it('keeps what it can of an object that can not be serialized', () => {
     const circular: Record<string, unknown> = { label: 'loop', n: 1, nothing: null };
-    circular.self = circular;
-    circular.inner = { ok: true };
-    circular.big = BigInt(1);
+    circular['self'] = circular;
+    circular['inner'] = { ok: true };
+    circular['big'] = BigInt(1);
 
     logCriticalError('Odd', circular);
 

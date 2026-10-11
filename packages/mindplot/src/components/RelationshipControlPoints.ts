@@ -38,7 +38,7 @@ class ControlPivotLine {
 
   private _pivotType: PivotType;
 
-  private _canvas: Canvas | null;
+  private _canvas: Canvas | undefined;
 
   private _relationship: Relationship;
 
@@ -59,11 +59,13 @@ class ControlPivotLine {
   private _keyDownHandler: (event: KeyboardEvent) => void;
 
   // The control point as it was when the drag started, put back if Escape abandons the drag ...
-  private _dragStart: {
-    controlPoint: PositionType;
-    isCustom: boolean;
-    linePosition: PositionType;
-  } | null;
+  private _dragStart:
+    | {
+        controlPoint: PositionType;
+        isCustom: boolean;
+        linePosition: PositionType;
+      }
+    | undefined;
 
   constructor(
     pivotType: PivotType,
@@ -115,11 +117,11 @@ class ControlPivotLine {
         this.cancelDrag();
       }
     };
-    this._dragStart = null;
+    this._dragStart = undefined;
 
     this._isVisible = false;
     this._wasDragged = false;
-    this._canvas = null;
+    this._canvas = undefined;
   }
 
   private mouseDownHandler(event: Event) {
@@ -148,7 +150,7 @@ class ControlPivotLine {
       if (!value) {
         // Hiding the dot ends a drag ...
         this.removeDragListeners();
-        this._dragStart = null;
+        this._dragStart = undefined;
         this._dot.removeEvent('mousedown', this._mouseDownHandler);
         this._dot.removeEvent('touchstart', markObjectTouch);
       } else {
@@ -179,7 +181,7 @@ class ControlPivotLine {
 
   /** True from the mousedown on the dot until the drag ends. */
   isDragging(): boolean {
-    return this._dragStart !== null;
+    return this._dragStart !== undefined;
   }
 
   redraw(): void {
@@ -263,12 +265,12 @@ class ControlPivotLine {
       this._relationship.redraw();
     }
     this._wasDragged = false;
-    this._dragStart = null;
+    this._dragStart = undefined;
   }
 
   private mouseUpHandler() {
     this.removeDragListeners();
-    this._dragStart = null;
+    this._dragStart = undefined;
 
     // A plain click on the dot does not move the control point, so there is nothing to record ...
     if (this._wasDragged) {

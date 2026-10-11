@@ -24,14 +24,14 @@ import type { StrokeStyle } from '../../types';
 class ArrowPeer extends ElementPeer<SVGPathElement> {
   private _fromPoint: PositionType;
 
-  private _controlPoint: PositionType | null;
+  private _controlPoint: PositionType | undefined;
 
   private _strokeWidth: number;
 
   constructor() {
     super(ElementPeer.createNode('path'));
     this._fromPoint = { x: 0, y: 0 };
-    this._controlPoint = null;
+    this._controlPoint = undefined;
     this._strokeWidth = 1;
   }
 
@@ -58,7 +58,7 @@ class ArrowPeer extends ElementPeer<SVGPathElement> {
   }
 
   setStrokeColor(color: string): void {
-    this.setStroke(null, null, color);
+    this.setStroke(undefined, undefined, color);
   }
 
   setStrokeWidth(width: number): void {
@@ -66,20 +66,20 @@ class ArrowPeer extends ElementPeer<SVGPathElement> {
   }
 
   override setStroke(
-    width: number | null,
-    style?: StrokeStyle | null,
-    color?: string | null,
+    width: number | undefined,
+    style?: StrokeStyle,
+    color?: string,
     opacity?: number,
   ): void {
     super.setStroke(width, style, color, opacity);
-    if (width != null && width !== this._strokeWidth) {
+    if (width !== undefined && width !== this._strokeWidth) {
       this._strokeWidth = Number(width);
       this._redraw();
     }
   }
 
   setDashed(isDashed: boolean, length: number, spacing: number): void {
-    if (isDashed && length != null && spacing != null) {
+    if (isDashed && length !== undefined && spacing !== undefined) {
       this.attr('stroke-dasharray', `${length},${spacing}`);
     } else {
       this.removeAttr('stroke-dasharray');

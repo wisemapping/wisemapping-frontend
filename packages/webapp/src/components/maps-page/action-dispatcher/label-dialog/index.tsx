@@ -15,24 +15,21 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { useContext } from 'react';
+import React, { use } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import Typography from '@mui/material/Typography';
 
-import { useStyles } from './style';
+import { MapTitle, paperSx } from './styled';
 import { MultiDialogProps } from '..';
 import BaseDialog from '../base-dialog';
 import { ErrorInfo, Label, MapInfo } from '../../../../classes/client';
 import { LabelSelector } from '../../maps-list/label-selector';
 import { ChangeLabelMutationFunctionParam, getChangeLabelMutationFunction } from '../../maps-list';
-import { Interpolation, Theme } from '@emotion/react';
 import { ClientContext } from '../../../../classes/provider/client-context';
 
 const LabelDialog = ({ mapsId, onClose }: MultiDialogProps): React.ReactElement => {
   const intl = useIntl();
-  const classes = useStyles();
-  const client = useContext(ClientContext);
+  const client = use(ClientContext);
   const queryClient = useQueryClient();
 
   const { data } = useQuery<unknown, ErrorInfo, MapInfo[]>({
@@ -77,18 +74,12 @@ const LabelDialog = ({ mapsId, onClose }: MultiDialogProps): React.ReactElement 
           id: 'label.description',
           defaultMessage: 'Use labels to organize your maps.',
         })}
-        papercss={classes.paper}
+        paperSx={paperSx}
         error={error}
       >
         {maps && (
           <>
-            <Typography
-              variant="body2"
-              css={classes.title as Interpolation<Theme>}
-              sx={{
-                marginTop: '10px',
-              }}
-            >
+            <MapTitle variant="body2">
               <FormattedMessage id="label.add-for" defaultMessage="Editing labels for " />
               {maps && maps.length > 1 ? (
                 <FormattedMessage
@@ -99,7 +90,7 @@ const LabelDialog = ({ mapsId, onClose }: MultiDialogProps): React.ReactElement 
               ) : (
                 maps.map((m) => m.title).join(', ')
               )}
-            </Typography>
+            </MapTitle>
             <LabelSelector onChange={handleChangesInLabels} maps={maps} />
           </>
         )}

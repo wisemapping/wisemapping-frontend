@@ -78,12 +78,12 @@ class LocalStorageManager extends PersistenceManager {
 
   loadMapDom(mapId: string): Promise<Document> {
     let result: Promise<Document>;
-    let localStorate: string | null = null;
+    let localStorate: string | undefined;
     if (!this.readOnly) {
-      localStorate = localStorage.getItem(`${mapId}-xml`);
+      localStorate = localStorage.getItem(`${mapId}-xml`) ?? undefined;
     }
 
-    if (localStorate == null || this.forceLoad) {
+    if (localStorate === undefined || this.forceLoad) {
       const url = this.documentUrl.replace('{id}', mapId);
 
       const fetchWithRetry = async (urlStr: string, retries = 3): Promise<Response> => {

@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useContext } from 'react';
+import React, { use } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { ChangeHistory, ErrorInfo } from '../../../../classes/client';
@@ -47,7 +47,7 @@ type HistoryDialogProps = SimpleDialogProps & {
    * Run before reverting, from the editor: saves its pending changes and stops it saving, or the
    * save on page unload would write the map back over the revert.
    */
-  beforeRevert?: () => Promise<void>;
+  beforeRevert?: (() => Promise<void>) | undefined;
 };
 
 const HistoryDialog = ({
@@ -57,7 +57,7 @@ const HistoryDialog = ({
 }: HistoryDialogProps): React.ReactElement => {
   const intl = useIntl();
   const date = useDate();
-  const client = useContext(ClientContext);
+  const client = use(ClientContext);
   const { data } = useQuery<unknown, ErrorInfo, ChangeHistory[]>({
     queryKey: [`history-${mapId}`],
     queryFn: () => client.fetchHistory(mapId),

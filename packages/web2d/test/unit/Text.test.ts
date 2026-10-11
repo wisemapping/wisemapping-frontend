@@ -198,7 +198,7 @@ describe('TextPeer fonts', () => {
   it('setFont with only a name keeps size, style and weight', () => {
     const text = new Text();
     text.setFont('Arial', 20, 'italic', 'bold');
-    text.setFont('Tahoma', undefined, null, undefined);
+    text.setFont('Tahoma', undefined, undefined, undefined);
     const node = text.peer._native;
     expect(node.getAttribute('font-family')).toBe('Tahoma');
     expect(node.getAttribute('font-size')).toBe('26.9');
@@ -209,7 +209,7 @@ describe('TextPeer fonts', () => {
   it('setFont with an empty weight keeps the weight', () => {
     const text = new Text();
     text.setFont('Arial', 10, 'normal', 'bold');
-    text.setFont('', 12, null, null);
+    text.setFont('', 12, undefined, undefined);
     expect(text.peer._native.getAttribute('font-family')).toBe('Arial');
     expect(text.peer._native.getAttribute('font-weight')).toBe('900');
   });
@@ -484,7 +484,7 @@ describe('Text measurement cache', () => {
         text.getShapeWidth();
         text.getShapeWidth();
         expect(spy).toHaveBeenCalledTimes(1);
-        listeners.loadingdone?.();
+        listeners['loadingdone']?.();
         text.getShapeWidth();
         expect(spy).toHaveBeenCalledTimes(2);
       });

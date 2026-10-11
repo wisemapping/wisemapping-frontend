@@ -67,7 +67,7 @@ const asTopic = (fake: Fake): any => ({
   __fake: fake,
   getPosition: () => ({ x: fake.x, y: fake.y }),
   getChildren: () => fake.children.map(asTopic),
-  getParent: () => (fake.parent ? asTopic(fake.parent) : null),
+  getParent: () => (fake.parent ? asTopic(fake.parent) : undefined),
   isCentralTopic: () => fake.central,
   getOrientation: () => 'horizontal',
   areChildrenShrunken: () => false,

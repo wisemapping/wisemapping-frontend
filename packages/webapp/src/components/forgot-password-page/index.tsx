@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useState, useEffect, useContext, useCallback } from 'react';
+import React, { useState, useEffect, use, useCallback } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { ErrorInfo, ForgotPasswordResult } from '../../classes/client';
 
@@ -48,7 +48,7 @@ const ForgotPassword = () => {
   const navigate = useNavigate();
   const intl = useIntl();
 
-  const client = useContext(ClientContext);
+  const client = use(ClientContext);
   const mutation = useMutation<ForgotPasswordResult, ErrorInfo, string>({
     mutationFn: (email: string) => client.resetPassword(email),
     onSuccess: (result) => {

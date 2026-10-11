@@ -20,7 +20,7 @@ import type CommandContext from './CommandContext';
 abstract class Command {
   private _id: number;
 
-  static _uuid: number;
+  static _uuid: number | undefined;
 
   private _discardDuplicated: string | undefined;
 
@@ -38,7 +38,7 @@ abstract class Command {
   }
 
   static _nextUUID() {
-    if (this._uuid == null) {
+    if (this._uuid === undefined) {
       this._uuid = 1;
     }
     this._uuid += 1;

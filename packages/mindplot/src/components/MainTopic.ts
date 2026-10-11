@@ -36,7 +36,7 @@ class MainTopic extends Topic {
     innerShape.setVisibility(true);
 
     const brColor = this.getBorderColor(this.getThemeVariant());
-    innerShape.setStroke(null, null, brColor);
+    innerShape.setStroke(undefined, undefined, brColor);
 
     const bgColor = this.getBackgroundColor(this.getThemeVariant());
     innerShape.setFill(bgColor);

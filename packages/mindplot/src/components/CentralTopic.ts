@@ -64,8 +64,8 @@ class CentralTopic extends Topic {
     this.setPosition(zeroPoint);
   }
 
-  override getShrinkConnector(): null {
-    return null;
+  override getShrinkConnector(): undefined {
+    return undefined;
   }
 
   workoutOutgoingConnectionPoint(targetPosition: PositionType) {

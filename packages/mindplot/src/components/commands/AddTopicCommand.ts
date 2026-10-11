@@ -24,7 +24,7 @@ import type Topic from '../Topic';
 class AddTopicCommand extends Command {
   private _models: NodeModel[];
 
-  private _parentsIds: number[] | null;
+  private _parentsIds: number[] | undefined;
 
   // Parents that were collapsed and this command expanded, to collapse them again on undo.
   private _expandedParentIds: number[];
@@ -33,9 +33,9 @@ class AddTopicCommand extends Command {
    * @classdesc This command class handles do/undo of adding one or multiple topics to
    * the mindmap.
    */
-  constructor(models: NodeModel[], parentTopicsId: number[] | null) {
+  constructor(models: NodeModel[], parentTopicsId?: number[]) {
     $assert(
-      parentTopicsId == null || parentTopicsId.length === models.length,
+      parentTopicsId === undefined || parentTopicsId.length === models.length,
       'parents and models must have the same size',
     );
 
@@ -50,7 +50,8 @@ class AddTopicCommand extends Command {
     // its topics are added as floating topics ...
     const parents = new Map<number, Topic>();
     if (this._parentsIds) {
-      const parentIds = this._parentsIds.filter((id): id is number => id != null);
+      // A JavaScript caller may pass null for a floating topic (BL5-43): only numbers are parents.
+      const parentIds = this._parentsIds.filter((id) => typeof id === 'number');
       Array.from(new Set(parentIds)).forEach((parentId) => {
         const parentTopic = commandContext.designer.getModel().findTopicById(parentId);
         if (parentTopic) {
@@ -78,7 +79,7 @@ class AddTopicCommand extends Command {
 
       // Connect to its parent, or add it as a floating topic when it has none ...
       const parentId = this._parentsIds?.[index];
-      const parentTopic = parentId != null ? parents.get(parentId) : undefined;
+      const parentTopic = typeof parentId === 'number' ? parents.get(parentId) : undefined;
       if (parentTopic) {
         commandContext.connect(topic, parentTopic);
       } else {

@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, use, useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Link as RouterLink, useLocation } from 'react-router';
 import AccountAccessLayout from '../layout/AccountAccessLayout';
@@ -27,14 +27,13 @@ import FormContainer from '../layout/form-container';
 import Typography from '@mui/material/Typography';
 import FormControl from '@mui/material/FormControl';
 import Link from '@mui/material/Link';
-import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 import Separator from '../common/separator';
 import GoogleButton from '../common/google-button';
 import FacebookButton from '../common/facebook-button';
 import AppConfig from '../../classes/app-config';
 import { useMutation } from '@tanstack/react-query';
-import { ErrorInfo, LoginErrorInfo } from '../../classes/client';
+import { LoginErrorInfo } from '../../classes/client';
 import { ClientContext } from '../../classes/provider/client-context';
 import { SEOHead } from '../seo';
 import { useTheme } from '../../contexts/ThemeContext';
@@ -44,6 +43,8 @@ import { getCanonicalUrl, getAlternateLanguageUrls } from '../../utils/seo-local
 import AuthProgress from '../layout/auth-progress';
 import { leaveTo, safeRedirectPath } from '../../utils/redirect';
 import { startOAuthFlow, takeOAuthFlow } from '../../utils/oauth-flow';
+import { SocialButtons } from './styled';
+import { TermsNotice } from '../layout/styled';
 
 export type Model = {
   email: string;
@@ -59,7 +60,7 @@ const defaultModel: Model = { email: '', password: '' };
 const LoginError = ({ error }: LoginErrorProps) => {
   const intl = useIntl();
 
-  let msg: null | string = null;
+  let msg: string | undefined;
   if (error) {
     // Always use the backend error message
     msg =
@@ -78,13 +79,13 @@ const LoginPage = (): React.ReactElement => {
   const [loginError, setLoginError] = useState<LoginErrorInfo | undefined>(undefined);
   const [isCheckingAuth, setIsCheckingAuth] = useState<boolean>(true);
 
-  const client = useContext(ClientContext);
+  const client = use(ClientContext);
   const location = useLocation();
   const { initializeThemeFromSystem } = useTheme();
 
   // Check if user came from a shared link
   const searchParams = new URLSearchParams(location.search);
-  const redirectUrl = searchParams.get('redirect');
+  const redirectUrl = searchParams.get('redirect') ?? undefined;
   const isSharedLink = redirectUrl?.includes('shared=true') || false;
   const oauthError = searchParams.get('error');
 
@@ -127,7 +128,7 @@ const LoginPage = (): React.ReactElement => {
   }, []);
 
   useEffect(() => {
-    const redirectUrl = new URLSearchParams(location.search).get('redirect');
+    const redirectUrl = new URLSearchParams(location.search).get('redirect') ?? undefined;
 
     const checkAuthentication = async (): Promise<void> => {
       try {
@@ -141,12 +142,13 @@ const LoginPage = (): React.ReactElement => {
     checkAuthentication();
   }, [client, location.search]);
 
-  const mutation = useMutation<void, ErrorInfo, Model>({
+  // The REST client rejects a login with a LoginErrorInfo.
+  const mutation = useMutation<void, LoginErrorInfo, Model>({
     mutationFn: (model: Model) => client.login({ ...model }),
     onSuccess: () => {
       initializeThemeFromSystem();
 
-      leaveTo(safeRedirectPath(new URLSearchParams(location.search).get('redirect')));
+      leaveTo(safeRedirectPath(new URLSearchParams(location.search).get('redirect') ?? undefined));
     },
     onError: (error: LoginErrorInfo) => {
       setLoginError(error);
@@ -210,9 +212,7 @@ const LoginPage = (): React.ReactElement => {
       />
       <AccountAccessLayout
         headerType={AppConfig.isRegistrationEnabled() ? 'only-signup' : 'none'}
-        contentSx={{
-          padding: { xs: '8px 16px', md: '16px 16px' },
-        }}
+        compact
       >
         <FormContainer>
           <header>
@@ -320,15 +320,7 @@ const LoginPage = (): React.ReactElement => {
                   defaultMessage: 'or',
                 })}
               />
-              <Box
-                sx={{
-                  display: 'flex',
-                  gap: 2,
-                  flexWrap: 'wrap',
-                  width: '100%',
-                  marginBottom: '-20px',
-                }}
-              >
+              <SocialButtons>
                 {AppConfig.isGoogleOauth2Enabled() && (
                   <GoogleButton
                     text={intl.formatMessage({
@@ -347,18 +339,10 @@ const LoginPage = (): React.ReactElement => {
                     onClick={() => handleOAuthLogin(AppConfig.getFacebookOauth2Url(), 'Facebook')}
                   />
                 )}
-              </Box>
+              </SocialButtons>
             </>
           )}
-          <Typography
-            variant="body2"
-            sx={{
-              fontSize: '12px',
-              mt: 3,
-              textAlign: 'center',
-              width: '100%',
-            }}
-          >
+          <TermsNotice gutter={3} variant="body2">
             <FormattedMessage
               id="common.terms-notice"
               defaultMessage="By continuing, you agree to our <termsLink>Terms of Service</termsLink> and <privacyLink>Privacy Policy</privacyLink>."
@@ -383,7 +367,7 @@ const LoginPage = (): React.ReactElement => {
                 ),
               }}
             />
-          </Typography>
+          </TermsNotice>
         </FormContainer>
       </AccountAccessLayout>
     </>

@@ -57,12 +57,7 @@ class Text extends WorkspaceElement<TextPeer> {
   }
 
   /** Sets the font. An empty name, or a missing size, style or weight, keeps the current one. */
-  setFont(
-    font: string,
-    size?: number | null,
-    style?: FontStyleType | null,
-    weight?: FontWeightType | null,
-  ): void {
+  setFont(font: string, size?: number, style?: FontStyleType, weight?: FontWeightType): void {
     this.peer.setFont(font, size, style, weight);
   }
 
@@ -74,7 +69,7 @@ class Text extends WorkspaceElement<TextPeer> {
     this.peer.setColor(color);
   }
 
-  getColor(): string | null {
+  getColor(): string | undefined {
     return this.peer.getColor();
   }
 
@@ -137,7 +132,7 @@ class Text extends WorkspaceElement<TextPeer> {
    * The text position in pixels. Pass the offset parent of an absolutely positioned element that
    * should be placed over the text (BL5-76); without it, the position is in document coordinates.
    */
-  getNativePosition(container?: Element | null): { left: number; top: number } {
+  getNativePosition(container?: Element): { left: number; top: number } {
     return this.peer.getNativePosition(container);
   }
 }

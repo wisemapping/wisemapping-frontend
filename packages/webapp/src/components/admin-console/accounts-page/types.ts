@@ -28,8 +28,8 @@ export interface User {
   creationDate: string;
   isActive: boolean;
   isSuspended: boolean;
-  suspensionReason?: string;
-  suspendedDate?: string;
+  suspensionReason?: string | undefined;
+  suspendedDate?: string | undefined;
   allowSendEmail: boolean;
   authenticationType: AuthenticationType;
 }

@@ -22,7 +22,7 @@ import type ThemeType from '../model/ThemeType';
 class ChangeThemeCommand extends Command {
   private _newTheme: ThemeType;
 
-  private _oldTheme: ThemeType | null | undefined;
+  private _oldTheme: ThemeType | undefined;
 
   private _applied: boolean;
 

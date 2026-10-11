@@ -20,8 +20,9 @@ import React from 'react';
 import Button, { ButtonProps } from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 
-export type AsyncButtonProps = ButtonProps & {
-  isLoading?: boolean;
+export type AsyncButtonProps = Omit<ButtonProps, 'disabled'> & {
+  disabled?: boolean | undefined;
+  isLoading?: boolean | undefined;
   loadingText?: string;
   children: React.ReactNode;
 };

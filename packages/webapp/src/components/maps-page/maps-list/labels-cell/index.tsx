@@ -17,12 +17,15 @@
  */
 
 import React, { memo } from 'react';
-import { LabelContainer, LabelText } from '../label/styled';
+import {
+  DeleteLabelButton,
+  DeleteLabelIcon,
+  LabelContainer,
+  LabelIcon,
+  LabelText,
+} from '../label/styled';
 
 import { Label } from '../../../../classes/client';
-import LabelTwoTone from '@mui/icons-material/LabelTwoTone';
-import DeleteIcon from '@mui/icons-material/Clear';
-import IconButton from '@mui/material/IconButton';
 import { useIntl } from 'react-intl';
 
 type Props = {
@@ -42,12 +45,9 @@ const LabelsCellComponent: React.FC<Props> = ({ labels, onDelete }) => {
     <>
       {labels.map((label) => (
         <LabelContainer key={label.id} color={label.color}>
-          <LabelTwoTone
-            htmlColor={getIconColor(label)}
-            style={{ height: '0.6em', width: '0.6em' }}
-          />
+          <LabelIcon htmlColor={getIconColor(label)} />
           <LabelText>{label.title}</LabelText>
-          <IconButton
+          <DeleteLabelButton
             color="default"
             size="small"
             aria-label={intl.formatMessage({
@@ -59,23 +59,10 @@ const LabelsCellComponent: React.FC<Props> = ({ labels, onDelete }) => {
               e.stopPropagation();
               onDelete(label);
             }}
-            sx={{
-              padding: '0px',
-              marginLeft: '2px',
-              '&:hover': {
-                opacity: 0.8,
-              },
-            }}
             className="delete-button"
           >
-            <DeleteIcon
-              style={{ height: '0.6em', width: '0.6em' }}
-              sx={{
-                color: 'rgba(255, 255, 255, 0.95)',
-                filter: 'drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3))',
-              }}
-            />
-          </IconButton>
+            <DeleteLabelIcon />
+          </DeleteLabelButton>
         </LabelContainer>
       ))}
     </>

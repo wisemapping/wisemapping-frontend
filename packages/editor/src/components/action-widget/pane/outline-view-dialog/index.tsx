@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { ReactElement, useState, useEffect } from 'react';
+import React, { ReactElement, useState } from 'react';
 import Dialog from '@mui/material/Dialog';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
@@ -71,23 +71,33 @@ const OutlineViewDialog = ({ open, onClose, mindmap }: OutlineViewDialogProps): 
   const intl = useIntl();
   const [outlineData, setOutlineData] = useState<OutlineNodeData[]>([]);
   const [centralTopicTitle, setCentralTopicTitle] = useState<string>('');
-  const [selectedNode, setSelectedNode] = useState<INodeModel | null>(null);
-  const [dialogType, setDialogType] = useState<'link' | 'note' | null>(null);
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const [selectedNode, setSelectedNode] = useState<INodeModel>();
+  const [dialogType, setDialogType] = useState<'link' | 'note'>();
+  const [anchorEl, setAnchorEl] = useState<HTMLElement>();
 
-  useEffect(() => {
+  // The outline is rebuilt from the map each time the dialog opens (or is given another map).
+  // Adjusted while rendering, not in an effect, so the dialog never opens on a frame of the
+  // outline it showed last time.
+  const [seenInputs, setSeenInputs] = useState<{ open: boolean; mindmap?: Mindmap | undefined }>({
+    open: false,
+  });
+  if (seenInputs.open !== open || seenInputs.mindmap !== mindmap) {
+    setSeenInputs({ open, mindmap });
     if (open && mindmap) {
       const centralTopic = mindmap.getCentralTopic();
       if (centralTopic) {
         // Set the central topic as title
-        setCentralTopicTitle(centralTopic.getText() || 'Untitled Map');
+        setCentralTopicTitle(
+          centralTopic.getText() ||
+            intl.formatMessage({ id: 'outline.untitled-map', defaultMessage: 'Untitled Map' }),
+        );
 
         // Build outline data using OutlineBuilder
         const children = outlineBuilder.buildFromCentralTopic(centralTopic);
         setOutlineData(children);
       }
     }
-  }, [open, mindmap]);
+  }
 
   const toggleExpanded = (nodeId: string) => {
     const updateNode = (nodes: OutlineNodeData[]): OutlineNodeData[] => {
@@ -137,9 +147,9 @@ const OutlineViewDialog = ({ open, onClose, mindmap }: OutlineViewDialogProps): 
   };
 
   const handleCloseTooltip = () => {
-    setAnchorEl(null);
-    setSelectedNode(null);
-    setDialogType(null);
+    setAnchorEl(undefined);
+    setSelectedNode(undefined);
+    setDialogType(undefined);
   };
 
   const renderNode = (node: OutlineNodeData): ReactElement => {
@@ -174,6 +184,7 @@ const OutlineViewDialog = ({ open, onClose, mindmap }: OutlineViewDialogProps): 
               {/* Render SVG icons */}
               {node.iconUrls.map((iconUrl, index) => (
                 <NodeIcon
+                  // eslint-disable-next-line @eslint-react/no-array-index-key -- a topic may repeat an icon
                   key={`icon-${index}`}
                   src={iconUrl}
                   alt="icon"
@@ -186,6 +197,7 @@ const OutlineViewDialog = ({ open, onClose, mindmap }: OutlineViewDialogProps): 
               {/* Render emoji icons */}
               {node.emojiChars.map((emoji, index) => (
                 <span
+                  // eslint-disable-next-line @eslint-react/no-array-index-key -- a topic may repeat an emoji
                   key={`emoji-${index}`}
                   style={{
                     fontSize: '16px',
@@ -378,6 +390,7 @@ const OutlineViewDialog = ({ open, onClose, mindmap }: OutlineViewDialogProps): 
                 {isHtml ? (
                   // The note comes from the map: sanitized, with its links opening in a new tab.
                   <TooltipContent
+                    // eslint-disable-next-line @eslint-react/dom-no-dangerously-set-innerhtml -- sanitized
                     dangerouslySetInnerHTML={{ __html: HtmlSanitizer.sanitizeForDisplay(noteText) }}
                   />
                 ) : (

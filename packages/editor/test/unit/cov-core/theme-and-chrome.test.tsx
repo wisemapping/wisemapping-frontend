@@ -128,7 +128,7 @@ describe('createEditorTheme', () => {
         backgroundColor: theme.palette.background.paper,
       });
       const iconButton = call(overrides.MuiIconButton!.styleOverrides!.root);
-      expect(iconButton.color).toBe(theme.palette.text.primary);
+      expect(iconButton['color']).toBe(theme.palette.text.primary);
       expect(iconButton['&:hover']).toEqual({
         backgroundColor: isLight ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.08)',
       });

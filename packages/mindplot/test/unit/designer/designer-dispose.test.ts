@@ -243,8 +243,8 @@ describe('Designer dispose (BL-48)', () => {
     const designer = await build();
     const dragManager = internals(designer)._dragManager;
     const dragListeners = dragManager as unknown as {
-      _mouseMoveListener: EventListener | null;
-      _mouseUpListener: EventListener | null;
+      _mouseMoveListener: EventListener | undefined;
+      _mouseUpListener: EventListener | undefined;
     };
     const removeDocumentListener = jest.spyOn(document, 'removeEventListener');
 
@@ -255,13 +255,13 @@ describe('Designer dispose (BL-48)', () => {
       .getNode()
       .dispatchEvent(new MouseEvent('mousedown', { clientX: 10, clientY: 10 }));
     const { _mouseMoveListener: mouseMove, _mouseUpListener: mouseUp } = dragListeners;
-    expect(mouseMove).not.toBeNull();
+    expect(mouseMove).toBeDefined();
 
     designer.dispose();
 
     expect(removeDocumentListener).toHaveBeenCalledWith('mousemove', mouseMove);
     expect(removeDocumentListener).toHaveBeenCalledWith('mouseup', mouseUp);
-    expect(dragListeners._mouseMoveListener).toBeNull();
+    expect(dragListeners._mouseMoveListener).toBeUndefined();
   });
 
   it('stops being the ActionDispatcher instance (BL4-50)', async () => {

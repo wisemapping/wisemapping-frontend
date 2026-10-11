@@ -100,7 +100,10 @@ class CommandContext {
 
   /** */
   findRelationships(relationshipIds: number[]): Relationship[] {
-    $assert(relationshipIds != null, 'relId can not be null');
+    $assert(
+      Array.isArray(relationshipIds) || typeof relationshipIds === 'number',
+      'relId can not be null',
+    );
     const relIds = Array.isArray(relationshipIds) ? relationshipIds : [relationshipIds];
 
     const designerRel = this._designer.getModel().getRelationships();

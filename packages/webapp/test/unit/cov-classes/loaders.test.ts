@@ -158,11 +158,11 @@ describe('root loader', () => {
 });
 
 describe('editor page loader', () => {
-  const useClient = (fetchMapMetadata: jest.Mock) =>
+  const stubClient = (fetchMapMetadata: jest.Mock) =>
     jest.spyOn(AppConfig, 'getClient').mockReturnValue(fakeClient(fetchMapMetadata));
 
   it.each([undefined, 'undefined'])('rejects a missing map id (%s) with a 400', async (id) => {
-    useClient(jest.fn());
+    stubClient(jest.fn());
 
     const response = await runLoader('edit', id);
 
@@ -171,7 +171,7 @@ describe('editor page loader', () => {
   });
 
   it("loads the editor's messages with the map", async () => {
-    useClient(jest.fn());
+    stubClient(jest.fn());
     localStorage.setItem('user.locale', 'hi');
     try {
       await runLoader('try', '3');
@@ -183,7 +183,7 @@ describe('editor page loader', () => {
   });
 
   it('rejects a non-numeric map id with a 400', async () => {
-    useClient(jest.fn());
+    stubClient(jest.fn());
 
     const response = await runLoader('edit', 'abc');
 
@@ -193,7 +193,7 @@ describe('editor page loader', () => {
 
   it('serves the showcase map for the try page without calling the backend', async () => {
     const fetchMapMetadata = jest.fn();
-    useClient(fetchMapMetadata);
+    stubClient(fetchMapMetadata);
 
     const response = await runLoader('try', '3');
 
@@ -207,7 +207,7 @@ describe('editor page loader', () => {
 
   it('opens an editable map with the role-based mode and the saved zoom', async () => {
     const fetchMapMetadata = jest.fn().mockResolvedValue(metadata());
-    useClient(fetchMapMetadata);
+    stubClient(fetchMapMetadata);
 
     const response = await runLoader('edit', '5');
 
@@ -221,7 +221,7 @@ describe('editor page loader', () => {
 
   it('reuses the cached metadata for the same map', async () => {
     const fetchMapMetadata = jest.fn().mockResolvedValue(metadata());
-    useClient(fetchMapMetadata);
+    stubClient(fetchMapMetadata);
 
     await runLoader('edit', '5');
     await runLoader('edit', '5');
@@ -230,7 +230,7 @@ describe('editor page loader', () => {
   });
 
   it('opens a locked map read-only', async () => {
-    useClient(jest.fn().mockResolvedValue(metadata({ isLocked: true })));
+    stubClient(jest.fn().mockResolvedValue(metadata({ isLocked: true })));
 
     const response = await runLoader('edit', '5');
 
@@ -240,7 +240,7 @@ describe('editor page loader', () => {
   it('opens a map read-only for a user who is no collaborator', async () => {
     // A public map opened at /edit by someone it is not shared with: the backend says role
     // "none". An editable canvas would save to a read-only store and silently drop every edit.
-    useClient(jest.fn().mockResolvedValue(metadata({ role: 'none' })));
+    stubClient(jest.fn().mockResolvedValue(metadata({ role: 'none' })));
 
     const response = await runLoader('edit', '5');
 
@@ -248,7 +248,7 @@ describe('editor page loader', () => {
   });
 
   it('opens a locked map of somebody else read-only through the public view', async () => {
-    useClient(jest.fn().mockResolvedValue(metadata({ role: 'none', isLocked: true })));
+    stubClient(jest.fn().mockResolvedValue(metadata({ role: 'none', isLocked: true })));
 
     const response = await runLoader('edit', '5');
 
@@ -257,7 +257,7 @@ describe('editor page loader', () => {
 
   it("opens a revision of somebody else's map through the private history endpoint", async () => {
     // There is no public history endpoint ({id}/{hid}/document/xml-pub does not exist).
-    useClient(jest.fn().mockResolvedValue(metadata({ role: 'none' })));
+    stubClient(jest.fn().mockResolvedValue(metadata({ role: 'none' })));
 
     const response = await runLoader('view-private', '5', true, '55');
 
@@ -266,7 +266,7 @@ describe('editor page loader', () => {
 
   it('does not bootstrap a history revision with the current map', async () => {
     const fetchMapMetadata = jest.fn().mockResolvedValue(metadata({ xml: '<current/>' }));
-    useClient(fetchMapMetadata);
+    stubClient(fetchMapMetadata);
 
     const data = await (await runLoader('view-private', '5', true, '55')).json();
 
@@ -276,7 +276,7 @@ describe('editor page loader', () => {
   });
 
   it('opens the private view read-only', async () => {
-    useClient(jest.fn().mockResolvedValue(metadata({ role: 'owner' })));
+    stubClient(jest.fn().mockResolvedValue(metadata({ role: 'owner' })));
 
     const response = await runLoader('view-private', '5');
 
@@ -291,7 +291,7 @@ describe('editor page loader', () => {
     ['invalid JSON', '{zoom'],
     ['a null value', 'null'],
   ])('falls back to the default zoom for %s', async (_name, jsonProps) => {
-    useClient(jest.fn().mockResolvedValue(metadata({ jsonProps })));
+    stubClient(jest.fn().mockResolvedValue(metadata({ jsonProps })));
 
     const response = await runLoader('edit', '5');
 
@@ -300,7 +300,7 @@ describe('editor page loader', () => {
 
   it('passes the map XML along when bootstrapping', async () => {
     const fetchMapMetadata = jest.fn().mockResolvedValue(metadata({ xml: '<map/>' }));
-    useClient(fetchMapMetadata);
+    stubClient(fetchMapMetadata);
 
     const response = await runLoader('edit', '5', true);
 
@@ -309,7 +309,7 @@ describe('editor page loader', () => {
   });
 
   it('bootstraps without XML when the server sends none', async () => {
-    useClient(jest.fn().mockResolvedValue(metadata()));
+    stubClient(jest.fn().mockResolvedValue(metadata()));
 
     const data = await (await runLoader('edit', '5', true)).json();
 
@@ -318,7 +318,7 @@ describe('editor page loader', () => {
 
   it('redirects to the login, keeping the current url, on an auth error', async () => {
     window.history.pushState({}, '', '/c/maps/5/edit?zoom=2');
-    useClient(jest.fn().mockRejectedValue({ isAuth: true, status: 403 }));
+    stubClient(jest.fn().mockRejectedValue({ isAuth: true, status: 403 }));
 
     const response = await runLoader('edit', '5');
 
@@ -331,13 +331,13 @@ describe('editor page loader', () => {
 
   it('rethrows other errors of the private pages', async () => {
     const error = { msg: 'Not found', status: 404 };
-    useClient(jest.fn().mockRejectedValue(error));
+    stubClient(jest.fn().mockRejectedValue(error));
 
     await expect(runLoader('view-private', '5')).rejects.toEqual(error);
   });
 
   it('opens a public map read-only with the default zoom', async () => {
-    useClient(jest.fn().mockResolvedValue(metadata({ xml: '<map/>' })));
+    stubClient(jest.fn().mockResolvedValue(metadata({ xml: '<map/>' })));
 
     const plain = await (await runLoader('view-public', '5')).json();
     expect(plain).toMatchObject({ editorMode: 'viewonly-public', zoom: 0.8 });
@@ -349,7 +349,7 @@ describe('editor page loader', () => {
   });
 
   it('answers a removed public map with a 410 response', async () => {
-    useClient(jest.fn().mockRejectedValue({ status: 410, msg: 'Flagged as spam' }));
+    stubClient(jest.fn().mockRejectedValue({ status: 410, msg: 'Flagged as spam' }));
 
     const thrown = await runLoader('view-public', '5').catch((e: unknown) => e);
 
@@ -359,7 +359,7 @@ describe('editor page loader', () => {
   });
 
   it('uses a default message for a removed public map without one', async () => {
-    useClient(jest.fn().mockRejectedValue({ status: 410 }));
+    stubClient(jest.fn().mockRejectedValue({ status: 410 }));
 
     const thrown = (await runLoader('view-public', '5').catch((e: unknown) => e)) as Response;
 
@@ -370,7 +370,7 @@ describe('editor page loader', () => {
 
   it('rethrows other errors of the public page', async () => {
     const plainError = new Error('boom');
-    useClient(jest.fn().mockRejectedValueOnce({ status: 500 }).mockRejectedValueOnce(plainError));
+    stubClient(jest.fn().mockRejectedValueOnce({ status: 500 }).mockRejectedValueOnce(plainError));
 
     await expect(runLoader('view-public', '5')).rejects.toEqual({ status: 500 });
     queryClient.clear();
@@ -378,7 +378,7 @@ describe('editor page loader', () => {
   });
 
   it('fails on an unknown page mode', async () => {
-    useClient(jest.fn());
+    stubClient(jest.fn());
 
     await expect(runLoader('other' as PageModeType, '5')).rejects.toThrow('other');
   });

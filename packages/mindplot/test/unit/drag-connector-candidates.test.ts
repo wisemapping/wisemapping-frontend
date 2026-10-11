@@ -46,7 +46,7 @@ const reference = (
   allTopics: Topic[],
   draggedNode: Topic,
   sPos: PositionType,
-  currentConnection: Topic | null,
+  currentConnection: Topic | undefined,
 ): Topic[] => {
   const orientation = draggedNode.getOrientation();
   let topics = allTopics.filter((topic) => {
@@ -92,7 +92,7 @@ type Searcher = { _searchConnectionCandidates(dragTopic: DragTopic): Topic[] };
 const dragTopicFor = (
   dragged: Topic,
   at: () => PositionType,
-  connectedTo: () => Topic | null,
+  connectedTo: () => Topic | undefined,
 ): DragTopic =>
   ({
     getPosition: at,
@@ -148,7 +148,7 @@ describe('DragConnector candidates (bug3.wxml)', () => {
       let compared = 0;
       let nonEmpty = 0;
       [main, deep, leaf].forEach((dragged) => {
-        [null, main.getParent()].forEach((connectedTo) => {
+        [undefined, main.getParent()].forEach((connectedTo) => {
           let mouse: PositionType = { x: 0, y: 0 };
           const dragTopic = dragTopicFor(
             dragged,
@@ -191,7 +191,7 @@ describe('DragConnector candidates (bug3.wxml)', () => {
     const dragTopic = dragTopicFor(
       main,
       () => mouse,
-      () => null,
+      () => undefined,
     );
     let candidates = 0;
     for (let i = 0; i < 50; i++) {
@@ -224,7 +224,7 @@ describe('DragConnector candidates (bug3.wxml)', () => {
     const dragTopic = dragTopicFor(
       main,
       () => mouse,
-      () => null,
+      () => undefined,
     );
     const MOVES = 50;
     let candidates = 0;
@@ -251,8 +251,8 @@ describe('DragConnector candidates (bug3.wxml)', () => {
     const getChildren = jest.spyOn(Topic.prototype, 'getChildren');
 
     const at = () => ({ x: 0, y: 0 });
-    connector._searchConnectionCandidates(dragTopicFor(first!, at, () => null));
-    connector._searchConnectionCandidates(dragTopicFor(second!, at, () => null));
+    connector._searchConnectionCandidates(dragTopicFor(first!, at, () => undefined));
+    connector._searchConnectionCandidates(dragTopicFor(second!, at, () => undefined));
 
     expect(getChildren.mock.calls.length).toBe(branchSize(first!) + branchSize(second!));
   });

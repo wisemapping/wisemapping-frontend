@@ -109,7 +109,7 @@ class RootedTreeSet {
     // If node has a parent, remove it from parent's children array
     if (node._parent) {
       node._parent._children = node._parent._children.filter((n) => n !== node);
-      node._parent = null;
+      node._parent = undefined;
     }
 
     // Remove from root nodes array
@@ -172,7 +172,7 @@ class RootedTreeSet {
 
     node._parent._children = node._parent._children.filter((n) => node !== n);
     this._rootNodes.push(node);
-    node._parent = null;
+    node._parent = undefined;
   }
 
   /**
@@ -180,14 +180,14 @@ class RootedTreeSet {
    * @param validate
    * @throws will throw an error if id is null or undefined
    * @throws will throw an error if node cannot be found
-   * @return node, or null when it is not found and validate is false
+   * @return node, or undefined when it is not found and validate is false
    */
   find(id: number, validate?: true): Node;
 
-  find(id: number, validate: false): Node | null;
+  find(id: number, validate: false): Node | undefined;
 
-  find(id: number, validate = true): Node | null {
-    const result = this._nodesById.get(id) ?? null;
+  find(id: number, validate = true): Node | undefined {
+    const result = this._nodesById.get(id);
 
     if (validate && !result) {
       throw new Error(`node could not be found id:${id}\n,RootedTreeSet${this.dump()}`);
@@ -230,7 +230,7 @@ class RootedTreeSet {
     return this._getAncestors(this.getParent(node), []);
   }
 
-  private _getAncestors(node: Node | null, ancestors: Node[]) {
+  private _getAncestors(node: Node | undefined, ancestors: Node[]) {
     const result = ancestors;
     if (node) {
       result.push(node);
@@ -296,7 +296,7 @@ class RootedTreeSet {
    * @throws will throw an error if node is null or undefined
    * @return parent
    */
-  getParent(node: Node): Node | null {
+  getParent(node: Node): Node | undefined {
     $assert(node, 'node cannot be null');
     return node._parent;
   }
@@ -453,7 +453,7 @@ class RootedTreeSet {
 
     // Traverse all trees
     this._rootNodes.forEach((root) => {
-      if (root._parent !== null) {
+      if (root._parent !== undefined) {
         errors.push(`Root node ${root.getId()} has non-null parent`);
       }
       collectIds(root);

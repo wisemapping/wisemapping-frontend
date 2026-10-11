@@ -31,7 +31,6 @@ import Client, {
   MapMetadata,
 } from '..';
 import { LocaleCode, localeFromStr } from '../../app-i18n';
-import Cookies from 'universal-cookie';
 import JwtTokenConfig from '../../jwt-token-config';
 import { setAnalyticsUserEmail, clearAnalyticsUserId } from '../../../utils/analytics';
 import { appLogger as log } from '../../../utils/logger';
@@ -53,6 +52,10 @@ const label3: Label = {
   title: 'label 3',
   color: 'red',
 };
+
+// The item at `index` of a non-empty list, wrapping around at its end.
+const cycle = <T>(list: readonly [T, ...T[]], index: number): T =>
+  list[index % list.length] ?? list[0];
 
 class MockClient implements Client {
   private maps: MapInfo[] = [];
@@ -144,7 +147,7 @@ class MockClient implements Client {
       ),
       ...Array.from({ length: 46 }, (_, i) => {
         const id = i + 13;
-        const titles = [
+        const titles: [string, ...string[]] = [
           'Project Planning',
           'Marketing Strategy',
           'Product Roadmap',
@@ -192,9 +195,16 @@ class MockClient implements Client {
           'Vendor Evaluation',
           'Compliance Checklist',
         ];
-        const creators = ['Paulo', 'Maria', 'John', 'Sarah', 'Mike', 'Anna'];
-        const labelSets = [[], [label1], [label2], [label3], [label1, label2], [label2, label3]];
-        const roles: ('owner' | 'editor' | 'viewer')[] = [
+        const creators: [string, ...string[]] = ['Paulo', 'Maria', 'John', 'Sarah', 'Mike', 'Anna'];
+        const labelSets: [Label[], ...Label[][]] = [
+          [],
+          [label1],
+          [label2],
+          [label3],
+          [label1, label2],
+          [label2, label3],
+        ];
+        const roles: ['owner' | 'editor' | 'viewer', ...('owner' | 'editor' | 'viewer')[]] = [
           'owner',
           'owner',
           'owner',
@@ -205,15 +215,15 @@ class MockClient implements Client {
         return createMapInfo(
           id,
           i % 7 === 0, // Some starred
-          titles[i % titles.length] + ` ${Math.floor(i / titles.length) + 1}`,
-          labelSets[i % labelSets.length],
-          creators[i % creators.length],
+          cycle(titles, i) + ` ${Math.floor(i / titles.length) + 1}`,
+          cycle(labelSets, i),
+          cycle(creators, i),
           new Date(2024, i % 12, (i % 28) + 1, 10, 0, 0).toISOString(),
-          creators[(i + 1) % creators.length],
+          cycle(creators, i + 1),
           new Date(2025, (i + 1) % 12, ((i + 5) % 28) + 1, 14 + (i % 8), 30, 0).toISOString(),
-          `Description for ${titles[i % titles.length]}`,
+          `Description for ${cycle(titles, i)}`,
           i % 5 === 0, // Some public
-          roles[i % roles.length],
+          cycle(roles, i),
         );
       }),
     ];
@@ -259,12 +269,6 @@ class MockClient implements Client {
     return Promise.resolve();
   }
 
-  private _jwtToken(): string | undefined {
-    // Set cookie on session ...
-    const cookies = new Cookies();
-    return cookies.get('jwt-token-mock');
-  }
-
   onSessionExpired(callback?: () => void): (() => void) | undefined {
     return callback;
   }
@@ -276,7 +280,7 @@ class MockClient implements Client {
     return Promise.resolve();
   }
 
-  addMapPermissions(id: number, message: string, permissions: Permission[]): Promise<void> {
+  addMapPermissions(id: number, _message: string, permissions: Permission[]): Promise<void> {
     let perm = this.permissionsByMap.get(id) || [];
     perm = perm.concat(permissions);
     this.permissionsByMap.set(id, perm);
@@ -338,7 +342,7 @@ class MockClient implements Client {
     if (!token) {
       return Promise.reject({ msg: 'User not authenticated', isAuth: true, status: 401 });
     }
-    const locale: LocaleCode | null = localStorage.getItem('locale') as LocaleCode;
+    const locale = (localStorage.getItem('locale') ?? undefined) as LocaleCode | undefined;
     return Promise.resolve({
       firstname: 'Costme',
       lastname: 'Fulanito',
@@ -470,7 +474,7 @@ class MockClient implements Client {
     return Promise.resolve(result);
   }
 
-  duplicateMap(id: number, basicInfo: BasicMapInfo): Promise<number> {
+  duplicateMap(_id: number, basicInfo: BasicMapInfo): Promise<number> {
     const exists = this.maps.find((m) => m.title == basicInfo.title) != undefined;
     if (!exists) {
       const newMap: MapInfo = {
@@ -585,7 +589,6 @@ class MockClient implements Client {
     return Promise.resolve({
       email: 'test@email.com',
       oauthSync: true,
-      syncCode: undefined,
     });
   }
 
@@ -593,7 +596,6 @@ class MockClient implements Client {
     return Promise.resolve({
       email: 'test@email.com',
       oauthSync: true,
-      syncCode: undefined,
     });
   }
 
@@ -644,7 +646,7 @@ class MockClient implements Client {
     return Promise.resolve({
       id: userId,
       ...userData,
-      fullName: `${userData.firstname as string} ${userData.lastname as string}`,
+      fullName: `${userData['firstname'] as string} ${userData['lastname'] as string}`,
     });
   }
 
@@ -652,7 +654,7 @@ class MockClient implements Client {
     return Promise.resolve({
       id: Math.floor(Math.random() * 1000),
       ...userData,
-      fullName: `${userData.firstname as string} ${userData.lastname as string}`,
+      fullName: `${userData['firstname'] as string} ${userData['lastname'] as string}`,
       isActive: true,
       isSuspended: false,
       authenticationType: 'DATABASE',

@@ -19,12 +19,12 @@ import { defineConfig } from 'cypress';
 import setupNodeEvents, { visualSnapshotExpose } from './cypress/plugins';
 
 export default defineConfig({
-  video: process.env.CYPRESS_VIDEO === 'true',
+  video: process.env['CYPRESS_VIDEO'] === 'true',
   // Image-snapshot mode (VISUAL_SNAPSHOTS=verify, the default, or update), see cypress/plugins/index.ts.
   expose: visualSnapshotExpose(),
   e2e: {
     setupNodeEvents,
-    baseUrl: process.env.CYPRESS_BASE_URL || 'http://localhost:6006',
+    baseUrl: process.env['CYPRESS_BASE_URL'] || 'http://localhost:6006',
     specPattern: 'cypress/e2e/**/*.cy.ts',
     supportFile: 'cypress/support/e2e.ts',
     chromeWebSecurity: false,

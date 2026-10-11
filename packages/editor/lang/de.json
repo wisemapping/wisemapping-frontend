@@ -772,5 +772,8 @@
   },
   "rich-text-editor.outdent": {
     "defaultMessage": "Einzug verkleinern (Umschalt+Tab)"
+  },
+  "outline.untitled-map": {
+    "defaultMessage": "Unbenannte Map"
   }
 }

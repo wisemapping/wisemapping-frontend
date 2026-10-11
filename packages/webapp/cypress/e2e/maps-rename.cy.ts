@@ -30,7 +30,7 @@ describe('Maps Page – Rename Map', () => {
 
   it('renames "El Mapa" via the card action menu', () => {
     // Search to bring "El Mapa" into the visible card list
-    cy.get('input[aria-label="search"]').type('El Mapa');
+    cy.get('input[aria-label="Search maps"]').type('El Mapa');
     getMapRow('El Mapa').find('[aria-label="Others"]').click();
     cy.contains('li', 'Rename').click();
     // Clear the existing title and type a new one

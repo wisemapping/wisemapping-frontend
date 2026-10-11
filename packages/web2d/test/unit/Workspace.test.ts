@@ -249,7 +249,7 @@ describe('Workspace.setSize with a zero size (BL5-206)', () => {
 
   it('keeps the current size for a missing width or height', () => {
     const workspace = new Workspace();
-    workspace.setSize('300px', null);
+    workspace.setSize('300px', undefined);
     workspace.setSize(undefined, '200px');
     const container = workspace._getHtmlContainer();
     expect(container.style.width).toBe('300px');

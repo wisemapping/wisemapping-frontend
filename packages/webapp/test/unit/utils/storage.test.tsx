@@ -46,7 +46,7 @@ describe('blocked browser storage', () => {
 
   test('reads as empty and ignores writes', () => {
     blockStorage();
-    expect(readStorage('themeMode')).toBeNull();
+    expect(readStorage('themeMode')).toBeUndefined();
     expect(() => writeStorage('themeMode', 'dark')).not.toThrow();
     expect(() => removeStorage('themeMode')).not.toThrow();
   });

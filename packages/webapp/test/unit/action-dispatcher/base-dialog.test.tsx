@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useContext, useState } from 'react';
+import React, { use, useState } from 'react';
 import { act, fireEvent, screen } from '@testing-library/react';
 import BaseDialog from '../../../src/components/maps-page/action-dispatcher/base-dialog';
 import {
@@ -26,7 +26,7 @@ import {
 import { renderWithProviders } from '../helpers/render';
 
 const HotkeyState = (): React.ReactElement => {
-  const { hotkeyEnabled } = useContext(KeyboardContext);
+  const { hotkeyEnabled } = use(KeyboardContext);
   return <span data-testid="hotkeys">{hotkeyEnabled ? 'enabled' : 'disabled'}</span>;
 };
 
@@ -38,14 +38,14 @@ const Page = (): React.ReactElement => {
   const [dialogs, setDialogs] = useState(['first', 'second']);
   setOpenDialogs = setDialogs;
   return (
-    <KeyboardContext.Provider value={keyboardContext}>
+    <KeyboardContext value={keyboardContext}>
       <HotkeyState />
       {dialogs.map((title) => (
         <BaseDialog key={title} title={title} onClose={jest.fn()}>
           {title}
         </BaseDialog>
       ))}
-    </KeyboardContext.Provider>
+    </KeyboardContext>
   );
 };
 

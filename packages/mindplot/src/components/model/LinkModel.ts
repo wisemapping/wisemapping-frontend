@@ -25,7 +25,7 @@ class LinkModel extends FeatureModel {
   constructor(attributes: FeatureAttributes) {
     super('link');
     // A missing url is rejected by setUrl, as an empty one.
-    this.setUrl(attributes.url ?? '');
+    this.setUrl(attributes['url'] ?? '');
   }
 
   getUrl(): string {
@@ -48,7 +48,7 @@ class LinkModel extends FeatureModel {
   static _fixUrl(url: string): string {
     // Keep urls whose scheme is allowed. Anything else (no scheme, or a scheme such as
     // javascript:) gets the http:// prefix, so the resulting href can never run script.
-    let protocol: string | null = null;
+    let protocol: string | undefined;
     try {
       protocol = new URL(url).protocol;
     } catch {

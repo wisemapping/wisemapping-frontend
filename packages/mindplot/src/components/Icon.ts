@@ -28,8 +28,8 @@ import type SizeType from './SizeType';
 export interface Removable {
   getElement(): Group | Image;
 
-  /** The IconGroup it is in, whose scale the widget accounts for; null when it is in none. */
-  getGroup(): IconGroup | null;
+  /** The IconGroup it is in, whose scale the widget accounts for; undefined when it is in none. */
+  getGroup(): IconGroup | undefined;
 
   getSize(): SizeType | undefined;
 

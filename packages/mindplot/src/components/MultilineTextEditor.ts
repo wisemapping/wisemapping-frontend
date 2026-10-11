@@ -34,7 +34,7 @@ class EditorComponent extends EventDispatcher<EditorEvents> {
   private _onClose: () => void;
 
   // Animation frame of the pending layout of the live preview, if any.
-  private _pendingRelayout: number | null = null;
+  private _pendingRelayout: number | undefined;
 
   constructor(topic: Topic, onClose: () => void) {
     super();
@@ -196,9 +196,9 @@ class EditorComponent extends EventDispatcher<EditorEvents> {
       this.relayout();
       return;
     }
-    if (this._pendingRelayout === null) {
+    if (this._pendingRelayout === undefined) {
       this._pendingRelayout = requestAnimationFrame(() => {
-        this._pendingRelayout = null;
+        this._pendingRelayout = undefined;
         // Closing lays the map out itself ...
         if (this._containerElem.isConnected) {
           this.relayout();
@@ -208,9 +208,9 @@ class EditorComponent extends EventDispatcher<EditorEvents> {
   }
 
   private cancelRelayout(): void {
-    if (this._pendingRelayout !== null) {
+    if (this._pendingRelayout !== undefined) {
       cancelAnimationFrame(this._pendingRelayout);
-      this._pendingRelayout = null;
+      this._pendingRelayout = undefined;
     }
   }
 
@@ -224,7 +224,9 @@ class EditorComponent extends EventDispatcher<EditorEvents> {
     // Adjust position: the editor is absolute, so place it relative to its offset parent ...
     const textShape = this._topic.getOrBuildTextShape();
     this._containerElem.style.position = 'absolute';
-    const { top, left } = textShape.getNativePosition(this._containerElem.offsetParent);
+    const { top, left } = textShape.getNativePosition(
+      this._containerElem.offsetParent ?? undefined,
+    );
     this._containerElem.style.top = `${top}px`;
     this._containerElem.style.left = `${left}px`;
 
@@ -385,18 +387,18 @@ class EditorComponent extends EventDispatcher<EditorEvents> {
 
 /** The text editor of one designer: each designer has its own (see TopicEventDispatcher). */
 class MultitTextEditor {
-  private _component: EditorComponent | null;
+  private _component: EditorComponent | undefined;
 
   constructor() {
-    this._component = null;
+    this._component = undefined;
   }
 
   isActive(): boolean {
-    return this._component !== null;
+    return this._component !== undefined;
   }
 
-  getActiveTopic(): Topic | null {
-    return this._component ? this._component.getTopic() : null;
+  getActiveTopic(): Topic | undefined {
+    return this._component?.getTopic();
   }
 
   show(topic: Topic, textOverwrite?: string): void {
@@ -407,7 +409,7 @@ class MultitTextEditor {
     }
     // Create a new instance
     this._component = new EditorComponent(topic, () => {
-      this._component = null;
+      this._component = undefined;
     });
     this._component.show(textOverwrite);
   }
@@ -415,7 +417,7 @@ class MultitTextEditor {
   close(update: boolean): void {
     if (this._component) {
       this._component.close(update);
-      this._component = null;
+      this._component = undefined;
     }
   }
 }

@@ -21,23 +21,11 @@ import { useIntl } from 'react-intl';
 import AddIcon from '@mui/icons-material/Add';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
-import Chip from '@mui/material/Chip';
 
 import { Label, LABEL_TITLE_MAX_LENGTH } from '../../../../classes/client';
-import { NewLabelColor } from './styled';
+import { LABEL_COLORS } from '../../../../theme/label-colors';
+import { AddLabelBox, AddLabelButton, ColorSwatch, ColorSwatches, NewLabelColor } from './styled';
 import Tooltip from '@mui/material/Tooltip';
-
-const labelColors = [
-  '#00b327',
-  '#0565ff',
-  '#2d2dd6',
-  '#6a00ba',
-  '#ad1599',
-  '#ff1e35',
-  '#ff6600',
-  '#ffff47',
-];
 
 type AddLabelFormProps = {
   onAdd: (newLabel: Label) => void;
@@ -45,17 +33,17 @@ type AddLabelFormProps = {
 
 const AddLabelDialog = ({ onAdd }: AddLabelFormProps): React.ReactElement => {
   const intl = useIntl();
-  const [createLabelColorIndex, setCreateLabelColorIndex] = React.useState(
-    Math.floor(Math.random() * labelColors.length),
+  const [createLabelColorIndex, setCreateLabelColorIndex] = React.useState(() =>
+    Math.floor(Math.random() * LABEL_COLORS.length),
   );
   const [newLabelTitle, setNewLabelTitle] = React.useState('');
 
-  const newLabelColor = labelColors[createLabelColorIndex];
+  const newLabelColor = LABEL_COLORS[createLabelColorIndex] ?? LABEL_COLORS[0];
   // The backend refuses a blank title.
   const title = newLabelTitle.trim();
 
   const setNextLabelColorIndex = () => {
-    const nextIndex = labelColors[createLabelColorIndex + 1] ? createLabelColorIndex + 1 : 0;
+    const nextIndex = LABEL_COLORS[createLabelColorIndex + 1] ? createLabelColorIndex + 1 : 0;
     setCreateLabelColorIndex(nextIndex);
   };
 
@@ -73,15 +61,7 @@ const AddLabelDialog = ({ onAdd }: AddLabelFormProps): React.ReactElement => {
   };
 
   return (
-    <Box
-      sx={{
-        paddingTop: '16px',
-        paddingBottom: '8px',
-        borderBottom: '1px solid',
-        borderColor: 'divider',
-        marginBottom: '16px',
-      }}
-    >
+    <AddLabelBox>
       <Box
         sx={{
           display: 'flex',
@@ -101,14 +81,6 @@ const AddLabelDialog = ({ onAdd }: AddLabelFormProps): React.ReactElement => {
             onClick={(e) => {
               e.stopPropagation();
               setNextLabelColorIndex();
-            }}
-            sx={{
-              fontSize: '28px',
-              cursor: 'pointer',
-              transition: 'transform 0.2s',
-              '&:hover': {
-                transform: 'scale(1.1)',
-              },
             }}
           />
         </Tooltip>
@@ -142,7 +114,7 @@ const AddLabelDialog = ({ onAdd }: AddLabelFormProps): React.ReactElement => {
           })}
         >
           <span>
-            <IconButton
+            <AddLabelButton
               color="primary"
               onClick={() => handleSubmitNew()}
               disabled={!title}
@@ -150,46 +122,25 @@ const AddLabelDialog = ({ onAdd }: AddLabelFormProps): React.ReactElement => {
                 id: 'label.add-button',
                 defaultMessage: 'Add label',
               })}
-              sx={{
-                backgroundColor: 'primary.main',
-                color: 'white',
-                '&:hover': {
-                  backgroundColor: 'primary.dark',
-                },
-                '&:disabled': {
-                  backgroundColor: 'action.disabledBackground',
-                  color: 'action.disabled',
-                },
-              }}
             >
               <AddIcon />
-            </IconButton>
+            </AddLabelButton>
           </span>
         </Tooltip>
       </Box>
 
-      <Box sx={{ mt: 2, display: 'flex', gap: 0.5, flexWrap: 'wrap' }}>
-        {labelColors.map((color, index) => (
-          <Chip
+      <ColorSwatches>
+        {LABEL_COLORS.map((color, index) => (
+          <ColorSwatch
             key={color}
             size="small"
-            sx={{
-              backgroundColor: color,
-              width: '32px',
-              height: '8px',
-              borderRadius: '4px',
-              cursor: 'pointer',
-              border: index === createLabelColorIndex ? '2px solid' : 'none',
-              borderColor: 'text.primary',
-              '&:hover': {
-                opacity: 0.8,
-              },
-            }}
+            swatchColor={color}
+            current={index === createLabelColorIndex}
             onClick={() => setCreateLabelColorIndex(index)}
           />
         ))}
-      </Box>
-    </Box>
+      </ColorSwatches>
+    </AddLabelBox>
   );
 };
 

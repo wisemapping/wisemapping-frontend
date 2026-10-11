@@ -26,7 +26,7 @@ export const DEFAULT_REDIRECT = '/c/maps/';
  * slash) falls back to `fallback`, so the value can never run script or leave the site.
  */
 export const safeRedirectPath = (
-  value: string | null | undefined,
+  value: string | undefined,
   fallback: string = DEFAULT_REDIRECT,
 ): string => {
   if (!value || !value.startsWith('/') || value.startsWith('//') || value.includes('\\')) {

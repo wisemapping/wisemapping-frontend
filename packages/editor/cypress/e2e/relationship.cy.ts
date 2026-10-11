@@ -24,8 +24,8 @@ type RelationshipHandle = {
   getModel(): {
     getFromNode(): number;
     getToNode(): number;
-    getSrcCtrlPoint(): { x: number; y: number } | null;
-    getDestCtrlPoint(): { x: number; y: number } | null;
+    getSrcCtrlPoint(): { x: number; y: number } | undefined;
+    getDestCtrlPoint(): { x: number; y: number } | undefined;
   };
 };
 
@@ -42,7 +42,8 @@ const controlPoints = () =>
       .find((r) => r.getModel().getFromNode() === 15 && r.getModel().getToNode() === 11);
     expect(relationship, 'relationship 15 -> 11').to.not.equal(undefined);
     const model = relationship!.getModel();
-    const copy = (point: { x: number; y: number } | null) => (point ? { ...point } : null);
+    const copy = (point: { x: number; y: number } | undefined) =>
+      point ? { ...point } : undefined;
     return { src: copy(model.getSrcCtrlPoint()), dest: copy(model.getDestCtrlPoint()) };
   });
 
@@ -56,7 +57,7 @@ const dotCenter = (pivot: 0 | 1) =>
   });
 
 /** The element a real pointer at `point` hits, looking inside open shadow roots. */
-const elementAt = (doc: Document, { clientX, clientY }: PointerPosition): Element | null => {
+const elementAt = (doc: Document, { clientX, clientY }: PointerPosition): Element | undefined => {
   let target = doc.elementFromPoint(clientX, clientY);
   while (target?.shadowRoot) {
     const inner = target.shadowRoot.elementFromPoint(clientX, clientY);
@@ -65,7 +66,7 @@ const elementAt = (doc: Document, { clientX, clientY }: PointerPosition): Elemen
     }
     target = inner;
   }
-  return target;
+  return target ?? undefined;
 };
 
 /** Whether `point` is on the empty canvas: the root <svg> of the mindplot workspace. */

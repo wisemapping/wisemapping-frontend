@@ -16,12 +16,23 @@
  *   limitations under the License.
  */
 
-import withEmotionStyles from '../../HOCs/withEmotionStyles';
-import Alert from '@mui/material/Alert';
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import TableCell from '@mui/material/TableCell';
+import { styled } from '@mui/material/styles';
 
-export const StyledAlert = withEmotionStyles({
-  padding: '10px 15px',
-  margin: '5px 0px ',
-})(Alert);
+// What the map list and its loading placeholder share: kept apart from styled.ts so that the
+// placeholder, which every page's loading screen shows, does not bring the list's styles along.
 
-export default StyledAlert;
+export const BodyCell = styled(TableCell)(({ theme }) => ({
+  fontSize: '0.96rem',
+  fontFamily: theme.typography.fontFamily,
+  padding: theme.spacing(1, 1.5),
+}));
+export const CompactCardHeader = styled(CardHeader)(({ theme }) => ({
+  padding: theme.spacing(0.5),
+}));
+export const MapCardRoot = styled(Card)({
+  maxWidth: '94vw',
+  margin: '3vw',
+});

@@ -46,7 +46,10 @@ export const baseConfig: TestConfig = {
   jwtExpirationMin: 10080,
 };
 
-type Container = { type: 'remote' | 'static'; url?: string; config?: Partial<TestConfig> };
+// A value set to undefined is a config that lacks it.
+type ConfigOverrides = { [K in keyof TestConfig]?: TestConfig[K] | undefined };
+
+type Container = { type: 'remote' | 'static'; url?: string; config?: ConfigOverrides };
 
 /** Sets (or, with `undefined`, removes) the bootstrap config the page script would define. */
 export const setBootstrap = (container: Container | undefined): void => {
@@ -64,17 +67,17 @@ export const setBootstrap = (container: Container | undefined): void => {
  */
 export const resetAppConfig = (): void => {
   Object.assign(AppConfig as unknown as Record<string, unknown>, {
-    _config: null,
-    _client: null,
-    _adminClient: null,
-    _mocks: null,
-    _initializationPromise: null,
+    _config: undefined,
+    _client: undefined,
+    _adminClient: undefined,
+    _mocks: undefined,
+    _initializationPromise: undefined,
   });
   setBootstrap(undefined);
 };
 
 /** Resets AppConfig and initializes it with a static config. */
-export const initAppConfig = async (overrides: Partial<TestConfig> = {}): Promise<void> => {
+export const initAppConfig = async (overrides: ConfigOverrides = {}): Promise<void> => {
   resetAppConfig();
   setBootstrap({ type: 'static', config: { ...baseConfig, ...overrides } });
   await AppConfig.initialize();

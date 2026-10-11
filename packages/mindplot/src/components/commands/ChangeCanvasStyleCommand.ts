@@ -22,7 +22,7 @@ import type { CanvasStyleType } from '../model/CanvasStyleType';
 class ChangeCanvasStyleCommand extends Command {
   private _newStyle: CanvasStyleType | undefined;
 
-  private _oldStyle: CanvasStyleType | null | undefined;
+  private _oldStyle: CanvasStyleType | undefined;
 
   private _applied: boolean;
 
@@ -61,7 +61,7 @@ class ChangeCanvasStyleCommand extends Command {
       const mindmap = designer.getMindmap();
 
       // Restore the old style to the model (persistence)
-      mindmap.setCanvasStyle(this._oldStyle || undefined);
+      mindmap.setCanvasStyle(this._oldStyle);
 
       // Re-render (reads from model + merges with theme defaults)
       designer.applyCanvasStyle();

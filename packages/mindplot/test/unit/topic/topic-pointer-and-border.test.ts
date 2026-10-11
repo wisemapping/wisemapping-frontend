@@ -101,9 +101,9 @@ describe('Topic pointer events', () => {
   it('has no page coordinates once off the page', async () => {
     const harness = await open();
     const topic = harness.topic(4);
-    expect(topic.getAbsoluteCornerCoordinates()).not.toBeNull();
+    expect(topic.getAbsoluteCornerCoordinates()).toBeDefined();
     groupOf(topic).remove();
-    expect(topic.getAbsoluteCornerCoordinates()).toBeNull();
+    expect(topic.getAbsoluteCornerCoordinates()).toBeUndefined();
   });
 });
 

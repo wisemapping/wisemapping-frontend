@@ -76,7 +76,7 @@ class MapInfoImpl implements MapInfo {
   }
 
   updateTitle(title: string): Promise<void> {
-    if (this.id == null || Number.isNaN(this.id)) {
+    if (Number.isNaN(this.id)) {
       return Promise.reject(new Error(`Invalid map ID: ${this.id}`));
     }
 
@@ -108,11 +108,11 @@ class MapInfoImpl implements MapInfo {
   }
 
   updateMetadata(metadata: {
-    locked?: boolean;
+    locked?: boolean | undefined;
     lockedMsg?: string | undefined;
-    zoom?: number;
-    starred?: boolean;
-    creatorFullName?: string;
+    zoom?: number | undefined;
+    starred?: boolean | undefined;
+    creatorFullName?: string | undefined;
   }): void {
     if (metadata.locked !== undefined) {
       this.locked = metadata.locked;

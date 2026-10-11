@@ -171,8 +171,8 @@ const IconImageTab = ({ iconModel }: IconImageTab): ReactElement => {
                   onClick={() => handleIconClick(icon)}
                 />
               ))
-            : iconGroups.map((family, i) => (
-                <span key={i}>
+            : iconGroups.map((family) => (
+                <span key={family.id}>
                   {family.icons.map((icon: string) => (
                     <SvgIcon
                       key={icon}

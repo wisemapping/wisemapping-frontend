@@ -46,7 +46,7 @@ describe('matchBlockRule', () => {
   test.each(['-', 'a - ', ' - ', '2. ', '1.', '#### ', '#a ', '-- ', 'x'])(
     'leaves %j as text',
     (text) => {
-      expect(matchBlockRule(text)).toBeNull();
+      expect(matchBlockRule(text)).toBeUndefined();
     },
   );
 });
@@ -76,7 +76,7 @@ describe('matchInlineRule', () => {
     'plain text',
     '``',
   ])('leaves %j as text', (text) => {
-    expect(matchInlineRule(text)).toBeNull();
+    expect(matchInlineRule(text)).toBeUndefined();
   });
 
   test('turns a link with a web address into a link', () => {
@@ -103,7 +103,7 @@ describe('matchInlineRule', () => {
     '[x](relative)',
     '![image](https://example.org/a.png)',
   ])('never makes a link of %j', (text) => {
-    expect(matchInlineRule(text)).toBeNull();
+    expect(matchInlineRule(text)).toBeUndefined();
   });
 });
 
@@ -133,7 +133,7 @@ describe('safeLinkUrl', () => {
     'mailto:',
     '',
   ])('refuses %j', (url) => {
-    expect(safeLinkUrl(url)).toBeNull();
+    expect(safeLinkUrl(url)).toBeUndefined();
   });
 });
 
@@ -210,7 +210,7 @@ describe('looksLikeMarkdown', () => {
 
 describe('Markdown edge cases', () => {
   test('refuses an address whose scheme is not followed by //', () => {
-    expect(safeLinkUrl('http:example.org')).toBeNull();
+    expect(safeLinkUrl('http:example.org')).toBeUndefined();
   });
 
   test('keeps an unsafe link of pasted text as text', () => {

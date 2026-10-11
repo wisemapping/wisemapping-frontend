@@ -32,6 +32,7 @@ import {
   SUPPORTED_LOCALES,
 } from '../../../src/utils/seo-locale';
 import { MapInfo } from '../../../src/classes/client';
+import { defined } from '../defined';
 
 const NOW = new Date('2026-03-15T12:00:00Z');
 
@@ -89,11 +90,11 @@ describe('sitemap utils', () => {
       changefreq: 'monthly',
       priority: '0.8',
     });
-    expect(urls[0].alternates?.[0]).toEqual({
+    expect(defined(urls[0]).alternates?.[0]).toEqual({
       hreflang: 'x-default',
       href: 'https://wm.test/c/login',
     });
-    expect(urls[0].alternates).toContainEqual({
+    expect(defined(urls[0]).alternates).toContainEqual({
       hreflang: 'zh-CN',
       href: 'https://wm.test/zh-CN/c/login',
     });
@@ -128,7 +129,7 @@ describe('sitemap utils', () => {
         priority: '0.6',
       },
     ]);
-    expect(buildPublicMapUrls([map({ id: 4 })])[0].loc).toBe(
+    expect(defined(buildPublicMapUrls([map({ id: 4 })])[0]).loc).toBe(
       'https://app.wisemapping.com/c/maps/4/public',
     );
   });
@@ -139,7 +140,7 @@ describe('sitemap utils', () => {
     expect(composeSitemapUrls()).toHaveLength(staticCount);
     const withMaps = composeSitemapUrls([map({ id: 9 })], { baseUrl: 'https://wm.test' });
     expect(withMaps).toHaveLength(staticCount + 1);
-    expect(withMaps[withMaps.length - 1].loc).toBe('https://wm.test/c/maps/9/public');
+    expect(defined(withMaps.at(-1)).loc).toBe('https://wm.test/c/maps/9/public');
   });
 
   it('generateSitemapXml escapes values and writes alternate links', () => {
@@ -184,7 +185,7 @@ describe('seo-locale', () => {
   it.each(['/c/login', '/xx/c/login', '/es/maps', '/'])('finds no locale in %s', (path) => {
     window.history.pushState({}, '', path);
 
-    expect(getLocaleFromPath()).toBeNull();
+    expect(getLocaleFromPath()).toBeUndefined();
   });
 
   it('uses the unlocalized path as canonical', () => {

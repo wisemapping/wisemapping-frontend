@@ -30,8 +30,8 @@ const emptySelectionDesigner = (): { designer: Designer; changeBackgroundColor: 
   const changeBackgroundColor = jest.fn();
   const designer = {
     getModel: () => ({
-      selectedTopic: () => null,
-      selectedRelationship: () => null,
+      selectedTopic: () => undefined,
+      selectedRelationship: () => undefined,
       filterSelectedTopics: () => [],
     }),
     getThemeVariant: () => 'light',

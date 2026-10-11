@@ -16,8 +16,8 @@
  *   limitations under the License.
  */
 
-import React, { createContext, useContext, useState, useEffect, ReactNode, useMemo } from 'react';
-import type { PaletteMode } from '@mui/material';
+import React, { createContext, use, useState, useEffect, ReactNode, useMemo } from 'react';
+import type { PaletteMode } from '@mui/material/styles';
 import { readStorage, writeStorage } from '../utils/storage';
 
 interface ThemeContextType {
@@ -35,7 +35,7 @@ interface ThemeProviderProps {
 export const AppThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const [mode, setMode] = useState<PaletteMode>(() => {
     // Check localStorage first, then system preference
-    const savedMode = readStorage('themeMode') as PaletteMode;
+    const savedMode = readStorage('themeMode') as PaletteMode | undefined;
     if (savedMode) {
       return savedMode;
     }
@@ -84,11 +84,11 @@ export const AppThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => 
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
-  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
+  return <ThemeContext value={value}>{children}</ThemeContext>;
 };
 
 export const useTheme = (): ThemeContextType => {
-  const context = useContext(ThemeContext);
+  const context = use(ThemeContext);
   if (!context) {
     throw new Error('useTheme must be used within an AppThemeProvider');
   }

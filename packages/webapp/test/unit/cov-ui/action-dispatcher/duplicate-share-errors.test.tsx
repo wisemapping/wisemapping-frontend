@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 
 const mockUseFetchMapById = jest.fn();
@@ -45,7 +44,7 @@ const map = (title: string): MapInfo => ({
 
 describe('DuplicateDialog errors', () => {
   const setup = (mapId: number, title = 'Original') => {
-    mockUseFetchMapById.mockReturnValue({ isLoading: false, error: null, data: map(title) });
+    mockUseFetchMapById.mockReturnValue({ isLoading: false, error: undefined, data: map(title) });
     const duplicateMap = jest.fn<Promise<number>, [number, unknown]>(() => Promise.resolve(5));
     const onClose = jest.fn();
     renderWithProviders(<DuplicateDialog mapId={mapId} onClose={onClose} />, {

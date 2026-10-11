@@ -74,7 +74,7 @@ const keyToModel: {
 
 // Some style values are numeric enums whose first member is 0 (LineType.THIN_CURVED),
 // so "not set" must be checked explicitly rather than by truthiness.
-const isUnset = (value: unknown): boolean => value === undefined || value === null || value === '';
+const isUnset = (value: unknown): boolean => value === undefined || value === '';
 
 // The least WCAG contrast a theme text colour keeps with what is behind it: 3:1, the AA level for
 // large text and user interface components. Below it, the text is drawn black or white instead.

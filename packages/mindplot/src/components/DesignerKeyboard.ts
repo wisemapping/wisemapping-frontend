@@ -66,15 +66,15 @@ class DesignerKeyboard extends Keyboard {
   ];
 
   // Listeners bound to the document and the canvas container, removed by dispose() ...
-  private _container: HTMLElement | null = null;
+  private _container: HTMLElement | undefined;
 
-  private _keypressListener: EventListener | null = null;
+  private _keypressListener: EventListener | undefined;
 
-  private _mouseEnterListener: EventListener | null = null;
+  private _mouseEnterListener: EventListener | undefined;
 
-  private _mouseLeaveListener: EventListener | null = null;
+  private _mouseLeaveListener: EventListener | undefined;
 
-  private _pointerDownListener: EventListener | null = null;
+  private _pointerDownListener: EventListener | undefined;
 
   private _disposed = false;
 
@@ -106,7 +106,7 @@ class DesignerKeyboard extends Keyboard {
 
     if (this._keypressListener) {
       EventManager.unbind(document, 'keypress', this._keypressListener);
-      this._keypressListener = null;
+      this._keypressListener = undefined;
     }
     if (this._container) {
       if (this._mouseEnterListener) {
@@ -119,10 +119,10 @@ class DesignerKeyboard extends Keyboard {
         this._container.removeEventListener('pointerdown', this._pointerDownListener);
       }
     }
-    this._container = null;
-    this._mouseEnterListener = null;
-    this._mouseLeaveListener = null;
-    this._pointerDownListener = null;
+    this._container = undefined;
+    this._mouseEnterListener = undefined;
+    this._mouseLeaveListener = undefined;
+    this._pointerDownListener = undefined;
 
     KeyboardManager.removeOwner(this);
     DesignerKeyboard._live.delete(this);
@@ -460,7 +460,7 @@ class DesignerKeyboard extends Keyboard {
     }
     const siblings = parent.getChildren();
     let target = node;
-    let dist: number | null = null;
+    let dist: number | undefined;
     const nodeValue = axis === 'x' ? node.getPosition().x : node.getPosition().y;
 
     siblings.forEach((brother) => {
@@ -487,7 +487,7 @@ class DesignerKeyboard extends Keyboard {
       }
 
       const distance = Math.abs(delta);
-      if (dist == null || distance < dist) {
+      if (dist === undefined || distance < dist) {
         dist = distance;
         target = brother;
       }
@@ -528,9 +528,9 @@ class DesignerKeyboard extends Keyboard {
       return false;
     }
 
-    let target: Topic | null = null;
+    let target: Topic | undefined;
     const parentY = node.getPosition().y;
-    let minDistance: number | null = null;
+    let minDistance: number | undefined;
     // A child at the root's x is on the right, the side the layout fills first. Tested as
     // `x >= 0` for LEFT and `x <= 0` for RIGHT, it was on neither side.
     const wanted = side === 'RIGHT' ? 1 : -1;
@@ -539,7 +539,7 @@ class DesignerKeyboard extends Keyboard {
         return;
       }
       const distance = Math.abs(child.getPosition().y - parentY);
-      if (minDistance == null || distance < minDistance) {
+      if (minDistance === undefined || distance < minDistance) {
         minDistance = distance;
         target = child;
       }
@@ -613,12 +613,12 @@ class DesignerKeyboard extends Keyboard {
     directionAxis: 'x' | 'y',
     direction: 'LEFT' | 'RIGHT' | 'UP' | 'DOWN',
     alignmentAxis: 'x' | 'y',
-  ): Topic | null {
+  ): Topic | undefined {
     const topics = designer.getModel().getTopics();
     const origin = node.getPosition();
-    let closest: Topic | null = null;
-    let minDirectionDistance: number | null = null;
-    let minAlignmentDistance: number | null = null;
+    let closest: Topic | undefined;
+    let minDirectionDistance: number | undefined;
+    let minAlignmentDistance: number | undefined;
 
     topics.forEach((candidate) => {
       // A topic inside a collapsed branch is not on screen: the arrows do not go there.
@@ -644,10 +644,10 @@ class DesignerKeyboard extends Keyboard {
 
       const directionDistance = Math.abs(directionDelta);
       if (
-        minDirectionDistance == null ||
+        minDirectionDistance === undefined ||
         directionDistance < minDirectionDistance ||
         (directionDistance === minDirectionDistance &&
-          (minAlignmentDistance == null || alignmentDistance < minAlignmentDistance))
+          (minAlignmentDistance === undefined || alignmentDistance < minAlignmentDistance))
       ) {
         minDirectionDistance = directionDistance;
         minAlignmentDistance = alignmentDistance;
@@ -664,10 +664,10 @@ class DesignerKeyboard extends Keyboard {
     direction: 'LEFT' | 'RIGHT' | 'UP' | 'DOWN',
     alignmentAxis?: 'x' | 'y',
     alignmentTolerance: number = Number.POSITIVE_INFINITY,
-  ): Topic | null {
+  ): Topic | undefined {
     const topics = designer.getModel().getTopics();
     const origin = node.getPosition();
-    let closest: Topic | null = null;
+    let closest: Topic | undefined;
     let minPrimary = Number.POSITIVE_INFINITY;
     let minSecondary = Number.POSITIVE_INFINITY;
     let minDistance = Number.POSITIVE_INFINITY;

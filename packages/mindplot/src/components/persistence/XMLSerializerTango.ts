@@ -79,7 +79,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     this._persistCanvasStyle(mapElem, mindmap);
 
     const version = mindmap.getVersion();
-    if (version != null) {
+    if (version !== undefined) {
       mapElem.setAttribute('version', version);
     }
 
@@ -116,16 +116,16 @@ class XMLSerializerTango implements XMLMindmapSerializer {
       return;
     }
 
-    if (canvasStyle.backgroundColor != null) {
+    if (canvasStyle.backgroundColor !== undefined) {
       mapElem.setAttribute('backgroundColor', canvasStyle.backgroundColor);
     }
-    if (canvasStyle.backgroundPattern != null) {
+    if (canvasStyle.backgroundPattern !== undefined) {
       mapElem.setAttribute('backgroundPattern', canvasStyle.backgroundPattern);
     }
-    if (canvasStyle.backgroundGridSize != null) {
+    if (canvasStyle.backgroundGridSize !== undefined) {
       mapElem.setAttribute('backgroundGridSize', String(canvasStyle.backgroundGridSize));
     }
-    if (canvasStyle.backgroundGridColor != null) {
+    if (canvasStyle.backgroundGridColor !== undefined) {
       mapElem.setAttribute('backgroundGridColor', canvasStyle.backgroundGridColor);
     }
   }
@@ -143,10 +143,10 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     // Build canvas style only if at least one attribute is present
     const canvasStyle: CanvasStyleType = {};
 
-    if (backgroundColor != null) {
+    if (backgroundColor !== null) {
       canvasStyle.backgroundColor = backgroundColor;
     }
-    if (backgroundPatternAttr != null && backgroundPatternAttr !== 'none') {
+    if (backgroundPatternAttr !== null && backgroundPatternAttr !== 'none') {
       // Ignore legacy 'none' value for backward compatibility
       if (isBackgroundPatternType(backgroundPatternAttr)) {
         canvasStyle.backgroundPattern = backgroundPatternAttr;
@@ -154,13 +154,13 @@ class XMLSerializerTango implements XMLMindmapSerializer {
         console.warn(`Unknown background pattern '${backgroundPatternAttr}', ignoring it.`);
       }
     }
-    if (gridSizeAttr != null) {
+    if (gridSizeAttr !== null) {
       const parsed = Number.parseInt(gridSizeAttr, 10);
       if (Number.isFinite(parsed)) {
         canvasStyle.backgroundGridSize = parsed;
       }
     }
-    if (gridColorAttr != null) {
+    if (gridColorAttr !== null) {
       canvasStyle.backgroundGridColor = gridColorAttr;
     }
 
@@ -247,11 +247,11 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     font += `${fontStyle || ''};`;
 
     if (
-      fontFamily != null ||
-      fontSize != null ||
-      fontColor != null ||
-      fontWeight != null ||
-      fontStyle != null
+      fontFamily !== undefined ||
+      fontSize !== undefined ||
+      fontColor !== undefined ||
+      fontWeight !== undefined ||
+      fontStyle !== undefined
     ) {
       parentTopic.setAttribute('fontStyle', font);
     }
@@ -283,7 +283,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     }
 
     const metadata = topic.getMetadata();
-    if (metadata != null) {
+    if (metadata !== undefined) {
       parentTopic.setAttribute('metadata', metadata);
     }
 
@@ -474,7 +474,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
   }
 
   protected _deserializeNode(domElem: Element, mindmap: Mindmap): NodeModel {
-    const type = domElem.getAttribute('central') != null ? 'CentralTopic' : 'MainTopic';
+    const type = domElem.getAttribute('central') !== null ? 'CentralTopic' : 'MainTopic';
 
     // Load attributes... A non-numeric id is missing.
     let id = Number.parseInt(domElem.getAttribute('id') ?? '', 10);
@@ -634,7 +634,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
 
     const isShrink = domElem.getAttribute('shrink');
     // Hack: Some production maps has been stored with the central topic collapsed. This is a bug.
-    if (isShrink != null && type !== 'CentralTopic') {
+    if (isShrink !== null && type !== 'CentralTopic') {
       topic.setChildrenShrunken(isShrink === 'true');
     }
 
@@ -677,7 +677,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
           // Has text node ?.
           const textAttr = XMLSerializerTango._deserializeTextAttr(elem);
           if (textAttr) {
-            attributes.text = textAttr;
+            attributes['text'] = textAttr;
           }
 
           // Create a new element ....
@@ -685,11 +685,11 @@ class XMLSerializerTango implements XMLMindmapSerializer {
           let feature: FeatureModel = FeatureModelFactory.createModel(featureType, attributes);
 
           // Migrate icons to emoji ...
-          const svgIcon = attributes.id;
+          const svgIcon = attributes['id'];
           if (featureType === 'icon' && svgIcon !== undefined) {
             const emoji = XMLSerializerTango.emojiEquivalent(svgIcon);
             if (emoji) {
-              attributes.id = emoji;
+              attributes['id'] = emoji;
               feature = FeatureModelFactory.createModel('eicon', attributes);
             }
           }
@@ -718,7 +718,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
   }
 
   static _deserializeTextAttr(domElem: Element): string {
-    let value = domElem.getAttribute('text');
+    let value = domElem.getAttribute('text') ?? undefined;
     if (!value) {
       value = XMLSerializerTango._readCDATA(domElem);
     } else {
@@ -739,16 +739,16 @@ class XMLSerializerTango implements XMLMindmapSerializer {
 
   private static _deserializeNodeText(domElem: ChildNode): string {
     const value = XMLSerializerTango._readCDATA(domElem);
-    return value !== null ? value : '';
+    return value ?? '';
   }
 
   /**
-   * Concatenates the CDATA sections and the text of the element, null if it has none. The writer
+   * Concatenates the CDATA sections and the text of the element, undefined if it has none. The writer
    * always uses CDATA, but plain text content (e.g. a hand-edited or third-party map) is read too.
    * Whitespace-only text is skipped: it is the indentation of a pretty-printed document.
    */
-  private static _readCDATA(domElem: ChildNode): string | null {
-    let value: string | null = null;
+  private static _readCDATA(domElem: ChildNode): string | undefined {
+    let value: string | undefined;
     domElem.childNodes.forEach((child) => {
       const content = child.nodeValue ?? '';
       const isText = child.nodeType === Node.TEXT_NODE && content.trim() !== '';
@@ -834,7 +834,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
    * XML 1.0 standard. For reference, please see
    * <a href="http://www.w3.org/TR/2000/REC-xml-20001006#NT-Char">the
    * standard</a>. This method will return an empty
-   * String if the input is null or empty.
+   * String if the input is empty.
    *
    * @param in The String whose non-valid characters we want to remove.
    * @return The in String, stripped of non-valid characters.
