@@ -4805,7 +4805,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/dom@npm:^10.1.0, @testing-library/dom@npm:^10.4.1":
+"@testing-library/dom@npm:^10.1.0, @testing-library/dom@npm:^10.4.1, @testing-library/dom@npm:^10.4.2":
   version: 10.4.2
   resolution: "@testing-library/dom@npm:10.4.2"
   dependencies:
@@ -5632,8 +5632,10 @@ __metadata:
     "@storybook/addon-links": "npm:^10.6.1"
     "@storybook/react": "npm:^10.6.1"
     "@storybook/react-vite": "npm:^10.6.1"
+    "@testing-library/dom": "npm:^10.4.2"
     "@testing-library/react": "npm:^16.3.3"
     "@types/jest": "npm:^30.0.0"
+    "@types/react": "npm:^19.3.0"
     "@vitejs/plugin-react": "npm:^6.1.1"
     "@wisemapping/mindplot": "npm:*"
     babel-jest: "npm:^30.5.2"
@@ -5675,6 +5677,7 @@ __metadata:
     "@storybook/html": "npm:^10.6.1"
     "@storybook/html-vite": "npm:^10.6.1"
     "@types/lodash": "npm:^4.17.25"
+    "@types/react": "npm:^19.3.0"
     "@wisemapping/web2d": "npm:*"
     blob-polyfill: "npm:^9.0.20240710"
     cypress: "npm:^16.1.1"
@@ -5688,6 +5691,7 @@ __metadata:
     jspdf: "npm:^4.2.1"
     lodash: "npm:^4.18.1"
     raphael: "npm:^2.3.0"
+    react: "npm:^19.3.0"
     storybook: "npm:^10.6.1"
     typescript: "npm:^6.0.3"
     vite: "npm:^8.3.2"
@@ -5699,6 +5703,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@wisemapping/web2d@workspace:packages/web2d"
   dependencies:
+    "@babel/core": "npm:^8.0.6"
     "@babel/preset-typescript": "npm:^8.0.1"
     "@mdx-js/react": "npm:^3.1.1"
     "@simonsmith/cypress-image-snapshot": "npm:^11.0.0"
@@ -5706,11 +5711,14 @@ __metadata:
     "@storybook/addon-links": "npm:^10.6.1"
     "@storybook/html-vite": "npm:^10.6.1"
     "@types/jest": "npm:^30.0.0"
+    "@types/react": "npm:^19.3.0"
     cypress: "npm:^16.1.1"
+    eslint: "npm:^10.12.0"
     eslint-plugin-storybook: "npm:^10.6.1"
     globals: "npm:^17.13.0"
     jest: "npm:^30.5.2"
     jest-environment-jsdom: "npm:^30.5.2"
+    react: "npm:^19.3.0"
     storybook: "npm:^10.6.1"
     ts-jest: "npm:^29.4.14"
     typescript: "npm:^6.0.3"
@@ -5736,8 +5744,10 @@ __metadata:
     "@storybook/react-vite": "npm:^10.6.1"
     "@tanstack/react-query": "npm:^5.104.1"
     "@testing-library/cypress": "npm:^10.1.3"
+    "@testing-library/dom": "npm:^10.4.2"
     "@testing-library/react": "npm:^16.3.3"
     "@types/jest": "npm:^30.0.0"
+    "@types/react": "npm:^19.3.0"
     "@vitejs/plugin-react": "npm:^6.1.1"
     "@wisemapping/editor": "npm:*"
     axe-core: "npm:^4.13.0"
@@ -6419,7 +6429,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"browserslist@npm:^4.24.0, browserslist@npm:^4.28.7":
+"browserslist@npm:^4.24.0, browserslist@npm:^4.28.7, browserslist@npm:^4.29.3":
   version: 4.29.3
   resolution: "browserslist@npm:4.29.3"
   dependencies:
@@ -14753,6 +14763,7 @@ __metadata:
     "@types/react-dom": "npm:^19.3.0"
     "@typescript-eslint/eslint-plugin": "npm:^8.71.0"
     "@typescript-eslint/parser": "npm:^8.71.0"
+    browserslist: "npm:^4.29.3"
     eslint: "npm:^10.12.0"
     eslint-config-airbnb-base: "npm:^15.0.0"
     eslint-config-prettier: "npm:^10.1.8"
