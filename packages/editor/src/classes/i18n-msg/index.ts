@@ -15,63 +15,97 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-// Import all locale files statically
-// Note: All locales are loaded upfront, but the files are small (~10-20KB each)
-// This ensures synchronous access which is required for proper editor initialization
-import fr from './../../compiled-lang/fr.json';
+
+import { useEffect, useState } from 'react';
+// English is the fallback, so it is bundled; every other locale is a chunk of its own, loaded
+// when a user needs it (together they are about 245 KB).
 import en from './../../compiled-lang/en.json';
-import es from './../../compiled-lang/es.json';
-import de from './../../compiled-lang/de.json';
-import ru from './../../compiled-lang/ru.json';
-import uk from './../../compiled-lang/uk.json';
-import zh from './../../compiled-lang/zh.json';
-import zhCN from './../../compiled-lang/zh-CN.json';
-import ja from './../../compiled-lang/ja.json';
-import pt from './../../compiled-lang/pt.json';
-import it from './../../compiled-lang/it.json';
-import hi from './../../compiled-lang/hi.json';
-import ar from './../../compiled-lang/ar.json';
 
 type MessagePart = {
   type: number;
   value: string;
 };
 
-type LocaleData = Record<string, MessagePart[]>;
+export type LocaleData = Record<string, MessagePart[]>;
+
+type Catalog = { default: unknown };
+
+const LOADERS: Record<string, () => Promise<Catalog>> = {
+  fr: () => import('./../../compiled-lang/fr.json'),
+  es: () => import('./../../compiled-lang/es.json'),
+  de: () => import('./../../compiled-lang/de.json'),
+  ru: () => import('./../../compiled-lang/ru.json'),
+  uk: () => import('./../../compiled-lang/uk.json'),
+  zh: () => import('./../../compiled-lang/zh.json'),
+  'zh-CN': () => import('./../../compiled-lang/zh-CN.json'),
+  ja: () => import('./../../compiled-lang/ja.json'),
+  pt: () => import('./../../compiled-lang/pt.json'),
+  it: () => import('./../../compiled-lang/it.json'),
+  hi: () => import('./../../compiled-lang/hi.json'),
+  ar: () => import('./../../compiled-lang/ar.json'),
+};
+
+const loaded = new Map<string, LocaleData>([['en', en as LocaleData]]);
+
+/** The locale whose messages are served: an unsupported one falls back to English. */
+const supported = (locale: string): string => (LOADERS[locale] ? locale : 'en');
 
 class I18nMsg {
-  static loadLocaleData(locale: string): LocaleData {
-    switch (locale) {
-      case 'fr':
-        return fr;
-      case 'en':
-        return en;
-      case 'es':
-        return es;
-      case 'de':
-        return de;
-      case 'ru':
-        return ru;
-      case 'uk':
-        return uk;
-      case 'zh':
-        return zh;
-      case 'zh-CN':
-        return zhCN;
-      case 'ja':
-        return ja;
-      case 'pt':
-        return pt;
-      case 'it':
-        return it;
-      case 'hi':
-        return hi;
-      case 'ar':
-        return ar;
-      default:
-        return en;
+  /** The messages of a locale already loaded, or undefined. */
+  static getLoaded(locale: string): LocaleData | undefined {
+    return loaded.get(supported(locale));
+  }
+
+  /**
+   * Loads the messages of a locale. Calling it before rendering the editor (from a route loader)
+   * shows the editor in that language from its first paint.
+   */
+  static async load(locale: string): Promise<LocaleData> {
+    const code = supported(locale);
+    const ready = loaded.get(code);
+    if (ready) {
+      return ready;
     }
+    const messages = (await LOADERS[code]()).default as LocaleData;
+    loaded.set(code, messages);
+    return messages;
   }
 }
+
+/**
+ * The locale and messages to give IntlProvider. Until the locale's messages are loaded it serves
+ * English, as English: react-intl would report every message as missing for another locale.
+ */
+export const useLocaleData = (locale: string): { locale: string; messages: LocaleData } => {
+  const [shown, setShown] = useState(() => {
+    const messages = I18nMsg.getLoaded(locale);
+    return messages ? { locale, messages } : { locale: 'en', messages: en as LocaleData };
+  });
+
+  // A locale already loaded is shown in the same render.
+  const ready = I18nMsg.getLoaded(locale);
+  if (ready && shown.messages !== ready) {
+    setShown({ locale, messages: ready });
+  }
+
+  useEffect(() => {
+    if (I18nMsg.getLoaded(locale)) {
+      return undefined;
+    }
+    let current = true;
+    I18nMsg.load(locale)
+      .then((messages) => {
+        if (current) {
+          setShown({ locale, messages });
+        }
+      })
+      .catch((error) => console.error(`Messages for locale ${locale} could not be loaded`, error));
+    return () => {
+      current = false;
+    };
+  }, [locale]);
+
+  return shown;
+};
 
 export default I18nMsg;

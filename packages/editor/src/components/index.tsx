@@ -21,7 +21,7 @@ import React, { ReactElement, useMemo, useRef } from 'react';
 import { IntlProvider } from 'react-intl';
 import { Designer } from '@wisemapping/mindplot';
 
-import I18nMsg from '../classes/i18n-msg';
+import { useLocaleData } from '../classes/i18n-msg';
 
 import { Theme, ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -166,14 +166,13 @@ const EditorContent = ({
 
   // Initialize locale ...
   const locale = options.locale;
-  // Memoize locale messages loading
-  const msg = useMemo(() => I18nMsg.loadLocaleData(locale), [locale]);
+  const intlLocale = useLocaleData(locale);
 
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <IntlProvider locale={locale} messages={msg}>
+        <IntlProvider locale={intlLocale.locale} messages={intlLocale.messages}>
           {options.enableAppBar && (
             <AppBar
               model={model}

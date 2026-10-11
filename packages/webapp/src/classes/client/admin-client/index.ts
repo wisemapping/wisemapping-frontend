@@ -503,7 +503,7 @@ export default class AdminClient implements AdminClientInterface {
 
   private getDefaultLocale(): Locale {
     // Return a default locale without using React hooks - FIXED
-    return { code: 'en', message: {}, label: 'English' };
+    return { code: 'en', label: 'English' };
   }
 
   private sessionExpired(): void {
@@ -667,7 +667,7 @@ export default class AdminClient implements AdminClientInterface {
       email: 'admin@wisemapping.com',
       firstname: 'Admin',
       lastname: 'User',
-      locale: { code: 'en', message: {}, label: 'English' },
+      locale: { code: 'en', label: 'English' },
       authenticationType: AuthenticationType.DATABASE,
       isAdmin: true, // Admin client should always return admin user
     });

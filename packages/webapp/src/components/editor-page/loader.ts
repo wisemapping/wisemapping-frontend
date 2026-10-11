@@ -24,6 +24,9 @@ import queryClient from '../../queryClient';
 import Client from '../../classes/client';
 import { createJsonResponse } from '../../utils/response';
 import { mapMetadataQueryKey } from '../../classes/middleware';
+import AppI18n from '../../classes/app-i18n';
+import I18nMsg from '@wisemapping/editor/classes/i18n-msg';
+import { appLogger as log } from '../../utils/logger';
 
 export type EditorMetadata = {
   editorMode: EditorRenderMode;
@@ -63,7 +66,22 @@ const isErrorInfo = (error: unknown): error is ErrorInfo =>
 
 const PUBLIC_MAP_REMOVED_MESSAGE = 'The map you are looking for is no longer available.';
 
+// The editor's own messages, loaded with the map so that its chrome paints in the user's
+// language. Imported by path: the editor barrel would put the whole editor in the entry.
+const preloadEditorMessages = (): Promise<unknown> =>
+  I18nMsg.load(AppI18n.getUserLocale().code).catch((error) =>
+    log.error('The editor messages could not be loaded', error),
+  );
+
 export const loader = (pageMode: PageModeType, bootstrap = false) => {
+  const loadMap = loadMapFor(pageMode, bootstrap);
+  return async (args: LoaderFunctionArgs): Promise<Response> => {
+    const [result] = await Promise.all([loadMap(args), preloadEditorMessages()]);
+    return result;
+  };
+};
+
+const loadMapFor = (pageMode: PageModeType, bootstrap: boolean) => {
   return async ({ params }: LoaderFunctionArgs): Promise<Response> => {
     const client = AppConfig.getClient();
     let result: Response | undefined;
