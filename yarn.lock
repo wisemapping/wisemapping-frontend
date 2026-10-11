@@ -5384,7 +5384,6 @@ __metadata:
     globals: "npm:^17.13.0"
     jest: "npm:^30.5.2"
     jest-environment-jsdom: "npm:^30.5.2"
-    jest-transform-stub: "npm:^2.0.0"
     lodash: "npm:^4.18.1"
     react: "npm:^19.3.0"
     react-dom: "npm:^19.3.0"
@@ -5422,7 +5421,6 @@ __metadata:
     globals: "npm:^17.13.0"
     html2canvas: "npm:^1.4.1"
     jest: "npm:^30.5.2"
-    jest-transform-stub: "npm:^2.0.0"
     jspdf: "npm:^4.2.1"
     lodash: "npm:^4.18.1"
     raphael: "npm:^2.3.0"
@@ -5484,7 +5482,6 @@ __metadata:
     globals: "npm:^17.13.0"
     jest: "npm:^30.5.2"
     jest-environment-jsdom: "npm:^30.5.2"
-    jest-transform-stub: "npm:^2.0.0"
     loglevel: "npm:^1.9.2"
     react: "npm:^19.3.0"
     react-dom: "npm:^19.3.0"
@@ -9900,13 +9897,6 @@ __metadata:
     semver: "npm:^7.7.2"
     synckit: "npm:^0.11.8"
   checksum: 10/64be725cd1171c940831c30cef6f349a9b5e331d064ee6454607e59da98d2a4141cb66eb5d208346e775f8ca3c199114f8fb1853218b9112a2b37cd7d572a648
-  languageName: node
-  linkType: hard
-
-"jest-transform-stub@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "jest-transform-stub@npm:2.0.0"
-  checksum: 10/c46134257e5fb047f5952e4a4a1339925dd009da15aa8d3310ba1d3e4d22266ed6c675cd18e58c9d5ca2246718d6cc8ff00ea6a4b6f3b2a6b285b6426f6ae8fe
   languageName: node
   linkType: hard
 

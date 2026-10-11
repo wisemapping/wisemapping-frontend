@@ -25,7 +25,7 @@ const config = {
     '^.+\\.(js)$': 'babel-jest',
   },
   moduleNameMapper: {
-    '\\.(svg|png|jpg|jpeg|gif)$': 'jest-transform-stub',
+    '\\.(svg|png|jpg|jpeg|gif)$': '<rootDir>/test/unit/__mocks__/asset-stub.js',
     // Uses Vite's import.meta.glob, which ts-jest can not compile: list the icons from disk.
     '/SvgIconAssets$': '<rootDir>/test/unit/__mocks__/SvgIconAssets.ts',
     '^@wisemapping/web2d$': '<rootDir>/../web2d/src/index.ts',

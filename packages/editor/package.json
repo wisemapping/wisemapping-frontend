@@ -78,7 +78,6 @@
     "globals": "^17.13.0",
     "jest": "^30.5.2",
     "jest-environment-jsdom": "^30.5.2",
-    "jest-transform-stub": "^2.0.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "start-server-and-test": "^3.0.12",
