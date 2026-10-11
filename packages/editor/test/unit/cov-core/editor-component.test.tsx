@@ -272,12 +272,12 @@ describe('Editor', () => {
     const { unmount } = renderEditor(configOf(model, { mode: 'viewonly-public' }));
 
     expect(document.body).toHaveAttribute('data-wisemapping-embed-loaded', 'true');
-    expect(listeners.loadSuccess).toHaveLength(1);
+    expect(listeners['loadSuccess']).toHaveLength(1);
 
     unmount();
 
     expect(document.body).not.toHaveAttribute('data-wisemapping-embed-loaded');
-    expect(listeners.loadSuccess).toHaveLength(0);
+    expect(listeners['loadSuccess']).toHaveLength(0);
   });
 
   it('marks an embedded page when the designer reports the load', () => {
@@ -286,7 +286,7 @@ describe('Editor', () => {
     const { unmount } = renderEditor(configOf(model, { mode: 'viewonly-public' }));
     expect(document.body).not.toHaveAttribute('data-wisemapping-embed-loaded');
 
-    act(() => listeners.loadSuccess?.forEach((l) => l()));
+    act(() => listeners['loadSuccess']?.forEach((l) => l()));
 
     expect(document.body).toHaveAttribute('data-wisemapping-embed-loaded', 'true');
     unmount();

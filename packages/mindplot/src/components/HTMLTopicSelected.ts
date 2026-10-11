@@ -660,7 +660,7 @@ class HTMLTopicSelected {
    */
   private setupHoverEffect(button: HTMLDivElement, baseColor: string, hoverColor: string): void {
     // Use a data attribute to track if hover is set up to avoid duplicate listeners
-    if (button.dataset.hoverSetup === 'true') {
+    if (button.dataset['hoverSetup'] === 'true') {
       // Update stored colors on the button for touch feedback
       const buttonWithColors = button as HTMLDivElement & {
         _baseColor?: string;
@@ -698,7 +698,7 @@ class HTMLTopicSelected {
       }
     });
 
-    button.dataset.hoverSetup = 'true';
+    button.dataset['hoverSetup'] = 'true';
   }
 
   /**

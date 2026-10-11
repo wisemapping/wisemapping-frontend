@@ -48,7 +48,7 @@ describe('ThemeStyle requires every style key (BL5-203)', () => {
 
   it('fails on a theme whose JSON files set no value for a key, naming the theme and key', () => {
     const ThemeStyleClass = loadWithClassicDefault((json) => {
-      delete json.SubTopic!.outerBorderColor;
+      delete json['SubTopic']!['outerBorderColor'];
     });
     expect(() => new ThemeStyleClass('classic', 'light')).toThrow(
       "Theme 'classic' sets no outerBorderColor for SubTopic",
@@ -58,7 +58,7 @@ describe('ThemeStyle requires every style key (BL5-203)', () => {
   it('accepts a key the light file sets on top of the default one', () => {
     // classic-light.json sets the CentralTopic font colour.
     const ThemeStyleClass = loadWithClassicDefault((json) => {
-      delete json.CentralTopic!.fontColor;
+      delete json['CentralTopic']!['fontColor'];
     });
     expect(new ThemeStyleClass('classic', 'dark').getStyles('CentralTopic').fontColor).toBe(
       '#000000',
@@ -67,7 +67,7 @@ describe('ThemeStyle requires every style key (BL5-203)', () => {
 
   it('fails on an unknown message key instead of dropping it', () => {
     const ThemeStyleClass = loadWithClassicDefault((json) => {
-      json.MainTopic!.msgKey = 'NO_SUCH_MESSAGE';
+      json['MainTopic']!['msgKey'] = 'NO_SUCH_MESSAGE';
     });
     expect(() => new ThemeStyleClass('classic', 'light')).toThrow(
       'Unknown message key: NO_SUCH_MESSAGE',
@@ -77,14 +77,14 @@ describe('ThemeStyle requires every style key (BL5-203)', () => {
   // BL5-209: the grid pattern of a theme JSON is checked instead of cast to its type.
   it('fails on an unknown grid pattern', () => {
     const ThemeStyleClass = loadWithClassicDefault((json) => {
-      json.Canvas!.gridPattern = 'stripes';
+      json['Canvas']!['gridPattern'] = 'stripes';
     });
     expect(() => new ThemeStyleClass('classic', 'light')).toThrow('Unknown grid pattern: stripes');
   });
 
   it('reads the grid pattern a theme sets', () => {
     const ThemeStyleClass = loadWithClassicDefault((json) => {
-      json.Canvas!.gridPattern = 'dots';
+      json['Canvas']!['gridPattern'] = 'dots';
     });
     expect(new ThemeStyleClass('classic', 'dark').getCanvasStyle().gridPattern).toBe('dots');
   });

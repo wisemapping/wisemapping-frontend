@@ -95,7 +95,7 @@ describe('IconGroup', () => {
 
     it('shows the delete widget without asking the global designer if it is read-only', () => {
       // The global designer is the last one built, which may be another, read-only, map.
-      (globalThis as Record<string, unknown>).designer = { isReadOnly: () => true };
+      (globalThis as Record<string, unknown>)['designer'] = { isReadOnly: () => true };
       try {
         const topicGroup = new Group();
         const append = jest.spyOn(topicGroup, 'append');
@@ -114,7 +114,7 @@ describe('IconGroup', () => {
 
         expect(append).toHaveBeenCalledTimes(1);
       } finally {
-        delete (globalThis as Record<string, unknown>).designer;
+        delete (globalThis as Record<string, unknown>)['designer'];
       }
     });
   });

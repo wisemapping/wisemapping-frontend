@@ -305,7 +305,7 @@ describe('AppBar per capability', () => {
 
     await waitFor(() => expect(button('Export')).toBeEnabled());
     unmount();
-    expect(listeners.loadSuccess).toHaveLength(0);
+    expect(listeners['loadSuccess']).toHaveLength(0);
   });
 
   it('keeps map actions disabled when the designer is not built yet', () => {

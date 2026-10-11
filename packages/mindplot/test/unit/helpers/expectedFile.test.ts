@@ -56,7 +56,7 @@ describe('assertExpectedFile (BL5-15)', () => {
   });
 
   test('fails on a missing expected file under CI, without writing it', () => {
-    process.env.CI = 'true';
+    process.env['CI'] = 'true';
     const file = path.join(dir, 'new.wxml');
 
     expect(() => assertExpectedFile(file, 'content')).toThrow(/Missing expected file/);
@@ -89,14 +89,14 @@ describe('import and export suite helpers (BL5-15)', () => {
   const missing = 'bl5-15-no-such-expected-file';
 
   test('the import helper fails under CI when the expected file is missing', async () => {
-    process.env.CI = 'true';
+    process.env['CI'] = 'true';
     const importer = { import: () => Promise.resolve('<map/>') } as unknown as Importer;
 
     await expect(importerAssert(missing, importer)).rejects.toThrow(/Missing expected file/);
   });
 
   test('the export helper fails under CI when the expected file is missing', async () => {
-    process.env.CI = 'true';
+    process.env['CI'] = 'true';
     const exporter = {
       export: () => Promise.resolve('content'),
       extension: () => 'md',

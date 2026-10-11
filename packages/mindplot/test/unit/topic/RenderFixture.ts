@@ -101,7 +101,7 @@ export const buildMediumMap = (theme?: string): string => {
 export const stubTextMeasurement = (): void => {
   const proto = (window as unknown as { SVGElement: { prototype: Record<string, unknown> } })
     .SVGElement.prototype;
-  proto.getBBox = function getBBox(this: SVGElement) {
+  proto['getBBox'] = function getBBox(this: SVGElement) {
     if (this.tagName.toLowerCase() === 'text') {
       const fontSize = Number.parseFloat(this.getAttribute('font-size') || '10');
       const lines = Array.from(this.querySelectorAll('tspan')).map((t) => t.textContent || '');
@@ -115,7 +115,7 @@ export const stubTextMeasurement = (): void => {
     }
     return { x: 0, y: 0, width: 60, height: 14 };
   };
-  proto.getComputedTextLength = () => 60;
+  proto['getComputedTextLength'] = () => 60;
 };
 
 const hash = (value: string): string => createHash('sha1').update(value).digest('hex').slice(0, 12);
@@ -147,6 +147,6 @@ export const renderSnapshot = (designer: Designer): Record<string, string> => {
     ].join(' ');
   });
   const svg = designer.getModel().getCentralTopic().get2DElement().getNode().ownerSVGElement;
-  result.canvas = hash(svg ? svg.outerHTML : '');
+  result['canvas'] = hash(svg ? svg.outerHTML : '');
   return result;
 };

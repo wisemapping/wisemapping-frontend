@@ -78,8 +78,8 @@ export class OutlineBuilder {
         // Emoji icon - extract the emoji character
         // The feature attributes contain the emoji ID
         const attributes = feature.getAttributes();
-        if (attributes && attributes.id) {
-          emojiChars.push(attributes.id);
+        if (attributes && attributes['id']) {
+          emojiChars.push(attributes['id']);
         }
       }
     });

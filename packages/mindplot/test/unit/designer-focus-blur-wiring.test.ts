@@ -134,8 +134,8 @@ describe("Designer 'onfocus'/'onblur' wiring", () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (designer as any)._buildNodeGraph(node, true);
 
-    expect(handlers.ontblur).toBeDefined();
-    expect(handlers.ontfocus).toBeDefined();
+    expect(handlers['ontblur']).toBeDefined();
+    expect(handlers['ontfocus']).toBeDefined();
   });
 
   afterEach(() => {
@@ -144,13 +144,13 @@ describe("Designer 'onfocus'/'onblur' wiring", () => {
 
   it("fires 'onblur' when nothing is selected", () => {
     setSelection(0, 0);
-    handlers.ontblur!();
+    handlers['ontblur']!();
     expect(fired).toContain('onblur');
   });
 
   it("does not fire 'onblur' while a topic is still selected", () => {
     setSelection(1, 0);
-    handlers.ontblur!();
+    handlers['ontblur']!();
     expect(fired).not.toContain('onblur');
   });
 
@@ -158,31 +158,31 @@ describe("Designer 'onfocus'/'onblur' wiring", () => {
     // A Ctrl or Cmd click that unselects one topic of several: before, no event at all, so the
     // editor kept the count of the selection before the click.
     setSelection(2, 0);
-    handlers.ontblur!();
+    handlers['ontblur']!();
     expect(fired).toEqual(['onfocus']);
   });
 
   it("does not fire 'onblur' while a relationship is still selected", () => {
     setSelection(0, 1);
-    handlers.ontblur!();
+    handlers['ontblur']!();
     expect(fired).not.toContain('onblur');
   });
 
   it("fires 'onfocus' for a single topic selection", () => {
     setSelection(1, 0);
-    handlers.ontfocus!();
+    handlers['ontfocus']!();
     expect(fired).toContain('onfocus');
   });
 
   it("fires 'onfocus' for a multi-topic selection", () => {
     setSelection(3, 0);
-    handlers.ontfocus!();
+    handlers['ontfocus']!();
     expect(fired).toContain('onfocus');
   });
 
   it("does not fire 'onfocus' when the selection is empty", () => {
     setSelection(0, 0);
-    handlers.ontfocus!();
+    handlers['ontfocus']!();
     expect(fired).not.toContain('onfocus');
   });
 
@@ -195,10 +195,10 @@ describe("Designer 'onfocus'/'onblur' wiring", () => {
         const expected = topics + rels === 0 ? 'onblur' : 'onfocus';
         setSelection(topics, rels);
         fired = [];
-        handlers.ontblur!();
+        handlers['ontblur']!();
         expect(fired).toEqual([expected]);
         fired = [];
-        handlers.ontfocus!();
+        handlers['ontfocus']!();
         expect(fired).toEqual([expected]);
       }
     }

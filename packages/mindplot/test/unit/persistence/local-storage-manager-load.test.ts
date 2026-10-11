@@ -48,15 +48,15 @@ describe('LocalStorageManager loading', () => {
     expect(await centralText(manager)).toBe('Central');
     expect(fetchMock.mock.calls[0][0]).toBe('/maps/m1.xml');
     const headers = (fetchMock.mock.calls[0][1] as RequestInit).headers as Record<string, string>;
-    expect(headers.Accept).toBe('application/xml');
-    expect(headers.Authorization).toBeUndefined();
+    expect(headers['Accept']).toBe('application/xml');
+    expect(headers['Authorization']).toBeUndefined();
   });
 
   it('sends the token as a bearer authorization', async () => {
     const manager = new LocalStorageManager('/maps/{id}.xml', false, 'tok');
     await manager.load('m1');
     const headers = (fetchMock.mock.calls[0][1] as RequestInit).headers as Record<string, string>;
-    expect(headers.Authorization).toBe('Bearer tok');
+    expect(headers['Authorization']).toBe('Bearer tok');
   });
 
   it('prefers the map stored by a writable manager, unless forced to load', async () => {

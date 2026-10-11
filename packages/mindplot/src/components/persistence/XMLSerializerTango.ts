@@ -677,7 +677,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
           // Has text node ?.
           const textAttr = XMLSerializerTango._deserializeTextAttr(elem);
           if (textAttr) {
-            attributes.text = textAttr;
+            attributes['text'] = textAttr;
           }
 
           // Create a new element ....
@@ -685,11 +685,11 @@ class XMLSerializerTango implements XMLMindmapSerializer {
           let feature: FeatureModel = FeatureModelFactory.createModel(featureType, attributes);
 
           // Migrate icons to emoji ...
-          const svgIcon = attributes.id;
+          const svgIcon = attributes['id'];
           if (featureType === 'icon' && svgIcon !== undefined) {
             const emoji = XMLSerializerTango.emojiEquivalent(svgIcon);
             if (emoji) {
-              attributes.id = emoji;
+              attributes['id'] = emoji;
               feature = FeatureModelFactory.createModel('eicon', attributes);
             }
           }

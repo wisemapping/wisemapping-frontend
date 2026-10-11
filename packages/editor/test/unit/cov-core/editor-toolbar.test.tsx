@@ -129,7 +129,7 @@ describe('buildEditorPanelConfig panels', () => {
     const props = pane(buildEditorPanelConfig(model, intl, selection), 'Style Topic', close).props;
 
     expect(props.closeModal).toBe(close);
-    expect(value(props.shapeModel)).toBe('rectangle');
+    expect(value(props['shapeModel'])).toBe('rectangle');
     [
       'fillColorModel',
       'borderColorModel',
@@ -148,10 +148,10 @@ describe('buildEditorPanelConfig panels', () => {
       jest.fn(),
     ).props;
 
-    expect(value(props.colorModel)).toBe('#ff0000');
-    expect(value(props.strokeStyleModel)).toBe('dotted');
-    expect(value(props.endArrowModel)).toBe(true);
-    expect(value(props.startArrowModel)).toBe(false);
+    expect(value(props['colorModel'])).toBe('#ff0000');
+    expect(value(props['strokeStyleModel'])).toBe('dotted');
+    expect(value(props['endArrowModel'])).toBe(true);
+    expect(value(props['startArrowModel'])).toBe(false);
     expect(trackEditorPanelAction).toHaveBeenCalledWith('open_relationship_style_editor');
   });
 
@@ -163,8 +163,8 @@ describe('buildEditorPanelConfig panels', () => {
       jest.fn(),
     ).props;
 
-    expect(value(props.fontFamilyModel)).toBe('Arial');
-    expect(props.model).toBe(model);
+    expect(value(props['fontFamilyModel'])).toBe('Arial');
+    expect(props['model']).toBe(model);
     ['fontSizeModel', 'fontWeightModel', 'fontStyleModel', 'fontColorModel'].forEach((name) =>
       expect(props[name]).toBeDefined(),
     );
@@ -189,7 +189,7 @@ describe('buildEditorPanelConfig panels', () => {
     const props = pane(buildEditorPanelConfig(model, intl, selection), 'Background', jest.fn())
       .props as PaneProps & { onStyleChange: (style: unknown) => void };
 
-    expect(props.initialStyle).toEqual({ backgroundColor: '#fafafa' });
+    expect(props['initialStyle']).toEqual({ backgroundColor: '#fafafa' });
     props.onStyleChange({ backgroundColor: '#000000' });
 
     expect(designer.setCanvasStyle).toHaveBeenCalledWith({ backgroundColor: '#000000' });

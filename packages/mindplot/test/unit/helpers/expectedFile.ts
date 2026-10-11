@@ -31,8 +31,8 @@ import { diff } from 'jest-diff';
 
 const shouldUpdate = (): boolean => {
   if (
-    process.env.UPDATE_SNAPSHOTS === 'true' ||
-    process.env.XMIND_IMPORTER_UPDATE_EXPECTED === 'true'
+    process.env['UPDATE_SNAPSHOTS'] === 'true' ||
+    process.env['XMIND_IMPORTER_UPDATE_EXPECTED'] === 'true'
   ) {
     return true;
   }
@@ -44,7 +44,7 @@ const shouldUpdate = (): boolean => {
 /** Compares the actual output with the expected file, writing it when updating or missing locally. */
 const assertExpectedFile = (file: string, actual: string): void => {
   const exists = fs.existsSync(file);
-  if (shouldUpdate() || (!exists && !process.env.CI)) {
+  if (shouldUpdate() || (!exists && !process.env['CI'])) {
     fs.mkdirSync(path.dirname(file), { recursive: true });
     if (!exists || fs.readFileSync(file).toString() !== actual) {
       fs.writeFileSync(file, actual);

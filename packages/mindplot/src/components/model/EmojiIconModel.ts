@@ -23,7 +23,7 @@ class EmojiIconModel extends FeatureModel {
   constructor(attributes: FeatureAttributes) {
     super('eicon');
     // A missing id is rejected by setIconType, as an empty one.
-    this.setIconType(attributes.id ?? '');
+    this.setIconType(attributes['id'] ?? '');
   }
 
   getIconType(): string {

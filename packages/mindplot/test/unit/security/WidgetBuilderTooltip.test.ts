@@ -49,7 +49,7 @@ const fakeIcon = () => {
     }),
   };
   const hover = () => {
-    listeners.mouseenter!({ target, stopPropagation: () => {} } as unknown as MouseEvent);
+    listeners['mouseenter']!({ target, stopPropagation: () => {} } as unknown as MouseEvent);
     jest.runOnlyPendingTimers();
   };
   return { icon, hover };

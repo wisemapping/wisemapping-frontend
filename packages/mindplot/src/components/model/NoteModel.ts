@@ -29,12 +29,12 @@ const isContentType = (value: unknown): value is ContentType =>
 class NoteModel extends FeatureModel {
   constructor(attributes: FeatureAttributes) {
     super('note');
-    const noteText = attributes.text ? attributes.text : ' ';
+    const noteText = attributes['text'] ? attributes['text'] : ' ';
     this.setText(noteText);
 
     // Set contentType if provided (for rich text notes)
-    if (attributes.contentType) {
-      this.applyContentType(attributes.contentType);
+    if (attributes['contentType']) {
+      this.applyContentType(attributes['contentType']);
     }
   }
 
