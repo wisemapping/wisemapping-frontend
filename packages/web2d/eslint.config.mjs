@@ -1,21 +1,14 @@
 import { defineConfig } from 'eslint/config';
-import typescriptEslint from '@typescript-eslint/eslint-plugin';
+import tseslint from 'typescript-eslint';
 import globals from 'globals';
-import tsParser from '@typescript-eslint/parser';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import js from '@eslint/js';
-import { FlatCompat } from '@eslint/eslintrc';
 import { createNodeResolver, importX } from 'eslint-plugin-import-x';
 import cypress from 'eslint-plugin-cypress';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all,
-});
 
 // Build and tool configs, loaded by Node (eslint, vite, cypress, jest, storybook) rather than bundled.
 const toolConfigFiles = [
@@ -46,14 +39,10 @@ export default defineConfig([
     extends: [
       js.configs.recommended,
       importX.flatConfigs.recommended,
-      ...compat.extends(
-        'plugin:@typescript-eslint/eslint-recommended',
-        'plugin:@typescript-eslint/recommended',
-      ),
+      tseslint.configs.recommended,
     ],
 
     plugins: {
-      '@typescript-eslint': typescriptEslint,
       cypress,
     },
 
@@ -63,7 +52,6 @@ export default defineConfig([
         ...globals.commonjs,
         ...globals.jest,
       },
-      parser: tsParser,
       parserOptions: {
         ecmaVersion: 2020,
         sourceType: 'module',

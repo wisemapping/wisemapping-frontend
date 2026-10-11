@@ -1,40 +1,26 @@
 import { defineConfig, globalIgnores } from 'eslint/config';
 import react from 'eslint-plugin-react';
-import typescriptEslint from '@typescript-eslint/eslint-plugin';
+import tseslint from 'typescript-eslint';
 import reactHooks from 'eslint-plugin-react-hooks';
-import { fixupPluginRules } from '@eslint/compat';
 import globals from 'globals';
-import tsParser from '@typescript-eslint/parser';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import js from '@eslint/js';
-import { FlatCompat } from '@eslint/eslintrc';
+import prettier from 'eslint-config-prettier/flat';
 import cypress from 'eslint-plugin-cypress';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all,
-});
 
 export default defineConfig([
   globalIgnores(['**/dist/**/*']),
   {
-    extends: compat.extends(
-      'eslint:recommended',
-      'prettier',
-      'plugin:react/recommended',
+    extends: [
+      js.configs.recommended,
+      prettier,
+      react.configs.flat.recommended,
       // The automatic JSX runtime (tsconfig "jsx": "react-jsx"): JSX needs no React in scope.
-      'plugin:react/jsx-runtime',
-      'plugin:@typescript-eslint/recommended',
-    ),
+      react.configs.flat['jsx-runtime'],
+      tseslint.configs.recommended,
+    ],
 
     plugins: {
-      react,
-      '@typescript-eslint': typescriptEslint,
-      'react-hooks': fixupPluginRules(reactHooks),
+      'react-hooks': reactHooks,
       cypress,
     },
 
@@ -43,7 +29,6 @@ export default defineConfig([
         ...globals.browser,
       },
 
-      parser: tsParser,
       ecmaVersion: 12,
       sourceType: 'module',
 
