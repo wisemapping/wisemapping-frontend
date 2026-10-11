@@ -431,6 +431,15 @@
   "maps.search-action": {
     "defaultMessage": "بحث..."
   },
+  "maps.search-label": {
+    "defaultMessage": "البحث في الخرائط"
+  },
+  "maps.sorted-ascending": {
+    "defaultMessage": "مرتبة تصاعديًا"
+  },
+  "maps.sorted-descending": {
+    "defaultMessage": "مرتبة تنازليًا"
+  },
   "maps.tooltip-open": {
     "defaultMessage": "فتح للتعديل"
   },

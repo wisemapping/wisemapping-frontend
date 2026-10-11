@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { MapInfo } from '../../../classes/client';
 import type { Filter } from '..';
 import { Order, getComparator, isLabelFilter, mapsFilter, stableSort } from './model';
@@ -33,6 +33,9 @@ const entryKey = (filter: Filter): string =>
  * - Choosing another sidebar entry clears the selection and goes back to the first page.
  * - The page is always one that exists: deleting the last map of the last page, or a search with
  *   fewer matches, no longer leaves an empty table.
+ *
+ * The handlers the rows and the search box use keep their identity across renders, so the
+ * memoized rows are not re-rendered by a change that is not theirs.
  */
 export interface MapsListState {
   order: Order;
@@ -90,6 +93,26 @@ export const useMapsListState = (filter: Filter, maps: MapInfo[]): MapsListState
     [sortedMaps, page, rowsPerPage],
   );
 
+  /** A selection kept across a search would include maps the search hides. */
+  const changeSearch = useCallback((value: string): void => {
+    setSearch(value);
+    setSelected([]);
+    setRequestedPage(0);
+  }, []);
+  const changePage = useCallback((newPage: number): void => setRequestedPage(newPage), []);
+  const changeRowsPerPage = useCallback((count: number): void => {
+    setRowsPerPage(count);
+    setRequestedPage(0);
+  }, []);
+  const toggleSelected = useCallback(
+    (id: number): void =>
+      setSelected((current) =>
+        current.includes(id) ? current.filter((other) => other !== id) : [...current, id],
+      ),
+    [],
+  );
+  const clearSelection = useCallback((): void => setSelected([]), []);
+
   return {
     order,
     orderBy,
@@ -105,25 +128,14 @@ export const useMapsListState = (filter: Filter, maps: MapInfo[]): MapsListState
       setOrder(orderBy === property && order === 'asc' ? 'desc' : 'asc');
       setOrderBy(property);
     },
-    changePage: (newPage: number): void => setRequestedPage(newPage),
-    changeRowsPerPage: (count: number): void => {
-      setRowsPerPage(count);
-      setRequestedPage(0);
-    },
-    /** A selection kept across a search would include maps the search hides. */
-    changeSearch: (value: string): void => {
-      setSearch(value);
-      setSelected([]);
-      setRequestedPage(0);
-    },
-    toggleSelected: (id: number): void =>
-      setSelected((current) =>
-        current.includes(id) ? current.filter((other) => other !== id) : [...current, id],
-      ),
+    changePage,
+    changeRowsPerPage,
+    changeSearch,
+    toggleSelected,
     /** Every map the entry and the search list, on every page. */
     selectAll: (checked: boolean): void =>
       setSelected(checked ? filteredMaps.map((map) => map.id) : []),
-    clearSelection: (): void => setSelected([]),
+    clearSelection,
     isSelected: (id: number): boolean => selected.includes(id),
   };
 };

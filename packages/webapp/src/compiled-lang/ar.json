@@ -3190,6 +3190,12 @@
       "value": "بحث..."
     }
   ],
+  "maps.search-label": [
+    {
+      "type": 0,
+      "value": "البحث في الخرائط"
+    }
+  ],
   "maps.select-all": [
     {
       "type": 0,
@@ -3204,6 +3210,18 @@
     {
       "type": 1,
       "value": "title"
+    }
+  ],
+  "maps.sorted-ascending": [
+    {
+      "type": 0,
+      "value": "مرتبة تصاعديًا"
+    }
+  ],
+  "maps.sorted-descending": [
+    {
+      "type": 0,
+      "value": "مرتبة تنازليًا"
     }
   ],
   "maps.tooltip-open": [

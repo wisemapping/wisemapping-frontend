@@ -17,111 +17,71 @@
  */
 
 import React from 'react';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import Skeleton from '@mui/material/Skeleton';
-import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
-import { useStyles } from './styled';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableContainer from '@mui/material/TableContainer';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import AppBar from '@mui/material/AppBar';
+import TableRow from '@mui/material/TableRow';
 import Toolbar from '@mui/material/Toolbar';
+import { BodyCell, CompactCardHeader, MapCardRoot } from './shared.styled';
+import {
+  DrawerSkeleton,
+  LoadingAppBar,
+  LoadingContainer,
+  LoadingDrawer,
+  LoadingDrawerFooter,
+  LoadingDrawerItem,
+  LoadingDrawerList,
+  LoadingDrawerLogo,
+  LoadingMainContent,
+  LoadingSearchToolbar,
+  LoadingToolbarCenter,
+  LoadingToolbarLeft,
+  LoadingToolbarRight,
+  SkeletonBlock,
+  SkeletonButton,
+  SkeletonText,
+} from './skeleton.styled';
 
 export const TableRowSkeleton: React.FC = () => {
-  const classes = useStyles();
-
   return (
     <TableRow hover>
-      <TableCell padding="checkbox" css={classes['bodyCell']}>
-        <Skeleton
-          animation="wave"
-          variant="rounded"
-          width={18}
-          height={18}
-          css={classes['skeletonBase']}
-        />
-      </TableCell>
-      <TableCell css={classes['bodyCell']}>
-        <Skeleton animation="wave" variant="text" width="60%" css={classes['skeletonTextLarge']} />
-      </TableCell>
-      <TableCell css={classes['bodyCell']}>
-        <Skeleton animation="wave" variant="text" width="40%" css={classes['skeletonTextSmall']} />
-      </TableCell>
-      <TableCell css={classes['bodyCell']}>
-        <Skeleton animation="wave" variant="text" width={100} css={classes['skeletonTextSmall']} />
-      </TableCell>
-      <TableCell css={classes['bodyCell']}>
-        <Skeleton animation="wave" variant="text" width={80} css={classes['skeletonTextSmall']} />
-      </TableCell>
-      <TableCell padding="checkbox" css={classes['bodyCell']}>
-        <Skeleton
-          animation="wave"
-          variant="circular"
-          width={24}
-          height={24}
-          css={classes['skeletonBase']}
-        />
-      </TableCell>
-      <TableCell css={classes['bodyCell']}>
-        <Skeleton
-          animation="wave"
-          variant="circular"
-          width={24}
-          height={24}
-          css={classes['skeletonBase']}
-        />
-      </TableCell>
+      <BodyCell padding="checkbox">
+        <SkeletonBlock animation="wave" variant="rounded" width={18} height={18} />
+      </BodyCell>
+      <BodyCell>
+        <SkeletonText animation="wave" variant="text" width="60%" />
+      </BodyCell>
+      <BodyCell>
+        <SkeletonText animation="wave" variant="text" width="40%" />
+      </BodyCell>
+      <BodyCell>
+        <SkeletonText animation="wave" variant="text" width={100} />
+      </BodyCell>
+      <BodyCell>
+        <SkeletonText animation="wave" variant="text" width={80} />
+      </BodyCell>
+      <BodyCell padding="checkbox">
+        <SkeletonBlock animation="wave" variant="circular" width={24} height={24} />
+      </BodyCell>
+      <BodyCell>
+        <SkeletonBlock animation="wave" variant="circular" width={24} height={24} />
+      </BodyCell>
     </TableRow>
   );
 };
 
 export const CardSkeleton: React.FC = () => {
-  const classes = useStyles();
-
   return (
-    <Card css={classes['cardSkeletonContainer']}>
-      <CardHeader
-        css={classes['cardHeader']}
-        avatar={
-          <Skeleton
-            animation="wave"
-            variant="circular"
-            width={24}
-            height={24}
-            css={classes['skeletonBase']}
-          />
-        }
-        action={
-          <Skeleton
-            animation="wave"
-            variant="circular"
-            width={24}
-            height={24}
-            css={classes['skeletonBase']}
-          />
-        }
-        title={
-          <Skeleton
-            animation="wave"
-            variant="text"
-            width="70%"
-            css={classes['skeletonTextLarge']}
-          />
-        }
-        subheader={
-          <Skeleton
-            animation="wave"
-            variant="text"
-            width="50%"
-            css={classes['skeletonTextSmall']}
-          />
-        }
+    <MapCardRoot>
+      <CompactCardHeader
+        avatar={<SkeletonBlock animation="wave" variant="circular" width={24} height={24} />}
+        action={<SkeletonBlock animation="wave" variant="circular" width={24} height={24} />}
+        title={<SkeletonText animation="wave" variant="text" width="70%" />}
+        subheader={<SkeletonText animation="wave" variant="text" width="50%" />}
       />
-    </Card>
+    </MapCardRoot>
   );
 };
 
@@ -140,208 +100,143 @@ export const MapsListSkeleton: React.FC<{ rowsPerPage: number }> = ({ rowsPerPag
   );
 };
 
-export const MapsPageLoading = (): React.ReactElement => {
-  const classes = useStyles();
+export const MapsPageLoading = (): React.ReactElement => (
+  <LoadingContainer>
+    {/* Left Drawer Skeleton */}
+    <LoadingDrawer>
+      {/* Logo */}
+      <LoadingDrawerLogo>
+        <DrawerSkeleton animation="wave" variant="rectangular" width={40} height={40} />
+      </LoadingDrawerLogo>
 
-  return (
-    <Box css={classes['loadingContainer']}>
-      {/* Left Drawer Skeleton */}
-      <Box css={classes['loadingDrawer']}>
-        {/* Logo */}
-        <Box css={classes['loadingDrawerLogo']}>
-          <Skeleton
+      {/* Navigation Items */}
+      <LoadingDrawerList>
+        {[...Array(5)].map((_, i) => (
+          <LoadingDrawerItem
+            // eslint-disable-next-line @eslint-react/no-array-index-key -- identical placeholders in a fixed-length list that never reorders
+            key={i}
+          >
+            <DrawerSkeleton animation="wave" variant="circular" width={24} height={24} />
+            <DrawerSkeleton animation="wave" variant="text" width={180} height={20} />
+          </LoadingDrawerItem>
+        ))}
+      </LoadingDrawerList>
+
+      {/* Divider */}
+      <DrawerSkeleton
+        animation="wave"
+        variant="rectangular"
+        width="100%"
+        height={1}
+        sx={{ marginTop: 2, marginBottom: 2 }}
+      />
+
+      {/* Label Items */}
+      <LoadingDrawerList>
+        {[...Array(3)].map((_, i) => (
+          <LoadingDrawerItem
+            // eslint-disable-next-line @eslint-react/no-array-index-key -- identical placeholders in a fixed-length list that never reorders
+            key={i}
+          >
+            <DrawerSkeleton animation="wave" variant="circular" width={24} height={24} />
+            <DrawerSkeleton animation="wave" variant="text" width={140} height={20} />
+          </LoadingDrawerItem>
+        ))}
+      </LoadingDrawerList>
+
+      {/* Footer - Powered by */}
+      <LoadingDrawerFooter>
+        <DrawerSkeleton animation="wave" variant="rectangular" width={120} height={24} />
+      </LoadingDrawerFooter>
+    </LoadingDrawer>
+
+    {/* Main Content Area */}
+    <LoadingMainContent>
+      {/* Header AppBar with skeleton toolbar */}
+      <LoadingAppBar position="fixed" elevation={0}>
+        <Toolbar>
+          <SkeletonBlock
             animation="wave"
-            variant="rectangular"
+            variant="circular"
             width={40}
             height={40}
-            css={classes['skeletonDrawer']}
+            sx={{ marginRight: 2 }}
           />
-        </Box>
-
-        {/* Navigation Items */}
-        <Box css={classes['loadingDrawerList']}>
-          {[...Array(5)].map((_, i) => (
-            <Box
-              // eslint-disable-next-line @eslint-react/no-array-index-key -- identical placeholders in a fixed-length list that never reorders
-              key={i}
-              style={{ display: 'flex', alignItems: 'center', gap: 16 }}
-            >
-              <Skeleton
-                animation="wave"
-                variant="circular"
-                width={24}
-                height={24}
-                css={classes['skeletonDrawer']}
-              />
-              <Skeleton
-                animation="wave"
-                variant="text"
-                width={180}
-                height={20}
-                css={classes['skeletonDrawer']}
-              />
-            </Box>
-          ))}
-        </Box>
-
-        {/* Divider */}
-        <Skeleton
-          animation="wave"
-          variant="rectangular"
-          width="100%"
-          height={1}
-          css={classes['skeletonDrawer']}
-          style={{ marginTop: 16, marginBottom: 16 }}
-        />
-
-        {/* Label Items */}
-        <Box css={classes['loadingDrawerList']}>
-          {[...Array(3)].map((_, i) => (
-            <Box
-              // eslint-disable-next-line @eslint-react/no-array-index-key -- identical placeholders in a fixed-length list that never reorders
-              key={i}
-              style={{ display: 'flex', alignItems: 'center', gap: 16 }}
-            >
-              <Skeleton
-                animation="wave"
-                variant="circular"
-                width={24}
-                height={24}
-                css={classes['skeletonDrawer']}
-              />
-              <Skeleton
-                animation="wave"
-                variant="text"
-                width={140}
-                height={20}
-                css={classes['skeletonDrawer']}
-              />
-            </Box>
-          ))}
-        </Box>
-
-        {/* Footer - Powered by */}
-        <Box css={classes['loadingDrawerFooter']}>
-          <Skeleton
+          <SkeletonButton
             animation="wave"
             variant="rectangular"
             width={120}
-            height={24}
-            css={classes['skeletonDrawer']}
+            height={36}
+            sx={{ marginRight: 2 }}
           />
-        </Box>
-      </Box>
+          <SkeletonButton animation="wave" variant="rectangular" width={120} height={36} />
+          <Box sx={{ flexGrow: 1 }} />
+          <SkeletonBlock
+            animation="wave"
+            variant="circular"
+            width={40}
+            height={40}
+            sx={{ marginRight: 1 }}
+          />
+          <SkeletonBlock
+            animation="wave"
+            variant="circular"
+            width={40}
+            height={40}
+            sx={{ marginRight: 1 }}
+          />
+          <SkeletonBlock animation="wave" variant="circular" width={40} height={40} />
+        </Toolbar>
+      </LoadingAppBar>
 
-      {/* Main Content Area */}
-      <Box css={classes['loadingMainContent']}>
-        {/* Header AppBar with skeleton toolbar */}
-        <AppBar
-          position="fixed"
+      {/* Main content area with skeleton table */}
+      <Box sx={{ width: '100%', marginTop: '80px' }}>
+        <Paper
           elevation={0}
-          css={classes['loadingAppBar']}
-          style={{ marginLeft: 240, width: 'calc(100% - 240px)' }}
+          sx={{
+            backgroundColor: 'transparent',
+            marginTop: '30px',
+            marginLeft: '96px',
+            marginRight: '96px',
+            marginBottom: 2,
+          }}
         >
-          <Toolbar>
-            <Skeleton
-              animation="wave"
-              variant="circular"
-              width={40}
-              height={40}
-              css={classes['loadingSkeletonCircle']}
-              style={{ marginRight: 16 }}
-            />
-            <Skeleton
-              animation="wave"
-              variant="rectangular"
-              width={120}
-              height={36}
-              css={classes['loadingSkeletonButton']}
-              style={{ marginRight: 16 }}
-            />
-            <Skeleton
-              animation="wave"
-              variant="rectangular"
-              width={120}
-              height={36}
-              css={classes['loadingSkeletonButton']}
-            />
-            <Box style={{ flexGrow: 1 }} />
-            <Skeleton
-              animation="wave"
-              variant="circular"
-              width={40}
-              height={40}
-              css={classes['loadingSkeletonCircle']}
-              style={{ marginRight: 8 }}
-            />
-            <Skeleton
-              animation="wave"
-              variant="circular"
-              width={40}
-              height={40}
-              css={classes['loadingSkeletonCircle']}
-              style={{ marginRight: 8 }}
-            />
-            <Skeleton
-              animation="wave"
-              variant="circular"
-              width={40}
-              height={40}
-              css={classes['loadingSkeletonCircle']}
-            />
-          </Toolbar>
-        </AppBar>
+          {/* Search Toolbar Skeleton */}
+          <LoadingSearchToolbar variant="dense">
+            <LoadingToolbarLeft>
+              {/* Placeholder for action buttons - empty when no selection */}
+            </LoadingToolbarLeft>
+            <LoadingToolbarCenter>
+              {/* Search Input Skeleton - centered; a string: sx multiplies a number radius */}
+              <SkeletonButton
+                animation="wave"
+                variant="rectangular"
+                width={240}
+                height={32}
+                sx={{ borderRadius: '9px' }}
+              />
+            </LoadingToolbarCenter>
+            <LoadingToolbarRight>
+              {/* Pagination removed - hidden when not needed */}
+            </LoadingToolbarRight>
+          </LoadingSearchToolbar>
 
-        {/* Main content area with skeleton table */}
-        <Box sx={{ width: '100%', marginTop: '80px' }}>
-          <Paper
-            elevation={0}
+          <TableContainer
             sx={{
-              backgroundColor: 'transparent',
-              marginTop: '30px',
-              marginLeft: '96px',
-              marginRight: '96px',
-              marginBottom: 2,
+              backgroundColor: 'background.default',
+              border: '1px solid rgba(128, 128, 128, 0.2)',
+              borderRadius: '12px',
+              overflow: 'hidden',
             }}
           >
-            {/* Search Toolbar Skeleton */}
-            <Toolbar css={classes['loadingSearchToolbar']} variant="dense">
-              <Box css={classes['loadingToolbarLeft']}>
-                {/* Placeholder for action buttons - empty when no selection */}
-              </Box>
-              <Box css={classes['loadingToolbarCenter']}>
-                {/* Search Input Skeleton - centered */}
-                <Skeleton
-                  animation="wave"
-                  variant="rectangular"
-                  width={240}
-                  height={32}
-                  css={classes['loadingSkeletonButton']}
-                  style={{ borderRadius: 9 }}
-                />
-              </Box>
-              <Box css={classes['loadingToolbarRight']}>
-                {/* Pagination removed - hidden when not needed */}
-              </Box>
-            </Toolbar>
-
-            <TableContainer
-              sx={{
-                backgroundColor: 'background.default',
-                border: '1px solid rgba(128, 128, 128, 0.2)',
-                borderRadius: '12px',
-                overflow: 'hidden',
-              }}
-            >
-              <Table sx={{ backgroundColor: 'background.default' }}>
-                <TableBody>
-                  <MapsListSkeleton rowsPerPage={10} />
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Paper>
-        </Box>
+            <Table sx={{ backgroundColor: 'background.default' }}>
+              <TableBody>
+                <MapsListSkeleton rowsPerPage={10} />
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Paper>
       </Box>
-    </Box>
-  );
-};
+    </LoadingMainContent>
+  </LoadingContainer>
+);

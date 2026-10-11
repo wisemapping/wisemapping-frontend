@@ -3079,6 +3079,12 @@
       "value": "搜索。。。"
     }
   ],
+  "maps.search-label": [
+    {
+      "type": 0,
+      "value": "搜索思维导图"
+    }
+  ],
   "maps.select-all": [
     {
       "type": 0,
@@ -3093,6 +3099,18 @@
     {
       "type": 1,
       "value": "title"
+    }
+  ],
+  "maps.sorted-ascending": [
+    {
+      "type": 0,
+      "value": "升序排列"
+    }
+  ],
+  "maps.sorted-descending": [
+    {
+      "type": 0,
+      "value": "降序排列"
     }
   ],
   "maps.tooltip-open": [

@@ -1388,11 +1388,20 @@
   "maps.search-action": {
     "defaultMessage": "Search ..."
   },
+  "maps.search-label": {
+    "defaultMessage": "Search maps"
+  },
   "maps.select-all": {
     "defaultMessage": "Select all"
   },
   "maps.select-map": {
     "defaultMessage": "Select {title}"
+  },
+  "maps.sorted-ascending": {
+    "defaultMessage": "sorted ascending"
+  },
+  "maps.sorted-descending": {
+    "defaultMessage": "sorted descending"
   },
   "maps.tooltip-open": {
     "defaultMessage": "Open for edition"

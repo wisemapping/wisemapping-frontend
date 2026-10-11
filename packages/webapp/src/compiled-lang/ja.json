@@ -3067,6 +3067,12 @@
       "value": "検索..."
     }
   ],
+  "maps.search-label": [
+    {
+      "type": 0,
+      "value": "マップを検索"
+    }
+  ],
   "maps.select-all": [
     {
       "type": 0,
@@ -3081,6 +3087,18 @@
     {
       "type": 0,
       "value": " を選択"
+    }
+  ],
+  "maps.sorted-ascending": [
+    {
+      "type": 0,
+      "value": "昇順"
+    }
+  ],
+  "maps.sorted-descending": [
+    {
+      "type": 0,
+      "value": "降順"
     }
   ],
   "maps.tooltip-open": [

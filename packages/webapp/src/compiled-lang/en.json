@@ -3093,6 +3093,12 @@
       "value": "Search ..."
     }
   ],
+  "maps.search-label": [
+    {
+      "type": 0,
+      "value": "Search maps"
+    }
+  ],
   "maps.select-all": [
     {
       "type": 0,
@@ -3107,6 +3113,18 @@
     {
       "type": 1,
       "value": "title"
+    }
+  ],
+  "maps.sorted-ascending": [
+    {
+      "type": 0,
+      "value": "sorted ascending"
+    }
+  ],
+  "maps.sorted-descending": [
+    {
+      "type": 0,
+      "value": "sorted descending"
     }
   ],
   "maps.tooltip-open": [

@@ -428,6 +428,15 @@
   "maps.search-action": {
     "defaultMessage": "Pesquisar..."
   },
+  "maps.search-label": {
+    "defaultMessage": "Pesquisar mapas"
+  },
+  "maps.sorted-ascending": {
+    "defaultMessage": "ordem crescente"
+  },
+  "maps.sorted-descending": {
+    "defaultMessage": "ordem decrescente"
+  },
   "maps.tooltip-open": {
     "defaultMessage": "Abrir para edição"
   },

@@ -26,7 +26,7 @@ describe('Maps Page – Search', () => {
   });
 
   it('filters map cards by search term', () => {
-    cy.get('input[aria-label="search"]').type('El Mapa');
+    cy.get('input[aria-label="Search maps"]').type('El Mapa');
     cy.get('tbody tr').should('have.length.at.least', 1);
     cy.get('tbody tr').each(($row) => {
       cy.wrap($row).contains(/El Mapa/i);
@@ -34,14 +34,14 @@ describe('Maps Page – Search', () => {
   });
 
   it('shows no cards when search term matches nothing', () => {
-    cy.get('input[aria-label="search"]').type('xyzzy-no-match-123');
+    cy.get('input[aria-label="Search maps"]').type('xyzzy-no-match-123');
     cy.contains('tbody tr', 'No matching mindmap found with the current filter criteria.').should(
       'be.visible',
     );
   });
 
   it('restores full list after clearing the search', () => {
-    cy.get('input[aria-label="search"]').type('El Mapa').clear();
+    cy.get('input[aria-label="Search maps"]').type('El Mapa').clear();
     cy.get('tbody tr').should('have.length', 10);
   });
 });

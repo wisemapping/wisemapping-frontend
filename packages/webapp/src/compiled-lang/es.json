@@ -3101,6 +3101,12 @@
       "value": "Buscar ..."
     }
   ],
+  "maps.search-label": [
+    {
+      "type": 0,
+      "value": "Buscar mapas"
+    }
+  ],
   "maps.select-all": [
     {
       "type": 0,
@@ -3115,6 +3121,18 @@
     {
       "type": 1,
       "value": "title"
+    }
+  ],
+  "maps.sorted-ascending": [
+    {
+      "type": 0,
+      "value": "orden ascendente"
+    }
+  ],
+  "maps.sorted-descending": [
+    {
+      "type": 0,
+      "value": "orden descendente"
     }
   ],
   "maps.tooltip-open": [

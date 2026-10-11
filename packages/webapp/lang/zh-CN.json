@@ -428,6 +428,15 @@
   "maps.search-action": {
     "defaultMessage": "搜索..."
   },
+  "maps.search-label": {
+    "defaultMessage": "搜索思维导图"
+  },
+  "maps.sorted-ascending": {
+    "defaultMessage": "升序排列"
+  },
+  "maps.sorted-descending": {
+    "defaultMessage": "降序排列"
+  },
   "maps.tooltip-open": {
     "defaultMessage": "打开编辑"
   },

@@ -431,6 +431,15 @@
   "maps.search-action": {
     "defaultMessage": "Пошук..."
   },
+  "maps.search-label": {
+    "defaultMessage": "Пошук карт"
+  },
+  "maps.sorted-ascending": {
+    "defaultMessage": "за зростанням"
+  },
+  "maps.sorted-descending": {
+    "defaultMessage": "за спаданням"
+  },
   "maps.tooltip-open": {
     "defaultMessage": "Відкрити для редагування"
   },

@@ -3157,6 +3157,12 @@
       "value": "Поиск ..."
     }
   ],
+  "maps.search-label": [
+    {
+      "type": 0,
+      "value": "Поиск карт"
+    }
+  ],
   "maps.select-all": [
     {
       "type": 0,
@@ -3171,6 +3177,18 @@
     {
       "type": 1,
       "value": "title"
+    }
+  ],
+  "maps.sorted-ascending": [
+    {
+      "type": 0,
+      "value": "по возрастанию"
+    }
+  ],
+  "maps.sorted-descending": [
+    {
+      "type": 0,
+      "value": "по убыванию"
     }
   ],
   "maps.tooltip-open": [

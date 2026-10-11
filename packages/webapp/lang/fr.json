@@ -383,6 +383,15 @@
   "maps.search-action": {
     "defaultMessage": "Chercher ..."
   },
+  "maps.search-label": {
+    "defaultMessage": "Chercher des cartes"
+  },
+  "maps.sorted-ascending": {
+    "defaultMessage": "tri croissant"
+  },
+  "maps.sorted-descending": {
+    "defaultMessage": "tri décroissant"
+  },
   "maps.tooltip-open": {
     "defaultMessage": "Ouvrir pour l'édition"
   },

@@ -3097,6 +3097,12 @@
       "value": "Cerca..."
     }
   ],
+  "maps.search-label": [
+    {
+      "type": 0,
+      "value": "Cerca mappe"
+    }
+  ],
   "maps.select-all": [
     {
       "type": 0,
@@ -3111,6 +3117,18 @@
     {
       "type": 1,
       "value": "title"
+    }
+  ],
+  "maps.sorted-ascending": [
+    {
+      "type": 0,
+      "value": "ordine crescente"
+    }
+  ],
+  "maps.sorted-descending": [
+    {
+      "type": 0,
+      "value": "ordine decrescente"
     }
   ],
   "maps.tooltip-open": [

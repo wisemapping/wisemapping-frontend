@@ -413,6 +413,15 @@
   "maps.search-action": {
     "defaultMessage": "Buscar ..."
   },
+  "maps.search-label": {
+    "defaultMessage": "Buscar mapas"
+  },
+  "maps.sorted-ascending": {
+    "defaultMessage": "orden ascendente"
+  },
+  "maps.sorted-descending": {
+    "defaultMessage": "orden descendente"
+  },
   "maps.tooltip-open": {
     "defaultMessage": "Abrir para edición"
   },

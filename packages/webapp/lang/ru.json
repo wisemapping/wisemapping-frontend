@@ -380,6 +380,15 @@
   "maps.search-action": {
     "defaultMessage": "Поиск ..."
   },
+  "maps.search-label": {
+    "defaultMessage": "Поиск карт"
+  },
+  "maps.sorted-ascending": {
+    "defaultMessage": "по возрастанию"
+  },
+  "maps.sorted-descending": {
+    "defaultMessage": "по убыванию"
+  },
   "maps.tooltip-open": {
     "defaultMessage": "Открыть для редактирования"
   },

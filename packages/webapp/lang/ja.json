@@ -428,6 +428,15 @@
   "maps.search-action": {
     "defaultMessage": "検索..."
   },
+  "maps.search-label": {
+    "defaultMessage": "マップを検索"
+  },
+  "maps.sorted-ascending": {
+    "defaultMessage": "昇順"
+  },
+  "maps.sorted-descending": {
+    "defaultMessage": "降順"
+  },
   "maps.tooltip-open": {
     "defaultMessage": "編集用に開く"
   },

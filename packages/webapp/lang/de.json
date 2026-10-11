@@ -380,6 +380,15 @@
   "maps.search-action": {
     "defaultMessage": "Suche ..."
   },
+  "maps.search-label": {
+    "defaultMessage": "Mindmaps durchsuchen"
+  },
+  "maps.sorted-ascending": {
+    "defaultMessage": "aufsteigend sortiert"
+  },
+  "maps.sorted-descending": {
+    "defaultMessage": "absteigend sortiert"
+  },
   "maps.tooltip-open": {
     "defaultMessage": "Zum Bearbeiten öffnen"
   },

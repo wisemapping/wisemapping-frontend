@@ -3093,6 +3093,12 @@
       "value": "खोजें..."
     }
   ],
+  "maps.search-label": [
+    {
+      "type": 0,
+      "value": "मानचित्र खोजें"
+    }
+  ],
   "maps.select-all": [
     {
       "type": 0,
@@ -3107,6 +3113,18 @@
     {
       "type": 0,
       "value": " चुनें"
+    }
+  ],
+  "maps.sorted-ascending": [
+    {
+      "type": 0,
+      "value": "आरोही क्रम में"
+    }
+  ],
+  "maps.sorted-descending": [
+    {
+      "type": 0,
+      "value": "अवरोही क्रम में"
     }
   ],
   "maps.tooltip-open": [

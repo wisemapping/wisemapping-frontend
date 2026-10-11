@@ -428,6 +428,15 @@
   "maps.search-action": {
     "defaultMessage": "खोजें..."
   },
+  "maps.search-label": {
+    "defaultMessage": "मानचित्र खोजें"
+  },
+  "maps.sorted-ascending": {
+    "defaultMessage": "आरोही क्रम में"
+  },
+  "maps.sorted-descending": {
+    "defaultMessage": "अवरोही क्रम में"
+  },
   "maps.tooltip-open": {
     "defaultMessage": "संपादन के लिए खोलें"
   },

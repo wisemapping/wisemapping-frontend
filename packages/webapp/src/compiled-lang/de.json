@@ -3101,6 +3101,12 @@
       "value": "Suche ..."
     }
   ],
+  "maps.search-label": [
+    {
+      "type": 0,
+      "value": "Mindmaps durchsuchen"
+    }
+  ],
   "maps.select-all": [
     {
       "type": 0,
@@ -3115,6 +3121,18 @@
     {
       "type": 0,
       "value": " auswählen"
+    }
+  ],
+  "maps.sorted-ascending": [
+    {
+      "type": 0,
+      "value": "aufsteigend sortiert"
+    }
+  ],
+  "maps.sorted-descending": [
+    {
+      "type": 0,
+      "value": "absteigend sortiert"
     }
   ],
   "maps.tooltip-open": [

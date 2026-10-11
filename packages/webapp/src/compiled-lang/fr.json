@@ -3093,6 +3093,12 @@
       "value": "Chercher ..."
     }
   ],
+  "maps.search-label": [
+    {
+      "type": 0,
+      "value": "Chercher des cartes"
+    }
+  ],
   "maps.select-all": [
     {
       "type": 0,
@@ -3107,6 +3113,18 @@
     {
       "type": 1,
       "value": "title"
+    }
+  ],
+  "maps.sorted-ascending": [
+    {
+      "type": 0,
+      "value": "tri croissant"
+    }
+  ],
+  "maps.sorted-descending": [
+    {
+      "type": 0,
+      "value": "tri décroissant"
     }
   ],
   "maps.tooltip-open": [

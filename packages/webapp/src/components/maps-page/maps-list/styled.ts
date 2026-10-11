@@ -16,347 +16,292 @@
  *   limitations under the License.
  */
 
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { alpha, useTheme } from '@mui/material/styles';
+import Checkbox from '@mui/material/Checkbox';
+import InputBase from '@mui/material/InputBase';
+import Link from '@mui/material/Link';
+import Paper from '@mui/material/Paper';
+import Table from '@mui/material/Table';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TablePagination from '@mui/material/TablePagination';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import StarRateRoundedIcon from '@mui/icons-material/StarRateRounded';
+import { alpha, styled } from '@mui/material/styles';
+import { BodyCell, CompactCardHeader, MapCardRoot } from './shared.styled';
 
-import useClasses from '../../../theme/useStyles';
+export { BodyCell, CompactCardHeader, MapCardRoot };
 
-export const useStyles = () => {
-  const theme = useTheme();
-  const smMediaQuery = theme.breakpoints.down('sm');
+/*
+ * The map list (table on wide screens, cards on narrow ones) and its loading placeholders.
+ * "Narrow" is `theme.breakpoints.down('sm')` throughout: the list picks its view with the same
+ * query (see `narrowScreen` in index.tsx).
+ */
 
-  return useClasses({
-    root: {
-      width: '100%',
-    },
-    /** The single cell of the "no maps" and "could not load" rows. */
-    messageCell: {
-      textAlign: 'center',
-    },
-    paper: {
-      marginTop: '30px',
-      marginBottom: theme.spacing(2),
-      backgroundColor: 'transparent',
-      marginLeft: '96px',
-      marginRight: '96px',
-      [smMediaQuery]: {
-        marginTop: '0px',
-        marginLeft: '0px',
-        marginRight: '0px',
-      },
-    },
-    cards: {
-      display: 'none',
-      [smMediaQuery]: {
-        display: 'block',
-      },
-    },
-    table: {
-      [smMediaQuery]: {
-        display: 'none',
-      },
-      minWidth: 750,
-      backgroundColor: theme.palette.background.default,
-      '& tbody tr': {
-        background: 'transparent',
-        borderBottom: `1px solid ${theme.palette.divider}`,
-        '&:hover': {
-          backgroundColor:
-            theme.palette.mode === 'light'
-              ? alpha(theme.palette.action.hover, 0.04)
-              : alpha(theme.palette.action.hover, 0.08),
-        },
-      },
-    },
-    headerCell: {
-      background: theme.palette.background.default,
-      fontWeight: 'bold',
-      color: theme.palette.text.secondary,
-      borderBottom: `1px solid ${theme.palette.divider}`,
-      borderTop: 0,
-      borderLeft: 0,
-      borderRight: 0,
-      fontSize: '0.96rem',
-      fontFamily: theme.typography.fontFamily,
-      padding: '8px 12px',
-    },
-    bodyCell: {
-      fontSize: '0.96rem',
-      fontFamily: theme.typography.fontFamily,
-      padding: '8px 12px',
-    },
-    labelsCell: {
-      maxWidth: '300px',
-      overflow: 'hidden',
-      textAlign: 'right',
-      whiteSpace: 'nowrap',
-      textOverflow: 'ellipsis',
-    },
-    visuallyHidden: {
-      border: 0,
-      clip: 'rect(0 0 0 0)',
-      height: 1,
-      margin: -1,
-      overflow: 'hidden',
-      padding: 0,
-      position: 'absolute',
-      top: 20,
-      width: 1,
-    },
-    toolbar: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      padding: '0',
-      paddingTop: '30px',
-      paddingBottom: '30px',
-      marging: '0',
-      boxShadow: 'none',
-      backgroundColor: 'transparent',
-      [smMediaQuery]: {
-        paddingTop: '16px',
-        paddingBottom: '16px',
-        paddingLeft: '8px',
-        paddingRight: '8px',
-      },
-    },
-    tableContainer: {
-      backgroundColor: theme.palette.background.default,
-      border: '1px solid rgba(128, 128, 128, 0.2)',
-      borderRadius: '12px',
-      overflow: 'hidden',
-      [smMediaQuery]: {
-        border: 'none',
-        borderRadius: '0',
-      },
-    },
-    toolbarActions: {
-      flex: '1 1 0',
-      minWidth: 0,
-      '& .MuiButton-root': {
-        [smMediaQuery]: {
-          minWidth: 'auto',
-          padding: '6px 8px',
-          '& .MuiButton-startIcon': {
-            margin: 0,
-          },
-        },
-      },
-      '& .button-text': {
-        [smMediaQuery]: {
-          display: 'none',
-        },
-      },
-    },
-    searchContainer: {
-      flex: '1 1 0',
-      display: 'flex',
-      justifyContent: 'center',
-      minWidth: 0,
-      [smMediaQuery]: {
-        display: 'none',
-      },
-    },
-    search: {
-      borderRadius: 9,
-      backgroundColor: alpha(theme.palette.common.white, 0.15),
-      '&:hover': {
-        backgroundColor: alpha(theme.palette.common.white, 0.25),
-      },
-      margin: '10px 0px',
-      width: 'auto',
-    },
-    paginationDesktop: {
-      display: 'block',
-      backgroundColor: 'transparent',
-      [smMediaQuery]: {
-        display: 'none',
-      },
-    },
-    paginationMobile: {
-      display: 'none',
-      backgroundColor: 'transparent',
-      [smMediaQuery]: {
-        display: 'flex',
-        justifyContent: 'center',
-        marginTop: '16px',
-        marginLeft: '16px',
-        marginRight: '16px',
-        backgroundColor: 'transparent',
-      },
-    },
-    tablePagination: {
-      width: 'auto',
-      display: 'inline-flex',
-      backgroundColor: 'transparent',
-      border: '1px solid rgba(128, 128, 128, 0.15)',
-      borderRadius: '8px',
-      padding: '0',
-      margin: '0',
-      '& .MuiTablePagination-toolbar': {
-        minHeight: '40px',
-        paddingLeft: '22px',
-        paddingRight: '12px',
-        minWidth: 'auto',
-        backgroundColor: 'transparent',
-      },
-      '& .MuiTablePagination-spacer': {
-        display: 'none',
-      },
-      '& .MuiTablePagination-selectLabel': {
+/** The border of the list's frame and of the pagination: a grey that reads on both modes. */
+const FRAME_BORDER = 'rgba(128, 128, 128, 0.2)';
+const PAGINATION_BORDER = 'rgba(128, 128, 128, 0.15)';
+
+// ---------------------------------------------------------------- The list and its toolbar
+
+export const ListRoot = styled('div')({
+  width: '100%',
+});
+
+export const ListPaper = styled(Paper)(({ theme }) => ({
+  marginTop: '30px',
+  marginBottom: theme.spacing(2),
+  backgroundColor: 'transparent',
+  marginLeft: theme.spacing(12),
+  marginRight: theme.spacing(12),
+  [theme.breakpoints.down('sm')]: {
+    marginTop: 0,
+    marginLeft: 0,
+    marginRight: 0,
+  },
+}));
+
+export const ListToolbar = styled(Toolbar)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  padding: 0,
+  paddingTop: '30px',
+  paddingBottom: '30px',
+  boxShadow: 'none',
+  backgroundColor: 'transparent',
+  [theme.breakpoints.down('sm')]: {
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
+  },
+}));
+
+/** The bulk actions: on narrow screens the buttons show their icon only. */
+export const ToolbarActions = styled('div')(({ theme }) => ({
+  flex: '1 1 0',
+  minWidth: 0,
+  '& .MuiButton-root': {
+    [theme.breakpoints.down('sm')]: {
+      minWidth: 'auto',
+      padding: theme.spacing(0.75, 1),
+      '& .MuiButton-startIcon': {
         margin: 0,
       },
-      '& .MuiTablePagination-displayedRows': {
-        margin: 0,
+    },
+  },
+  '& .button-text': {
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
+  },
+}));
+
+export const SearchContainer = styled('div')(({ theme }) => ({
+  flex: '1 1 0',
+  display: 'flex',
+  justifyContent: 'center',
+  minWidth: 0,
+  [theme.breakpoints.down('sm')]: {
+    display: 'none',
+  },
+}));
+
+export const SearchBox = styled('div')(({ theme }) => ({
+  borderRadius: 9,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  margin: '10px 0px',
+  width: 'auto',
+}));
+
+export const SearchIconWrapper = styled('div')({
+  padding: '6px 0 0 5px',
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  alignItems: 'center',
+  justifyContent: 'center',
+});
+
+export const SearchInput = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  '& .MuiInputBase-input': {
+    border: `1px solid ${theme.palette.primary.main}`,
+    borderRadius: theme.shape.borderRadius,
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      width: '24ch',
+      '&:focus': {
+        width: '39ch',
       },
-      [smMediaQuery]: {
-        width: '50%',
-        overflow: 'hidden',
-        marginRight: '0',
-      },
     },
-    searchIcon: {
-      padding: '6px 0 0 5px',
-      height: '100%',
-      position: 'absolute',
-      pointerEvents: 'none',
-      alignItems: 'center',
-      justifyContent: 'center',
+  },
+}));
+
+export const ToolbarEnd = styled('div')({
+  flex: '1 1 0',
+  minWidth: 0,
+  display: 'flex',
+  justifyContent: 'flex-end',
+});
+
+export const PaginationDesktop = styled('div')({
+  display: 'block',
+  backgroundColor: 'transparent',
+});
+
+/** Below the cards, where the toolbar has no room for it. */
+export const PaginationMobile = styled('div')(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'center',
+  marginTop: theme.spacing(2),
+  marginLeft: theme.spacing(2),
+  marginRight: theme.spacing(2),
+  backgroundColor: 'transparent',
+}));
+
+/** Typed as TablePagination: styled() would drop its `component` prop (rendered as a div here). */
+export const ListPagination = styled(TablePagination)(({ theme }) => ({
+  width: 'auto',
+  display: 'inline-flex',
+  backgroundColor: 'transparent',
+  border: `1px solid ${PAGINATION_BORDER}`,
+  borderRadius: '8px',
+  padding: 0,
+  margin: 0,
+  '& .MuiTablePagination-toolbar': {
+    minHeight: '40px',
+    paddingLeft: '22px',
+    paddingRight: theme.spacing(1.5),
+    minWidth: 'auto',
+    backgroundColor: 'transparent',
+  },
+  '& .MuiTablePagination-spacer': {
+    display: 'none',
+  },
+  '& .MuiTablePagination-selectLabel': {
+    margin: 0,
+  },
+  '& .MuiTablePagination-displayedRows': {
+    margin: 0,
+  },
+  [theme.breakpoints.down('sm')]: {
+    width: '50%',
+    overflow: 'hidden',
+    marginRight: 0,
+  },
+})) as typeof TablePagination;
+
+export const ListTableContainer = styled(TableContainer)(({ theme }) => ({
+  backgroundColor: theme.palette.background.default,
+  border: `1px solid ${FRAME_BORDER}`,
+  borderRadius: '12px',
+  overflow: 'hidden',
+  [theme.breakpoints.down('sm')]: {
+    border: 'none',
+    borderRadius: 0,
+  },
+}));
+
+// ---------------------------------------------------------------- The table (wide screens)
+
+export const ListTable = styled(Table)(({ theme }) => ({
+  minWidth: 750,
+  backgroundColor: theme.palette.background.default,
+  '& tbody tr': {
+    background: 'transparent',
+    borderBottom: `1px solid ${theme.palette.divider}`,
+    '&:hover': {
+      backgroundColor: alpha(theme.palette.action.hover, 0.04),
+      ...theme.applyStyles('dark', {
+        backgroundColor: alpha(theme.palette.action.hover, 0.08),
+      }),
     },
-    searchInputRoot: {
-      color: 'inherit',
-    },
-    toolbalLeft: {
-      float: 'right',
-    },
-    searchInputInput: {
-      '& .MuiInputBase-input': {
-        border: `1px solid ${theme.palette.primary.main}`,
-        borderRadius: 4,
-        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-          width: '24ch',
-          '&:focus': {
-            width: '39ch',
-          },
-        },
-      },
-    },
-    cardHeader: {
-      padding: '4px',
-    },
-    cardTitle: {
-      maxWidth: '70vw',
-      fontSize: '0.875rem',
-      fontFamily: theme.typography.fontFamily,
-    },
-    // Skeleton styles
-    skeletonBase: {
-      backgroundColor:
-        theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.11)' : 'rgba(0, 0, 0, 0.11)',
-    },
-    skeletonDrawer: {
-      backgroundColor:
-        theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.2)' : 'rgba(255, 255, 255, 0.11)',
-    },
-    skeletonTextLarge: {
-      fontSize: '0.96rem',
-      backgroundColor:
-        theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.11)' : 'rgba(0, 0, 0, 0.11)',
-    },
-    skeletonTextSmall: {
-      fontSize: '0.96rem',
-      backgroundColor:
-        theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.11)' : 'rgba(0, 0, 0, 0.11)',
-    },
-    cardSkeletonContainer: {
-      maxWidth: '94vw',
-      margin: '3vw',
-    },
-    // MapsPageLoading styles
-    loadingContainer: {
-      display: 'flex',
-      minHeight: '100vh',
-      backgroundColor: theme.palette.background.default,
-    },
-    loadingDrawer: {
-      width: 240,
-      flexShrink: 0,
-      background:
-        theme.palette.mode === 'light' ? theme.palette.primary.main : theme.palette.grey[900],
-      borderRight: `1px solid ${theme.palette.divider}`,
-      display: 'flex',
-      flexDirection: 'column',
-      padding: theme.spacing(2),
-    },
-    loadingDrawerLogo: {
-      padding: '20px 0 20px 0',
-    },
-    loadingDrawerList: {
-      display: 'flex',
-      flexDirection: 'column',
-      gap: theme.spacing(1),
-      marginTop: theme.spacing(2),
-      marginBottom: theme.spacing(2),
-    },
-    loadingDrawerFooter: {
-      marginTop: 'auto',
-      paddingTop: theme.spacing(2),
-    },
-    loadingMainContent: {
-      flexGrow: 1,
-      display: 'flex',
-      flexDirection: 'column',
-    },
-    loadingAppBar: {
-      backgroundColor: theme.palette.background.paper,
-      borderBottom: `1px solid ${theme.palette.divider}`,
-    },
-    loadingSkeletonButton: {
-      borderRadius: theme.spacing(0.5),
-      backgroundColor:
-        theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.11)' : 'rgba(0, 0, 0, 0.11)',
-    },
-    loadingSkeletonCircle: {
-      backgroundColor:
-        theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.11)' : 'rgba(0, 0, 0, 0.11)',
-    },
-    loadingTableContainer: {
-      marginTop: theme.spacing(10),
-      marginBottom: theme.spacing(4),
-      marginLeft: '96px',
-      marginRight: '96px',
-      padding: '0 !important',
-    },
-    loadingSearchToolbar: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      padding: '0',
-      paddingTop: '30px',
-      paddingBottom: '30px',
-      margin: '0',
-      boxShadow: 'none',
-      backgroundColor: theme.palette.background.default,
-    },
-    loadingToolbarLeft: {
-      flex: '1 1 0',
-      paddingLeft: '23px',
-      minWidth: 0,
-    },
-    loadingToolbarCenter: {
-      flex: '1 1 0',
-      display: 'flex',
-      justifyContent: 'center',
-      minWidth: 0,
-    },
-    loadingToolbarRight: {
-      flex: '1 1 0',
-      display: 'flex',
-      justifyContent: 'flex-end',
-      minWidth: 0,
-    },
-  });
-};
+  },
+}));
+
+export const HeaderCell = styled(TableCell)(({ theme }) => ({
+  background: theme.palette.background.default,
+  fontWeight: 'bold',
+  color: theme.palette.text.secondary,
+  borderBottom: `1px solid ${theme.palette.divider}`,
+  borderTop: 0,
+  borderLeft: 0,
+  borderRight: 0,
+  fontSize: '0.96rem',
+  fontFamily: theme.typography.fontFamily,
+  padding: theme.spacing(1, 1.5),
+}));
+
+export const LabelsBodyCell = styled(BodyCell)({
+  maxWidth: '300px',
+  overflow: 'hidden',
+  textAlign: 'right',
+  whiteSpace: 'nowrap',
+  textOverflow: 'ellipsis',
+});
+
+/** Read by screen readers only. */
+export const VisuallyHidden = styled('span')({
+  border: 0,
+  clip: 'rect(0 0 0 0)',
+  height: 1,
+  margin: -1,
+  overflow: 'hidden',
+  padding: 0,
+  position: 'absolute',
+  top: 20,
+  width: 1,
+});
+
+/** The row and "select all" checkboxes: greyed, not in the brand colour. */
+export const SelectCheckbox = styled(Checkbox)(({ theme }) => ({
+  color: theme.palette.action.disabled,
+  '&.Mui-checked, &.MuiCheckbox-indeterminate': {
+    color: theme.palette.action.active,
+    ...theme.applyStyles('dark', {
+      color: alpha(theme.palette.common.white, 0.7),
+    }),
+  },
+}));
+
+export const TitleLink = styled(Link)(({ theme }) => ({
+  fontSize: '0.96rem',
+  fontFamily: theme.typography.fontFamily,
+}));
+
+export const CellText = styled(Typography)(({ theme }) => ({
+  fontSize: '0.96rem',
+  fontFamily: theme.typography.fontFamily,
+}));
+
+/**
+ * The star of a map. `&&`: the theme's IconButton gives its icons `color: inherit` through a
+ * descendant selector, which a single class would lose to.
+ */
+export const StarIcon = styled(StarRateRoundedIcon, {
+  shouldForwardProp: (prop) => prop !== 'starred',
+})<{ starred: boolean }>(({ starred }) => ({
+  '&&': {
+    color: starred ? 'yellow' : 'gray',
+  },
+}));
+
+// ---------------------------------------------------------------- The cards (narrow screens)
+
+export const CardTitle = styled(Typography)(({ theme }) => ({
+  maxWidth: '70vw',
+  fontSize: '0.875rem',
+  fontFamily: theme.typography.fontFamily,
+  color: theme.palette.text.secondary,
+}));
+
+// ---------------------------------------------------------------- Loading placeholders
+
+/** A placeholder block, a shade over the background in either mode. */
