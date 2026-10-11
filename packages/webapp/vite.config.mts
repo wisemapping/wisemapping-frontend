@@ -114,10 +114,11 @@ export default defineConfig(({ mode }) => {
           replacement: path.resolve(import.meta.dirname, '../editor/src/$1'),
         },
         {
-          // The editor's theme modules, imported by path so that the webapp's theme does not pull
-          // in the whole editor (see editor/src/theme/dialog.ts).
-          find: /^@wisemapping\/editor\/theme\/(.*)/,
-          replacement: path.resolve(import.meta.dirname, '../editor/src/theme/$1'),
+          // An editor module imported by path (`@wisemapping/editor/theme/dialog`), as tsconfig
+          // and jest resolve it. The barrel can not be tree-shaken: importing anything from it
+          // pulls in the whole editor and mindplot, so code outside the editor page imports by path.
+          find: /^@wisemapping\/editor\/(.+)/,
+          replacement: path.resolve(import.meta.dirname, '../editor/src/$1'),
         },
         {
           find: /^@wisemapping\/editor$/,

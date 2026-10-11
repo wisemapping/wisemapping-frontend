@@ -29,6 +29,7 @@ import type { PersistenceError, MapInfo } from '@wisemapping/editor';
 import type { EditorRenderMode } from '@wisemapping/mindplot';
 import { IntlProvider } from 'react-intl';
 import AppI18n, { Locales } from '../../classes/app-i18n';
+import { useLocaleMessages } from '../../classes/app-i18n/messages';
 import { useFetchAccount } from '../../classes/middleware';
 import { trackPageView } from '../../utils/analytics';
 import { getMapNodeDeepLink } from '../../utils/map-urls';
@@ -124,6 +125,7 @@ const LoadedEditorPage = ({
 
   const account = useFetchAccount();
   const userLocale = AppI18n.getUserLocale(account?.locale);
+  const intlLocale = useLocaleMessages(userLocale.code);
   const theme = useMuiTheme(); // Get MUI theme object
   const client = useContext(ClientContext);
   const { hotkeyEnabled } = useContext(KeyboardContext);
@@ -223,9 +225,9 @@ const LoadedEditorPage = ({
 
   return (
     <IntlProvider
-      locale={userLocale.code}
+      locale={intlLocale.locale}
       defaultLocale={Locales.EN.code}
-      messages={userLocale.message as Record<string, string>}
+      messages={intlLocale.messages}
     >
       {pageMode === 'view-public' ? (
         <PublicMapSEO
@@ -253,10 +255,7 @@ const LoadedEditorPage = ({
           // Prevent load on non-authenticated.
           editorOptions.mode !== 'showcase' ? (
             <Suspense fallback={<></>}>
-              <IntlProvider
-                locale={userLocale.code}
-                messages={userLocale.message as Record<string, string>}
-              >
+              <IntlProvider locale={intlLocale.locale} messages={intlLocale.messages}>
                 <AccountMenu />
               </IntlProvider>
             </Suspense>

@@ -28,29 +28,15 @@ import 'dayjs/locale/pt';
 import 'dayjs/locale/it';
 import 'dayjs/locale/hi';
 import 'dayjs/locale/ar';
-import enMessages from '../../compiled-lang/en.json';
-import esMessages from '../../compiled-lang/es.json';
-import deMessages from '../../compiled-lang/de.json';
-import frMessages from '../../compiled-lang/fr.json';
-import ruMessages from '../../compiled-lang/ru.json';
-import ukMessages from '../../compiled-lang/uk.json';
-import zhMessages from '../../compiled-lang/zh.json';
-import zhCnMessages from '../../compiled-lang/zh-CN.json';
-import jaMessages from '../../compiled-lang/ja.json';
-import ptMessages from '../../compiled-lang/pt.json';
-import itMessages from '../../compiled-lang/it.json';
-import hiMessages from '../../compiled-lang/hi.json';
-import arMessages from '../../compiled-lang/ar.json';
 import { readStorage, writeStorage } from '../../utils/storage';
+// Its messages are loaded on demand: see ./messages.
 export class Locale {
   code: LocaleCode;
   label: string;
-  message: Record<string, string>;
 
-  constructor(code: LocaleCode, label: string, message: unknown) {
+  constructor(code: LocaleCode, label: string) {
     this.code = code;
     this.label = label;
-    this.message = message as Record<string, string>;
   }
 }
 
@@ -175,19 +161,19 @@ export type LocaleCode =
   'en' | 'es' | 'fr' | 'de' | 'ru' | 'uk' | 'zh' | 'zh-CN' | 'ja' | 'pt' | 'it' | 'hi' | 'ar';
 
 export const Locales = {
-  EN: new Locale('en', 'English', enMessages),
-  ES: new Locale('es', 'Español', esMessages),
-  DE: new Locale('de', 'Deutsch', deMessages),
-  FR: new Locale('fr', 'Français', frMessages),
-  RU: new Locale('ru', 'Pусский', ruMessages),
-  UK: new Locale('uk', 'Українська', ukMessages),
-  ZH: new Locale('zh', '中文 (简体)', zhMessages),
-  ZH_CN: new Locale('zh-CN', '中文 (普通话)', zhCnMessages),
-  JA: new Locale('ja', '日本語', jaMessages),
-  PT: new Locale('pt', 'Português', ptMessages),
-  IT: new Locale('it', 'Italiano', itMessages),
-  HI: new Locale('hi', 'हिन्दी', hiMessages),
-  AR: new Locale('ar', 'العربية', arMessages),
+  EN: new Locale('en', 'English'),
+  ES: new Locale('es', 'Español'),
+  DE: new Locale('de', 'Deutsch'),
+  FR: new Locale('fr', 'Français'),
+  RU: new Locale('ru', 'Pусский'),
+  UK: new Locale('uk', 'Українська'),
+  ZH: new Locale('zh', '中文 (简体)'),
+  ZH_CN: new Locale('zh-CN', '中文 (普通话)'),
+  JA: new Locale('ja', '日本語'),
+  PT: new Locale('pt', 'Português'),
+  IT: new Locale('it', 'Italiano'),
+  HI: new Locale('hi', 'हिन्दी'),
+  AR: new Locale('ar', 'العربية'),
 };
 
 export const localeFromStr = (code: string): Locale => {

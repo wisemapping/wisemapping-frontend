@@ -22,7 +22,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
 import ImageIcon from '@mui/icons-material/Image';
 import { FormattedMessage } from 'react-intl';
-import EmojiPicker, { EmojiClickData, EmojiStyle, Theme } from 'emoji-picker-react';
+import type { EmojiClickData } from 'emoji-picker-react';
+import EmojiPicker from '../shared/emoji-picker';
 import { DesignerKeyboard } from '@wisemapping/mindplot';
 import { useTheme } from '../../../../contexts/ThemeContext';
 import NodeProperty from '../../../../classes/model/node-property';
@@ -99,14 +100,7 @@ const TopicIconEditor = ({ closeModal, iconModel }: TopicIconEditorProps): React
           <PickerEmojiArea>
             <EmojiPicker
               onEmojiClick={handleEmojiSelect}
-              lazyLoadEmojis={true}
-              autoFocusSearch={true}
-              previewConfig={{ showPreview: false }}
-              emojiStyle={EmojiStyle.NATIVE}
-              skinTonesDisabled
-              theme={mode === 'dark' ? Theme.DARK : Theme.LIGHT}
-              width="100%"
-              height="100%"
+              theme={mode === 'dark' ? 'dark' : 'light'}
             />
           </PickerEmojiArea>
         )}

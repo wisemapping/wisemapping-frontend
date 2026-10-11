@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useEffect } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import RenameDialog from './rename-dialog';
 import DeleteDialog from './delete-dialog';
 import { ActionType } from '../action-chooser';
@@ -25,15 +25,18 @@ import { QueryClient } from '@tanstack/react-query';
 import DuplicateDialog from './duplicate-dialog';
 import CreateDialog from './create-dialog';
 import HistoryDialog from './history-dialog';
-import ImportDialog from './import-dialog';
 import PublishDialog from './publish-dialog';
 import InfoDialog from './info-dialog';
 import DeleteMultiselectDialog from './delete-multiselect-dialog';
-import ExportDialog from './export-dialog';
 import ShareDialog from './share-dialog';
 import LabelDialog from './label-dialog';
 import { trackMindmapListAction } from '../../../utils/analytics';
 import type { Designer } from '@wisemapping/editor';
+
+// They use the editor's exporters and importers: loaded with the editor (1.3 MB) when opened,
+// not with the map list.
+const ImportDialog = React.lazy(() => import('./import-dialog'));
+const ExportDialog = React.lazy(() => import('./export-dialog'));
 
 export type BasicMapInfo = {
   name: string;
@@ -96,7 +99,7 @@ const ActionDispatcher = ({
   };
 
   return (
-    <span>
+    <Suspense fallback={null}>
       {action === 'create' && <CreateDialog onClose={handleOnClose} />}
       {action === 'delete' && mapsId.length == 1 && (
         <DeleteDialog onClose={handleOnClose} mapId={mapsId[0]} />
@@ -122,7 +125,7 @@ const ActionDispatcher = ({
       )}
       {action === 'share' && <ShareDialog onClose={handleOnClose} mapId={mapsId[0]} />}
       {action === 'label' && <LabelDialog onClose={handleOnClose} mapsId={mapsId} />}
-    </span>
+    </Suspense>
   );
 };
 

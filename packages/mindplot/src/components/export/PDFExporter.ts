@@ -15,8 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
 import Exporter from './Exporter';
 
 class PDFExporter extends Exporter {
@@ -50,6 +48,12 @@ class PDFExporter extends Exporter {
     document.body.appendChild(tempContainer);
 
     try {
+      // Loaded on export: together they are about 530 KB, which a map never needs otherwise.
+      const [{ default: html2canvas }, { default: jsPDF }] = await Promise.all([
+        import('html2canvas'),
+        import('jspdf'),
+      ]);
+
       // Convert SVG to canvas using html2canvas. The canvas is read back with toDataURL,
       // so it must not be tainted: cross-origin images without CORS are skipped instead.
       const canvas = await html2canvas(tempContainer, {

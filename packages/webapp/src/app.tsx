@@ -35,6 +35,7 @@ import { ForgotPasswordPage } from './components/forgot-password-page';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { createAppTheme } from './theme';
 import AppI18n, { Locales } from './classes/app-i18n';
+import { useLocaleMessages } from './classes/app-i18n/messages';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider as MuiThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import RegistrationSuccessPage from './components/registration-success-page';
@@ -47,7 +48,7 @@ import LoadingFallback from './components/loading-fallback';
 import { MapsPageLoading } from './components/maps-page/maps-list/MapsListSkeleton';
 import { mapsPageLoader } from './components/maps-page/loader';
 import MapsPageErrorFallback from './components/maps-page/MapsPageErrorFallback';
-import { EditorLoadingSkeleton } from '@wisemapping/editor';
+import EditorLoadingSkeleton from '@wisemapping/editor/components/editor-loading-skeleton';
 import { HelmetProvider } from './components/seo';
 import { PageModeType, loader as mapLoader } from './components/editor-page/loader';
 import { loader as configLoader } from './loader';
@@ -114,6 +115,7 @@ const IntlProviderWrapper = ({ children }: { children: React.ReactNode }): React
   const account = useFetchAccount();
   // Re-read locale when location changes to pick up locale from URL
   const locale = AppI18n.getUserLocale(account?.locale);
+  const intlLocale = useLocaleMessages(locale.code);
 
   // Trigger an auto-ads refresh on every SPA route change so AdSense sees
   // a new pageview, covering pages that rely on auto-ads (e.g. /c/maps/).
@@ -129,9 +131,9 @@ const IntlProviderWrapper = ({ children }: { children: React.ReactNode }): React
 
   return (
     <IntlProvider
-      locale={locale.code}
+      locale={intlLocale.locale}
       defaultLocale={Locales.EN.code}
-      messages={locale.message as Record<string, string>}
+      messages={intlLocale.messages}
       key={location.pathname} // Force re-render when pathname changes
     >
       {children}

@@ -21,7 +21,7 @@ import React, { useState, useEffect } from 'react';
 import OutlineViewDialog from './index';
 import { Mindmap, XMLSerializerFactory } from '@wisemapping/mindplot';
 import { IntlProvider } from 'react-intl';
-import I18nMsg from '../../../../classes/i18n-msg';
+import { useLocaleData } from '../../../../classes/i18n-msg';
 import { Button, Box } from '@mui/material';
 
 // Custom args interface for the story
@@ -83,7 +83,7 @@ const OutlineViewStory = ({ mapId = 'welcome' }: StoryArgs) => {
   const [error, setError] = useState<string | undefined>(undefined);
   const [open, setOpen] = useState(false);
   const locale = 'en';
-  const msg = I18nMsg.loadLocaleData(locale);
+  const { messages: msg } = useLocaleData(locale);
 
   useEffect(() => {
     const loadMindmap = async () => {

@@ -23,10 +23,13 @@ import JwtTokenConfig from './classes/jwt-token-config';
 import { setAnalyticsUserEmail } from './utils/analytics';
 import { appLogger as log } from './utils/logger';
 import queryClient from './queryClient';
+import AppI18n from './classes/app-i18n';
+import { preloadMessages } from './classes/app-i18n/messages';
 
 export const loader = async (): Promise<Response> => {
-  // Ensure configuration is loaded before continuing.
-  await AppConfig.initialize();
+  // Ensure configuration is loaded before continuing, and the user's messages, so that the first
+  // paint is in their language.
+  await Promise.all([AppConfig.initialize(), preloadMessages(AppI18n.getUserLocale().code)]);
 
   // Google Analytics Initialization.
   const trackingId = AppConfig.getGoogleAnalyticsAccount();

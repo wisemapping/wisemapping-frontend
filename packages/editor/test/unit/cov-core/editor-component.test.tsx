@@ -24,6 +24,7 @@ import { render, screen, fireEvent, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { useIntl } from 'react-intl';
 import Editor from '../../../src/components';
+import I18nMsg from '../../../src/classes/i18n-msg';
 import Capability from '../../../src/classes/action/capability';
 import type Model from '../../../src/classes/model/editor';
 import type MapInfo from '../../../src/classes/model/map-info';
@@ -197,7 +198,14 @@ describe('Editor', () => {
     expect(container).not.toHaveTextContent('Solar System');
   });
 
-  it('renders the chrome in the requested language', () => {
+  it('renders the chrome in the requested language once its messages load', async () => {
+    const { model } = createModel();
+    renderEditor(configOf(model, { locale: 'es' }));
+    expect(await screen.findByText('Acercar')).toBeInTheDocument();
+  });
+
+  it('renders a preloaded language from the first paint', async () => {
+    await I18nMsg.load('es');
     const { model } = createModel();
     renderEditor(configOf(model, { locale: 'es' }));
     expect(screen.getByText('Acercar')).toBeInTheDocument();

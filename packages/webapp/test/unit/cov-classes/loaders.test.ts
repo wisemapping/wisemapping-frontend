@@ -25,6 +25,8 @@ import queryClient from '../../../src/queryClient';
 import { loader as rootLoader } from '../../../src/loader';
 import { loader as editorLoader, PageModeType } from '../../../src/components/editor-page/loader';
 import { analyticsLogger, appLogger } from '../../../src/utils/logger';
+import { getLoadedMessages } from '../../../src/classes/app-i18n/messages';
+import I18nMsg from '@wisemapping/editor/classes/i18n-msg';
 import { initAppConfig, resetAppConfig } from './helpers/app-config';
 import { flushPromises, installWebCrypto } from './helpers/axios-stub';
 
@@ -85,6 +87,16 @@ describe('root loader', () => {
 
     await expect(response.json()).resolves.toBe('Load success');
     expect(initialize).not.toHaveBeenCalled();
+  });
+
+  it("loads the user's messages before the first paint", async () => {
+    localStorage.setItem('user.locale', 'pt');
+    try {
+      await rootLoader();
+      expect(getLoadedMessages('pt')).toBeDefined();
+    } finally {
+      localStorage.removeItem('user.locale');
+    }
   });
 
   it('starts analytics with the configured account', async () => {
@@ -156,6 +168,18 @@ describe('editor page loader', () => {
 
     expect(response.status).toBe(400);
     await expect(response.text()).resolves.toBe('Map ID is required');
+  });
+
+  it("loads the editor's messages with the map", async () => {
+    useClient(jest.fn());
+    localStorage.setItem('user.locale', 'hi');
+    try {
+      await runLoader('try', '3');
+      expect(I18nMsg.getLoaded('hi')).toBeDefined();
+      expect(I18nMsg.getLoaded('hi')).not.toBe(I18nMsg.getLoaded('en'));
+    } finally {
+      localStorage.removeItem('user.locale');
+    }
   });
 
   it('rejects a non-numeric map id with a 400', async () => {

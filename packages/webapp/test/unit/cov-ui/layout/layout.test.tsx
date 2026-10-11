@@ -21,8 +21,9 @@ import { fireEvent, screen } from '@testing-library/react';
 import { ThemeProvider } from '@mui/material/styles';
 
 jest.mock('react-router', () => jest.requireActual('../router-mock'));
-jest.mock('@wisemapping/editor', () => ({
-  EditorLoadingSkeleton: () => <div>editor skeleton</div>,
+jest.mock('@wisemapping/editor/components/editor-loading-skeleton', () => ({
+  __esModule: true,
+  default: () => <div>editor skeleton</div>,
 }));
 
 import Header, { SignInButton } from '../../../../src/components/layout/header';

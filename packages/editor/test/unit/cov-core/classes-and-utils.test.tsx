@@ -21,10 +21,11 @@
  */
 import type { ReactElement } from 'react';
 import ReactGA from 'react-ga4';
+import { renderHook } from '@testing-library/react';
 import type { PersistenceManager, Topic } from '@wisemapping/mindplot';
 import BootstrapPersistenceManager from '../../../src/classes/persistence/BootstrapPersistenceManager';
 import DefaultWidgetBuilder from '../../../src/classes/default-widget-manager';
-import I18nMsg from '../../../src/classes/i18n-msg';
+import I18nMsg, { useLocaleData } from '../../../src/classes/i18n-msg';
 import type NodeProperty from '../../../src/classes/model/node-property';
 import {
   trackAppBarAction,
@@ -183,7 +184,7 @@ describe('DefaultWidgetBuilder', () => {
   });
 });
 
-describe('I18nMsg.loadLocaleData', () => {
+describe('I18nMsg', () => {
   it.each([
     ['en', en],
     ['es', es],
@@ -198,16 +199,39 @@ describe('I18nMsg.loadLocaleData', () => {
     ['it', it_],
     ['hi', hi],
     ['ar', ar],
-  ])('loads the %s messages', (locale, messages) => {
-    expect(I18nMsg.loadLocaleData(locale)).toBe(messages);
+  ])('loads the %s messages', async (locale, messages) => {
+    await expect(I18nMsg.load(locale)).resolves.toEqual(messages);
+    expect(I18nMsg.getLoaded(locale)).toEqual(messages);
   });
 
-  it.each(['xx', '', 'en-US', 'pt-BR'])('falls back to English for %p', (locale) => {
-    expect(I18nMsg.loadLocaleData(locale)).toBe(en);
+  it.each(['xx', '', 'en-US', 'pt-BR'])('falls back to English for %p', async (locale) => {
+    await expect(I18nMsg.load(locale)).resolves.toEqual(en);
+    expect(I18nMsg.getLoaded(locale)).toEqual(en);
   });
 
-  it('serves distinct translations per locale', () => {
-    expect(I18nMsg.loadLocaleData('es')).not.toBe(I18nMsg.loadLocaleData('en'));
+  it('loads a locale once', async () => {
+    expect(await I18nMsg.load('de')).toBe(await I18nMsg.load('de'));
+  });
+
+  it('serves distinct translations per locale', async () => {
+    expect(await I18nMsg.load('es')).not.toEqual(await I18nMsg.load('en'));
+  });
+});
+
+describe('useLocaleData', () => {
+  it('serves a loaded locale from the first render', async () => {
+    await I18nMsg.load('it');
+    const { result } = renderHook(() => useLocaleData('it'));
+    expect(result.current).toEqual({ locale: 'it', messages: it_ });
+  });
+
+  it('switches to another loaded locale in the same render', async () => {
+    await I18nMsg.load('fr');
+    const { result, rerender } = renderHook(({ locale }) => useLocaleData(locale), {
+      initialProps: { locale: 'en' },
+    });
+    rerender({ locale: 'fr' });
+    expect(result.current).toEqual({ locale: 'fr', messages: fr });
   });
 });
 

@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { MapInfo } from '@wisemapping/editor';
+import type { MapInfo } from '@wisemapping/editor';
 import Client from '../client';
 
 class MapInfoImpl implements MapInfo {

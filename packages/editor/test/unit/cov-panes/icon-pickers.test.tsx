@@ -177,17 +177,17 @@ describe('IconPicker', () => {
     expect(resume).toHaveBeenCalledTimes(1);
   });
 
-  it('sets an emoji icon picked from the emoji picker', () => {
+  it('sets an emoji icon picked from the emoji picker', async () => {
     const iconModel = property<string | undefined>(undefined);
     renderPane(<IconPicker triggerClose={jest.fn()} iconModel={iconModel} />);
 
-    expect(screen.getByTestId('emoji-picker').getAttribute('data-theme')).toBe('auto');
+    expect((await screen.findByTestId('emoji-picker')).getAttribute('data-theme')).toBe('auto');
     fireEvent.click(screen.getByRole('button', { name: 'pick party emoji' }));
 
     expect(iconModel.setValue).toHaveBeenCalledWith('emoji:🎉');
   });
 
-  it('switches to the image gallery with "Show images"', () => {
+  it('switches to the image gallery with "Show images"', async () => {
     const iconModel = property<string | undefined>(undefined);
     renderPane(<IconPicker triggerClose={jest.fn()} iconModel={iconModel} />);
 
@@ -198,10 +198,10 @@ describe('IconPicker', () => {
     expect(iconModel.setValue).toHaveBeenCalledWith('image:flag_blue');
 
     fireEvent.click(screen.getByLabelText('Show images'));
-    expect(screen.getByTestId('emoji-picker')).toBeTruthy();
+    expect(await screen.findByTestId('emoji-picker')).toBeTruthy();
   });
 
-  it('ignores an emoji when the icon cannot be changed', () => {
+  it('ignores an emoji when the icon cannot be changed', async () => {
     renderPane(
       <IconPicker
         triggerClose={jest.fn()}
@@ -210,29 +210,29 @@ describe('IconPicker', () => {
     );
 
     fireEvent.click(screen.getByRole('button', { name: 'pick party emoji' }));
-    expect(screen.getByTestId('emoji-picker')).toBeTruthy();
+    expect(await screen.findByTestId('emoji-picker')).toBeTruthy();
   });
 });
 
 describe('TopicIconEditor', () => {
-  it('opens on the emoji tab and sets the picked emoji', () => {
+  it('opens on the emoji tab and sets the picked emoji', async () => {
     const iconModel = property<string | undefined>(undefined);
     renderPane(<TopicIconEditor closeModal={jest.fn()} iconModel={iconModel} />);
 
     expect(screen.getByRole('tab', { name: 'Emojis' }).getAttribute('aria-selected')).toBe('true');
-    expect(screen.getByTestId('emoji-picker').getAttribute('data-theme')).toBe('light');
+    expect((await screen.findByTestId('emoji-picker')).getAttribute('data-theme')).toBe('light');
     fireEvent.click(screen.getByRole('button', { name: 'pick party emoji' }));
 
     expect(iconModel.setValue).toHaveBeenCalledWith('emoji:🎉');
   });
 
-  it('uses the dark emoji theme in dark mode', () => {
+  it('uses the dark emoji theme in dark mode', async () => {
     renderPane(
       <TopicIconEditor closeModal={jest.fn()} iconModel={property<string | undefined>('x')} />,
       'dark',
     );
 
-    expect(screen.getByTestId('emoji-picker').getAttribute('data-theme')).toBe('dark');
+    expect((await screen.findByTestId('emoji-picker')).getAttribute('data-theme')).toBe('dark');
   });
 
   it('sets an image icon from the gallery tab', () => {

@@ -17,7 +17,8 @@
  */
 import React, { ReactElement, useEffect } from 'react';
 import NodeProperty from '../../../../classes/model/node-property';
-import EmojiPicker, { EmojiClickData, EmojiStyle, Theme } from 'emoji-picker-react';
+import type { EmojiClickData } from 'emoji-picker-react';
+import EmojiPicker from '../shared/emoji-picker';
 import { DesignerKeyboard } from '@wisemapping/mindplot';
 import IconImageTab from './image-icon-tab';
 import Switch from '@mui/material/Switch';
@@ -63,14 +64,7 @@ const IconPicker = ({ triggerClose, iconModel }: IconPickerProp): ReactElement =
         <PickerEmojiFrame>
           <EmojiPicker
             onEmojiClick={handleEmojiSelect}
-            lazyLoadEmojis={true}
-            autoFocusSearch={true}
-            previewConfig={{ showPreview: false }}
-            emojiStyle={EmojiStyle.NATIVE}
-            skinTonesDisabled
-            theme={Theme.AUTO}
-            width="100%"
-            height="100%"
+            theme="auto"
             searchPlaceholder={intl.formatMessage({
               id: 'emoji-picker.search-placeholder',
               defaultMessage: 'Search emojis...',

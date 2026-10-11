@@ -15,14 +15,14 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { ErrorInfo, ReactElement, useContext, useEffect } from 'react';
+import React, { ErrorInfo, ReactElement, useContext, useEffect, useMemo } from 'react';
 import Drawer from '@mui/material/Drawer';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import { useStyles } from './style';
 import { MapsList } from './maps-list';
-import { createIntl, createIntlCache, FormattedMessage, IntlProvider } from 'react-intl';
+import { createIntl, FormattedMessage, IntlProvider } from 'react-intl';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Label } from '../../classes/client';
 import ActionDispatcher from './action-dispatcher';
@@ -32,6 +32,7 @@ import HelpMenu from './help-menu';
 import LanguageMenu from './language-menu';
 import ThemeToggleButton from '../common/theme-toggle-button';
 import AppI18n, { Locales } from '../../classes/app-i18n';
+import { useLocaleMessages } from '../../classes/app-i18n/messages';
 import { useFetchAccount } from '../../classes/middleware';
 
 import MenuIcon from '@mui/icons-material/Menu';
@@ -124,14 +125,16 @@ const MapsPage = (): ReactElement => {
   // Reload based on user preference ...
   const userLocale = AppI18n.getUserLocale(account?.locale);
 
-  const cache = createIntlCache();
-  const intl = createIntl(
-    {
-      defaultLocale: userLocale.code,
-      locale: Locales.EN.code,
-      messages: userLocale.message,
-    },
-    cache,
+  const intlLocale = useLocaleMessages(userLocale.code);
+  // One per locale: a new one on every render re-ran the effects that depend on it.
+  const intl = useMemo(
+    () =>
+      createIntl({
+        locale: intlLocale.locale,
+        defaultLocale: Locales.EN.code,
+        messages: intlLocale.messages,
+      }),
+    [intlLocale],
   );
 
   useEffect(() => {
@@ -246,9 +249,9 @@ const MapsPage = (): ReactElement => {
   const label: Label | undefined = labels.find((l) => l.id === labelToDelete);
   return (
     <IntlProvider
-      locale={userLocale.code}
+      locale={intlLocale.locale}
       defaultLocale={Locales.EN.code}
-      messages={userLocale.message}
+      messages={intlLocale.messages}
     >
       <SEOHead
         title={intl.formatMessage({
