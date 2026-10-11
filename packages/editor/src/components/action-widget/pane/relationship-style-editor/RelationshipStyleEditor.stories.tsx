@@ -17,7 +17,7 @@
  */
 
 import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import RelationshipStyleEditor from './index';
 import NodeProperty from '../../../../classes/model/node-property';
 import { StrokeStyle } from '@wisemapping/mindplot';

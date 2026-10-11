@@ -17,7 +17,7 @@
  */
 
 /* eslint-disable no-new */
-import { StoryFn, Meta } from '@storybook/html';
+import { StoryFn, Meta } from '@storybook/html-vite';
 import BalancedTestSuite from './layout/BalancedTestSuite';
 import SymmetricTestSuite from './layout/SymmetricTestSuite';
 import TestSuite from './layout/TestSuite';

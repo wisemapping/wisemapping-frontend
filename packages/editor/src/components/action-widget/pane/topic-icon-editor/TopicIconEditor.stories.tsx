@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import TopicIconEditor from './index';
 import NodeProperty from '../../../../classes/model/node-property';
 import React from 'react';

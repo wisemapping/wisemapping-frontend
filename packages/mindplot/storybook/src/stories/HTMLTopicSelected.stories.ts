@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import { StoryFn, Meta } from '@storybook/html';
+import { StoryFn, Meta } from '@storybook/html-vite';
 import { TopicArgs } from './Topic';
 import { Mindmap, Topic, HTMLTopicSelected, Designer } from '../../../src/index';
 import NodeModel from '../../../src/components/model/NodeModel';
