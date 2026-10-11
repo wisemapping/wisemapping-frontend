@@ -100,7 +100,7 @@ const createMapInfo = (overrides: Partial<Record<keyof MapInfo, unknown>> = {}) 
 const renderAppBar = (
   props: {
     mode?: EditorRenderMode;
-    model?: Editor;
+    model?: Editor | undefined;
     mapInfo?: MapInfo;
     accountConfig?: React.ReactElement;
     locked?: boolean;

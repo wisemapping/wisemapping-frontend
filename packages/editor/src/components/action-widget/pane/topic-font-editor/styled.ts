@@ -51,7 +51,7 @@ export const ActionButton = styled(IconButton)<{ selected?: boolean }>(({ select
 /** The font family menu, written in the font that is selected. */
 export const FontSelect = styled(Select, {
   shouldForwardProp: (prop) => prop !== 'currentFamily',
-})<{ currentFamily?: string }>(({ theme, currentFamily }) => ({
+})<{ currentFamily?: string | undefined }>(({ theme, currentFamily }) => ({
   fontSize: '0.656rem',
   fontFamily: currentFamily || 'inherit',
   '& .MuiSelect-select': {

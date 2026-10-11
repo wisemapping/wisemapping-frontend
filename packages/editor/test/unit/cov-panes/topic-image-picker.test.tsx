@@ -19,7 +19,6 @@
 /**
  * @jest-environment jsdom
  */
-import React from 'react';
 import { fireEvent, screen } from '@testing-library/react';
 import TopicImagePicker from '../../../src/components/action-widget/pane/topic-image-picker';
 import ImageIconTab, {
@@ -27,6 +26,7 @@ import ImageIconTab, {
 } from '../../../src/components/action-widget/pane/topic-image-picker/image-icon-tab';
 import { property, readOnlyProperty, renderPane } from './helpers';
 import { BURST_TEXT, typeInBurst } from '../burst-typing';
+import { defined } from '../defined';
 
 const pause = jest.fn();
 const resume = jest.fn();
@@ -48,7 +48,7 @@ beforeEach(() => {
  * grid, so the first element with the icon is the category button.
  */
 const categoryButton = (iconTestId: string): HTMLElement =>
-  screen.getAllByTestId(iconTestId)[0].closest('button') as HTMLElement;
+  defined(screen.getAllByTestId(iconTestId)[0]).closest('button') as HTMLElement;
 
 const search = (term: string): void => {
   fireEvent.change(screen.getByPlaceholderText('Search icons...'), { target: { value: term } });
@@ -138,7 +138,7 @@ describe('ImageIconTab (material icon gallery)', () => {
     renderPane(<ImageIconTab {...models()} />);
 
     const inSearchField = (): boolean =>
-      screen.getAllByTestId('ClearIcon')[0].closest('.MuiInputAdornment-root') !== null;
+      defined(screen.getAllByTestId('ClearIcon')[0]).closest('.MuiInputAdornment-root') !== null;
     // No clear button until there is something to clear.
     expect(inSearchField()).toBe(false);
     search('zzzz');
@@ -236,7 +236,9 @@ describe('TopicImagePicker', () => {
     const triggerClose = jest.fn();
     renderPane(<TopicImagePicker triggerClose={triggerClose} {...models()} />);
 
-    fireEvent.click(screen.getAllByTestId('CloseIcon')[0].closest('button') as HTMLElement);
+    fireEvent.click(
+      defined(screen.getAllByTestId('CloseIcon')[0]).closest('button') as HTMLElement,
+    );
 
     expect(triggerClose).toHaveBeenCalledTimes(1);
   });

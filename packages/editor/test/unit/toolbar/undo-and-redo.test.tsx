@@ -19,7 +19,6 @@
 /**
  * @jest-environment jsdom
  */
-import React from 'react';
 import { render, screen, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import UndoOutlinedIcon from '@mui/icons-material/UndoOutlined';

@@ -15,7 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React from 'react';
 import Editor, { EditorOptions, useEditor } from '../../../../src/index';
 import { createRoot } from 'react-dom/client';
 import { LocalStorageManager, Designer } from '@wisemapping/mindplot';

@@ -19,11 +19,11 @@
 /**
  * @jest-environment jsdom
  */
-import React from 'react';
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import type { INodeModel, Mindmap } from '@wisemapping/mindplot';
 import OutlineViewDialog from '../../../src/components/action-widget/pane/outline-view-dialog';
 import { renderPane } from './helpers';
+import { defined } from '../defined';
 
 // The outline only needs the icon URL lookup, the content-type names and the note sanitizer
 // from mindplot.
@@ -206,7 +206,7 @@ describe('OutlineViewDialog', () => {
     renderPane(<OutlineViewDialog open onClose={jest.fn()} mindmap={sampleMap()} />);
 
     const [planningNote] = screen.getAllByRole('button', { name: 'note' });
-    fireEvent.mouseEnter(planningNote);
+    fireEvent.mouseEnter(defined(planningNote));
 
     expect(await screen.findByText('Plain planning note')).toBeTruthy();
     expect(screen.getByText('Note')).toBeTruthy();
@@ -216,7 +216,7 @@ describe('OutlineViewDialog', () => {
     renderPane(<OutlineViewDialog open onClose={jest.fn()} mindmap={sampleMap()} />);
 
     const researchNote = screen.getAllByRole('button', { name: 'note' })[1];
-    fireEvent.mouseEnter(researchNote);
+    fireEvent.mouseEnter(defined(researchNote));
 
     const bold = await screen.findByText('Bold');
     expect(bold.tagName).toBe('B');
@@ -232,7 +232,7 @@ describe('OutlineViewDialog', () => {
   it('closes the popover with Escape', async () => {
     renderPane(<OutlineViewDialog open onClose={jest.fn()} mindmap={sampleMap()} />);
 
-    fireEvent.mouseEnter(screen.getAllByRole('button', { name: 'note' })[0]);
+    fireEvent.mouseEnter(defined(screen.getAllByRole('button', { name: 'note' })[0]));
     const text = await screen.findByText('Plain planning note');
     fireEvent.keyDown(text, { key: 'Escape' });
 

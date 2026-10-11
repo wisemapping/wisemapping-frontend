@@ -19,7 +19,6 @@
 /**
  * @jest-environment jsdom
  */
-import React from 'react';
 import { render, fireEvent, screen, act, cleanup } from '@testing-library/react';
 import { IntlProvider } from 'react-intl';
 import ThreeDRotation from '@mui/icons-material/ThreeDRotation';

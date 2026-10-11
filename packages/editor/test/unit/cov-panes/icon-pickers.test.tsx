@@ -19,13 +19,13 @@
 /**
  * @jest-environment jsdom
  */
-import React from 'react';
 import { fireEvent, screen } from '@testing-library/react';
 import IconPicker from '../../../src/components/action-widget/pane/icon-picker';
 import IconImageTab from '../../../src/components/action-widget/pane/icon-picker/image-icon-tab';
 import TopicIconEditor from '../../../src/components/action-widget/pane/topic-icon-editor';
 import { property, readOnlyProperty, renderPane } from './helpers';
 import { BURST_TEXT, typeInBurst } from '../burst-typing';
+import { defined } from '../defined';
 
 const pause = jest.fn();
 const resume = jest.fn();
@@ -89,7 +89,7 @@ describe('IconImageTab (image gallery)', () => {
     renderPane(<IconImageTab iconModel={iconModel} />);
 
     // Clicking a frequently-used icon picks it as well.
-    fireEvent.click(iconImages()[0]);
+    fireEvent.click(defined(iconImages()[0]));
     expect(iconModel.setValue).toHaveBeenLastCalledWith('image:flag_green');
 
     fireEvent.click(iconImage('flag_pink'));

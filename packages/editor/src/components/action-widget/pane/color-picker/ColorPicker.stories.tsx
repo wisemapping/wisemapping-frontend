@@ -60,9 +60,7 @@ export default meta;
 type Story = StoryObj<typeof ColorPickerWithActions>;
 
 export const Default: Story = {
-  args: {
-    initialColor: undefined,
-  },
+  args: {},
 };
 
 export const WithSelectedColor: Story = {

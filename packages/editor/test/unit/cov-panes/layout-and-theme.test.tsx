@@ -19,7 +19,6 @@
 /**
  * @jest-environment jsdom
  */
-import React from 'react';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import type { LayoutType, ThemeType } from '@wisemapping/mindplot';
 import LayoutSelector from '../../../src/components/action-widget/pane/layout-selector';

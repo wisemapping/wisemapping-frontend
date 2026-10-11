@@ -18,7 +18,7 @@
 import Button from '@mui/material/Button';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
-import React, { ReactElement, useState, useMemo } from 'react';
+import { ReactElement, useState, useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import NodeProperty from '../../../../classes/model/node-property';
 import { ThemeType } from '@wisemapping/mindplot';

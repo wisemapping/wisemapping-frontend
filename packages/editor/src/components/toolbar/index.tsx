@@ -100,7 +100,7 @@ const horizontalAligment: { anchorOrigin: PopoverOrigin; transformOrigin: Popove
 
 type ToolbarSubmenuProps = {
   configuration: ActionConfig;
-  vertical?: boolean;
+  vertical?: boolean | undefined;
   elevation?: number;
 };
 
@@ -329,7 +329,7 @@ const Toolbar = ({ configurations, position }: ToolbarProps): ReactElement => {
     }
 
     event.preventDefault();
-    buttons[target].focus();
+    buttons[target]?.focus();
   };
 
   return (

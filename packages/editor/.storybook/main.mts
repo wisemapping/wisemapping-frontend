@@ -12,11 +12,7 @@ const config: StorybookConfig = {
   addons: [getAbsolutePath('@storybook/addon-docs'), getAbsolutePath('@storybook/addon-links')],
   framework: {
     name: getAbsolutePath('@storybook/react-vite'),
-    options: {
-      builder: {
-        viteConfigPath: undefined,
-      },
-    },
+    options: {},
   },
   core: {
     disableTelemetry: true,
@@ -33,6 +29,7 @@ const config: StorybookConfig = {
               map: null,
             };
           }
+          return null;
         },
       };
     };

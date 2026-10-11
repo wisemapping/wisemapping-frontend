@@ -18,7 +18,7 @@
 import KeyboardOutlined from '@mui/icons-material/KeyboardOutlined';
 import Brightness4 from '@mui/icons-material/Brightness4';
 import Brightness7 from '@mui/icons-material/Brightness7';
-import React, { ReactElement, useState, useEffect, useMemo } from 'react';
+import { ReactElement, useState, useEffect, useMemo } from 'react';
 import { IntlShape, useIntl } from 'react-intl';
 import ActionConfig from '../../classes/action/action-config';
 import Capability from '../../classes/action/capability';
@@ -143,8 +143,7 @@ export function buildVisualizationToolbarConfig(
       }),
       'data-testid': 'find-in-map-button',
       onClick: () => trackEditorInteraction('find_in_map'),
-      open: findInMap?.open,
-      onOpenChange: findInMap?.setOpen,
+      ...(findInMap && { open: findInMap.open, onOpenChange: findInMap.setOpen }),
       options: [
         {
           render: (closeModal) => (

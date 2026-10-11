@@ -17,6 +17,7 @@
  */
 
 import fs from 'fs';
+import { defined } from '../defined';
 import path from 'path';
 
 type Source = Record<string, { defaultMessage: string }>;
@@ -70,11 +71,12 @@ describe.each(locales)('%s messages', (lang) => {
   });
 
   test('translates every English message', () => {
-    const untranslated = Object.keys(en).filter(
-      (id) =>
-        messages[id]?.defaultMessage === en[id].defaultMessage &&
-        !SAME_AS_ENGLISH[id]?.includes(lang),
-    );
+    const untranslated = Object.entries(en)
+      .filter(
+        ([id, { defaultMessage }]) =>
+          messages[id]?.defaultMessage === defaultMessage && !SAME_AS_ENGLISH[id]?.includes(lang),
+      )
+      .map(([id]) => id);
     expect(untranslated).toEqual([]);
   });
 
@@ -82,7 +84,7 @@ describe.each(locales)('%s messages', (lang) => {
     'translates %s',
     (id) => {
       expect(messages[id]?.defaultMessage).toBeDefined();
-      expect(messages[id].defaultMessage).not.toBe(en[id].defaultMessage);
+      expect(messages[id]?.defaultMessage).not.toBe(defined(en[id]).defaultMessage);
     },
   );
 
@@ -102,8 +104,8 @@ describe.each(locales)('%s messages', (lang) => {
       'zh-CN': '网格样式',
       zh: '网格样式',
     };
-    expect(en['canvas-style.grid-style'].defaultMessage).toBe('Grid Size');
-    expect(messages['canvas-style.grid-style'].defaultMessage).not.toBe(before[lang]);
+    expect(en['canvas-style.grid-style']?.defaultMessage).toBe('Grid Size');
+    expect(defined(messages['canvas-style.grid-style']).defaultMessage).not.toBe(before[lang]);
   });
 });
 
@@ -115,9 +117,9 @@ const TRADITIONAL_ONLY =
 describe.each(['zh', 'zh-CN'])('%s messages', (lang) => {
   test('are written in Simplified characters', () => {
     const messages = readLang(lang);
-    const traditional = Object.keys(messages)
-      .filter((id) => TRADITIONAL_ONLY.test(messages[id].defaultMessage))
-      .map((id) => `${id}: ${messages[id].defaultMessage}`);
+    const traditional = Object.entries(messages)
+      .filter(([, { defaultMessage }]) => TRADITIONAL_ONLY.test(defaultMessage))
+      .map(([id, { defaultMessage }]) => `${id}: ${defaultMessage}`);
     expect(traditional).toEqual([]);
   });
 });

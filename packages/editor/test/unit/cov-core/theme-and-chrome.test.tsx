@@ -19,7 +19,6 @@
 /**
  * @jest-environment jsdom
  */
-import React from 'react';
 import { render, screen, fireEvent, renderHook, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import type { Designer, Topic, WidgetBuilder } from '@wisemapping/mindplot';
@@ -34,6 +33,7 @@ import { WidgetPopover } from '../../../src/components/widgetPopover';
 import type Capability from '../../../src/classes/action/capability';
 import type MapInfo from '../../../src/classes/model/map-info';
 import { createThemeStorage, Providers } from './helpers';
+import { defined } from '../defined';
 
 jest.mock('@wisemapping/mindplot', () => ({}));
 
@@ -136,7 +136,7 @@ describe('createEditorTheme', () => {
         backgroundColor: isLight ? '#616161' : '#424242',
         color: '#ffffff',
       });
-      const contained = overrides.MuiButton!.variants![0];
+      const contained = defined(overrides.MuiButton!.variants![0]);
       expect(call(contained.style)).toEqual(
         expect.objectContaining({ backgroundColor: theme.palette.primary.main }),
       );

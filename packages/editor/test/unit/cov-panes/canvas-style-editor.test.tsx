@@ -19,7 +19,6 @@
 /**
  * @jest-environment jsdom
  */
-import React from 'react';
 import { fireEvent, screen } from '@testing-library/react';
 import CanvasStyleEditor from '../../../src/components/action-widget/pane/canvas-style-editor';
 import { renderPane } from './helpers';

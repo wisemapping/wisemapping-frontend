@@ -38,7 +38,7 @@ export const typeInBurst = async (
   field: HTMLInputElement | HTMLTextAreaElement,
   text: string = BURST_TEXT,
 ): Promise<unknown[]> => {
-  const reactAct = globalThis as unknown as { IS_REACT_ACT_ENVIRONMENT?: boolean };
+  const reactAct = globalThis as unknown as { IS_REACT_ACT_ENVIRONMENT?: boolean | undefined };
   const previousAct = reactAct.IS_REACT_ACT_ENVIRONMENT;
   reactAct.IS_REACT_ACT_ENVIRONMENT = false;
   const errors: unknown[] = [];

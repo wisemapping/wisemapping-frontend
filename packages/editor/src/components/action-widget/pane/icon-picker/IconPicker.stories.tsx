@@ -62,9 +62,7 @@ export default meta;
 type Story = StoryObj<typeof IconPickerWithActions>;
 
 export const Default: Story = {
-  args: {
-    initialIcon: undefined,
-  },
+  args: {},
 };
 
 export const WithEmoji: Story = {

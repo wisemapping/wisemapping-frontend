@@ -25,8 +25,8 @@ export interface OutlineNodeData {
   children: OutlineNodeData[];
   iconUrls: string[];
   emojiChars: string[];
-  linkUrl?: string;
-  noteText?: string;
+  linkUrl?: string | undefined;
+  noteText?: string | undefined;
   node: INodeModel;
   isExpanded: boolean;
 }

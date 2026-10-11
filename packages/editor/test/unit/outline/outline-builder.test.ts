@@ -85,10 +85,10 @@ describe('OutlineBuilder', () => {
       const result = builder.buildOutlineData(parent, 0);
 
       expect(result.children).toHaveLength(2);
-      expect(result.children[0].text).toBe('Child 1');
-      expect(result.children[0].level).toBe(1);
-      expect(result.children[1].text).toBe('Child 2');
-      expect(result.children[1].level).toBe(1);
+      expect(result.children[0]?.text).toBe('Child 1');
+      expect(result.children[0]?.level).toBe(1);
+      expect(result.children[1]?.text).toBe('Child 2');
+      expect(result.children[1]?.level).toBe(1);
     });
 
     it('should filter out children with undefined text', () => {
@@ -104,7 +104,7 @@ describe('OutlineBuilder', () => {
       const result = builder.buildOutlineData(parent, 0);
 
       expect(result.children).toHaveLength(1);
-      expect(result.children[0].text).toBe('Child 1');
+      expect(result.children[0]?.text).toBe('Child 1');
     });
 
     it('should extract link URLs from features', () => {
@@ -201,9 +201,9 @@ describe('OutlineBuilder', () => {
 
       const result = builder.buildOutlineData(parent, 0);
 
-      expect(result.children[0].children).toHaveLength(1);
-      expect(result.children[0].children[0].text).toBe('Grandchild');
-      expect(result.children[0].children[0].level).toBe(2);
+      expect(result.children[0]?.children).toHaveLength(1);
+      expect(result.children[0]?.children[0]?.text).toBe('Grandchild');
+      expect(result.children[0]?.children[0]?.level).toBe(2);
     });
 
     it('should generate unique IDs based on node ID and level', () => {
@@ -227,10 +227,10 @@ describe('OutlineBuilder', () => {
       const result = builder.buildFromCentralTopic(centralTopic);
 
       expect(result).toHaveLength(2);
-      expect(result[0].text).toBe('Branch 1');
-      expect(result[0].level).toBe(0);
-      expect(result[1].text).toBe('Branch 2');
-      expect(result[1].level).toBe(0);
+      expect(result[0]?.text).toBe('Branch 1');
+      expect(result[0]?.level).toBe(0);
+      expect(result[1]?.text).toBe('Branch 2');
+      expect(result[1]?.level).toBe(0);
     });
 
     it('should filter out children with undefined text from central topic', () => {
@@ -246,7 +246,7 @@ describe('OutlineBuilder', () => {
       const result = builder.buildFromCentralTopic(centralTopic);
 
       expect(result).toHaveLength(1);
-      expect(result[0].text).toBe('Branch 1');
+      expect(result[0]?.text).toBe('Branch 1');
     });
 
     it('should return empty array if central topic has no children', () => {

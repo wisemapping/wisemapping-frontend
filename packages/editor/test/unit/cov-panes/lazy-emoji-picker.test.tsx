@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import LazyEmojiPicker from '../../../src/components/action-widget/pane/shared/emoji-picker';
 

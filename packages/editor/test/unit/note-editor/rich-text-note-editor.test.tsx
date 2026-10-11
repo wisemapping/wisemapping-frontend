@@ -19,11 +19,11 @@
 /**
  * @jest-environment jsdom
  */
-import React from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { IntlProvider } from 'react-intl';
 import RichTextNoteEditor from '../../../src/components/action-widget/pane/rich-text-note-editor';
 import type NodeProperty from '../../../src/classes/model/node-property';
+import { defined } from '../defined';
 
 jest.mock('emoji-picker-react', () => ({
   __esModule: true,
@@ -71,7 +71,7 @@ describe('RichTextNoteEditor', () => {
 
   test('saves nested lists, sanitized', () => {
     const { editor, model } = renderEditor('<ul><li>a</li><li>b</li></ul>');
-    caretIn(editor.querySelectorAll('li')[1].firstChild!, 0);
+    caretIn(defined(editor.querySelectorAll('li')[1]).firstChild!, 0);
 
     fireEvent.keyDown(editor, { key: 'Tab' });
     editor.appendChild(document.createElement('script'));
@@ -83,7 +83,7 @@ describe('RichTextNoteEditor', () => {
 
   test('the indent buttons nest and unnest the item with the caret', () => {
     const { editor } = renderEditor('<ol><li>a</li><li>b</li></ol>');
-    caretIn(editor.querySelectorAll('li')[1].firstChild!, 1);
+    caretIn(defined(editor.querySelectorAll('li')[1]).firstChild!, 1);
 
     fireEvent.click(screen.getByTitle('Increase Indent (Tab)'));
     expect(editor.innerHTML).toBe('<ol><li>a<ol><li>b</li></ol></li></ol>');
@@ -106,7 +106,7 @@ describe('RichTextNoteEditor', () => {
 
   test('takes 200 characters typed in one burst, as Cypress types them', async () => {
     // Real scheduling: React renders in a microtask after each key, not inside act().
-    const reactAct = globalThis as unknown as { IS_REACT_ACT_ENVIRONMENT?: boolean };
+    const reactAct = globalThis as unknown as { IS_REACT_ACT_ENVIRONMENT?: boolean | undefined };
     const previousAct = reactAct.IS_REACT_ACT_ENVIRONMENT;
     reactAct.IS_REACT_ACT_ENVIRONMENT = false;
     const errors: unknown[] = [];

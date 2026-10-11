@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { ReactElement, useState, useEffect } from 'react';
+import { ReactElement, useState, useEffect } from 'react';
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import CloseIcon from '@mui/icons-material/Close';

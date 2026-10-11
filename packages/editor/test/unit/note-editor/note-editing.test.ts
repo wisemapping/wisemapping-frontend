@@ -24,6 +24,7 @@ import {
   attachNoteEditing,
   NoteEditing,
 } from '../../../src/components/action-widget/pane/rich-text-note-editor/note-editing';
+import { defined } from '../defined';
 
 let root: HTMLDivElement;
 let editing: NoteEditing;
@@ -332,8 +333,8 @@ describe('Tab and Shift+Tab in lists', () => {
   test('indents every selected item', () => {
     root.innerHTML = '<ul><li>a</li><li>b</li><li>c</li></ul>';
     const range = document.createRange();
-    range.setStart(root.querySelectorAll('li')[1].firstChild!, 0);
-    range.setEnd(root.querySelectorAll('li')[2].firstChild!, 1);
+    range.setStart(defined(root.querySelectorAll('li')[1]).firstChild!, 0);
+    range.setEnd(defined(root.querySelectorAll('li')[2]).firstChild!, 1);
     window.getSelection()!.removeAllRanges();
     window.getSelection()!.addRange(range);
 
@@ -410,7 +411,7 @@ describe('Enter and Shift+Enter in lists', () => {
 
   test('Enter on an empty top level item leaves the list', () => {
     root.innerHTML = '<ul><li>a</li><li><br></li></ul>';
-    caretAt(root.querySelectorAll('li')[1], 0);
+    caretAt(defined(root.querySelectorAll('li')[1]), 0);
 
     expect(key('Enter').defaultPrevented).toBe(true);
 
@@ -420,7 +421,7 @@ describe('Enter and Shift+Enter in lists', () => {
 
   test('Enter on an empty nested item moves it up one level', () => {
     root.innerHTML = '<ul><li>a<ul><li>b</li><li><br></li></ul></li></ul>';
-    caretAt(root.querySelectorAll('li')[2], 0);
+    caretAt(defined(root.querySelectorAll('li')[2]), 0);
 
     expect(key('Enter').defaultPrevented).toBe(true);
 
@@ -688,7 +689,7 @@ describe('Caret and structure edge cases', () => {
   test('indents the items of a selection with a sub-list between them', () => {
     root.innerHTML = '<ul><li>a</li><li>b</li><ul><li>x</li></ul><li>c</li><li>d</li></ul>';
     const items = root.querySelectorAll(':scope > ul > li');
-    select(items[1].firstChild!, 0, items[2].firstChild!, 1);
+    select(defined(items[1]).firstChild!, 0, defined(items[2]).firstChild!, 1);
 
     key('Tab');
 
@@ -737,7 +738,7 @@ describe('Caret and structure edge cases', () => {
   test('undo after indenting a selection puts the content back', () => {
     root.innerHTML = '<ul><li>a</li><li>b</li><li>c</li></ul>';
     const items = root.querySelectorAll('li');
-    select(items[1].firstChild!, 0, items[2].firstChild!, 1);
+    select(defined(items[1]).firstChild!, 0, defined(items[2]).firstChild!, 1);
     key('Tab');
 
     expect(key('z', { ctrlKey: true }).defaultPrevented).toBe(true);

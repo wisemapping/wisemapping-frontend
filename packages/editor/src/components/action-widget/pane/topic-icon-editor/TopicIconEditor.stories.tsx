@@ -60,9 +60,7 @@ export default meta;
 type Story = StoryObj<typeof TopicIconEditorWithActions>;
 
 export const Default: Story = {
-  args: {
-    initialIcon: undefined,
-  },
+  args: {},
 };
 
 export const WithEmoji: Story = {

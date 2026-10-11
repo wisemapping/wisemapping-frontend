@@ -32,7 +32,7 @@ type TopicProps = {
   fontColor?: string;
   backgroundColor?: string;
   borderColor?: string;
-  borderStyle?: string;
+  borderStyle?: string | undefined;
   connectionColor?: string;
   connectionStyle?: number;
   shapeType?: string;

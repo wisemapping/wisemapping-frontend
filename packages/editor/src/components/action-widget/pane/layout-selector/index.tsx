@@ -18,7 +18,7 @@
 import Button from '@mui/material/Button';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
-import React, { ReactElement, useState } from 'react';
+import { ReactElement, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import SvgIcon from '@mui/material/SvgIcon';

@@ -19,11 +19,11 @@
 /**
  * @jest-environment jsdom
  */
-import React from 'react';
 import { fireEvent, screen } from '@testing-library/react';
 import ColorPicker from '../../../src/components/action-widget/pane/color-picker';
 import colors from '../../../src/components/action-widget/pane/color-picker/colors.json';
 import { property, readOnlyProperty, renderPane } from './helpers';
+import { defined } from '../defined';
 
 const colorButtons = (): HTMLElement[] =>
   screen.getAllByRole('button').filter((button) => button.tagName === 'BUTTON');
@@ -59,7 +59,7 @@ describe('ColorPicker', () => {
 
     // The grid keeps its size: the default circle takes the place of the first swatch.
     expect(colorButtons()).toHaveLength(colors.length - 1);
-    expect(screen.queryByRole('button', { name: colors[0] })).toBeNull();
+    expect(screen.queryByRole('button', { name: defined(colors[0]) })).toBeNull();
   });
 
   it('shows the whole palette and no default choice when hideNoneOption is set', () => {
@@ -73,7 +73,7 @@ describe('ColorPicker', () => {
 
     expect(screen.queryByRole('button', { name: 'Default color' })).toBeNull();
     expect(colorButtons()).toHaveLength(colors.length);
-    expect(screen.getByRole('button', { name: colors[0] })).toBeTruthy();
+    expect(screen.getByRole('button', { name: defined(colors[0]) })).toBeTruthy();
   });
 
   it('still closes when the colour cannot be changed', () => {

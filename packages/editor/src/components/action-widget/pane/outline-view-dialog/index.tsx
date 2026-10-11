@@ -61,7 +61,7 @@ import {
 interface OutlineViewDialogProps {
   open: boolean;
   onClose: () => void;
-  mindmap?: Mindmap;
+  mindmap?: Mindmap | undefined;
 }
 
 // Create outline builder instance

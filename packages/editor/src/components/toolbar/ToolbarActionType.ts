@@ -33,9 +33,7 @@ type DelegatedNames =
 // ActionType, which would turn a rename into a silent hole rather than a
 // compile error. This constraint is what makes the drift claim above hold.
 type MustBeActionTypes<T extends ActionType> = T;
-// eslint-disable-next-line @typescript-eslint/no-unused-vars -- compile-time assertion only
-type _AssertDelegatedNamesExist = MustBeActionTypes<DelegatedNames>;
 
-export type HostDelegatedAction = Extract<ActionType, DelegatedNames>;
+export type HostDelegatedAction = Extract<ActionType, MustBeActionTypes<DelegatedNames>>;
 
 export type ToolbarActionType = HostDelegatedAction | 'back';

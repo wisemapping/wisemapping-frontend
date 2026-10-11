@@ -26,6 +26,8 @@ export default defineConfig([
       'eslint:recommended',
       'prettier',
       'plugin:react/recommended',
+      // The automatic JSX runtime (tsconfig "jsx": "react-jsx"): JSX needs no React in scope.
+      'plugin:react/jsx-runtime',
       'plugin:@typescript-eslint/recommended',
     ),
 

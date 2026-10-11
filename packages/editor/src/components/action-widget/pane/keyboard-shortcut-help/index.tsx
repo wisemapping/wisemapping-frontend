@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { ReactElement, useState } from 'react';
+import { ReactElement, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
@@ -144,7 +144,7 @@ const KeyboardShorcutsHelp = ({ closeModal }: KeyboardShorcutsHelpProps): ReactE
       </Tabs>
 
       {/* Navigation is the one group the key names alone do not explain. */}
-      {category.key === 'navigation' && <NavigationDiagram />}
+      {category?.key === 'navigation' && <NavigationDiagram />}
 
       <TableContainer
         component={Paper}
@@ -162,7 +162,7 @@ const KeyboardShorcutsHelp = ({ closeModal }: KeyboardShorcutsHelpProps): ReactE
             </TableRow>
           </TableHead>
           <TableBody>
-            {category.shortcuts.map((shortcut) => (
+            {category?.shortcuts.map((shortcut) => (
               <TableRow hover key={shortcut.message.id}>
                 <TableCell sx={{ fontSize: '0.72rem' }}>
                   <FormattedMessage {...shortcut.message} />

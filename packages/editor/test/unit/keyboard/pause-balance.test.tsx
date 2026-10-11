@@ -19,7 +19,6 @@
 /**
  * @jest-environment jsdom
  */
-import React from 'react';
 import { render, screen, fireEvent, renderHook } from '@testing-library/react';
 import type { Designer, Topic, PersistenceManager } from '@wisemapping/mindplot';
 import type MapInfo from '../../../src/classes/model/map-info';

@@ -23,7 +23,7 @@ const trackEditorAction = (action: string, category: string, label?: string): vo
     ReactGA.event({
       category: category,
       action: action,
-      label: label,
+      ...(label !== undefined && { label }),
       nonInteraction: false,
     });
   } catch (error) {

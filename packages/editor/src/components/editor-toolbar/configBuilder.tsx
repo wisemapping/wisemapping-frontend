@@ -15,7 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React from 'react';
 import BrushIcon from '@mui/icons-material/Brush';
 import FontDownloadOutlinedIcon from '@mui/icons-material/FontDownloadOutlined';
 import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet';
@@ -61,8 +60,8 @@ export function buildEditorPanelConfig(
   const noRelationshipSelected = selection.relationshipCount === 0;
 
   const singleSelectedTopicId = (): number | undefined => {
-    const selected = model.getDesignerModel()!.filterSelectedTopics();
-    return selected.length === 1 ? selected[0].getId() : undefined;
+    const [selected, ...others] = model.getDesignerModel()!.filterSelectedTopics();
+    return selected && others.length === 0 ? selected.getId() : undefined;
   };
 
   const styleConfiguration: ActionConfig = {

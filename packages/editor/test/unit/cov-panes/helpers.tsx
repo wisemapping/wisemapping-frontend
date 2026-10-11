@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { ReactElement, ReactNode } from 'react';
+import { ReactElement, ReactNode } from 'react';
 import { render, RenderResult } from '@testing-library/react';
 import { IntlProvider } from 'react-intl';
 import { createTheme, ThemeProvider } from '@mui/material/styles';

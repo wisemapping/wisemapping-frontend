@@ -19,7 +19,6 @@
 /**
  * @jest-environment jsdom
  */
-import React from 'react';
 import { fireEvent, screen } from '@testing-library/react';
 import { LineType, StrokeStyle } from '@wisemapping/mindplot';
 import type { TopicShapeType } from '@wisemapping/mindplot';
