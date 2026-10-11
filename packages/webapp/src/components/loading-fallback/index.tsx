@@ -21,7 +21,7 @@ import { FormattedMessage } from 'react-intl';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
-import { EditorLoadingSkeleton } from '@wisemapping/editor';
+import EditorLoadingSkeleton from '@wisemapping/editor/components/editor-loading-skeleton';
 import { MapsPageLoading } from '../maps-page/maps-list/MapsListSkeleton';
 
 const isEditorRoute = () => {

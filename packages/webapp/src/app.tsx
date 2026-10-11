@@ -47,7 +47,7 @@ import LoadingFallback from './components/loading-fallback';
 import { MapsPageLoading } from './components/maps-page/maps-list/MapsListSkeleton';
 import { mapsPageLoader } from './components/maps-page/loader';
 import MapsPageErrorFallback from './components/maps-page/MapsPageErrorFallback';
-import { EditorLoadingSkeleton } from '@wisemapping/editor';
+import EditorLoadingSkeleton from '@wisemapping/editor/components/editor-loading-skeleton';
 import { HelmetProvider } from './components/seo';
 import { PageModeType, loader as mapLoader } from './components/editor-page/loader';
 import { loader as configLoader } from './loader';
