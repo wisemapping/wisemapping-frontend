@@ -47,6 +47,13 @@ cd packages/mindplot && yarn jest test/unit/path/to/file.test.ts
 
 Storybook is the integration-test harness for `web2d`, `mindplot`, and `editor` — `test:integration` boots Storybook (or Vite playground) on a fixed port and runs Cypress against it via `scripts/run-storybook-cypress.js` / `start-server-and-test`. Ports: web2d 6106, mindplot 6107, editor playground 8081 + storybook 6008, webapp 3000. Tests use dynamic port allocation that will kill blockers — see `TESTING_PORT_ALLOCATION.md`.
 
+## Bundle size
+
+The webapp resolves `@wisemapping/editor`, `mindplot` and `web2d` to their sources (`vite.config.mts` aliases), and the editor and mindplot barrels can not be tree-shaken: one value import of `@wisemapping/editor` or `@wisemapping/mindplot` puts the whole editor (about 1.3 MB) in that chunk. So:
+
+- Outside the editor page, import an editor module by path (`@wisemapping/editor/components/editor-loading-skeleton`, `@wisemapping/editor/theme/dialog`), use `import type` for types, and load anything that needs the editor with `React.lazy` / `import()` (the export and import dialogs do). `test/unit/bundle/entry-imports.test.ts` fails, naming the chain, when the entry or the map list reaches a barrel.
+- Large libraries used by one action load on demand: jspdf and html2canvas on PDF export, emoji-picker-react when a picker opens, each locale's messages when it is the user's (English is bundled as the fallback; route loaders preload the user's locale so the first paint is translated).
+
 ## i18n
 
 `editor` and `webapp` use `react-intl` with FormatJS AST compilation. Source of truth is `lang/en.json`; other locales (es, fr, de, zh, zh-CN, ru, uk, ja, pt, it, hi, ar) are compiled into `src/compiled-lang/` at build time. Workflow:
