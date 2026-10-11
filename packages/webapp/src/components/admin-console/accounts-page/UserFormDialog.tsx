@@ -129,24 +129,24 @@ const UserFormDialog = ({
     const errors: Record<string, string> = {};
 
     if (!formData.firstname.trim()) {
-      errors.firstname = intl.formatMessage({
+      errors['firstname'] = intl.formatMessage({
         id: 'admin.validation.firstname-required',
         defaultMessage: 'First name is required',
       });
     }
     if (!formData.lastname.trim()) {
-      errors.lastname = intl.formatMessage({
+      errors['lastname'] = intl.formatMessage({
         id: 'admin.validation.lastname-required',
         defaultMessage: 'Last name is required',
       });
     }
     if (!formData.email.trim()) {
-      errors.email = intl.formatMessage({
+      errors['email'] = intl.formatMessage({
         id: 'admin.validation.email-required',
         defaultMessage: 'Email is required',
       });
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      errors.email = intl.formatMessage({
+      errors['email'] = intl.formatMessage({
         id: 'admin.validation.email-invalid',
         defaultMessage: 'Invalid email format',
       });
@@ -167,9 +167,9 @@ const UserFormDialog = ({
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>
-        {formErrors.general && (
+        {formErrors['general'] && (
           <Alert severity="error" sx={{ mb: 2 }}>
-            {formErrors.general}
+            {formErrors['general']}
           </Alert>
         )}
         <Box
@@ -184,8 +184,8 @@ const UserFormDialog = ({
             label={intl.formatMessage({ id: 'common.first-name', defaultMessage: 'First Name' })}
             value={formData.firstname}
             onChange={handleFirstnameChange}
-            error={!!formErrors.firstname}
-            helperText={formErrors.firstname}
+            error={!!formErrors['firstname']}
+            helperText={formErrors['firstname']}
             fullWidth
             required
           />
@@ -193,8 +193,8 @@ const UserFormDialog = ({
             label={intl.formatMessage({ id: 'common.last-name', defaultMessage: 'Last Name' })}
             value={formData.lastname}
             onChange={handleLastnameChange}
-            error={!!formErrors.lastname}
-            helperText={formErrors.lastname}
+            error={!!formErrors['lastname']}
+            helperText={formErrors['lastname']}
             fullWidth
             required
           />
@@ -203,8 +203,8 @@ const UserFormDialog = ({
             type="email"
             value={formData.email}
             onChange={handleEmailChange}
-            error={!!formErrors.email}
-            helperText={formErrors.email}
+            error={!!formErrors['email']}
+            helperText={formErrors['email']}
             fullWidth
             required
           />

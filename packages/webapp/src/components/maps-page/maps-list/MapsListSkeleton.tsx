@@ -36,43 +36,43 @@ export const TableRowSkeleton: React.FC = () => {
 
   return (
     <TableRow hover>
-      <TableCell padding="checkbox" css={classes.bodyCell}>
+      <TableCell padding="checkbox" css={classes['bodyCell']}>
         <Skeleton
           animation="wave"
           variant="rounded"
           width={18}
           height={18}
-          css={classes.skeletonBase}
+          css={classes['skeletonBase']}
         />
       </TableCell>
-      <TableCell css={classes.bodyCell}>
-        <Skeleton animation="wave" variant="text" width="60%" css={classes.skeletonTextLarge} />
+      <TableCell css={classes['bodyCell']}>
+        <Skeleton animation="wave" variant="text" width="60%" css={classes['skeletonTextLarge']} />
       </TableCell>
-      <TableCell css={classes.bodyCell}>
-        <Skeleton animation="wave" variant="text" width="40%" css={classes.skeletonTextSmall} />
+      <TableCell css={classes['bodyCell']}>
+        <Skeleton animation="wave" variant="text" width="40%" css={classes['skeletonTextSmall']} />
       </TableCell>
-      <TableCell css={classes.bodyCell}>
-        <Skeleton animation="wave" variant="text" width={100} css={classes.skeletonTextSmall} />
+      <TableCell css={classes['bodyCell']}>
+        <Skeleton animation="wave" variant="text" width={100} css={classes['skeletonTextSmall']} />
       </TableCell>
-      <TableCell css={classes.bodyCell}>
-        <Skeleton animation="wave" variant="text" width={80} css={classes.skeletonTextSmall} />
+      <TableCell css={classes['bodyCell']}>
+        <Skeleton animation="wave" variant="text" width={80} css={classes['skeletonTextSmall']} />
       </TableCell>
-      <TableCell padding="checkbox" css={classes.bodyCell}>
+      <TableCell padding="checkbox" css={classes['bodyCell']}>
         <Skeleton
           animation="wave"
           variant="circular"
           width={24}
           height={24}
-          css={classes.skeletonBase}
+          css={classes['skeletonBase']}
         />
       </TableCell>
-      <TableCell css={classes.bodyCell}>
+      <TableCell css={classes['bodyCell']}>
         <Skeleton
           animation="wave"
           variant="circular"
           width={24}
           height={24}
-          css={classes.skeletonBase}
+          css={classes['skeletonBase']}
         />
       </TableCell>
     </TableRow>
@@ -83,16 +83,16 @@ export const CardSkeleton: React.FC = () => {
   const classes = useStyles();
 
   return (
-    <Card css={classes.cardSkeletonContainer}>
+    <Card css={classes['cardSkeletonContainer']}>
       <CardHeader
-        css={classes.cardHeader}
+        css={classes['cardHeader']}
         avatar={
           <Skeleton
             animation="wave"
             variant="circular"
             width={24}
             height={24}
-            css={classes.skeletonBase}
+            css={classes['skeletonBase']}
           />
         }
         action={
@@ -101,14 +101,24 @@ export const CardSkeleton: React.FC = () => {
             variant="circular"
             width={24}
             height={24}
-            css={classes.skeletonBase}
+            css={classes['skeletonBase']}
           />
         }
         title={
-          <Skeleton animation="wave" variant="text" width="70%" css={classes.skeletonTextLarge} />
+          <Skeleton
+            animation="wave"
+            variant="text"
+            width="70%"
+            css={classes['skeletonTextLarge']}
+          />
         }
         subheader={
-          <Skeleton animation="wave" variant="text" width="50%" css={classes.skeletonTextSmall} />
+          <Skeleton
+            animation="wave"
+            variant="text"
+            width="50%"
+            css={classes['skeletonTextSmall']}
+          />
         }
       />
     </Card>
@@ -131,22 +141,22 @@ export const MapsPageLoading = (): React.ReactElement => {
   const classes = useStyles();
 
   return (
-    <Box css={classes.loadingContainer}>
+    <Box css={classes['loadingContainer']}>
       {/* Left Drawer Skeleton */}
-      <Box css={classes.loadingDrawer}>
+      <Box css={classes['loadingDrawer']}>
         {/* Logo */}
-        <Box css={classes.loadingDrawerLogo}>
+        <Box css={classes['loadingDrawerLogo']}>
           <Skeleton
             animation="wave"
             variant="rectangular"
             width={40}
             height={40}
-            css={classes.skeletonDrawer}
+            css={classes['skeletonDrawer']}
           />
         </Box>
 
         {/* Navigation Items */}
-        <Box css={classes.loadingDrawerList}>
+        <Box css={classes['loadingDrawerList']}>
           {[...Array(5)].map((_, i) => (
             <Box key={i} style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
               <Skeleton
@@ -154,14 +164,14 @@ export const MapsPageLoading = (): React.ReactElement => {
                 variant="circular"
                 width={24}
                 height={24}
-                css={classes.skeletonDrawer}
+                css={classes['skeletonDrawer']}
               />
               <Skeleton
                 animation="wave"
                 variant="text"
                 width={180}
                 height={20}
-                css={classes.skeletonDrawer}
+                css={classes['skeletonDrawer']}
               />
             </Box>
           ))}
@@ -173,12 +183,12 @@ export const MapsPageLoading = (): React.ReactElement => {
           variant="rectangular"
           width="100%"
           height={1}
-          css={classes.skeletonDrawer}
+          css={classes['skeletonDrawer']}
           style={{ marginTop: 16, marginBottom: 16 }}
         />
 
         {/* Label Items */}
-        <Box css={classes.loadingDrawerList}>
+        <Box css={classes['loadingDrawerList']}>
           {[...Array(3)].map((_, i) => (
             <Box key={i} style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
               <Skeleton
@@ -186,38 +196,38 @@ export const MapsPageLoading = (): React.ReactElement => {
                 variant="circular"
                 width={24}
                 height={24}
-                css={classes.skeletonDrawer}
+                css={classes['skeletonDrawer']}
               />
               <Skeleton
                 animation="wave"
                 variant="text"
                 width={140}
                 height={20}
-                css={classes.skeletonDrawer}
+                css={classes['skeletonDrawer']}
               />
             </Box>
           ))}
         </Box>
 
         {/* Footer - Powered by */}
-        <Box css={classes.loadingDrawerFooter}>
+        <Box css={classes['loadingDrawerFooter']}>
           <Skeleton
             animation="wave"
             variant="rectangular"
             width={120}
             height={24}
-            css={classes.skeletonDrawer}
+            css={classes['skeletonDrawer']}
           />
         </Box>
       </Box>
 
       {/* Main Content Area */}
-      <Box css={classes.loadingMainContent}>
+      <Box css={classes['loadingMainContent']}>
         {/* Header AppBar with skeleton toolbar */}
         <AppBar
           position="fixed"
           elevation={0}
-          css={classes.loadingAppBar}
+          css={classes['loadingAppBar']}
           style={{ marginLeft: 240, width: 'calc(100% - 240px)' }}
         >
           <Toolbar>
@@ -226,7 +236,7 @@ export const MapsPageLoading = (): React.ReactElement => {
               variant="circular"
               width={40}
               height={40}
-              css={classes.loadingSkeletonCircle}
+              css={classes['loadingSkeletonCircle']}
               style={{ marginRight: 16 }}
             />
             <Skeleton
@@ -234,7 +244,7 @@ export const MapsPageLoading = (): React.ReactElement => {
               variant="rectangular"
               width={120}
               height={36}
-              css={classes.loadingSkeletonButton}
+              css={classes['loadingSkeletonButton']}
               style={{ marginRight: 16 }}
             />
             <Skeleton
@@ -242,7 +252,7 @@ export const MapsPageLoading = (): React.ReactElement => {
               variant="rectangular"
               width={120}
               height={36}
-              css={classes.loadingSkeletonButton}
+              css={classes['loadingSkeletonButton']}
             />
             <Box style={{ flexGrow: 1 }} />
             <Skeleton
@@ -250,7 +260,7 @@ export const MapsPageLoading = (): React.ReactElement => {
               variant="circular"
               width={40}
               height={40}
-              css={classes.loadingSkeletonCircle}
+              css={classes['loadingSkeletonCircle']}
               style={{ marginRight: 8 }}
             />
             <Skeleton
@@ -258,7 +268,7 @@ export const MapsPageLoading = (): React.ReactElement => {
               variant="circular"
               width={40}
               height={40}
-              css={classes.loadingSkeletonCircle}
+              css={classes['loadingSkeletonCircle']}
               style={{ marginRight: 8 }}
             />
             <Skeleton
@@ -266,7 +276,7 @@ export const MapsPageLoading = (): React.ReactElement => {
               variant="circular"
               width={40}
               height={40}
-              css={classes.loadingSkeletonCircle}
+              css={classes['loadingSkeletonCircle']}
             />
           </Toolbar>
         </AppBar>
@@ -284,22 +294,22 @@ export const MapsPageLoading = (): React.ReactElement => {
             }}
           >
             {/* Search Toolbar Skeleton */}
-            <Toolbar css={classes.loadingSearchToolbar} variant="dense">
-              <Box css={classes.loadingToolbarLeft}>
+            <Toolbar css={classes['loadingSearchToolbar']} variant="dense">
+              <Box css={classes['loadingToolbarLeft']}>
                 {/* Placeholder for action buttons - empty when no selection */}
               </Box>
-              <Box css={classes.loadingToolbarCenter}>
+              <Box css={classes['loadingToolbarCenter']}>
                 {/* Search Input Skeleton - centered */}
                 <Skeleton
                   animation="wave"
                   variant="rectangular"
                   width={240}
                   height={32}
-                  css={classes.loadingSkeletonButton}
+                  css={classes['loadingSkeletonButton']}
                   style={{ borderRadius: 9 }}
                 />
               </Box>
-              <Box css={classes.loadingToolbarRight}>
+              <Box css={classes['loadingToolbarRight']}>
                 {/* Pagination removed - hidden when not needed */}
               </Box>
             </Toolbar>

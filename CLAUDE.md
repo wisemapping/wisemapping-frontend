@@ -49,7 +49,7 @@ Storybook is the integration-test harness for `web2d`, `mindplot`, and `editor` 
 
 ## Types: strictness, `undefined` and `null`
 
-Every package extends `tsconfig.strict.json` (root): `strict` plus `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `noImplicitOverride`, `noImplicitReturns`, `noFallthroughCasesInSwitch`, `noUnusedLocals`, `noUnusedParameters`. Change the checks there, for all packages at once; a package's own tsconfig only adds what is specific to it (web2d: `verbatimModuleSyntax`, `isolatedDeclarations`). An unused parameter that a signature needs is prefixed with `_`.
+Every package (and its Cypress and Storybook type checks) extends `tsconfig.strict.json` (root): `strict` plus `noUncheckedIndexedAccess`, `noPropertyAccessFromIndexSignature` (a key from an index signature is read `obj['key']`), `exactOptionalPropertyTypes`, `noImplicitOverride`, `noImplicitReturns`, `noFallthroughCasesInSwitch`, `noUnusedLocals`, `noUnusedParameters`. Change the checks there, for all packages at once; a package's own tsconfig only adds what is specific to it (web2d: `verbatimModuleSyntax`, `isolatedDeclarations`). An unused parameter that a signature needs is prefixed with `_`.
 
 **`undefined` is "absent"; `null` only where something outside our code defines it.**
 

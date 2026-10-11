@@ -136,7 +136,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
           padding="checkbox"
           key="select"
           style={{ width: '20px' }}
-          css={classes.headerCell}
+          css={classes['headerCell']}
         >
           <Checkbox
             indeterminate={numSelected > 0 && numSelected < rowCount}
@@ -176,7 +176,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
               key={headCell.id}
               sortDirection={orderBy === headCell.id ? order : false}
               style={headCell.style}
-              css={classes.headerCell}
+              css={classes['headerCell']}
             >
               <TableSortLabel
                 active={orderBy === headCell.id}
@@ -187,7 +187,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                 {headCell.label}
 
                 {orderBy === headCell.id && (
-                  <span css={classes.visuallyHidden as Interpolation<Theme>}>
+                  <span css={classes['visuallyHidden'] as Interpolation<Theme>}>
                     {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
                   </span>
                 )}
@@ -196,13 +196,13 @@ function EnhancedTableHead(props: EnhancedTableProps) {
           );
         })}
 
-        <TableCell padding="checkbox" key="starred" css={classes.headerCell}>
-          <span css={classes.visuallyHidden as Interpolation<Theme>}>
+        <TableCell padding="checkbox" key="starred" css={classes['headerCell']}>
+          <span css={classes['visuallyHidden'] as Interpolation<Theme>}>
             {intl.formatMessage({ id: 'maps.tooltip-starred', defaultMessage: 'Starred' })}
           </span>
         </TableCell>
-        <TableCell padding="checkbox" key="action" css={classes.headerCell}>
-          <span css={classes.visuallyHidden as Interpolation<Theme>}>
+        <TableCell padding="checkbox" key="action" css={classes['headerCell']}>
+          <span css={classes['visuallyHidden'] as Interpolation<Theme>}>
             {intl.formatMessage({ id: 'map.actions', defaultMessage: 'Actions' })}
           </span>
         </TableCell>
@@ -382,7 +382,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
   };
 
   return (
-    <div css={classes.root}>
+    <div css={classes['root']}>
       {activeRowAction?.mapId !== undefined && (
         <ActionChooser
           anchor={activeRowAction?.el}
@@ -390,9 +390,9 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
           mapId={activeRowAction.mapId}
         />
       )}
-      <Paper css={classes.paper} elevation={0}>
-        <Toolbar css={classes.toolbar} variant="dense" sx={{ backgroundColor: 'transparent' }}>
-          <div css={classes.toolbarActions}>
+      <Paper css={classes['paper']} elevation={0}>
+        <Toolbar css={classes['toolbar']} variant="dense" sx={{ backgroundColor: 'transparent' }}>
+          <div css={classes['toolbarActions']}>
             {selected.length > 0 && (
               <Tooltip
                 arrow={true}
@@ -443,9 +443,9 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
             )}
           </div>
 
-          <div css={classes.searchContainer as Interpolation<Theme>}>
-            <div css={classes.search as Interpolation<Theme>}>
-              <div css={classes.searchIcon as Interpolation<Theme>}>
+          <div css={classes['searchContainer'] as Interpolation<Theme>}>
+            <div css={classes['search'] as Interpolation<Theme>}>
+              <div css={classes['searchIcon'] as Interpolation<Theme>}>
                 <SearchIcon />
               </div>
               <InputBase
@@ -453,7 +453,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                   id: 'maps.search-action',
                   defaultMessage: 'Search ...',
                 })}
-                css={[classes.searchInputRoot, classes.searchInputInput]}
+                css={[classes['searchInputRoot'], classes['searchInputInput']]}
                 slotProps={{ input: { 'aria-label': 'search' } }}
                 onChange={handleOnSearchChange}
                 // startAdornment={<SearchIcon />}
@@ -464,9 +464,9 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
           <div style={{ flex: '1 1 0', minWidth: 0, display: 'flex', justifyContent: 'flex-end' }}>
             {/* Pagination on desktop */}
             {filteredMaps.length > rowsPerPage && (
-              <Box css={classes.paginationDesktop as Interpolation<Theme>}>
+              <Box css={classes['paginationDesktop'] as Interpolation<Theme>}>
                 <TablePagination
-                  css={classes.tablePagination as Interpolation<Theme>}
+                  css={classes['tablePagination'] as Interpolation<Theme>}
                   count={filteredMaps.length}
                   rowsPerPageOptions={[]}
                   rowsPerPage={rowsPerPage}
@@ -480,8 +480,8 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
           </div>
         </Toolbar>
 
-        <TableContainer css={classes.tableContainer as Interpolation<Theme>}>
-          <Box css={classes.cards}>
+        <TableContainer css={classes['tableContainer'] as Interpolation<Theme>}>
+          <Box css={classes['cards']}>
             {isLoadingMaps ? (
               <Box data-testid="maps-loading" aria-busy="true">
                 {Array.from({ length: 5 }).map((_, index) => (
@@ -511,7 +511,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                       onClick={(e) => e.stopPropagation()}
                     >
                       <CardHeader
-                        css={classes.cardHeader}
+                        css={classes['cardHeader']}
                         avatar={
                           <Tooltip
                             arrow={true}
@@ -551,7 +551,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                         }
                         title={
                           <Typography
-                            css={classes.cardTitle}
+                            css={classes['cardTitle']}
                             noWrap
                             sx={{
                               color: 'text.secondary',
@@ -603,7 +603,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
               })
             )}
           </Box>
-          <Table css={classes.table} size="small" stickyHeader>
+          <Table css={classes['table']} size="small" stickyHeader>
             <EnhancedTableHead
               classes={classes}
               numSelected={selected.length}
@@ -622,13 +622,13 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                 <MapsListSkeleton rowsPerPage={rowsPerPage} />
               ) : mapsLoadFailed ? (
                 <TableRow>
-                  <TableCell colSpan={6} css={classes.messageCell}>
+                  <TableCell colSpan={6} css={classes['messageCell']}>
                     {loadFailedMessage}
                   </TableCell>
                 </TableRow>
               ) : filteredMaps.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={6} css={classes.messageCell}>
+                  <TableCell colSpan={6} css={classes['messageCell']}>
                     <FormattedMessage
                       id="maps.empty-result"
                       defaultMessage="No matching mindmap found with the current filter criteria."
@@ -647,7 +647,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                       key={row.id}
                       selected={isItemSelected}
                     >
-                      <TableCell padding="checkbox" css={classes.bodyCell}>
+                      <TableCell padding="checkbox" css={classes['bodyCell']}>
                         <Checkbox
                           checked={isItemSelected}
                           size="small"
@@ -676,7 +676,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                           }}
                         />
                       </TableCell>
-                      <TableCell css={classes.bodyCell}>
+                      <TableCell css={classes['bodyCell']}>
                         <Tooltip
                           arrow={true}
                           title={intl.formatMessage({
@@ -701,7 +701,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                           </Link>
                         </Tooltip>
                       </TableCell>
-                      <TableCell css={[classes.bodyCell, classes.labelsCell as CSSObject]}>
+                      <TableCell css={[classes['bodyCell'], classes['labelsCell'] as CSSObject]}>
                         <LabelsCell
                           labels={row.labels}
                           onDelete={(lbl) => {
@@ -709,7 +709,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                           }}
                         />
                       </TableCell>
-                      <TableCell css={classes.bodyCell}>
+                      <TableCell css={classes['bodyCell']}>
                         <Typography
                           variant="body2"
                           sx={{
@@ -721,7 +721,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                           {row.createdBy}
                         </Typography>
                       </TableCell>
-                      <TableCell css={classes.bodyCell}>
+                      <TableCell css={classes['bodyCell']}>
                         <Tooltip
                           arrow={true}
                           title={intl.formatMessage(
@@ -748,7 +748,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                           </Typography>
                         </Tooltip>
                       </TableCell>
-                      <TableCell padding="checkbox" css={classes.bodyCell}>
+                      <TableCell padding="checkbox" css={classes['bodyCell']}>
                         <Tooltip
                           arrow={true}
                           title={intl.formatMessage({
@@ -766,7 +766,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                           </IconButton>
                         </Tooltip>
                       </TableCell>
-                      <TableCell css={classes.bodyCell}>
+                      <TableCell css={classes['bodyCell']}>
                         <Tooltip
                           arrow={true}
                           title={intl.formatMessage({
@@ -796,9 +796,9 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
 
         {/* Pagination on mobile only - below table */}
         {filteredMaps.length > rowsPerPage && (
-          <Box css={classes.paginationMobile as Interpolation<Theme>}>
+          <Box css={classes['paginationMobile'] as Interpolation<Theme>}>
             <TablePagination
-              css={classes.tablePagination as Interpolation<Theme>}
+              css={classes['tablePagination'] as Interpolation<Theme>}
               count={filteredMaps.length}
               rowsPerPageOptions={[]}
               rowsPerPage={rowsPerPage}

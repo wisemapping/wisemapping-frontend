@@ -53,7 +53,7 @@ describe('English messages', () => {
       cwd: root,
       env: {
         ...process.env,
-        PATH: `${path.resolve(root, '../../node_modules/.bin')}:${process.env.PATH}`,
+        PATH: `${path.resolve(root, '../../node_modules/.bin')}:${process.env['PATH']}`,
       },
       stdio: 'pipe',
     });

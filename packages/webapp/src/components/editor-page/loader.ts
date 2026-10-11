@@ -87,14 +87,14 @@ const loadMapFor = (pageMode: PageModeType, bootstrap: boolean) => {
     let result: Response | undefined;
 
     // Validate that params.id exists and is a valid number
-    if (!params.id || params.id === 'undefined') {
+    if (!params['id'] || params['id'] === 'undefined') {
       return new Response('Map ID is required', {
         status: 400,
         statusText: 'Bad Request',
       });
     }
 
-    const mapId = Number.parseInt(params.id, 10);
+    const mapId = Number.parseInt(params['id'], 10);
     if (Number.isNaN(mapId)) {
       return new Response('Invalid map ID', {
         status: 400,
@@ -124,14 +124,14 @@ const loadMapFor = (pageMode: PageModeType, bootstrap: boolean) => {
         try {
           // A history revision is loaded by the editor from its own URL: bootstrapping it with
           // the current map's XML would show today's map instead of the revision.
-          const bootstrapXml = bootstrap && !params.hid;
+          const bootstrapXml = bootstrap && !params['hid'];
           const mapMetadata = await fetchMapMetadataWithCache(mapId, client, bootstrapXml);
 
           let editorMode: EditorRenderMode;
           if (!isCollaboratorRole(mapMetadata.role)) {
             // Somebody else's public map: only its public XML can be read, and nothing saved.
             // A revision has no public endpoint, so it is read through the private one.
-            editorMode = params.hid ? 'viewonly-private' : 'viewonly-public';
+            editorMode = params['hid'] ? 'viewonly-private' : 'viewonly-public';
           } else if (mapMetadata.isLocked || pageMode === 'view-private') {
             editorMode = 'viewonly-private';
           } else {

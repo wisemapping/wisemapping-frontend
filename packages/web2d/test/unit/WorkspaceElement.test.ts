@@ -123,9 +123,9 @@ describe('WorkspaceElement._initialize (attribute bag)', () => {
 describe('WorkspaceElement attribute bag without reflection (typing T8)', () => {
   it('has no setAttribute / getAttribute by name', () => {
     const rect = new Rect(0) as unknown as Record<string, unknown>;
-    expect(rect.setAttribute).toBeUndefined();
-    expect(rect.getAttribute).toBeUndefined();
-    expect(rect._attributeNameToFuncName).toBeUndefined();
+    expect(rect['setAttribute']).toBeUndefined();
+    expect(rect['getAttribute']).toBeUndefined();
+    expect(rect['_attributeNameToFuncName']).toBeUndefined();
   });
 
   it('collects one call per setter, in the order of its first key', () => {
@@ -246,8 +246,8 @@ describe('StraightLine', () => {
   // Section 3.6: the dead static setPosition/setSize/setFill stubs are deleted.
   it('has no static setPosition, setSize or setFill stubs', () => {
     const statics = StraightLine as unknown as Record<string, unknown>;
-    expect(statics.setPosition).toBeUndefined();
-    expect(statics.setSize).toBeUndefined();
-    expect(statics.setFill).toBeUndefined();
+    expect(statics['setPosition']).toBeUndefined();
+    expect(statics['setSize']).toBeUndefined();
+    expect(statics['setFill']).toBeUndefined();
   });
 });

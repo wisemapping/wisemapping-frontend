@@ -516,7 +516,7 @@ const MapsManagement = (): ReactElement => {
     } catch (error: unknown) {
       console.error('Failed to fetch map XML:', error);
       setXmlContent(
-        `Error loading XML: ${(error as Record<string, unknown>)?.message || 'Unknown error'}`,
+        `Error loading XML: ${(error as Record<string, unknown>)?.['message'] || 'Unknown error'}`,
       );
     } finally {
       setIsLoadingXml(false);

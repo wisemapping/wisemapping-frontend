@@ -255,7 +255,7 @@ const ExportDialog = ({
           <RadioGroup name="export" value={exportGroup} onChange={handleOnGroupChange}>
             <FormControl>
               <FormControlLabel
-                css={classes.label}
+                css={classes['label']}
                 value="image"
                 disabled={!enableImgExport}
                 control={<Radio color="primary" />}
@@ -273,23 +273,23 @@ const ExportDialog = ({
                     onChange={handleOnExportFormatChange}
                     variant="outlined"
                     value={exportFormat}
-                    css={classes.select}
+                    css={classes['select']}
                   >
-                    <MenuItem value="svg" css={classes.menu}>
+                    <MenuItem value="svg" css={classes['menu']}>
                       Scalable Vector Graphics (SVG)
                     </MenuItem>
-                    <MenuItem value="png" css={classes.menu}>
+                    <MenuItem value="png" css={classes['menu']}>
                       Portable Network Graphics (PNG)
                     </MenuItem>
-                    <MenuItem value="jpg" css={classes.menu}>
+                    <MenuItem value="jpg" css={classes['menu']}>
                       JPEG Image (JPEG)
                     </MenuItem>
-                    <MenuItem value="pdf" css={classes.menu}>
+                    <MenuItem value="pdf" css={classes['menu']}>
                       Portable Document Format (PDF)
                     </MenuItem>
                   </Select>
                   <FormControlLabel
-                    css={classes.select}
+                    css={classes['select']}
                     control={<Checkbox checked={zoomToFit} onChange={handleOnZoomToFit} />}
                     label={intl.formatMessage({
                       id: 'export.img-center',
@@ -302,7 +302,7 @@ const ExportDialog = ({
 
             <FormControl>
               <FormControlLabel
-                css={classes.label}
+                css={classes['label']}
                 value="document"
                 control={<Radio color="primary" />}
                 label={intl.formatMessage({
@@ -317,12 +317,12 @@ const ExportDialog = ({
                   onChange={handleOnExportFormatChange}
                   variant="outlined"
                   value={exportFormat}
-                  css={classes.select}
+                  css={classes['select']}
                 >
-                  <MenuItem css={classes.select} value="txt">
+                  <MenuItem css={classes['select']} value="txt">
                     Plain Text File (TXT)
                   </MenuItem>
-                  <MenuItem css={classes.select} value="md">
+                  <MenuItem css={classes['select']} value="md">
                     Markdown (MD)
                   </MenuItem>
                   {/* <MenuItem className={classes.select} value="xls">
@@ -334,7 +334,7 @@ const ExportDialog = ({
 
             <FormControl>
               <FormControlLabel
-                css={classes.label}
+                css={classes['label']}
                 value="mindmap-tool"
                 control={<Radio color="primary" />}
                 label={intl.formatMessage({
@@ -348,16 +348,16 @@ const ExportDialog = ({
                 <Select
                   onChange={handleOnExportFormatChange}
                   variant="outlined"
-                  css={classes.select}
+                  css={classes['select']}
                   value={exportFormat}
                 >
-                  <MenuItem css={classes.select} value="wxml">
+                  <MenuItem css={classes['select']} value="wxml">
                     WiseMapping (WXML)
                   </MenuItem>
-                  <MenuItem css={classes.select} value="mm">
+                  <MenuItem css={classes['select']} value="mm">
                     Freemind 1.0.1 (MM)
                   </MenuItem>
-                  <MenuItem css={classes.select} value="mmx">
+                  <MenuItem css={classes['select']} value="mmx">
                     Freeplane (MM)
                   </MenuItem>
                   {/* <MenuItem className={classes.select} value="mmap">

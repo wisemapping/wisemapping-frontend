@@ -133,7 +133,7 @@ const EditMapDialog = ({
     // Basic validation
     const errors: Record<string, string> = {};
     if (!formData.title.trim()) {
-      errors.title = 'Title is required';
+      errors['title'] = 'Title is required';
     }
 
     if (Object.keys(errors).length > 0) {
@@ -156,9 +156,9 @@ const EditMapDialog = ({
         })}
       </DialogTitle>
       <DialogContent>
-        {formErrors.general && (
+        {formErrors['general'] && (
           <Alert severity="error" sx={{ mb: 2 }}>
-            {formErrors.general}
+            {formErrors['general']}
           </Alert>
         )}
 
@@ -173,8 +173,8 @@ const EditMapDialog = ({
           variant="outlined"
           value={formData.title}
           onChange={handleTitleChange}
-          error={!!formErrors.title}
-          helperText={formErrors.title}
+          error={!!formErrors['title']}
+          helperText={formErrors['title']}
           slotProps={titleSlotProps}
           sx={fieldSx}
         />

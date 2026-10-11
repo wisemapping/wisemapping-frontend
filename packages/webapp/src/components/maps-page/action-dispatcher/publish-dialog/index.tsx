@@ -128,9 +128,9 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
           defaultMessage: 'Make your map public. Anyone with the link can view it.',
         })}
         maxWidth="md"
-        papercss={classes.paper}
+        papercss={classes['paper']}
       >
-        <Box css={classes.checkboxContainer}>
+        <Box css={classes['checkboxContainer']}>
           <FormControl fullWidth={true}>
             <FormControlLabel
               control={
@@ -184,7 +184,7 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
                     defaultMessage: 'Public URL',
                   })}
                   value="1"
-                  css={classes.tab}
+                  css={classes['tab']}
                 />
                 <Tab
                   label={intl.formatMessage({
@@ -192,12 +192,12 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
                     defaultMessage: 'Embedded',
                   })}
                   value="2"
-                  css={classes.tab}
+                  css={classes['tab']}
                 />
               </TabList>
             </Box>
-            <TabPanel value="2" css={classes.tabPanel}>
-              <Typography variant="subtitle2" css={classes.label}>
+            <TabPanel value="2" css={classes['tabPanel']}>
+              <Typography variant="subtitle2" css={classes['label']}>
                 <FormattedMessage
                   id="publish.embedded-msg"
                   defaultMessage="Click the code below to copy it to your clipboard:"
@@ -214,7 +214,7 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
                 arrow
               >
                 <TextareaAutosize
-                  css={classes.textarea}
+                  css={classes['textarea']}
                   readOnly={true}
                   spellCheck={false}
                   minRows={4}
@@ -224,8 +224,8 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
                 />
               </Tooltip>
             </TabPanel>
-            <TabPanel value="1" css={classes.tabPanel}>
-              <Typography variant="subtitle2" css={classes.label}>
+            <TabPanel value="1" css={classes['tabPanel']}>
+              <Typography variant="subtitle2" css={classes['label']}>
                 <FormattedMessage
                   id="publish.public-url-msg"
                   defaultMessage="Click the link below to copy it to your clipboard:"
@@ -245,7 +245,7 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
                   fullWidth
                   value={publicUrl}
                   onClick={() => handleCopyToClipboard(publicUrl)}
-                  css={classes.urlInput}
+                  css={classes['urlInput']}
                   variant="outlined"
                   size="small"
                   slotProps={{

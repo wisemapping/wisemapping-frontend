@@ -281,10 +281,10 @@ const MapsPage = (): ReactElement => {
           },
         }}
       />
-      <div css={classes.root}>
+      <div css={classes['root']}>
         <AppBar
           position="fixed"
-          css={[classes.appBar, classes.appBarShift]}
+          css={[classes['appBar'], classes['appBarShift']]}
           variant="outlined"
           elevation={0}
           component="header"
@@ -336,7 +336,7 @@ const MapsPage = (): ReactElement => {
                 type="button"
                 disableElevation={true}
                 startIcon={<AddCircleTwoTone />}
-                css={classes.newMapButton}
+                css={classes['newMapButton']}
                 onClick={() => setActiveDialog('create')}
               >
                 <span className="message">
@@ -359,7 +359,7 @@ const MapsPage = (): ReactElement => {
                 type="button"
                 disableElevation={true}
                 startIcon={<SmartToyTwoTone />}
-                css={classes.copilotButton}
+                css={classes['copilotButton']}
                 onClick={handleMindMapCopilotDialogOpen}
               >
                 <span className="message">
@@ -382,7 +382,7 @@ const MapsPage = (): ReactElement => {
                 type="button"
                 disableElevation={true}
                 startIcon={<CloudUploadTwoTone />}
-                css={classes.importButton}
+                css={classes['importButton']}
                 onClick={() => setActiveDialog('import')}
               >
                 <span className="message">
@@ -430,7 +430,7 @@ const MapsPage = (): ReactElement => {
               </DialogActions>
             </Dialog>
 
-            <div css={classes.rightButtonGroup as Interpolation<Theme>}>
+            <div css={classes['rightButtonGroup'] as Interpolation<Theme>}>
               <ThemeToggleButton />
               <LanguageMenu />
               <AccountMenu />
@@ -445,22 +445,22 @@ const MapsPage = (): ReactElement => {
           ModalProps={{
             keepMounted: true,
           }}
-          css={[classes.mobileDrawer, { '& .MuiPaper-root': classes.drawerOpen }]}
+          css={[classes['mobileDrawer'], { '& .MuiPaper-root': classes['drawerOpen'] }]}
         >
           {drawerItemsList}
         </Drawer>
         <Drawer
           variant="permanent"
           css={[
-            classes.drawer as CSSObject,
-            classes.drawerOpen,
-            { '& .MuiPaper-root': classes.drawerOpen },
+            classes['drawer'] as CSSObject,
+            classes['drawerOpen'],
+            { '& .MuiPaper-root': classes['drawerOpen'] },
           ]}
         >
           {drawerItemsList}
         </Drawer>
-        <main css={classes.content} role="main">
-          <div css={classes.toolbar} />
+        <main css={classes['content']} role="main">
+          <div css={classes['toolbar']} />
           <section
             aria-label={intl.formatMessage({ id: 'common.maps-list', defaultMessage: 'Maps list' })}
           >

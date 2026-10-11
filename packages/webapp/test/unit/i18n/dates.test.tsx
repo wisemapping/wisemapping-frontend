@@ -53,8 +53,8 @@ describe('useDate', () => {
   });
 
   test('loading a locale registers its dayjs locale', async () => {
-    expect(dayjs.Ls.ja).toBeUndefined();
+    expect(dayjs.Ls['ja']).toBeUndefined();
     await loadMessages('ja');
-    expect(dayjs.Ls.ja).toBeDefined();
+    expect(dayjs.Ls['ja']).toBeDefined();
   });
 });

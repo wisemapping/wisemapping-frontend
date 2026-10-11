@@ -69,7 +69,7 @@ const MapsAdminPage = React.lazy(() => import('./components/admin-console/maps-p
 const SystemPage = React.lazy(() => import('./components/admin-console/system-page'));
 
 const PageEditorWrapper = ({ mode }: { mode: PageModeType }) => {
-  const id = useParams().id;
+  const id = useParams()['id'];
   if (id === undefined) {
     throw 'Map could not be loaded';
   }
@@ -82,7 +82,7 @@ const PageEditorWrapper = ({ mode }: { mode: PageModeType }) => {
   const mapId: number = Number.parseInt(id);
 
   // Is a history view ?
-  const hidStr = useParams().hid;
+  const hidStr = useParams()['hid'];
   const hid = hidStr ? Number.parseInt(hidStr) : undefined;
 
   return (

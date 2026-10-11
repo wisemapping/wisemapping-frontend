@@ -97,13 +97,13 @@ export const installWebCrypto = (): (() => void) => {
   const { webcrypto } = require('crypto') as typeof import('crypto');
   const target = globalThis.crypto as unknown as Record<string, unknown>;
   const had = Object.prototype.hasOwnProperty.call(target, 'subtle');
-  const previous = target.subtle;
+  const previous = target['subtle'];
   Object.defineProperty(target, 'subtle', { value: webcrypto.subtle, configurable: true });
   return () => {
     if (had) {
       Object.defineProperty(target, 'subtle', { value: previous, configurable: true });
     } else {
-      delete target.subtle;
+      delete target['subtle'];
     }
   };
 };

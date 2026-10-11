@@ -39,7 +39,7 @@ class JwtTokenConfig {
    * decoded, or that carry no `exp`, are treated as not expired and left to the server.
    */
   static isTokenExpired(token: string): boolean {
-    const exp = JwtTokenConfig.decodePayload(token)?.exp;
+    const exp = JwtTokenConfig.decodePayload(token)?.['exp'];
     return typeof exp === 'number' && exp * 1000 <= Date.now();
   }
 
@@ -48,7 +48,7 @@ class JwtTokenConfig {
    * can not be decoded. Read only, not verified: the signature is the server's business.
    */
   static getSubject(token: string): string | undefined {
-    const sub = JwtTokenConfig.decodePayload(token)?.sub;
+    const sub = JwtTokenConfig.decodePayload(token)?.['sub'];
     return typeof sub === 'string' && sub ? sub : undefined;
   }
 

@@ -646,7 +646,7 @@ class MockClient implements Client {
     return Promise.resolve({
       id: userId,
       ...userData,
-      fullName: `${userData.firstname as string} ${userData.lastname as string}`,
+      fullName: `${userData['firstname'] as string} ${userData['lastname'] as string}`,
     });
   }
 
@@ -654,7 +654,7 @@ class MockClient implements Client {
     return Promise.resolve({
       id: Math.floor(Math.random() * 1000),
       ...userData,
-      fullName: `${userData.firstname as string} ${userData.lastname as string}`,
+      fullName: `${userData['firstname'] as string} ${userData['lastname'] as string}`,
       isActive: true,
       isSuspended: false,
       authenticationType: 'DATABASE',

@@ -308,8 +308,8 @@ describe.each([
 
   it('has no control point methods (typing T5)', () => {
     const line = create() as unknown as Record<string, unknown>;
-    expect(line.setSrcControlPoint).toBeUndefined();
-    expect(line.getControlPoints).toBeUndefined();
-    expect(line.isSrcControlPointCustom).toBeUndefined();
+    expect(line['setSrcControlPoint']).toBeUndefined();
+    expect(line['getControlPoints']).toBeUndefined();
+    expect(line['isSrcControlPointCustom']).toBeUndefined();
   });
 });

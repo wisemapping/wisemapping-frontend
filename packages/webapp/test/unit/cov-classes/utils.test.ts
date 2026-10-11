@@ -105,7 +105,7 @@ describe('logCriticalError', () => {
 
   it('serializes a debug object and redacts personal context keys', () => {
     const circular: Record<string, unknown> = {};
-    circular.self = circular;
+    circular['self'] = circular;
 
     logCriticalError('Map failed', {
       errorInfo: { msg: 'Gone', status: 410, fields: { name: 'x' } },
@@ -143,9 +143,9 @@ describe('logCriticalError', () => {
 
   it('keeps what it can of an object that can not be serialized', () => {
     const circular: Record<string, unknown> = { label: 'loop', n: 1, nothing: null };
-    circular.self = circular;
-    circular.inner = { ok: true };
-    circular.big = BigInt(1);
+    circular['self'] = circular;
+    circular['inner'] = { ok: true };
+    circular['big'] = BigInt(1);
 
     logCriticalError('Odd', circular);
 

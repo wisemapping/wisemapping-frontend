@@ -484,7 +484,7 @@ describe('Text measurement cache', () => {
         text.getShapeWidth();
         text.getShapeWidth();
         expect(spy).toHaveBeenCalledTimes(1);
-        listeners.loadingdone?.();
+        listeners['loadingdone']?.();
         text.getShapeWidth();
         expect(spy).toHaveBeenCalledTimes(2);
       });

@@ -77,14 +77,14 @@ const LabelDialog = ({ mapsId, onClose }: MultiDialogProps): React.ReactElement 
           id: 'label.description',
           defaultMessage: 'Use labels to organize your maps.',
         })}
-        papercss={classes.paper}
+        papercss={classes['paper']}
         error={error}
       >
         {maps && (
           <>
             <Typography
               variant="body2"
-              css={classes.title as Interpolation<Theme>}
+              css={classes['title'] as Interpolation<Theme>}
               sx={{
                 marginTop: '10px',
               }}

@@ -71,7 +71,7 @@ describe('createAppTheme', () => {
       unknown
     >;
 
-    expect(root.textTransform).toBe('none');
-    expect(root.borderRadius).toBe('9px');
+    expect(root['textTransform']).toBe('none');
+    expect(root['borderRadius']).toBe('9px');
   });
 });

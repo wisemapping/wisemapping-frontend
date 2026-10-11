@@ -734,7 +734,7 @@ export default class AdminClient implements AdminClientInterface {
 
       // Set status code ...
       if (result) {
-        (result as Record<string, unknown>).status = status;
+        (result as Record<string, unknown>)['status'] = status;
         result.isAuth = false;
 
         // No access to the operation and not seession token, assuming that the issue is related ot missing auth.
