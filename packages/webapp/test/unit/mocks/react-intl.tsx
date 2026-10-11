@@ -64,7 +64,11 @@ export const intl = {
   locale: 'en',
   formatMessage,
   formatDate: (value: Date | number | string): string => new Date(value).toISOString(),
-  formatNumber: (value: number): string => String(value),
+  // Plain numbers as is; with options (units, percents, digits) as English formats them.
+  formatNumber: (value: number, options?: Intl.NumberFormatOptions): string =>
+    options ? new Intl.NumberFormat('en', options).format(value) : String(value),
+  formatList: (values: readonly string[], options?: Intl.ListFormatOptions): string =>
+    new Intl.ListFormat('en', options).format(values),
   formatPlural: (value: number): string => (value === 1 ? 'one' : 'other'),
 };
 

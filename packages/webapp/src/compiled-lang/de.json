@@ -341,6 +341,44 @@
       "value": "Konto erfolgreich aktiviert"
     }
   ],
+  "admin.accounts.activate-dialog.button": [
+    {
+      "type": 0,
+      "value": "Benutzer aktivieren"
+    }
+  ],
+  "admin.accounts.activate-dialog.confirm": [
+    {
+      "type": 0,
+      "value": "Möchtest du den Benutzer „"
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": "“ wirklich manuell aktivieren?"
+    }
+  ],
+  "admin.accounts.activate-dialog.info": [
+    {
+      "type": 0,
+      "value": "Der Benutzer kann sich dann sofort anmelden, ohne seine E-Mail-Adresse zu bestätigen."
+    }
+  ],
+  "admin.accounts.activate-dialog.pending": [
+    {
+      "type": 0,
+      "value": "Wird aktiviert..."
+    }
+  ],
+  "admin.accounts.activate-dialog.title": [
+    {
+      "type": 0,
+      "value": "Benutzer aktivieren"
+    }
+  ],
   "admin.accounts.add-user": [
     {
       "type": 0,
@@ -359,10 +397,66 @@
       "value": "Benutzer erstellen"
     }
   ],
+  "admin.accounts.delete-dialog.button": [
+    {
+      "type": 0,
+      "value": "Benutzer löschen"
+    }
+  ],
+  "admin.accounts.delete-dialog.confirm": [
+    {
+      "type": 0,
+      "value": "Möchtest du den Benutzer „"
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": "“ wirklich löschen?"
+    }
+  ],
+  "admin.accounts.delete-dialog.pending": [
+    {
+      "type": 0,
+      "value": "Wird gelöscht..."
+    }
+  ],
+  "admin.accounts.delete-dialog.title": [
+    {
+      "type": 0,
+      "value": "Benutzer löschen"
+    }
+  ],
+  "admin.accounts.delete-dialog.warning": [
+    {
+      "type": 0,
+      "value": "Diese Aktion kann nicht rückgängig gemacht werden!"
+    }
+  ],
   "admin.accounts.edit-user": [
     {
       "type": 0,
       "value": "Benutzer bearbeiten"
+    }
+  ],
+  "admin.accounts.filter.not-suspended": [
+    {
+      "type": 0,
+      "value": "Nicht gesperrt"
+    }
+  ],
+  "admin.accounts.filter.suspended-only": [
+    {
+      "type": 0,
+      "value": "Nur gesperrte"
+    }
+  ],
+  "admin.accounts.filter.suspension-all": [
+    {
+      "type": 0,
+      "value": "Alle (gesperrt + aktiv)"
     }
   ],
   "admin.accounts.filters": [
@@ -401,10 +495,120 @@
       "value": "Benutzerkonten, Berechtigungen und Einstellungen verwalten"
     }
   ],
+  "admin.accounts.suspend-dialog.button": [
+    {
+      "type": 0,
+      "value": "Benutzer sperren"
+    }
+  ],
+  "admin.accounts.suspend-dialog.confirm": [
+    {
+      "type": 0,
+      "value": "Möchtest du den Benutzer „"
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": "“ wirklich sperren?"
+    }
+  ],
+  "admin.accounts.suspend-dialog.pending": [
+    {
+      "type": 0,
+      "value": "Wird gesperrt..."
+    }
+  ],
+  "admin.accounts.suspend-dialog.title": [
+    {
+      "type": 0,
+      "value": "Benutzer sperren"
+    }
+  ],
+  "admin.accounts.table.actions": [
+    {
+      "type": 0,
+      "value": "Aktionen"
+    }
+  ],
+  "admin.accounts.table.auth": [
+    {
+      "type": 0,
+      "value": "Anmeldung"
+    }
+  ],
+  "admin.accounts.table.created": [
+    {
+      "type": 0,
+      "value": "Erstellt"
+    }
+  ],
+  "admin.accounts.table.id": [
+    {
+      "type": 0,
+      "value": "ID"
+    }
+  ],
+  "admin.accounts.table.name": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "admin.accounts.table.status": [
+    {
+      "type": 0,
+      "value": "Status"
+    }
+  ],
   "admin.accounts.title": [
     {
       "type": 0,
       "value": "Benutzerverwaltung"
+    }
+  ],
+  "admin.accounts.unsuspend-dialog.button": [
+    {
+      "type": 0,
+      "value": "Benutzer entsperren"
+    }
+  ],
+  "admin.accounts.unsuspend-dialog.confirm": [
+    {
+      "type": 0,
+      "value": "Möchtest du den Benutzer „"
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": "“ wirklich entsperren?"
+    }
+  ],
+  "admin.accounts.unsuspend-dialog.pending": [
+    {
+      "type": 0,
+      "value": "Wird entsperrt..."
+    }
+  ],
+  "admin.accounts.unsuspend-dialog.reason": [
+    {
+      "type": 0,
+      "value": "Aktueller Sperrgrund: "
+    },
+    {
+      "type": 1,
+      "value": "reason"
+    }
+  ],
+  "admin.accounts.unsuspend-dialog.title": [
+    {
+      "type": 0,
+      "value": "Benutzer entsperren"
     }
   ],
   "admin.action.mark-as-not-spam": [
@@ -453,6 +657,12 @@
     {
       "type": 0,
       "value": "LDAP"
+    }
+  ],
+  "admin.button.creating": [
+    {
+      "type": 0,
+      "value": "Wird erstellt..."
     }
   ],
   "admin.button.update-user": [
@@ -565,12 +775,6 @@
       "value": "Admin-Konsole"
     }
   ],
-  "admin.current-suspension-reason": [
-    {
-      "type": 0,
-      "value": "Aktueller Sperrgrund:"
-    }
-  ],
   "admin.delete": [
     {
       "type": 0,
@@ -651,6 +855,12 @@
       "value": "Suche für Facebook-Datenlöschung"
     }
   ],
+  "admin.facebook.id-label": [
+    {
+      "type": 0,
+      "value": "Facebook-Benutzer-ID"
+    }
+  ],
   "admin.facebook.lookup-button": [
     {
       "type": 0,
@@ -707,6 +917,12 @@
       "value": "Wird entfernt..."
     }
   ],
+  "admin.filter.all": [
+    {
+      "type": 0,
+      "value": "Alle"
+    }
+  ],
   "admin.lock-status": [
     {
       "type": 0,
@@ -755,16 +971,78 @@
       "value": "Mindmap bearbeiten"
     }
   ],
+  "admin.maps.filter.all-time": [
+    {
+      "type": 0,
+      "value": "Gesamter Zeitraum"
+    }
+  ],
   "admin.maps.filter.date": [
     {
       "type": 0,
       "value": "Zeitraum"
     }
   ],
+  "admin.maps.filter.last-months": [
+    {
+      "type": 6,
+      "value": "count",
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Letzter "
+            },
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " Monat"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Letzte "
+            },
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " Monate"
+            }
+          ]
+        }
+      },
+      "offset": 0,
+      "pluralType": "cardinal"
+    }
+  ],
+  "admin.maps.filter.not-spam": [
+    {
+      "type": 0,
+      "value": "Kein Spam"
+    }
+  ],
   "admin.maps.filter.spam": [
     {
       "type": 0,
       "value": "Spam"
+    }
+  ],
+  "admin.maps.locked-by": [
+    {
+      "type": 0,
+      "value": "Gesperrt von "
+    },
+    {
+      "type": 1,
+      "value": "user"
     }
   ],
   "admin.maps.locked-tooltip": [
@@ -791,6 +1069,12 @@
     {
       "type": 0,
       "value": "Als Spam markieren"
+    }
+  ],
+  "admin.maps.no-description": [
+    {
+      "type": 0,
+      "value": "Keine Beschreibung"
     }
   ],
   "admin.maps.no-maps": [
@@ -933,10 +1217,22 @@
       "value": "Aktionen"
     }
   ],
+  "admin.maps.table.collaborators": [
+    {
+      "type": 0,
+      "value": "Mitwirkende"
+    }
+  ],
   "admin.maps.table.created": [
     {
       "type": 0,
       "value": "Erstellt"
+    }
+  ],
+  "admin.maps.table.created-by": [
+    {
+      "type": 0,
+      "value": "Erstellt von"
     }
   ],
   "admin.maps.table.description": [
@@ -987,6 +1283,12 @@
       "value": "Titel"
     }
   ],
+  "admin.maps.unknown-user": [
+    {
+      "type": 0,
+      "value": "unbekannter Benutzer"
+    }
+  ],
   "admin.maps.unlocked-tooltip": [
     {
       "type": 0,
@@ -1005,6 +1307,16 @@
       "value": "Formatiertes XML kopieren"
     }
   ],
+  "admin.maps.xml-viewer.error": [
+    {
+      "type": 0,
+      "value": "Fehler beim Laden des XML: "
+    },
+    {
+      "type": 1,
+      "value": "message"
+    }
+  ],
   "admin.maps.xml-viewer.info": [
     {
       "type": 0,
@@ -1021,6 +1333,24 @@
     {
       "type": 0,
       "value": "Kein XML-Inhalt verfügbar"
+    }
+  ],
+  "admin.maps.xml-viewer.subtitle": [
+    {
+      "type": 1,
+      "value": "title"
+    },
+    {
+      "type": 0,
+      "value": " (ID: "
+    },
+    {
+      "type": 1,
+      "value": "id"
+    },
+    {
+      "type": 0,
+      "value": ")"
     }
   ],
   "admin.maps.xml-viewer.title": [
@@ -1081,6 +1411,12 @@
     {
       "type": 0,
       "value": "Die Passwörter stimmen nicht überein"
+    }
+  ],
+  "admin.private": [
+    {
+      "type": 0,
+      "value": "Privat"
     }
   ],
   "admin.prompt.new-user-password": [
@@ -1301,6 +1637,30 @@
       "value": "Systemzustand"
     }
   ],
+  "admin.system.health.down": [
+    {
+      "type": 0,
+      "value": "Ausgefallen"
+    }
+  ],
+  "admin.system.health.unknown": [
+    {
+      "type": 0,
+      "value": "Unbekannt"
+    }
+  ],
+  "admin.system.health.up": [
+    {
+      "type": 0,
+      "value": "In Betrieb"
+    }
+  ],
+  "admin.system.health.warning": [
+    {
+      "type": 0,
+      "value": "Warnung"
+    }
+  ],
   "admin.system.jvm": [
     {
       "type": 0,
@@ -1481,6 +1841,12 @@
       "value": "Systeminformationen"
     }
   ],
+  "admin.unlocked": [
+    {
+      "type": 0,
+      "value": "Entsperrt"
+    }
+  ],
   "admin.unsuspend-user": [
     {
       "type": 0,
@@ -1505,10 +1871,14 @@
       "value": "Status"
     }
   ],
-  "admin.user-info.suspension-reason": [
+  "admin.user-info.suspension-reason-value": [
     {
       "type": 0,
-      "value": "Sperrgrund:"
+      "value": "Sperrgrund: "
+    },
+    {
+      "type": 1,
+      "value": "reason"
     }
   ],
   "admin.user-info.title": [
@@ -1579,6 +1949,12 @@
     {
       "type": 0,
       "value": "Nachname ist erforderlich"
+    }
+  ],
+  "admin.validation.title-required": [
+    {
+      "type": 0,
+      "value": "Titel ist erforderlich"
     }
   ],
   "admin.view-user-maps": [

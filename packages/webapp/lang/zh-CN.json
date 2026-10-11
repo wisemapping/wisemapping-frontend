@@ -653,6 +653,9 @@
   "admin.auth.ldap": {
     "defaultMessage": "LDAP"
   },
+  "admin.button.creating": {
+    "defaultMessage": "创建中..."
+  },
   "admin.button.update-user": {
     "defaultMessage": "更新用户"
   },
@@ -698,6 +701,9 @@
   "admin.facebook.filter-tooltip": {
     "defaultMessage": "Facebook 数据删除查询"
   },
+  "admin.facebook.id-label": {
+    "defaultMessage": "Facebook 用户 ID"
+  },
   "admin.facebook.lookup-button": {
     "defaultMessage": "查找账户"
   },
@@ -721,6 +727,9 @@
   },
   "admin.facebook.removing": {
     "defaultMessage": "移除中..."
+  },
+  "admin.filter.all": {
+    "defaultMessage": "全部"
   },
   "admin.refresh": {
     "defaultMessage": "刷新"
@@ -830,8 +839,8 @@
   "admin.user-info.status": {
     "defaultMessage": "状态"
   },
-  "admin.user-info.suspension-reason": {
-    "defaultMessage": "暂停原因："
+  "admin.user-info.suspension-reason-value": {
+    "defaultMessage": "暂停原因：{reason}"
   },
   "admin.user-info.title": {
     "defaultMessage": "用户信息"
@@ -859,6 +868,9 @@
   },
   "admin.validation.lastname-required": {
     "defaultMessage": "姓氏为必填项"
+  },
+  "admin.validation.title-required": {
+    "defaultMessage": "标题为必填项"
   },
   "admin.view-user-maps": {
     "defaultMessage": "查看用户思维导图"
@@ -896,11 +908,23 @@
   "admin.maps.edit-title": {
     "defaultMessage": "编辑思维导图"
   },
+  "admin.maps.filter.all-time": {
+    "defaultMessage": "所有时间"
+  },
   "admin.maps.filter.date": {
     "defaultMessage": "日期范围"
   },
+  "admin.maps.filter.last-months": {
+    "defaultMessage": "{count, plural, other {最近 # 个月}}"
+  },
+  "admin.maps.filter.not-spam": {
+    "defaultMessage": "非垃圾内容"
+  },
   "admin.maps.filter.spam": {
     "defaultMessage": "垃圾内容"
+  },
+  "admin.maps.locked-by": {
+    "defaultMessage": "已被 {user} 锁定"
   },
   "admin.maps.locked-tooltip": {
     "defaultMessage": "当前正由 {user} 编辑"
@@ -910,6 +934,9 @@
   },
   "admin.maps.mark-as-spam": {
     "defaultMessage": "标记为垃圾内容"
+  },
+  "admin.maps.no-description": {
+    "defaultMessage": "无描述"
   },
   "admin.maps.no-maps": {
     "defaultMessage": "未找到思维导图"
@@ -965,8 +992,14 @@
   "admin.maps.table.actions": {
     "defaultMessage": "操作"
   },
+  "admin.maps.table.collaborators": {
+    "defaultMessage": "协作者"
+  },
   "admin.maps.table.created": {
     "defaultMessage": "创建时间"
+  },
+  "admin.maps.table.created-by": {
+    "defaultMessage": "创建者"
   },
   "admin.maps.table.description": {
     "defaultMessage": "描述"
@@ -992,6 +1025,9 @@
   "admin.maps.title": {
     "defaultMessage": "标题"
   },
+  "admin.maps.unknown-user": {
+    "defaultMessage": "未知用户"
+  },
   "admin.maps.unlocked-tooltip": {
     "defaultMessage": "当前未在编辑"
   },
@@ -1001,6 +1037,9 @@
   "admin.maps.xml-viewer.copy": {
     "defaultMessage": "复制格式化的 XML"
   },
+  "admin.maps.xml-viewer.error": {
+    "defaultMessage": "加载 XML 出错：{message}"
+  },
   "admin.maps.xml-viewer.info": {
     "defaultMessage": "这是该思维导图的原始 XML 内容。您可以复制此内容用于备份或分析。"
   },
@@ -1009,6 +1048,9 @@
   },
   "admin.maps.xml-viewer.no-content": {
     "defaultMessage": "没有可用的 XML 内容"
+  },
+  "admin.maps.xml-viewer.subtitle": {
+    "defaultMessage": "{title}（ID：{id}）"
   },
   "admin.maps.xml-viewer.title": {
     "defaultMessage": "思维导图 XML 内容"
@@ -1036,6 +1078,9 @@
   },
   "admin.system.title": {
     "defaultMessage": "系统信息"
+  },
+  "admin.unlocked": {
+    "defaultMessage": "未锁定"
   },
   "admin.system.refresh": {
     "defaultMessage": "刷新"
@@ -1114,6 +1159,18 @@
   },
   "admin.system.health": {
     "defaultMessage": "系统健康状况"
+  },
+  "admin.system.health.down": {
+    "defaultMessage": "异常"
+  },
+  "admin.system.health.unknown": {
+    "defaultMessage": "未知"
+  },
+  "admin.system.health.up": {
+    "defaultMessage": "正常"
+  },
+  "admin.system.health.warning": {
+    "defaultMessage": "警告"
   },
   "admin.system.jvm": {
     "defaultMessage": "JVM"
@@ -1262,9 +1319,6 @@
   "admin.console.title": {
     "defaultMessage": "管理控制台"
   },
-  "admin.current-suspension-reason": {
-    "defaultMessage": "当前暂停原因："
-  },
   "admin.change-password-button": {
     "defaultMessage": "更改密码"
   },
@@ -1273,6 +1327,9 @@
   },
   "admin.password-error-mismatch": {
     "defaultMessage": "密码不匹配"
+  },
+  "admin.private": {
+    "defaultMessage": "私有"
   },
   "admin.prompt.new-user-password": {
     "defaultMessage": "请输入新用户的密码："
@@ -1391,6 +1448,21 @@
   "activation.success.title": {
     "defaultMessage": "账户激活成功"
   },
+  "admin.accounts.activate-dialog.button": {
+    "defaultMessage": "激活用户"
+  },
+  "admin.accounts.activate-dialog.confirm": {
+    "defaultMessage": "您确定要手动激活用户“{email}”吗？"
+  },
+  "admin.accounts.activate-dialog.info": {
+    "defaultMessage": "该用户无需确认电子邮件即可立即登录。"
+  },
+  "admin.accounts.activate-dialog.pending": {
+    "defaultMessage": "激活中..."
+  },
+  "admin.accounts.activate-dialog.title": {
+    "defaultMessage": "激活用户"
+  },
   "admin.accounts.add-user": {
     "defaultMessage": "添加新用户"
   },
@@ -1400,8 +1472,32 @@
   "admin.accounts.create-user": {
     "defaultMessage": "创建用户"
   },
+  "admin.accounts.delete-dialog.button": {
+    "defaultMessage": "删除用户"
+  },
+  "admin.accounts.delete-dialog.confirm": {
+    "defaultMessage": "您确定要删除用户“{email}”吗？"
+  },
+  "admin.accounts.delete-dialog.pending": {
+    "defaultMessage": "删除中..."
+  },
+  "admin.accounts.delete-dialog.title": {
+    "defaultMessage": "删除用户"
+  },
+  "admin.accounts.delete-dialog.warning": {
+    "defaultMessage": "此操作无法撤销！"
+  },
   "admin.accounts.edit-user": {
     "defaultMessage": "编辑用户"
+  },
+  "admin.accounts.filter.not-suspended": {
+    "defaultMessage": "未暂停"
+  },
+  "admin.accounts.filter.suspended-only": {
+    "defaultMessage": "仅已暂停"
+  },
+  "admin.accounts.filter.suspension-all": {
+    "defaultMessage": "全部（已暂停 + 活跃）"
   },
   "admin.accounts.filters": {
     "defaultMessage": "搜索和筛选"
@@ -1421,8 +1517,53 @@
   "admin.accounts.subtitle": {
     "defaultMessage": "管理用户账户、权限和设置"
   },
+  "admin.accounts.suspend-dialog.button": {
+    "defaultMessage": "暂停用户"
+  },
+  "admin.accounts.suspend-dialog.confirm": {
+    "defaultMessage": "您确定要暂停用户“{email}”吗？"
+  },
+  "admin.accounts.suspend-dialog.pending": {
+    "defaultMessage": "暂停中..."
+  },
+  "admin.accounts.suspend-dialog.title": {
+    "defaultMessage": "暂停用户"
+  },
+  "admin.accounts.table.actions": {
+    "defaultMessage": "操作"
+  },
+  "admin.accounts.table.auth": {
+    "defaultMessage": "认证"
+  },
+  "admin.accounts.table.created": {
+    "defaultMessage": "创建时间"
+  },
+  "admin.accounts.table.id": {
+    "defaultMessage": "ID"
+  },
+  "admin.accounts.table.name": {
+    "defaultMessage": "姓名"
+  },
+  "admin.accounts.table.status": {
+    "defaultMessage": "状态"
+  },
   "admin.accounts.title": {
     "defaultMessage": "用户管理"
+  },
+  "admin.accounts.unsuspend-dialog.button": {
+    "defaultMessage": "恢复用户"
+  },
+  "admin.accounts.unsuspend-dialog.confirm": {
+    "defaultMessage": "您确定要恢复用户“{email}”吗？"
+  },
+  "admin.accounts.unsuspend-dialog.pending": {
+    "defaultMessage": "恢复中..."
+  },
+  "admin.accounts.unsuspend-dialog.reason": {
+    "defaultMessage": "当前暂停原因：{reason}"
+  },
+  "admin.accounts.unsuspend-dialog.title": {
+    "defaultMessage": "恢复用户"
   },
   "admin.action.mark-as-not-spam": {
     "defaultMessage": "标记为非垃圾内容"

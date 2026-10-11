@@ -341,6 +341,44 @@
       "value": "खाता सफलतापूर्वक सक्रिय हुआ"
     }
   ],
+  "admin.accounts.activate-dialog.button": [
+    {
+      "type": 0,
+      "value": "उपयोगकर्ता सक्रिय करें"
+    }
+  ],
+  "admin.accounts.activate-dialog.confirm": [
+    {
+      "type": 0,
+      "value": "क्या आप वाकई उपयोगकर्ता \""
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": "\" को मैन्युअल रूप से सक्रिय करना चाहते हैं?"
+    }
+  ],
+  "admin.accounts.activate-dialog.info": [
+    {
+      "type": 0,
+      "value": "इससे उपयोगकर्ता ईमेल पुष्टि के बिना तुरंत लॉग इन कर सकेगा।"
+    }
+  ],
+  "admin.accounts.activate-dialog.pending": [
+    {
+      "type": 0,
+      "value": "सक्रिय किया जा रहा है..."
+    }
+  ],
+  "admin.accounts.activate-dialog.title": [
+    {
+      "type": 0,
+      "value": "उपयोगकर्ता सक्रिय करें"
+    }
+  ],
   "admin.accounts.add-user": [
     {
       "type": 0,
@@ -359,10 +397,66 @@
       "value": "उपयोगकर्ता बनाएं"
     }
   ],
+  "admin.accounts.delete-dialog.button": [
+    {
+      "type": 0,
+      "value": "उपयोगकर्ता हटाएं"
+    }
+  ],
+  "admin.accounts.delete-dialog.confirm": [
+    {
+      "type": 0,
+      "value": "क्या आप वाकई उपयोगकर्ता \""
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": "\" को हटाना चाहते हैं?"
+    }
+  ],
+  "admin.accounts.delete-dialog.pending": [
+    {
+      "type": 0,
+      "value": "हटाया जा रहा है..."
+    }
+  ],
+  "admin.accounts.delete-dialog.title": [
+    {
+      "type": 0,
+      "value": "उपयोगकर्ता हटाएं"
+    }
+  ],
+  "admin.accounts.delete-dialog.warning": [
+    {
+      "type": 0,
+      "value": "यह क्रिया पूर्ववत नहीं की जा सकती!"
+    }
+  ],
   "admin.accounts.edit-user": [
     {
       "type": 0,
       "value": "उपयोगकर्ता संपादित करें"
+    }
+  ],
+  "admin.accounts.filter.not-suspended": [
+    {
+      "type": 0,
+      "value": "निलंबित नहीं"
+    }
+  ],
+  "admin.accounts.filter.suspended-only": [
+    {
+      "type": 0,
+      "value": "केवल निलंबित"
+    }
+  ],
+  "admin.accounts.filter.suspension-all": [
+    {
+      "type": 0,
+      "value": "सभी (निलंबित + सक्रिय)"
     }
   ],
   "admin.accounts.filters": [
@@ -401,10 +495,120 @@
       "value": "उपयोगकर्ता खाते, अनुमतियां और सेटिंग्स प्रबंधित करें"
     }
   ],
+  "admin.accounts.suspend-dialog.button": [
+    {
+      "type": 0,
+      "value": "उपयोगकर्ता निलंबित करें"
+    }
+  ],
+  "admin.accounts.suspend-dialog.confirm": [
+    {
+      "type": 0,
+      "value": "क्या आप वाकई उपयोगकर्ता \""
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": "\" को निलंबित करना चाहते हैं?"
+    }
+  ],
+  "admin.accounts.suspend-dialog.pending": [
+    {
+      "type": 0,
+      "value": "निलंबित किया जा रहा है..."
+    }
+  ],
+  "admin.accounts.suspend-dialog.title": [
+    {
+      "type": 0,
+      "value": "उपयोगकर्ता निलंबित करें"
+    }
+  ],
+  "admin.accounts.table.actions": [
+    {
+      "type": 0,
+      "value": "क्रियाएँ"
+    }
+  ],
+  "admin.accounts.table.auth": [
+    {
+      "type": 0,
+      "value": "प्रमाणीकरण"
+    }
+  ],
+  "admin.accounts.table.created": [
+    {
+      "type": 0,
+      "value": "बनाया गया"
+    }
+  ],
+  "admin.accounts.table.id": [
+    {
+      "type": 0,
+      "value": "ID"
+    }
+  ],
+  "admin.accounts.table.name": [
+    {
+      "type": 0,
+      "value": "नाम"
+    }
+  ],
+  "admin.accounts.table.status": [
+    {
+      "type": 0,
+      "value": "स्थिति"
+    }
+  ],
   "admin.accounts.title": [
     {
       "type": 0,
       "value": "उपयोगकर्ता प्रबंधन"
+    }
+  ],
+  "admin.accounts.unsuspend-dialog.button": [
+    {
+      "type": 0,
+      "value": "उपयोगकर्ता को पुनः सक्रिय करें"
+    }
+  ],
+  "admin.accounts.unsuspend-dialog.confirm": [
+    {
+      "type": 0,
+      "value": "क्या आप वाकई उपयोगकर्ता \""
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": "\" को पुनः सक्रिय करना चाहते हैं?"
+    }
+  ],
+  "admin.accounts.unsuspend-dialog.pending": [
+    {
+      "type": 0,
+      "value": "पुनः सक्रिय किया जा रहा है..."
+    }
+  ],
+  "admin.accounts.unsuspend-dialog.reason": [
+    {
+      "type": 0,
+      "value": "वर्तमान निलंबन कारण: "
+    },
+    {
+      "type": 1,
+      "value": "reason"
+    }
+  ],
+  "admin.accounts.unsuspend-dialog.title": [
+    {
+      "type": 0,
+      "value": "उपयोगकर्ता को पुनः सक्रिय करें"
     }
   ],
   "admin.action.mark-as-not-spam": [
@@ -453,6 +657,12 @@
     {
       "type": 0,
       "value": "LDAP"
+    }
+  ],
+  "admin.button.creating": [
+    {
+      "type": 0,
+      "value": "बनाया जा रहा है..."
     }
   ],
   "admin.button.update-user": [
@@ -565,12 +775,6 @@
       "value": "व्यवस्थापक कंसोल"
     }
   ],
-  "admin.current-suspension-reason": [
-    {
-      "type": 0,
-      "value": "वर्तमान निलंबन कारण:"
-    }
-  ],
   "admin.delete": [
     {
       "type": 0,
@@ -651,6 +855,12 @@
       "value": "Facebook डेटा हटाने के लिए खोज"
     }
   ],
+  "admin.facebook.id-label": [
+    {
+      "type": 0,
+      "value": "Facebook उपयोगकर्ता ID"
+    }
+  ],
   "admin.facebook.lookup-button": [
     {
       "type": 0,
@@ -707,6 +917,12 @@
       "value": "हटाया जा रहा है..."
     }
   ],
+  "admin.filter.all": [
+    {
+      "type": 0,
+      "value": "सभी"
+    }
+  ],
   "admin.lock-status": [
     {
       "type": 0,
@@ -755,16 +971,78 @@
       "value": "मानचित्र संपादित करें"
     }
   ],
+  "admin.maps.filter.all-time": [
+    {
+      "type": 0,
+      "value": "सभी समय"
+    }
+  ],
   "admin.maps.filter.date": [
     {
       "type": 0,
       "value": "दिनांक सीमा"
     }
   ],
+  "admin.maps.filter.last-months": [
+    {
+      "type": 6,
+      "value": "count",
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "पिछला "
+            },
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " महीना"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "पिछले "
+            },
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " महीने"
+            }
+          ]
+        }
+      },
+      "offset": 0,
+      "pluralType": "cardinal"
+    }
+  ],
+  "admin.maps.filter.not-spam": [
+    {
+      "type": 0,
+      "value": "स्पैम नहीं"
+    }
+  ],
   "admin.maps.filter.spam": [
     {
       "type": 0,
       "value": "स्पैम"
+    }
+  ],
+  "admin.maps.locked-by": [
+    {
+      "type": 1,
+      "value": "user"
+    },
+    {
+      "type": 0,
+      "value": " द्वारा लॉक किया गया"
     }
   ],
   "admin.maps.locked-tooltip": [
@@ -791,6 +1069,12 @@
     {
       "type": 0,
       "value": "स्पैम के रूप में चिह्नित करें"
+    }
+  ],
+  "admin.maps.no-description": [
+    {
+      "type": 0,
+      "value": "कोई विवरण नहीं"
     }
   ],
   "admin.maps.no-maps": [
@@ -929,10 +1213,22 @@
       "value": "क्रियाएँ"
     }
   ],
+  "admin.maps.table.collaborators": [
+    {
+      "type": 0,
+      "value": "सहयोगी"
+    }
+  ],
   "admin.maps.table.created": [
     {
       "type": 0,
       "value": "बनाया गया"
+    }
+  ],
+  "admin.maps.table.created-by": [
+    {
+      "type": 0,
+      "value": "निर्माता"
     }
   ],
   "admin.maps.table.description": [
@@ -983,6 +1279,12 @@
       "value": "शीर्षक"
     }
   ],
+  "admin.maps.unknown-user": [
+    {
+      "type": 0,
+      "value": "अज्ञात उपयोगकर्ता"
+    }
+  ],
   "admin.maps.unlocked-tooltip": [
     {
       "type": 0,
@@ -1001,6 +1303,16 @@
       "value": "फ़ॉर्मेट किया गया XML कॉपी करें"
     }
   ],
+  "admin.maps.xml-viewer.error": [
+    {
+      "type": 0,
+      "value": "XML लोड करने में त्रुटि: "
+    },
+    {
+      "type": 1,
+      "value": "message"
+    }
+  ],
   "admin.maps.xml-viewer.info": [
     {
       "type": 0,
@@ -1017,6 +1329,24 @@
     {
       "type": 0,
       "value": "कोई XML सामग्री उपलब्ध नहीं है"
+    }
+  ],
+  "admin.maps.xml-viewer.subtitle": [
+    {
+      "type": 1,
+      "value": "title"
+    },
+    {
+      "type": 0,
+      "value": " (ID: "
+    },
+    {
+      "type": 1,
+      "value": "id"
+    },
+    {
+      "type": 0,
+      "value": ")"
     }
   ],
   "admin.maps.xml-viewer.title": [
@@ -1077,6 +1407,12 @@
     {
       "type": 0,
       "value": "पासवर्ड मेल नहीं खाते"
+    }
+  ],
+  "admin.private": [
+    {
+      "type": 0,
+      "value": "निजी"
     }
   ],
   "admin.prompt.new-user-password": [
@@ -1297,6 +1633,30 @@
       "value": "सिस्टम स्वास्थ्य"
     }
   ],
+  "admin.system.health.down": [
+    {
+      "type": 0,
+      "value": "बंद"
+    }
+  ],
+  "admin.system.health.unknown": [
+    {
+      "type": 0,
+      "value": "अज्ञात"
+    }
+  ],
+  "admin.system.health.up": [
+    {
+      "type": 0,
+      "value": "चालू"
+    }
+  ],
+  "admin.system.health.warning": [
+    {
+      "type": 0,
+      "value": "चेतावनी"
+    }
+  ],
   "admin.system.jvm": [
     {
       "type": 0,
@@ -1477,6 +1837,12 @@
       "value": "सिस्टम जानकारी"
     }
   ],
+  "admin.unlocked": [
+    {
+      "type": 0,
+      "value": "अनलॉक"
+    }
+  ],
   "admin.unsuspend-user": [
     {
       "type": 0,
@@ -1501,10 +1867,14 @@
       "value": "स्थिति"
     }
   ],
-  "admin.user-info.suspension-reason": [
+  "admin.user-info.suspension-reason-value": [
     {
       "type": 0,
-      "value": "निलंबन कारण:"
+      "value": "निलंबन कारण: "
+    },
+    {
+      "type": 1,
+      "value": "reason"
     }
   ],
   "admin.user-info.title": [
@@ -1571,6 +1941,12 @@
     {
       "type": 0,
       "value": "अंतिम नाम आवश्यक है"
+    }
+  ],
+  "admin.validation.title-required": [
+    {
+      "type": 0,
+      "value": "शीर्षक आवश्यक है"
     }
   ],
   "admin.view-user-maps": [

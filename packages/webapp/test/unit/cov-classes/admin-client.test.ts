@@ -214,10 +214,7 @@ describe('AdminClient requests', () => {
     });
 
     const offline = newClient(['network']);
-    await expect(offline.client.login({ email: 'a', password: 'b' })).rejects.toEqual({
-      msg: 'Unexpected error. Please, try latter',
-      code: 1,
-    });
+    await expect(offline.client.login({ email: 'a', password: 'b' })).rejects.toEqual({ code: 1 });
   });
 });
 
@@ -263,15 +260,12 @@ describe('AdminClient errors', () => {
     await expect(client.getSystemInfo()).rejects.toEqual({ status: 403, isAuth: false });
   });
 
-  it('reports an empty body or network failure with a generic message', async () => {
+  // No English text: the admin console shows its own translated "Unknown error".
+  it('reports an empty body or network failure without a message', async () => {
     const { client } = newClient([{ status: 500 }, 'network']);
 
-    await expect(client.getSystemInfo()).rejects.toEqual({
-      msg: 'Unexpected error. Please, try latter',
-    });
-    await expect(client.getSystemInfo()).rejects.toEqual({
-      msg: 'Unexpected error. Please, try latter',
-    });
+    await expect(client.getSystemInfo()).rejects.toEqual({});
+    await expect(client.getSystemInfo()).rejects.toEqual({});
   });
 
   it('does not notify session expiry on other errors, nor without a callback', async () => {

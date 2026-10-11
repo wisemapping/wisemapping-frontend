@@ -157,7 +157,17 @@ const SpamStatusChip = ({
           <span>
             <IconButton
               onClick={handleToggle}
-              aria-label={spam ? 'mark-not-spam' : 'mark-spam'}
+              aria-label={
+                spam
+                  ? intl.formatMessage({
+                      id: 'admin.maps.mark-as-not-spam',
+                      defaultMessage: 'Mark as not spam',
+                    })
+                  : intl.formatMessage({
+                      id: 'admin.maps.mark-as-spam',
+                      defaultMessage: 'Mark as spam',
+                    })
+              }
               color={spam ? 'success' : 'warning'}
               size="small"
               disabled={loading}

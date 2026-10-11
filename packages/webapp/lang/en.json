@@ -158,6 +158,21 @@
   "activation.success.title": {
     "defaultMessage": "Account Activated Successfully"
   },
+  "admin.accounts.activate-dialog.button": {
+    "defaultMessage": "Activate User"
+  },
+  "admin.accounts.activate-dialog.confirm": {
+    "defaultMessage": "Are you sure you want to manually activate user \"{email}\"?"
+  },
+  "admin.accounts.activate-dialog.info": {
+    "defaultMessage": "This will allow the user to login immediately without email confirmation."
+  },
+  "admin.accounts.activate-dialog.pending": {
+    "defaultMessage": "Activating..."
+  },
+  "admin.accounts.activate-dialog.title": {
+    "defaultMessage": "Activate User"
+  },
   "admin.accounts.add-user": {
     "defaultMessage": "Add New User"
   },
@@ -167,8 +182,32 @@
   "admin.accounts.create-user": {
     "defaultMessage": "Create User"
   },
+  "admin.accounts.delete-dialog.button": {
+    "defaultMessage": "Delete User"
+  },
+  "admin.accounts.delete-dialog.confirm": {
+    "defaultMessage": "Are you sure you want to delete user \"{email}\"?"
+  },
+  "admin.accounts.delete-dialog.pending": {
+    "defaultMessage": "Deleting..."
+  },
+  "admin.accounts.delete-dialog.title": {
+    "defaultMessage": "Delete User"
+  },
+  "admin.accounts.delete-dialog.warning": {
+    "defaultMessage": "This action cannot be undone!"
+  },
   "admin.accounts.edit-user": {
     "defaultMessage": "Edit User"
+  },
+  "admin.accounts.filter.not-suspended": {
+    "defaultMessage": "Not Suspended"
+  },
+  "admin.accounts.filter.suspended-only": {
+    "defaultMessage": "Suspended Only"
+  },
+  "admin.accounts.filter.suspension-all": {
+    "defaultMessage": "All (Suspended + Active)"
   },
   "admin.accounts.filters": {
     "defaultMessage": "Search & Filters"
@@ -188,8 +227,53 @@
   "admin.accounts.subtitle": {
     "defaultMessage": "Manage user accounts, permissions, and settings"
   },
+  "admin.accounts.suspend-dialog.button": {
+    "defaultMessage": "Suspend User"
+  },
+  "admin.accounts.suspend-dialog.confirm": {
+    "defaultMessage": "Are you sure you want to suspend user \"{email}\"?"
+  },
+  "admin.accounts.suspend-dialog.pending": {
+    "defaultMessage": "Suspending..."
+  },
+  "admin.accounts.suspend-dialog.title": {
+    "defaultMessage": "Suspend User"
+  },
+  "admin.accounts.table.actions": {
+    "defaultMessage": "Actions"
+  },
+  "admin.accounts.table.auth": {
+    "defaultMessage": "Auth"
+  },
+  "admin.accounts.table.created": {
+    "defaultMessage": "Created"
+  },
+  "admin.accounts.table.id": {
+    "defaultMessage": "ID"
+  },
+  "admin.accounts.table.name": {
+    "defaultMessage": "Name"
+  },
+  "admin.accounts.table.status": {
+    "defaultMessage": "Status"
+  },
   "admin.accounts.title": {
     "defaultMessage": "User Management"
+  },
+  "admin.accounts.unsuspend-dialog.button": {
+    "defaultMessage": "Unsuspend User"
+  },
+  "admin.accounts.unsuspend-dialog.confirm": {
+    "defaultMessage": "Are you sure you want to unsuspend user \"{email}\"?"
+  },
+  "admin.accounts.unsuspend-dialog.pending": {
+    "defaultMessage": "Unsuspending..."
+  },
+  "admin.accounts.unsuspend-dialog.reason": {
+    "defaultMessage": "Current suspension reason: {reason}"
+  },
+  "admin.accounts.unsuspend-dialog.title": {
+    "defaultMessage": "Unsuspend User"
   },
   "admin.action.mark-as-not-spam": {
     "defaultMessage": "mark as not spam"
@@ -214,6 +298,9 @@
   },
   "admin.auth.ldap": {
     "defaultMessage": "LDAP"
+  },
+  "admin.button.creating": {
+    "defaultMessage": "Creating..."
   },
   "admin.button.update-user": {
     "defaultMessage": "Update User"
@@ -260,9 +347,6 @@
   "admin.console.title": {
     "defaultMessage": "Admin Console"
   },
-  "admin.current-suspension-reason": {
-    "defaultMessage": "Current suspension reason:"
-  },
   "admin.delete": {
     "defaultMessage": "Delete"
   },
@@ -299,6 +383,9 @@
   "admin.facebook.filter-tooltip": {
     "defaultMessage": "Facebook data deletion lookup"
   },
+  "admin.facebook.id-label": {
+    "defaultMessage": "Facebook user ID"
+  },
   "admin.facebook.lookup-button": {
     "defaultMessage": "Find Account"
   },
@@ -322,6 +409,9 @@
   },
   "admin.facebook.removing": {
     "defaultMessage": "Removing..."
+  },
+  "admin.filter.all": {
+    "defaultMessage": "All"
   },
   "admin.lock-status": {
     "defaultMessage": "Lock Status"
@@ -347,11 +437,23 @@
   "admin.maps.edit-title": {
     "defaultMessage": "Edit Map"
   },
+  "admin.maps.filter.all-time": {
+    "defaultMessage": "All Time"
+  },
   "admin.maps.filter.date": {
     "defaultMessage": "Date Range"
   },
+  "admin.maps.filter.last-months": {
+    "defaultMessage": "{count, plural, one {Last # Month} other {Last # Months}}"
+  },
+  "admin.maps.filter.not-spam": {
+    "defaultMessage": "Not Spam"
+  },
   "admin.maps.filter.spam": {
     "defaultMessage": "Spam"
+  },
+  "admin.maps.locked-by": {
+    "defaultMessage": "Locked by {user}"
   },
   "admin.maps.locked-tooltip": {
     "defaultMessage": "Currently being edited by {user}"
@@ -361,6 +463,9 @@
   },
   "admin.maps.mark-as-spam": {
     "defaultMessage": "Mark as spam"
+  },
+  "admin.maps.no-description": {
+    "defaultMessage": "No description"
   },
   "admin.maps.no-maps": {
     "defaultMessage": "No maps found"
@@ -416,8 +521,14 @@
   "admin.maps.table.actions": {
     "defaultMessage": "Actions"
   },
+  "admin.maps.table.collaborators": {
+    "defaultMessage": "Collaborators"
+  },
   "admin.maps.table.created": {
     "defaultMessage": "Created"
+  },
+  "admin.maps.table.created-by": {
+    "defaultMessage": "Created By"
   },
   "admin.maps.table.description": {
     "defaultMessage": "Description"
@@ -443,6 +554,9 @@
   "admin.maps.title": {
     "defaultMessage": "Title"
   },
+  "admin.maps.unknown-user": {
+    "defaultMessage": "unknown user"
+  },
   "admin.maps.unlocked-tooltip": {
     "defaultMessage": "Not currently being edited"
   },
@@ -452,6 +566,9 @@
   "admin.maps.xml-viewer.copy": {
     "defaultMessage": "Copy Formatted XML"
   },
+  "admin.maps.xml-viewer.error": {
+    "defaultMessage": "Error loading XML: {message}"
+  },
   "admin.maps.xml-viewer.info": {
     "defaultMessage": "This is the raw XML content of the mindmap. You can copy this content for backup or analysis purposes."
   },
@@ -460,6 +577,9 @@
   },
   "admin.maps.xml-viewer.no-content": {
     "defaultMessage": "No XML content available"
+  },
+  "admin.maps.xml-viewer.subtitle": {
+    "defaultMessage": "{title} (ID: {id})"
   },
   "admin.maps.xml-viewer.title": {
     "defaultMessage": "Map XML Content"
@@ -490,6 +610,9 @@
   },
   "admin.password-error-mismatch": {
     "defaultMessage": "Passwords do not match"
+  },
+  "admin.private": {
+    "defaultMessage": "Private"
   },
   "admin.prompt.new-user-password": {
     "defaultMessage": "Enter password for new user:"
@@ -596,6 +719,18 @@
   "admin.system.health": {
     "defaultMessage": "System Health"
   },
+  "admin.system.health.down": {
+    "defaultMessage": "Down"
+  },
+  "admin.system.health.unknown": {
+    "defaultMessage": "Unknown"
+  },
+  "admin.system.health.up": {
+    "defaultMessage": "Up"
+  },
+  "admin.system.health.warning": {
+    "defaultMessage": "Warning"
+  },
   "admin.system.jvm": {
     "defaultMessage": "JVM"
   },
@@ -686,6 +821,9 @@
   "admin.system.title": {
     "defaultMessage": "System Information"
   },
+  "admin.unlocked": {
+    "defaultMessage": "Unlocked"
+  },
   "admin.unsuspend-user": {
     "defaultMessage": "Unsuspend user"
   },
@@ -698,8 +836,8 @@
   "admin.user-info.status": {
     "defaultMessage": "Status"
   },
-  "admin.user-info.suspension-reason": {
-    "defaultMessage": "Suspension Reason:"
+  "admin.user-info.suspension-reason-value": {
+    "defaultMessage": "Suspension Reason: {reason}"
   },
   "admin.user-info.title": {
     "defaultMessage": "User Information"
@@ -727,6 +865,9 @@
   },
   "admin.validation.lastname-required": {
     "defaultMessage": "Last name is required"
+  },
+  "admin.validation.title-required": {
+    "defaultMessage": "Title is required"
   },
   "admin.view-user-maps": {
     "defaultMessage": "View user maps"

@@ -742,9 +742,10 @@ export default class AdminClient implements AdminClientInterface {
       }
     }
 
-    // Network related problem ...
+    // Network related problem: no text from the backend. The admin console shows its own
+    // translated "Unknown error" for an error without one (an English text here was shown as is).
     if (!result) {
-      result = { msg: 'Unexpected error. Please, try latter' };
+      result = {};
     }
 
     return result;

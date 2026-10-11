@@ -89,8 +89,9 @@ describe('SystemInformation', () => {
 
     expect(await screen.findByText('System Information')).toBeTruthy();
     // Health chips.
-    expect(screen.getByText('UP').closest('.MuiChip-root')?.className).toContain('colorSuccess');
-    expect(screen.getByText('WARNING').closest('.MuiChip-root')?.className).toContain(
+    // The backend's health codes, translated.
+    expect(screen.getByText('Up').closest('.MuiChip-root')?.className).toContain('colorSuccess');
+    expect(screen.getByText('Warning').closest('.MuiChip-root')?.className).toContain(
       'colorWarning',
     );
     expect(screen.getByText('(42.5%)')).toBeTruthy();
@@ -136,11 +137,11 @@ describe('SystemInformation', () => {
     };
     setup(info, { database: 'DOWN', memory: '' } as SystemHealth);
 
-    expect(await screen.findByText('DOWN')).toBeTruthy();
-    expect(screen.getByText('DOWN').closest('.MuiChip-root')?.className).toContain('colorError');
+    expect(await screen.findByText('Down')).toBeTruthy();
+    expect(screen.getByText('Down').closest('.MuiChip-root')?.className).toContain('colorError');
     expect(screen.getByText('Unknown')).toBeTruthy();
     expect(screen.getByText('N/A')).toBeTruthy();
-    expect(screen.getByText('0 Bytes')).toBeTruthy();
+    expect(screen.getByText('0 bytes')).toBeTruthy();
     expect(screen.getByText('Statistics unavailable')).toBeTruthy();
     expect(screen.getAllByText('0')).toHaveLength(2);
   });

@@ -653,6 +653,9 @@
   "admin.auth.ldap": {
     "defaultMessage": "LDAP"
   },
+  "admin.button.creating": {
+    "defaultMessage": "बनाया जा रहा है..."
+  },
   "admin.button.update-user": {
     "defaultMessage": "उपयोगकर्ता अपडेट करें"
   },
@@ -698,6 +701,9 @@
   "admin.facebook.filter-tooltip": {
     "defaultMessage": "Facebook डेटा हटाने के लिए खोज"
   },
+  "admin.facebook.id-label": {
+    "defaultMessage": "Facebook उपयोगकर्ता ID"
+  },
   "admin.facebook.lookup-button": {
     "defaultMessage": "खाता खोजें"
   },
@@ -721,6 +727,9 @@
   },
   "admin.facebook.removing": {
     "defaultMessage": "हटाया जा रहा है..."
+  },
+  "admin.filter.all": {
+    "defaultMessage": "सभी"
   },
   "admin.refresh": {
     "defaultMessage": "ताज़ा करें"
@@ -830,8 +839,8 @@
   "admin.user-info.status": {
     "defaultMessage": "स्थिति"
   },
-  "admin.user-info.suspension-reason": {
-    "defaultMessage": "निलंबन कारण:"
+  "admin.user-info.suspension-reason-value": {
+    "defaultMessage": "निलंबन कारण: {reason}"
   },
   "admin.user-info.title": {
     "defaultMessage": "उपयोगकर्ता जानकारी"
@@ -859,6 +868,9 @@
   },
   "admin.validation.lastname-required": {
     "defaultMessage": "अंतिम नाम आवश्यक है"
+  },
+  "admin.validation.title-required": {
+    "defaultMessage": "शीर्षक आवश्यक है"
   },
   "admin.view-user-maps": {
     "defaultMessage": "उपयोगकर्ता के मानचित्र देखें"
@@ -896,11 +908,23 @@
   "admin.maps.edit-title": {
     "defaultMessage": "मानचित्र संपादित करें"
   },
+  "admin.maps.filter.all-time": {
+    "defaultMessage": "सभी समय"
+  },
   "admin.maps.filter.date": {
     "defaultMessage": "दिनांक सीमा"
   },
+  "admin.maps.filter.last-months": {
+    "defaultMessage": "{count, plural, one {पिछला # महीना} other {पिछले # महीने}}"
+  },
+  "admin.maps.filter.not-spam": {
+    "defaultMessage": "स्पैम नहीं"
+  },
   "admin.maps.filter.spam": {
     "defaultMessage": "स्पैम"
+  },
+  "admin.maps.locked-by": {
+    "defaultMessage": "{user} द्वारा लॉक किया गया"
   },
   "admin.maps.locked-tooltip": {
     "defaultMessage": "वर्तमान में {user} द्वारा संपादित किया जा रहा है"
@@ -910,6 +934,9 @@
   },
   "admin.maps.mark-as-spam": {
     "defaultMessage": "स्पैम के रूप में चिह्नित करें"
+  },
+  "admin.maps.no-description": {
+    "defaultMessage": "कोई विवरण नहीं"
   },
   "admin.maps.no-maps": {
     "defaultMessage": "कोई मानचित्र नहीं मिला"
@@ -965,8 +992,14 @@
   "admin.maps.table.actions": {
     "defaultMessage": "क्रियाएँ"
   },
+  "admin.maps.table.collaborators": {
+    "defaultMessage": "सहयोगी"
+  },
   "admin.maps.table.created": {
     "defaultMessage": "बनाया गया"
+  },
+  "admin.maps.table.created-by": {
+    "defaultMessage": "निर्माता"
   },
   "admin.maps.table.description": {
     "defaultMessage": "विवरण"
@@ -992,6 +1025,9 @@
   "admin.maps.title": {
     "defaultMessage": "शीर्षक"
   },
+  "admin.maps.unknown-user": {
+    "defaultMessage": "अज्ञात उपयोगकर्ता"
+  },
   "admin.maps.unlocked-tooltip": {
     "defaultMessage": "वर्तमान में संपादित नहीं किया जा रहा है"
   },
@@ -1001,6 +1037,9 @@
   "admin.maps.xml-viewer.copy": {
     "defaultMessage": "फ़ॉर्मेट किया गया XML कॉपी करें"
   },
+  "admin.maps.xml-viewer.error": {
+    "defaultMessage": "XML लोड करने में त्रुटि: {message}"
+  },
   "admin.maps.xml-viewer.info": {
     "defaultMessage": "यह माइंडमैप की मूल XML सामग्री है। आप बैकअप या विश्लेषण के लिए इस सामग्री को कॉपी कर सकते हैं।"
   },
@@ -1009,6 +1048,9 @@
   },
   "admin.maps.xml-viewer.no-content": {
     "defaultMessage": "कोई XML सामग्री उपलब्ध नहीं है"
+  },
+  "admin.maps.xml-viewer.subtitle": {
+    "defaultMessage": "{title} (ID: {id})"
   },
   "admin.maps.xml-viewer.title": {
     "defaultMessage": "मानचित्र XML सामग्री"
@@ -1036,6 +1078,9 @@
   },
   "admin.system.title": {
     "defaultMessage": "सिस्टम जानकारी"
+  },
+  "admin.unlocked": {
+    "defaultMessage": "अनलॉक"
   },
   "admin.system.refresh": {
     "defaultMessage": "ताज़ा करें"
@@ -1114,6 +1159,18 @@
   },
   "admin.system.health": {
     "defaultMessage": "सिस्टम स्वास्थ्य"
+  },
+  "admin.system.health.down": {
+    "defaultMessage": "बंद"
+  },
+  "admin.system.health.unknown": {
+    "defaultMessage": "अज्ञात"
+  },
+  "admin.system.health.up": {
+    "defaultMessage": "चालू"
+  },
+  "admin.system.health.warning": {
+    "defaultMessage": "चेतावनी"
   },
   "admin.system.jvm": {
     "defaultMessage": "JVM"
@@ -1262,9 +1319,6 @@
   "admin.console.title": {
     "defaultMessage": "व्यवस्थापक कंसोल"
   },
-  "admin.current-suspension-reason": {
-    "defaultMessage": "वर्तमान निलंबन कारण:"
-  },
   "admin.change-password-button": {
     "defaultMessage": "पासवर्ड बदलें"
   },
@@ -1273,6 +1327,9 @@
   },
   "admin.password-error-mismatch": {
     "defaultMessage": "पासवर्ड मेल नहीं खाते"
+  },
+  "admin.private": {
+    "defaultMessage": "निजी"
   },
   "admin.prompt.new-user-password": {
     "defaultMessage": "नए उपयोगकर्ता के लिए पासवर्ड दर्ज करें:"
@@ -1391,6 +1448,21 @@
   "activation.success.title": {
     "defaultMessage": "खाता सफलतापूर्वक सक्रिय हुआ"
   },
+  "admin.accounts.activate-dialog.button": {
+    "defaultMessage": "उपयोगकर्ता सक्रिय करें"
+  },
+  "admin.accounts.activate-dialog.confirm": {
+    "defaultMessage": "क्या आप वाकई उपयोगकर्ता \"{email}\" को मैन्युअल रूप से सक्रिय करना चाहते हैं?"
+  },
+  "admin.accounts.activate-dialog.info": {
+    "defaultMessage": "इससे उपयोगकर्ता ईमेल पुष्टि के बिना तुरंत लॉग इन कर सकेगा।"
+  },
+  "admin.accounts.activate-dialog.pending": {
+    "defaultMessage": "सक्रिय किया जा रहा है..."
+  },
+  "admin.accounts.activate-dialog.title": {
+    "defaultMessage": "उपयोगकर्ता सक्रिय करें"
+  },
   "admin.accounts.add-user": {
     "defaultMessage": "नया उपयोगकर्ता जोड़ें"
   },
@@ -1400,8 +1472,32 @@
   "admin.accounts.create-user": {
     "defaultMessage": "उपयोगकर्ता बनाएं"
   },
+  "admin.accounts.delete-dialog.button": {
+    "defaultMessage": "उपयोगकर्ता हटाएं"
+  },
+  "admin.accounts.delete-dialog.confirm": {
+    "defaultMessage": "क्या आप वाकई उपयोगकर्ता \"{email}\" को हटाना चाहते हैं?"
+  },
+  "admin.accounts.delete-dialog.pending": {
+    "defaultMessage": "हटाया जा रहा है..."
+  },
+  "admin.accounts.delete-dialog.title": {
+    "defaultMessage": "उपयोगकर्ता हटाएं"
+  },
+  "admin.accounts.delete-dialog.warning": {
+    "defaultMessage": "यह क्रिया पूर्ववत नहीं की जा सकती!"
+  },
   "admin.accounts.edit-user": {
     "defaultMessage": "उपयोगकर्ता संपादित करें"
+  },
+  "admin.accounts.filter.not-suspended": {
+    "defaultMessage": "निलंबित नहीं"
+  },
+  "admin.accounts.filter.suspended-only": {
+    "defaultMessage": "केवल निलंबित"
+  },
+  "admin.accounts.filter.suspension-all": {
+    "defaultMessage": "सभी (निलंबित + सक्रिय)"
   },
   "admin.accounts.filters": {
     "defaultMessage": "खोज और फ़िल्टर"
@@ -1421,8 +1517,53 @@
   "admin.accounts.subtitle": {
     "defaultMessage": "उपयोगकर्ता खाते, अनुमतियां और सेटिंग्स प्रबंधित करें"
   },
+  "admin.accounts.suspend-dialog.button": {
+    "defaultMessage": "उपयोगकर्ता निलंबित करें"
+  },
+  "admin.accounts.suspend-dialog.confirm": {
+    "defaultMessage": "क्या आप वाकई उपयोगकर्ता \"{email}\" को निलंबित करना चाहते हैं?"
+  },
+  "admin.accounts.suspend-dialog.pending": {
+    "defaultMessage": "निलंबित किया जा रहा है..."
+  },
+  "admin.accounts.suspend-dialog.title": {
+    "defaultMessage": "उपयोगकर्ता निलंबित करें"
+  },
+  "admin.accounts.table.actions": {
+    "defaultMessage": "क्रियाएँ"
+  },
+  "admin.accounts.table.auth": {
+    "defaultMessage": "प्रमाणीकरण"
+  },
+  "admin.accounts.table.created": {
+    "defaultMessage": "बनाया गया"
+  },
+  "admin.accounts.table.id": {
+    "defaultMessage": "ID"
+  },
+  "admin.accounts.table.name": {
+    "defaultMessage": "नाम"
+  },
+  "admin.accounts.table.status": {
+    "defaultMessage": "स्थिति"
+  },
   "admin.accounts.title": {
     "defaultMessage": "उपयोगकर्ता प्रबंधन"
+  },
+  "admin.accounts.unsuspend-dialog.button": {
+    "defaultMessage": "उपयोगकर्ता को पुनः सक्रिय करें"
+  },
+  "admin.accounts.unsuspend-dialog.confirm": {
+    "defaultMessage": "क्या आप वाकई उपयोगकर्ता \"{email}\" को पुनः सक्रिय करना चाहते हैं?"
+  },
+  "admin.accounts.unsuspend-dialog.pending": {
+    "defaultMessage": "पुनः सक्रिय किया जा रहा है..."
+  },
+  "admin.accounts.unsuspend-dialog.reason": {
+    "defaultMessage": "वर्तमान निलंबन कारण: {reason}"
+  },
+  "admin.accounts.unsuspend-dialog.title": {
+    "defaultMessage": "उपयोगकर्ता को पुनः सक्रिय करें"
   },
   "admin.action.mark-as-not-spam": {
     "defaultMessage": "गैर-स्पैम के रूप में चिह्नित"

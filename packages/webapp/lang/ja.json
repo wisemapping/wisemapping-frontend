@@ -653,6 +653,9 @@
   "admin.auth.ldap": {
     "defaultMessage": "LDAP"
   },
+  "admin.button.creating": {
+    "defaultMessage": "作成中..."
+  },
   "admin.button.update-user": {
     "defaultMessage": "ユーザーを更新"
   },
@@ -698,6 +701,9 @@
   "admin.facebook.filter-tooltip": {
     "defaultMessage": "Facebookデータ削除の照会"
   },
+  "admin.facebook.id-label": {
+    "defaultMessage": "FacebookユーザーID"
+  },
   "admin.facebook.lookup-button": {
     "defaultMessage": "アカウントを検索"
   },
@@ -721,6 +727,9 @@
   },
   "admin.facebook.removing": {
     "defaultMessage": "解除中..."
+  },
+  "admin.filter.all": {
+    "defaultMessage": "すべて"
   },
   "admin.refresh": {
     "defaultMessage": "更新"
@@ -830,8 +839,8 @@
   "admin.user-info.status": {
     "defaultMessage": "状態"
   },
-  "admin.user-info.suspension-reason": {
-    "defaultMessage": "停止理由："
+  "admin.user-info.suspension-reason-value": {
+    "defaultMessage": "停止理由：{reason}"
   },
   "admin.user-info.title": {
     "defaultMessage": "ユーザー情報"
@@ -859,6 +868,9 @@
   },
   "admin.validation.lastname-required": {
     "defaultMessage": "姓は必須です"
+  },
+  "admin.validation.title-required": {
+    "defaultMessage": "タイトルは必須です"
   },
   "admin.view-user-maps": {
     "defaultMessage": "ユーザーのマップを表示"
@@ -896,11 +908,23 @@
   "admin.maps.edit-title": {
     "defaultMessage": "マップを編集"
   },
+  "admin.maps.filter.all-time": {
+    "defaultMessage": "全期間"
+  },
   "admin.maps.filter.date": {
     "defaultMessage": "期間"
   },
+  "admin.maps.filter.last-months": {
+    "defaultMessage": "{count, plural, other {過去 # か月}}"
+  },
+  "admin.maps.filter.not-spam": {
+    "defaultMessage": "非スパム"
+  },
   "admin.maps.filter.spam": {
     "defaultMessage": "スパム"
+  },
+  "admin.maps.locked-by": {
+    "defaultMessage": "{user} がロック中"
   },
   "admin.maps.locked-tooltip": {
     "defaultMessage": "現在 {user} が編集中です"
@@ -910,6 +934,9 @@
   },
   "admin.maps.mark-as-spam": {
     "defaultMessage": "スパムとしてマーク"
+  },
+  "admin.maps.no-description": {
+    "defaultMessage": "説明なし"
   },
   "admin.maps.no-maps": {
     "defaultMessage": "マップが見つかりません"
@@ -965,8 +992,14 @@
   "admin.maps.table.actions": {
     "defaultMessage": "操作"
   },
+  "admin.maps.table.collaborators": {
+    "defaultMessage": "共同編集者"
+  },
   "admin.maps.table.created": {
     "defaultMessage": "作成日"
+  },
+  "admin.maps.table.created-by": {
+    "defaultMessage": "作成者"
   },
   "admin.maps.table.description": {
     "defaultMessage": "説明"
@@ -992,6 +1025,9 @@
   "admin.maps.title": {
     "defaultMessage": "タイトル"
   },
+  "admin.maps.unknown-user": {
+    "defaultMessage": "不明なユーザー"
+  },
   "admin.maps.unlocked-tooltip": {
     "defaultMessage": "現在編集されていません"
   },
@@ -1001,6 +1037,9 @@
   "admin.maps.xml-viewer.copy": {
     "defaultMessage": "整形済みXMLをコピー"
   },
+  "admin.maps.xml-viewer.error": {
+    "defaultMessage": "XMLの読み込みエラー：{message}"
+  },
   "admin.maps.xml-viewer.info": {
     "defaultMessage": "これはマインドマップの生のXMLコンテンツです。バックアップや分析のためにこの内容をコピーできます。"
   },
@@ -1009,6 +1048,9 @@
   },
   "admin.maps.xml-viewer.no-content": {
     "defaultMessage": "XMLコンテンツがありません"
+  },
+  "admin.maps.xml-viewer.subtitle": {
+    "defaultMessage": "{title}（ID: {id}）"
   },
   "admin.maps.xml-viewer.title": {
     "defaultMessage": "マップのXMLコンテンツ"
@@ -1036,6 +1078,9 @@
   },
   "admin.system.title": {
     "defaultMessage": "システム情報"
+  },
+  "admin.unlocked": {
+    "defaultMessage": "ロック解除"
   },
   "admin.system.refresh": {
     "defaultMessage": "更新"
@@ -1114,6 +1159,18 @@
   },
   "admin.system.health": {
     "defaultMessage": "システムの状態"
+  },
+  "admin.system.health.down": {
+    "defaultMessage": "停止"
+  },
+  "admin.system.health.unknown": {
+    "defaultMessage": "不明"
+  },
+  "admin.system.health.up": {
+    "defaultMessage": "稼働中"
+  },
+  "admin.system.health.warning": {
+    "defaultMessage": "警告"
   },
   "admin.system.jvm": {
     "defaultMessage": "JVM"
@@ -1262,9 +1319,6 @@
   "admin.console.title": {
     "defaultMessage": "管理コンソール"
   },
-  "admin.current-suspension-reason": {
-    "defaultMessage": "現在の停止理由："
-  },
   "admin.change-password-button": {
     "defaultMessage": "パスワードを変更"
   },
@@ -1273,6 +1327,9 @@
   },
   "admin.password-error-mismatch": {
     "defaultMessage": "パスワードが一致しません"
+  },
+  "admin.private": {
+    "defaultMessage": "非公開"
   },
   "admin.prompt.new-user-password": {
     "defaultMessage": "新しいユーザーのパスワードを入力してください："
@@ -1391,6 +1448,21 @@
   "activation.success.title": {
     "defaultMessage": "アカウントが正常に有効化されました"
   },
+  "admin.accounts.activate-dialog.button": {
+    "defaultMessage": "ユーザーを有効化"
+  },
+  "admin.accounts.activate-dialog.confirm": {
+    "defaultMessage": "ユーザー「{email}」を手動で有効化してもよろしいですか？"
+  },
+  "admin.accounts.activate-dialog.info": {
+    "defaultMessage": "ユーザーはメールアドレスを確認しなくても、すぐにログインできるようになります。"
+  },
+  "admin.accounts.activate-dialog.pending": {
+    "defaultMessage": "有効化中..."
+  },
+  "admin.accounts.activate-dialog.title": {
+    "defaultMessage": "ユーザーを有効化"
+  },
   "admin.accounts.add-user": {
     "defaultMessage": "新しいユーザーを追加"
   },
@@ -1400,8 +1472,32 @@
   "admin.accounts.create-user": {
     "defaultMessage": "ユーザーを作成"
   },
+  "admin.accounts.delete-dialog.button": {
+    "defaultMessage": "ユーザーを削除"
+  },
+  "admin.accounts.delete-dialog.confirm": {
+    "defaultMessage": "ユーザー「{email}」を削除してもよろしいですか？"
+  },
+  "admin.accounts.delete-dialog.pending": {
+    "defaultMessage": "削除中..."
+  },
+  "admin.accounts.delete-dialog.title": {
+    "defaultMessage": "ユーザーを削除"
+  },
+  "admin.accounts.delete-dialog.warning": {
+    "defaultMessage": "この操作は元に戻せません！"
+  },
   "admin.accounts.edit-user": {
     "defaultMessage": "ユーザーを編集"
+  },
+  "admin.accounts.filter.not-suspended": {
+    "defaultMessage": "停止されていない"
+  },
+  "admin.accounts.filter.suspended-only": {
+    "defaultMessage": "停止中のみ"
+  },
+  "admin.accounts.filter.suspension-all": {
+    "defaultMessage": "すべて（停止中 + アクティブ）"
   },
   "admin.accounts.filters": {
     "defaultMessage": "検索とフィルター"
@@ -1421,8 +1517,53 @@
   "admin.accounts.subtitle": {
     "defaultMessage": "ユーザーアカウント、権限、設定を管理します"
   },
+  "admin.accounts.suspend-dialog.button": {
+    "defaultMessage": "ユーザーを停止"
+  },
+  "admin.accounts.suspend-dialog.confirm": {
+    "defaultMessage": "ユーザー「{email}」を停止してもよろしいですか？"
+  },
+  "admin.accounts.suspend-dialog.pending": {
+    "defaultMessage": "停止中..."
+  },
+  "admin.accounts.suspend-dialog.title": {
+    "defaultMessage": "ユーザーを停止"
+  },
+  "admin.accounts.table.actions": {
+    "defaultMessage": "操作"
+  },
+  "admin.accounts.table.auth": {
+    "defaultMessage": "認証"
+  },
+  "admin.accounts.table.created": {
+    "defaultMessage": "作成日"
+  },
+  "admin.accounts.table.id": {
+    "defaultMessage": "ID"
+  },
+  "admin.accounts.table.name": {
+    "defaultMessage": "名前"
+  },
+  "admin.accounts.table.status": {
+    "defaultMessage": "状態"
+  },
   "admin.accounts.title": {
     "defaultMessage": "ユーザー管理"
+  },
+  "admin.accounts.unsuspend-dialog.button": {
+    "defaultMessage": "ユーザーの停止を解除"
+  },
+  "admin.accounts.unsuspend-dialog.confirm": {
+    "defaultMessage": "ユーザー「{email}」の停止を解除してもよろしいですか？"
+  },
+  "admin.accounts.unsuspend-dialog.pending": {
+    "defaultMessage": "停止を解除中..."
+  },
+  "admin.accounts.unsuspend-dialog.reason": {
+    "defaultMessage": "現在の停止理由：{reason}"
+  },
+  "admin.accounts.unsuspend-dialog.title": {
+    "defaultMessage": "ユーザーの停止を解除"
   },
   "admin.action.mark-as-not-spam": {
     "defaultMessage": "非スパムとしてマーク"

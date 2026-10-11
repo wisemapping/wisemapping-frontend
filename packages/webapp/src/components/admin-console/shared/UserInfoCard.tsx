@@ -34,6 +34,7 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import StorageIcon from '@mui/icons-material/Storage';
 import { AuthenticationType } from '../../../classes/client';
 import AccountStatusChip, { getSuspensionReasonLabel } from './AccountStatusChip';
+import { useDate } from '../../../classes/app-i18n/dates';
 
 interface UserInfoCardProps {
   user: {
@@ -63,10 +64,9 @@ const UserInfoCard = ({
   onUnsuspend,
 }: UserInfoCardProps): ReactElement => {
   const intl = useIntl();
+  const date = useDate();
 
-  const formatDate = (dateString: string): string => {
-    return new Date(dateString).toLocaleDateString();
-  };
+  const formatDate = (dateString: string): string => date(dateString).format('L');
 
   const getAuthIcon = (authenticationType: AuthenticationType): ReactElement => {
     switch (authenticationType) {
@@ -260,11 +260,13 @@ const UserInfoCard = ({
                 fontWeight: 'medium',
               }}
             >
-              {intl.formatMessage({
-                id: 'admin.user-info.suspension-reason',
-                defaultMessage: 'Suspension Reason:',
-              })}{' '}
-              {getSuspensionReasonLabel(user.suspensionReason, intl)}
+              {intl.formatMessage(
+                {
+                  id: 'admin.user-info.suspension-reason-value',
+                  defaultMessage: 'Suspension Reason: {reason}',
+                },
+                { reason: getSuspensionReasonLabel(user.suspensionReason, intl) },
+              )}
             </Typography>
             {user.suspendedDate && (
               <Typography

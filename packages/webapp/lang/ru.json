@@ -623,6 +623,9 @@
   "admin.auth.ldap": {
     "defaultMessage": "LDAP"
   },
+  "admin.button.creating": {
+    "defaultMessage": "Создание..."
+  },
   "admin.button.update-user": {
     "defaultMessage": "Обновить пользователя"
   },
@@ -674,6 +677,9 @@
   "admin.facebook.filter-tooltip": {
     "defaultMessage": "Поиск для удаления данных Facebook"
   },
+  "admin.facebook.id-label": {
+    "defaultMessage": "Идентификатор пользователя Facebook"
+  },
   "admin.facebook.lookup-button": {
     "defaultMessage": "Найти аккаунт"
   },
@@ -697,6 +703,9 @@
   },
   "admin.facebook.removing": {
     "defaultMessage": "Отвязка..."
+  },
+  "admin.filter.all": {
+    "defaultMessage": "Все"
   },
   "label.description": {
     "defaultMessage": "Используйте метки для организации ваших карт."
@@ -830,8 +839,8 @@
   "admin.user-info.status": {
     "defaultMessage": "Статус"
   },
-  "admin.user-info.suspension-reason": {
-    "defaultMessage": "Причина приостановки:"
+  "admin.user-info.suspension-reason-value": {
+    "defaultMessage": "Причина приостановки: {reason}"
   },
   "admin.user-info.title": {
     "defaultMessage": "Информация о пользователе"
@@ -859,6 +868,9 @@
   },
   "admin.validation.lastname-required": {
     "defaultMessage": "Укажите фамилию"
+  },
+  "admin.validation.title-required": {
+    "defaultMessage": "Укажите название"
   },
   "admin.view-user-maps": {
     "defaultMessage": "Просмотреть карты пользователя"
@@ -896,11 +908,23 @@
   "admin.maps.edit-title": {
     "defaultMessage": "Редактирование карты"
   },
+  "admin.maps.filter.all-time": {
+    "defaultMessage": "За всё время"
+  },
   "admin.maps.filter.date": {
     "defaultMessage": "Диапазон дат"
   },
+  "admin.maps.filter.last-months": {
+    "defaultMessage": "{count, plural, one {За последний # месяц} few {За последние # месяца} many {За последние # месяцев} other {За последние # месяца}}"
+  },
+  "admin.maps.filter.not-spam": {
+    "defaultMessage": "Не спам"
+  },
   "admin.maps.filter.spam": {
     "defaultMessage": "Спам"
+  },
+  "admin.maps.locked-by": {
+    "defaultMessage": "Заблокирована пользователем {user}"
   },
   "admin.maps.locked-tooltip": {
     "defaultMessage": "Сейчас редактируется пользователем {user}"
@@ -910,6 +934,9 @@
   },
   "admin.maps.mark-as-spam": {
     "defaultMessage": "Пометить как спам"
+  },
+  "admin.maps.no-description": {
+    "defaultMessage": "Нет описания"
   },
   "admin.maps.no-maps": {
     "defaultMessage": "Карты не найдены"
@@ -965,8 +992,14 @@
   "admin.maps.table.actions": {
     "defaultMessage": "Действия"
   },
+  "admin.maps.table.collaborators": {
+    "defaultMessage": "Соавторы"
+  },
   "admin.maps.table.created": {
     "defaultMessage": "Создана"
+  },
+  "admin.maps.table.created-by": {
+    "defaultMessage": "Создатель"
   },
   "admin.maps.table.description": {
     "defaultMessage": "Описание"
@@ -992,6 +1025,9 @@
   "admin.maps.title": {
     "defaultMessage": "Название"
   },
+  "admin.maps.unknown-user": {
+    "defaultMessage": "неизвестный пользователь"
+  },
   "admin.maps.unlocked-tooltip": {
     "defaultMessage": "Сейчас никем не редактируется"
   },
@@ -1001,6 +1037,9 @@
   "admin.maps.xml-viewer.copy": {
     "defaultMessage": "Копировать форматированный XML"
   },
+  "admin.maps.xml-viewer.error": {
+    "defaultMessage": "Ошибка загрузки XML: {message}"
+  },
   "admin.maps.xml-viewer.info": {
     "defaultMessage": "Это исходное XML-содержимое майнд-карты. Вы можете скопировать его для резервного копирования или анализа."
   },
@@ -1009,6 +1048,9 @@
   },
   "admin.maps.xml-viewer.no-content": {
     "defaultMessage": "XML-содержимое недоступно"
+  },
+  "admin.maps.xml-viewer.subtitle": {
+    "defaultMessage": "{title} (ID: {id})"
   },
   "admin.maps.xml-viewer.title": {
     "defaultMessage": "XML-содержимое карты"
@@ -1036,6 +1078,9 @@
   },
   "admin.system.title": {
     "defaultMessage": "Системная информация"
+  },
+  "admin.unlocked": {
+    "defaultMessage": "Не заблокирован"
   },
   "admin.system.refresh": {
     "defaultMessage": "Обновить"
@@ -1114,6 +1159,18 @@
   },
   "admin.system.health": {
     "defaultMessage": "Состояние системы"
+  },
+  "admin.system.health.down": {
+    "defaultMessage": "Не работает"
+  },
+  "admin.system.health.unknown": {
+    "defaultMessage": "Неизвестно"
+  },
+  "admin.system.health.up": {
+    "defaultMessage": "Работает"
+  },
+  "admin.system.health.warning": {
+    "defaultMessage": "Предупреждение"
   },
   "admin.system.jvm": {
     "defaultMessage": "JVM"
@@ -1262,9 +1319,6 @@
   "admin.console.title": {
     "defaultMessage": "Консоль администратора"
   },
-  "admin.current-suspension-reason": {
-    "defaultMessage": "Текущая причина приостановки:"
-  },
   "admin.change-password-button": {
     "defaultMessage": "Сменить пароль"
   },
@@ -1273,6 +1327,9 @@
   },
   "admin.password-error-mismatch": {
     "defaultMessage": "Пароли не совпадают"
+  },
+  "admin.private": {
+    "defaultMessage": "Приватный"
   },
   "admin.prompt.new-user-password": {
     "defaultMessage": "Введите пароль для нового пользователя:"
@@ -1391,6 +1448,21 @@
   "activation.success.title": {
     "defaultMessage": "Аккаунт успешно активирован"
   },
+  "admin.accounts.activate-dialog.button": {
+    "defaultMessage": "Активировать пользователя"
+  },
+  "admin.accounts.activate-dialog.confirm": {
+    "defaultMessage": "Вы уверены, что хотите вручную активировать пользователя «{email}»?"
+  },
+  "admin.accounts.activate-dialog.info": {
+    "defaultMessage": "Пользователь сможет сразу войти без подтверждения адреса электронной почты."
+  },
+  "admin.accounts.activate-dialog.pending": {
+    "defaultMessage": "Активация..."
+  },
+  "admin.accounts.activate-dialog.title": {
+    "defaultMessage": "Активировать пользователя"
+  },
   "admin.accounts.add-user": {
     "defaultMessage": "Добавить пользователя"
   },
@@ -1400,8 +1472,32 @@
   "admin.accounts.create-user": {
     "defaultMessage": "Создать пользователя"
   },
+  "admin.accounts.delete-dialog.button": {
+    "defaultMessage": "Удалить пользователя"
+  },
+  "admin.accounts.delete-dialog.confirm": {
+    "defaultMessage": "Вы уверены, что хотите удалить пользователя «{email}»?"
+  },
+  "admin.accounts.delete-dialog.pending": {
+    "defaultMessage": "Удаление..."
+  },
+  "admin.accounts.delete-dialog.title": {
+    "defaultMessage": "Удалить пользователя"
+  },
+  "admin.accounts.delete-dialog.warning": {
+    "defaultMessage": "Это действие нельзя отменить!"
+  },
   "admin.accounts.edit-user": {
     "defaultMessage": "Редактировать пользователя"
+  },
+  "admin.accounts.filter.not-suspended": {
+    "defaultMessage": "Не приостановленные"
+  },
+  "admin.accounts.filter.suspended-only": {
+    "defaultMessage": "Только приостановленные"
+  },
+  "admin.accounts.filter.suspension-all": {
+    "defaultMessage": "Все (приостановленные + активные)"
   },
   "admin.accounts.filters": {
     "defaultMessage": "Поиск и фильтры"
@@ -1421,8 +1517,53 @@
   "admin.accounts.subtitle": {
     "defaultMessage": "Управление аккаунтами пользователей, правами доступа и настройками"
   },
+  "admin.accounts.suspend-dialog.button": {
+    "defaultMessage": "Приостановить пользователя"
+  },
+  "admin.accounts.suspend-dialog.confirm": {
+    "defaultMessage": "Вы уверены, что хотите приостановить пользователя «{email}»?"
+  },
+  "admin.accounts.suspend-dialog.pending": {
+    "defaultMessage": "Приостановка..."
+  },
+  "admin.accounts.suspend-dialog.title": {
+    "defaultMessage": "Приостановить пользователя"
+  },
+  "admin.accounts.table.actions": {
+    "defaultMessage": "Действия"
+  },
+  "admin.accounts.table.auth": {
+    "defaultMessage": "Авторизация"
+  },
+  "admin.accounts.table.created": {
+    "defaultMessage": "Создан"
+  },
+  "admin.accounts.table.id": {
+    "defaultMessage": "ID"
+  },
+  "admin.accounts.table.name": {
+    "defaultMessage": "Имя"
+  },
+  "admin.accounts.table.status": {
+    "defaultMessage": "Статус"
+  },
   "admin.accounts.title": {
     "defaultMessage": "Управление пользователями"
+  },
+  "admin.accounts.unsuspend-dialog.button": {
+    "defaultMessage": "Возобновить пользователя"
+  },
+  "admin.accounts.unsuspend-dialog.confirm": {
+    "defaultMessage": "Вы уверены, что хотите возобновить пользователя «{email}»?"
+  },
+  "admin.accounts.unsuspend-dialog.pending": {
+    "defaultMessage": "Возобновление..."
+  },
+  "admin.accounts.unsuspend-dialog.reason": {
+    "defaultMessage": "Текущая причина приостановки: {reason}"
+  },
+  "admin.accounts.unsuspend-dialog.title": {
+    "defaultMessage": "Возобновить пользователя"
   },
   "admin.action.mark-as-not-spam": {
     "defaultMessage": "пометить как не спам"

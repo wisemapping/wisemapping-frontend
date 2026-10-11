@@ -28,6 +28,7 @@ import BlockIcon from '@mui/icons-material/Block';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
 import { AuthenticationType } from '../../../classes/client';
+import { useDate } from '../../../classes/app-i18n/dates';
 
 /**
  * Translates suspension reason codes to user-friendly labels.
@@ -88,6 +89,7 @@ const AccountStatusChip = ({
   interactive = false,
 }: AccountStatusChipProps): ReactElement => {
   const intl = useIntl();
+  const date = useDate();
   const [anchorEl, setAnchorEl] = useState<HTMLElement>();
   const menuOpen = Boolean(anchorEl);
 
@@ -122,9 +124,7 @@ const AccountStatusChip = ({
     }
   };
 
-  const formatDate = (dateString: string): string => {
-    return new Date(dateString).toLocaleDateString();
-  };
+  const formatDate = (dateString: string): string => date(dateString).format('L');
 
   // Check if user is OAuth (Google, Facebook, etc.) - they don't need email activation
   const isOAuthUser =

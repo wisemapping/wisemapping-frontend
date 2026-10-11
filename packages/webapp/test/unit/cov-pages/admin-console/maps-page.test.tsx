@@ -568,13 +568,13 @@ describe('MapsManagement', () => {
       setup();
       await waitForRows();
 
-      fireEvent.click(within(rowOf('Plain map')).getByRole('button', { name: 'mark-spam' }));
+      fireEvent.click(within(rowOf('Plain map')).getByRole('button', { name: 'Mark as spam' }));
       expect(confirm).toHaveBeenCalledWith('Are you sure you want to mark as spam this map?');
       await waitFor(() =>
         expect(client.updateMapSpamStatus).toHaveBeenCalledWith(11, { spam: true }),
       );
 
-      fireEvent.click(within(rowOf('Busy map')).getByRole('button', { name: 'mark-not-spam' }));
+      fireEvent.click(within(rowOf('Busy map')).getByRole('button', { name: 'Mark as not spam' }));
       expect(confirm).toHaveBeenCalledWith('Are you sure you want to mark as not spam this map?');
       await waitFor(() =>
         expect(client.updateMapSpamStatus).toHaveBeenCalledWith(12, { spam: false }),
@@ -588,11 +588,11 @@ describe('MapsManagement', () => {
       setup();
       await waitForRows();
 
-      fireEvent.click(within(rowOf('Plain map')).getByRole('button', { name: 'mark-spam' }));
+      fireEvent.click(within(rowOf('Plain map')).getByRole('button', { name: 'Mark as spam' }));
       expect(client.updateMapSpamStatus).not.toHaveBeenCalled();
 
       confirm.mockReturnValue(true);
-      fireEvent.click(within(rowOf('Plain map')).getByRole('button', { name: 'mark-spam' }));
+      fireEvent.click(within(rowOf('Plain map')).getByRole('button', { name: 'Mark as spam' }));
       await waitFor(() =>
         expect(errorSpy).toHaveBeenCalledWith('Failed to update spam status:', expect.any(Error)),
       );
@@ -714,7 +714,7 @@ describe('MapsManagement', () => {
       await waitForRows();
 
       let dialog = await openOwner();
-      fireEvent.click(within(dialog).getByRole('button', { name: 'mark-not-spam' }));
+      fireEvent.click(within(dialog).getByRole('button', { name: 'Mark as not spam' }));
       await waitFor(() =>
         expect(client.updateMapSpamStatus).toHaveBeenCalledWith(22, { spam: false }),
       );

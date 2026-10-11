@@ -17,7 +17,7 @@
  */
 
 import { ReactElement } from 'react';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -248,7 +248,12 @@ const UserMapsDialog = ({
                             color: 'text.secondary',
                           }}
                         >
-                          {map.description || 'No description'}
+                          {map.description || (
+                            <FormattedMessage
+                              id="admin.maps.no-description"
+                              defaultMessage="No description"
+                            />
+                          )}
                         </Typography>
                       </TableCell>
                       <TableCell>{formatDate(map.creationTime)}</TableCell>
@@ -267,7 +272,17 @@ const UserMapsDialog = ({
                             getSuspendedUserChip(map.creatorSuspended || false)}
                           {!getPublicChip && (
                             <Chip
-                              label={map.public ? 'Public' : 'Private'}
+                              label={
+                                map.public
+                                  ? intl.formatMessage({
+                                      id: 'admin.public',
+                                      defaultMessage: 'Public',
+                                    })
+                                  : intl.formatMessage({
+                                      id: 'admin.private',
+                                      defaultMessage: 'Private',
+                                    })
+                              }
                               color={map.public ? 'success' : 'default'}
                               size="small"
                             />

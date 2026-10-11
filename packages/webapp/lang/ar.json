@@ -623,6 +623,9 @@
   "admin.facebook.filter-tooltip": {
     "defaultMessage": "البحث لحذف بيانات Facebook"
   },
+  "admin.facebook.id-label": {
+    "defaultMessage": "معرّف مستخدم Facebook"
+  },
   "admin.facebook.lookup-button": {
     "defaultMessage": "البحث عن الحساب"
   },
@@ -647,6 +650,9 @@
   "admin.facebook.removing": {
     "defaultMessage": "جارٍ الإزالة..."
   },
+  "admin.filter.all": {
+    "defaultMessage": "الكل"
+  },
   "admin.unsuspend-user": {
     "defaultMessage": "إلغاء تعليق المستخدم"
   },
@@ -659,8 +665,8 @@
   "admin.user-info.status": {
     "defaultMessage": "الحالة"
   },
-  "admin.user-info.suspension-reason": {
-    "defaultMessage": "سبب التعليق:"
+  "admin.user-info.suspension-reason-value": {
+    "defaultMessage": "سبب التعليق: {reason}"
   },
   "admin.user-info.title": {
     "defaultMessage": "معلومات المستخدم"
@@ -688,6 +694,9 @@
   },
   "admin.validation.lastname-required": {
     "defaultMessage": "اسم العائلة مطلوب"
+  },
+  "admin.validation.title-required": {
+    "defaultMessage": "العنوان مطلوب"
   },
   "admin.view-user-maps": {
     "defaultMessage": "عرض خرائط المستخدم"
@@ -755,11 +764,23 @@
   "admin.maps.edit-title": {
     "defaultMessage": "تعديل الخريطة"
   },
+  "admin.maps.filter.all-time": {
+    "defaultMessage": "كل الأوقات"
+  },
   "admin.maps.filter.date": {
     "defaultMessage": "النطاق الزمني"
   },
+  "admin.maps.filter.last-months": {
+    "defaultMessage": "{count, plural, zero {آخر # شهر} one {آخر شهر} two {آخر شهرين} few {آخر # أشهر} many {آخر # شهرًا} other {آخر # شهر}}"
+  },
+  "admin.maps.filter.not-spam": {
+    "defaultMessage": "ليس محتوى غير مرغوب فيه"
+  },
   "admin.maps.filter.spam": {
     "defaultMessage": "غير مرغوب فيه"
+  },
+  "admin.maps.locked-by": {
+    "defaultMessage": "مقفلة بواسطة {user}"
   },
   "admin.maps.locked-tooltip": {
     "defaultMessage": "يعدّلها {user} حاليًا"
@@ -769,6 +790,9 @@
   },
   "admin.maps.mark-as-spam": {
     "defaultMessage": "تمييزها كمحتوى غير مرغوب فيه"
+  },
+  "admin.maps.no-description": {
+    "defaultMessage": "بلا وصف"
   },
   "admin.maps.no-maps": {
     "defaultMessage": "لم يتم العثور على خرائط"
@@ -824,8 +848,14 @@
   "admin.maps.table.actions": {
     "defaultMessage": "الإجراءات"
   },
+  "admin.maps.table.collaborators": {
+    "defaultMessage": "المتعاونون"
+  },
   "admin.maps.table.created": {
     "defaultMessage": "تاريخ الإنشاء"
+  },
+  "admin.maps.table.created-by": {
+    "defaultMessage": "المنشئ"
   },
   "admin.maps.table.description": {
     "defaultMessage": "الوصف"
@@ -851,6 +881,9 @@
   "admin.maps.title": {
     "defaultMessage": "العنوان"
   },
+  "admin.maps.unknown-user": {
+    "defaultMessage": "مستخدم غير معروف"
+  },
   "admin.maps.unlocked-tooltip": {
     "defaultMessage": "لا يعدّلها أحد حاليًا"
   },
@@ -860,6 +893,9 @@
   "admin.maps.xml-viewer.copy": {
     "defaultMessage": "نسخ XML المنسّق"
   },
+  "admin.maps.xml-viewer.error": {
+    "defaultMessage": "خطأ في تحميل XML: {message}"
+  },
   "admin.maps.xml-viewer.info": {
     "defaultMessage": "هذا هو محتوى XML الخام للخريطة الذهنية. يمكنك نسخ هذا المحتوى لأغراض النسخ الاحتياطي أو التحليل."
   },
@@ -868,6 +904,9 @@
   },
   "admin.maps.xml-viewer.no-content": {
     "defaultMessage": "لا يتوفر محتوى XML"
+  },
+  "admin.maps.xml-viewer.subtitle": {
+    "defaultMessage": "{title} (المعرّف: {id})"
   },
   "admin.maps.xml-viewer.title": {
     "defaultMessage": "محتوى XML للخريطة"
@@ -913,6 +952,9 @@
   },
   "admin.auth.ldap": {
     "defaultMessage": "LDAP"
+  },
+  "admin.button.creating": {
+    "defaultMessage": "جارٍ الإنشاء..."
   },
   "admin.button.update-user": {
     "defaultMessage": "تحديث المستخدم"
@@ -1037,6 +1079,9 @@
   "admin.system.title": {
     "defaultMessage": "معلومات النظام"
   },
+  "admin.unlocked": {
+    "defaultMessage": "غير مقفل"
+  },
   "admin.system.refresh": {
     "defaultMessage": "تحديث"
   },
@@ -1114,6 +1159,18 @@
   },
   "admin.system.health": {
     "defaultMessage": "حالة النظام"
+  },
+  "admin.system.health.down": {
+    "defaultMessage": "متوقف"
+  },
+  "admin.system.health.unknown": {
+    "defaultMessage": "غير معروف"
+  },
+  "admin.system.health.up": {
+    "defaultMessage": "يعمل"
+  },
+  "admin.system.health.warning": {
+    "defaultMessage": "تحذير"
   },
   "admin.system.jvm": {
     "defaultMessage": "JVM"
@@ -1235,6 +1292,21 @@
   "activation.success.title": {
     "defaultMessage": "تم تفعيل الحساب بنجاح"
   },
+  "admin.accounts.activate-dialog.button": {
+    "defaultMessage": "تفعيل المستخدم"
+  },
+  "admin.accounts.activate-dialog.confirm": {
+    "defaultMessage": "هل أنت متأكد أنك تريد تفعيل المستخدم \"{email}\" يدويًا؟"
+  },
+  "admin.accounts.activate-dialog.info": {
+    "defaultMessage": "سيتمكن المستخدم من تسجيل الدخول فورًا دون تأكيد بريده الإلكتروني."
+  },
+  "admin.accounts.activate-dialog.pending": {
+    "defaultMessage": "جارٍ التفعيل..."
+  },
+  "admin.accounts.activate-dialog.title": {
+    "defaultMessage": "تفعيل المستخدم"
+  },
   "admin.accounts.add-user": {
     "defaultMessage": "إضافة مستخدم جديد"
   },
@@ -1244,8 +1316,32 @@
   "admin.accounts.create-user": {
     "defaultMessage": "إنشاء مستخدم"
   },
+  "admin.accounts.delete-dialog.button": {
+    "defaultMessage": "حذف المستخدم"
+  },
+  "admin.accounts.delete-dialog.confirm": {
+    "defaultMessage": "هل أنت متأكد أنك تريد حذف المستخدم \"{email}\"؟"
+  },
+  "admin.accounts.delete-dialog.pending": {
+    "defaultMessage": "جارٍ الحذف..."
+  },
+  "admin.accounts.delete-dialog.title": {
+    "defaultMessage": "حذف المستخدم"
+  },
+  "admin.accounts.delete-dialog.warning": {
+    "defaultMessage": "لا يمكن التراجع عن هذا الإجراء!"
+  },
   "admin.accounts.edit-user": {
     "defaultMessage": "تعديل المستخدم"
+  },
+  "admin.accounts.filter.not-suspended": {
+    "defaultMessage": "غير معلّقين"
+  },
+  "admin.accounts.filter.suspended-only": {
+    "defaultMessage": "المعلّقون فقط"
+  },
+  "admin.accounts.filter.suspension-all": {
+    "defaultMessage": "الكل (المعلّقون + النشطون)"
   },
   "admin.accounts.filters": {
     "defaultMessage": "البحث وعوامل التصفية"
@@ -1265,8 +1361,53 @@
   "admin.accounts.subtitle": {
     "defaultMessage": "إدارة حسابات المستخدمين والصلاحيات والإعدادات"
   },
+  "admin.accounts.suspend-dialog.button": {
+    "defaultMessage": "تعليق المستخدم"
+  },
+  "admin.accounts.suspend-dialog.confirm": {
+    "defaultMessage": "هل أنت متأكد أنك تريد تعليق المستخدم \"{email}\"؟"
+  },
+  "admin.accounts.suspend-dialog.pending": {
+    "defaultMessage": "جارٍ التعليق..."
+  },
+  "admin.accounts.suspend-dialog.title": {
+    "defaultMessage": "تعليق المستخدم"
+  },
+  "admin.accounts.table.actions": {
+    "defaultMessage": "الإجراءات"
+  },
+  "admin.accounts.table.auth": {
+    "defaultMessage": "المصادقة"
+  },
+  "admin.accounts.table.created": {
+    "defaultMessage": "تاريخ الإنشاء"
+  },
+  "admin.accounts.table.id": {
+    "defaultMessage": "المعرّف"
+  },
+  "admin.accounts.table.name": {
+    "defaultMessage": "الاسم"
+  },
+  "admin.accounts.table.status": {
+    "defaultMessage": "الحالة"
+  },
   "admin.accounts.title": {
     "defaultMessage": "إدارة المستخدمين"
+  },
+  "admin.accounts.unsuspend-dialog.button": {
+    "defaultMessage": "إلغاء تعليق المستخدم"
+  },
+  "admin.accounts.unsuspend-dialog.confirm": {
+    "defaultMessage": "هل أنت متأكد أنك تريد إلغاء تعليق المستخدم \"{email}\"؟"
+  },
+  "admin.accounts.unsuspend-dialog.pending": {
+    "defaultMessage": "جارٍ إلغاء التعليق..."
+  },
+  "admin.accounts.unsuspend-dialog.reason": {
+    "defaultMessage": "سبب التعليق الحالي: {reason}"
+  },
+  "admin.accounts.unsuspend-dialog.title": {
+    "defaultMessage": "إلغاء تعليق المستخدم"
   },
   "admin.action.mark-as-not-spam": {
     "defaultMessage": "إزالة علامة المحتوى غير المرغوب فيه عن"
@@ -1325,9 +1466,6 @@
   "admin.console.title": {
     "defaultMessage": "وحدة تحكم المسؤول"
   },
-  "admin.current-suspension-reason": {
-    "defaultMessage": "سبب التعليق الحالي:"
-  },
   "admin.change-password-button": {
     "defaultMessage": "تغيير كلمة المرور"
   },
@@ -1336,6 +1474,9 @@
   },
   "admin.password-error-mismatch": {
     "defaultMessage": "كلمتا المرور غير متطابقتين"
+  },
+  "admin.private": {
+    "defaultMessage": "خاص"
   },
   "admin.prompt.new-user-password": {
     "defaultMessage": "أدخل كلمة المرور للمستخدم الجديد:"

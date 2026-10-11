@@ -82,7 +82,10 @@ const FacebookLookup = ({ onLookup, onRemove }: FacebookLookupProps): ReactEleme
       }}
     >
       <TextField
-        label="facebookId"
+        label={intl.formatMessage({
+          id: 'admin.facebook.id-label',
+          defaultMessage: 'Facebook user ID',
+        })}
         placeholder="652098797767905"
         value={facebookIdInput}
         onChange={(e) => {

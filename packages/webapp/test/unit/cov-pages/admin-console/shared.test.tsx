@@ -188,7 +188,7 @@ describe('SpamStatusChip', () => {
     expect(screen.getByText('Clean')).toBeTruthy();
     expect(screen.getByLabelText('Not marked as spam')).toBeTruthy();
 
-    fireEvent.click(screen.getByRole('button', { name: 'mark-spam' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Mark as spam' }));
     expect(onToggleSpam).toHaveBeenCalledWith(true);
   });
 
@@ -209,7 +209,7 @@ describe('SpamStatusChip', () => {
     expect(screen.getByLabelText('Detected as spam on on-2026-03-04')).toBeTruthy();
     expect(screen.getByText('Too many links')).toBeTruthy();
 
-    fireEvent.click(screen.getByRole('button', { name: 'mark-not-spam' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Mark as not spam' }));
     expect(onToggleSpam).toHaveBeenCalledWith(false);
   });
 
@@ -228,9 +228,9 @@ describe('SpamStatusChip', () => {
       <SpamStatusChip spam={false} onToggleSpam={onToggleSpam} formatDate={formatDate} loading />,
     );
 
-    expect((screen.getByRole('button', { name: 'mark-spam' }) as HTMLButtonElement).disabled).toBe(
-      true,
-    );
+    expect(
+      (screen.getByRole('button', { name: 'Mark as spam' }) as HTMLButtonElement).disabled,
+    ).toBe(true);
 
     rerender(
       <SpamStatusChip
@@ -240,7 +240,7 @@ describe('SpamStatusChip', () => {
         showToggleButton={false}
       />,
     );
-    expect(screen.queryByRole('button', { name: 'mark-spam' })).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Mark as spam' })).toBeNull();
   });
 });
 
@@ -377,9 +377,9 @@ describe('UserMapsDialog', () => {
     fireEvent.click(defined(screen.getAllByRole('button', { name: 'Edit' })[1]));
     expect(onEditMap).toHaveBeenCalledWith(maps[1]);
 
-    fireEvent.click(screen.getByRole('button', { name: 'mark-not-spam' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Mark as not spam' }));
     expect(onToggleSpam).toHaveBeenCalledWith(32, true);
-    fireEvent.click(screen.getByRole('button', { name: 'mark-spam' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Mark as spam' }));
     expect(onToggleSpam).toHaveBeenCalledWith(31, false);
 
     fireEvent.click(defined(screen.getAllByRole('button', { name: 'Delete' })[0]));
