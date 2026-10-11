@@ -15,12 +15,11 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import styled from 'styled-components';
-import { styled as muiStyled } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import { EDITOR_LAYOUT } from '../../theme/layout';
 
-export const CreatorInfoContainer = styled.div`
+export const CreatorInfoContainer = styled('div')`
   display: flex;
   align-items: end;
   position: absolute;
@@ -30,7 +29,7 @@ export const CreatorInfoContainer = styled.div`
   height: ${EDITOR_LAYOUT.creatorInfoPane.height};
 `;
 
-export const CreatorInfoText = muiStyled(Box)(({ theme }) => ({
+export const CreatorInfoText = styled(Box)(({ theme }) => ({
   fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
   fontSize: '14px',
   color: theme.palette.text.secondary,

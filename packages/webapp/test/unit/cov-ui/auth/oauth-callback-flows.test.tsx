@@ -126,7 +126,9 @@ describe('OAuthCallbackPage flows', () => {
 
   test('a callback without code or token is an error', () => {
     setup('/c/registration-google?state=x');
-    expect(screen.getByText('Missing OAuth code or token in callback: ?state=x')).toBeTruthy();
+    expect(
+      screen.getByText('The sign-in response did not include a code or a token.'),
+    ).toBeTruthy();
   });
 
   test('a synced token callback stores the token and applies the system theme', () => {

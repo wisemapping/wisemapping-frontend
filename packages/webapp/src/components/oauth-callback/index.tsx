@@ -174,7 +174,12 @@ const OAuthCallbackPage = (): React.ReactElement => {
       // Other OAuth errors - show error message
       const errorDescription = searchParams.get('error_description');
       setError({
-        msg: errorDescription || `OAuth error: ${error}`,
+        msg:
+          errorDescription ||
+          intl.formatMessage(
+            { id: 'oauth.error', defaultMessage: 'OAuth error: {error}' },
+            { error },
+          ),
       });
       return;
     }
@@ -184,7 +189,10 @@ const OAuthCallbackPage = (): React.ReactElement => {
     scrubCallbackParams();
     if (!params) {
       setError({
-        msg: `Missing OAuth code or token in callback: ${window.location.search}`,
+        msg: intl.formatMessage({
+          id: 'oauth.missing-code',
+          defaultMessage: 'The sign-in response did not include a code or a token.',
+        }),
       });
       return;
     }

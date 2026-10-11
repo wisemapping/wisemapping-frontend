@@ -1507,5 +1507,14 @@
   },
   "accountinfo.tabs": {
     "defaultMessage": "アカウント設定のセクション"
+  },
+  "activation.invalid-link": {
+    "defaultMessage": "無効な有効化リンクです"
+  },
+  "oauth.error": {
+    "defaultMessage": "OAuth エラー：{error}"
+  },
+  "oauth.missing-code": {
+    "defaultMessage": "サインインの応答にコードもトークンも含まれていませんでした。"
   }
 }

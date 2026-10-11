@@ -57,7 +57,12 @@ const ActivationPage = (): React.ReactElement => {
   useEffect(() => {
     const code = new URLSearchParams(window.location.search).get('code');
     if (!code) {
-      setError('Invalid activation link');
+      setError(
+        intl.formatMessage({
+          id: 'activation.invalid-link',
+          defaultMessage: 'Invalid activation link',
+        }),
+      );
       setLoading(false);
       return;
     }
@@ -69,10 +74,12 @@ const ActivationPage = (): React.ReactElement => {
         setLoading(false);
       })
       .catch((err) => {
-        // Use err.msg from ErrorInfo instead of err.message
-        setError(err.msg || 'Activation failed');
+        // The server's reason, or the page's own (translated) explanation.
+        setError(err.msg || null);
         setLoading(false);
       });
+    // The message is read once, on arrival: the activation code is single-use.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [client]);
 
   return (

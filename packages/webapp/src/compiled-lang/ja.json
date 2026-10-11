@@ -305,6 +305,12 @@
       "value": "有効化に失敗しました"
     }
   ],
+  "activation.invalid-link": [
+    {
+      "type": 0,
+      "value": "無効な有効化リンクです"
+    }
+  ],
   "activation.loading.desc": [
     {
       "type": 0,
@@ -2762,6 +2768,22 @@
     {
       "type": 0,
       "value": "サインアウト"
+    }
+  ],
+  "oauth.error": [
+    {
+      "type": 0,
+      "value": "OAuth エラー："
+    },
+    {
+      "type": 1,
+      "value": "error"
+    }
+  ],
+  "oauth.missing-code": [
+    {
+      "type": 0,
+      "value": "サインインの応答にコードもトークンも含まれていませんでした。"
     }
   ],
   "publish.checkbox": [

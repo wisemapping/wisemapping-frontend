@@ -1507,5 +1507,14 @@
   },
   "accountinfo.tabs": {
     "defaultMessage": "Kontobereiche"
+  },
+  "activation.invalid-link": {
+    "defaultMessage": "Ungültiger Aktivierungslink"
+  },
+  "oauth.error": {
+    "defaultMessage": "OAuth-Fehler: {error}"
+  },
+  "oauth.missing-code": {
+    "defaultMessage": "Die Anmeldeantwort enthielt weder einen Code noch ein Token."
   }
 }

@@ -140,6 +140,9 @@
   "activation.error.title": {
     "defaultMessage": "Activation Failed"
   },
+  "activation.invalid-link": {
+    "defaultMessage": "Invalid activation link"
+  },
   "activation.loading.desc": {
     "defaultMessage": "Please wait while we activate your account..."
   },
@@ -1273,6 +1276,12 @@
   },
   "menu.signout": {
     "defaultMessage": "Sign Out"
+  },
+  "oauth.error": {
+    "defaultMessage": "OAuth error: {error}"
+  },
+  "oauth.missing-code": {
+    "defaultMessage": "The sign-in response did not include a code or a token."
   },
   "publish.checkbox": {
     "defaultMessage": "Enable public sharing"

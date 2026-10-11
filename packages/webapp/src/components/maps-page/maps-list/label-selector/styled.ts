@@ -17,7 +17,7 @@
  */
 
 import FormGroup from '@mui/material/FormGroup';
-import styled from 'styled-components';
+import { styled } from '@mui/material/styles';
 
 export const LabelListContainer = styled(FormGroup)`
   max-height: 400px;

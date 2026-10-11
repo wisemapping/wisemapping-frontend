@@ -15,9 +15,9 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import styled from 'styled-components';
+import { styled } from '@mui/material/styles';
 
-export const SvgIcon = styled.img`
+export const SvgIcon = styled('img')`
   width: 25px;
   height: 25px;
   margin-left: 4px;

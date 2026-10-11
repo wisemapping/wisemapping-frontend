@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useEffect, useMemo, CSSProperties, useContext, useRef } from 'react';
+import React, { useEffect, useMemo, CSSProperties, useContext } from 'react';
 
 import { useStyles } from './styled';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -66,19 +66,15 @@ import Typography from '@mui/material/Typography';
 import CardHeader from '@mui/material/CardHeader';
 import { ClientContext } from '../../../classes/provider/client-context';
 import { CardSkeleton, MapsListSkeleton } from './MapsListSkeleton';
-import {
-  ChangeLabelMutationFunctionParam,
-  Order,
-  getChangeLabelMutationFunction,
-  getComparator,
-  isLabelFilter,
-  mapsFilter,
-  stableSort,
-} from './model';
+import { ChangeLabelMutationFunctionParam, Order, getChangeLabelMutationFunction } from './model';
+import { useMapsListState } from './useMapsListState';
 
 // The label dialog imports these from here.
 export type { ChangeLabelMutationFunctionParam };
 export { getChangeLabelMutationFunction };
+
+// A stable empty list: `data = []` would be a new array on every render while loading.
+const NO_MAPS: MapInfo[] = [];
 
 dayjs.extend(LocalizedFormat);
 dayjs.extend(relativeTime);
@@ -233,15 +229,6 @@ interface MapsListProps {
 
 export const MapsList = (props: MapsListProps): React.ReactElement => {
   const classes = useStyles();
-  const [order, setOrder] = React.useState<Order>('desc');
-  const [filter, setFilter] = React.useState<Filter>({ type: 'all' });
-
-  const [orderBy, setOrderBy] = React.useState<keyof MapInfo>('lastModificationTime');
-  const [selected, setSelected] = React.useState<number[]>([]);
-  const [searchCondition, setSearchCondition] = React.useState<string>('');
-
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const client = useContext(ClientContext);
   const intl = useIntl();
   const queryClient = useQueryClient();
@@ -252,36 +239,8 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
     dayjs.locale(userLocale.code);
   }, [userLocale.code]);
 
-  const filterLabelId = isLabelFilter(props.filter) ? props.filter.label.id : undefined;
-  // The filter the menu last chose. The list resets only when its type or label changes: the menu
-  // hands over a new object even when the same entry is chosen again.
-  const latestFilter = useRef(props.filter);
-  useEffect(() => {
-    latestFilter.current = props.filter;
-  }, [props.filter]);
-
-  useEffect(() => {
-    setSelected([]);
-    setPage(0);
-    setFilter((prevFilter) => {
-      const nextFilter = latestFilter.current;
-
-      if (prevFilter.type === nextFilter.type) {
-        if (isLabelFilter(nextFilter) && isLabelFilter(prevFilter)) {
-          if (prevFilter.label.id === nextFilter.label.id) {
-            return prevFilter;
-          }
-        } else {
-          return prevFilter;
-        }
-      }
-
-      return nextFilter;
-    });
-  }, [props.filter.type, filterLabelId]);
-
   const {
-    data: mapsData = [],
+    data: mapsData = NO_MAPS,
     // Only until the first list arrives: a background refetch keeps showing the maps.
     isPending: isLoadingMaps,
     isError: mapsLoadFailed,
@@ -298,19 +257,23 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
     />
   );
 
-  const filteredMaps: MapInfo[] = useMemo(() => {
-    const predicate = mapsFilter(filter, searchCondition);
-    return mapsData.filter(predicate);
-  }, [mapsData, filter, searchCondition]);
-
-  const sortedMaps = useMemo(() => {
-    return stableSort(filteredMaps, getComparator(order, orderBy));
-  }, [filteredMaps, order, orderBy]);
-
-  const pagedMaps = useMemo(() => {
-    const start = page * rowsPerPage;
-    return sortedMaps.slice(start, start + rowsPerPage);
-  }, [sortedMaps, page, rowsPerPage]);
+  const {
+    order,
+    orderBy,
+    page,
+    rowsPerPage,
+    selected,
+    filteredMaps,
+    pagedMaps,
+    requestSort,
+    changePage,
+    changeRowsPerPage,
+    changeSearch,
+    toggleSelected,
+    selectAll,
+    isSelected,
+    clearSelection,
+  } = useMapsListState(props.filter, mapsData);
 
   const [activeRowAction, setActiveRowAction] = React.useState<ActionPanelState | undefined>(
     undefined,
@@ -322,49 +285,18 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
   };
 
   const [activeDialog, setActiveDialog] = React.useState<ActiveDialog | undefined>(undefined);
-  const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof MapInfo) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
+  const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof MapInfo) =>
+    requestSort(property);
 
-  const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    if (event.target.checked) {
-      const newSelecteds = filteredMaps.map((n) => n.id);
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
-  };
+  const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>): void =>
+    selectAll(event.target.checked);
 
-  const handleRowClick = (event: React.MouseEvent<unknown>, id: number): void => {
-    const selectedIndex = selected.indexOf(id);
-    let newSelected: number[] = [];
+  const handleRowClick = (event: React.MouseEvent<unknown>, id: number): void => toggleSelected(id);
 
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      );
-    }
+  const handleChangePage = (event: unknown, newPage: number) => changePage(newPage);
 
-    setSelected(newSelected);
-  };
-
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) =>
+    changeRowsPerPage(parseInt(event.target.value, 10));
 
   const handleActionClick = (mapId: number): ((event: React.MouseEvent<HTMLElement>) => void) => {
     return (event: React.MouseEvent<HTMLElement>): void => {
@@ -419,13 +351,8 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
     setActiveRowAction(undefined);
   };
 
-  const handleOnSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchCondition(e.target.value);
-    // As on a filter change: a selection kept across a search would include maps the search
-    // hides, and a bulk delete would remove them unseen. The matches start on the first page.
-    setSelected([]);
-    setPage(0);
-  };
+  const handleOnSearchChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    changeSearch(e.target.value);
 
   const handleDeleteClick = () => {
     trackToolbarAction('delete_selected', `count:${selected.length}`);
@@ -464,7 +391,6 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
     removeLabelMultation.mutate({ mapId, labelId });
   };
 
-  const isSelected = (id: number) => selected.indexOf(id) !== -1;
   return (
     <div css={classes.root}>
       {activeRowAction?.mapId !== undefined && (
@@ -538,7 +464,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                   defaultMessage: 'Search ...',
                 })}
                 css={[classes.searchInputRoot, classes.searchInputInput]}
-                inputProps={{ 'aria-label': 'search' }}
+                slotProps={{ input: { 'aria-label': 'search' } }}
                 onChange={handleOnSearchChange}
                 // startAdornment={<SearchIcon />}
               />
@@ -604,16 +530,14 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                               defaultMessage: 'Starred',
                             })}
                           >
-                            <div className="hola" onClick={(e) => e.stopPropagation()}>
-                              <IconButton size="small" onClick={(e) => handleStarred(e, row.id)}>
-                                <StarRateRoundedIcon
-                                  color="action"
-                                  style={{
-                                    color: row.starred ? 'yellow' : 'gray',
-                                  }}
-                                />
-                              </IconButton>
-                            </div>
+                            <IconButton size="small" onClick={(e) => handleStarred(e, row.id)}>
+                              <StarRateRoundedIcon
+                                color="action"
+                                style={{
+                                  color: row.starred ? 'yellow' : 'gray',
+                                }}
+                              />
+                            </IconButton>
                           </Tooltip>
                         }
                         action={
@@ -903,7 +827,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
 
           // If it was a success action, reset the selection list ...
           if (success) {
-            setSelected([]);
+            clearSelection();
           }
         }}
         mapsId={activeDialog ? activeDialog.mapsId : []}

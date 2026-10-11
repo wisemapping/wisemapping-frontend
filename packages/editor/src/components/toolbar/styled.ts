@@ -15,9 +15,9 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import styled from 'styled-components';
+import { styled } from '@mui/material/styles';
 
-export const HeaderContainer = styled.div`
+export const HeaderContainer = styled('div')`
   width: 100%;
   height: 0px;
   background: #202020;
@@ -27,13 +27,13 @@ export const HeaderContainer = styled.div`
   display: flex;
 `;
 
-export const ToolbarContainer = styled.div`
+export const ToolbarContainer = styled('div')`
   display: flex;
   flex-direction: column;
   flex: 1;
 `;
 
-export const ToolbarButton = styled.div`
+export const ToolbarButton = styled('div')`
   width: 28px;
   height: 28px;
   text-align: center;
@@ -51,12 +51,12 @@ export const ToolbarButtonExt = styled(ToolbarButton)`
   padding-left: 5px;
 `;
 
-export const AccountButton = styled.div`
+export const AccountButton = styled('div')`
   display: inline-block;
   margin-top: 3px;
 `;
 
-export const ToolbarRightContainer = styled.div`
+export const ToolbarRightContainer = styled('div')`
   flex-shrink: 1;
   display: flex;
   flex-direction: row;

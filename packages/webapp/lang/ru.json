@@ -1507,5 +1507,14 @@
   },
   "accountinfo.tabs": {
     "defaultMessage": "Разделы настроек учётной записи"
+  },
+  "activation.invalid-link": {
+    "defaultMessage": "Недействительная ссылка активации"
+  },
+  "oauth.error": {
+    "defaultMessage": "Ошибка OAuth: {error}"
+  },
+  "oauth.missing-code": {
+    "defaultMessage": "В ответе на вход нет ни кода, ни токена."
   }
 }

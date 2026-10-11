@@ -15,9 +15,9 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import styled from 'styled-components';
+import { styled } from '@mui/material/styles';
 
-export const ShortcutsContainer = styled.div`
+export const ShortcutsContainer = styled('div')`
   font-size: 13px;
   width: 100%;
 

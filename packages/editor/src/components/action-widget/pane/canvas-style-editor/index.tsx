@@ -17,11 +17,7 @@
  */
 
 import React, { ReactElement, useState } from 'react';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
@@ -29,8 +25,16 @@ import GridOnIcon from '@mui/icons-material/GridOn';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import NotInterestedOutlined from '@mui/icons-material/NotInterestedOutlined';
 import { FormattedMessage } from 'react-intl';
-import { styled } from '@mui/material/styles';
 import ColorPicker from '../color-picker';
+import {
+  PaneButtonRow,
+  PaneCard,
+  PaneCenteredRow,
+  PaneCloseButton,
+  PaneSection,
+  PaneSectionTitle,
+} from '../shared/StyledPane';
+import { ActionButton, CanvasTabs, GridSizeButton, GridSizeLabel } from './styled';
 import NodeProperty from '../../../../classes/model/node-property';
 import type { CanvasStyleType, BackgroundPatternType } from '@wisemapping/mindplot';
 
@@ -41,29 +45,6 @@ type CanvasStyleEditorProps = {
   initialStyle?: Partial<CanvasStyleType>;
   onStyleChange: (style: Partial<CanvasStyleType>) => void;
 };
-
-const ActionButton = styled(IconButton)<{ selected?: boolean }>(({ selected, theme }) => ({
-  padding: '8px',
-  width: '32px',
-  height: '32px',
-  border: selected ? `2px solid ${theme.palette.primary.main}` : '2px solid #e0e0e0',
-  borderRadius: '4px',
-  '&:hover': {
-    borderColor: theme.palette.primary.main,
-  },
-}));
-
-const GridSizeButton = styled(IconButton)<{ selected?: boolean }>(({ selected, theme }) => ({
-  padding: '6px',
-  width: '32px',
-  height: '32px',
-  border: selected ? `2px solid ${theme.palette.primary.main}` : '2px solid #e0e0e0',
-  borderRadius: '4px',
-  fontSize: '0.7rem',
-  '&:hover': {
-    borderColor: theme.palette.primary.main,
-  },
-}));
 
 const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
   const defaultStyle: CanvasStyleType = {
@@ -158,43 +139,17 @@ const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
   };
 
   return (
-    <Box
-      sx={{
-        pt: 1.5,
-        px: 1.5,
-        pb: 1,
-        minWidth: '280px',
-        maxWidth: '320px',
-        backgroundColor: 'background.paper',
-        borderRadius: '8px',
-        border: '1px solid',
-        borderColor: 'divider',
-        position: 'relative',
-      }}
-    >
-      <IconButton
-        onClick={props.closeModal}
-        sx={{
-          position: 'absolute',
-          top: 4,
-          right: 4,
-          zIndex: 1,
-          width: 24,
-          height: 24,
-          '& .MuiSvgIcon-root': {
-            fontSize: '16px',
-          },
-        }}
-      >
+    <PaneCard>
+      <PaneCloseButton onClick={props.closeModal}>
         <CloseIcon />
-      </IconButton>
+      </PaneCloseButton>
 
       {/* Background Style - Always visible */}
-      <Box sx={{ mb: 2 }}>
-        <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
+      <PaneSection>
+        <PaneSectionTitle variant="subtitle2" gutterBottom>
           <FormattedMessage id="canvas-style.background-style" defaultMessage="Background Style" />
-        </Typography>
-        <Box sx={{ display: 'flex', gap: 1, justifyContent: 'center' }}>
+        </PaneSectionTitle>
+        <PaneButtonRow>
           <Tooltip
             title={
               <FormattedMessage
@@ -242,53 +197,37 @@ const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
               <FiberManualRecordIcon sx={{ fontSize: '8px' }} />
             </ActionButton>
           </Tooltip>
-        </Box>
-      </Box>
+        </PaneButtonRow>
+      </PaneSection>
 
       {/* Tabs - Only shown when pattern is not default */}
       {style.backgroundPattern !== undefined && (
         <>
-          <Tabs
-            value={activeTab}
-            onChange={handleTabChange}
-            sx={{
-              minHeight: '36px',
-              mb: 2,
-              '& .MuiTabs-indicator': {
-                height: 2,
-              },
-              '& .MuiTab-root': {
-                minHeight: '36px',
-                fontSize: '0.75rem',
-                py: 0.5,
-                textTransform: 'none',
-              },
-            }}
-          >
+          <CanvasTabs value={activeTab} onChange={handleTabChange}>
             <Tab label={<FormattedMessage id="canvas-style.tab-color" defaultMessage="Color" />} />
             <Tab
               label={<FormattedMessage id="canvas-style.tab-grid" defaultMessage="Grid Color" />}
               disabled={style.backgroundPattern !== 'grid' && style.backgroundPattern !== 'dots'}
             />
-          </Tabs>
+          </CanvasTabs>
 
           {/* Tab 0: Background Color */}
           {activeTab === 0 && (
-            <Box sx={{ mb: 2 }}>
-              <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
+            <PaneSection>
+              <PaneSectionTitle variant="subtitle2" gutterBottom>
                 <FormattedMessage
                   id="canvas-style.background-color"
                   defaultMessage="Background Color"
                 />
-              </Typography>
-              <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
+              </PaneSectionTitle>
+              <PaneCenteredRow>
                 <ColorPicker
                   closeModal={preventClose}
                   colorModel={backgroundColorModel}
                   hideNoneOption={true}
                 />
-              </Box>
-            </Box>
+              </PaneCenteredRow>
+            </PaneSection>
           )}
 
           {/* Tab 1: Grid Color */}
@@ -296,25 +235,25 @@ const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
             (style.backgroundPattern === 'grid' || style.backgroundPattern === 'dots') && (
               <>
                 {/* Grid Color */}
-                <Box sx={{ mb: 2 }}>
-                  <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
+                <PaneSection>
+                  <PaneSectionTitle variant="subtitle2" gutterBottom>
                     <FormattedMessage id="canvas-style.grid-color" defaultMessage="Grid Color" />
-                  </Typography>
-                  <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
+                  </PaneSectionTitle>
+                  <PaneCenteredRow>
                     <ColorPicker
                       closeModal={preventClose}
                       colorModel={gridColorModel}
                       hideNoneOption={true}
                     />
-                  </Box>
-                </Box>
+                  </PaneCenteredRow>
+                </PaneSection>
 
                 {/* Grid Size */}
-                <Box sx={{ mb: 2 }}>
-                  <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
+                <PaneSection>
+                  <PaneSectionTitle variant="subtitle2" gutterBottom>
                     <FormattedMessage id="canvas-style.grid-style" defaultMessage="Grid Size" />
-                  </Typography>
-                  <Box sx={{ display: 'flex', gap: 1, justifyContent: 'center' }}>
+                  </PaneSectionTitle>
+                  <PaneButtonRow>
                     <Tooltip
                       title={
                         <FormattedMessage
@@ -327,7 +266,7 @@ const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
                         selected={style.backgroundGridSize === 15}
                         onClick={() => handleGridSizeChange(15)}
                       >
-                        <Typography sx={{ fontSize: '0.65rem', fontWeight: 600 }}>XS</Typography>
+                        <GridSizeLabel>XS</GridSizeLabel>
                       </GridSizeButton>
                     </Tooltip>
                     <Tooltip
@@ -339,7 +278,7 @@ const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
                         selected={style.backgroundGridSize === 25}
                         onClick={() => handleGridSizeChange(25)}
                       >
-                        <Typography sx={{ fontSize: '0.65rem', fontWeight: 600 }}>S</Typography>
+                        <GridSizeLabel>S</GridSizeLabel>
                       </GridSizeButton>
                     </Tooltip>
                     <Tooltip
@@ -351,7 +290,7 @@ const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
                         selected={style.backgroundGridSize === 50}
                         onClick={() => handleGridSizeChange(50)}
                       >
-                        <Typography sx={{ fontSize: '0.65rem', fontWeight: 600 }}>M</Typography>
+                        <GridSizeLabel>M</GridSizeLabel>
                       </GridSizeButton>
                     </Tooltip>
                     <Tooltip
@@ -363,7 +302,7 @@ const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
                         selected={style.backgroundGridSize === 75}
                         onClick={() => handleGridSizeChange(75)}
                       >
-                        <Typography sx={{ fontSize: '0.65rem', fontWeight: 600 }}>L</Typography>
+                        <GridSizeLabel>L</GridSizeLabel>
                       </GridSizeButton>
                     </Tooltip>
                     <Tooltip
@@ -378,16 +317,16 @@ const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
                         selected={style.backgroundGridSize === 100}
                         onClick={() => handleGridSizeChange(100)}
                       >
-                        <Typography sx={{ fontSize: '0.65rem', fontWeight: 600 }}>XL</Typography>
+                        <GridSizeLabel>XL</GridSizeLabel>
                       </GridSizeButton>
                     </Tooltip>
-                  </Box>
-                </Box>
+                  </PaneButtonRow>
+                </PaneSection>
               </>
             )}
         </>
       )}
-    </Box>
+    </PaneCard>
   );
 };
 

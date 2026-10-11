@@ -16,29 +16,21 @@
  *   limitations under the License.
  */
 
-import styled from 'styled-components';
+import Box from '@mui/material/Box';
+import FormGroup from '@mui/material/FormGroup';
+import { styled } from '@mui/material/styles';
 
-export const LabelContainer = styled.div`
-  display: inline-flex;
-  flex-direction: row;
-  margin: 2px;
-  padding: 4px;
-  align-items: center;
-  font-size: 0.96rem;
-  font-family: 'Figtree', 'Noto Sans JP', 'Helvetica', 'system-ui', 'Arial', 'sans-serif';
+export const PickerRoot = styled(Box)({
+  padding: '5px',
+  maxWidth: '100%',
+});
 
-  .delete-button {
-    opacity: 0;
-    transition: opacity 0.2s ease;
-  }
+export const PickerEmojiFrame = styled(Box)({
+  width: 'clamp(240px, 85vw, 320px)',
+  height: 'clamp(280px, 50vh, 350px)',
+  overflow: 'hidden',
+});
 
-  &:hover .delete-button {
-    opacity: 1;
-  }
-`;
-
-export const LabelText = styled.span`
-  margin-left: 4px;
-  margin-right: 0px;
-  font-family: 'Figtree', 'Noto Sans JP', 'Helvetica', 'system-ui', 'Arial', 'sans-serif';
-`;
+export const PickerShowImages = styled(FormGroup)({
+  float: 'right',
+});

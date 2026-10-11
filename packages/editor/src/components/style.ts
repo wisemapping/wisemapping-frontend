@@ -15,9 +15,9 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import styled from 'styled-components';
+import { styled } from '@mui/material/styles';
 
-export const SpinnerCentered = styled.div`
+export const SpinnerCentered = styled('div')`
   position: absolute;
   top: 50%;
   left: 50%;

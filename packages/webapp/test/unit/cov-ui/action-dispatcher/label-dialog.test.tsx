@@ -186,7 +186,7 @@ describe('AddLabelDialog', () => {
 
     fireEvent.change(titleInput, { target: { value: '   ' } });
     expect(addButton.disabled).toBe(true);
-    fireEvent.keyPress(titleInput, { key: 'Enter', code: 'Enter', charCode: 13 });
+    fireEvent.keyDown(titleInput, { key: 'Enter', code: 'Enter' });
     expect(onAdd).not.toHaveBeenCalled();
 
     fireEvent.change(titleInput, { target: { value: '  Ideas ' } });
@@ -220,14 +220,14 @@ describe('AddLabelDialog', () => {
   test('Enter in the title adds the label, but not while it is empty', () => {
     const { onAdd, titleInput } = setup(0);
 
-    fireEvent.keyPress(titleInput, { key: 'Enter', code: 'Enter', charCode: 13 });
+    fireEvent.keyDown(titleInput, { key: 'Enter', code: 'Enter' });
     expect(onAdd).not.toHaveBeenCalled();
 
     fireEvent.change(titleInput, { target: { value: 'Ideas' } });
-    fireEvent.keyPress(titleInput, { key: 'a', code: 'KeyA', charCode: 97 });
+    fireEvent.keyDown(titleInput, { key: 'a', code: 'KeyA' });
     expect(onAdd).not.toHaveBeenCalled();
 
-    fireEvent.keyPress(titleInput, { key: 'Enter', code: 'Enter', charCode: 13 });
+    fireEvent.keyDown(titleInput, { key: 'Enter', code: 'Enter' });
     expect(onAdd).toHaveBeenCalledWith({ title: 'Ideas', color: COLORS[0], id: 0 });
   });
 
