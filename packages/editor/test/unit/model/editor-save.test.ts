@@ -22,6 +22,7 @@
 import type { MindplotWebComponent, WidgetBuilder } from '@wisemapping/mindplot';
 import type Capability from '../../../src/classes/action/capability';
 import Editor from '../../../src/classes/model/editor';
+import { defined } from '../defined';
 
 jest.mock('@wisemapping/mindplot', () => ({}));
 
@@ -235,7 +236,7 @@ describe('Editor dispose (BL5-25)', () => {
 
     expect(designer.dispose).toHaveBeenCalledTimes(1);
     expect(loaded.save.mock.invocationCallOrder[0]).toBeLessThan(
-      designer.dispose.mock.invocationCallOrder[0],
+      defined(designer.dispose.mock.invocationCallOrder[0]),
     );
     editor.dispose();
     expect(designer.dispose).toHaveBeenCalledTimes(1);

@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import { StoryFn, Meta } from '@storybook/html';
+import { StoryFn, Meta } from '@storybook/html-vite';
 import createConnection, { TopicArgs } from './Connection';
 
 export default {

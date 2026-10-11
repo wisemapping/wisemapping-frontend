@@ -77,8 +77,9 @@ class NodePropertyBuilder {
 
   private uniqueOrUndefined<T>(propertyGetter: (Topic: Topic) => T | undefined): T | undefined {
     const nodes = this.designer.getModel().filterSelectedTopics();
-    if (nodes.length === 0) return undefined;
-    const firstValue = propertyGetter(nodes[0]);
+    const [first] = nodes;
+    if (first === undefined) return undefined;
+    const firstValue = propertyGetter(first);
     return nodes.every((n) => propertyGetter(n) === firstValue) ? firstValue : undefined;
   }
 
@@ -245,8 +246,10 @@ class NodePropertyBuilder {
         getValue: () => undefined,
         setValue: (value: string | undefined) => {
           if (value) {
-            const values = value.split(':');
-            this.designer.addIconType(values[0] as 'image' | 'emoji', values[1]);
+            const [type, id] = value.split(':');
+            if (id !== undefined) {
+              this.designer.addIconType(type as 'image' | 'emoji', id);
+            }
           }
         },
       };

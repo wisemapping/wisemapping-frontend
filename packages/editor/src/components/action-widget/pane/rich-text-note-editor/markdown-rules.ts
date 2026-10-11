@@ -73,6 +73,9 @@ const INLINE_RULES: { pattern: RegExp; type: Exclude<InlineRuleType, 'a'> }[] = 
   { pattern: /(^|[^\w_])_(?![\s_])([^_]*[^\s_])_$/, type: 'em' },
 ];
 
+/** A capture group of a match; one that took no part in it is empty. */
+const group = (match: RegExpExecArray, index: number): string => match[index] ?? '';
+
 const LINK_RULE = /(^|[^!])\[([^[\]]*\S[^[\]]*)\]\(([^()\s]+)\)$/;
 
 /**
@@ -110,14 +113,16 @@ export const safeLinkUrl = (value: string): string | null => {
 export const matchInlineRule = (text: string): InlineRule | null => {
   const link = LINK_RULE.exec(text);
   if (link) {
-    const href = safeLinkUrl(link[3]);
-    return href ? { type: 'a', start: link.index + link[1].length, content: link[2], href } : null;
+    const href = safeLinkUrl(group(link, 3));
+    return href
+      ? { type: 'a', start: link.index + group(link, 1).length, content: group(link, 2), href }
+      : null;
   }
 
   for (const { pattern, type } of INLINE_RULES) {
     const match = pattern.exec(text);
     if (match) {
-      return { type, start: match.index + match[1].length, content: match[2] };
+      return { type, start: match.index + group(match, 1).length, content: group(match, 2) };
     }
   }
   return null;
@@ -159,17 +164,17 @@ export const inlineMarkdownToHtml = (text: string): string => {
   const before = escapeHtml(text.slice(0, match.index));
   const after = inlineMarkdownToHtml(text.slice(match.index + match[0].length));
   if (type === 'code') {
-    return `${before}<code>${escapeHtml(match[1])}</code>${after}`;
+    return `${before}<code>${escapeHtml(group(match, 1))}</code>${after}`;
   }
   if (type === 'a') {
-    const href = safeLinkUrl(match[2]);
+    const href = safeLinkUrl(group(match, 2));
     // An unsafe link stays as the text that was written.
     const span = href
-      ? `<a href="${escapeHtml(href)}">${inlineMarkdownToHtml(match[1])}</a>`
+      ? `<a href="${escapeHtml(href)}">${inlineMarkdownToHtml(group(match, 1))}</a>`
       : escapeHtml(match[0]);
     return `${before}${span}${after}`;
   }
-  return `${before}<${type}>${inlineMarkdownToHtml(match[1])}</${type}>${after}`;
+  return `${before}<${type}>${inlineMarkdownToHtml(group(match, 1))}</${type}>${after}`;
 };
 
 const LIST_ITEM = /^([ \t]*)([*+-]|\d{1,9}[.)])[ \t]+(.*)$/;
@@ -207,21 +212,26 @@ export const markdownToHtml = (text: string): string => {
   // The open lists, outermost first.
   let stack: List[] = [];
   const closeLists = () => {
-    if (stack.length > 0) {
-      out.push(listToHtml(stack[0]));
+    const [outermost] = stack;
+    if (outermost) {
+      out.push(listToHtml(outermost));
       stack = [];
     }
   };
 
   const lines = text.split(/\r\n?|\n/);
   for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
+    const line = lines[i] ?? '';
 
     if (FENCE.test(line)) {
       closeLists();
       const code: string[] = [];
-      for (i += 1; i < lines.length && !FENCE.test(lines[i]); i++) {
-        code.push(lines[i]);
+      for (i += 1; i < lines.length; i++) {
+        const codeLine = lines[i] ?? '';
+        if (FENCE.test(codeLine)) {
+          break;
+        }
+        code.push(codeLine);
       }
       out.push(`<pre>${escapeHtml(code.join('\n'))}</pre>`);
       continue;
@@ -229,21 +239,23 @@ export const markdownToHtml = (text: string): string => {
 
     const item = LIST_ITEM.exec(line);
     if (item) {
-      const indent = indentWidth(item[1]);
-      const tag = /^\d/.test(item[2]) ? 'ol' : 'ul';
-      const entry: ListItem = { html: inlineMarkdownToHtml(item[3].trim()), children: [] };
+      const indent = indentWidth(group(item, 1));
+      const tag = /^\d/.test(group(item, 2)) ? 'ol' : 'ul';
+      const entry: ListItem = { html: inlineMarkdownToHtml(group(item, 3).trim()), children: [] };
 
       // Close the lists nested deeper than this item.
-      while (stack.length > 1 && indent < stack[stack.length - 1].indent) {
+      let top = stack.at(-1);
+      while (stack.length > 1 && top !== undefined && indent < top.indent) {
         stack.pop();
+        top = stack.at(-1);
       }
-      const top = stack[stack.length - 1];
+      const lastItem = top?.items.at(-1);
       if (!top) {
         stack.push({ tag, indent, items: [entry] });
-      } else if (indent > top.indent && top.items.length > 0) {
+      } else if (indent > top.indent && lastItem) {
         // A sub-list of the last item.
         const nested: List = { tag, indent, items: [entry] };
-        top.items[top.items.length - 1].children.push(nested);
+        lastItem.children.push(nested);
         stack.push(nested);
       } else if (top.tag === tag) {
         top.items.push(entry);
@@ -254,9 +266,8 @@ export const markdownToHtml = (text: string): string => {
       } else {
         // A sub-list of the other kind next to the current one.
         stack.pop();
-        const parent = stack[stack.length - 1];
         const sibling: List = { tag, indent, items: [entry] };
-        parent.items[parent.items.length - 1].children.push(sibling);
+        stack.at(-1)?.items.at(-1)?.children.push(sibling);
         stack.push(sibling);
       }
       continue;
@@ -269,8 +280,8 @@ export const markdownToHtml = (text: string): string => {
     closeLists();
     const heading = HEADING.exec(line);
     if (heading) {
-      const level = heading[1].length;
-      out.push(`<h${level}>${inlineMarkdownToHtml(heading[2])}</h${level}>`);
+      const level = group(heading, 1).length;
+      out.push(`<h${level}>${inlineMarkdownToHtml(group(heading, 2))}</h${level}>`);
     } else {
       out.push(`<div>${inlineMarkdownToHtml(line.trim())}</div>`);
     }

@@ -61,7 +61,7 @@ interface AppBarProps {
   mapInfo: MapInfo;
   capability: Capability;
   onAction: (type: ToolbarActionType) => void;
-  accountConfig?: React.ReactElement;
+  accountConfig?: React.ReactElement | undefined;
 }
 
 const appBarDivisor = {

@@ -15,7 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React from 'react';
 import FormatLineSpacingIcon from '@mui/icons-material/FormatLineSpacing';
 import { IntlShape } from 'react-intl';
 import { Topic } from '@wisemapping/mindplot';

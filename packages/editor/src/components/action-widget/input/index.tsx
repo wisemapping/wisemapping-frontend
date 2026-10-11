@@ -17,7 +17,7 @@
  */
 import TextField, { TextFieldProps } from '@mui/material/TextField';
 import { DesignerKeyboard } from '@wisemapping/mindplot';
-import React, { ReactElement, useEffect, useRef } from 'react';
+import { ReactElement, useEffect, useRef } from 'react';
 
 /**
  *

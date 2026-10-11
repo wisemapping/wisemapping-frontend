@@ -22,11 +22,9 @@ const config = {
   preset: 'ts-jest',
   moduleFileExtensions: ['js', 'ts', 'tsx'],
   transform: {
-    // Inline preset-env rather than the root babel.config.json, which sets
-    // `modules: false` so that Vite can do its own ESM handling. Jest needs
-    // CommonJS, and without this override react-intl -- shipped ESM-only --
-    // cannot be required at all, which is why anything rendering a
-    // FormattedMessage was previously untestable.
+    // An inline preset-env that compiles to CommonJS, which Jest needs: without it react-intl --
+    // shipped ESM-only -- can not be required at all, and nothing rendering a FormattedMessage
+    // could be tested.
     '^.+\\.m?js$': [
       'babel-jest',
       {
@@ -35,7 +33,6 @@ const config = {
         configFile: false,
       },
     ],
-    '.+\\.(svg|css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$': 'jest-transform-stub',
   },
   moduleNameMapper: {
     '^react-ga4$': '<rootDir>/test/mocks/react-ga4.js',
@@ -45,10 +42,9 @@ const config = {
     '^@wisemapping/web2d$': '<rootDir>/../web2d/src/index.ts',
     // Uses Vite's import.meta.glob, which ts-jest can not compile: list the icons from disk.
     '/SvgIconAssets$': '<rootDir>/../mindplot/test/unit/__mocks__/SvgIconAssets.ts',
-    // Before the transform below gets a chance: assets resolve to a placeholder
-    // path rather than jest-transform-stub's empty string, which React rejects
-    // when it lands on an <img src>.
-    '\\.(svg|png|jpg|jpeg|gif)$': '<rootDir>/test/mocks/asset-stub.js',
+    // Assets resolve to a placeholder path: an empty string, React rejects on an <img src>.
+    '\\.(svg|css|styl|less|sass|scss|png|jpg|jpeg|gif|ttf|woff|woff2)$':
+      '<rootDir>/test/mocks/asset-stub.js',
   },
   // react-intl and the @formatjs packages it depends on are ESM-only, so they
   // have to go through the transform above instead of being skipped.

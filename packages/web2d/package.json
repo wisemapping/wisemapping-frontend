@@ -41,15 +41,14 @@
     "typecheck:storybook": "tsc --noEmit -p storybook"
   },
   "devDependencies": {
-    "@babel/preset-typescript": "^8.0.1",
-    "@mdx-js/react": "^3.1.1",
     "@simonsmith/cypress-image-snapshot": "^11.0.0",
     "@storybook/addon-docs": "^10.6.1",
     "@storybook/addon-links": "^10.6.1",
     "@storybook/html-vite": "^10.6.1",
     "@types/jest": "^30.0.0",
+    "@types/react": "^19.3.0",
     "cypress": "^16.1.1",
-    "eslint-plugin-storybook": "^10.6.1",
+    "eslint": "^10.12.0",
     "globals": "^17.13.0",
     "jest": "^30.5.2",
     "jest-environment-jsdom": "^30.5.2",

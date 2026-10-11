@@ -134,7 +134,8 @@ const restoreCaret = (root: HTMLElement, path: number[] | null): void => {
   }
   const length =
     node.nodeType === Node.TEXT_NODE ? node.textContent!.length : node.childNodes.length;
-  const offset = path && node !== root ? Math.min(path[path.length - 1], length) : length;
+  const last = path?.at(-1);
+  const offset = last !== undefined && node !== root ? Math.min(last, length) : length;
   setCaret(root, node, offset);
 };
 
@@ -175,11 +176,12 @@ const lineOf = (root: HTMLElement, caret: Caret): { block: HTMLElement; nodes: N
 };
 
 const textBefore = (root: HTMLElement, nodes: Node[], caret: Caret): string => {
-  if (nodes.length === 0) {
+  const [first] = nodes;
+  if (!first) {
     return '';
   }
   const range = root.ownerDocument.createRange();
-  range.setStartBefore(nodes[0]);
+  range.setStartBefore(first);
   range.setEnd(caret.node, caret.offset);
   return range.toString();
 };
@@ -224,7 +226,8 @@ const fillEmpty = (el: HTMLElement): void => {
 /** Converts the caret's line to a list or a heading, removing the marker typed at its start. */
 const applyBlockRule = (root: HTMLElement, caret: Caret, rule: BlockRule): boolean => {
   const { block, nodes } = lineOf(root, caret);
-  if (nodes.length === 0) {
+  const [lineStart] = nodes;
+  if (!lineStart) {
     return false;
   }
   // Only a whole line of the root or a whole paragraph is converted, not part of a list item or
@@ -239,17 +242,18 @@ const applyBlockRule = (root: HTMLElement, caret: Caret, rule: BlockRule): boole
 
   const doc = root.ownerDocument;
   const marker = doc.createRange();
-  marker.setStartBefore(nodes[0]);
+  marker.setStartBefore(lineStart);
   marker.setEnd(caret.node, caret.offset);
   marker.deleteContents();
 
   const isListRule = rule.type === 'ul' || rule.type === 'ol';
   const target = doc.createElement(isListRule ? 'li' : rule.type);
   const remaining = nodes.filter((n) => n.parentNode === block);
-  const anchor = remaining.length > 0 ? remaining[0] : null;
+  const anchor = remaining[0] ?? null;
+  const lastRemaining = remaining.at(-1);
   // The <br> around a line of the root are not needed next to a block.
-  if (block === root && remaining.length > 0) {
-    [remaining[0].previousSibling, remaining[remaining.length - 1].nextSibling].forEach((n) => {
+  if (block === root && anchor && lastRemaining) {
+    [anchor.previousSibling, lastRemaining.nextSibling].forEach((n) => {
       if (isElement(n) && n.tagName === 'BR') {
         n.remove();
       }

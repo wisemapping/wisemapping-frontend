@@ -17,7 +17,7 @@
  */
 
 import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import TopicImagePicker from './index';
 import NodeProperty from '../../../../classes/model/node-property';
 
@@ -84,22 +84,17 @@ export default meta;
 type Story = StoryObj<typeof TopicImagePickerWithActions>;
 
 export const Default: Story = {
-  args: {
-    initialEmoji: undefined,
-    initialIconsGallery: undefined,
-  },
+  args: {},
 };
 
 export const WithEmoji: Story = {
   args: {
     initialEmoji: 'emoji:😀',
-    initialIconsGallery: undefined,
   },
 };
 
 export const WithImage: Story = {
   args: {
-    initialEmoji: undefined,
     initialIconsGallery: 'image:tag_blue',
   },
 };

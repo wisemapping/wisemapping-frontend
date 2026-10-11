@@ -26,6 +26,7 @@ import BootstrapPersistenceManager from '../../../src/classes/persistence/Bootst
 import DefaultWidgetBuilder from '../../../src/classes/default-widget-manager';
 import { useEditor, EditorOptions } from '../../../src/hooks/useEditor';
 import { logCriticalError } from '../../../src/utils/error-logger';
+import { defined } from '../defined';
 
 const keyboard = { pause: jest.fn(), resume: jest.fn() };
 jest.mock('@wisemapping/mindplot', () => ({
@@ -130,7 +131,7 @@ describe('useEditor', () => {
     const { result, canvas } = mountWithCanvas(optionsOf());
 
     await waitFor(() => expect(result.current.model).toBeDefined());
-    const model = models[0];
+    const model = defined(models[0]);
     expect(model.component).toBe(canvas);
     expect(model.loadMindmap).toHaveBeenCalledWith(
       '42',
@@ -147,7 +148,9 @@ describe('useEditor', () => {
     );
 
     await waitFor(() => expect(result.current.model).toBeDefined());
-    expect(models[0].loadMindmap.mock.calls[0][1]).toBeInstanceOf(BootstrapPersistenceManager);
+    expect(defined(models[0]).loadMindmap.mock.calls[0][1]).toBeInstanceOf(
+      BootstrapPersistenceManager,
+    );
   });
 
   it('logs a map that fails to load', async () => {
@@ -160,7 +163,7 @@ describe('useEditor', () => {
         expect.any(Error),
       ),
     );
-    expect(models[0].registerEvents).not.toHaveBeenCalled();
+    expect(defined(models[0]).registerEvents).not.toHaveBeenCalled();
   });
 
   it('builds the model only once across re-renders', async () => {
@@ -178,8 +181,8 @@ describe('useEditor', () => {
 
     unmount();
 
-    expect(models[0].flushPendingChangesOnce).toHaveBeenCalled();
-    expect(models[0].dispose).toHaveBeenCalled();
+    expect(defined(models[0]).flushPendingChangesOnce).toHaveBeenCalled();
+    expect(defined(models[0]).dispose).toHaveBeenCalled();
   });
 
   it('logs a save that fails while leaving', async () => {

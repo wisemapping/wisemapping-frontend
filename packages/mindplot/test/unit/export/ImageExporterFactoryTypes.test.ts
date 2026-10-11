@@ -27,11 +27,10 @@ jest.mock('../../../src/components/export/PDFExporter', () => ({
   },
 }));
 
-// eslint-disable-next-line import/first
 import BinaryImageExporter from '../../../src/components/export/BinaryImageExporter';
-// eslint-disable-next-line import/first
+
 import ImageExporterFactory from '../../../src/components/export/ImageExporterFactory';
-// eslint-disable-next-line import/first
+
 import PDFExporter from '../../../src/components/export/PDFExporter';
 
 describe('ImageExporterFactory', () => {

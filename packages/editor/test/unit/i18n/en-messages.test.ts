@@ -20,6 +20,7 @@ import { execFileSync } from 'child_process';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
+import { defined } from '../defined';
 
 type Source = Record<string, { defaultMessage: string }>;
 type Compiled = Record<string, { type: number; value: string }[]>;
@@ -44,9 +45,9 @@ describe('English messages', () => {
 
   test('lang/en.json is what i18n:extract produces from the source', () => {
     // The same command as the package's i18n:extract script, into a scratch file.
-    const script = readJson<{ scripts: Record<string, string> }>('package.json').scripts[
-      'i18n:extract'
-    ];
+    const script = defined(
+      readJson<{ scripts: Record<string, string> }>('package.json').scripts['i18n:extract'],
+    );
     const out = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'i18n-')), 'en.json');
     execFileSync('sh', ['-c', `${script.replace('lang/en.json', out)}`], {
       cwd: root,
@@ -62,9 +63,9 @@ describe('English messages', () => {
   test('keeps the messages that are declared as data', () => {
     // The shortcut table and the level tooltip used to pass ids through variables or a template
     // literal, which i18n:extract cannot read, so they dropped out of en.json.
-    expect(en['shortcut-help-pane.zoom-to-fit'].defaultMessage).toBe('Zoom to fit');
-    expect(en['shortcut-help-pane.edit-topic-key'].defaultMessage).toBe('F2 or Double Click');
-    expect(en['visualization-toolbar.tooltip-expand-level-current'].defaultMessage).toBe(
+    expect(en['shortcut-help-pane.zoom-to-fit']?.defaultMessage).toBe('Zoom to fit');
+    expect(en['shortcut-help-pane.edit-topic-key']?.defaultMessage).toBe('F2 or Double Click');
+    expect(en['visualization-toolbar.tooltip-expand-level-current']?.defaultMessage).toBe(
       'Expand by Level (Level {level})',
     );
   });

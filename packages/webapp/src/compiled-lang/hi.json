@@ -2489,12 +2489,6 @@
       "value": "पासवर्ड"
     }
   ],
-  "login.redirecting": [
-    {
-      "type": 0,
-      "value": "पुनर्निर्देशन..."
-    }
-  ],
   "login.server-error": [
     {
       "type": 0,

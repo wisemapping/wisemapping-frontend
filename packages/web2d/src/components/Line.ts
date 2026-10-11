@@ -83,5 +83,5 @@ export interface ControlPointLine extends Line {
 }
 
 // A type cannot be `export default`ed by name under verbatimModuleSyntax.
-// eslint-disable-next-line no-restricted-exports
+
 export type { Line as default };

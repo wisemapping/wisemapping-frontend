@@ -2540,12 +2540,6 @@
       "value": "كلمة المرور"
     }
   ],
-  "login.redirecting": [
-    {
-      "type": 0,
-      "value": "جارٍ إعادة التوجيه..."
-    }
-  ],
   "login.server-error": [
     {
       "type": 0,

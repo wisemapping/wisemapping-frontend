@@ -17,25 +17,26 @@
  */
 
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import CircularProgress from '@mui/material/CircularProgress';
 import AccountAccessLayout from '../AccountAccessLayout';
 import { ProgressMessage, ProgressStack } from './styled';
 
-type AuthProgressProps = {
-  /** What is happening; without one, only the spinner shows (while a page loads). */
-  message?: React.ReactNode;
-};
-
 /**
  * The waiting screen of signing in. The OAuth callback, the login page checking the session and
- * the loading of those pages all show it, in the layout of the login page, so that signing in
- * reads as one screen whose message changes instead of a run of different pages.
+ * the loading of those pages all show it, in the layout of the login page and with one message,
+ * so that signing in reads as one screen instead of a run of different pages and texts.
  */
-const AuthProgress = ({ message }: AuthProgressProps): React.ReactElement => (
+const AuthProgress = (): React.ReactElement => (
   <AccountAccessLayout headerType="none">
     <ProgressStack role="status" aria-live="polite">
       <CircularProgress size={48} />
-      {message && <ProgressMessage variant="h6">{message}</ProgressMessage>}
+      <ProgressMessage variant="h6">
+        <FormattedMessage
+          id="registration.callback.waiting.description"
+          defaultMessage="Please wait while we validate your identity"
+        />
+      </ProgressMessage>
     </ProgressStack>
   </AccountAccessLayout>
 );

@@ -86,14 +86,14 @@ class XMLSerializerFactory {
     if (!entry) {
       throw new Error(`Cound not find serialized for ${version}`);
     }
-    // eslint-disable-next-line new-cap
+
     let result: XMLMindmapSerializer = new entry.serializer();
     // Wrap it in the migrator of each later version, up to the current one.
     codeToSerializer.slice(start + 1).forEach(({ codeName, migrator }) => {
       if (!migrator) {
         throw new Error(`Missing migrator to ${codeName}`);
       }
-      // eslint-disable-next-line new-cap
+
       result = new migrator(result);
     });
     return result;

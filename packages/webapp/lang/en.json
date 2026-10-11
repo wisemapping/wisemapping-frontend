@@ -1139,9 +1139,6 @@
   "login.password": {
     "defaultMessage": "Password"
   },
-  "login.redirecting": {
-    "defaultMessage": "Redirecting..."
-  },
   "login.server-error": {
     "defaultMessage": "An unexpected error occurred. Please try again later."
   },

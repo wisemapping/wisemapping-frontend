@@ -166,7 +166,7 @@ class HtmlSanitizer {
 
   // Dangerous URL schemes
   private static readonly DANGEROUS_PROTOCOLS = new Set([
-    'javascript:', // eslint-disable-line no-script-url
+    'javascript:',
     'vbscript:',
     'data:',
     'file:',

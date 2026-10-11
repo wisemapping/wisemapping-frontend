@@ -2497,12 +2497,6 @@
       "value": "Passwort"
     }
   ],
-  "login.redirecting": [
-    {
-      "type": 0,
-      "value": "Weiterleitung..."
-    }
-  ],
   "login.server-error": [
     {
       "type": 0,

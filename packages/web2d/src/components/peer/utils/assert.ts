@@ -34,10 +34,9 @@
  */
 
 // Imported by name everywhere, so it stays a named export.
-// eslint-disable-next-line import/prefer-default-export
+
 export function $assert(assert: unknown, message: string): asserts assert {
   if (!assert) {
-    // eslint-disable-next-line no-console
     console.error(message);
     throw new Error(message);
   }

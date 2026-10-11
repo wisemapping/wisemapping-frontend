@@ -1,20 +1,14 @@
 import { defineConfig } from 'eslint/config';
-import typescriptEslint from '@typescript-eslint/eslint-plugin';
+import tseslint from 'typescript-eslint';
 import globals from 'globals';
-import tsParser from '@typescript-eslint/parser';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import js from '@eslint/js';
-import { FlatCompat } from '@eslint/eslintrc';
+import { createNodeResolver, importX } from 'eslint-plugin-import-x';
 import cypress from 'eslint-plugin-cypress';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all,
-});
 
 // Build and tool configs, loaded by Node (eslint, vite, cypress, jest, storybook) rather than bundled.
 const toolConfigFiles = [
@@ -39,14 +33,16 @@ export default defineConfig([
   },
   {
     files: ['src/**/*.{js,ts}', 'test/**/*.{js,ts}', ...toolConfigFiles],
-    extends: compat.extends(
-      'airbnb-base',
-      'plugin:@typescript-eslint/eslint-recommended',
-      'plugin:@typescript-eslint/recommended',
-    ),
+    // ESLint's and import-x's recommended rules, in place of eslint-config-airbnb-base, which
+    // stopped at ESLint 8 (2021). import-x is the maintained fork of eslint-plugin-import, whose
+    // last release supports ESLint 9 at most.
+    extends: [
+      js.configs.recommended,
+      importX.flatConfigs.recommended,
+      tseslint.configs.recommended,
+    ],
 
     plugins: {
-      '@typescript-eslint': typescriptEslint,
       cypress,
     },
 
@@ -56,7 +52,6 @@ export default defineConfig([
         ...globals.commonjs,
         ...globals.jest,
       },
-      parser: tsParser,
       parserOptions: {
         ecmaVersion: 2020,
         sourceType: 'module',
@@ -64,11 +59,7 @@ export default defineConfig([
     },
 
     settings: {
-      'import/resolver': {
-        node: {
-          extensions: ['.js', '.ts'],
-        },
-      },
+      'import-x/resolver-next': [createNodeResolver({ extensions: ['.js', '.ts'] })],
     },
 
     rules: {
@@ -105,7 +96,7 @@ export default defineConfig([
       '@typescript-eslint/no-this-alias': 'off',
       '@typescript-eslint/no-non-null-assertion': 'off',
 
-      'import/extensions': [
+      'import-x/extensions': [
         'error',
         'ignorePackages',
         {
@@ -124,14 +115,8 @@ export default defineConfig([
   {
     files: toolConfigFiles,
     rules: {
-      // These packages publish only an `exports` map, which the import plugin's node resolver
-      // does not read. Node resolves them, or the tool would fail to start.
-      'import/no-unresolved': [
-        'error',
-        { ignore: ['^vite$', '^eslint/config$', '^@typescript-eslint/(parser|eslint-plugin)$'] },
-      ],
       // Tooling is a development dependency, declared here or in the root package.json.
-      'import/no-extraneous-dependencies': [
+      'import-x/no-extraneous-dependencies': [
         'error',
         { devDependencies: true, packageDir: [__dirname, path.join(__dirname, '../..')] },
       ],
@@ -141,7 +126,7 @@ export default defineConfig([
     // Storybook reads named exports (`parameters`, `decorators`) from the preview file.
     files: ['.storybook/preview.ts'],
     rules: {
-      'import/prefer-default-export': 'off',
+      'import-x/prefer-default-export': 'off',
     },
   },
 ]);

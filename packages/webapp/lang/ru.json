@@ -1292,9 +1292,6 @@
   "validation.title-required": {
     "defaultMessage": "Название обязательно"
   },
-  "login.redirecting": {
-    "defaultMessage": "Перенаправление..."
-  },
   "error.go-home": {
     "defaultMessage": "На главную"
   },

@@ -58,7 +58,7 @@ export const CLOUD_ATTRIBUTES = ['COLOR'] as const;
 
 export const ICON_ATTRIBUTES = ['BUILTIN'] as const;
 
-export type Attributes<T extends readonly string[]> = { [name in T[number]]?: string };
+export type Attributes<T extends readonly string[]> = { [name in T[number]]?: string | undefined };
 
 export interface FreemindNode extends Attributes<typeof NODE_ATTRIBUTES> {
   kind: 'node';
@@ -76,7 +76,7 @@ export interface FreemindEdge extends Attributes<typeof EDGE_ATTRIBUTES> {
 export interface FreemindArrowlink extends Attributes<typeof ARROWLINK_ATTRIBUTES> {
   kind: 'arrowlink';
   // Freeplane only: the dash pattern, its lengths separated by spaces. It is written, not read.
-  DASH?: string;
+  DASH?: string | undefined;
 }
 
 export interface FreemindCloud extends Attributes<typeof CLOUD_ATTRIBUTES> {
@@ -90,15 +90,15 @@ export interface FreemindIcon extends Attributes<typeof ICON_ATTRIBUTES> {
 // A plugin. FreeMind 0.7 stored notes as hooks with a <text> child.
 export interface FreemindHook {
   kind: 'hook';
-  NAME?: string;
-  text?: string;
+  NAME?: string | undefined;
+  text?: string | undefined;
 }
 
 // A rich text (an <html> document) of TYPE NODE (the node text) or NOTE.
 export interface FreemindRichcontent {
   kind: 'richcontent';
-  TYPE?: string;
-  html?: string;
+  TYPE?: string | undefined;
+  html?: string | undefined;
 }
 
 export type FreemindElement =

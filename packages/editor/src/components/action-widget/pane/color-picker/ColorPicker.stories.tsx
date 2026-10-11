@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import ColorPicker from './index';
 import NodeProperty from '../../../../classes/model/node-property';
 import React from 'react';
@@ -60,9 +60,7 @@ export default meta;
 type Story = StoryObj<typeof ColorPickerWithActions>;
 
 export const Default: Story = {
-  args: {
-    initialColor: undefined,
-  },
+  args: {},
 };
 
 export const WithSelectedColor: Story = {

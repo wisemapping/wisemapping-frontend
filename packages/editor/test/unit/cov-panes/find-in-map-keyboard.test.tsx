@@ -19,7 +19,6 @@
 /**
  * @jest-environment jsdom
  */
-import React from 'react';
 import { fireEvent, screen } from '@testing-library/react';
 import type { Designer, Topic } from '@wisemapping/mindplot';
 import FindInMapPanel from '../../../src/components/action-widget/pane/find-in-map';

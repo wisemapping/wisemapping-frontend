@@ -19,16 +19,16 @@
 /**
  * @jest-environment jsdom
  */
-import React from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Toolbar, { ToolbarMenuItem } from '../../../src/components/toolbar';
 import type ActionConfig from '../../../src/classes/action/action-config';
+import { defined } from '../defined';
 
 const hoverMenu = (onClick?: jest.Mock): ActionConfig => ({
   icon: <span>icon</span>,
   tooltip: 'Fonts',
-  onClick,
+  ...(onClick && { onClick }),
   options: [
     { icon: <span>bold</span>, tooltip: 'Bold', onClick: jest.fn() },
     { icon: <span>hidden</span>, tooltip: 'Hidden', onClick: jest.fn(), visible: false },
@@ -76,7 +76,9 @@ describe('ToolbarSubmenu hover behaviour', () => {
     render(<ToolbarMenuItem configuration={hoverMenu()} />);
     fireEvent.click(trigger('Fonts'));
 
-    fireEvent.keyDown(screen.getAllByRole('menu', { hidden: true })[0], { key: 'Escape' });
+    fireEvent.keyDown(defined(screen.getAllByRole('menu', { hidden: true })[0]), {
+      key: 'Escape',
+    });
 
     expect(trigger('Fonts')).toHaveAttribute('aria-expanded', 'false');
   });

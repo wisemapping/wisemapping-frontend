@@ -273,7 +273,7 @@ describe('emoji and gallery icon', () => {
       Group.prototype,
       'append',
       () => topic.redraw(topic.getThemeVariant(), false),
-      (self, args) => args[0] === emoji,
+      (_self, args) => args[0] === emoji,
     );
     console.info(`emoji redraw: ${rewrites} setText, ${appends} appends`);
     expect(rewrites).toBe(0);
@@ -289,7 +289,7 @@ describe('emoji and gallery icon', () => {
       Group.prototype,
       'append',
       () => topic.redraw(topic.getThemeVariant(), false),
-      (self, args) => args[0] === svg,
+      (_self, args) => args[0] === svg,
     );
     console.info(`gallery icon redraw: ${appends} appends`);
     expect(appends).toBe(0);

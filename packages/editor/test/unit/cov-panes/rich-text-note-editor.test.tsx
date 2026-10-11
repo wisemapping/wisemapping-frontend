@@ -19,7 +19,6 @@
 /**
  * @jest-environment jsdom
  */
-import React from 'react';
 import { act, fireEvent, screen, waitFor, within } from '@testing-library/react';
 import RichTextNoteEditor from '../../../src/components/action-widget/pane/rich-text-note-editor';
 import { property, readOnlyProperty, renderPane } from './helpers';

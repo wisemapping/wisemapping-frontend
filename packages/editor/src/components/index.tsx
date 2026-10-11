@@ -62,7 +62,7 @@ type EditorProps = {
    * host application, which owns routing. When omitted the "copy link to node"
    * affordance is hidden.
    */
-  getDeepLink?: (nodeId: number) => string;
+  getDeepLink?: ((nodeId: number) => string) | undefined;
 };
 
 const EditorContent = ({
@@ -218,24 +218,10 @@ const EditorContent = ({
   );
 };
 
-const Editor = ({
-  config,
-  onAction,
-  accountConfiguration,
-  themeVariantStorage,
-  initialSearchParams,
-  getDeepLink,
-}: EditorProps): ReactElement => {
+const Editor = (props: EditorProps): ReactElement => {
   return (
-    <EditorThemeProvider themeVariantStorage={themeVariantStorage}>
-      <EditorContent
-        config={config}
-        onAction={onAction}
-        accountConfiguration={accountConfiguration}
-        themeVariantStorage={themeVariantStorage}
-        initialSearchParams={initialSearchParams}
-        getDeepLink={getDeepLink}
-      />
+    <EditorThemeProvider themeVariantStorage={props.themeVariantStorage}>
+      <EditorContent {...props} />
     </EditorThemeProvider>
   );
 };

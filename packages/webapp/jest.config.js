@@ -28,8 +28,6 @@ const config = {
   transform: {
     '^.+\\.(ts|tsx)$': 'ts-jest',
     '^.+\\.js$': 'babel-jest',
-    '.+\\.(svg|css|styl|less|sass|scss|png|jpg|jpeg|gif|ttf|woff|woff2|wxml)$':
-      'jest-transform-stub',
   },
   moduleNameMapper: {
     // Resolve the sibling workspace packages to their sources, the same way
@@ -44,7 +42,8 @@ const config = {
     // compile: reuse mindplot's own test replacement, which lists them from disk.
     '/SvgIconAssets$': '<rootDir>/../mindplot/test/unit/__mocks__/SvgIconAssets.ts',
     // Asset imports carry no behaviour under jsdom.
-    '\\.(svg|css|styl|less|sass|scss|png|jpg|jpeg|gif|ttf|woff|woff2|wxml)$': 'jest-transform-stub',
+    '\\.(svg|css|styl|less|sass|scss|png|jpg|jpeg|gif|ttf|woff|woff2|wxml)$':
+      '<rootDir>/test/unit/mocks/asset-stub.js',
     // react-ga4 touches window.gtag on import; stub it out.
     '^react-ga4$': '<rootDir>/test/unit/mocks/react-ga4.js',
     // react-intl (and @formatjs below it) is ESM-only and cannot be required

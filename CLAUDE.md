@@ -47,6 +47,17 @@ cd packages/mindplot && yarn jest test/unit/path/to/file.test.ts
 
 Storybook is the integration-test harness for `web2d`, `mindplot`, and `editor` — `test:integration` boots Storybook (or Vite playground) on a fixed port and runs Cypress against it via `scripts/run-storybook-cypress.js` / `start-server-and-test`. Ports: web2d 6106, mindplot 6107, editor playground 8081 + storybook 6008, webapp 3000. Tests use dynamic port allocation that will kill blockers — see `TESTING_PORT_ALLOCATION.md`.
 
+## Types: strictness, `undefined` and `null`
+
+Every package extends `tsconfig.strict.json` (root): `strict` plus `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `noImplicitOverride`, `noImplicitReturns`, `noFallthroughCasesInSwitch`, `noUnusedLocals`, `noUnusedParameters`. Change the checks there, for all packages at once; a package's own tsconfig only adds what is specific to it (web2d: `verbatimModuleSyntax`, `isolatedDeclarations`). An unused parameter that a signature needs is prefixed with `_`.
+
+**`undefined` is "absent"; `null` only where something outside our code defines it.**
+
+- Our own types, parameters, fields and return values express absence with `undefined`: optional properties and parameters (`name?: string`), "not found" / "not set" results (`findTopic(id): Topic | undefined`), fields not set yet, a value cleared. Not `null`, and not both (`T | null | undefined`).
+- `null` stays where an API we do not own defines it, and is converted at that boundary (`?? undefined`) before it enters our model: DOM APIs (`getAttribute`, `querySelector`, `parentElement`), `JSON.parse` and backend payloads that send `null`, third-party APIs that take or return `null`. React keeps its own: element refs (`useRef<HTMLDivElement>(null)`) and a component rendering nothing (`return null`).
+- With `exactOptionalPropertyTypes`, an optional property written `undefined` on purpose (cleared, or copied from a value that may be missing) is typed `?: T | undefined`; otherwise leave the key out.
+- Checks match the type: `x === undefined` / `x !== undefined`, `x ?? fallback`, `x?.y`; `=== null` only on a boundary value typed `| null`. No loose `== null` / `!= null`: a value is never both.
+
 ## Bundle size
 
 The webapp resolves `@wisemapping/editor`, `mindplot` and `web2d` to their sources (`vite.config.mts` aliases), and the editor and mindplot barrels can not be tree-shaken: one value import of `@wisemapping/editor` or `@wisemapping/mindplot` puts the whole editor (about 1.3 MB) in that chunk. So:

@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-// jest-transform-stub resolves an asset import to the empty string, and React
-// warns when that reaches an <img src>. A placeholder path stands in for the
-// URL the bundler produces in a real build.
+// What an asset import (an image, a font, a stylesheet) resolves to under Jest: a placeholder for
+// the URL the bundler produces in a real build. Not the empty string, which React warns about when
+// it reaches an <img src>.
 module.exports = 'asset-stub';

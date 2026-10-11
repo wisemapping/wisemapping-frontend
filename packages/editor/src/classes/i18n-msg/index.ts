@@ -66,7 +66,12 @@ class I18nMsg {
     if (ready) {
       return ready;
     }
-    const messages = (await LOADERS[code]()).default as LocaleData;
+    const loader = LOADERS[code];
+    if (!loader) {
+      // Only English has no loader, and it is bundled.
+      return en as LocaleData;
+    }
+    const messages = (await loader()).default as LocaleData;
     loaded.set(code, messages);
     return messages;
   }

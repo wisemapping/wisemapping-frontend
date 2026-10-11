@@ -17,7 +17,7 @@
  */
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import NodeProperty from '../../../../classes/model/node-property';
 import { FormattedMessage } from 'react-intl';
 

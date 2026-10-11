@@ -1292,9 +1292,6 @@
   "validation.title-required": {
     "defaultMessage": "标题是必需的"
   },
-  "login.redirecting": {
-    "defaultMessage": "重定向中..."
-  },
   "error.go-home": {
     "defaultMessage": "返回首页"
   },

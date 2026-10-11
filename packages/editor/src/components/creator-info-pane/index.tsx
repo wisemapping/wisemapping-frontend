@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import MapInfo from '../../classes/model/map-info';
 import LogoTextBlackSvg from '../../../images/logo-text-black.svg';
 import LogoTextWhiteSvg from '../../../images/pwrdby-white.svg';

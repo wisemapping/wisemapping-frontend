@@ -11,6 +11,11 @@ declare namespace Cypress {
 
   interface Chainable {
     /**
+     * Runs axe-core in the page under test and yields the accessibility violations it finds.
+     */
+    scanA11y(): Chainable<import('axe-core').Result[]>;
+
+    /**
      * Custom command to access the editor web component shadow root.
      */
     getMindplotShadowRoot(): Chainable<JQuery<HTMLElement>>;

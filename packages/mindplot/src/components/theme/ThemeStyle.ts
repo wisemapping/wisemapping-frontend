@@ -74,10 +74,10 @@ export type TopicStyleType = {
 
 export type CanvasStyleType = {
   backgroundColor: string;
-  gridColor?: string;
+  gridColor?: string | undefined;
   opacity?: number;
   showGrid?: boolean;
-  gridPattern?: BackgroundPatternType;
+  gridPattern?: BackgroundPatternType | undefined;
 };
 
 type JsonTopicStyleType = {

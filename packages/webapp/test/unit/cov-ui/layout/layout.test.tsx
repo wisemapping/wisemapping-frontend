@@ -125,6 +125,8 @@ describe('LoadingFallback', () => {
       renderPage(<LoadingFallback />);
       const status = screen.getByRole('status');
       expect(status.querySelector('[role="progressbar"]')).not.toBeNull();
+      // The same message as the callback and the login page: one text through signing in.
+      expect(status.textContent).toBe('Please wait while we validate your identity');
       expect(status.closest('section')).not.toBeNull();
       expect(screen.queryByText('Loading...')).toBeNull();
     },

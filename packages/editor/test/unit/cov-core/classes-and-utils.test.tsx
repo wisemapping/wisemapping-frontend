@@ -266,7 +266,12 @@ describe('analytics', () => {
 
   it('sends no label when none is given', () => {
     trackAppBarAction('save');
-    expect(eventSpy).toHaveBeenCalledWith(expect.objectContaining({ label: undefined }));
+    expect(eventSpy).toHaveBeenCalledWith({
+      category: 'app_bar',
+      action: 'save',
+      nonInteraction: false,
+    });
+    expect(eventSpy.mock.lastCall?.[0]).not.toHaveProperty('label');
   });
 
   it('logs rather than throws when analytics fails', () => {

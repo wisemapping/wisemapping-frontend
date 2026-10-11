@@ -1292,9 +1292,6 @@
   "validation.title-required": {
     "defaultMessage": "タイトルは必須です"
   },
-  "login.redirecting": {
-    "defaultMessage": "リダイレクト中..."
-  },
   "error.go-home": {
     "defaultMessage": "ホームへ移動"
   },

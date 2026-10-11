@@ -1,6 +1,6 @@
 import js from '@eslint/js';
 import globals from 'globals';
-import typescriptEslint from '@typescript-eslint/eslint-plugin';
+import tseslint from 'typescript-eslint';
 
 // The Vercel functions at the root: the sitemap serverless function and the Edge middleware.
 const vercelFiles = ['api/**/*.ts', 'middleware.ts'];
@@ -22,7 +22,7 @@ export default [
       'implicit-arrow-linebreak': 'off',
     },
   },
-  ...typescriptEslint.configs['flat/recommended'].map((config) => ({
+  ...tseslint.configs.recommended.map((config) => ({
     ...config,
     files: vercelFiles,
   })),

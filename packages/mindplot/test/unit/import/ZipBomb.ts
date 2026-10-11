@@ -26,7 +26,7 @@ export const BOMB_BYTES_PER_PAIR = 258;
  * with a literal 0 followed by `pairs` back-references of 258 bytes at distance 1. Each one takes
  * 13 bits, so the stream inflates about 160 times its size, and building it costs no compression.
  */
-/* eslint-disable no-bitwise -- a DEFLATE stream is written bit by bit */
+
 export const deflateBomb = (pairs: number): Uint8Array => {
   const out = new Uint8Array(Math.ceil((3 + 8 + pairs * 13 + 7) / 8));
   let bit = 0;
@@ -59,7 +59,6 @@ export const deflateBomb = (pairs: number): Uint8Array => {
   writeCode(0b0000000, 7); // end of block
   return out;
 };
-/* eslint-enable no-bitwise */
 
 export type RawZipEntry = {
   name: string;

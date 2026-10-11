@@ -38,18 +38,18 @@ import { sidePosition } from './support/MainTopicPosition';
 
 interface MindManagerTopic {
   // Topics without an ID or OId can not be referenced, so they are not mapped.
-  id?: string;
+  id?: string | undefined;
   text: string;
   notes?: string;
   // The XHTML of the note, sanitized. Preferred to the plain text notes.
-  notesHtml?: string;
+  notesHtml?: string | undefined;
   hyperlink?: string;
   icons: string[];
   // The WiseMapping task progress icon (task_0 ... task_100) of the TaskPercentage.
-  progressIcon?: string;
-  fillColor?: string;
-  lineColor?: string;
-  shape?: TopicShapeType;
+  progressIcon?: string | undefined;
+  fillColor?: string | undefined;
+  lineColor?: string | undefined;
+  shape?: TopicShapeType | undefined;
   // TopicViewGroup/Collapsed: the subtopics are hidden.
   collapsed?: boolean;
   // In millimeters. For a floating topic, its position from the central topic. For a subtopic, a

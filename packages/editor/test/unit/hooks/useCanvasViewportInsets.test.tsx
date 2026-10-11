@@ -19,7 +19,6 @@
 /**
  * @jest-environment jsdom
  */
-import React from 'react';
 import { render, renderHook, cleanup } from '@testing-library/react';
 import ThreeDRotation from '@mui/icons-material/ThreeDRotation';
 import type { Designer, ViewportInsets } from '@wisemapping/mindplot';
@@ -28,6 +27,7 @@ import {
   useCanvasViewportInsets,
 } from '../../../src/hooks/useCanvasViewportInsets';
 import Toolbar from '../../../src/components/toolbar';
+import { defined } from '../defined';
 
 type Box = { left: number; top: number; width: number; height: number };
 
@@ -171,7 +171,7 @@ describe('Toolbar', () => {
     );
 
     const [bottom, none] = getAllByRole('menu');
-    expect(bottom.getAttribute('data-canvas-inset')).toBe('bottom');
-    expect(none.hasAttribute('data-canvas-inset')).toBe(false);
+    expect(defined(bottom).getAttribute('data-canvas-inset')).toBe('bottom');
+    expect(defined(none).hasAttribute('data-canvas-inset')).toBe(false);
   });
 });

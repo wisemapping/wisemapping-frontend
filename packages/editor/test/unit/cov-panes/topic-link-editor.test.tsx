@@ -19,7 +19,6 @@
 /**
  * @jest-environment jsdom
  */
-import React from 'react';
 import { fireEvent, screen } from '@testing-library/react';
 import TopicLinkEditor from '../../../src/components/action-widget/pane/topic-link-editor';
 import SaveAndDelete from '../../../src/components/action-widget/pane/save-and-delete';

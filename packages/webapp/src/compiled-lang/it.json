@@ -2493,12 +2493,6 @@
       "value": "Password"
     }
   ],
-  "login.redirecting": [
-    {
-      "type": 0,
-      "value": "Reindirizzamento..."
-    }
-  ],
   "login.server-error": [
     {
       "type": 0,

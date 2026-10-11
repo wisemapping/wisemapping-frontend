@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import Box from '@mui/material/Box';
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import NodeProperty from '../../../../classes/model/node-property';
 import colors from './colors.json';
 import { styled } from '@mui/material/styles';

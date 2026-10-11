@@ -113,7 +113,9 @@ describe('LoginPage', () => {
     const client = setup('/c/login', true);
 
     // The waiting screen the OAuth callback shows too (AuthProgress).
-    expect(screen.getByRole('status').textContent).toBe('Redirecting...');
+    expect(screen.getByRole('status').textContent).toBe(
+      'Please wait while we validate your identity',
+    );
     await waitFor(() => expect(client.fetchAccountInfo).toHaveBeenCalled());
     await new Promise((resolve) => setTimeout(resolve, 0));
     expect(screen.queryByRole('form', { name: 'Login form' })).toBeNull();

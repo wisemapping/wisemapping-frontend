@@ -19,7 +19,6 @@
 /**
  * @jest-environment jsdom
  */
-import React from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { useIntl } from 'react-intl';
@@ -287,7 +286,7 @@ describe('Editor', () => {
     const { unmount } = renderEditor(configOf(model, { mode: 'viewonly-public' }));
     expect(document.body).not.toHaveAttribute('data-wisemapping-embed-loaded');
 
-    act(() => listeners.loadSuccess.forEach((l) => l()));
+    act(() => listeners.loadSuccess?.forEach((l) => l()));
 
     expect(document.body).toHaveAttribute('data-wisemapping-embed-loaded', 'true');
     unmount();

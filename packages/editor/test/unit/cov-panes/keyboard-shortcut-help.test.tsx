@@ -19,7 +19,6 @@
 /**
  * @jest-environment jsdom
  */
-import React from 'react';
 import { fireEvent, screen, within } from '@testing-library/react';
 import KeyboardShortcutsHelp from '../../../src/components/action-widget/pane/keyboard-shortcut-help';
 import {
@@ -27,6 +26,7 @@ import {
   Combo,
 } from '../../../src/components/action-widget/pane/keyboard-shortcut-help/shortcuts';
 import { renderPane } from './helpers';
+import { defined } from '../defined';
 
 const isMacPlatform = jest.fn(() => false);
 jest.mock('@wisemapping/mindplot', () => ({
@@ -38,14 +38,14 @@ beforeEach(() => {
 });
 
 const bodyRows = (): HTMLElement[] =>
-  within(screen.getAllByRole('rowgroup')[1]).getAllByRole('row');
+  within(defined(screen.getAllByRole('rowgroup')[1])).getAllByRole('row');
 
 const label = (descriptor: { defaultMessage?: unknown }): string =>
   String(descriptor.defaultMessage);
 
 /** Expected key caps and joiners for one platform column of a category. */
 const expected = (combosOf: (combo: { win: Combo[]; mac: Combo[] }) => Combo[], index: number) => {
-  const combos = SHORTCUT_CATEGORIES[index].shortcuts.map(combosOf);
+  const combos = defined(SHORTCUT_CATEGORIES[index]).shortcuts.map(combosOf);
   return {
     keys: combos.flat().flatMap((combo) => combo.keys ?? []),
     alternatives: combos.reduce((sum, list) => sum + list.length - 1, 0),
@@ -63,7 +63,7 @@ describe('KeyboardShortcutsHelp', () => {
     expect(tabs.map((tab) => tab.textContent)).toEqual(
       SHORTCUT_CATEGORIES.map((category) => label(category.label)),
     );
-    expect(tabs[0].getAttribute('aria-selected')).toBe('true');
+    expect(defined(tabs[0]).getAttribute('aria-selected')).toBe('true');
 
     const diagram = screen.getByRole('img', {
       name: 'Left arrow moves to the parent topic, right arrow to a child, up and down between siblings.',
@@ -84,7 +84,7 @@ describe('KeyboardShortcutsHelp', () => {
     expect(screen.getByRole('columnheader', { name: 'Action' })).toBeTruthy();
 
     SHORTCUT_CATEGORIES.forEach((category, index) => {
-      fireEvent.click(screen.getAllByRole('tab')[index]);
+      fireEvent.click(defined(screen.getAllByRole('tab')[index]));
 
       const rows = bodyRows();
       expect(rows.map((row) => row.firstElementChild?.textContent)).toEqual(
@@ -107,7 +107,7 @@ describe('KeyboardShortcutsHelp', () => {
 
     expect(screen.getByRole('columnheader', { name: 'Mac OS X' })).toBeTruthy();
     SHORTCUT_CATEGORIES.forEach((_category, index) => {
-      fireEvent.click(screen.getAllByRole('tab')[index]);
+      fireEvent.click(defined(screen.getAllByRole('tab')[index]));
       const { keys } = expected((s) => s.mac, index);
       expect(Array.from(document.querySelectorAll('kbd')).map((kbd) => kbd.textContent)).toEqual(
         keys,
@@ -121,7 +121,7 @@ describe('KeyboardShortcutsHelp', () => {
       category.shortcuts.some((s) => s.message.id === 'shortcut-help-pane.drag-disconnect'),
     );
 
-    fireEvent.click(screen.getAllByRole('tab')[editing]);
+    fireEvent.click(defined(screen.getAllByRole('tab')[editing]));
 
     const row = bodyRows().find((r) => r.textContent?.startsWith('Disconnect topic'));
     expect(row?.lastElementChild?.textContent).toBe('Ctrl+drag topic');
@@ -134,7 +134,7 @@ describe('KeyboardShortcutsHelp', () => {
       category.shortcuts.some((s) => s.message.id === 'shortcut-help-pane.drag-disconnect'),
     );
 
-    fireEvent.click(screen.getAllByRole('tab')[editing]);
+    fireEvent.click(defined(screen.getAllByRole('tab')[editing]));
 
     const row = bodyRows().find((r) => r.textContent?.startsWith('Disconnect topic'));
     // The drag reads hasShortcutModifier(): Cmd on a Mac, where a Ctrl press is the right click.

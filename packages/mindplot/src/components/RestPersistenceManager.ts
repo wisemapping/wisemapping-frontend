@@ -38,7 +38,12 @@ class RESTPersistenceManager extends PersistenceManager {
 
   private jwt: string | undefined;
 
-  constructor(options: { documentUrl: string; revertUrl: string; lockUrl: string; jwt?: string }) {
+  constructor(options: {
+    documentUrl: string;
+    revertUrl: string;
+    lockUrl: string;
+    jwt?: string | undefined;
+  }) {
     $assert(options.documentUrl, 'documentUrl can not be null');
     $assert(options.revertUrl, 'revertUrl can not be null');
     $assert(options.lockUrl, 'lockUrl can not be null');
@@ -290,12 +295,10 @@ class RESTPersistenceManager extends PersistenceManager {
     };
 
     if (accept) {
-      // eslint-disable-next-line dot-notation
       headers['Accept'] = accept;
     }
 
     if (this.jwt) {
-      // eslint-disable-next-line dot-notation
       headers['Authorization'] = `Bearer ${this.jwt}`;
     }
     return headers;

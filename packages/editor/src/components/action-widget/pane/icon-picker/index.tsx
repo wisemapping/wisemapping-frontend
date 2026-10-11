@@ -31,8 +31,7 @@ type IconPickerProp = {
   iconModel: NodeProperty<string | undefined>;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const IconPicker = ({ triggerClose, iconModel }: IconPickerProp): ReactElement => {
+const IconPicker = ({ iconModel }: IconPickerProp): ReactElement => {
   const [checked, setChecked] = React.useState(true);
   const intl = useIntl();
 

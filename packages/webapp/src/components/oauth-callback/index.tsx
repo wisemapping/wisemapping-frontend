@@ -265,16 +265,7 @@ const OAuthCallbackPage = (): React.ReactElement => {
 
   // While it signs in, the same waiting screen as the login page it goes on to (see AuthProgress).
   if (!error && !needConfirmLinking && !needConfirmSignIn) {
-    return (
-      <AuthProgress
-        message={
-          <FormattedMessage
-            id="registration.callback.waiting.description"
-            defaultMessage="Please wait while we validate your identity"
-          />
-        }
-      />
-    );
+    return <AuthProgress />;
   }
 
   return (

@@ -1,20 +1,14 @@
 import { defineConfig } from 'eslint/config';
-import typescriptEslint from '@typescript-eslint/eslint-plugin';
+import tseslint from 'typescript-eslint';
 import globals from 'globals';
-import tsParser from '@typescript-eslint/parser';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import js from '@eslint/js';
-import { FlatCompat } from '@eslint/eslintrc';
+import { createNodeResolver, importX } from 'eslint-plugin-import-x';
 import cypress from 'eslint-plugin-cypress';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all,
-});
 
 export default defineConfig([
   {
@@ -29,14 +23,16 @@ export default defineConfig([
     ],
   },
   {
-    extends: compat.extends(
-      'airbnb-base',
-      'plugin:@typescript-eslint/eslint-recommended',
-      'plugin:@typescript-eslint/recommended',
-    ),
+    // ESLint's and import-x's recommended rules, in place of eslint-config-airbnb-base, which
+    // stopped at ESLint 8 (2021). import-x is the maintained fork of eslint-plugin-import, whose
+    // last release supports ESLint 9 at most.
+    extends: [
+      js.configs.recommended,
+      importX.flatConfigs.recommended,
+      tseslint.configs.recommended,
+    ],
 
     plugins: {
-      '@typescript-eslint': typescriptEslint,
       cypress,
     },
 
@@ -48,18 +44,13 @@ export default defineConfig([
         designer: true,
       },
 
-      parser: tsParser,
       ecmaVersion: 11,
       sourceType: 'script',
     },
 
     settings: {
-      'import/core-modules': ['@wisemapping/web2d'],
-      'import/resolver': {
-        node: {
-          extensions: ['.js', '.ts'],
-        },
-      },
+      'import-x/core-modules': ['@wisemapping/web2d'],
+      'import-x/resolver-next': [createNodeResolver({ extensions: ['.js', '.ts'] })],
     },
 
     rules: {
@@ -129,7 +120,7 @@ export default defineConfig([
         },
       ],
 
-      'import/extensions': [
+      'import-x/extensions': [
         'error',
         'ignorePackages',
         {
@@ -167,14 +158,8 @@ export default defineConfig([
       '.storybook/**/*.{js,mjs}',
     ],
     rules: {
-      // These packages publish only an `exports` map, which the import plugin's node resolver
-      // does not read. Node resolves them, or the tool would fail to start.
-      'import/no-unresolved': [
-        'error',
-        { ignore: ['^vite$', '^eslint/config$', '^@typescript-eslint/(parser|eslint-plugin)$'] },
-      ],
       // Tooling is a development dependency, declared here or in the root package.json.
-      'import/no-extraneous-dependencies': [
+      'import-x/no-extraneous-dependencies': [
         'error',
         { devDependencies: true, packageDir: [__dirname, path.join(__dirname, '../..')] },
       ],
@@ -202,10 +187,6 @@ export default defineConfig([
         ...globals.mocha,
       },
     },
-    rules: {
-      // The image-snapshot command publishes only an `exports` map (see the tool-config override).
-      'import/no-unresolved': ['error', { ignore: ['^@simonsmith/cypress-image-snapshot/'] }],
-    },
   },
   {
     // Chai property assertions (`expect(x).to.be.true`) are expressions that assert when read.
@@ -225,14 +206,13 @@ export default defineConfig([
     },
     rules: {
       '@typescript-eslint/no-require-imports': 'off',
-      'import/no-unresolved': ['error', { ignore: ['^@simonsmith/cypress-image-snapshot/'] }],
     },
   },
   {
     // Storybook reads named exports (`parameters`, `decorators`) from the preview file.
     files: ['.storybook/preview.js'],
     rules: {
-      'import/prefer-default-export': 'off',
+      'import-x/prefer-default-export': 'off',
     },
   },
   {

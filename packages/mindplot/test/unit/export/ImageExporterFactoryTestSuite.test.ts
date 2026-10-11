@@ -26,9 +26,8 @@ jest.mock('../../../src/components/export/PDFExporter', () => ({
   default: class {},
 }));
 
-// eslint-disable-next-line import/first
 import ImageExporterFactory from '../../../src/components/export/ImageExporterFactory';
-// eslint-disable-next-line import/first
+
 import SVGExporter from '../../../src/components/export/SVGExporter';
 
 setupBlob();

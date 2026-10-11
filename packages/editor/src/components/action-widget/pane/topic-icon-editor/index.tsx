@@ -47,7 +47,7 @@ const TopicIconEditor = ({ closeModal, iconModel }: TopicIconEditorProps): React
   const [tabValue, setTabValue] = React.useState(0); // 0 = Emojis, 1 = Icons Gallery
   const { mode } = useTheme();
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
 

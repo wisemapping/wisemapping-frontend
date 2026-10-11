@@ -29,6 +29,7 @@ const wxmlLoader = () => {
           map: null,
         };
       }
+      return null;
     },
   };
 };

@@ -36,7 +36,7 @@ type WidgetPopoverProps = {
    * Designer's constructor assigns -- an undeclared dependency TypeScript could
    * not see, and one rename away from a runtime ReferenceError.
    */
-  designer?: Designer;
+  designer?: Designer | undefined;
 };
 
 export const WidgetPopover = ({

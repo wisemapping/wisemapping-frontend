@@ -470,6 +470,7 @@ class XMindImporter extends Importer {
       } catch (error) {
         throw new Error(
           `Unsupported XMind input: unable to detect format (${(error as Error).message})`,
+          { cause: error },
         );
       }
     }
@@ -547,7 +548,9 @@ class XMindImporter extends Importer {
       if (error instanceof ImportError) {
         throw error;
       }
-      throw new Error(`Failed to unzip XMind archive: ${(error as Error).message}`);
+      throw new Error(`Failed to unzip XMind archive: ${(error as Error).message}`, {
+        cause: error,
+      });
     }
 
     const entries = Object.entries(files);

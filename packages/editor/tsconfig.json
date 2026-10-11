@@ -1,4 +1,5 @@
 {
+  "extends": "../../tsconfig.strict.json",
   "include": ["src/**/*", "test/**/*", "vite.config.mts", ".storybook/**/*"],
   "compilerOptions": {
     "jsx": "react-jsx",
@@ -6,15 +7,11 @@
     "outDir": "./dist/",
     "rootDir": "..",
     "sourceMap": true,
-    "noImplicitAny": true,
-    "noImplicitOverride": true,
     "module": "es2020",
     "moduleResolution": "bundler",
-    "strict": true,
     "target": "es2022",
     "allowJs": true,
     "esModuleInterop": true,
-    "strictNullChecks": true,
     "declaration": true,
     "skipLibCheck": true,
     "rootDirs": ["src", "../mindplot/src", "../web2d/src"],

@@ -48,7 +48,7 @@ type UseEditorProps = {
 };
 
 export interface EditorConfiguration {
-  model?: Model;
+  model?: Model | undefined;
   mindplotRef: React.MutableRefObject<unknown>;
   mapInfo: MapInfo;
   capability: Capability;

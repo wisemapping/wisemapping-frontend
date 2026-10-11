@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { ReactElement, useMemo } from 'react';
+import { ReactElement, useMemo } from 'react';
 import { useIntl } from 'react-intl';
 import Capability from '../../classes/action/capability';
 import Model from '../../classes/model/editor';
@@ -26,7 +26,7 @@ import { useSelection } from '../../hooks/useSelection';
 type EditorToolbarProps = {
   model: Model | undefined;
   capability: Capability;
-  getDeepLink?: (nodeId: number) => string;
+  getDeepLink?: ((nodeId: number) => string) | undefined;
 };
 
 const EditorToolbar = ({ model, capability, getDeepLink }: EditorToolbarProps): ReactElement => {

@@ -17,7 +17,6 @@
  */
 
 import '../css/viewmode.css';
-import React from 'react';
 import { LocalStorageManager, Designer } from '@wisemapping/mindplot';
 import MapInfoImpl from './MapInfoImpl';
 import { createRoot } from 'react-dom/client';

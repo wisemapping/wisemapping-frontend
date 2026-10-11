@@ -19,7 +19,6 @@
 /**
  * @jest-environment jsdom
  */
-import React from 'react';
 import { act, fireEvent, screen, within } from '@testing-library/react';
 import TopicFontEditor from '../../../src/components/action-widget/pane/topic-font-editor';
 import { SwitchValueDirection } from '../../../src/classes/model/value-stepper';

@@ -254,7 +254,7 @@ class BalancedSorter extends AbstractBasicSorter {
     });
   }
 
-  getChildDirection(treeSet: RootedTreeSet, child: Node): 1 | -1 {
+  getChildDirection(_treeSet: RootedTreeSet, child: Node): 1 | -1 {
     return (child.getOrder() ?? 0) % 2 === 0 ? 1 : -1;
   }
 
