@@ -772,5 +772,8 @@
   },
   "rich-text-editor.outdent": {
     "defaultMessage": "Riduci rientro (Maiusc+Tab)"
+  },
+  "outline.untitled-map": {
+    "defaultMessage": "Mappa senza titolo"
   }
 }

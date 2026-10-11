@@ -772,5 +772,8 @@
   },
   "rich-text-editor.outdent": {
     "defaultMessage": "इंडेंट घटाएँ (Shift+Tab)"
+  },
+  "outline.untitled-map": {
+    "defaultMessage": "बिना शीर्षक का मानचित्र"
   }
 }

@@ -772,5 +772,8 @@
   },
   "rich-text-editor.outdent": {
     "defaultMessage": "Diminuer le retrait (Maj+Tab)"
+  },
+  "outline.untitled-map": {
+    "defaultMessage": "Carte sans titre"
   }
 }

@@ -772,5 +772,8 @@
   },
   "rich-text-editor.outdent": {
     "defaultMessage": "إنقاص المسافة البادئة (Shift+Tab)"
+  },
+  "outline.untitled-map": {
+    "defaultMessage": "خريطة بدون عنوان"
   }
 }

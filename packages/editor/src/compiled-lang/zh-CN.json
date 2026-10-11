@@ -789,6 +789,12 @@
       "value": "笔记"
     }
   ],
+  "outline.untitled-map": [
+    {
+      "type": 0,
+      "value": "未命名导图"
+    }
+  ],
   "relationship-style-editor.color": [
     {
       "type": 0,

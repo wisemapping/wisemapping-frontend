@@ -87,7 +87,10 @@ const OutlineViewDialog = ({ open, onClose, mindmap }: OutlineViewDialogProps): 
       const centralTopic = mindmap.getCentralTopic();
       if (centralTopic) {
         // Set the central topic as title
-        setCentralTopicTitle(centralTopic.getText() || 'Untitled Map');
+        setCentralTopicTitle(
+          centralTopic.getText() ||
+            intl.formatMessage({ id: 'outline.untitled-map', defaultMessage: 'Untitled Map' }),
+        );
 
         // Build outline data using OutlineBuilder
         const children = outlineBuilder.buildFromCentralTopic(centralTopic);

@@ -772,5 +772,8 @@
   },
   "rich-text-editor.outdent": {
     "defaultMessage": "インデントを減らす (Shift+Tab)"
+  },
+  "outline.untitled-map": {
+    "defaultMessage": "無題のマップ"
   }
 }

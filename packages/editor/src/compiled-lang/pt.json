@@ -781,6 +781,12 @@
       "value": "Nota"
     }
   ],
+  "outline.untitled-map": [
+    {
+      "type": 0,
+      "value": "Mapa sem título"
+    }
+  ],
   "relationship-style-editor.color": [
     {
       "type": 0,
