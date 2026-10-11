@@ -116,6 +116,20 @@ describe('LoadingFallback', () => {
     expect(screen.getByRole('progressbar')).toBeTruthy();
   });
 
+  test.each(['/c/login', '/es/c/login', '/c/oauth-callback', '/c/registration-google'])(
+    'on the sign-in route %s shows the waiting screen of signing in',
+    (path) => {
+      // The OAuth callback and the login page show the same screen while they work; loading them
+      // in it keeps signing in from reading as a run of different pages.
+      setLocation(path);
+      renderPage(<LoadingFallback />);
+      const status = screen.getByRole('status');
+      expect(status.querySelector('[role="progressbar"]')).not.toBeNull();
+      expect(status.closest('section')).not.toBeNull();
+      expect(screen.queryByText('Loading...')).toBeNull();
+    },
+  );
+
   test.each(['/c/maps', '/c/maps/'])('on the map list %s shows its skeleton', (path) => {
     // The same skeleton the map list keeps up while it loads: one skeleton, then the page.
     setLocation(path);

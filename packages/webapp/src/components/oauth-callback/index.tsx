@@ -19,8 +19,8 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import FormContainer from '../layout/form-container';
-import Header from '../layout/header';
-import Footer from '../layout/footer';
+import AccountAccessLayout from '../layout/AccountAccessLayout';
+import AuthProgress from '../layout/auth-progress';
 import { Link as RouterLink, useLocation } from 'react-router';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -31,7 +31,6 @@ import GlobalError from '../form/global-error';
 import { buttonsStyle } from './style';
 import { ClientContext } from '../../classes/provider/client-context';
 import { logCriticalError } from '../../utils';
-import CircularProgress from '@mui/material/CircularProgress';
 import { useTheme } from '../../contexts/ThemeContext';
 import JwtTokenConfig from '../../classes/jwt-token-config';
 import { DEFAULT_REDIRECT, leaveTo, safeRedirectPath } from '../../utils/redirect';
@@ -264,10 +263,22 @@ const OAuthCallbackPage = (): React.ReactElement => {
   const needConfirmLinking = !error && callbackResult?.email && !callbackResult?.oauthSync;
   const needConfirmSignIn = !error && unconfirmed !== undefined;
 
-  // Show the standard OAuth callback page with form container
+  // While it signs in, the same waiting screen as the login page it goes on to (see AuthProgress).
+  if (!error && !needConfirmLinking && !needConfirmSignIn) {
+    return (
+      <AuthProgress
+        message={
+          <FormattedMessage
+            id="registration.callback.waiting.description"
+            defaultMessage="Please wait while we validate your identity"
+          />
+        }
+      />
+    );
+  }
+
   return (
-    <div>
-      <Header type="none" />
+    <AccountAccessLayout headerType="none">
       <FormContainer>
         <Typography variant="h4" component="h1">
           {needConfirmSignIn ? (
@@ -334,8 +345,6 @@ const OAuthCallbackPage = (): React.ReactElement => {
           </div>
         )}
 
-        {!needConfirmLinking && !needConfirmSignIn && !error && <CircularProgress />}
-
         {needConfirmSignIn && (
           <div key="confirm-signin">
             <Button
@@ -393,8 +402,7 @@ const OAuthCallbackPage = (): React.ReactElement => {
           </div>
         )}
       </FormContainer>
-      <Footer />
-    </div>
+    </AccountAccessLayout>
   );
 };
 

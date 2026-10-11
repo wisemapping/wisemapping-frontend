@@ -112,7 +112,8 @@ describe('LoginPage', () => {
   test('a signed-in user is redirected instead of seeing the form', async () => {
     const client = setup('/c/login', true);
 
-    expect(screen.getByText('Redirecting...')).toBeTruthy();
+    // The waiting screen the OAuth callback shows too (AuthProgress).
+    expect(screen.getByRole('status').textContent).toBe('Redirecting...');
     await waitFor(() => expect(client.fetchAccountInfo).toHaveBeenCalled());
     await new Promise((resolve) => setTimeout(resolve, 0));
     expect(screen.queryByRole('form', { name: 'Login form' })).toBeNull();

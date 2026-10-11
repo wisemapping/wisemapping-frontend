@@ -41,7 +41,7 @@ import { useTheme } from '../../contexts/ThemeContext';
 import { trackPageView } from '../../utils/analytics';
 import { appLogger as log } from '../../utils/logger';
 import { getCanonicalUrl, getAlternateLanguageUrls } from '../../utils/seo-locale';
-import CircularProgress from '@mui/material/CircularProgress';
+import AuthProgress from '../layout/auth-progress';
 import { leaveTo, safeRedirectPath } from '../../utils/redirect';
 import { startOAuthFlow, takeOAuthFlow } from '../../utils/oauth-flow';
 
@@ -174,21 +174,9 @@ const LoginPage = (): React.ReactElement => {
 
   if (isCheckingAuth) {
     return (
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: '100vh',
-          gap: 2,
-        }}
-      >
-        <CircularProgress />
-        <Typography variant="body1">
-          <FormattedMessage id="login.redirecting" defaultMessage="Redirecting..." />
-        </Typography>
-      </Box>
+      <AuthProgress
+        message={<FormattedMessage id="login.redirecting" defaultMessage="Redirecting..." />}
+      />
     );
   }
 

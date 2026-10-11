@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { ReactElement, Suspense, useEffect, useState } from 'react';
+import React, { ReactElement, Suspense, useEffect, useState, useMemo } from 'react';
 import { IntlProvider } from 'react-intl';
 import {
   Route,
@@ -306,7 +306,15 @@ const buildRouter = () =>
 const AppWithTheme = (): ReactElement => {
   const keyboardContext = useKeyboardContextValue();
   const { mode } = useTheme();
-  const theme = createAppTheme(mode);
+  const theme = useMemo(() => createAppTheme(mode), [mode]);
+
+  // index.html paints the page in the theme's background before the app loads (theme-preload);
+  // it follows the mode when the user switches it.
+  useEffect(() => {
+    const root = document.documentElement;
+    root.style.colorScheme = mode;
+    root.style.backgroundColor = theme.palette.background.default;
+  }, [mode, theme]);
   const [router, setRouter] = useState<ReturnType<typeof createBrowserRouter> | null>(null);
   const [initializationError, setInitializationError] = useState<string | null>(null);
 
@@ -336,29 +344,30 @@ const AppWithTheme = (): ReactElement => {
     };
   }, []);
 
-  if (initializationError) {
-    return <div role="alert">{initializationError}</div>;
-  }
-
-  if (!router) {
-    return <div></div>;
-  }
-
+  // The theme wraps the whole app, the moments before the router is ready included: an empty
+  // page rendered outside it showed the browser's white between the steps of signing in, also in
+  // dark mode.
   return (
-    <ClientContext.Provider value={AppConfig.getClient()}>
-      <QueryClientProvider client={queryClient}>
-        <StyledEngineProvider injectFirst>
-          <MuiThemeProvider theme={theme}>
-            <ThemeProvider theme={theme}>
-              <CssBaseline />
-              <KeyboardContext.Provider value={keyboardContext}>
-                <RouterProvider router={router} />
-              </KeyboardContext.Provider>
-            </ThemeProvider>
-          </MuiThemeProvider>
-        </StyledEngineProvider>
-      </QueryClientProvider>
-    </ClientContext.Provider>
+    <StyledEngineProvider injectFirst>
+      <MuiThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          {initializationError ? (
+            <div role="alert">{initializationError}</div>
+          ) : (
+            router && (
+              <ClientContext.Provider value={AppConfig.getClient()}>
+                <QueryClientProvider client={queryClient}>
+                  <KeyboardContext.Provider value={keyboardContext}>
+                    <RouterProvider router={router} />
+                  </KeyboardContext.Provider>
+                </QueryClientProvider>
+              </ClientContext.Provider>
+            )
+          )}
+        </ThemeProvider>
+      </MuiThemeProvider>
+    </StyledEngineProvider>
   );
 };
 

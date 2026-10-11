@@ -23,6 +23,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 import EditorLoadingSkeleton from '@wisemapping/editor/components/editor-loading-skeleton';
 import { MapsPageLoading } from '../maps-page/maps-list/MapsListSkeleton';
+import AuthProgress from '../layout/auth-progress';
 
 const isEditorRoute = () => {
   if (typeof window === 'undefined') {
@@ -37,7 +38,18 @@ const isEditorRoute = () => {
 const isMapListRoute = () =>
   typeof window !== 'undefined' && /^\/c\/maps\/?$/.test(window.location.pathname);
 
+// Signing in goes through these, with a full page load between the OAuth callback and the login
+// page: they load in the waiting screen they show, so the steps read as one screen.
+const isSignInRoute = () =>
+  typeof window !== 'undefined' &&
+  /^(\/[a-z]{2}(-[A-Z]{2})?)?\/c\/(login|oauth-callback|registration-google|registration-facebook)\/?$/.test(
+    window.location.pathname,
+  );
+
 const LoadingFallback = (): React.ReactElement => {
+  if (isSignInRoute()) {
+    return <AuthProgress />;
+  }
   if (isEditorRoute()) {
     return <EditorLoadingSkeleton />;
   }

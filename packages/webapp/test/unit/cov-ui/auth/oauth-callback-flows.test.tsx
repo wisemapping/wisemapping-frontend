@@ -139,7 +139,10 @@ describe('OAuthCallbackPage flows', () => {
     expect(store).toHaveBeenCalledWith(ANA);
     expect(setAnalyticsUserEmail).toHaveBeenCalledWith('ana@wisemapping.com');
     expect(localStorage.getItem('themeMode')).toBe('dark');
-    expect(screen.getByText('Please wait while we validate your identity')).toBeTruthy();
+    // The waiting screen the login page shows next (AuthProgress).
+    expect(screen.getByRole('status').textContent).toBe(
+      'Please wait while we validate your identity',
+    );
   });
 
   test('a token callback for an account not linked yet asks to link it', async () => {

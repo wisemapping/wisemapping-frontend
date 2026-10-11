@@ -3,6 +3,27 @@
   <head>
     <title>WiseMapping - Free & Open-Source Mind Mapping</title>
     <meta charset="utf-8" />
+    <!-- The theme's background from the first paint, before the app loads: the mode the user
+         chose (ThemeContext stores it), or the system's. Without it every full page load, as
+         signing in has, flashed white in dark mode. The colours are the theme's
+         background.default (src/theme), which a unit test keeps in sync. -->
+    <script id="theme-preload">
+      (function () {
+        var mode;
+        try {
+          mode = localStorage.getItem('themeMode');
+        } catch (e) {}
+        if (mode !== 'light' && mode !== 'dark') {
+          mode =
+            window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+              ? 'dark'
+              : 'light';
+        }
+        var root = document.documentElement;
+        root.style.colorScheme = mode;
+        root.style.backgroundColor = mode === 'dark' ? '#2a2a2a' : '#fafafa';
+      })();
+    </script>
     <link rel="icon" href="/favicon.ico" />
 
     <!-- Preconnect to font domains for faster font loading -->
