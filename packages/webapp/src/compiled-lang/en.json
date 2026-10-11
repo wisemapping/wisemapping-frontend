@@ -2489,12 +2489,6 @@
       "value": "Password"
     }
   ],
-  "login.redirecting": [
-    {
-      "type": 0,
-      "value": "Redirecting..."
-    }
-  ],
   "login.server-error": [
     {
       "type": 0,

@@ -2497,12 +2497,6 @@
       "value": "Contraseña"
     }
   ],
-  "login.redirecting": [
-    {
-      "type": 0,
-      "value": "Redirigiendo..."
-    }
-  ],
   "login.server-error": [
     {
       "type": 0,

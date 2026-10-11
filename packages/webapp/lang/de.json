@@ -1292,9 +1292,6 @@
   "validation.title-required": {
     "defaultMessage": "Titel ist erforderlich"
   },
-  "login.redirecting": {
-    "defaultMessage": "Weiterleitung..."
-  },
   "error.go-home": {
     "defaultMessage": "Zur Startseite"
   },

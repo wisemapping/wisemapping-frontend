@@ -2478,12 +2478,6 @@
       "value": "パスワード"
     }
   ],
-  "login.redirecting": [
-    {
-      "type": 0,
-      "value": "リダイレクト中..."
-    }
-  ],
   "login.server-error": [
     {
       "type": 0,

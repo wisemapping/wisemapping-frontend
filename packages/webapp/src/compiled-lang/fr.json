@@ -2489,12 +2489,6 @@
       "value": "Mot de passe"
     }
   ],
-  "login.redirecting": [
-    {
-      "type": 0,
-      "value": "Redirection en cours..."
-    }
-  ],
   "login.server-error": [
     {
       "type": 0,

@@ -1292,9 +1292,6 @@
   "validation.title-required": {
     "defaultMessage": "शीर्षक आवश्यक है"
   },
-  "login.redirecting": {
-    "defaultMessage": "पुनर्निर्देशन..."
-  },
   "error.go-home": {
     "defaultMessage": "होम पर जाएं"
   },

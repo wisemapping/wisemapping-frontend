@@ -2486,12 +2486,6 @@
       "value": "密码"
     }
   ],
-  "login.redirecting": [
-    {
-      "type": 0,
-      "value": "重定向中..."
-    }
-  ],
   "login.server-error": [
     {
       "type": 0,

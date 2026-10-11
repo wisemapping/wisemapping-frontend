@@ -173,11 +173,7 @@ const LoginPage = (): React.ReactElement => {
     typeof window !== 'undefined' ? window.location.origin : 'https://app.wisemapping.com';
 
   if (isCheckingAuth) {
-    return (
-      <AuthProgress
-        message={<FormattedMessage id="login.redirecting" defaultMessage="Redirecting..." />}
-      />
-    );
+    return <AuthProgress />;
   }
 
   return (

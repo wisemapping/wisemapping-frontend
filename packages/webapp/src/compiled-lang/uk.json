@@ -2523,12 +2523,6 @@
       "value": "Пароль"
     }
   ],
-  "login.redirecting": [
-    {
-      "type": 0,
-      "value": "Переспрямування..."
-    }
-  ],
   "login.server-error": [
     {
       "type": 0,
