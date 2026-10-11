@@ -11,6 +11,8 @@ Yarn 4 + Lerna monorepo (workspaces under `packages/*`), Node `>=24`. Versioning
 - `packages/editor` — React component wrapper around `mindplot`. Built with Vite as a UMD+ESM library (`dist/editor.{es,umd}.js`). MUI v9 + Emotion.
 - `packages/webapp` — the React application (Vite, react-router 7, MUI v9, react-query). Consumes `@wisemapping/editor`. Talks to the backend at `wisemapping-open-source` (separate repo); base API URL is configured via `API_URL` env var.
 
+Each package declares every dependency its code, configs and scripts use (ESLint plugins, Jest presets and environments, Babel presets, `@types/*` named in its tsconfig `types`, CLIs in its scripts), even when another package declares it too: Yarn installs one copy, and nothing relies on hoisting. The root declares only what the root uses (its ESLint config and Vercel functions, lerna, husky, lint-staged, prettier, `scripts/`).
+
 Top-level extras:
 
 - `middleware.ts` — Vercel Edge middleware that intercepts `/c/maps/:id/public` and proxies/handles 410 (deleted map) responses against `API_URL`.
