@@ -246,8 +246,8 @@ describe('RichTextNoteEditor', () => {
     const area = editable(container);
 
     fireEvent.click(screen.getByTitle('Insert Icon'));
-    expect(screen.getByTestId('emoji-picker').getAttribute('data-theme')).toBe('light');
-    expect(screen.getByTestId('emoji-picker').getAttribute('data-placeholder')).toBe(
+    expect((await screen.findByTestId('emoji-picker')).getAttribute('data-theme')).toBe('light');
+    expect((await screen.findByTestId('emoji-picker')).getAttribute('data-placeholder')).toBe(
       'Search emojis...',
     );
 
@@ -296,18 +296,18 @@ describe('RichTextNoteEditor', () => {
     renderPane(<RichTextNoteEditor closeModal={jest.fn()} noteModel={noteModel} />);
 
     fireEvent.click(screen.getByTitle('Insert Icon'));
-    fireEvent.keyDown(screen.getByTestId('emoji-picker'), { key: 'Escape' });
+    fireEvent.keyDown(await screen.findByTestId('emoji-picker'), { key: 'Escape' });
 
     await waitFor(() => expect(screen.queryByTestId('emoji-picker')).toBeNull());
     expect(execCommand).not.toHaveBeenCalled();
   });
 
-  it('gives the emoji picker the dark theme in dark mode', () => {
+  it('gives the emoji picker the dark theme in dark mode', async () => {
     renderPane(<RichTextNoteEditor closeModal={jest.fn()} noteModel={note('x')} />, 'dark');
 
     fireEvent.click(screen.getByTitle('Insert Icon'));
 
-    expect(screen.getByTestId('emoji-picker').getAttribute('data-theme')).toBe('dark');
+    expect((await screen.findByTestId('emoji-picker')).getAttribute('data-theme')).toBe('dark');
   });
 
   it('focuses the note area shortly after opening', () => {

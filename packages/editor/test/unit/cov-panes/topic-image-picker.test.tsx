@@ -191,14 +191,14 @@ describe('TopicImagePicker', () => {
     expect(m.emojiModel.setValue).toHaveBeenCalledWith(undefined);
   });
 
-  it('sets an emoji from the emoji tab and clears the gallery icon, staying open', () => {
+  it('sets an emoji from the emoji tab and clears the gallery icon, staying open', async () => {
     const m = models();
     const triggerClose = jest.fn();
     renderPane(<TopicImagePicker triggerClose={triggerClose} {...m} />);
 
     fireEvent.click(screen.getByRole('tab', { name: 'Emojis' }));
     expect(screen.queryByPlaceholderText('Search icons...')).toBeNull();
-    const picker = screen.getByTestId('emoji-picker');
+    const picker = await screen.findByTestId('emoji-picker');
     expect(picker.getAttribute('data-theme')).toBe('light');
     expect(picker.getAttribute('data-placeholder')).toBe('Search emojis...');
 
@@ -209,15 +209,15 @@ describe('TopicImagePicker', () => {
     expect(triggerClose).not.toHaveBeenCalled();
   });
 
-  it('uses the dark emoji theme in dark mode', () => {
+  it('uses the dark emoji theme in dark mode', async () => {
     renderPane(<TopicImagePicker triggerClose={jest.fn()} {...models()} />, 'dark');
 
     fireEvent.click(screen.getByRole('tab', { name: 'Emojis' }));
 
-    expect(screen.getByTestId('emoji-picker').getAttribute('data-theme')).toBe('dark');
+    expect((await screen.findByTestId('emoji-picker')).getAttribute('data-theme')).toBe('dark');
   });
 
-  it('ignores an emoji when the models cannot be changed', () => {
+  it('ignores an emoji when the models cannot be changed', async () => {
     renderPane(
       <TopicImagePicker
         triggerClose={jest.fn()}
@@ -229,7 +229,7 @@ describe('TopicImagePicker', () => {
     fireEvent.click(screen.getByRole('tab', { name: 'Emojis' }));
     fireEvent.click(screen.getByRole('button', { name: 'pick party emoji' }));
 
-    expect(screen.getByTestId('emoji-picker')).toBeTruthy();
+    expect(await screen.findByTestId('emoji-picker')).toBeTruthy();
   });
 
   it('closes from the close button', () => {

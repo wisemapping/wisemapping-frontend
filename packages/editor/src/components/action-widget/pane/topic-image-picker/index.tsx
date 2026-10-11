@@ -21,7 +21,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
 import ImageIcon from '@mui/icons-material/Image';
 import { FormattedMessage, useIntl } from 'react-intl';
-import EmojiPicker, { EmojiClickData, EmojiStyle, Theme } from 'emoji-picker-react';
+import type { EmojiClickData } from 'emoji-picker-react';
+import EmojiPicker from '../shared/emoji-picker';
 
 import NodeProperty from '../../../../classes/model/node-property';
 import { DesignerKeyboard } from '@wisemapping/mindplot';
@@ -120,14 +121,7 @@ const TopicImagePicker = ({
           <PickerEmojiArea>
             <EmojiPicker
               onEmojiClick={handleEmojiSelect}
-              lazyLoadEmojis={true}
-              autoFocusSearch={true}
-              previewConfig={{ showPreview: false }}
-              emojiStyle={EmojiStyle.NATIVE}
-              skinTonesDisabled
-              theme={mode === 'dark' ? Theme.DARK : Theme.LIGHT}
-              width="100%"
-              height="100%"
+              theme={mode === 'dark' ? 'dark' : 'light'}
               searchPlaceholder={intl.formatMessage({
                 id: 'emoji-picker.search-placeholder',
                 defaultMessage: 'Search emojis...',

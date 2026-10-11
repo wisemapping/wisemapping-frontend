@@ -33,7 +33,8 @@ import React, {
 import { FormattedMessage, useIntl } from 'react-intl';
 import NodeProperty from '../../../../classes/model/node-property';
 import SaveAndDelete from '../save-and-delete';
-import EmojiPicker, { EmojiClickData, EmojiStyle, Theme } from 'emoji-picker-react';
+import type { EmojiClickData } from 'emoji-picker-react';
+import EmojiPicker from '../shared/emoji-picker';
 import { HtmlSanitizer } from '@wisemapping/mindplot';
 import { attachNoteEditing, NoteEditing } from './note-editing';
 import { safeLinkUrl } from './markdown-rules';
@@ -512,14 +513,7 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
         <EmojiPopoverBox>
           <EmojiPicker
             onEmojiClick={handleEmojiSelect}
-            lazyLoadEmojis={true}
-            autoFocusSearch={true}
-            previewConfig={{ showPreview: false }}
-            emojiStyle={EmojiStyle.NATIVE}
-            skinTonesDisabled
-            theme={theme.palette.mode === 'dark' ? Theme.DARK : Theme.LIGHT}
-            width="100%"
-            height="100%"
+            theme={theme.palette.mode === 'dark' ? 'dark' : 'light'}
             searchPlaceholder={intl.formatMessage({
               id: 'emoji-picker.search-placeholder',
               defaultMessage: 'Search emojis...',
