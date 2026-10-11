@@ -22,11 +22,11 @@
  * SecurityError on every access, which at the app's root left an embedded map blank. Reads then
  * find nothing and writes are dropped: the stored values are preferences only.
  */
-export const readStorage = (key: string): string | null => {
+export const readStorage = (key: string): string | undefined => {
   try {
-    return localStorage.getItem(key);
+    return localStorage.getItem(key) ?? undefined;
   } catch {
-    return null;
+    return undefined;
   }
 };
 

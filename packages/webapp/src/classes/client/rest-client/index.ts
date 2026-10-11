@@ -172,10 +172,10 @@ export default class RestClient implements Client {
     return new Promise(handler);
   }
 
-  private _jwtHeaderTokenValue(): string | null {
+  private _jwtHeaderTokenValue(): string | undefined {
     // Set cookie on session ...
     const token = JwtTokenConfig.retreiveToken();
-    return token ? `Bearer ${token}` : null;
+    return token ? `Bearer ${token}` : undefined;
   }
 
   onSessionExpired(callback?: () => void): (() => void) | undefined {
@@ -375,7 +375,7 @@ export default class RestClient implements Client {
         })
         .then((response) => {
           const account = response.data;
-          const locale: LocaleCode | null = account.locale;
+          const locale: LocaleCode | undefined = account.locale ?? undefined;
           let accountLocale: Locale | undefined;
           if (locale) {
             try {

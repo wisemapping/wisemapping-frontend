@@ -293,7 +293,7 @@ describe('MockClient account', () => {
       firstname: 'a',
       lastname: 'b',
       password: 'p',
-      recaptcha: null,
+      recaptcha: '',
       acceptedTerms: true,
     };
 

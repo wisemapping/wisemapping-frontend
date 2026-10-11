@@ -133,7 +133,7 @@ describe('analytics user id', () => {
   it('clears the user id for an empty email and on clear', () => {
     const set = jest.spyOn(ReactGA, 'set');
 
-    setAnalyticsUserEmail(null);
+    setAnalyticsUserEmail(undefined);
     clearAnalyticsUserId();
 
     expect(set).toHaveBeenCalledTimes(2);

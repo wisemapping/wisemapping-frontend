@@ -33,7 +33,7 @@ import Tooltip from '@mui/material/Tooltip';
 import { HelpMenuList } from './styled';
 
 const HelpMenu = (): React.ReactElement => {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = React.useState<HTMLElement>();
   const open = Boolean(anchorEl);
   const intl = useIntl();
 
@@ -42,7 +42,7 @@ const HelpMenu = (): React.ReactElement => {
   };
 
   const handleClose = () => {
-    setAnchorEl(null);
+    setAnchorEl(undefined);
   };
 
   return (

@@ -71,9 +71,9 @@ const OutlineViewDialog = ({ open, onClose, mindmap }: OutlineViewDialogProps): 
   const intl = useIntl();
   const [outlineData, setOutlineData] = useState<OutlineNodeData[]>([]);
   const [centralTopicTitle, setCentralTopicTitle] = useState<string>('');
-  const [selectedNode, setSelectedNode] = useState<INodeModel | null>(null);
-  const [dialogType, setDialogType] = useState<'link' | 'note' | null>(null);
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const [selectedNode, setSelectedNode] = useState<INodeModel>();
+  const [dialogType, setDialogType] = useState<'link' | 'note'>();
+  const [anchorEl, setAnchorEl] = useState<HTMLElement>();
 
   // The outline is rebuilt from the map each time the dialog opens (or is given another map).
   // Adjusted while rendering, not in an effect, so the dialog never opens on a frame of the
@@ -147,9 +147,9 @@ const OutlineViewDialog = ({ open, onClose, mindmap }: OutlineViewDialogProps): 
   };
 
   const handleCloseTooltip = () => {
-    setAnchorEl(null);
-    setSelectedNode(null);
-    setDialogType(null);
+    setAnchorEl(undefined);
+    setSelectedNode(undefined);
+    setDialogType(undefined);
   };
 
   const renderNode = (node: OutlineNodeData): ReactElement => {

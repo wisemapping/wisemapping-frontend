@@ -187,7 +187,7 @@ describe('AppConfig clients', () => {
     await initAppConfig();
     AppConfig.getClient();
     AppConfig.getAdminClient();
-    expect((AppConfig as unknown as { _mocks: unknown })._mocks).toBeNull();
+    expect((AppConfig as unknown as { _mocks: unknown })._mocks).toBeUndefined();
   });
 
   it('falls back to the mock client for a mock config', async () => {

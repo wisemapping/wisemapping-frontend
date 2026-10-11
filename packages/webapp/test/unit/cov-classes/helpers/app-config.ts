@@ -67,11 +67,11 @@ export const setBootstrap = (container: Container | undefined): void => {
  */
 export const resetAppConfig = (): void => {
   Object.assign(AppConfig as unknown as Record<string, unknown>, {
-    _config: null,
-    _client: null,
-    _adminClient: null,
-    _mocks: null,
-    _initializationPromise: null,
+    _config: undefined,
+    _client: undefined,
+    _adminClient: undefined,
+    _mocks: undefined,
+    _initializationPromise: undefined,
   });
   setBootstrap(undefined);
 };

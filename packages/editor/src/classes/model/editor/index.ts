@@ -30,19 +30,18 @@ import debounce from 'lodash/debounce';
 class Editor {
   private component: MindplotWebComponent;
 
-  private pendingFlushPromise: Promise<void> | null = null;
+  private pendingFlushPromise: Promise<void> | undefined;
 
-  private beforeUnloadHandler: (() => void) | null = null;
+  private beforeUnloadHandler: (() => void) | undefined;
 
   // The debounced autosave and the designer it listens on, released by dispose() ...
-  private autoSave: { designer: Designer; save: (() => void) & { cancel: () => void } } | null =
-    null;
+  private autoSave: { designer: Designer; save: (() => void) & { cancel: () => void } } | undefined;
 
   // The designer loadMindmap built, disposed by dispose() ...
-  private designer: Designer | null = null;
+  private designer: Designer | undefined;
 
   // Removes the designer handlers added by registerEvents; called by dispose() ...
-  private removeDesignerHandlersFn: (() => void) | null = null;
+  private removeDesignerHandlersFn: (() => void) | undefined;
 
   constructor(component: MindplotWebComponent) {
     this.component = component;
@@ -201,7 +200,7 @@ class Editor {
   flushPendingChangesOnce(unloading = false): Promise<void> {
     if (!this.pendingFlushPromise) {
       this.pendingFlushPromise = this.flushPendingChanges(unloading).finally(() => {
-        this.pendingFlushPromise = null;
+        this.pendingFlushPromise = undefined;
       });
     }
     return this.pendingFlushPromise;
@@ -229,13 +228,13 @@ class Editor {
     this.removeDesignerHandlers();
     // The element disposes it too once it leaves the page; disposing twice is a no-op.
     this.designer?.dispose();
-    this.designer = null;
+    this.designer = undefined;
   }
 
   private removeDesignerHandlers(): void {
     if (this.removeDesignerHandlersFn) {
       this.removeDesignerHandlersFn();
-      this.removeDesignerHandlersFn = null;
+      this.removeDesignerHandlersFn = undefined;
     }
   }
 
@@ -243,14 +242,14 @@ class Editor {
     if (this.autoSave) {
       this.autoSave.save.cancel();
       this.autoSave.designer.removeEvent('modelUpdate', this.autoSave.save);
-      this.autoSave = null;
+      this.autoSave = undefined;
     }
   }
 
   private removeBeforeUnloadHandler(): void {
     if (this.beforeUnloadHandler) {
       window.removeEventListener('beforeunload', this.beforeUnloadHandler);
-      this.beforeUnloadHandler = null;
+      this.beforeUnloadHandler = undefined;
     }
   }
 

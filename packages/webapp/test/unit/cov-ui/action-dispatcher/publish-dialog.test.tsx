@@ -46,7 +46,7 @@ const map = (isPublic: boolean): MapInfo => ({
 const PUBLIC_URL = 'http://localhost/c/maps/12/public';
 
 const setup = (isPublic = false) => {
-  mockUseFetchMapById.mockReturnValue({ isLoading: false, error: null, data: map(isPublic) });
+  mockUseFetchMapById.mockReturnValue({ isLoading: false, error: undefined, data: map(isPublic) });
   const updateMapToPublic = jest.fn<Promise<void>, [number, boolean]>(() => Promise.resolve());
   const onClose = jest.fn();
   renderWithProviders(<PublishDialog mapId={12} onClose={onClose} />, {
@@ -192,7 +192,7 @@ describe('PublishDialog', () => {
   });
 
   test('while the map is loading it is shown as private', () => {
-    mockUseFetchMapById.mockReturnValue({ isLoading: true, error: null, data: undefined });
+    mockUseFetchMapById.mockReturnValue({ isLoading: true, error: undefined, data: undefined });
     renderWithProviders(<PublishDialog mapId={12} onClose={jest.fn()} />, {
       client: {} as Client,
     });
@@ -202,7 +202,7 @@ describe('PublishDialog', () => {
   });
 
   test('the switch follows the map once it has loaded', () => {
-    mockUseFetchMapById.mockReturnValue({ isLoading: true, error: null, data: undefined });
+    mockUseFetchMapById.mockReturnValue({ isLoading: true, error: undefined, data: undefined });
     let rerenderDialog = (): void => undefined;
     const Host = (): React.ReactElement => {
       const [, forceRender] = React.useReducer((renders: number) => renders + 1, 0);
@@ -212,7 +212,7 @@ describe('PublishDialog', () => {
     renderWithProviders(<Host />, { client: {} as Client });
     expect(publicSwitch().checked).toBe(false);
 
-    mockUseFetchMapById.mockReturnValue({ isLoading: false, error: null, data: map(true) });
+    mockUseFetchMapById.mockReturnValue({ isLoading: false, error: undefined, data: map(true) });
     rerenderDialog();
 
     expect(publicSwitch().checked).toBe(true);

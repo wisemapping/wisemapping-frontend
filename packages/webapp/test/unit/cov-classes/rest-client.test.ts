@@ -478,7 +478,7 @@ describe('RestClient account', () => {
       firstname: 'A',
       lastname: 'B',
       password: 'p',
-      recaptcha: null,
+      recaptcha: '',
       acceptedTerms: true,
     };
 

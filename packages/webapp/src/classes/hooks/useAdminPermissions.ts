@@ -19,9 +19,9 @@
 import { useFetchAccountWithState } from '../middleware';
 
 interface AdminPermissionsState {
-  isAdmin: boolean | null;
+  isAdmin: boolean | undefined;
   loading: boolean;
-  error: string | null;
+  error: string | undefined;
 }
 
 /**
@@ -34,16 +34,16 @@ export const useAdminPermissions = (): AdminPermissionsState => {
   // If account is still loading, return loading state
   if (isLoading) {
     return {
-      isAdmin: null,
+      isAdmin: undefined,
       loading: true,
-      error: null,
+      error: undefined,
     };
   }
 
   // If there was an error loading the account
   if (error) {
     return {
-      isAdmin: null,
+      isAdmin: undefined,
       loading: false,
       error: error.msg || 'Failed to load account information',
     };
@@ -53,6 +53,6 @@ export const useAdminPermissions = (): AdminPermissionsState => {
   return {
     isAdmin: account?.isAdmin || false,
     loading: false,
-    error: null,
+    error: undefined,
   };
 };

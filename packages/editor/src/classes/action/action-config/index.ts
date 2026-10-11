@@ -44,9 +44,9 @@ interface ActionConfig {
    */
   render?: (closeMenu: () => void) => React.ReactElement | undefined;
   /**
-   * submenu options. If null, a divider will be inserted.
+   * submenu options. An undefined entry inserts a divider.
    */
-  options?: (ActionConfig | null)[];
+  options?: (ActionConfig | undefined)[];
   /**
    * option is disabled
    */

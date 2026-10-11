@@ -342,7 +342,7 @@ class MockClient implements Client {
     if (!token) {
       return Promise.reject({ msg: 'User not authenticated', isAuth: true, status: 401 });
     }
-    const locale: LocaleCode | null = localStorage.getItem('locale') as LocaleCode;
+    const locale = (localStorage.getItem('locale') ?? undefined) as LocaleCode | undefined;
     return Promise.resolve({
       firstname: 'Costme',
       lastname: 'Fulanito',

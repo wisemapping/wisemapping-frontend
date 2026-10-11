@@ -59,7 +59,7 @@ const defaultModel: Model = { email: '', password: '' };
 const LoginError = ({ error }: LoginErrorProps) => {
   const intl = useIntl();
 
-  let msg: null | string = null;
+  let msg: string | undefined;
   if (error) {
     // Always use the backend error message
     msg =
@@ -84,7 +84,7 @@ const LoginPage = (): React.ReactElement => {
 
   // Check if user came from a shared link
   const searchParams = new URLSearchParams(location.search);
-  const redirectUrl = searchParams.get('redirect');
+  const redirectUrl = searchParams.get('redirect') ?? undefined;
   const isSharedLink = redirectUrl?.includes('shared=true') || false;
   const oauthError = searchParams.get('error');
 
@@ -127,7 +127,7 @@ const LoginPage = (): React.ReactElement => {
   }, []);
 
   useEffect(() => {
-    const redirectUrl = new URLSearchParams(location.search).get('redirect');
+    const redirectUrl = new URLSearchParams(location.search).get('redirect') ?? undefined;
 
     const checkAuthentication = async (): Promise<void> => {
       try {
@@ -147,7 +147,7 @@ const LoginPage = (): React.ReactElement => {
     onSuccess: () => {
       initializeThemeFromSystem();
 
-      leaveTo(safeRedirectPath(new URLSearchParams(location.search).get('redirect')));
+      leaveTo(safeRedirectPath(new URLSearchParams(location.search).get('redirect') ?? undefined));
     },
     onError: (error: LoginErrorInfo) => {
       setLoginError(error);

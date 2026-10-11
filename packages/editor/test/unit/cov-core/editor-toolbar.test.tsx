@@ -75,8 +75,8 @@ const createModel = (
     }),
   };
   const designerModel = {
-    selectedTopic: () => (state.topics ? topic : null),
-    selectedRelationship: () => (state.relationships ? relationship : null),
+    selectedTopic: () => (state.topics ? topic : undefined),
+    selectedRelationship: () => (state.relationships ? relationship : undefined),
     filterSelectedTopics: () => Array.from({ length: state.topics }, () => topic),
     filterSelectedRelationships: () => Array.from({ length: state.relationships }, () => ({})),
     countSelectedTopics: () => state.topics,

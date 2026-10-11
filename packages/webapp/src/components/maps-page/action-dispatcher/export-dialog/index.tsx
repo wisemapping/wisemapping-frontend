@@ -112,7 +112,7 @@ const ExportDialog = ({
 
   const exporter = async (formatType: ExportFormat): Promise<string> => {
     // exporting from editor toolbar action
-    if (designer != null) {
+    if (designer !== undefined) {
       // The export is rendered in the export theme on the live canvas, so put the
       // map's own theme back once it is done (or failed): the editor saves this model.
       const originalTheme = designer.getMindmap().getTheme();

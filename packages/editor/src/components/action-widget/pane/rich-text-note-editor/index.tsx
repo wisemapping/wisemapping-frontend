@@ -110,9 +110,9 @@ const CharacterCounter = ({
 const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps): ReactElement => {
   const initialValue = noteModel.getValue() || '';
   const editorRef = useRef<HTMLDivElement>(null);
-  const [iconPickerAnchor, setIconPickerAnchor] = useState<HTMLButtonElement | null>(null);
-  const savedRangeRef = useRef<Range | null>(null);
-  const editingRef = useRef<NoteEditing | null>(null);
+  const [iconPickerAnchor, setIconPickerAnchor] = useState<HTMLButtonElement>();
+  const savedRangeRef = useRef<Range | undefined>(undefined);
+  const editingRef = useRef<NoteEditing | undefined>(undefined);
   const counterRef = useRef<CharacterCounterHandle>(null);
   // Count visible text, as edits do; DOMParser is inert (no scripts or image loads).
   const [initialCount] = useState(
@@ -191,8 +191,8 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
   }, []);
 
   const handleIconPickerClose = useCallback(() => {
-    setIconPickerAnchor(null);
-    savedRangeRef.current = null;
+    setIconPickerAnchor(undefined);
+    savedRangeRef.current = undefined;
   }, []);
 
   const handleEmojiSelect = useCallback(
@@ -272,7 +272,7 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
     editingRef.current = editing;
     return () => {
       editing.detach();
-      editingRef.current = null;
+      editingRef.current = undefined;
     };
   }, [handleContentChange]);
 

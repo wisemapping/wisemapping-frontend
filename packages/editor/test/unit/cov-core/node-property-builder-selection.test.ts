@@ -127,8 +127,8 @@ const setup = (
   const designer = {
     ...spies,
     getModel: () => ({
-      selectedTopic: () => topics[0] ?? null,
-      selectedRelationship: () => options.relationship ?? null,
+      selectedTopic: () => topics[0],
+      selectedRelationship: () => options.relationship,
       filterSelectedTopics: () => topics,
     }),
     getThemeVariant: () => options.variant ?? 'light',

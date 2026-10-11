@@ -34,7 +34,7 @@ export type OAuthFlow = {
   redirect?: string;
 };
 
-export const startOAuthFlow = (authUrl: string, redirect?: string | null): void => {
+export const startOAuthFlow = (authUrl: string, redirect?: string): void => {
   const flow: OAuthFlow = { startedAt: Date.now(), ...(redirect ? { redirect } : {}) };
   try {
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify(flow));
@@ -46,9 +46,9 @@ export const startOAuthFlow = (authUrl: string, redirect?: string | null): void 
 
 /** Returns the sign-in started in this tab, if any and recent, without forgetting it. */
 export const peekOAuthFlow = (): OAuthFlow | undefined => {
-  let raw: string | null;
+  let raw: string | undefined;
   try {
-    raw = sessionStorage.getItem(STORAGE_KEY);
+    raw = sessionStorage.getItem(STORAGE_KEY) ?? undefined;
   } catch {
     return undefined;
   }

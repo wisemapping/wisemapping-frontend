@@ -397,7 +397,7 @@ describe('UserMapsDialog', () => {
 
   test('shows spinners while the user or the maps load', () => {
     const { rerender } = renderWithWrapper(
-      <UserMapsDialog {...baseProps} user={null} isLoadingUser isLoadingMaps />,
+      <UserMapsDialog {...baseProps} user={undefined} isLoadingUser isLoadingMaps />,
     );
     expect(screen.getByText('Loading user...')).toBeTruthy();
     expect(screen.queryByText('User Information')).toBeNull();

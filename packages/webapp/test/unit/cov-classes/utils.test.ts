@@ -48,12 +48,12 @@ describe('CSRF helpers', () => {
     expect(getCsrfTokenParameter()).toBe('_csrf');
   });
 
-  it('return null for a meta tag without content', () => {
+  it('return undefined for a meta tag without content', () => {
     addMeta('_csrf');
     addMeta('_csrf_parameter');
 
-    expect(getCsrfToken()).toBeNull();
-    expect(getCsrfTokenParameter()).toBeNull();
+    expect(getCsrfToken()).toBeUndefined();
+    expect(getCsrfTokenParameter()).toBeUndefined();
   });
 });
 

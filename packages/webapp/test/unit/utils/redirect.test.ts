@@ -45,7 +45,6 @@ describe('safeRedirectPath', () => {
     ['c/maps/3'],
     ['wisemapping'],
     [''],
-    [null],
     [undefined],
   ])('falls back for %p', (value) => {
     expect(safeRedirectPath(value)).toBe(DEFAULT_REDIRECT);

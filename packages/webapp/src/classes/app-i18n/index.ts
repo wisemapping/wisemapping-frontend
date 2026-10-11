@@ -41,7 +41,7 @@ export default abstract class AppI18n {
     '/c/forgot-password',
     '/c/forgot-password-success',
   ]);
-  private static localePrefixRegex: RegExp | null = null;
+  private static localePrefixRegex: RegExp | undefined;
 
   public static getUserLocale(accountLocale?: Locale): Locale {
     const path = window.location.pathname;
@@ -95,8 +95,8 @@ export default abstract class AppI18n {
 
   public static getDefaultLocale(): Locale {
     // Fetch local from local storage ...
-    let result: Locale | null = null;
-    const userLocaleCode: string | null = readStorage(AppI18n.LOCAL_STORAGE_KEY);
+    let result: Locale | undefined;
+    const userLocaleCode = readStorage(AppI18n.LOCAL_STORAGE_KEY);
     if (userLocaleCode) {
       result = localeFromStr(userLocaleCode);
     }

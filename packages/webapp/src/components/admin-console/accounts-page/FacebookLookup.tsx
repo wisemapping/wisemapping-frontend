@@ -45,7 +45,7 @@ type FacebookLookupProps = {
 const FacebookLookup = ({ onLookup, onRemove }: FacebookLookupProps): ReactElement => {
   const intl = useIntl();
   const [facebookIdInput, setFacebookIdInput] = useState('');
-  const [facebookLookupResult, setFacebookLookupResult] = useState<User | null>(null);
+  const [facebookLookupResult, setFacebookLookupResult] = useState<User>();
   const [facebookLookupError, setFacebookLookupError] = useState('');
   const [isFacebookLookupLoading, setIsFacebookLookupLoading] = useState(false);
 
@@ -53,7 +53,7 @@ const FacebookLookup = ({ onLookup, onRemove }: FacebookLookupProps): ReactEleme
     const id = facebookIdInput.trim();
     if (!id) return;
     setIsFacebookLookupLoading(true);
-    setFacebookLookupResult(null);
+    setFacebookLookupResult(undefined);
     setFacebookLookupError('');
     onLookup(id)
       .then((user) => setFacebookLookupResult(user))
@@ -87,7 +87,7 @@ const FacebookLookup = ({ onLookup, onRemove }: FacebookLookupProps): ReactEleme
         value={facebookIdInput}
         onChange={(e) => {
           setFacebookIdInput(e.target.value);
-          setFacebookLookupResult(null);
+          setFacebookLookupResult(undefined);
           setFacebookLookupError('');
         }}
         onKeyDown={(e) => e.key === 'Enter' && handleFacebookLookup()}

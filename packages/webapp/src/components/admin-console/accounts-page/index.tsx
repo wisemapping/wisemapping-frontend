@@ -161,7 +161,7 @@ const AccountManagement = (): ReactElement => {
   const [filterSuspended, setFilterSuspended] = useState<string>('all');
   const [filterAuthType, setFilterAuthType] = useState<string>('all');
 
-  const [editingUser, setEditingUser] = useState<User | null>(null);
+  const [editingUser, setEditingUser] = useState<User>();
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   // A new key opens the user and password dialogs with a fresh form.
@@ -169,35 +169,35 @@ const AccountManagement = (): ReactElement => {
 
   // Suspension dialog state
   const [isSuspensionDialogOpen, setIsSuspensionDialogOpen] = useState(false);
-  const [suspendingUser, setSuspendingUser] = useState<User | null>(null);
+  const [suspendingUser, setSuspendingUser] = useState<User>();
   const [suspensionReason, setSuspensionReason] = useState<string>('');
 
   // Delete confirmation dialog state
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  const [deletingUser, setDeletingUser] = useState<User | null>(null);
+  const [deletingUser, setDeletingUser] = useState<User>();
 
   // Unsuspend confirmation dialog state
   const [isUnsuspendDialogOpen, setIsUnsuspendDialogOpen] = useState(false);
-  const [unsuspendingUser, setUnsuspendingUser] = useState<User | null>(null);
+  const [unsuspendingUser, setUnsuspendingUser] = useState<User>();
 
   // Activate confirmation dialog state
   const [isActivateDialogOpen, setIsActivateDialogOpen] = useState(false);
-  const [activatingUser, setActivatingUser] = useState<User | null>(null);
+  const [activatingUser, setActivatingUser] = useState<User>();
 
   // User maps dialog state
   const [isUserMapsDialogOpen, setIsUserMapsDialogOpen] = useState(false);
-  const [viewingMapsUser, setViewingMapsUser] = useState<User | null>(null);
+  const [viewingMapsUser, setViewingMapsUser] = useState<User>();
 
   // Change password dialog state
   const [isPasswordDialogOpen, setIsPasswordDialogOpen] = useState(false);
-  const [changingPasswordUser, setChangingPasswordUser] = useState<User | null>(null);
+  const [changingPasswordUser, setChangingPasswordUser] = useState<User>();
 
   // Facebook data deletion state
   const [isFacebookFilterExpanded, setIsFacebookFilterExpanded] = useState(false);
   // A new key clears the lookup.
   const [facebookLookupKey, setFacebookLookupKey] = useState(0);
   const [isRemoveFacebookDialogOpen, setIsRemoveFacebookDialogOpen] = useState(false);
-  const [removingFacebookUser, setRemovingFacebookUser] = useState<User | null>(null);
+  const [removingFacebookUser, setRemovingFacebookUser] = useState<User>();
 
   // Suspension reasons
   const suspensionReasons = [
@@ -297,7 +297,7 @@ const AccountManagement = (): ReactElement => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['adminUsers'] });
       setIsEditDialogOpen(false);
-      setEditingUser(null);
+      setEditingUser(undefined);
     },
     onError: (error: Error) => {
       console.error('Failed to update user:', error);
@@ -331,7 +331,7 @@ const AccountManagement = (): ReactElement => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['adminUsers'] });
       setIsDeleteDialogOpen(false);
-      setDeletingUser(null);
+      setDeletingUser(undefined);
     },
     onError: (error: Error) => {
       console.error('Failed to delete user:', error);
@@ -348,7 +348,7 @@ const AccountManagement = (): ReactElement => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['adminUsers'] });
       setIsSuspensionDialogOpen(false);
-      setSuspendingUser(null);
+      setSuspendingUser(undefined);
       setSuspensionReason('');
     },
     onError: (error: Error) => {
@@ -362,7 +362,7 @@ const AccountManagement = (): ReactElement => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['adminUsers'] });
       setIsUnsuspendDialogOpen(false);
-      setUnsuspendingUser(null);
+      setUnsuspendingUser(undefined);
     },
     onError: (error: Error) => {
       console.error('Failed to unsuspend user:', error);
@@ -375,7 +375,7 @@ const AccountManagement = (): ReactElement => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['adminUsers'] });
       setIsActivateDialogOpen(false);
-      setActivatingUser(null);
+      setActivatingUser(undefined);
     },
     onError: (error: Error) => {
       console.error('Failed to activate user:', error);
@@ -399,7 +399,7 @@ const AccountManagement = (): ReactElement => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['adminUsers'] });
       setIsRemoveFacebookDialogOpen(false);
-      setRemovingFacebookUser(null);
+      setRemovingFacebookUser(undefined);
       // Clear the lookup since the account changed
       setFacebookLookupKey((key) => key + 1);
     },
@@ -481,7 +481,7 @@ const AccountManagement = (): ReactElement => {
       .changeUserPassword(changingPasswordUser.id, password)
       .then(() => {
         setIsPasswordDialogOpen(false);
-        setChangingPasswordUser(null);
+        setChangingPasswordUser(undefined);
         return undefined;
       })
       .catch((error) => {
@@ -506,7 +506,7 @@ const AccountManagement = (): ReactElement => {
 
   const handleCancelDelete = () => {
     setIsDeleteDialogOpen(false);
-    setDeletingUser(null);
+    setDeletingUser(undefined);
   };
 
   const handleSuspendUser = (user: User) => {
@@ -528,7 +528,7 @@ const AccountManagement = (): ReactElement => {
 
   const handleCancelUnsuspend = () => {
     setIsUnsuspendDialogOpen(false);
-    setUnsuspendingUser(null);
+    setUnsuspendingUser(undefined);
   };
 
   const handleActivateUser = (user: User) => {
@@ -544,7 +544,7 @@ const AccountManagement = (): ReactElement => {
 
   const handleCancelActivate = () => {
     setIsActivateDialogOpen(false);
-    setActivatingUser(null);
+    setActivatingUser(undefined);
   };
 
   const handleConfirmSuspension = () => {
@@ -558,7 +558,7 @@ const AccountManagement = (): ReactElement => {
 
   const handleCancelSuspension = () => {
     setIsSuspensionDialogOpen(false);
-    setSuspendingUser(null);
+    setSuspendingUser(undefined);
     setSuspensionReason('');
   };
 
@@ -571,7 +571,7 @@ const AccountManagement = (): ReactElement => {
 
   const handleCloseUserMapsDialog = () => {
     setIsUserMapsDialogOpen(false);
-    setViewingMapsUser(null);
+    setViewingMapsUser(undefined);
   };
 
   const formatDate = (dateString: string) => {

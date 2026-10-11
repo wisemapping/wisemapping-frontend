@@ -119,7 +119,7 @@ const LoadedEditorPage = ({
   hid,
   editorMetadata,
 }: EditorPropsType & { editorMetadata: EditorMetadata }): React.ReactElement => {
-  const [activeDialog, setActiveDialog] = useState<ActionType | null>(null);
+  const [activeDialog, setActiveDialog] = useState<ActionType>();
   const [sessionExpired, setSessionExpired] = useState<boolean>(false);
   const mapInfoRef = useRef<MapInfoImpl | undefined>(undefined);
 
@@ -268,7 +268,7 @@ const LoadedEditorPage = ({
         <Suspense fallback={<></>}>
           <ActionDispatcher
             action={activeDialog}
-            onClose={() => setActiveDialog(null)}
+            onClose={() => setActiveDialog(undefined)}
             mapsId={[mapId]}
             fromEditor
             pageMode={pageMode}

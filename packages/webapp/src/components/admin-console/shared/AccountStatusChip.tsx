@@ -88,7 +88,7 @@ const AccountStatusChip = ({
   interactive = false,
 }: AccountStatusChipProps): ReactElement => {
   const intl = useIntl();
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<HTMLElement>();
   const menuOpen = Boolean(anchorEl);
 
   const handleChipClick = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -98,7 +98,7 @@ const AccountStatusChip = ({
   };
 
   const handleCloseMenu = () => {
-    setAnchorEl(null);
+    setAnchorEl(undefined);
   };
 
   const handleSuspend = () => {

@@ -47,7 +47,7 @@ const ResetPassword = () => {
 
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
-  const [validationError, setValidationError] = useState<string | null>(null);
+  const [validationError, setValidationError] = useState<string>();
   const [error, setError] = useState<ErrorInfo | undefined>(undefined);
   // Stable, so that a key re-renders only the field typed in (see Input).
   const handlePasswordChange = useCallback(
@@ -99,7 +99,7 @@ const ResetPassword = () => {
 
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    setValidationError(null);
+    setValidationError(undefined);
 
     if (password.length < 8) {
       setValidationError(

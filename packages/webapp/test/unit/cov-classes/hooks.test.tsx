@@ -84,7 +84,7 @@ describe('useFetchMapById', () => {
       role: 'viewer',
     });
     expect(result.current.isLoading).toBe(false);
-    expect(result.current.error).toBeNull();
+    expect(result.current.error).toBeUndefined();
   });
 
   it('copies the extended metadata fields', async () => {
@@ -194,7 +194,7 @@ describe('account hooks', () => {
 
     expect(result.current.isLoading).toBe(true);
     await waitFor(() => expect(result.current.data).toEqual(account));
-    expect(result.current).toMatchObject({ isLoading: false, error: null });
+    expect(result.current).toMatchObject({ isLoading: false, error: undefined });
   });
 });
 
@@ -205,14 +205,14 @@ describe('useAdminPermissions', () => {
   it('is loading while the account is fetched', () => {
     const { result } = render(jest.fn(() => new Promise(() => undefined)));
 
-    expect(result.current).toEqual({ isAdmin: null, loading: true, error: null });
+    expect(result.current).toEqual({ isAdmin: undefined, loading: true, error: undefined });
   });
 
   it('grants admin rights to an admin account', async () => {
     const { result } = render(jest.fn().mockResolvedValue(account));
 
     await waitFor(() =>
-      expect(result.current).toEqual({ isAdmin: true, loading: false, error: null }),
+      expect(result.current).toEqual({ isAdmin: true, loading: false, error: undefined }),
     );
   });
 
@@ -220,7 +220,7 @@ describe('useAdminPermissions', () => {
     const { result } = render(jest.fn().mockResolvedValue({ ...account, isAdmin: false }));
 
     await waitFor(() =>
-      expect(result.current).toEqual({ isAdmin: false, loading: false, error: null }),
+      expect(result.current).toEqual({ isAdmin: false, loading: false, error: undefined }),
     );
   });
 
@@ -229,7 +229,7 @@ describe('useAdminPermissions', () => {
 
     await waitFor(() =>
       expect(result.current).toEqual({
-        isAdmin: null,
+        isAdmin: undefined,
         loading: false,
         error: 'Session expired',
       }),
@@ -249,6 +249,6 @@ describe('useAdminPermissions', () => {
     const { result } = render(fetchAccountInfo);
 
     expect(fetchAccountInfo).not.toHaveBeenCalled();
-    expect(result.current).toEqual({ isAdmin: false, loading: false, error: null });
+    expect(result.current).toEqual({ isAdmin: false, loading: false, error: undefined });
   });
 });

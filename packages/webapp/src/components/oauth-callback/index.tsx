@@ -74,7 +74,7 @@ const readCallbackParams = (
 // the sign-in mark and scrubs the URL afterwards, in an effect.
 type Arrival = { redirect: string } & (
   | { kind: 'cancelled' }
-  | { kind: 'provider-error'; error: string; description: string | null }
+  | { kind: 'provider-error'; error: string; description: string | undefined }
   | { kind: 'missing' }
   | { kind: 'invalid' }
   // trusted: the sign-in was started in this tab (see oauth-flow).
@@ -85,7 +85,7 @@ const readArrival = (): Arrival => {
   const searchParams = new URLSearchParams(window.location.search);
   const flow = peekOAuthFlow();
   // Where to go once signed in: a path on this site only (see safeRedirectPath).
-  const redirect = safeRedirectPath(flow?.redirect ?? searchParams.get('state'));
+  const redirect = safeRedirectPath(flow?.redirect ?? searchParams.get('state') ?? undefined);
 
   // Check if user cancelled the OAuth flow
   const error = searchParams.get('error');
@@ -99,7 +99,7 @@ const readArrival = (): Arrival => {
       redirect,
       kind: 'provider-error',
       error,
-      description: searchParams.get('error_description'),
+      description: searchParams.get('error_description') ?? undefined,
     };
   }
 

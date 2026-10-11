@@ -72,7 +72,7 @@ const RenameDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement
     setError(undefined);
 
     // Validate that mapId is valid (0 is a valid ID)
-    if (mapId == null || Number.isNaN(mapId)) {
+    if (Number.isNaN(mapId)) {
       setError({
         msg: intl.formatMessage({
           id: 'error.invalid-map-id',
@@ -116,12 +116,11 @@ const RenameDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement
 
   // An invalid id (0 is a valid one) is an error for as long as it is invalid: derived, so typing
   // in the form can not clear it.
-  const invalidMapIdError: ErrorInfo | undefined =
-    mapId == null || Number.isNaN(mapId)
-      ? {
-          msg: intl.formatMessage({ id: 'error.invalid-map-id', defaultMessage: 'Invalid map ID' }),
-        }
-      : undefined;
+  const invalidMapIdError: ErrorInfo | undefined = Number.isNaN(mapId)
+    ? {
+        msg: intl.formatMessage({ id: 'error.invalid-map-id', defaultMessage: 'Invalid map ID' }),
+      }
+    : undefined;
   const shownError = error ?? invalidMapIdError;
 
   // Only set model from map data on initial load. Adjusted while rendering, not in an effect, so

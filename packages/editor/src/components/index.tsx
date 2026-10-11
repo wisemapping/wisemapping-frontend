@@ -56,7 +56,7 @@ type EditorProps = {
    * centres that node once the map has loaded. Falls back to
    * `window.location` when not supplied.
    */
-  initialSearchParams?: URLSearchParams | null;
+  initialSearchParams?: URLSearchParams | undefined;
   /**
    * Builds a shareable URL that deep-links to a single node. Supplied by the
    * host application, which owns routing. When omitted the "copy link to node"
@@ -88,7 +88,7 @@ const EditorContent = ({
   const mode = internalMode;
 
   // Memoize default widget builder to avoid recreating on every render
-  const defaultWidgetBuilderRef = useRef<DefaultWidgetBuilder | null>(null);
+  const defaultWidgetBuilderRef = useRef<DefaultWidgetBuilder | undefined>(undefined);
   if (!defaultWidgetBuilderRef.current) {
     defaultWidgetBuilderRef.current = new DefaultWidgetBuilder();
   }

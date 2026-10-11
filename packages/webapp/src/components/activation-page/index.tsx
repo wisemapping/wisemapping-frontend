@@ -34,10 +34,12 @@ const ActivationPage = (): React.ReactElement => {
   const intl = useIntl();
   const client = use(ClientContext);
   // Read once, on arrival: the activation code is single-use.
-  const [code] = useState(() => new URLSearchParams(window.location.search).get('code'));
+  const [code] = useState(
+    () => new URLSearchParams(window.location.search).get('code') ?? undefined,
+  );
   const [loading, setLoading] = useState(Boolean(code));
   const [success, setSuccess] = useState(false);
-  const [serverError, setServerError] = useState<string | null>(null);
+  const [serverError, setServerError] = useState<string>();
   const error = code
     ? serverError
     : intl.formatMessage({
@@ -74,7 +76,7 @@ const ActivationPage = (): React.ReactElement => {
       })
       .catch((err) => {
         // The server's reason, or the page's own (translated) explanation.
-        setServerError(err.msg || null);
+        setServerError(err.msg || undefined);
         setLoading(false);
       });
   }, [client, code]);

@@ -185,7 +185,7 @@ describe('seo-locale', () => {
   it.each(['/c/login', '/xx/c/login', '/es/maps', '/'])('finds no locale in %s', (path) => {
     window.history.pushState({}, '', path);
 
-    expect(getLocaleFromPath()).toBeNull();
+    expect(getLocaleFromPath()).toBeUndefined();
   });
 
   it('uses the unlocalized path as canonical', () => {

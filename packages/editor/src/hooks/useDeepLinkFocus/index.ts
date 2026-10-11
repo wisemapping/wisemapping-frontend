@@ -23,13 +23,14 @@ import type Model from '../../classes/model/editor';
  * the `searchParams` prop, `window.location.search`, then
  * `window.location.hash` (so `#node=12` works for hash-routed embeds).
  */
-const resolveNodeId = (searchParams: URLSearchParams | null | undefined): number | undefined => {
-  let nodeStr = searchParams?.get('node');
+const resolveNodeId = (searchParams: URLSearchParams | undefined): number | undefined => {
+  let nodeStr = searchParams?.get('node') ?? undefined;
 
   if (!nodeStr && typeof window !== 'undefined') {
-    nodeStr = new URLSearchParams(window.location.search).get('node');
+    nodeStr = new URLSearchParams(window.location.search).get('node') ?? undefined;
     if (!nodeStr && window.location.hash) {
-      nodeStr = new URLSearchParams(window.location.hash.replace(/^#/, '')).get('node');
+      nodeStr =
+        new URLSearchParams(window.location.hash.replace(/^#/, '')).get('node') ?? undefined;
     }
   }
 
@@ -68,7 +69,7 @@ const resolveNodeId = (searchParams: URLSearchParams | null | undefined): number
  */
 export const useDeepLinkFocus = (
   model: Model | undefined,
-  searchParams: URLSearchParams | null | undefined,
+  searchParams: URLSearchParams | undefined,
 ): void => {
   const lastFocusedNodeIdRef = useRef<number | undefined>(undefined);
 

@@ -36,7 +36,7 @@ import { useAdminPermissions } from '../../../classes/hooks/useAdminPermissions'
 
 type ActionType = 'account-info' | undefined;
 const AccountMenu = (): React.ReactElement => {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = React.useState<HTMLElement>();
   const open = Boolean(anchorEl);
   const [action, setAction] = React.useState<ActionType>(undefined);
   const client = use(ClientContext);
@@ -48,7 +48,7 @@ const AccountMenu = (): React.ReactElement => {
   };
 
   const handleClose = () => {
-    setAnchorEl(null);
+    setAnchorEl(undefined);
   };
 
   const handleLogout = (event: React.MouseEvent<HTMLElement>) => {

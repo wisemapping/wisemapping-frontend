@@ -46,7 +46,7 @@ const ALL = [
 const setup = (role: Role | undefined, open = true) => {
   mockUseFetchMapById.mockReturnValue({
     isLoading: false,
-    error: null,
+    error: undefined,
     data: role ? { id: 9, role } : undefined,
   });
   const anchor = document.createElement('button');

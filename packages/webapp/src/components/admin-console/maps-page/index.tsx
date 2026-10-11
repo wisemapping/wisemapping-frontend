@@ -149,8 +149,8 @@ type SortField =
 type SortDirection = 'asc' | 'desc';
 
 // Detect search type
-const getSearchType = (term: string): 'id' | 'email' | 'text' | null => {
-  if (!term || term.trim() === '') return null;
+const getSearchType = (term: string): 'id' | 'email' | 'text' | undefined => {
+  if (!term || term.trim() === '') return undefined;
   const trimmed = term.trim();
 
   // Check for ID search (starts with #)
@@ -263,29 +263,27 @@ const MapsManagement = (): ReactElement => {
   const [filterLocked, setFilterLocked] = useState<string>('all');
   const [filterSpam, setFilterSpam] = useState<string>('all');
   const [dateFilter, setDateFilter] = useState<string>('1');
-  const [editingMap, setEditingMap] = useState<AdminMap | null>(null);
+  const [editingMap, setEditingMap] = useState<AdminMap>();
 
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   // A new key opens the edit dialog with a fresh form.
   const [editDialogKey, setEditDialogKey] = useState(0);
 
   // XML Viewer state
-  const [viewingMap, setViewingMap] = useState<AdminMap | null>(null);
+  const [viewingMap, setViewingMap] = useState<AdminMap>();
   const [isXmlViewerOpen, setIsXmlViewerOpen] = useState(false);
   const [xmlContent, setXmlContent] = useState<string>('');
   const [isPendingXml, setIsPendingXml] = useState(false);
 
   // User suspension state
   const [isSuspensionDialogOpen, setIsSuspensionDialogOpen] = useState(false);
-  const [suspendingUser, setSuspendingUser] = useState<{ userId: number; userName: string } | null>(
-    null,
-  );
+  const [suspendingUser, setSuspendingUser] = useState<{ userId: number; userName: string }>();
 
   // Owner maps dialog state
   const [isOwnerMapsDialogOpen, setIsOwnerMapsDialogOpen] = useState(false);
-  const [selectedOwnerId, setSelectedOwnerId] = useState<number | null>(null);
+  const [selectedOwnerId, setSelectedOwnerId] = useState<number>();
   const [selectedOwnerName, setSelectedOwnerName] = useState<string>('');
-  const [selectedOwnerUser, setSelectedOwnerUser] = useState<AdminUser | null>(null);
+  const [selectedOwnerUser, setSelectedOwnerUser] = useState<AdminUser>();
   const [ownerMaps, setOwnerMaps] = useState<AdminMap[]>([]);
   const [isPendingOwnerMaps, setIsPendingOwnerMaps] = useState(false);
   const [isPendingOwnerInfo, setIsPendingOwnerInfo] = useState(false);
@@ -348,7 +346,7 @@ const MapsManagement = (): ReactElement => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['adminMaps'] });
       setIsEditDialogOpen(false);
-      setEditingMap(null);
+      setEditingMap(undefined);
     },
     onError: (error: Error) => {
       console.error('Failed to update map:', error);
@@ -391,9 +389,9 @@ const MapsManagement = (): ReactElement => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['adminMaps'] });
       setIsSuspensionDialogOpen(false);
-      setSuspendingUser(null);
+      setSuspendingUser(undefined);
       // Refresh owner user info if in owner maps dialog
-      if (selectedOwnerId !== null) {
+      if (selectedOwnerId !== undefined) {
         loadOwnerInfo(selectedOwnerId);
       }
     },
@@ -409,7 +407,7 @@ const MapsManagement = (): ReactElement => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['adminMaps'] });
       // Refresh owner user info if in owner maps dialog
-      if (selectedOwnerId !== null) {
+      if (selectedOwnerId !== undefined) {
         loadOwnerInfo(selectedOwnerId);
       }
     },
@@ -634,7 +632,7 @@ const MapsManagement = (): ReactElement => {
   const handleViewOwnerMaps = async (ownerId: number, ownerName: string) => {
     setSelectedOwnerId(ownerId);
     setSelectedOwnerName(ownerName);
-    setSelectedOwnerUser(null);
+    setSelectedOwnerUser(undefined);
     setIsOwnerMapsDialogOpen(true);
     setIsPendingOwnerMaps(true);
     setIsPendingOwnerInfo(true);
@@ -1308,12 +1306,12 @@ const MapsManagement = (): ReactElement => {
         isLoadingMaps={isPendingOwnerMaps}
         onSuspend={() => {
           setIsOwnerMapsDialogOpen(false);
-          if (selectedOwnerId !== null) {
+          if (selectedOwnerId !== undefined) {
             handleSuspendUser(selectedOwnerId, selectedOwnerName);
           }
         }}
         onUnsuspend={() => {
-          if (selectedOwnerId !== null) {
+          if (selectedOwnerId !== undefined) {
             handleUnsuspendUserFromDialog(selectedOwnerId);
           }
         }}

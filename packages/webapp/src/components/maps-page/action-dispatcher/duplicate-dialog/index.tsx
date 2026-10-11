@@ -74,7 +74,7 @@ const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElem
     setError(undefined);
 
     // Validate that mapId is valid (0 is a valid ID)
-    if (mapId == null || Number.isNaN(mapId)) {
+    if (Number.isNaN(mapId)) {
       setError({
         msg: intl.formatMessage({
           id: 'error.invalid-map-id',
@@ -130,12 +130,11 @@ const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElem
 
   // An invalid id (0 is a valid one) is an error for as long as it is invalid: derived, so typing
   // in the form can not clear it.
-  const invalidMapIdError: ErrorInfo | undefined =
-    mapId == null || Number.isNaN(mapId)
-      ? {
-          msg: intl.formatMessage({ id: 'error.invalid-map-id', defaultMessage: 'Invalid map ID' }),
-        }
-      : undefined;
+  const invalidMapIdError: ErrorInfo | undefined = Number.isNaN(mapId)
+    ? {
+        msg: intl.formatMessage({ id: 'error.invalid-map-id', defaultMessage: 'Invalid map ID' }),
+      }
+    : undefined;
   const shownError = error ?? invalidMapIdError;
 
   // The form starts from each map fetched (and is retitled in the current language). Adjusted while

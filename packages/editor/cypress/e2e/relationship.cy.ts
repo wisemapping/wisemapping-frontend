@@ -57,7 +57,7 @@ const dotCenter = (pivot: 0 | 1) =>
   });
 
 /** The element a real pointer at `point` hits, looking inside open shadow roots. */
-const elementAt = (doc: Document, { clientX, clientY }: PointerPosition): Element | null => {
+const elementAt = (doc: Document, { clientX, clientY }: PointerPosition): Element | undefined => {
   let target = doc.elementFromPoint(clientX, clientY);
   while (target?.shadowRoot) {
     const inner = target.shadowRoot.elementFromPoint(clientX, clientY);
@@ -66,7 +66,7 @@ const elementAt = (doc: Document, { clientX, clientY }: PointerPosition): Elemen
     }
     target = inner;
   }
-  return target;
+  return target ?? undefined;
 };
 
 /** Whether `point` is on the empty canvas: the root <svg> of the mindplot workspace. */

@@ -94,9 +94,9 @@ const hashEmail = async (email: string): Promise<string> => {
     .join('');
 };
 
-const setAnalyticsUserId = (userId: string | null): void => {
+const setAnalyticsUserId = (userId: string | undefined): void => {
   try {
-    ReactGA.set({ userId: userId ?? undefined });
+    ReactGA.set({ userId });
   } catch (error) {
     log.warn('Failed to set analytics user ID:', error);
   }
@@ -105,11 +105,11 @@ const setAnalyticsUserId = (userId: string | null): void => {
 /**
  * Hashes the user's email with SHA-256 and sets it as the GA4 user ID.
  * Sends a pseudonymous identifier — the original email is not recoverable.
- * Pass null to clear the user ID (e.g. on logout).
+ * Pass undefined to clear the user ID (e.g. on logout).
  */
-export const setAnalyticsUserEmail = (email: string | null): void => {
+export const setAnalyticsUserEmail = (email: string | undefined): void => {
   if (!email) {
-    setAnalyticsUserId(null);
+    setAnalyticsUserId(undefined);
     return;
   }
   hashEmail(email)
@@ -121,5 +121,5 @@ export const setAnalyticsUserEmail = (email: string | null): void => {
  * Clears the user ID in Google Analytics
  */
 export const clearAnalyticsUserId = (): void => {
-  setAnalyticsUserId(null);
+  setAnalyticsUserId(undefined);
 };

@@ -108,7 +108,7 @@ describe('useDeepLinkFocus', () => {
       setLocation('/?node=7');
       const designer = makeDesigner();
 
-      renderHook(() => useDeepLinkFocus(makeModel(designer), null));
+      renderHook(() => useDeepLinkFocus(makeModel(designer), undefined));
 
       designer.fireLoadSuccess();
       expect(designer.revealNode).toHaveBeenCalledWith({ id: 7, label: 'mock-topic' }, true);

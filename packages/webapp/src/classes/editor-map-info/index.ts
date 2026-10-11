@@ -76,7 +76,7 @@ class MapInfoImpl implements MapInfo {
   }
 
   updateTitle(title: string): Promise<void> {
-    if (this.id == null || Number.isNaN(this.id)) {
+    if (Number.isNaN(this.id)) {
       return Promise.reject(new Error(`Invalid map ID: ${this.id}`));
     }
 

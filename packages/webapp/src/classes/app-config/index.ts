@@ -43,20 +43,22 @@ type Config = {
 };
 
 class AppConfig {
-  private static _config: Config | null = null;
+  private static _config: Config | undefined;
 
-  private static _initializationPromise: Promise<Config> | null = null;
+  private static _initializationPromise: Promise<Config> | undefined;
 
-  private static _client: Client | null = null;
+  private static _client: Client | undefined;
 
-  private static _adminClient: AdminClientInterface | null = null;
+  private static _adminClient: AdminClientInterface | undefined;
 
   // The mock clients, loaded by initialize() only when the configuration asks for them: they are
   // for development, and production does not download them.
-  private static _mocks: {
-    MockClient: new () => Client;
-    MockAdminClient: new () => AdminClientInterface;
-  } | null = null;
+  private static _mocks:
+    | {
+        MockClient: new () => Client;
+        MockAdminClient: new () => AdminClientInterface;
+      }
+    | undefined;
 
   static async initialize(): Promise<Config> {
     if (this._config) {
@@ -87,7 +89,7 @@ class AppConfig {
           throw { msg: `Unexpected error application. Please, try latter. Detail: ${message}` };
         })
         .finally(() => {
-          this._initializationPromise = null;
+          this._initializationPromise = undefined;
         });
     }
 

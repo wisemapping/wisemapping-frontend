@@ -35,7 +35,7 @@ interface ThemeProviderProps {
 export const AppThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const [mode, setMode] = useState<PaletteMode>(() => {
     // Check localStorage first, then system preference
-    const savedMode = readStorage('themeMode') as PaletteMode;
+    const savedMode = readStorage('themeMode') as PaletteMode | undefined;
     if (savedMode) {
       return savedMode;
     }

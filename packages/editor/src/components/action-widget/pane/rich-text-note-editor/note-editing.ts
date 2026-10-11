@@ -68,32 +68,32 @@ type Caret = { node: Node; offset: number };
 /** The closest element, from the node up to the root (excluded), matching the predicate. */
 const closest = (
   root: HTMLElement,
-  node: Node | null,
+  node: Node,
   predicate: (el: HTMLElement) => boolean,
-): HTMLElement | null => {
-  for (let current = node; current && current !== root; current = current.parentNode) {
+): HTMLElement | undefined => {
+  for (let current: Node | null = node; current && current !== root; current = current.parentNode) {
     if (isElement(current) && predicate(current)) {
       return current;
     }
   }
-  return null;
+  return undefined;
 };
 
-const selectionIn = (root: HTMLElement): Selection | null => {
+const selectionIn = (root: HTMLElement): Selection | undefined => {
   const selection = root.ownerDocument.getSelection();
   if (!selection || selection.rangeCount === 0) {
-    return null;
+    return undefined;
   }
   const range = selection.getRangeAt(0);
   return root.contains(range.startContainer) && root.contains(range.endContainer)
     ? selection
-    : null;
+    : undefined;
 };
 
-const collapsedCaret = (root: HTMLElement): Caret | null => {
+const collapsedCaret = (root: HTMLElement): Caret | undefined => {
   const selection = selectionIn(root);
   if (!selection || !selection.isCollapsed) {
-    return null;
+    return undefined;
   }
   const range = selection.getRangeAt(0);
   return { node: range.startContainer, offset: range.startOffset };
@@ -110,9 +110,9 @@ const setCaret = (root: HTMLElement, node: Node, offset: number): void => {
 };
 
 /** The caret as child indexes from the root, so it can be found again in restored content. */
-const caretPath = (root: HTMLElement, caret: Caret | null): number[] | null => {
+const caretPath = (root: HTMLElement, caret: Caret | undefined): number[] | undefined => {
   if (!caret || !root.contains(caret.node)) {
-    return null;
+    return undefined;
   }
   const path = [caret.offset];
   for (let node = caret.node; node !== root; node = node.parentNode!) {
@@ -121,7 +121,7 @@ const caretPath = (root: HTMLElement, caret: Caret | null): number[] | null => {
   return path;
 };
 
-const restoreCaret = (root: HTMLElement, path: number[] | null): void => {
+const restoreCaret = (root: HTMLElement, path: number[] | undefined): void => {
   let node: Node = root;
   if (path) {
     for (const index of path.slice(0, -1)) {
@@ -151,9 +151,9 @@ const blockOf = (root: HTMLElement, node: Node): HTMLElement =>
  */
 const lineOf = (root: HTMLElement, caret: Caret): { block: HTMLElement; nodes: Node[] } => {
   const block = blockOf(root, caret.node);
-  let child: Node | null;
+  let child: Node | undefined;
   if (caret.node === block) {
-    child = block.childNodes[caret.offset - 1] ?? block.childNodes[caret.offset] ?? null;
+    child = block.childNodes[caret.offset - 1] ?? block.childNodes[caret.offset];
   } else {
     child = caret.node;
     while (child.parentNode !== block) {
@@ -162,7 +162,7 @@ const lineOf = (root: HTMLElement, caret: Caret): { block: HTMLElement; nodes: N
   }
   const inLine = (node: Node | null): node is Node =>
     !!node && !isBlock(node) && !(isElement(node) && node.tagName === 'BR');
-  if (!inLine(child)) {
+  if (!child || !inLine(child)) {
     return { block, nodes: [] };
   }
   const nodes: Node[] = [child];
@@ -187,7 +187,7 @@ const textBefore = (root: HTMLElement, nodes: Node[], caret: Caret): string => {
 };
 
 /** The DOM position of a text offset in the line. */
-const positionAt = (nodes: Node[], offset: number): Caret | null => {
+const positionAt = (nodes: Node[], offset: number): Caret | undefined => {
   let remaining = offset;
   for (const top of nodes) {
     const walker = top.ownerDocument!.createTreeWalker(top, NodeFilter.SHOW_TEXT);
@@ -200,7 +200,7 @@ const positionAt = (nodes: Node[], offset: number): Caret | null => {
       text = top.nodeType === Node.TEXT_NODE ? null : walker.nextNode();
     }
   }
-  return null;
+  return undefined;
 };
 
 const isInsideCode = (root: HTMLElement, node: Node): boolean =>
@@ -249,7 +249,7 @@ const applyBlockRule = (root: HTMLElement, caret: Caret, rule: BlockRule): boole
   const isListRule = rule.type === 'ul' || rule.type === 'ol';
   const target = doc.createElement(isListRule ? 'li' : rule.type);
   const remaining = nodes.filter((n) => n.parentNode === block);
-  const anchor = remaining[0] ?? null;
+  const anchor = remaining[0];
   const lastRemaining = remaining.at(-1);
   // The <br> around a line of the root are not needed next to a block.
   if (block === root && anchor && lastRemaining) {
@@ -265,8 +265,9 @@ const applyBlockRule = (root: HTMLElement, caret: Caret, rule: BlockRule): boole
   }
 
   if (block === root) {
-    const reference = anchor ?? marker.startContainer.childNodes[marker.startOffset] ?? null;
-    root.insertBefore(outer, reference && reference.parentNode === root ? reference : null);
+    const reference = anchor ?? marker.startContainer.childNodes[marker.startOffset];
+    // insertBefore takes null to append.
+    root.insertBefore(outer, reference?.parentNode === root ? reference : null);
   } else {
     block.parentNode!.replaceChild(outer, block);
   }
@@ -296,19 +297,23 @@ const applyBlockRule = (root: HTMLElement, caret: Caret, rule: BlockRule): boole
 };
 
 /** Replaces the span the rule matched, ending at the caret, with its element. */
-const applyInlineRule = (root: HTMLElement, caret: Caret, rule: InlineRule): HTMLElement | null => {
+const applyInlineRule = (
+  root: HTMLElement,
+  caret: Caret,
+  rule: InlineRule,
+): HTMLElement | undefined => {
   const { nodes } = lineOf(root, caret);
   const text = textBefore(root, nodes, caret);
   const start = positionAt(nodes, rule.start);
   if (!start) {
-    return null;
+    return undefined;
   }
   const doc = root.ownerDocument;
   const span = doc.createRange();
   span.setStart(start.node, start.offset);
   span.setEnd(caret.node, caret.offset);
   if (span.toString() !== text.slice(rule.start)) {
-    return null;
+    return undefined;
   }
   span.deleteContents();
 
@@ -364,7 +369,7 @@ const selectedItems = (root: HTMLElement): HTMLLIElement[] => {
     return [];
   }
   const range = selection.getRangeAt(0);
-  const first = closest(root, range.startContainer, isItem) as HTMLLIElement | null;
+  const first = closest(root, range.startContainer, isItem) as HTMLLIElement | undefined;
   if (!first) {
     return [];
   }
@@ -423,10 +428,10 @@ const adoptFollowing = (li: HTMLLIElement, list: HTMLElement): void => {
  * Moves a nested item one level up, after its parent item, keeping the items that followed it as
  * its children. An item of a top level list leaves it and becomes a line.
  */
-const outdentItem = (root: HTMLElement, li: HTMLLIElement): HTMLElement | null => {
+const outdentItem = (root: HTMLElement, li: HTMLLIElement): HTMLElement | undefined => {
   const list = li.parentElement;
   if (!list || !isList(list)) {
-    return null;
+    return undefined;
   }
   const holder = list.parentElement;
   if (holder && holder !== root && (isItem(holder) || isList(holder))) {
@@ -566,7 +571,7 @@ export type NoteEditingOptions = {
   openLink?: (href: string) => void;
 };
 
-type Snapshot = { html: string; caret: number[] | null };
+type Snapshot = { html: string; caret: number[] | undefined };
 
 const INLINE_TRIGGERS = new Set(['*', '_', '~', '`', ')']);
 
@@ -583,9 +588,9 @@ export type NoteEditing = {
 export const attachNoteEditing = (root: HTMLElement, options: NoteEditingOptions): NoteEditing => {
   const openLink = options.openLink ?? openInNewTab;
   // The content before and after the last change made here, for undo.
-  let last: { before: Snapshot; after: string } | null = null;
+  let last: { before: Snapshot; after: string } | undefined;
   // An element a typed span just became: the next character typed at its end goes after it.
-  let exitElement: HTMLElement | null = null;
+  let exitElement: HTMLElement | undefined;
 
   const change = (apply: () => boolean): boolean => {
     const before: Snapshot = { html: root.innerHTML, caret: caretPath(root, collapsedCaret(root)) };
@@ -603,8 +608,8 @@ export const attachNoteEditing = (root: HTMLElement, options: NoteEditingOptions
     }
     root.innerHTML = last.before.html;
     restoreCaret(root, last.before.caret);
-    last = null;
-    exitElement = null;
+    last = undefined;
+    exitElement = undefined;
     options.onChange();
     return true;
   };
@@ -634,7 +639,7 @@ export const attachNoteEditing = (root: HTMLElement, options: NoteEditingOptions
 
   const onInput = (event: Event): void => {
     const input = event as InputEvent;
-    exitElement = null;
+    exitElement = undefined;
     if (input.inputType && input.inputType !== 'insertText') {
       return;
     }
@@ -663,7 +668,7 @@ export const attachNoteEditing = (root: HTMLElement, options: NoteEditingOptions
   const onBeforeInput = (event: Event): void => {
     const input = event as InputEvent;
     const element = exitElement;
-    exitElement = null;
+    exitElement = undefined;
     if (!element || input.inputType !== 'insertText' || !input.data) {
       return;
     }
@@ -674,7 +679,7 @@ export const attachNoteEditing = (root: HTMLElement, options: NoteEditingOptions
     // Browsers keep typing inside the element the caret is at the end of: write after it.
     event.preventDefault();
     const next = element.nextSibling;
-    const following = next && next.nodeType === Node.TEXT_NODE ? (next as Text) : null;
+    const following = next && next.nodeType === Node.TEXT_NODE ? (next as Text) : undefined;
     // A space with no text after it is not shown, and the browser drops it: it is written as a
     // non-breaking one, as browsers do.
     const data = /^$|^\s/.test(following?.data ?? '')
@@ -718,7 +723,9 @@ export const attachNoteEditing = (root: HTMLElement, options: NoteEditingOptions
 
     if (event.key === 'Enter') {
       const caret = collapsedCaret(root);
-      const li = caret ? (closest(root, caret.node, isItem) as HTMLLIElement | null) : null;
+      const li = caret
+        ? (closest(root, caret.node, isItem) as HTMLLIElement | undefined)
+        : undefined;
       if (!li || !caret) {
         return;
       }

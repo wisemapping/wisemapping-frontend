@@ -39,7 +39,7 @@ import { ClientContext } from '../../../classes/provider/client-context';
 const LanguageMenu = (): React.ReactElement => {
   const queryClient = useQueryClient();
   const client = use(ClientContext);
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = React.useState<HTMLElement>();
   const [helpDialogOpen, setHelpDialogOpen] = React.useState<boolean>(false);
 
   const open = Boolean(anchorEl);
@@ -47,7 +47,7 @@ const LanguageMenu = (): React.ReactElement => {
   const theme = useTheme();
   const smMediaQuery = theme.breakpoints.down('sm');
 
-  // Todo: For some reasons, in some situations locale is null. More research needed.
+  // Todo: For some reasons, in some situations locale is missing. More research needed.
   const mutation = useMutation({
     mutationFn: (locale: LocaleCode) => client.updateAccountLanguage(locale ? locale : 'en'),
     onSuccess: () => {
@@ -64,7 +64,7 @@ const LanguageMenu = (): React.ReactElement => {
   };
 
   const handleClose = () => {
-    setAnchorEl(null);
+    setAnchorEl(undefined);
   };
 
   const handleOnClick = (localeCode: LocaleCode) => {

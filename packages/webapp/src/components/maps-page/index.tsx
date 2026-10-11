@@ -85,7 +85,7 @@ const MapsPage = (): ReactElement => {
   const queryClient = useQueryClient();
   const [activeDialog, setActiveDialog] = React.useState<ActionType | undefined>(undefined);
   const [mindMapCopilotDialogOpen, setMindMapCopilotDialogOpen] = React.useState(false);
-  const [labelToDelete, setLabelToDelete] = React.useState<number | null>(null);
+  const [labelToDelete, setLabelToDelete] = React.useState<number>();
   const [mobileDrawerOpen, setMobileDrawerOpen] = React.useState(false);
   const [desktopDrawerOpen, setDesktopDrawerOpen] = React.useState(
     () => readStorage('desktopDrawerOpen') === 'true',
@@ -481,12 +481,12 @@ const MapsPage = (): ReactElement => {
           <HelpMenu />
         </Box>
       </div>
-      {label && labelToDelete != null && (
+      {label && labelToDelete !== undefined && (
         <LabelDeleteConfirm
-          onClose={() => setLabelToDelete(null)}
+          onClose={() => setLabelToDelete(undefined)}
           onConfirm={() => {
             handleLabelDelete(labelToDelete);
-            setLabelToDelete(null);
+            setLabelToDelete(undefined);
           }}
           label={label}
         />

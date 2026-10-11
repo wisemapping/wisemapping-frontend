@@ -497,10 +497,10 @@ export default class AdminClient implements AdminClientInterface {
       });
   }
 
-  private _jwtHeaderTokenValue(): string | null {
+  private _jwtHeaderTokenValue(): string | undefined {
     // Set cookie on session ...
     const token = JwtTokenConfig.retreiveToken();
-    return token ? `Bearer ${token}` : null;
+    return token ? `Bearer ${token}` : undefined;
   }
 
   private getDefaultLocale(): Locale {

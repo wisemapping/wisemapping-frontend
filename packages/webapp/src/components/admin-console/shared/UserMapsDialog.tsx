@@ -47,7 +47,7 @@ import type { AdminUser, AdminMap } from '../../../classes/client/admin-client';
 interface UserMapsDialogProps {
   open: boolean;
   onClose: () => void;
-  user: AdminUser | null;
+  user: AdminUser | undefined;
   maps: AdminMap[];
   isLoadingUser: boolean;
   isLoadingMaps: boolean;

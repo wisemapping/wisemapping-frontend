@@ -79,8 +79,8 @@ export const useRouteError = (): unknown => routerState.routeError;
 /* eslint-enable @eslint-react/no-unnecessary-use-prefix */
 
 export const isRouteErrorResponse = (error: unknown): boolean =>
-  error != null &&
   typeof error === 'object' &&
+  error !== null &&
   typeof (error as { status?: unknown }).status === 'number' &&
   typeof (error as { statusText?: unknown }).statusText === 'string' &&
   typeof (error as { internal?: unknown }).internal === 'boolean' &&

@@ -33,7 +33,7 @@ export const mapMetadataQueryKey = (id: number, withXml = false): unknown[] =>
 
 type MapLoadResult = {
   isLoading: boolean;
-  error: ErrorInfo | null;
+  error: ErrorInfo | undefined;
   data: MapInfo | undefined;
 };
 
@@ -42,8 +42,8 @@ export const useFetchMapById = (id: number): MapLoadResult => {
   const { isLoading, error, data } = useQuery<MapMetadata, ErrorInfo>({
     queryKey: mapMetadataQueryKey(id),
     queryFn: () => client.fetchMapMetadata(id),
-    // 0 is a valid map ID, only disable for null/undefined/NaN
-    enabled: id != null && !Number.isNaN(id),
+    // 0 is a valid map ID, only disable for NaN
+    enabled: !Number.isNaN(id),
   });
 
   // Convert MapMetadata to MapInfo format. Memoised on `data`: callers key
@@ -68,12 +68,12 @@ export const useFetchMapById = (id: number): MapLoadResult => {
         : undefined,
     [data],
   );
-  return { isLoading, error, data: map };
+  return { isLoading, error: error ?? undefined, data: map };
 };
 
 type MapMetadataLoadResult = {
   isLoading: boolean;
-  error: ErrorInfo | null;
+  error: ErrorInfo | undefined;
   data: MapMetadata | undefined;
 };
 
@@ -83,7 +83,7 @@ export const useFetchMapMetadata = (id: number): MapMetadataLoadResult => {
     queryKey: mapMetadataQueryKey(id),
     queryFn: () => client.fetchMapMetadata(id),
   });
-  return { isLoading, error, data };
+  return { isLoading, error: error ?? undefined, data };
 };
 
 export const useFetchAccount = (): AccountInfo | undefined => {
@@ -99,7 +99,7 @@ export const useFetchAccount = (): AccountInfo | undefined => {
 export const useFetchAccountWithState = (): {
   data: AccountInfo | undefined;
   isLoading: boolean;
-  error: ErrorInfo | null;
+  error: ErrorInfo | undefined;
 } => {
   const client = use(ClientContext);
   const { data, isLoading, error } = useQuery<AccountInfo, ErrorInfo>({
@@ -107,5 +107,5 @@ export const useFetchAccountWithState = (): {
     queryFn: () => client.fetchAccountInfo(),
     enabled: !AppI18n.isPublicPage(),
   });
-  return { data, isLoading, error };
+  return { data, isLoading, error: error ?? undefined };
 };

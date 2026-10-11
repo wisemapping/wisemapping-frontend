@@ -315,8 +315,8 @@ const AppWithTheme = (): ReactElement => {
     root.style.colorScheme = mode;
     root.style.backgroundColor = theme.palette.background.default;
   }, [mode, theme]);
-  const [router, setRouter] = useState<ReturnType<typeof createBrowserRouter> | null>(null);
-  const [initializationError, setInitializationError] = useState<string | null>(null);
+  const [router, setRouter] = useState<ReturnType<typeof createBrowserRouter>>();
+  const [initializationError, setInitializationError] = useState<string>();
 
   useEffect(() => {
     let cancelled = false;

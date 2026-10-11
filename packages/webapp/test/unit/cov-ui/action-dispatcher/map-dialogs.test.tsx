@@ -68,7 +68,7 @@ const textbox = (name: RegExp): HTMLInputElement =>
   screen.getByRole('textbox', { name }) as HTMLInputElement;
 
 beforeEach(() => {
-  mockUseFetchMapById.mockReturnValue({ isLoading: false, error: null, data: map });
+  mockUseFetchMapById.mockReturnValue({ isLoading: false, error: undefined, data: map });
 });
 
 describe('RenameDialog', () => {
@@ -457,7 +457,7 @@ describe('InfoDialog', () => {
   test('a public map says so', () => {
     mockUseFetchMapById.mockReturnValue({
       isLoading: false,
-      error: null,
+      error: undefined,
       data: { ...map, public: true, starred: false },
     });
     renderWithProviders(<InfoDialog mapId={7} onClose={jest.fn()} />, { client: {} as Client });
@@ -467,7 +467,7 @@ describe('InfoDialog', () => {
   });
 
   test('while the map loads, dates are dashes rather than today', () => {
-    mockUseFetchMapById.mockReturnValue({ isLoading: true, error: null, data: undefined });
+    mockUseFetchMapById.mockReturnValue({ isLoading: true, error: undefined, data: undefined });
     renderWithProviders(<InfoDialog mapId={7} onClose={jest.fn()} />, { client: {} as Client });
 
     expect(screen.getByText('Basic Info')).toBeTruthy();
