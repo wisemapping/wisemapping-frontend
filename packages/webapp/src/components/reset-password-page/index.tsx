@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useState, useEffect, useContext, useCallback } from 'react';
+import React, { useState, useEffect, use, useCallback } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useNavigate, useSearchParams } from 'react-router';
 import { Link as RouterLink } from 'react-router';
@@ -40,7 +40,7 @@ import { getCanonicalUrl, getAlternateLanguageUrls } from '../../utils/seo-local
 const ResetPassword = () => {
   const intl = useIntl();
   const navigate = useNavigate();
-  const client = useContext(ClientContext);
+  const client = use(ClientContext);
   const [searchParams] = useSearchParams();
 
   const token = searchParams.get('token');

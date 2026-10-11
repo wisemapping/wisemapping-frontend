@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { use, useRef } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ErrorInfo } from '../../../../classes/client';
@@ -45,7 +45,7 @@ import { copyText } from '../../../../utils/clipboard';
 const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
   const { data: map } = useFetchMapById(mapId);
 
-  const client = useContext(ClientContext);
+  const client = use(ClientContext);
   const [model, setModel] = React.useState<boolean>(map?.public ?? false);
   const [error, setError] = React.useState<ErrorInfo>();
   const [activeTab, setActiveTab] = React.useState('1');
@@ -55,15 +55,18 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
   const classes = useStyles();
   const previousModelRef = useRef<boolean>(map?.public ?? false);
 
-  // Sync model state when map data changes (e.g., after refetch or initial load)
+  // Sync model state when map data changes (e.g., after refetch or initial load). Adjusted while
+  // rendering, not in an effect, so the switch never shows a frame of the stale value. The revert
+  // value (previousModelRef) needs no sync: every toggle records it before mutating.
   const loadedMapId = map?.id;
   const loadedPublic = map ? (map.public ?? false) : undefined;
-  useEffect(() => {
+  const [seenMap, setSeenMap] = React.useState({ id: loadedMapId, isPublic: loadedPublic });
+  if (seenMap.id !== loadedMapId || seenMap.isPublic !== loadedPublic) {
+    setSeenMap({ id: loadedMapId, isPublic: loadedPublic });
     if (loadedPublic !== undefined) {
       setModel(loadedPublic);
-      previousModelRef.current = loadedPublic;
     }
-  }, [loadedMapId, loadedPublic]);
+  }
 
   const mutation = useMutation<void, ErrorInfo, boolean>({
     mutationFn: (model: boolean) => {

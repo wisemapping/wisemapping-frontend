@@ -37,8 +37,8 @@ import { renderWithProviders } from '../helpers/render';
 const renderPage = (SuccessPage: React.ComponentType): (() => void) => {
   let rerenderPage = (): void => undefined;
   const Page = (): React.ReactElement => {
-    const [, setRenders] = React.useState(0);
-    rerenderPage = () => act(() => setRenders((renders) => renders + 1));
+    const [, forceRender] = React.useReducer((renders: number) => renders + 1, 0);
+    rerenderPage = () => act(() => forceRender());
     return <SuccessPage />;
   };
   renderWithProviders(<Page />);

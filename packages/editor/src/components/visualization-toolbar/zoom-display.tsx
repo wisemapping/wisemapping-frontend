@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { ReactElement, useEffect, useState } from 'react';
+import { ReactElement, useCallback, useSyncExternalStore } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Model from '../../classes/model/editor';
@@ -48,42 +48,42 @@ type ZoomDisplayProps = {
  * widget popover -- once per frame of every drag, purely so this number could
  * stay current. Now only this leaf re-renders.
  */
+const readPercent = (model: Model): number => {
+  try {
+    return toZoomPercent(model.getDesigner().getWorkSpace()?.getZoom());
+  } catch {
+    return DEFAULT_PERCENT;
+  }
+};
+
 export const ZoomDisplay = ({ model }: ZoomDisplayProps): ReactElement => {
-  const [percent, setPercent] = useState(DEFAULT_PERCENT);
   // The canvas only exists once the map has loaded, and `isMapLoadded()` is
-  // mutable designer state rather than a React value -- so without this as an
-  // effect dependency the subscription below would be attempted once, before
-  // there was anything to subscribe to, and never retried.
+  // mutable designer state rather than a React value -- so without this as a
+  // subscription dependency the subscription below would be attempted once,
+  // before there was anything to subscribe to, and never retried.
   const { isMapLoaded } = useSelection(model);
 
-  useEffect(() => {
-    const screenManager = (() => {
-      try {
-        return isMapLoaded ? model.getDesigner().getWorkSpace()?.getScreenManager() : null;
-      } catch {
-        return null;
+  const subscribe = useCallback(
+    (onChange: () => void): (() => void) => {
+      const screenManager = (() => {
+        try {
+          return isMapLoaded ? model.getDesigner().getWorkSpace()?.getScreenManager() : undefined;
+        } catch {
+          return undefined;
+        }
+      })();
+      if (!screenManager) {
+        return () => undefined;
       }
-    })();
-
-    const refresh = (): void => {
-      try {
-        setPercent(toZoomPercent(model.getDesigner().getWorkSpace()?.getZoom()));
-      } catch {
-        setPercent(DEFAULT_PERCENT);
-      }
-    };
-
-    refresh();
-
-    if (!screenManager) {
-      return undefined;
-    }
-
-    screenManager.addEvent('update', refresh);
-    return () => {
-      screenManager.removeEvent('update', refresh);
-    };
-  }, [model, isMapLoaded]);
+      screenManager.addEvent('update', onChange);
+      return () => {
+        screenManager.removeEvent('update', onChange);
+      };
+    },
+    [model, isMapLoaded],
+  );
+  // A number: the same zoom is the same snapshot, so a pan that keeps the zoom does not re-render.
+  const percent = useSyncExternalStore(subscribe, () => readPercent(model));
 
   return (
     <Box sx={{ p: 0.5 }}>

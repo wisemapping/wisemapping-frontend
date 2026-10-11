@@ -27,10 +27,15 @@ jest.mock('react-router', () => {
   return {
     useLocation: () => ({ pathname: window.location.pathname }),
     Outlet: () => ReactActual.createElement('div', null, 'admin-outlet'),
-    NavLink: ReactActual.forwardRef<HTMLAnchorElement, { to: string; children?: React.ReactNode }>(
-      ({ to, children, ...rest }, ref) =>
-        ReactActual.createElement('a', { ...rest, href: to, ref }, children),
-    ),
+    NavLink: ({
+      to,
+      children,
+      ...rest
+    }: {
+      to: string;
+      children?: React.ReactNode;
+      ref?: React.Ref<HTMLAnchorElement>;
+    }) => ReactActual.createElement('a', { ...rest, href: to }, children),
     Navigate: (props: { to: string; replace?: boolean }) => {
       mockNavigateElement(props);
       return null;

@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useContext, useEffect } from 'react';
+import React, { use } from 'react';
 import { useIntl } from 'react-intl';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
@@ -39,7 +39,7 @@ export type RenameModel = {
 
 const defaultModel: RenameModel = { title: '', description: '', id: -1 };
 const RenameDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
-  const client = useContext(ClientContext);
+  const client = use(ClientContext);
   const [model, setModel] = React.useState<RenameModel>(defaultModel);
   const [isInitialized, setIsInitialized] = React.useState<boolean>(false);
   const [error, setError] = React.useState<ErrorInfo>();
@@ -124,13 +124,12 @@ const RenameDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement
       : undefined;
   const shownError = error ?? invalidMapIdError;
 
-  useEffect(() => {
-    // Only set model from map data on initial load
-    if (map && !isInitialized) {
-      setModel(map);
-      setIsInitialized(true);
-    }
-  }, [map, isInitialized]);
+  // Only set model from map data on initial load. Adjusted while rendering, not in an effect, so
+  // the form never shows a frame of empty fields once the map is there.
+  if (map && !isInitialized) {
+    setModel(map);
+    setIsInitialized(true);
+  }
 
   return (
     <div>

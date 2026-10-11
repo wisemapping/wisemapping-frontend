@@ -131,7 +131,10 @@ export const MapsListSkeleton: React.FC<{ rowsPerPage: number }> = ({ rowsPerPag
   return (
     <>
       {Array.from({ length: skeletonCount }).map((_, index) => (
-        <TableRowSkeleton key={index} />
+        <TableRowSkeleton
+          // eslint-disable-next-line @eslint-react/no-array-index-key -- identical placeholders in a fixed-length list that never reorders
+          key={index}
+        />
       ))}
     </>
   );
@@ -158,7 +161,11 @@ export const MapsPageLoading = (): React.ReactElement => {
         {/* Navigation Items */}
         <Box css={classes['loadingDrawerList']}>
           {[...Array(5)].map((_, i) => (
-            <Box key={i} style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+            <Box
+              // eslint-disable-next-line @eslint-react/no-array-index-key -- identical placeholders in a fixed-length list that never reorders
+              key={i}
+              style={{ display: 'flex', alignItems: 'center', gap: 16 }}
+            >
               <Skeleton
                 animation="wave"
                 variant="circular"
@@ -190,7 +197,11 @@ export const MapsPageLoading = (): React.ReactElement => {
         {/* Label Items */}
         <Box css={classes['loadingDrawerList']}>
           {[...Array(3)].map((_, i) => (
-            <Box key={i} style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+            <Box
+              // eslint-disable-next-line @eslint-react/no-array-index-key -- identical placeholders in a fixed-length list that never reorders
+              key={i}
+              style={{ display: 'flex', alignItems: 'center', gap: 16 }}
+            >
               <Skeleton
                 animation="wave"
                 variant="circular"

@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, use, useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Link as RouterLink, useLocation } from 'react-router';
 import AccountAccessLayout from '../layout/AccountAccessLayout';
@@ -78,7 +78,7 @@ const LoginPage = (): React.ReactElement => {
   const [loginError, setLoginError] = useState<LoginErrorInfo | undefined>(undefined);
   const [isCheckingAuth, setIsCheckingAuth] = useState<boolean>(true);
 
-  const client = useContext(ClientContext);
+  const client = use(ClientContext);
   const location = useLocation();
   const { initializeThemeFromSystem } = useTheme();
 

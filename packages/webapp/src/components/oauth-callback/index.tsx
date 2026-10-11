@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { use, useEffect, useMemo, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import FormContainer from '../layout/form-container';
 import AccountAccessLayout from '../layout/AccountAccessLayout';
@@ -33,8 +33,8 @@ import { ClientContext } from '../../classes/provider/client-context';
 import { logCriticalError } from '../../utils';
 import { useTheme } from '../../contexts/ThemeContext';
 import JwtTokenConfig from '../../classes/jwt-token-config';
-import { DEFAULT_REDIRECT, leaveTo, safeRedirectPath } from '../../utils/redirect';
-import { takeOAuthFlow } from '../../utils/oauth-flow';
+import { leaveTo, safeRedirectPath } from '../../utils/redirect';
+import { forgetOAuthFlow, peekOAuthFlow } from '../../utils/oauth-flow';
 
 type OAuthProvider = 'google' | 'facebook';
 
@@ -70,6 +70,49 @@ const readCallbackParams = (
   return code ? { kind: 'code', code } : undefined;
 };
 
+// What the browser arrived with. Read once, on arrival, without side effects: the page consumes
+// the sign-in mark and scrubs the URL afterwards, in an effect.
+type Arrival = { redirect: string } & (
+  | { kind: 'cancelled' }
+  | { kind: 'provider-error'; error: string; description: string | null }
+  | { kind: 'missing' }
+  | { kind: 'invalid' }
+  // trusted: the sign-in was started in this tab (see oauth-flow).
+  | { kind: 'params'; params: OAuthCallbackParams; trusted: boolean }
+);
+
+const readArrival = (): Arrival => {
+  const searchParams = new URLSearchParams(window.location.search);
+  const flow = peekOAuthFlow();
+  // Where to go once signed in: a path on this site only (see safeRedirectPath).
+  const redirect = safeRedirectPath(flow?.redirect ?? searchParams.get('state'));
+
+  // Check if user cancelled the OAuth flow
+  const error = searchParams.get('error');
+  if (error) {
+    // User cancelled or denied access - redirect to login
+    if (error === 'access_denied' || searchParams.get('error_reason') === 'user_denied') {
+      return { redirect, kind: 'cancelled' };
+    }
+    // Other OAuth errors - show error message
+    return {
+      redirect,
+      kind: 'provider-error',
+      error,
+      description: searchParams.get('error_description'),
+    };
+  }
+
+  const params = readCallbackParams(searchParams);
+  if (!params) {
+    return { redirect, kind: 'missing' };
+  }
+  if (params === 'invalid') {
+    return { redirect, kind: 'invalid' };
+  }
+  return { redirect, kind: 'params', params, trusted: flow !== undefined };
+};
+
 const SECRET_PARAMS = ['jwtToken', 'email', 'syncCode', 'code', 'oauthSync'];
 
 const scrubCallbackParams = (): void => {
@@ -80,21 +123,66 @@ const scrubCallbackParams = (): void => {
 
 const OAuthCallbackPage = (): React.ReactElement => {
   const intl = useIntl();
-  const client = useContext(ClientContext);
+  const client = use(ClientContext);
   const location = useLocation();
   const navigate = useNavigate();
   const { initializeThemeFromSystem } = useTheme();
 
-  const [error, setError] = useState<ErrorInfo | undefined>();
-  const [callbackResult, setCallbackResult] = useState<Oauth2CallbackResult>();
-  // A callback that did not start from a sign-in in this tab, held until the user confirms it.
-  const [unconfirmed, setUnconfirmed] = useState<OAuthCallbackParams>();
-  // Where to go once signed in: a path on this site only (see safeRedirectPath).
-  const redirectTarget = useRef<string>(DEFAULT_REDIRECT);
+  const [arrival] = useState(readArrival);
+  const redirectTarget = arrival.redirect;
+  // A callback that did not start from a sign-in in this tab waits until the user confirms it.
+  const [confirmed, setConfirmed] = useState(false);
+  const accepted = arrival.kind === 'params' && (arrival.trusted || confirmed);
+  const unconfirmed = arrival.kind === 'params' && !accepted ? arrival.params : undefined;
+
+  const [requestError, setRequestError] = useState<ErrorInfo>();
+  const arrivalError = useMemo((): ErrorInfo | undefined => {
+    switch (arrival.kind) {
+      case 'provider-error':
+        return {
+          msg:
+            arrival.description ||
+            intl.formatMessage(
+              { id: 'oauth.error', defaultMessage: 'OAuth error: {error}' },
+              { error: arrival.error },
+            ),
+        };
+      case 'missing':
+        return {
+          msg: intl.formatMessage({
+            id: 'oauth.missing-code',
+            defaultMessage: 'The sign-in response did not include a code or a token.',
+          }),
+        };
+      case 'invalid':
+        return {
+          msg: intl.formatMessage({
+            id: 'registration.callback.invalid',
+            defaultMessage: 'This sign-in link is not valid. Please sign in again.',
+          }),
+        };
+      default:
+        return undefined;
+    }
+  }, [arrival, intl]);
+  const error = requestError ?? arrivalError;
+
+  // A token callback carries its own result; a code is exchanged for one (see processCallback).
+  const [exchangedResult, setExchangedResult] = useState<Oauth2CallbackResult>();
+  const tokenResult = useMemo((): Oauth2CallbackResult | undefined => {
+    if (!accepted || arrival.kind !== 'params' || arrival.params.kind !== 'token') {
+      return undefined;
+    }
+    const { email, oauthSync, syncCode } = arrival.params;
+    return oauthSync
+      ? undefined
+      : { email, oauthSync, ...(syncCode !== undefined && { syncCode }) };
+  }, [accepted, arrival]);
+  const callbackResult = exchangedResult ?? tokenResult;
 
   // Route through login page so Google Ads vignette fires from a page with ads already loaded.
   const navigateAfterOAuth = (): void => {
-    leaveTo(`/c/login?redirect=${encodeURIComponent(redirectTarget.current)}`);
+    leaveTo(`/c/login?redirect=${encodeURIComponent(redirectTarget)}`);
   };
 
   // Determine OAuth provider based on route path
@@ -123,13 +211,8 @@ const OAuthCallbackPage = (): React.ReactElement => {
         // Initialize theme from system preference if not already set
         initializeThemeFromSystem();
         navigateAfterOAuth();
-        return;
       }
-      setCallbackResult({
-        email: params.email,
-        oauthSync: params.oauthSync,
-        ...(params.syncCode !== undefined && { syncCode: params.syncCode }),
-      });
+      // Otherwise the token is the result to confirm (see tokenResult).
       return;
     }
 
@@ -147,69 +230,28 @@ const OAuthCallbackPage = (): React.ReactElement => {
           navigateAfterOAuth();
           return;
         }
-        setCallbackResult(result);
+        setExchangedResult(result);
       })
       .catch((errorInfo: ErrorInfo) => {
-        setError(errorInfo);
+        setRequestError(errorInfo);
         logCriticalError(`Unexpected error on ${provider} OAuth callback`, errorInfo);
       });
   };
 
   useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-    const flow = takeOAuthFlow();
-    redirectTarget.current = safeRedirectPath(flow?.redirect ?? searchParams.get('state'));
-
-    // Check if user cancelled the OAuth flow
-    const error = searchParams.get('error');
-    const errorReason = searchParams.get('error_reason');
-
-    if (error) {
-      // User cancelled or denied access - redirect to login
-      if (error === 'access_denied' || errorReason === 'user_denied') {
-        navigate('/c/login');
-        return;
-      }
-
-      // Other OAuth errors - show error message
-      const errorDescription = searchParams.get('error_description');
-      setError({
-        msg:
-          errorDescription ||
-          intl.formatMessage(
-            { id: 'oauth.error', defaultMessage: 'OAuth error: {error}' },
-            { error },
-          ),
-      });
+    // The sign-in mark is single-use (see oauth-flow).
+    forgetOAuthFlow();
+    if (arrival.kind === 'cancelled') {
+      navigate('/c/login');
       return;
     }
-
-    const params = readCallbackParams(searchParams);
+    if (arrival.kind === 'provider-error') {
+      return;
+    }
     // The token, code and email must not stay in the address bar, the history or the Referer.
     scrubCallbackParams();
-    if (!params) {
-      setError({
-        msg: intl.formatMessage({
-          id: 'oauth.missing-code',
-          defaultMessage: 'The sign-in response did not include a code or a token.',
-        }),
-      });
-      return;
-    }
-    if (params === 'invalid') {
-      setError({
-        msg: intl.formatMessage({
-          id: 'registration.callback.invalid',
-          defaultMessage: 'This sign-in link is not valid. Please sign in again.',
-        }),
-      });
-      return;
-    }
-
-    if (flow) {
-      processCallback(params);
-    } else {
-      setUnconfirmed(params);
+    if (arrival.kind === 'params' && arrival.trusted) {
+      processCallback(arrival.params);
     }
     // Once, on arrival: the OAuth code in the URL is single-use, and initializeThemeFromSystem is a
     // new function on every ThemeContext render, so re-running would post the spent code again.
@@ -230,7 +272,7 @@ const OAuthCallbackPage = (): React.ReactElement => {
         navigateAfterOAuth();
       })
       .catch((errorInfo: ErrorInfo) => {
-        setError(errorInfo);
+        setRequestError(errorInfo);
 
         // Check for session expiry during pending oauth
         let probableCause: string | undefined;
@@ -248,7 +290,7 @@ const OAuthCallbackPage = (): React.ReactElement => {
           context: {
             email: callback.email,
             syncCode: callback.syncCode || '(not provided)',
-            redirectTarget: redirectTarget.current,
+            redirectTarget,
             provider,
             path: window.location.pathname,
           },
@@ -352,7 +394,7 @@ const OAuthCallbackPage = (): React.ReactElement => {
             </Button>
             <Button
               onClick={() => {
-                setUnconfirmed(undefined);
+                setConfirmed(true);
                 processCallback(unconfirmed);
               }}
               color="primary"

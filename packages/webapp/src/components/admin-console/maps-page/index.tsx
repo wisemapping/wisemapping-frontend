@@ -273,7 +273,7 @@ const MapsManagement = (): ReactElement => {
   const [viewingMap, setViewingMap] = useState<AdminMap | null>(null);
   const [isXmlViewerOpen, setIsXmlViewerOpen] = useState(false);
   const [xmlContent, setXmlContent] = useState<string>('');
-  const [isPendingXml, setIsLoadingXml] = useState(false);
+  const [isPendingXml, setIsPendingXml] = useState(false);
 
   // User suspension state
   const [isSuspensionDialogOpen, setIsSuspensionDialogOpen] = useState(false);
@@ -287,8 +287,8 @@ const MapsManagement = (): ReactElement => {
   const [selectedOwnerName, setSelectedOwnerName] = useState<string>('');
   const [selectedOwnerUser, setSelectedOwnerUser] = useState<AdminUser | null>(null);
   const [ownerMaps, setOwnerMaps] = useState<AdminMap[]>([]);
-  const [isPendingOwnerMaps, setIsLoadingOwnerMaps] = useState(false);
-  const [isPendingOwnerInfo, setIsLoadingOwnerInfo] = useState(false);
+  const [isPendingOwnerMaps, setIsPendingOwnerMaps] = useState(false);
+  const [isPendingOwnerInfo, setIsPendingOwnerInfo] = useState(false);
 
   // Fetch maps with pagination and filters
   const [currentPage, setCurrentPage] = useAdminPage([
@@ -493,21 +493,21 @@ const MapsManagement = (): ReactElement => {
   };
 
   const loadOwnerInfo = async (userId: number) => {
-    setIsLoadingOwnerInfo(true);
+    setIsPendingOwnerInfo(true);
     try {
       const userInfo = await client.getAdminUser(userId);
       setSelectedOwnerUser(userInfo);
     } catch (error) {
       console.error('Failed to fetch owner info:', error);
     } finally {
-      setIsLoadingOwnerInfo(false);
+      setIsPendingOwnerInfo(false);
     }
   };
 
   const handleViewXml = async (map: AdminMap) => {
     setViewingMap(map);
     setIsXmlViewerOpen(true);
-    setIsLoadingXml(true);
+    setIsPendingXml(true);
     setXmlContent('');
 
     try {
@@ -519,7 +519,7 @@ const MapsManagement = (): ReactElement => {
         `Error loading XML: ${(error as Record<string, unknown>)?.['message'] || 'Unknown error'}`,
       );
     } finally {
-      setIsLoadingXml(false);
+      setIsPendingXml(false);
     }
   };
 
@@ -636,8 +636,8 @@ const MapsManagement = (): ReactElement => {
     setSelectedOwnerName(ownerName);
     setSelectedOwnerUser(null);
     setIsOwnerMapsDialogOpen(true);
-    setIsLoadingOwnerMaps(true);
-    setIsLoadingOwnerInfo(true);
+    setIsPendingOwnerMaps(true);
+    setIsPendingOwnerInfo(true);
     setOwnerMaps([]);
 
     try {
@@ -651,8 +651,8 @@ const MapsManagement = (): ReactElement => {
     } catch (err) {
       console.error('Failed to load owner info/maps:', err);
     } finally {
-      setIsLoadingOwnerMaps(false);
-      setIsLoadingOwnerInfo(false);
+      setIsPendingOwnerMaps(false);
+      setIsPendingOwnerInfo(false);
     }
   };
 

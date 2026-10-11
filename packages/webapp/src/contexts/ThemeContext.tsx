@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { createContext, useContext, useState, useEffect, ReactNode, useMemo } from 'react';
+import React, { createContext, use, useState, useEffect, ReactNode, useMemo } from 'react';
 import type { PaletteMode } from '@mui/material';
 import { readStorage, writeStorage } from '../utils/storage';
 
@@ -84,11 +84,11 @@ export const AppThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => 
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
-  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
+  return <ThemeContext value={value}>{children}</ThemeContext>;
 };
 
 export const useTheme = (): ThemeContextType => {
-  const context = useContext(ThemeContext);
+  const context = use(ThemeContext);
   if (!context) {
     throw new Error('useTheme must be used within an AppThemeProvider');
   }

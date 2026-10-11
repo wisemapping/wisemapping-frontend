@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useContext, useEffect } from 'react';
+import React, { use, useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { ErrorInfo } from '../../../../classes/client';
 import Dialog from '@mui/material/Dialog';
@@ -52,7 +52,7 @@ export type DialogProps = {
 };
 
 const BaseDialog = (props: DialogProps): React.ReactElement => {
-  const { disableHotkeys } = useContext(KeyboardContext);
+  const { disableHotkeys } = use(KeyboardContext);
   const intl = useIntl();
   // Hotkeys stay disabled while any dialog is open: released on unmount.
   useEffect(() => disableHotkeys(), [disableHotkeys]);

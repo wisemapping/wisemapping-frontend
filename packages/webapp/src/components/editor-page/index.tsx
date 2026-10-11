@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { useCallback, useContext, useEffect, useState, Suspense, useRef } from 'react';
+import React, { useCallback, use, useEffect, useState, Suspense, useRef } from 'react';
 import Editor, { useEditor, EditorLoadingSkeleton } from '@wisemapping/editor';
 import type { EditorOptions } from '@wisemapping/editor';
 
@@ -127,8 +127,8 @@ const LoadedEditorPage = ({
   const userLocale = AppI18n.getUserLocale(account?.locale);
   const intlLocale = useLocaleMessages(userLocale.code);
   const theme = useMuiTheme(); // Get MUI theme object
-  const client = useContext(ClientContext);
-  const { hotkeyEnabled } = useContext(KeyboardContext);
+  const client = use(ClientContext);
+  const { hotkeyEnabled } = use(KeyboardContext);
 
   // Parse query parameters for hideCreatorInfo and theme
   const [searchParams] = useSearchParams();

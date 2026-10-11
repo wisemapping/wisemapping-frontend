@@ -25,6 +25,8 @@ import ThemeToggle from '../../common/theme-toggle';
 
 const Footer = (): React.ReactElement => {
   const intl = useIntl();
+  // Read once per mount: rendering stays pure, and the year shown does not change mid-session.
+  const [year] = React.useState(() => new Date().getFullYear());
   return (
     <StyledFooter>
       <div>
@@ -42,7 +44,7 @@ const Footer = (): React.ReactElement => {
             <FormattedMessage
               id="footer.copyright"
               defaultMessage="© {year} WiseMapping LLC"
-              values={{ year: new Date().getFullYear() }}
+              values={{ year }}
             />
           </div>
         </div>

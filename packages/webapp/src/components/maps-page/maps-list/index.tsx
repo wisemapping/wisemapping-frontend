@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useMemo, CSSProperties, useContext } from 'react';
+import React, { useMemo, CSSProperties, use } from 'react';
 
 import { useStyles } from './styled';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -222,7 +222,7 @@ interface MapsListProps {
 
 export const MapsList = (props: MapsListProps): React.ReactElement => {
   const classes = useStyles();
-  const client = useContext(ClientContext);
+  const client = use(ClientContext);
   const intl = useIntl();
   const queryClient = useQueryClient();
 
@@ -485,7 +485,10 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
             {isLoadingMaps ? (
               <Box data-testid="maps-loading" aria-busy="true">
                 {Array.from({ length: 5 }).map((_, index) => (
-                  <CardSkeleton key={index} />
+                  <CardSkeleton
+                    // eslint-disable-next-line @eslint-react/no-array-index-key -- identical placeholders in a fixed-length list that never reorders
+                    key={index}
+                  />
                 ))}
               </Box>
             ) : mapsLoadFailed ? (

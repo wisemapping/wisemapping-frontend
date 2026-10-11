@@ -16,7 +16,15 @@
  *   limitations under the License.
  */
 import { formatTooltip } from '../visualization-toolbar/utils';
-import React, { ReactElement, useEffect, useState, useRef, useMemo } from 'react';
+import React, {
+  ReactElement,
+  useCallback,
+  useEffect,
+  useState,
+  useRef,
+  useMemo,
+  useSyncExternalStore,
+} from 'react';
 import MaterialToolbar from '@mui/material/Toolbar';
 import MaterialAppBar from '@mui/material/AppBar';
 import { ToolbarMenuItem } from '../toolbar';
@@ -85,11 +93,52 @@ const AppBar = ({
 }: AppBarProps): ReactElement => {
   const [isStarred, setIsStarred] = useState<undefined | boolean>(undefined);
   const [isEditingTitle, setIsEditingTitle] = useState<boolean>(false);
-  const [editedTitle, setEditedTitle] = useState<string>('');
+  const [editedTitle, setEditedTitle] = useState<string>(() => mapInfo.getTitle());
   const [isSaving, setIsSaving] = useState<boolean>(false);
-  const [currentTitle, setCurrentTitle] = useState<string>(mapInfo.getTitle());
-  const [isMapLoaded, setIsMapLoaded] = useState<boolean>(() => model?.isMapLoadded() ?? false);
+  const [currentTitle, setCurrentTitle] = useState<string>(() => mapInfo.getTitle());
   const canRename = !capability.isHidden('rename');
+
+  // Another map: its title replaces the previous one. Adjusted while rendering, not in an effect,
+  // so the bar never shows a frame of the previous map's title.
+  const [seenMapInfo, setSeenMapInfo] = useState(mapInfo);
+  if (mapInfo !== seenMapInfo) {
+    setSeenMapInfo(mapInfo);
+    const latestTitle = mapInfo.getTitle();
+    setCurrentTitle(latestTitle);
+    setEditedTitle(latestTitle);
+  }
+
+  // Renaming taken away mid-edit: the edit is discarded. Adjusted while rendering, like the above.
+  if (!canRename && isEditingTitle) {
+    setIsEditingTitle(false);
+    setEditedTitle(currentTitle);
+  }
+
+  // Whether the map has loaded is designer state: read it from the designer, and listen for the
+  // load (the designer may not be built yet, which reads as "not loaded").
+  const subscribeToMapLoad = useCallback(
+    (onChange: () => void): (() => void) => {
+      const designer = (() => {
+        try {
+          return model?.getDesigner();
+        } catch {
+          return undefined;
+        }
+      })();
+      if (!designer) {
+        return () => undefined;
+      }
+      designer.addEvent('loadSuccess', onChange);
+      return () => {
+        designer.removeEvent('loadSuccess', onChange);
+      };
+    },
+    [model],
+  );
+  const isMapLoaded = useSyncExternalStore(
+    subscribeToMapLoad,
+    () => model?.isMapLoadded() ?? false,
+  );
   const inputRef = useRef<HTMLInputElement>(null);
   const intl = useIntl();
   const { mode, toggleMode } = useTheme();
@@ -170,13 +219,6 @@ const AppBar = ({
     }
   }, [isEditingTitle]);
 
-  useEffect(() => {
-    if (!canRename && isEditingTitle) {
-      setIsEditingTitle(false);
-      setEditedTitle(currentTitle);
-    }
-  }, [canRename, isEditingTitle, currentTitle]);
-
   // Debounced save handler - first save is immediate, subsequent saves within 5 seconds are debounced
   // First save executes immediately, intermediate saves are discarded (only the last save within 5 seconds executes)
   const handleDebouncedSave = useMemo(
@@ -203,12 +245,6 @@ const AppBar = ({
       handleDebouncedSave.cancel();
     };
   }, [handleDebouncedSave]);
-
-  useEffect(() => {
-    const latestTitle = mapInfo.getTitle();
-    setCurrentTitle(latestTitle);
-    setEditedTitle(latestTitle);
-  }, [mapInfo]);
 
   const readOnlyTitleField = (
     <TextField
@@ -276,40 +312,6 @@ const AppBar = ({
       active = false;
     };
   }, [capability, mapInfo]);
-
-  useEffect(() => {
-    if (!model) {
-      setIsMapLoaded(false);
-      return;
-    }
-
-    if (model.isMapLoadded()) {
-      setIsMapLoaded(true);
-      return;
-    }
-
-    const designer = (() => {
-      try {
-        return model.getDesigner();
-      } catch {
-        return undefined;
-      }
-    })();
-
-    if (!designer) {
-      return;
-    }
-
-    const handleLoadSuccess = (): void => {
-      setIsMapLoaded(true);
-    };
-
-    designer.addEvent('loadSuccess', handleLoadSuccess);
-
-    return () => {
-      designer.removeEvent('loadSuccess', handleLoadSuccess);
-    };
-  }, [model]);
 
   const config: (ActionConfig | undefined)[] = [
     {

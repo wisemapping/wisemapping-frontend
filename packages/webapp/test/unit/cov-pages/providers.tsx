@@ -41,7 +41,7 @@ export const renderWithWrapper = (
   const Wrapper = ({ children }: { children: React.ReactNode }): React.ReactElement => (
     <ThemeProvider theme={createAppTheme('light')}>
       <QueryClientProvider client={qc}>
-        <ClientContext.Provider value={client as Client}>{children}</ClientContext.Provider>
+        <ClientContext value={client as Client}>{children}</ClientContext>
       </QueryClientProvider>
     </ThemeProvider>
   );

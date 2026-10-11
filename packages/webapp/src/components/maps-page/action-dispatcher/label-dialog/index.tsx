@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { useContext } from 'react';
+import React, { use } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Typography from '@mui/material/Typography';
@@ -32,7 +32,7 @@ import { ClientContext } from '../../../../classes/provider/client-context';
 const LabelDialog = ({ mapsId, onClose }: MultiDialogProps): React.ReactElement => {
   const intl = useIntl();
   const classes = useStyles();
-  const client = useContext(ClientContext);
+  const client = use(ClientContext);
   const queryClient = useQueryClient();
 
   const { data } = useQuery<unknown, ErrorInfo, MapInfo[]>({

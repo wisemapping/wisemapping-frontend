@@ -15,14 +15,14 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { useContext, useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { ClientContext } from '../../classes/provider/client-context';
 import SessionExpiredDialog from './session-expired-dialog';
 import { Outlet } from 'react-router';
 
 const SessionExpired = (): React.ReactElement => {
   const [sessionExpired, setSessionExpired] = useState(false);
-  const client = useContext(ClientContext);
+  const client = use(ClientContext);
 
   useEffect(() => {
     client.onSessionExpired(() => {

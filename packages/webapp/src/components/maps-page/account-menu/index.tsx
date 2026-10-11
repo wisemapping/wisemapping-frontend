@@ -24,7 +24,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Tooltip from '@mui/material/Tooltip';
 import SettingsApplicationsOutlined from '@mui/icons-material/SettingsApplicationsOutlined';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import React, { useContext } from 'react';
+import React, { use } from 'react';
 import { FormattedMessage } from 'react-intl';
 import AccountInfoDialog from './account-info-dialog';
 import ExitToAppOutlined from '@mui/icons-material/ExitToAppOutlined';
@@ -39,7 +39,7 @@ const AccountMenu = (): React.ReactElement => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const [action, setAction] = React.useState<ActionType>(undefined);
-  const client = useContext(ClientContext);
+  const client = use(ClientContext);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 

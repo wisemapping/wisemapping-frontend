@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { ReactElement, useState, useEffect } from 'react';
+import React, { ReactElement, useState } from 'react';
 import Dialog from '@mui/material/Dialog';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
@@ -75,7 +75,14 @@ const OutlineViewDialog = ({ open, onClose, mindmap }: OutlineViewDialogProps): 
   const [dialogType, setDialogType] = useState<'link' | 'note' | null>(null);
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
-  useEffect(() => {
+  // The outline is rebuilt from the map each time the dialog opens (or is given another map).
+  // Adjusted while rendering, not in an effect, so the dialog never opens on a frame of the
+  // outline it showed last time.
+  const [seenInputs, setSeenInputs] = useState<{ open: boolean; mindmap?: Mindmap | undefined }>({
+    open: false,
+  });
+  if (seenInputs.open !== open || seenInputs.mindmap !== mindmap) {
+    setSeenInputs({ open, mindmap });
     if (open && mindmap) {
       const centralTopic = mindmap.getCentralTopic();
       if (centralTopic) {
@@ -87,7 +94,7 @@ const OutlineViewDialog = ({ open, onClose, mindmap }: OutlineViewDialogProps): 
         setOutlineData(children);
       }
     }
-  }, [open, mindmap]);
+  }
 
   const toggleExpanded = (nodeId: string) => {
     const updateNode = (nodes: OutlineNodeData[]): OutlineNodeData[] => {

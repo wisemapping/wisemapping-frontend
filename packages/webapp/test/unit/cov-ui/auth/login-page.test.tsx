@@ -33,7 +33,7 @@ import { leaveTo } from '../../../../src/utils/redirect';
 import { startOAuthFlow, takeOAuthFlow } from '../../../../src/utils/oauth-flow';
 import { appLogger } from '../../../../src/utils/logger';
 import { BURST_TEXT, typeInBurst } from '../../burst-typing';
-import { initAppConfig, installMatchMedia, renderPage, useConfig } from '../helpers';
+import { initAppConfig, installMatchMedia, renderPage, stubConfig } from '../helpers';
 import { resetRouter, setLocation } from '../router-mock';
 import { defined } from '../../defined';
 
@@ -201,7 +201,7 @@ describe('LoginPage', () => {
   });
 
   test('offers sign-up in the header only while registration is open', async () => {
-    useConfig({ registrationEnabled: true });
+    stubConfig({ registrationEnabled: true });
     setup();
     expect(
       defined((await screen.findAllByRole('link', { name: 'Sign Up' }))[0]).getAttribute('href'),
@@ -209,7 +209,7 @@ describe('LoginPage', () => {
   });
 
   test('no sign-up link when registration is closed', async () => {
-    useConfig({ registrationEnabled: false });
+    stubConfig({ registrationEnabled: false });
     setup();
     await screen.findByRole('form', { name: 'Login form' });
     expect(screen.queryByRole('link', { name: 'Sign Up' })).toBeNull();
@@ -223,7 +223,7 @@ describe('LoginPage', () => {
   });
 
   test('the social buttons send the user to the provider', async () => {
-    useConfig({
+    stubConfig({
       googleOauth2Enabled: true,
       googleOauth2Url: 'https://accounts.example.com/auth',
       facebookOauth2Enabled: true,
@@ -244,7 +244,7 @@ describe('LoginPage', () => {
   });
 
   test('a provider without a URL is reported and not navigated to', async () => {
-    useConfig({ googleOauth2Enabled: true, googleOauth2Url: undefined });
+    stubConfig({ googleOauth2Enabled: true, googleOauth2Url: undefined });
     const log = jest.spyOn(appLogger, 'warn').mockImplementation(() => undefined);
     setup();
 

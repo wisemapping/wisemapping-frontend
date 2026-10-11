@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useContext } from 'react';
+import React, { use } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { ChangeHistory, ErrorInfo } from '../../../../classes/client';
@@ -57,7 +57,7 @@ const HistoryDialog = ({
 }: HistoryDialogProps): React.ReactElement => {
   const intl = useIntl();
   const date = useDate();
-  const client = useContext(ClientContext);
+  const client = use(ClientContext);
   const { data } = useQuery<unknown, ErrorInfo, ChangeHistory[]>({
     queryKey: [`history-${mapId}`],
     queryFn: () => client.fetchHistory(mapId),

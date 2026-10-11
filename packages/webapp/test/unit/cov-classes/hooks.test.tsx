@@ -33,7 +33,7 @@ const wrapperFor = (client: Partial<Client>) => {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   const Wrapper = ({ children }: { children: React.ReactNode }): React.ReactElement => (
     <QueryClientProvider client={queryClient}>
-      <ClientContext.Provider value={client as Client}>{children}</ClientContext.Provider>
+      <ClientContext value={client as Client}>{children}</ClientContext>
     </QueryClientProvider>
   );
   return Wrapper;

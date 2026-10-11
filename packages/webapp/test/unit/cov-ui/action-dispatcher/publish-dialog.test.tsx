@@ -16,7 +16,8 @@
  *   limitations under the License.
  */
 
-import { fireEvent, screen, waitFor } from '@testing-library/react';
+import React from 'react';
+import { act, fireEvent, screen, waitFor } from '@testing-library/react';
 
 const mockUseFetchMapById = jest.fn();
 jest.mock('../../../../src/classes/middleware', () => ({
@@ -198,6 +199,24 @@ describe('PublishDialog', () => {
 
     expect(publicSwitch().checked).toBe(false);
     expect(sharingHidden()).toBe(true);
+  });
+
+  test('the switch follows the map once it has loaded', () => {
+    mockUseFetchMapById.mockReturnValue({ isLoading: true, error: null, data: undefined });
+    let rerenderDialog = (): void => undefined;
+    const Host = (): React.ReactElement => {
+      const [, forceRender] = React.useReducer((renders: number) => renders + 1, 0);
+      rerenderDialog = () => act(() => forceRender());
+      return <PublishDialog mapId={12} onClose={jest.fn()} />;
+    };
+    renderWithProviders(<Host />, { client: {} as Client });
+    expect(publicSwitch().checked).toBe(false);
+
+    mockUseFetchMapById.mockReturnValue({ isLoading: false, error: null, data: map(true) });
+    rerenderDialog();
+
+    expect(publicSwitch().checked).toBe(true);
+    expect(sharingHidden()).toBe(false);
   });
 
   test('close button closes the dialog', () => {

@@ -19,7 +19,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { AccountInfo, ErrorInfo, MapInfo, MapMetadata } from '../client';
 import { ClientContext } from '../provider/client-context';
-import { useContext, useMemo } from 'react';
+import { use, useMemo } from 'react';
 import AppI18n from '../app-i18n';
 
 /**
@@ -38,7 +38,7 @@ type MapLoadResult = {
 };
 
 export const useFetchMapById = (id: number): MapLoadResult => {
-  const client = useContext(ClientContext);
+  const client = use(ClientContext);
   const { isLoading, error, data } = useQuery<MapMetadata, ErrorInfo>({
     queryKey: mapMetadataQueryKey(id),
     queryFn: () => client.fetchMapMetadata(id),
@@ -78,7 +78,7 @@ type MapMetadataLoadResult = {
 };
 
 export const useFetchMapMetadata = (id: number): MapMetadataLoadResult => {
-  const client = useContext(ClientContext);
+  const client = use(ClientContext);
   const { isLoading, error, data } = useQuery<MapMetadata, ErrorInfo>({
     queryKey: mapMetadataQueryKey(id),
     queryFn: () => client.fetchMapMetadata(id),
@@ -87,7 +87,7 @@ export const useFetchMapMetadata = (id: number): MapMetadataLoadResult => {
 };
 
 export const useFetchAccount = (): AccountInfo | undefined => {
-  const client = useContext(ClientContext);
+  const client = use(ClientContext);
   const { data } = useQuery<AccountInfo, ErrorInfo>({
     queryKey: ['account'],
     queryFn: () => client.fetchAccountInfo(),
@@ -101,7 +101,7 @@ export const useFetchAccountWithState = (): {
   isLoading: boolean;
   error: ErrorInfo | null;
 } => {
-  const client = useContext(ClientContext);
+  const client = use(ClientContext);
   const { data, isLoading, error } = useQuery<AccountInfo, ErrorInfo>({
     queryKey: ['account'],
     queryFn: () => client.fetchAccountInfo(),

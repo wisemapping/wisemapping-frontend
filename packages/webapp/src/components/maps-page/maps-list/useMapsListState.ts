@@ -60,7 +60,7 @@ export const useMapsListState = (filter: Filter, maps: MapInfo[]): MapsListState
   const [order, setOrder] = useState<Order>('desc');
   const [orderBy, setOrderBy] = useState<keyof MapInfo>('lastModificationTime');
   const [search, setSearch] = useState('');
-  const [requestedPage, setPage] = useState(0);
+  const [requestedPage, setRequestedPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [selected, setSelected] = useState<number[]>([]);
 
@@ -71,7 +71,7 @@ export const useMapsListState = (filter: Filter, maps: MapInfo[]): MapsListState
   if (seenKey !== key) {
     setSeenKey(key);
     setSelected([]);
-    setPage(0);
+    setRequestedPage(0);
   }
 
   const filteredMaps = useMemo(
@@ -105,16 +105,16 @@ export const useMapsListState = (filter: Filter, maps: MapInfo[]): MapsListState
       setOrder(orderBy === property && order === 'asc' ? 'desc' : 'asc');
       setOrderBy(property);
     },
-    changePage: (newPage: number): void => setPage(newPage),
+    changePage: (newPage: number): void => setRequestedPage(newPage),
     changeRowsPerPage: (count: number): void => {
       setRowsPerPage(count);
-      setPage(0);
+      setRequestedPage(0);
     },
     /** A selection kept across a search would include maps the search hides. */
     changeSearch: (value: string): void => {
       setSearch(value);
       setSelected([]);
-      setPage(0);
+      setRequestedPage(0);
     },
     toggleSelected: (id: number): void =>
       setSelected((current) =>

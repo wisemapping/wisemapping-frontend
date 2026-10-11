@@ -56,22 +56,16 @@ export const resetRouter = (): void => {
   setLocation('/');
 };
 
-type LinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement> & {
-  to?: string;
-  children?: React.ReactNode;
-};
+// React.ComponentProps<'a'> carries `ref`, which React 19 passes as a regular prop.
+type LinkProps = React.ComponentProps<'a'> & { to?: string };
 
-export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(function Link(
-  { to, children, ...rest },
-  ref,
-) {
-  return (
-    <a ref={ref} href={to} {...rest}>
-      {children}
-    </a>
-  );
-});
+export const Link = ({ to, children, ...rest }: LinkProps): React.ReactElement => (
+  <a href={to} {...rest}>
+    {children}
+  </a>
+);
 
+/* eslint-disable @eslint-react/no-unnecessary-use-prefix -- stand-ins for the library hooks of the same name: the mocked module fixes these names */
 export const useNavigate = (): jest.Mock => routerState.navigate;
 
 export const useLocation = (): Location => routerState.location;
@@ -82,6 +76,7 @@ export const useSearchParams = (): [URLSearchParams, jest.Mock] => [
 ];
 
 export const useRouteError = (): unknown => routerState.routeError;
+/* eslint-enable @eslint-react/no-unnecessary-use-prefix */
 
 export const isRouteErrorResponse = (error: unknown): boolean =>
   error != null &&

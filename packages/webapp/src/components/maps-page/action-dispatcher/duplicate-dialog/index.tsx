@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useContext, useEffect } from 'react';
+import React, { use } from 'react';
 import { useIntl } from 'react-intl';
 import { useMutation } from '@tanstack/react-query';
 import FormControl from '@mui/material/FormControl';
@@ -41,7 +41,7 @@ export type DuplicateModel = {
 
 const defaultModel: DuplicateModel = { title: '', description: '', id: -1 };
 const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
-  const client = useContext(ClientContext);
+  const client = use(ClientContext);
   const [model, setModel] = React.useState<DuplicateModel>(defaultModel);
   const [error, setError] = React.useState<ErrorInfo>();
 
@@ -138,7 +138,21 @@ const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElem
       : undefined;
   const shownError = error ?? invalidMapIdError;
 
-  useEffect(() => {
+  // The form starts from each map fetched (and is retitled in the current language). Adjusted while
+  // rendering, not in an effect, so the form never shows a frame of the previous values.
+  const [seenInputs, setSeenInputs] = React.useState<{
+    map: typeof map;
+    mapId: number;
+    intl: typeof intl;
+  }>();
+  // Object.is: an invalid id can be NaN, which is never === itself.
+  if (
+    !seenInputs ||
+    seenInputs.map !== map ||
+    !Object.is(seenInputs.mapId, mapId) ||
+    seenInputs.intl !== intl
+  ) {
+    setSeenInputs({ map, mapId, intl });
     if (map) {
       // Validate that map.title exists and is not empty
       if (!map.title || map.title.trim().length === 0) {
@@ -148,28 +162,27 @@ const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElem
             defaultMessage: 'Map title is required and cannot be empty',
           }),
         });
-        return;
+      } else {
+        // Clear any previous errors when model is successfully initialized
+        setError(undefined);
+
+        // Translated "Copy of {title}": each language places the title where its phrase needs it.
+        const copyTitle = intl.formatMessage(
+          {
+            id: 'duplicate.copy-title',
+            defaultMessage: 'Copy of {title}',
+          },
+          { title: map.title.trim() },
+        );
+
+        setModel({
+          title: copyTitle,
+          description: map.description ?? '',
+          id: mapId,
+        });
       }
-
-      // Clear any previous errors when model is successfully initialized
-      setError(undefined);
-
-      // Translated "Copy of {title}": each language places the title where its phrase needs it.
-      const copyTitle = intl.formatMessage(
-        {
-          id: 'duplicate.copy-title',
-          defaultMessage: 'Copy of {title}',
-        },
-        { title: map.title.trim() },
-      );
-
-      setModel({
-        title: copyTitle,
-        description: map.description ?? '',
-        id: mapId,
-      });
     }
-  }, [map, mapId, intl]);
+  }
 
   return (
     <div>

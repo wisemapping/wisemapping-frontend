@@ -44,12 +44,11 @@ export const startOAuthFlow = (authUrl: string, redirect?: string | null): void 
   leaveTo(authUrl);
 };
 
-/** Returns the sign-in started in this tab, if any and recent, and forgets it: it is single-use. */
-export const takeOAuthFlow = (): OAuthFlow | undefined => {
+/** Returns the sign-in started in this tab, if any and recent, without forgetting it. */
+export const peekOAuthFlow = (): OAuthFlow | undefined => {
   let raw: string | null;
   try {
     raw = sessionStorage.getItem(STORAGE_KEY);
-    sessionStorage.removeItem(STORAGE_KEY);
   } catch {
     return undefined;
   }
@@ -65,4 +64,20 @@ export const takeOAuthFlow = (): OAuthFlow | undefined => {
   } catch {
     return undefined;
   }
+};
+
+/** Forgets the sign-in started in this tab: a mark is single-use. */
+export const forgetOAuthFlow = (): void => {
+  try {
+    sessionStorage.removeItem(STORAGE_KEY);
+  } catch {
+    // No storage: nothing to forget.
+  }
+};
+
+/** Returns the sign-in started in this tab, if any and recent, and forgets it: it is single-use. */
+export const takeOAuthFlow = (): OAuthFlow | undefined => {
+  const flow = peekOAuthFlow();
+  forgetOAuthFlow();
+  return flow;
 };

@@ -17,7 +17,7 @@
  */
 
 import TranslateTwoTone from '@mui/icons-material/TranslateTwoTone';
-import React, { useContext } from 'react';
+import React, { use } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FormattedMessage, useIntl } from 'react-intl';
 import AppI18n, { LocaleCode, Locales } from '../../../classes/app-i18n';
@@ -38,9 +38,9 @@ import { ClientContext } from '../../../classes/provider/client-context';
 
 const LanguageMenu = (): React.ReactElement => {
   const queryClient = useQueryClient();
-  const client = useContext(ClientContext);
+  const client = use(ClientContext);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [openHelpDialog, setHelpDialogOpen] = React.useState<boolean>(false);
+  const [helpDialogOpen, setHelpDialogOpen] = React.useState<boolean>(false);
 
   const open = Boolean(anchorEl);
   const intl = useIntl();
@@ -129,7 +129,7 @@ const LanguageMenu = (): React.ReactElement => {
           <FormattedMessage id="language.help" defaultMessage="Help to Translate" />
         </MenuItem>
       </Menu>
-      {openHelpDialog && <HelpUsToTranslateDialog onClose={() => setHelpDialogOpen(false)} />}
+      {helpDialogOpen && <HelpUsToTranslateDialog onClose={() => setHelpDialogOpen(false)} />}
     </span>
   );
 };

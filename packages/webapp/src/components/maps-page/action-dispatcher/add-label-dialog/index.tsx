@@ -45,7 +45,7 @@ type AddLabelFormProps = {
 
 const AddLabelDialog = ({ onAdd }: AddLabelFormProps): React.ReactElement => {
   const intl = useIntl();
-  const [createLabelColorIndex, setCreateLabelColorIndex] = React.useState(
+  const [createLabelColorIndex, setCreateLabelColorIndex] = React.useState(() =>
     Math.floor(Math.random() * labelColors.length),
   );
   const [newLabelTitle, setNewLabelTitle] = React.useState('');

@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { ErrorInfo, ReactElement, useContext, useEffect, useMemo } from 'react';
+import React, { ErrorInfo, ReactElement, use, useEffect, useMemo } from 'react';
 import Drawer from '@mui/material/Drawer';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -81,14 +81,14 @@ export interface LabelFilter {
 
 const MapsPage = (): ReactElement => {
   const [filter, setFilter] = React.useState<Filter>({ type: 'all' });
-  const client = useContext(ClientContext);
+  const client = use(ClientContext);
   const queryClient = useQueryClient();
   const [activeDialog, setActiveDialog] = React.useState<ActionType | undefined>(undefined);
   const [mindMapCopilotDialogOpen, setMindMapCopilotDialogOpen] = React.useState(false);
   const [labelToDelete, setLabelToDelete] = React.useState<number | null>(null);
   const [mobileDrawerOpen, setMobileDrawerOpen] = React.useState(false);
   const [desktopDrawerOpen, setDesktopDrawerOpen] = React.useState(
-    readStorage('desktopDrawerOpen') === 'true',
+    () => readStorage('desktopDrawerOpen') === 'true',
   );
   const classes = useStyles(desktopDrawerOpen);
 

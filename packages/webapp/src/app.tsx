@@ -356,13 +356,13 @@ const AppWithTheme = (): ReactElement => {
             <div role="alert">{initializationError}</div>
           ) : (
             router && (
-              <ClientContext.Provider value={AppConfig.getClient()}>
+              <ClientContext value={AppConfig.getClient()}>
                 <QueryClientProvider client={queryClient}>
-                  <KeyboardContext.Provider value={keyboardContext}>
+                  <KeyboardContext value={keyboardContext}>
                     <RouterProvider router={router} />
-                  </KeyboardContext.Provider>
+                  </KeyboardContext>
                 </QueryClientProvider>
-              </ClientContext.Provider>
+              </ClientContext>
             )
           )}
         </ThemeProvider>

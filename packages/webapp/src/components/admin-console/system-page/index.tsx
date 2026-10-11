@@ -751,7 +751,10 @@ const SystemInformation = (): ReactElement => {
                         })}
                       </Typography>
                       {listingMetrics?.topQueries?.map((query, index) => (
-                        <Box key={`${query.sql}-${index}`}>
+                        <Box
+                          // eslint-disable-next-line @eslint-react/no-array-index-key -- a read-only snapshot, never reordered; the SQL text is not guaranteed unique
+                          key={`${query.sql}-${index}`}
+                        >
                           <Typography
                             variant="body2"
                             sx={{ fontFamily: 'monospace', whiteSpace: 'pre-wrap' }}

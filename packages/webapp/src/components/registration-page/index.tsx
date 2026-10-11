@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useState, useEffect, useContext, useCallback } from 'react';
+import React, { useState, useEffect, use, useCallback } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import {
   GoogleReCaptchaProvider,
@@ -98,7 +98,7 @@ const RegistrationForm = ({ onCaptchaReset }: { onCaptchaReset?: () => void }) =
   const navigate = useNavigate();
   const intl = useIntl();
 
-  const client = useContext(ClientContext);
+  const client = use(ClientContext);
   const mutation = useMutation<void, ErrorInfo, Model>({
     mutationFn: (model: Model) => client.registerNewUser({ ...model }),
     onSuccess: () => navigate('/c/registration-success'),

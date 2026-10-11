@@ -68,6 +68,7 @@ export const intl = {
   formatPlural: (value: number): string => (value === 1 ? 'one' : 'other'),
 };
 
+// eslint-disable-next-line @eslint-react/no-unnecessary-use-prefix -- stands in for react-intl's hook of the same name
 export const useIntl = (): typeof intl => intl;
 
 export const createIntl = (): typeof intl => intl;

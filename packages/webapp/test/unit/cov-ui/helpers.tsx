@@ -95,7 +95,7 @@ export const initAppConfig = async (config: TestConfig = {}): Promise<void> => {
 };
 
 /** Overrides single configuration values for one test (spies are restored after each test). */
-export const useConfig = (config: TestConfig): void => {
+export const stubConfig = (config: TestConfig): void => {
   const spy = <K extends keyof typeof AppConfig>(key: K, value: unknown): void => {
     jest.spyOn(AppConfig, key as never).mockImplementation((() => value) as never);
   };

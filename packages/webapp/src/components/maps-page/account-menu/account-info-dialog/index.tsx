@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useCallback, useContext, useEffect, useMemo } from 'react';
+import React, { useCallback, use, useMemo } from 'react';
 import { FormattedMessage, defineMessages, useIntl } from 'react-intl';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ErrorInfo } from '../../../../classes/client';
@@ -71,7 +71,7 @@ const messages = defineMessages({
 });
 
 const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElement => {
-  const client = useContext(ClientContext);
+  const client = use(ClientContext);
   const queryClient = useQueryClient();
   const [showDeleteDialog, setShowDeleteDialog] = React.useState<boolean>(false);
   const [deleteConfirmationText, setDeleteConfirmationText] = React.useState<string>('');
@@ -142,17 +142,21 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
     },
   });
 
-  useEffect(() => {
+  // The form starts from each account fetched. Adjusted while rendering, not in an effect, so the
+  // form never shows a frame with the previous account's values.
+  const [seenAccount, setSeenAccount] = React.useState<typeof account>(undefined);
+  if (account !== seenAccount) {
+    setSeenAccount(account);
     if (account) {
       setModel({
-        email: account?.email,
-        lastname: account?.lastname,
-        firstname: account?.firstname,
+        email: account.email,
+        lastname: account.lastname,
+        firstname: account.firstname,
       });
       // Set the current language from account or default
       setSelectedLanguage((account.locale ?? AppI18n.getDefaultLocale()).code);
     }
-  }, [account]);
+  }
 
   const handleOnClose = (): void => {
     onClose();

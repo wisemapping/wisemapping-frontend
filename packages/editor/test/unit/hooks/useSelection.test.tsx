@@ -182,6 +182,23 @@ describe('useSelection', () => {
     });
   });
 
+  it('follows a new model: reads its selection and moves the subscription to it', () => {
+    const first = createModel();
+    const second = createModel();
+    second.state.topics = 2;
+    const { rerender } = render(<Probe model={first.model} />);
+
+    rerender(<Probe model={second.model} />);
+
+    expect(snapshot()).toBe('2/0/true');
+    expect(first.listeners['onfocus']).toHaveLength(0);
+    expect(second.listeners['onfocus']).toHaveLength(1);
+
+    second.state.topics = 4;
+    second.fire('onfocus');
+    expect(snapshot()).toBe('4/0/true');
+  });
+
   it('survives a model whose getDesigner throws', () => {
     const model = {
       isMapLoadded: () => false,

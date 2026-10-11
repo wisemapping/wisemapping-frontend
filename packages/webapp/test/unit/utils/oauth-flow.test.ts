@@ -22,7 +22,12 @@ jest.mock('../../../src/utils/redirect', () => ({
 }));
 
 import { leaveTo } from '../../../src/utils/redirect';
-import { startOAuthFlow, takeOAuthFlow } from '../../../src/utils/oauth-flow';
+import {
+  forgetOAuthFlow,
+  peekOAuthFlow,
+  startOAuthFlow,
+  takeOAuthFlow,
+} from '../../../src/utils/oauth-flow';
 
 describe('OAuth flow mark', () => {
   beforeEach(() => {
@@ -42,6 +47,15 @@ describe('OAuth flow mark', () => {
 
     expect(takeOAuthFlow()).toBeDefined();
     expect(takeOAuthFlow()).toBeUndefined();
+  });
+
+  test('peeking reads the flow without forgetting it; forgetting drops it', () => {
+    startOAuthFlow('https://accounts.example.com/auth', '/c/maps/3');
+
+    expect(peekOAuthFlow()).toMatchObject({ redirect: '/c/maps/3' });
+    expect(peekOAuthFlow()).toMatchObject({ redirect: '/c/maps/3' });
+    forgetOAuthFlow();
+    expect(peekOAuthFlow()).toBeUndefined();
   });
 
   test('without a started flow there is nothing to take', () => {

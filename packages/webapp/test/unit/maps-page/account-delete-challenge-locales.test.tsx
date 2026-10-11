@@ -53,7 +53,7 @@ jest.mock('react-intl', () => {
     };
   const useIntl = () => ({
     locale: 'en',
-    formatMessage: formatWith(ReactInContext.useContext(MessagesContext)),
+    formatMessage: formatWith(ReactInContext.use(MessagesContext)),
   });
   return {
     useIntl,
@@ -64,7 +64,7 @@ jest.mock('react-intl', () => {
     }: {
       messages: Record<string, MockElement[]>;
       children?: React.ReactNode;
-    }) => <MessagesContext.Provider value={messages}>{children}</MessagesContext.Provider>,
+    }) => <MessagesContext value={messages}>{children}</MessagesContext>,
     FormattedMessage: ({ values, ...descriptor }: MockDescriptor & { values?: MockValues }) => (
       <>{useIntl().formatMessage(descriptor, values)}</>
     ),
@@ -120,9 +120,9 @@ const renderDialog = (locale: string) => {
     <ThemeProvider theme={createAppTheme('light')}>
       <IntlProvider locale={locale} messages={compiled(locale) as Record<string, never>}>
         <QueryClientProvider client={queryClient}>
-          <ClientContext.Provider value={client}>
+          <ClientContext value={client}>
             <AccountInfoDialog onClose={jest.fn()} />
-          </ClientContext.Provider>
+          </ClientContext>
         </QueryClientProvider>
       </IntlProvider>
     </ThemeProvider>,

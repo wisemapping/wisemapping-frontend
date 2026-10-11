@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useContext, useState } from 'react';
+import React, { use, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { handleOnMutationSuccess, MultiDialogProps } from '..';
@@ -32,14 +32,14 @@ const NAMED_MAPS = 5;
 
 const DeleteMultiselectDialog = ({ onClose, mapsId }: MultiDialogProps): React.ReactElement => {
   const intl = useIntl();
-  const client = useContext(ClientContext);
+  const client = use(ClientContext);
   const queryClient = useQueryClient();
   const [error, setError] = useState<ErrorInfo>();
 
   // "Select all" takes the maps of every page, so the confirmation says which maps go.
-  const [titles] = useState<string[]>(() => {
+  const [namedMaps] = useState<Pick<MapInfo, 'id' | 'title'>[]>(() => {
     const maps = queryClient.getQueryData<MapInfo[]>(['maps']) ?? [];
-    return mapsId.flatMap((id) => maps.find((m) => m.id === id)?.title ?? []);
+    return mapsId.flatMap((id) => maps.find((m) => m.id === id) ?? []);
   });
 
   const mutation = useMutation<void, ErrorInfo, number[]>({
@@ -77,10 +77,10 @@ const DeleteMultiselectDialog = ({ onClose, mapsId }: MultiDialogProps): React.R
               values={{ count: mapsId.length }}
             />
           </AlertTitle>
-          {titles.length > 0 && (
+          {namedMaps.length > 0 && (
             <MapTitleList>
-              {titles.slice(0, NAMED_MAPS).map((title, index) => (
-                <li key={index}>{title}</li>
+              {namedMaps.slice(0, NAMED_MAPS).map(({ id, title }) => (
+                <li key={id}>{title}</li>
               ))}
               {mapsId.length > NAMED_MAPS && (
                 <li>
