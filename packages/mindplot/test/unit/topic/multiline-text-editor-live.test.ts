@@ -160,7 +160,7 @@ describe('MultilineTextEditor on a live designer', () => {
     expect(container()!.style.color).toBe(textarea()!.style.color);
     editor.close(false);
 
-    jest.spyOn(harness.topic(1).getOrBuildTextShape(), 'getColor').mockReturnValue(null);
+    jest.spyOn(harness.topic(1).getOrBuildTextShape(), 'getColor').mockReturnValue(undefined);
     editor.show(harness.topic(1), 'A');
 
     // Not the colour of the topic edited before.

@@ -43,7 +43,7 @@ export const neuronSteps = (length: number): number =>
 
 /**
  * The cubic segments from `from` to `to`: `steps` of them, by default neuronSteps of the length.
- * The last one ends exactly at `to` (W-NEURONEND). `null` when the ends coincide: there is
+ * The last one ends exactly at `to` (W-NEURONEND). `undefined` when the ends coincide: there is
  * nothing to draw.
  */
 export const neuronSegments = (
@@ -51,9 +51,9 @@ export const neuronSegments = (
   to: Vec,
   seed: number,
   steps?: number,
-): NeuronSegment[] | null => {
+): NeuronSegment[] | undefined => {
   if (from.x === to.x && from.y === to.y) {
-    return null;
+    return undefined;
   }
   const dx = to.x - from.x;
   const dy = to.y - from.y;
@@ -107,11 +107,16 @@ export const neuronSegments = (
   return segments;
 };
 
-/** The `d` of the spline (see neuronSegments), or `null` when the ends coincide. */
-export const neuronPathData = (from: Vec, to: Vec, seed: number, steps?: number): string | null => {
+/** The `d` of the spline (see neuronSegments), or `undefined` when the ends coincide. */
+export const neuronPathData = (
+  from: Vec,
+  to: Vec,
+  seed: number,
+  steps?: number,
+): string | undefined => {
   const segments = neuronSegments(from, to, seed, steps);
   if (!segments) {
-    return null;
+    return undefined;
   }
   const path = new PathBuilder(format).moveTo(from);
   segments.forEach((s) => path.curveTo(s.c1, s.c2, s.to));

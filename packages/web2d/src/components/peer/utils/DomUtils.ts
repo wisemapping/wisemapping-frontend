@@ -20,7 +20,7 @@
  * The position of `elem` in document coordinates: its border box in the viewport
  * (getBoundingClientRect) plus the page scroll. An element that is not rendered is at 0,0.
  */
-export const getOffset = (elem: Element | null): { top: number; left: number } => {
+export const getOffset = (elem?: Element): { top: number; left: number } => {
   if (!elem || !elem.getClientRects().length) {
     return { top: 0, left: 0 };
   }
@@ -68,8 +68,5 @@ const isStaticRoot = (container: Element): boolean => {
  * document coordinates (see getOffset) without one or for a static <body>/<html>, which place an
  * absolute element in the document.
  */
-export const getPosition = (
-  elem: Element,
-  container?: Element | null,
-): { top: number; left: number } =>
+export const getPosition = (elem: Element, container?: Element): { top: number; left: number } =>
   container && !isStaticRoot(container) ? getPositionIn(elem, container) : getOffset(elem);

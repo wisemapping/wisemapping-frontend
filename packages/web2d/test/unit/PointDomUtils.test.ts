@@ -71,7 +71,7 @@ describe('DomUtils', () => {
   };
 
   it('getOffset of a missing or unrendered element is 0,0', () => {
-    expect(getOffset(null)).toEqual({ top: 0, left: 0 });
+    expect(getOffset(undefined)).toEqual({ top: 0, left: 0 });
     expect(getOffset(document.createElement('div'))).toEqual({ top: 0, left: 0 });
   });
 
@@ -103,7 +103,7 @@ describe('DomUtils', () => {
     mockRect(parent, 100, 50);
     mockRect(child, 130, 90);
     expect(getPosition(child)).toEqual({ top: 130, left: 90 });
-    expect(getPosition(child, null)).toEqual({ top: 130, left: 90 });
+    expect(getPosition(child, undefined)).toEqual({ top: 130, left: 90 });
     parent.remove();
   });
 

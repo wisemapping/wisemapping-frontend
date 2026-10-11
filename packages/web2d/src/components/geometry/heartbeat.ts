@@ -61,11 +61,11 @@ export const heartbeatAmplitude = (distance: number, strokeWidth: number): numbe
 /**
  * The points of the waveform, from `from` to `to` inclusive. The wobble is seeded from the
  * length, not the absolute ends, so the shape does not change when the whole line moves
- * (W-STALEPATH). `null` when the ends coincide: there is nothing to draw.
+ * (W-STALEPATH). `undefined` when the ends coincide: there is nothing to draw.
  */
-export const heartbeatPoints = (from: Vec, to: Vec, strokeWidth: number): Vec[] | null => {
+export const heartbeatPoints = (from: Vec, to: Vec, strokeWidth: number): Vec[] | undefined => {
   if (from.x === to.x && from.y === to.y) {
-    return null;
+    return undefined;
   }
   const dx = to.x - from.x;
   const dy = to.y - from.y;
@@ -89,11 +89,11 @@ export const heartbeatPoints = (from: Vec, to: Vec, strokeWidth: number): Vec[] 
   return points;
 };
 
-/** The `d` of the waveform (see heartbeatPoints), or `null` when the ends coincide. */
-export const heartbeatPathData = (from: Vec, to: Vec, strokeWidth: number): string | null => {
+/** The `d` of the waveform (see heartbeatPoints), or `undefined` when the ends coincide. */
+export const heartbeatPathData = (from: Vec, to: Vec, strokeWidth: number): string | undefined => {
   const points = heartbeatPoints(from, to, strokeWidth);
   if (!points) {
-    return null;
+    return undefined;
   }
   const path = new PathBuilder(format);
   points.forEach((p, i) => (i === 0 ? path.moveTo(p) : path.lineTo(p)));

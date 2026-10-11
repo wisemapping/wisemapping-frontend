@@ -39,7 +39,7 @@ interface TopicShape {
 
   removeFrom(group: Group): void;
 
-  setStroke(width: number | null, style: StrokeStyle | null, color: string): void;
+  setStroke(width: number | undefined, style: StrokeStyle | undefined, color: string): void;
 
   getShapeType(): TopicShapeType;
 }

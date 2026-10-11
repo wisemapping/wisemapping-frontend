@@ -46,7 +46,7 @@ describe('geometry/matrix', () => {
     ['a general matrix', { a: 2, b: 1, c: 3, d: 4, e: 5, f: 6 }],
   ])('invertMatrix of %s undoes it', (_name, m) => {
     const inverse = invertMatrix(m);
-    expect(inverse).not.toBeNull();
+    expect(inverse).toBeDefined();
     const p = { x: 12.5, y: -3 };
     const back = applyMatrix(inverse!, applyMatrix(m, p));
     expect(back.x).toBeCloseTo(p.x, 10);
@@ -72,7 +72,7 @@ describe('geometry/matrix', () => {
     ['a zero scale', { a: 0, b: 0, c: 0, d: 1, e: 0, f: 0 }],
     ['parallel axes', { a: 1, b: 2, c: 2, d: 4, e: 0, f: 0 }],
   ])('invertMatrix of %s has no inverse', (_name, m) => {
-    expect(invertMatrix(m)).toBeNull();
+    expect(invertMatrix(m)).toBeUndefined();
   });
 
   it('viewBoxMatrix maps the viewBox corners onto the viewport corners', () => {

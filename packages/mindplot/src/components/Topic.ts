@@ -1559,7 +1559,7 @@ abstract class Topic extends NodeGraph {
       const borderColor = this.getBorderColor(variant);
       const borderStyle = this.getBorderStyle() || 'solid';
       const strokeStyle = this.getStrokeStyle(borderStyle);
-      innerShape.setStroke(null, strokeStyle, borderColor);
+      innerShape.setStroke(undefined, strokeStyle, borderColor);
 
       const bgColor = this.getBackgroundColor(variant);
       innerShape.setFill(bgColor);
@@ -1627,8 +1627,8 @@ abstract class Topic extends NodeGraph {
     );
   }
 
-  private getStrokeStyle(borderStyle: string | null): StrokeStyle | null {
-    if (!borderStyle) return null;
+  private getStrokeStyle(borderStyle: string | undefined): StrokeStyle | undefined {
+    if (!borderStyle) return undefined;
 
     switch (borderStyle) {
       case 'solid':

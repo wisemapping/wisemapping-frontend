@@ -27,7 +27,7 @@ class ElipsePeer extends ElementPeer<SVGEllipseElement> {
     this._position = { x: 0, y: 0 };
   }
 
-  override setSize(width?: number | null, height?: number | null): void {
+  override setSize(width?: number, height?: number): void {
     super.setSize(width, height);
     // The kept size: a missing width or height keeps the current one.
     this.attr('rx', formatLength(this._size.width / 2));

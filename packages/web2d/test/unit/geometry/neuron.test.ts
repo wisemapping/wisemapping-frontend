@@ -66,9 +66,9 @@ describe('geometry/neuron neuronRand', () => {
 });
 
 describe('geometry/neuron neuronSegments', () => {
-  it('is null when the ends coincide', () => {
-    expect(neuronSegments(O, O, SEED)).toBeNull();
-    expect(neuronSegments({ x: 3, y: 4 }, { x: 3, y: 4 }, SEED)).toBeNull();
+  it('is undefined when the ends coincide', () => {
+    expect(neuronSegments(O, O, SEED)).toBeUndefined();
+    expect(neuronSegments({ x: 3, y: 4 }, { x: 3, y: 4 }, SEED)).toBeUndefined();
   });
 
   it.each([
@@ -137,8 +137,8 @@ describe('geometry/neuron neuronSegments', () => {
 });
 
 describe('geometry/neuron neuronPathData', () => {
-  it('is null when the ends coincide', () => {
-    expect(neuronPathData(O, O, SEED)).toBeNull();
+  it('is undefined when the ends coincide', () => {
+    expect(neuronPathData(O, O, SEED)).toBeUndefined();
   });
 
   it('matches the characterized horizontal line', () => {
@@ -171,6 +171,6 @@ describe('geometry/neuron neuronSteps', () => {
     expect(neuronSegments(O, to, SEED)).toHaveLength(neuronSteps(400));
     expect(neuronSegments(O, to, SEED, 6)).toHaveLength(6);
     expect(neuronSegments(O, to, SEED, neuronSteps(400))).toEqual(neuronSegments(O, to, SEED));
-    expect(pathCommands(neuronPathData(O, to, SEED, 6)).filter((c) => c === 'C')).toHaveLength(6);
+    expect(pathCommands(neuronPathData(O, to, SEED, 6)!).filter((c) => c === 'C')).toHaveLength(6);
   });
 });

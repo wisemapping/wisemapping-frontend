@@ -62,9 +62,9 @@ describe('geometry/heartbeat heartbeatAmplitude', () => {
 });
 
 describe('geometry/heartbeat heartbeatPoints', () => {
-  it('is null when the ends coincide', () => {
-    expect(heartbeatPoints(O, O, 3)).toBeNull();
-    expect(heartbeatPoints({ x: 5, y: -5 }, { x: 5, y: -5 }, 3)).toBeNull();
+  it('is undefined when the ends coincide', () => {
+    expect(heartbeatPoints(O, O, 3)).toBeUndefined();
+    expect(heartbeatPoints({ x: 5, y: -5 }, { x: 5, y: -5 }, 3)).toBeUndefined();
   });
 
   it('starts and ends exactly at the ends, with one point per pattern node between', () => {
@@ -118,8 +118,8 @@ describe('geometry/heartbeat heartbeatPoints', () => {
 });
 
 describe('geometry/heartbeat heartbeatPathData', () => {
-  it('is null when the ends coincide', () => {
-    expect(heartbeatPathData(O, O, 3)).toBeNull();
+  it('is undefined when the ends coincide', () => {
+    expect(heartbeatPathData(O, O, 3)).toBeUndefined();
   });
 
   it('is one move and a line per point, with 1 decimal', () => {

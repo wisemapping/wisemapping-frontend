@@ -309,7 +309,7 @@ describe('ElementPeer tree', () => {
     const child = new ElementPeer(svgNode());
     parent.append(child);
     parent.removeChild(child);
-    expect(child.getParent()).toBeNull();
+    expect(child.getParent()).toBeUndefined();
     expect(parent.getChildren()).toEqual([]);
     expect(child._native.parentNode).toBeNull();
   });

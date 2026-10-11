@@ -65,7 +65,7 @@ class Group<M extends CustomEventMap = CustomEventMap> extends WorkspaceElement<
     }
 
     const elementType = element.getType();
-    if (elementType == null) {
+    if (!elementType) {
       throw new Error(`It seems not to be an element ->${element}`);
     }
 
@@ -85,7 +85,7 @@ class Group<M extends CustomEventMap = CustomEventMap> extends WorkspaceElement<
     }
 
     const elementType = element.getType();
-    if (elementType == null) {
+    if (!elementType) {
       throw new Error(`It seems not to be an element ->${element}`);
     }
 
@@ -168,8 +168,8 @@ class Group<M extends CustomEventMap = CustomEventMap> extends WorkspaceElement<
   /** A group has no stroke of its own: this is a no-op (stroke its children instead). */
   /* eslint-disable @typescript-eslint/no-unused-vars */
   override setStroke(
-    _width?: number | null,
-    _style?: StrokeStyle | null,
+    _width?: number,
+    _style?: StrokeStyle,
     _color?: string,
     _opacity?: number,
   ): void {
@@ -182,7 +182,7 @@ class Group<M extends CustomEventMap = CustomEventMap> extends WorkspaceElement<
   }
 
   appendDomChild(DomElement: Element | Node): void {
-    if (DomElement == null) {
+    if (!DomElement) {
       throw new Error('Child element can not be null');
     }
 

@@ -146,11 +146,11 @@ describe('CurvedLinePeer control points (W-CTRLFLAG, BL-69)', () => {
     ).not.toThrow();
   });
 
-  it('a null control point is ignored, and keeps the default point', () => {
+  it('an undefined control point is ignored, and keeps the default point', () => {
     const peer = line(0, 0, 90, 0);
     const before = d(peer);
-    peer.setSrcControlPoint(null);
-    peer.setDestControlPoint(null);
+    peer.setSrcControlPoint(undefined);
+    peer.setDestControlPoint(undefined);
     expect(d(peer)).toBe(before);
     peer.setTo(0, 90);
     expect(peer.getControlPoints()).toEqual([

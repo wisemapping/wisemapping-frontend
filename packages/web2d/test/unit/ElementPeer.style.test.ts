@@ -132,10 +132,10 @@ describe('ElementPeer stroke', () => {
 
     it('a style without a width scales with the width already written, or 1', () => {
       const p = peer();
-      p.setStroke(null, 'dash');
+      p.setStroke(undefined, 'dash');
       expect(attr(p, 'stroke-dasharray')).toBe('5 5');
       p.setStroke(3);
-      p.setStroke(null, 'dot');
+      p.setStroke(undefined, 'dot');
       expect(attr(p, 'stroke-dasharray')).toBe('3 24');
     });
 
@@ -197,7 +197,12 @@ describe('ElementPeer stroke', () => {
   });
 
   it('getStroke defaults: no width, opacity 1', () => {
-    expect(peer().getStroke()).toEqual({ color: null, style: null, opacity: 1, width: null });
+    expect(peer().getStroke()).toEqual({
+      color: undefined,
+      style: undefined,
+      opacity: 1,
+      width: undefined,
+    });
   });
 
   it('the dash table getter returns a copy', () => {
@@ -226,10 +231,10 @@ describe('ElementPeer fill', () => {
     expect(p.getFill()).toEqual({ color: 'green', opacity: 0.3 });
   });
 
-  it('a null colour keeps the previous colour', () => {
+  it('an undefined colour keeps the previous colour', () => {
     const p = peer();
     p.setFill('green');
-    p.setFill(null, 1);
+    p.setFill(undefined, 1);
     expect(attr(p, 'fill')).toBe('green');
   });
 

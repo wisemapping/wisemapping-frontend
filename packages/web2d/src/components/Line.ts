@@ -35,7 +35,7 @@ interface Line {
 
   setCursor(value: string): void;
 
-  setStroke(width: number, style?: StrokeStyle | null, color?: string, opacity?: number): void;
+  setStroke(width: number, style?: StrokeStyle, color?: string, opacity?: number): void;
 
   setFill(color: string, opacity: number): void;
 

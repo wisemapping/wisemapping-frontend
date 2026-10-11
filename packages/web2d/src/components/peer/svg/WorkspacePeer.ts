@@ -59,9 +59,9 @@ class WorkspacePeer extends ElementPeer<SVGSVGElement> {
 
   // The viewBox as numbers, and the attribute value they were parsed from or written as. A pan
   // reads and writes the origin, so it should not parse the string each time.
-  private _viewBoxSource: string | null = null;
+  private _viewBoxSource: string | undefined;
 
-  private _viewBox: ViewBox | null = null;
+  private _viewBox: ViewBox | undefined;
 
   /**
    * The coordinate size and origin are the SVG viewBox: <min-x> <min-y> <width> <height> in user
@@ -92,13 +92,13 @@ class WorkspacePeer extends ElementPeer<SVGSVGElement> {
   }
 
   /**
-   * The viewBox numbers, or null without a viewBox. The string is parsed only when it is not the
+   * The viewBox numbers, or undefined without a viewBox. The string is parsed only when it is not the
    * one last seen, for example after a write around the peer. A missing number is NaN.
    */
-  private viewBox(): ViewBox | null {
+  private viewBox(): ViewBox | undefined {
     const viewBox = this._native.getAttribute('viewBox');
     if (viewBox === null) {
-      return null;
+      return undefined;
     }
     if (viewBox !== this._viewBoxSource || !this._viewBox) {
       const [x = NaN, y = NaN, width = NaN, height = NaN] = viewBox
@@ -130,7 +130,9 @@ class WorkspacePeer extends ElementPeer<SVGSVGElement> {
    */
   getScreenMatrix(): Matrix {
     const ctm =
-      typeof this._native.getScreenCTM === 'function' ? this._native.getScreenCTM() : null;
+      typeof this._native.getScreenCTM === 'function'
+        ? (this._native.getScreenCTM() ?? undefined)
+        : undefined;
     if (ctm) {
       return ctm;
     }

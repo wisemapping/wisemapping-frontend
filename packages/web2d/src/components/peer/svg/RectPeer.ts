@@ -33,11 +33,11 @@ class RectPeer extends ElementPeer<SVGRectElement> {
   }
 
   setPosition(x: number, y: number): void {
-    if (x != null) {
+    if (x !== undefined) {
       this._position = { ...this._position, x };
       this.attr('x', formatLength(x));
     }
-    if (y != null) {
+    if (y !== undefined) {
       this._position = { ...this._position, y };
       this.attr('y', formatLength(y));
     }
@@ -51,12 +51,12 @@ class RectPeer extends ElementPeer<SVGRectElement> {
     return true;
   }
 
-  override setSize(width?: number | null, height?: number | null): void {
+  override setSize(width?: number, height?: number): void {
     super.setSize(width, height);
     // The kept size: a missing width or height keeps the current one.
     const min = Math.min(this._size.width, this._size.height);
 
-    if (this._arc != null) {
+    if (this._arc !== undefined) {
       // Transform percentages to SVG format.
       const arc = (min / 2) * this._arc;
       this.attr('rx', formatLength(arc));

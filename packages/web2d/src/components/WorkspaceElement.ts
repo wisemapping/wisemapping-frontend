@@ -49,7 +49,7 @@ abstract class WorkspaceElement<T extends ElementPeer, M extends CustomEventMap 
 
   constructor(peer: T, attributes: StyleAttributes = {}, delayInit?: boolean) {
     this.peer = peer;
-    if (peer == null) {
+    if (!peer) {
       throw new Error('Element peer can not be null');
     }
 
@@ -73,7 +73,7 @@ abstract class WorkspaceElement<T extends ElementPeer, M extends CustomEventMap 
         break;
       case 'stroke':
         this.setStroke(
-          toNumber(args[0]) ?? null,
+          toNumber(args[0]),
           toStrokeStyle(args[1]),
           toText(args[2]),
           toNumber(args[3]),
@@ -96,7 +96,7 @@ abstract class WorkspaceElement<T extends ElementPeer, M extends CustomEventMap 
   }
 
   /** Sets the size. A missing width or height keeps the current one. */
-  setSize(width?: number | null, height?: number | null): void {
+  setSize(width?: number, height?: number): void {
     this.peer.setSize(width, height);
   }
 
@@ -156,7 +156,7 @@ abstract class WorkspaceElement<T extends ElementPeer, M extends CustomEventMap 
   /**
    * Todo: Doc
    */
-  getFill(): { color: string | null; opacity: number } {
+  getFill(): { color: string | undefined; opacity: number } {
     return this.peer.getFill();
   }
 
@@ -165,7 +165,7 @@ abstract class WorkspaceElement<T extends ElementPeer, M extends CustomEventMap 
    * color: Fill color
    * opacity: Opacity of the fill. It must be less than 1.
    */
-  setFill(color?: string | null, opacity?: number | null): void {
+  setFill(color?: string, opacity?: number): void {
     this.peer.setFill(color, opacity);
   }
 
@@ -177,13 +177,13 @@ abstract class WorkspaceElement<T extends ElementPeer, M extends CustomEventMap 
    *  opacity: stroke visibility
    */
   setStroke(
-    width: number | null,
-    style?: StrokeStyle | null,
+    width: number | undefined,
+    style?: StrokeStyle,
     color?: string,
     opacity?: number,
   ): void {
     // Checked at run time too: JavaScript callers and attribute strings are not type checked.
-    if (style != null && !isStrokeStyle(style)) {
+    if (style !== undefined && !isStrokeStyle(style)) {
       throw new Error(`Unsupported stroke style: '${style}'`);
     }
     this.peer.setStroke(width, style, color, opacity);
@@ -220,10 +220,10 @@ abstract class WorkspaceElement<T extends ElementPeer, M extends CustomEventMap 
   }
 
   getStroke(): {
-    color: string | null;
-    style: StrokeStyle | null;
+    color: string | undefined;
+    style: StrokeStyle | undefined;
     opacity: number;
-    width: number | null;
+    width: number | undefined;
   } {
     return this.peer.getStroke();
   }

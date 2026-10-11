@@ -224,7 +224,9 @@ class EditorComponent extends EventDispatcher<EditorEvents> {
     // Adjust position: the editor is absolute, so place it relative to its offset parent ...
     const textShape = this._topic.getOrBuildTextShape();
     this._containerElem.style.position = 'absolute';
-    const { top, left } = textShape.getNativePosition(this._containerElem.offsetParent);
+    const { top, left } = textShape.getNativePosition(
+      this._containerElem.offsetParent ?? undefined,
+    );
     this._containerElem.style.top = `${top}px`;
     this._containerElem.style.left = `${left}px`;
 

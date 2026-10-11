@@ -36,8 +36,8 @@ const WHITE = '#FFFFFF';
 // A model canvas style without a pattern drops its colours (Mindmap.setCanvasStyle).
 const DARK_CANVAS = { backgroundColor: '#1a1a1a', backgroundPattern: 'solid' as const };
 
-const textColor = (topic: Topic): string | null =>
-  topic.getOrBuildTextShape().getColor()?.toUpperCase() ?? null;
+const textColor = (topic: Topic): string | undefined =>
+  topic.getOrBuildTextShape().getColor()?.toUpperCase();
 
 describe('ChangeCanvasStyleCommand', () => {
   let harness: Harness;
