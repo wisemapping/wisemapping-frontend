@@ -128,7 +128,7 @@
     "jest": "^30.5.2",
     "jest-diff": "^30.5.2",
     "jest-environment-jsdom": "^30.5.2",
-    "lerna": "^10.0.1",
+    "lerna": "^10.1.0",
     "lint-staged": "^17.6.0",
     "prettier": "^3.9.9",
     "start-server-and-test": "^3.0.12",
@@ -141,7 +141,7 @@
     "node": ">=24.0.0"
   },
   "resolutions": {
-    "lerna/js-yaml": "^4.3.2",
-    "nx/smol-toml": "^1.7.1"
+    "nx/smol-toml": "^1.7.1",
+    "nx/undici": "^7.30.0"
   }
 }

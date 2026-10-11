@@ -17,9 +17,7 @@
  */
 
 import Client from '../client';
-import MockClient from '../client/mock-client';
 import RestClient from '../client/rest-client';
-import MockAdminClient from '../client/mock-admin-client';
 import AdminClient, { AdminClientInterface } from '../client/admin-client';
 import { appLogger as log } from '../../utils/logger';
 
@@ -53,6 +51,13 @@ class AppConfig {
 
   private static _adminClient: AdminClientInterface | null = null;
 
+  // The mock clients, loaded by initialize() only when the configuration asks for them: they are
+  // for development, and production does not download them.
+  private static _mocks: {
+    MockClient: new () => Client;
+    MockAdminClient: new () => AdminClientInterface;
+  } | null = null;
+
   static async initialize(): Promise<Config> {
     if (this._config) {
       return this._config;
@@ -60,7 +65,17 @@ class AppConfig {
 
     if (!this._initializationPromise) {
       this._initializationPromise = this.loadConfig()
-        .then((config) => {
+        .then(async (config) => {
+          if (AppConfig.usesMockClient(config)) {
+            const [mockClient, mockAdminClient] = await Promise.all([
+              import('../client/mock-client'),
+              import('../client/mock-admin-client'),
+            ]);
+            this._mocks = {
+              MockClient: mockClient.default,
+              MockAdminClient: mockAdminClient.default,
+            };
+          }
           this._config = config;
           return config;
         })
@@ -118,6 +133,18 @@ class AppConfig {
     }
 
     return (await response.json()) as Config;
+  }
+
+  // The clients fall back to the mocks when the configuration has no REST API to talk to.
+  private static usesMockClient(config: Config): boolean {
+    return (config.clientType !== 'rest' && !!config.clientType) || !config.apiBaseUrl;
+  }
+
+  private static mocks(): NonNullable<typeof AppConfig._mocks> {
+    if (!this._mocks) {
+      throw new Error('The mock clients are only loaded when the configuration asks for them.');
+    }
+    return this._mocks;
   }
 
   static isMockEnv(): boolean {
@@ -198,7 +225,7 @@ class AppConfig {
 
     if (!result) {
       log.warn('Service using mock client');
-      result = new MockClient();
+      result = new (this.mocks().MockClient)();
     }
 
     this._client = result;
@@ -213,7 +240,7 @@ class AppConfig {
     // If we're in mock mode, always use MockAdminClient for admin functionality
     if (this.isMockEnv()) {
       log.info('Mock environment detected, using MockAdminClient');
-      this._adminClient = new MockAdminClient();
+      this._adminClient = new (this.mocks().MockAdminClient)();
       return this._adminClient;
     }
 
@@ -232,7 +259,7 @@ class AppConfig {
 
     if (!result) {
       log.warn('Service using mock admin client');
-      result = new MockAdminClient();
+      result = new (this.mocks().MockAdminClient)();
     }
 
     this._adminClient = result;

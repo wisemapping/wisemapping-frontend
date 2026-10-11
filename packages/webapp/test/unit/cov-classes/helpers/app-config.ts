@@ -67,6 +67,7 @@ export const resetAppConfig = (): void => {
     _config: null,
     _client: null,
     _adminClient: null,
+    _mocks: null,
     _initializationPromise: null,
   });
   setBootstrap(undefined);

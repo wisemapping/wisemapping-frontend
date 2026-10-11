@@ -49,7 +49,6 @@ import { MapsPageLoading } from './components/maps-page/maps-list/MapsListSkelet
 import { mapsPageLoader } from './components/maps-page/loader';
 import MapsPageErrorFallback from './components/maps-page/MapsPageErrorFallback';
 import EditorLoadingSkeleton from '@wisemapping/editor/components/editor-loading-skeleton';
-import { HelmetProvider } from './components/seo';
 import { PageModeType, loader as mapLoader } from './components/editor-page/loader';
 import { loader as configLoader } from './loader';
 import queryClient from './queryClient';
@@ -346,22 +345,20 @@ const AppWithTheme = (): ReactElement => {
   }
 
   return (
-    <HelmetProvider>
-      <ClientContext.Provider value={AppConfig.getClient()}>
-        <QueryClientProvider client={queryClient}>
-          <StyledEngineProvider injectFirst>
-            <MuiThemeProvider theme={theme}>
-              <ThemeProvider theme={theme}>
-                <CssBaseline />
-                <KeyboardContext.Provider value={keyboardContext}>
-                  <RouterProvider router={router} />
-                </KeyboardContext.Provider>
-              </ThemeProvider>
-            </MuiThemeProvider>
-          </StyledEngineProvider>
-        </QueryClientProvider>
-      </ClientContext.Provider>
-    </HelmetProvider>
+    <ClientContext.Provider value={AppConfig.getClient()}>
+      <QueryClientProvider client={queryClient}>
+        <StyledEngineProvider injectFirst>
+          <MuiThemeProvider theme={theme}>
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              <KeyboardContext.Provider value={keyboardContext}>
+                <RouterProvider router={router} />
+              </KeyboardContext.Provider>
+            </ThemeProvider>
+          </MuiThemeProvider>
+        </StyledEngineProvider>
+      </QueryClientProvider>
+    </ClientContext.Provider>
   );
 };
 

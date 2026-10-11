@@ -20,27 +20,68 @@ import { useEffect, useState } from 'react';
 import type { MessageFormatElement } from 'react-intl';
 import { appLogger as log } from '../../utils/logger';
 import type { LocaleCode } from '.';
-// English is the fallback, so it is bundled; every other locale is a chunk of its own, loaded
-// when a user needs it (together they are about 480 KB).
+// English is the fallback, so it is bundled; every other locale is a chunk of its own, with its
+// dayjs locale, loaded when a user needs it (together they are about 480 KB).
 import enMessages from '../../compiled-lang/en.json';
 
 export type Messages = Record<string, MessageFormatElement[]>;
 
 type Catalog = { default: unknown };
 
+// A locale's messages and its dayjs locale, which registers itself for the dates (see ./dates).
+const withDates =
+  (catalog: () => Promise<Catalog>, dates: () => Promise<unknown>) => async (): Promise<Catalog> =>
+    (await Promise.all([catalog(), dates()]))[0];
+
 const LOADERS: Record<Exclude<LocaleCode, 'en'>, () => Promise<Catalog>> = {
-  es: () => import('../../compiled-lang/es.json'),
-  de: () => import('../../compiled-lang/de.json'),
-  fr: () => import('../../compiled-lang/fr.json'),
-  ru: () => import('../../compiled-lang/ru.json'),
-  uk: () => import('../../compiled-lang/uk.json'),
-  zh: () => import('../../compiled-lang/zh.json'),
-  'zh-CN': () => import('../../compiled-lang/zh-CN.json'),
-  ja: () => import('../../compiled-lang/ja.json'),
-  pt: () => import('../../compiled-lang/pt.json'),
-  it: () => import('../../compiled-lang/it.json'),
-  hi: () => import('../../compiled-lang/hi.json'),
-  ar: () => import('../../compiled-lang/ar.json'),
+  es: withDates(
+    () => import('../../compiled-lang/es.json'),
+    () => import('dayjs/locale/es'),
+  ),
+  de: withDates(
+    () => import('../../compiled-lang/de.json'),
+    () => import('dayjs/locale/de'),
+  ),
+  fr: withDates(
+    () => import('../../compiled-lang/fr.json'),
+    () => import('dayjs/locale/fr'),
+  ),
+  ru: withDates(
+    () => import('../../compiled-lang/ru.json'),
+    () => import('dayjs/locale/ru'),
+  ),
+  uk: withDates(
+    () => import('../../compiled-lang/uk.json'),
+    () => import('dayjs/locale/uk'),
+  ),
+  zh: withDates(
+    () => import('../../compiled-lang/zh.json'),
+    () => import('dayjs/locale/zh'),
+  ),
+  'zh-CN': withDates(
+    () => import('../../compiled-lang/zh-CN.json'),
+    () => import('dayjs/locale/zh-cn'),
+  ),
+  ja: withDates(
+    () => import('../../compiled-lang/ja.json'),
+    () => import('dayjs/locale/ja'),
+  ),
+  pt: withDates(
+    () => import('../../compiled-lang/pt.json'),
+    () => import('dayjs/locale/pt'),
+  ),
+  it: withDates(
+    () => import('../../compiled-lang/it.json'),
+    () => import('dayjs/locale/it'),
+  ),
+  hi: withDates(
+    () => import('../../compiled-lang/hi.json'),
+    () => import('dayjs/locale/hi'),
+  ),
+  ar: withDates(
+    () => import('../../compiled-lang/ar.json'),
+    () => import('dayjs/locale/ar'),
+  ),
 };
 
 const ENGLISH = enMessages as unknown as Messages;

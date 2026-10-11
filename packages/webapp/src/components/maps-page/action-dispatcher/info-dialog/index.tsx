@@ -22,8 +22,8 @@ import Chip from '@mui/material/Chip';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import PublicIcon from '@mui/icons-material/Public';
 import StarIcon from '@mui/icons-material/Star';
-import dayjs from 'dayjs';
-import LocalizedFormat from 'dayjs/plugin/localizedFormat';
+import type { Dayjs, ConfigType } from 'dayjs';
+import { useDate } from '../../../../classes/app-i18n/dates';
 
 import BaseDialog from '../base-dialog';
 import { SimpleDialogProps } from '..';
@@ -40,10 +40,9 @@ import {
   StatusChips,
 } from './styled';
 
-dayjs.extend(LocalizedFormat);
-
 // A date the backend did not send (or while the map loads) is shown as a dash, not as today.
-const formatDate = (value?: string): string => (value ? dayjs(value).format('LLL') : '—');
+const formatDate = (date: (value: ConfigType) => Dayjs, value?: string): string =>
+  value ? date(value).format('LLL') : '—';
 
 const Person = ({ name }: { name?: string }): React.ReactElement =>
   name ? (
@@ -58,6 +57,7 @@ const Person = ({ name }: { name?: string }): React.ReactElement =>
 const InfoDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
   const { data: map } = useFetchMapById(mapId);
   const intl = useIntl();
+  const date = useDate();
 
   return (
     <BaseDialog
@@ -118,7 +118,7 @@ const InfoDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement =
           <DetailLabel>
             <FormattedMessage id="info.creation-time" defaultMessage="Creation Date" />
           </DetailLabel>
-          <DetailValue>{formatDate(map?.creationTime)}</DetailValue>
+          <DetailValue>{formatDate(date, map?.creationTime)}</DetailValue>
         </DetailRow>
         <DetailRow>
           <DetailLabel>
@@ -132,7 +132,7 @@ const InfoDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement =
           <DetailLabel>
             <FormattedMessage id="info.modified-time" defaultMessage="Last Modified Date" />
           </DetailLabel>
-          <DetailValue>{formatDate(map?.lastModificationTime)}</DetailValue>
+          <DetailValue>{formatDate(date, map?.lastModificationTime)}</DetailValue>
         </DetailRow>
       </DetailList>
     </BaseDialog>

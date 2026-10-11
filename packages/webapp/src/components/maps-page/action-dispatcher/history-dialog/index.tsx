@@ -22,7 +22,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { ChangeHistory, ErrorInfo } from '../../../../classes/client';
 import { SimpleDialogProps } from '..';
 import BaseDialog from '../base-dialog';
-import dayjs from 'dayjs';
+import { useDate } from '../../../../classes/app-i18n/dates';
 
 import Tooltip from '@mui/material/Tooltip';
 import { ClientContext } from '../../../../classes/provider/client-context';
@@ -56,6 +56,7 @@ const HistoryDialog = ({
   beforeRevert,
 }: HistoryDialogProps): React.ReactElement => {
   const intl = useIntl();
+  const date = useDate();
   const client = useContext(ClientContext);
   const { data } = useQuery<unknown, ErrorInfo, ChangeHistory[]>({
     queryKey: [`history-${mapId}`],
@@ -117,10 +118,10 @@ const HistoryDialog = ({
               <HistoryText>
                 <HistoryAuthor>{row.lastModificationBy}</HistoryAuthor>
                 <Tooltip
-                  title={dayjs(row.lastModificationTime).format('lll')}
+                  title={date(row.lastModificationTime).format('lll')}
                   placement="bottom-start"
                 >
-                  <HistoryTime>{dayjs(row.lastModificationTime).fromNow()}</HistoryTime>
+                  <HistoryTime>{date(row.lastModificationTime).fromNow()}</HistoryTime>
                 </Tooltip>
               </HistoryText>
               <HistoryActions>

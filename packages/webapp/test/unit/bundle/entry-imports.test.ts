@@ -21,7 +21,8 @@ import path from 'path';
 
 /**
  * Walks the static imports from a module, as the bundler does, and returns the chain of modules
- * that leads to the first value import of one of `forbidden`, or undefined.
+ * that leads to the first value import of one of `forbidden` (a package specifier or a source
+ * file relative to the webapp), or undefined.
  *
  * Dynamic `import()` starts another chunk and `import type` disappears in the build, so neither is
  * followed. Only the webapp's and the editor's own sources are walked: an npm package is a leaf.
@@ -61,6 +62,9 @@ export const findStaticImportChain = (entry: string, forbidden: string[]): strin
       if (isTypeOnly(clause)) continue;
       if (forbidden.includes(specifier)) return [...chain, specifier];
       const next = resolveImport(file, specifier);
+      if (next && forbidden.includes(path.relative(ROOT, next))) {
+        return [...chain, path.relative(ROOT, next)];
+      }
       const found = next && walk(next, [...chain, path.relative(ROOT, next)]);
       if (found) return found;
     }
@@ -79,6 +83,15 @@ describe('the editor stays out of the pages that do not show a map', () => {
     ['the map list', 'src/components/maps-page/index.tsx'],
   ])('%s does not reach the editor or mindplot barrel', (_, entry) => {
     expect(findStaticImportChain(path.resolve(ROOT, entry), BARRELS)).toBeUndefined();
+  });
+
+  test('the entry does not reach the mock clients, which only development uses', () => {
+    expect(
+      findStaticImportChain(path.resolve(ROOT, 'src/index.tsx'), [
+        'src/classes/client/mock-client/index.ts',
+        'src/classes/client/mock-admin-client/index.ts',
+      ]),
+    ).toBeUndefined();
   });
 
   test('the walk finds a barrel import when there is one', () => {
