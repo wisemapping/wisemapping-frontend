@@ -86,7 +86,7 @@ describe('redraw render snapshot of a medium map', () => {
     for (let i = 0; i < values.length; i++) {
       textarea.value = values[i]!;
       textarea.dispatchEvent(new Event('input', { bubbles: true }));
-      // eslint-disable-next-line no-await-in-loop
+
       await nextFrame();
     }
     expect(renderSnapshot(harness.designer)).toMatchSnapshot('typing');

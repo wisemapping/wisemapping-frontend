@@ -33,7 +33,6 @@ jest.mock('../../../src/components/export/SVGExporter', () => ({
   },
 }));
 
-// eslint-disable-next-line import/first
 import BinaryImageExporter from '../../../src/components/export/BinaryImageExporter';
 
 // jsdom never loads images, so the test decides whether the SVG load succeeds.

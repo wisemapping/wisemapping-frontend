@@ -25,7 +25,7 @@ describe('mindplot entry point', () => {
   it('can be imported without a DOM', () => {
     expect(typeof window).toBe('undefined');
     expect(typeof customElements).toBe('undefined');
-    // eslint-disable-next-line global-require, @typescript-eslint/no-require-imports
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     expect(() => require('../../src/index')).not.toThrow();
   });
 });

@@ -52,7 +52,7 @@ describe('WorkspaceElement._initialize (attribute bag)', () => {
 
   it('batches multi-key attributes into one setter call', () => {
     const spy = jest.spyOn(Rect.prototype, 'setStroke');
-    // eslint-disable-next-line no-new
+
     new Rect(0, { strokeWidth: 3, strokeColor: 'red', strokeStyle: 'dash' });
     expect(spy).toHaveBeenCalledTimes(1);
     expect(spy).toHaveBeenCalledWith(3, 'dash', 'red', undefined);

@@ -290,12 +290,10 @@ class RESTPersistenceManager extends PersistenceManager {
     };
 
     if (accept) {
-      // eslint-disable-next-line dot-notation
       headers['Accept'] = accept;
     }
 
     if (this.jwt) {
-      // eslint-disable-next-line dot-notation
       headers['Authorization'] = `Bearer ${this.jwt}`;
     }
     return headers;

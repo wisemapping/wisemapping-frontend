@@ -33,7 +33,6 @@ const buildTopic = (initialIcon: string | undefined, designer?: object) => {
       iconName = value;
     },
   };
-  let feature: ImageSVGFeature | undefined;
   const topic = {
     getModel: () => model,
     get2DElement: () => group,
@@ -45,13 +44,13 @@ const buildTopic = (initialIcon: string | undefined, designer?: object) => {
     getShapeType: () => 'line',
     getThemeVariant: () => 'light',
     redraw: () => {
-      if (feature!.hasSVG()) {
-        feature!.addToGroup(group);
-        feature!.buildRemoveTip();
+      if (feature.hasSVG()) {
+        feature.addToGroup(group);
+        feature.buildRemoveTip();
       }
     },
   };
-  feature = new ImageSVGFeature(topic as unknown as Topic);
+  const feature = new ImageSVGFeature(topic as unknown as Topic);
   return { feature, group, topic };
 };
 

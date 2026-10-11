@@ -70,7 +70,6 @@ class LocalStorageManager extends PersistenceManager {
     };
 
     if (this.jwtToken) {
-      // eslint-disable-next-line dot-notation
       result['Authorization'] = `Bearer ${this.jwtToken}`;
     }
 

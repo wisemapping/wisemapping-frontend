@@ -33,7 +33,6 @@ const buildTopic = (initialEmoji: string | undefined, designer?: object) => {
       emoji = value;
     },
   };
-  let feature: ImageEmojiFeature | undefined;
   const topic = {
     getModel: () => model,
     get2DElement: () => group,
@@ -44,13 +43,13 @@ const buildTopic = (initialEmoji: string | undefined, designer?: object) => {
     getFontStyle: () => 'normal',
     getThemeVariant: () => 'light',
     redraw: () => {
-      if (feature!.hasEmoji()) {
-        feature!.addToGroup(group);
-        feature!.setupDeleteWidget();
+      if (feature.hasEmoji()) {
+        feature.addToGroup(group);
+        feature.setupDeleteWidget();
       }
     },
   };
-  feature = new ImageEmojiFeature(topic as unknown as Topic);
+  const feature = new ImageEmojiFeature(topic as unknown as Topic);
   return { feature, group, topic };
 };
 

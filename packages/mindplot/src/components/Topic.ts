@@ -1427,14 +1427,11 @@ abstract class Topic extends NodeGraph {
 
       // Calculate size and adjust ...
       let topicHeight = textHeight + padding * 2;
-      let topicWith = textWidth + padding * 2;
-      let iconGroupWith = 0;
-      let textIconSpacing = 0;
 
       // Default horizontal layout
-      textIconSpacing = fontHeight / 50;
-      iconGroupWith = iconGroup.getSize().width;
-      topicWith = iconGroupWith + 2 * textIconSpacing + textWidth + padding * 2;
+      const textIconSpacing = fontHeight / 50;
+      const iconGroupWith = iconGroup.getSize().width;
+      let topicWith = iconGroupWith + 2 * textIconSpacing + textWidth + padding * 2;
 
       // Handle emoji and SVG features - both appear on top of any shape
       const hasEmoji = this._imageEmojiFeature.hasEmoji();

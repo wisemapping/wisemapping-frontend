@@ -6,6 +6,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import js from '@eslint/js';
 import { FlatCompat } from '@eslint/eslintrc';
+import importPlugin from 'eslint-plugin-import';
 import cypress from 'eslint-plugin-cypress';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -39,11 +40,16 @@ export default defineConfig([
   },
   {
     files: ['src/**/*.{js,ts}', 'test/**/*.{js,ts}', ...toolConfigFiles],
-    extends: compat.extends(
-      'airbnb-base',
-      'plugin:@typescript-eslint/eslint-recommended',
-      'plugin:@typescript-eslint/recommended',
-    ),
+    // ESLint's and the import plugin's recommended rules, in place of eslint-config-airbnb-base,
+    // which stopped at ESLint 8 (2021) and does not support this ESLint.
+    extends: [
+      js.configs.recommended,
+      importPlugin.flatConfigs.recommended,
+      ...compat.extends(
+        'plugin:@typescript-eslint/eslint-recommended',
+        'plugin:@typescript-eslint/recommended',
+      ),
+    ],
 
     plugins: {
       '@typescript-eslint': typescriptEslint,

@@ -19,5 +19,5 @@
 type PositionType = Readonly<{ x: number; y: number }>;
 
 // A type cannot be `export default`ed by name under verbatimModuleSyntax.
-// eslint-disable-next-line no-restricted-exports
+
 export type { PositionType as default };

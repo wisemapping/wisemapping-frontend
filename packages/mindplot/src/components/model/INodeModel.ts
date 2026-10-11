@@ -452,13 +452,7 @@ abstract class INodeModel {
   abstract clone(): INodeModel;
 
   isChildNode(node: INodeModel): boolean {
-    let result = false;
-    if (node === this) {
-      result = true;
-    } else {
-      result = this.getChildren().some((child) => child.isChildNode(node));
-    }
-    return result;
+    return node === this || this.getChildren().some((child) => child.isChildNode(node));
   }
 
   /** The node with the given id in this subtree (this node included), undefined if none. */

@@ -211,9 +211,8 @@ class Relationship extends BaseConnectionLine<CurvedLine> {
     const line2d = this._line;
     const sourceTopic = this._sourceTopic;
     const targetTopic = this._targetTopic;
-    let tPos = targetTopic.getPosition();
     // For relationships, calculate connection points that face toward the center
-    tPos = this.calculateRelationshipConnectionPoint(targetTopic);
+    const tPos = this.calculateRelationshipConnectionPoint(targetTopic);
     const sPos = this.calculateRelationshipConnectionPoint(sourceTopic);
 
     // Only set stroke once - remove redundant stroke calls

@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-// eslint-disable-next-line max-classes-per-file
+
 import { Ellipse, StraightLine } from '@wisemapping/web2d';
 import type Canvas from './Canvas';
 import type PositionType from './PositionType';

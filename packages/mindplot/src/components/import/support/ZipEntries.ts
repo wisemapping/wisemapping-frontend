@@ -121,7 +121,7 @@ const readCentralDirectory = (data: Uint8Array, view: DataView): ZipEntry[] => {
       extraStart + extraLength,
       [view.getUint32(at + 24, true), view.getUint32(at + 20, true), view.getUint32(at + 42, true)],
     );
-    // eslint-disable-next-line no-bitwise -- a flag of the general purpose bit field
+
     const utf8Name = (flags & UTF8_NAME_FLAG) !== 0;
     entries.push({
       name: strFromU8(data.subarray(nameStart, extraStart), !utf8Name),

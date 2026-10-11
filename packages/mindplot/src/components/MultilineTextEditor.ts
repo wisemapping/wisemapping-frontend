@@ -1,4 +1,3 @@
-/* eslint-disable max-classes-per-file */
 /*
  *    Copyright [2007-2025] [wisemapping]
  *

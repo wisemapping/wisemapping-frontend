@@ -43,7 +43,6 @@ jest.mock('jspdf', () => ({
   },
 }));
 
-// eslint-disable-next-line import/first
 import PDFExporter from '../../../src/components/export/PDFExporter';
 
 const svg = () => document.createElementNS('http://www.w3.org/2000/svg', 'svg');

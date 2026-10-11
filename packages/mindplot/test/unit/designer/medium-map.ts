@@ -22,7 +22,6 @@
  */
 import type Designer from '../../../src/components/Designer';
 
-/* eslint-disable no-bitwise -- mulberry32 is integer bit mixing */
 /** A small seeded generator (mulberry32), so the generated map never changes. */
 const random = (seed: number): (() => number) => {
   let state = seed;
@@ -33,7 +32,6 @@ const random = (seed: number): (() => number) => {
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
 };
-/* eslint-enable no-bitwise */
 
 const WORDS = ['alpha', 'beta', 'gamma', 'delta', 'epsilon', 'zeta', 'eta', 'theta', 'iota'];
 

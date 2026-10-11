@@ -23,7 +23,7 @@
 describe('DragTopic module', () => {
   it('can be imported without a DOM', () => {
     expect(typeof window).toBe('undefined');
-    // eslint-disable-next-line global-require, @typescript-eslint/no-require-imports
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     expect(() => require('../../src/components/DragTopic')).not.toThrow();
   });
 });

@@ -53,7 +53,6 @@ const expectClickableHitShape = (relationship: Relationship): void => {
 
 /** True when `element` is painted before (below) `other`. */
 const isBelow = (element: Element, other: Element): boolean =>
-  // eslint-disable-next-line no-bitwise
   (element.compareDocumentPosition(other) & Node.DOCUMENT_POSITION_FOLLOWING) !== 0;
 
 const expectBelowTopics = (relationship: Relationship, topics: Topic[]): void => {

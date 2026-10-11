@@ -65,7 +65,7 @@ class PDFExporter extends Exporter {
       });
 
       // Create PDF
-      // eslint-disable-next-line new-cap
+
       const pdf = new jsPDF({
         orientation: 'landscape',
         unit: 'mm',

@@ -235,7 +235,6 @@ class Canvas {
    */
   private static afterNextPaint(): Promise<void> {
     return new Promise((resolve) => {
-      let timeout: ReturnType<typeof setTimeout> | undefined;
       let done = false;
       const finish = () => {
         if (!done) {
@@ -244,7 +243,7 @@ class Canvas {
           resolve();
         }
       };
-      timeout = setTimeout(finish, NO_FRAME_TIMEOUT);
+      const timeout = setTimeout(finish, NO_FRAME_TIMEOUT);
       if (typeof requestAnimationFrame === 'function') {
         // The frame callback runs before the paint: continue in the task after it.
         requestAnimationFrame(() => setTimeout(finish, 0));
