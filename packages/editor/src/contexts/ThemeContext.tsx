@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, use, useState, useEffect, ReactNode } from 'react';
 import type { PaletteMode } from '@mui/material';
 import { ThemeVariantStorage } from '../types/ThemeVariantStorage';
 
@@ -64,11 +64,11 @@ export const EditorThemeProvider: React.FC<ThemeProviderProps> = ({
   // System theme changes are handled by ThemeVariantStorage
   // No need for additional localStorage or system preference handling
 
-  return <ThemeContext.Provider value={{ mode, toggleMode }}>{children}</ThemeContext.Provider>;
+  return <ThemeContext value={{ mode, toggleMode }}>{children}</ThemeContext>;
 };
 
 export const useTheme = (): ThemeContextType => {
-  const context = useContext(ThemeContext);
+  const context = use(ThemeContext);
   if (!context) {
     throw new Error('useTheme must be used within an EditorThemeProvider');
   }

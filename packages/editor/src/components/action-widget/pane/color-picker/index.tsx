@@ -96,9 +96,9 @@ const ColorPicker = (props: {
             <NotInterestedOutlined />
           </NoneColorCircle>
         )}
-        {(props.hideNoneOption ? colors : colors.slice(1)).map((color, index) => (
+        {(props.hideNoneOption ? colors : colors.slice(1)).map((color) => (
           <Box
-            key={index}
+            key={color}
             component="button"
             aria-label={color}
             title={color}

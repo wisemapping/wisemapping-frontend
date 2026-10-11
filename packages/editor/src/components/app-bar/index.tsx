@@ -83,7 +83,7 @@ const AppBar = ({
   onAction,
   accountConfig,
 }: AppBarProps): ReactElement => {
-  const [isStarred, setStarred] = useState<undefined | boolean>(undefined);
+  const [isStarred, setIsStarred] = useState<undefined | boolean>(undefined);
   const [isEditingTitle, setIsEditingTitle] = useState<boolean>(false);
   const [editedTitle, setEditedTitle] = useState<string>('');
   const [isSaving, setIsSaving] = useState<boolean>(false);
@@ -97,7 +97,7 @@ const AppBar = ({
   const handleStarredOnClick = () => {
     const newStatus = !isStarred;
     trackAppBarAction('starred', newStatus ? 'star' : 'unstar');
-    mapInfo.updateStarred(newStatus).then(() => setStarred(newStatus));
+    mapInfo.updateStarred(newStatus).then(() => setIsStarred(newStatus));
   };
 
   const handleTitleClick = () => {
@@ -266,7 +266,7 @@ const AppBar = ({
       .isStarred()
       .then((value) => {
         if (active) {
-          setStarred(value);
+          setIsStarred(value);
         }
       })
       .catch((e) => {
@@ -618,6 +618,7 @@ const AppBar = ({
       >
         <MaterialToolbar>
           {config.map((c, i) => {
+            // eslint-disable-next-line @eslint-react/no-array-index-key -- a toolbar built once, never reordered
             return <ToolbarMenuItem key={i} configuration={c} />;
           })}
         </MaterialToolbar>

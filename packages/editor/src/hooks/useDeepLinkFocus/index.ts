@@ -62,7 +62,7 @@ const resolveNodeId = (searchParams: URLSearchParams | null | undefined): number
  *
  * Listening to both means a signal is always available no matter which arrives
  * first, and that a map still mid-build simply gets retried on the next layout
- * pass instead of on a guessed delay. The `lastFocusedNodeId` guard makes the
+ * pass instead of on a guessed delay. The `lastFocusedNodeIdRef` guard makes the
  * reveal happen exactly once, so later edits -- which also fire `forceLayout`
  * -- never yank the viewport back.
  */
@@ -70,7 +70,7 @@ export const useDeepLinkFocus = (
   model: Model | undefined,
   searchParams: URLSearchParams | null | undefined,
 ): void => {
-  const lastFocusedNodeId = useRef<number | null>(null);
+  const lastFocusedNodeIdRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     if (!model) return undefined;
@@ -80,10 +80,10 @@ export const useDeepLinkFocus = (
 
     const nodeId = resolveNodeId(searchParams);
     if (nodeId === undefined) return undefined;
-    if (lastFocusedNodeId.current === nodeId) return undefined;
+    if (lastFocusedNodeIdRef.current === nodeId) return undefined;
 
     const revealIfReady = (): void => {
-      if (lastFocusedNodeId.current === nodeId) return;
+      if (lastFocusedNodeIdRef.current === nodeId) return;
 
       const topic = designer.getModel().findTopicById(nodeId);
       if (!topic) {
@@ -91,7 +91,7 @@ export const useDeepLinkFocus = (
         return;
       }
 
-      lastFocusedNodeId.current = nodeId;
+      lastFocusedNodeIdRef.current = nodeId;
       designer.revealNode(topic, true);
     };
 

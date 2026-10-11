@@ -195,6 +195,7 @@ export const ToolbarSubmenu = ({
               return (
                 <ToolbarMenuItem
                   vertical={!vertical}
+                  // eslint-disable-next-line @eslint-react/no-array-index-key -- a menu built once, never reordered
                   key={i}
                   configuration={o as ActionConfig}
                   elevation={elevation ? elevation + 3 : 0}
@@ -202,7 +203,10 @@ export const ToolbarSubmenu = ({
               );
             } else {
               // Only render custom render functions when popover is open
-              return open ? <span key={i}>{o.render(() => setOpen(false))}</span> : null;
+              return open ? (
+                // eslint-disable-next-line @eslint-react/no-array-index-key -- a menu built once, never reordered
+                <span key={i}>{o.render(() => setOpen(false))}</span>
+              ) : null;
             }
           })}
         </div>
@@ -357,6 +361,7 @@ const Toolbar = ({ configurations, position }: ToolbarProps): ReactElement => {
       aria-orientation={pos.vertical ? 'vertical' : 'horizontal'}
     >
       {configurations.map((c, i) => {
+        // eslint-disable-next-line @eslint-react/no-array-index-key -- a toolbar built once, never reordered
         return <ToolbarMenuItem key={i} configuration={c} elevation={2} vertical={!pos.vertical} />;
       })}
     </AppBar>

@@ -21,7 +21,7 @@ import {
   PersistenceManager,
   WidgetBuilder,
 } from '@wisemapping/mindplot';
-import { useState, useRef, useEffect, useMemo } from 'react';
+import { useState, useRef, useEffect, useMemo, useReducer } from 'react';
 import Capability from '../../classes/action/capability';
 import MapInfo from '../../classes/model/map-info';
 import Model from '../../classes/model/editor';
@@ -67,7 +67,7 @@ export const useEditor = ({
   const mindplotRef = useRef(null);
 
   // This is required to redraw in case of changes in the canvas...
-  const [, setCanvasUpdate] = useState<number>();
+  const [, redrawCanvas] = useReducer((count: number) => count + 1, 0);
   const widgetBuilderRef = useRef<WidgetBuilder>(new DefaultWidgetBuilder());
 
   // Memoize capability to avoid recreating on every render
@@ -92,8 +92,8 @@ export const useEditor = ({
       model
         .loadMindmap(mapInfo.getId(), effectivePersistenceManager, widgetBuilderRef.current)
         .then(() => {
-          setCanvasUpdate(Date.now());
-          model.registerEvents(setCanvasUpdate, capability, widgetBuilderRef.current);
+          redrawCanvas();
+          model.registerEvents(redrawCanvas, capability, widgetBuilderRef.current);
         })
         .catch((e) => {
           logCriticalError(`Unexpected error loading mindmap with id ${mapInfo.getId()}`, e);

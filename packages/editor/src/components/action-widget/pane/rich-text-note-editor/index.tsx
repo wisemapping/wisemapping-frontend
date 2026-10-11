@@ -255,12 +255,14 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
       // The note comes from the map: it is sanitized before it is edited.
       editorRef.current.innerHTML = HtmlSanitizer.sanitize(initialValue || '');
       // Auto-focus the editor when it opens
-      setTimeout(() => {
+      const focusTimer = setTimeout(() => {
         if (editorRef.current) {
           editorRef.current.focus();
         }
       }, 100);
+      return () => clearTimeout(focusTimer);
     }
+    return undefined;
   }, [initialValue]);
 
   // Markdown, nested lists, line breaks and links (see note-editing).

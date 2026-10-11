@@ -174,6 +174,7 @@ const OutlineViewDialog = ({ open, onClose, mindmap }: OutlineViewDialogProps): 
               {/* Render SVG icons */}
               {node.iconUrls.map((iconUrl, index) => (
                 <NodeIcon
+                  // eslint-disable-next-line @eslint-react/no-array-index-key -- a topic may repeat an icon
                   key={`icon-${index}`}
                   src={iconUrl}
                   alt="icon"
@@ -186,6 +187,7 @@ const OutlineViewDialog = ({ open, onClose, mindmap }: OutlineViewDialogProps): 
               {/* Render emoji icons */}
               {node.emojiChars.map((emoji, index) => (
                 <span
+                  // eslint-disable-next-line @eslint-react/no-array-index-key -- a topic may repeat an emoji
                   key={`emoji-${index}`}
                   style={{
                     fontSize: '16px',
@@ -378,6 +380,7 @@ const OutlineViewDialog = ({ open, onClose, mindmap }: OutlineViewDialogProps): 
                 {isHtml ? (
                   // The note comes from the map: sanitized, with its links opening in a new tab.
                   <TooltipContent
+                    // eslint-disable-next-line @eslint-react/dom-no-dangerously-set-innerhtml -- sanitized
                     dangerouslySetInnerHTML={{ __html: HtmlSanitizer.sanitizeForDisplay(noteText) }}
                   />
                 ) : (
