@@ -182,6 +182,14 @@ describe('AppConfig clients', () => {
     expect(AppConfig.getClient()).toBe(client);
   });
 
+  it('does not load the mock clients for a REST configuration', async () => {
+    // They are development-only: production must not download them.
+    await initAppConfig();
+    AppConfig.getClient();
+    AppConfig.getAdminClient();
+    expect((AppConfig as unknown as { _mocks: unknown })._mocks).toBeNull();
+  });
+
   it('falls back to the mock client for a mock config', async () => {
     await initAppConfig({ clientType: 'mock' });
 
