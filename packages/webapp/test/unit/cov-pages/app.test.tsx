@@ -57,9 +57,6 @@ jest.mock('../../../src/components/maps-page/MapsPageErrorFallback', () =>
   mockStub('maps-page-error-fallback'),
 );
 jest.mock('@wisemapping/editor', () => ({ EditorLoadingSkeleton: () => 'editor-loading' }));
-jest.mock('../../../src/components/seo', () => ({
-  HelmetProvider: ({ children }: { children: React.ReactNode }) => children,
-}));
 jest.mock('../../../src/components/editor-page/loader', () => ({
   loader: (mode: string, bootstrap: boolean) => `map-loader:${mode}:${bootstrap}`,
 }));

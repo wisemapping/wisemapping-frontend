@@ -16,8 +16,7 @@
  *   limitations under the License.
  */
 
-import React from 'react';
-import { Helmet } from 'react-helmet-async';
+import React, { useEffect } from 'react';
 
 export interface SEOProps {
   title?: string;
@@ -66,8 +65,14 @@ const SEOHead: React.FC<SEOProps> = ({
       : `${baseUrl}${twitterImage}`
     : fullOgImage;
 
+  // React renders <title>, <meta> and <link> into the document head itself; the <html> element
+  // is not something a component renders, so its language is set here.
+  useEffect(() => {
+    document.documentElement.lang = language;
+  }, [language]);
+
   return (
-    <Helmet>
+    <>
       {/* Basic Meta Tags */}
       <title>{title}</title>
       <meta name="description" content={description} />
@@ -103,7 +108,6 @@ const SEOHead: React.FC<SEOProps> = ({
       <meta name="twitter:creator" content="@wisemapping" />
 
       {/* Language and Internationalization */}
-      <html lang={language} />
       {alternateLanguages.map((alt, index) => (
         <link key={index} rel="alternate" hrefLang={alt.hreflang} href={alt.href} />
       ))}
@@ -114,11 +118,11 @@ const SEOHead: React.FC<SEOProps> = ({
       <meta name="apple-mobile-web-app-title" content="WiseMapping" />
       <meta name="application-name" content="WiseMapping" />
 
-      {/* Structured Data */}
+      {/* Structured Data: stays in the body, where search engines read it too */}
       {structuredData && (
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
       )}
-    </Helmet>
+    </>
   );
 };
 
