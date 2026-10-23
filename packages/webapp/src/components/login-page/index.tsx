@@ -30,6 +30,7 @@ import Link from '@mui/material/Link';
 import Alert from '@mui/material/Alert';
 import Separator from '../common/separator';
 import GoogleButton from '../common/google-button';
+import OidcButton from '../common/oidc-button';
 import FacebookButton from '../common/facebook-button';
 import AppConfig from '../../classes/app-config';
 import { useMutation } from '@tanstack/react-query';
@@ -311,7 +312,9 @@ const LoginPage = (): React.ReactElement => {
           <Link component={RouterLink} to="/c/forgot-password">
             <FormattedMessage id="login.forgotpwd" defaultMessage="Forgot Password ?" />
           </Link>
-          {(AppConfig.isGoogleOauth2Enabled() || AppConfig.isFacebookOauth2Enabled()) && (
+          {(AppConfig.isGoogleOauth2Enabled() ||
+            AppConfig.isFacebookOauth2Enabled() ||
+            AppConfig.isOidcOauth2Enabled()) && (
             <>
               <Separator
                 responsive={false}
@@ -321,6 +324,20 @@ const LoginPage = (): React.ReactElement => {
                 })}
               />
               <SocialButtons>
+                {AppConfig.isOidcOauth2Enabled() && (
+                  <OidcButton
+                    text={intl.formatMessage(
+                      {
+                        id: 'login.oidc.button',
+                        defaultMessage: 'Sign in with {provider}',
+                      },
+                      { provider: AppConfig.getOidcOauth2Label() },
+                    )}
+                    onClick={() =>
+                      handleOAuthLogin(AppConfig.getOidcOauth2Url(), AppConfig.getOidcOauth2Label())
+                    }
+                  />
+                )}
                 {AppConfig.isGoogleOauth2Enabled() && (
                   <GoogleButton
                     text={intl.formatMessage({

@@ -220,6 +220,26 @@ describe('LoginPage', () => {
     await screen.findByRole('form', { name: 'Login form' });
     expect(screen.queryByRole('button', { name: 'Sign in with Google' })).toBeNull();
     expect(screen.queryByRole('button', { name: 'Sign in with Facebook' })).toBeNull();
+    expect(screen.queryByRole('button', { name: /^Sign in with Single Sign-On$/ })).toBeNull();
+  });
+
+  test('the generic OIDC button carries the configured name and sends the user to the provider', async () => {
+    stubConfig({
+      oidcOauth2Enabled: true,
+      oidcOauth2Url: 'https://wm.example.com/oauth2/authorization/oidc',
+      oidcOauth2Label: 'Authentik',
+    });
+    const log = jest.spyOn(appLogger, 'warn').mockImplementation(() => undefined);
+    setup('/c/login?redirect=%2Fc%2Fmaps%2F3');
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Sign in with Authentik' }));
+
+    expect(log).not.toHaveBeenCalled();
+    expect(leaveTo).toHaveBeenCalledWith(
+      'https://wm.example.com/oauth2/authorization/oidc?state=%2Fc%2Fmaps%2F3',
+    );
+    // Only the configured providers are offered.
+    expect(screen.queryByRole('button', { name: 'Sign in with Google' })).toBeNull();
   });
 
   test('the social buttons send the user to the provider', async () => {

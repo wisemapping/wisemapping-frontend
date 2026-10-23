@@ -32,13 +32,24 @@ import { ClientContext } from '../../classes/provider/client-context';
 import { logCriticalError } from '../../utils';
 import { useTheme } from '../../contexts/ThemeContext';
 import JwtTokenConfig from '../../classes/jwt-token-config';
+import AppConfig from '../../classes/app-config';
 import { leaveTo, safeRedirectPath } from '../../utils/redirect';
 import { forgetOAuthFlow, peekOAuthFlow } from '../../utils/oauth-flow';
 
-type OAuthProvider = 'google' | 'facebook';
+type OAuthProvider = 'google' | 'facebook' | 'oidc';
+
+const isOAuthProvider = (value: string | null): value is OAuthProvider =>
+  value === 'google' || value === 'facebook' || value === 'oidc';
 
 type OAuthCallbackParams =
-  | { kind: 'token'; jwtToken: string; email: string; oauthSync: boolean; syncCode?: string }
+  | {
+      kind: 'token';
+      jwtToken: string;
+      email: string;
+      oauthSync: boolean;
+      syncCode?: string;
+      provider?: OAuthProvider;
+    }
   | { kind: 'code'; code: string };
 
 // Spring Boot OAuth2 sends the JWT itself; the legacy endpoints send a code to exchange.
@@ -57,12 +68,15 @@ const readCallbackParams = (
       return 'invalid';
     }
     const syncCode = searchParams.get('syncCode');
+    // Sent by the backend so that an account link is confirmed for the provider that signed in.
+    const provider = searchParams.get('provider');
     return {
       kind: 'token',
       jwtToken,
       email: subject,
       oauthSync: searchParams.get('oauthSync') === 'true',
       ...(syncCode ? { syncCode } : {}),
+      ...(isOAuthProvider(provider) ? { provider } : {}),
     };
   }
   const code = searchParams.get('code');
@@ -184,9 +198,17 @@ const OAuthCallbackPage = (): React.ReactElement => {
     leaveTo(`/c/login?redirect=${encodeURIComponent(redirectTarget)}`);
   };
 
-  // Determine OAuth provider based on route path
-  const provider: OAuthProvider = location.pathname.includes('facebook') ? 'facebook' : 'google';
-  const providerName = provider === 'facebook' ? 'Facebook' : 'Google';
+  // Determine OAuth provider: named by the backend, else based on route path (legacy endpoints)
+  const provider: OAuthProvider =
+    (arrival.kind === 'params' && arrival.params.kind === 'token'
+      ? arrival.params.provider
+      : undefined) ?? (location.pathname.includes('facebook') ? 'facebook' : 'google');
+  const providerName =
+    provider === 'oidc'
+      ? AppConfig.getOidcOauth2Label()
+      : provider === 'facebook'
+        ? 'Facebook'
+        : 'Google';
 
   useEffect(() => {
     document.title = intl.formatMessage({

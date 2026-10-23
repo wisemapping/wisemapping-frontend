@@ -39,6 +39,9 @@ type Config = {
   googleOauth2Enabled: boolean;
   facebookOauth2Url: string;
   facebookOauth2Enabled: boolean;
+  oidcOauth2Url?: string;
+  oidcOauth2Enabled?: boolean;
+  oidcOauth2Label?: string;
   jwtExpirationMin: number;
 };
 
@@ -205,6 +208,22 @@ class AppConfig {
   static isFacebookOauth2Enabled(): boolean {
     const config = this.fetchOrGetConfig();
     return config.facebookOauth2Enabled || false;
+  }
+
+  static getOidcOauth2Url(): string | undefined {
+    const config = this.fetchOrGetConfig();
+    return config.oidcOauth2Url;
+  }
+
+  static isOidcOauth2Enabled(): boolean {
+    const config = this.fetchOrGetConfig();
+    return config.oidcOauth2Enabled || false;
+  }
+
+  // Name of the instance's own identity provider, shown on its sign-in button.
+  static getOidcOauth2Label(): string {
+    const config = this.fetchOrGetConfig();
+    return config.oidcOauth2Label || 'Single Sign-On';
   }
 
   static getClient(): Client {

@@ -503,8 +503,14 @@
   "registration.google.button": {
     "defaultMessage": "Зарегистрируйтесь в Google"
   },
+  "registration.oidc.button": {
+    "defaultMessage": "Sign up with {provider}"
+  },
   "login.google.button": {
     "defaultMessage": "Войти через Google"
+  },
+  "login.oidc.button": {
+    "defaultMessage": "Sign in with {provider}"
   },
   "registration.division": {
     "defaultMessage": "или же"

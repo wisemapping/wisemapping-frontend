@@ -536,8 +536,14 @@
   "registration.google.button": {
     "defaultMessage": "使用谷歌注册"
   },
+  "registration.oidc.button": {
+    "defaultMessage": "Sign up with {provider}"
+  },
   "login.google.button": {
     "defaultMessage": "使用 Google 登录"
+  },
+  "login.oidc.button": {
+    "defaultMessage": "Sign in with {provider}"
   },
   "registration.division": {
     "defaultMessage": "或者"
