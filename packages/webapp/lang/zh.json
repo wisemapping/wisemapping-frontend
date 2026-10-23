@@ -537,13 +537,13 @@
     "defaultMessage": "使用谷歌注册"
   },
   "registration.oidc.button": {
-    "defaultMessage": "Sign up with {provider}"
+    "defaultMessage": "使用 {provider} 注册"
   },
   "login.google.button": {
     "defaultMessage": "使用 Google 登录"
   },
   "login.oidc.button": {
-    "defaultMessage": "Sign in with {provider}"
+    "defaultMessage": "使用 {provider} 登录"
   },
   "registration.division": {
     "defaultMessage": "或者"

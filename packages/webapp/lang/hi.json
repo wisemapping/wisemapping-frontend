@@ -336,7 +336,7 @@
     "defaultMessage": "Google के साथ साइन इन करें"
   },
   "login.oidc.button": {
-    "defaultMessage": "Sign in with {provider}"
+    "defaultMessage": "{provider} से साइन इन करें"
   },
   "login.page-title": {
     "defaultMessage": "लॉगिन | WiseMapping"
@@ -537,7 +537,7 @@
     "defaultMessage": "Google के साथ साइन अप करें"
   },
   "registration.oidc.button": {
-    "defaultMessage": "Sign up with {provider}"
+    "defaultMessage": "{provider} से साइन अप करें"
   },
   "registration.lastname": {
     "defaultMessage": "अंतिम नाम"

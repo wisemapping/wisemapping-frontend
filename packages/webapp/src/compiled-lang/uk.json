@@ -3776,5 +3776,25 @@
       "type": 0,
       "value": "Назва обов'язкова"
     }
+  ],
+  "login.oidc.button": [
+    {
+      "type": 0,
+      "value": "Увійти через "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    }
+  ],
+  "registration.oidc.button": [
+    {
+      "type": 0,
+      "value": "Зареєструватися через "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    }
   ]
 }

@@ -3720,5 +3720,33 @@
       "type": 0,
       "value": "Titel ist erforderlich"
     }
+  ],
+  "login.oidc.button": [
+    {
+      "type": 0,
+      "value": "Mit "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": " anmelden"
+    }
+  ],
+  "registration.oidc.button": [
+    {
+      "type": 0,
+      "value": "Mit "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": " registrieren"
+    }
   ]
 }

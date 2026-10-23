@@ -3720,5 +3720,25 @@
       "type": 0,
       "value": "El título es obligatorio"
     }
+  ],
+  "login.oidc.button": [
+    {
+      "type": 0,
+      "value": "Iniciar sesión con "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    }
+  ],
+  "registration.oidc.button": [
+    {
+      "type": 0,
+      "value": "Registrarse con "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    }
   ]
 }

@@ -336,7 +336,7 @@
     "defaultMessage": "Googleでサインイン"
   },
   "login.oidc.button": {
-    "defaultMessage": "Sign in with {provider}"
+    "defaultMessage": "{provider} でサインイン"
   },
   "login.page-title": {
     "defaultMessage": "ログイン | WiseMapping"
@@ -537,7 +537,7 @@
     "defaultMessage": "Googleでサインアップ"
   },
   "registration.oidc.button": {
-    "defaultMessage": "Sign up with {provider}"
+    "defaultMessage": "{provider} で登録"
   },
   "registration.lastname": {
     "defaultMessage": "姓"

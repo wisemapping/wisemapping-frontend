@@ -3698,5 +3698,33 @@
       "type": 0,
       "value": "标题是必需的"
     }
+  ],
+  "login.oidc.button": [
+    {
+      "type": 0,
+      "value": "使用 "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": " 登录"
+    }
+  ],
+  "registration.oidc.button": [
+    {
+      "type": 0,
+      "value": "使用 "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": " 注册"
+    }
   ]
 }

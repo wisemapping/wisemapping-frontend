@@ -3712,5 +3712,25 @@
       "type": 0,
       "value": "Title is required"
     }
+  ],
+  "login.oidc.button": [
+    {
+      "type": 0,
+      "value": "Sign in with "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    }
+  ],
+  "registration.oidc.button": [
+    {
+      "type": 0,
+      "value": "Sign up with "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    }
   ]
 }

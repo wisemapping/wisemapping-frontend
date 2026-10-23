@@ -3678,5 +3678,25 @@
       "type": 0,
       "value": "タイトルは必須です"
     }
+  ],
+  "login.oidc.button": [
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": " でサインイン"
+    }
+  ],
+  "registration.oidc.button": [
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": " で登録"
+    }
   ]
 }
