@@ -2839,6 +2839,20 @@
       "value": "OAuth 身份验证失败。请重试或使用其他登录方式。"
     }
   ],
+  "login.oidc.button": [
+    {
+      "type": 0,
+      "value": "使用 "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": " 登录"
+    }
+  ],
   "login.page-title": [
     {
       "type": 0,
@@ -2861,6 +2875,12 @@
     {
       "type": 0,
       "value": "有人与您分享了一张思维导图。请登录以访问。还没有账号？免费注册或使用您的Google/Facebook账号。"
+    }
+  ],
+  "login.shared-map-notice.signin-only": [
+    {
+      "type": 0,
+      "value": "有人与您分享了一张思维导图。请登录以访问。"
     }
   ],
   "login.signin": [
@@ -3377,6 +3397,20 @@
       "value": "姓氏"
     }
   ],
+  "registration.oidc.button": [
+    {
+      "type": 0,
+      "value": "使用 "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": " 注册"
+    }
+  ],
   "registration.page-title": [
     {
       "type": 0,
@@ -3697,34 +3731,6 @@
     {
       "type": 0,
       "value": "标题是必需的"
-    }
-  ],
-  "login.oidc.button": [
-    {
-      "type": 0,
-      "value": "使用 "
-    },
-    {
-      "type": 1,
-      "value": "provider"
-    },
-    {
-      "type": 0,
-      "value": " 登录"
-    }
-  ],
-  "registration.oidc.button": [
-    {
-      "type": 0,
-      "value": "使用 "
-    },
-    {
-      "type": 1,
-      "value": "provider"
-    },
-    {
-      "type": 0,
-      "value": " 注册"
     }
   ]
 }

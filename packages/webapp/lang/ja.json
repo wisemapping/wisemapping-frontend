@@ -356,6 +356,9 @@
   "login.shared-map-notice": {
     "defaultMessage": "マインドマップが共有されました。アクセスするにはログインしてください。アカウントをお持ちでない方は、無料で登録するか、Google/Facebookアカウントをご利用ください。"
   },
+  "login.shared-map-notice.signin-only": {
+    "defaultMessage": "マインドマップが共有されました。アクセスするにはログインしてください。"
+  },
   "map.creator": {
     "defaultMessage": "作成者"
   },

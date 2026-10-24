@@ -238,10 +238,18 @@ const LoginPage = (): React.ReactElement => {
 
           {isSharedLink && (
             <Alert severity="info" sx={{ mb: 2 }}>
-              <FormattedMessage
-                id="login.shared-map-notice"
-                defaultMessage="A mind map has been shared with you. Please log in to access it. Don't have an account? Sign up for free or use your Google/Facebook account."
-              />
+              {/* Sign-up is only suggested where there is one (see isRegistrationEnabled). */}
+              {AppConfig.isRegistrationEnabled() ? (
+                <FormattedMessage
+                  id="login.shared-map-notice"
+                  defaultMessage="A mind map has been shared with you. Please log in to access it. Don't have an account? Sign up for free or use your Google/Facebook account."
+                />
+              ) : (
+                <FormattedMessage
+                  id="login.shared-map-notice.signin-only"
+                  defaultMessage="A mind map has been shared with you. Please log in to access it."
+                />
+              )}
             </Alert>
           )}
 

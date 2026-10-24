@@ -359,6 +359,9 @@
   "login.shared-map-notice": {
     "defaultMessage": "تمت مشاركة خريطة ذهنية معك. يرجى تسجيل الدخول للوصول إليها. ليس لديك حساب؟ سجّل مجانًا أو استخدم حساب Google/Facebook الخاص بك."
   },
+  "login.shared-map-notice.signin-only": {
+    "defaultMessage": "تمت مشاركة خريطة ذهنية معك. يرجى تسجيل الدخول للوصول إليها."
+  },
   "map.creator": {
     "defaultMessage": "المُنشئ"
   },

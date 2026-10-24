@@ -359,6 +359,9 @@
   "login.shared-map-notice": {
     "defaultMessage": "З вами поділилися картою розуму. Будь ласка, увійдіть, щоб отримати доступ. Немає акаунта? Зареєструйтеся безкоштовно або використовуйте свій акаунт Google чи Facebook."
   },
+  "login.shared-map-notice.signin-only": {
+    "defaultMessage": "З вами поділилися картою розуму. Будь ласка, увійдіть, щоб отримати доступ."
+  },
   "map.creator": {
     "defaultMessage": "Створювач"
   },

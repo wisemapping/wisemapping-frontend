@@ -2917,6 +2917,16 @@
       "value": "Ошибка аутентификации OAuth. Пожалуйста, попробуйте ещё раз или выберите другой способ входа."
     }
   ],
+  "login.oidc.button": [
+    {
+      "type": 0,
+      "value": "Войти через "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    }
+  ],
   "login.page-title": [
     {
       "type": 0,
@@ -2939,6 +2949,12 @@
     {
       "type": 0,
       "value": "С вами поделились майнд-картой. Пожалуйста, войдите в систему, чтобы получить доступ. Нет аккаунта? Зарегистрируйтесь бесплатно или используйте свой аккаунт Google/Facebook."
+    }
+  ],
+  "login.shared-map-notice.signin-only": [
+    {
+      "type": 0,
+      "value": "С вами поделились майнд-картой. Пожалуйста, войдите в систему, чтобы получить доступ."
     }
   ],
   "login.signin": [
@@ -3455,6 +3471,16 @@
       "value": "Фамилия"
     }
   ],
+  "registration.oidc.button": [
+    {
+      "type": 0,
+      "value": "Зарегистрироваться через "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    }
+  ],
   "registration.page-title": [
     {
       "type": 0,
@@ -3775,26 +3801,6 @@
     {
       "type": 0,
       "value": "Название обязательно"
-    }
-  ],
-  "login.oidc.button": [
-    {
-      "type": 0,
-      "value": "Войти через "
-    },
-    {
-      "type": 1,
-      "value": "provider"
-    }
-  ],
-  "registration.oidc.button": [
-    {
-      "type": 0,
-      "value": "Зарегистрироваться через "
-    },
-    {
-      "type": 1,
-      "value": "provider"
     }
   ]
 }

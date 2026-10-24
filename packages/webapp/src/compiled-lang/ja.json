@@ -2827,6 +2827,16 @@
       "value": "OAuth認証に失敗しました。もう一度お試しいただくか、別のサインイン方法をご利用ください。"
     }
   ],
+  "login.oidc.button": [
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": " でサインイン"
+    }
+  ],
   "login.page-title": [
     {
       "type": 0,
@@ -2849,6 +2859,12 @@
     {
       "type": 0,
       "value": "マインドマップが共有されました。アクセスするにはログインしてください。アカウントをお持ちでない方は、無料で登録するか、Google/Facebookアカウントをご利用ください。"
+    }
+  ],
+  "login.shared-map-notice.signin-only": [
+    {
+      "type": 0,
+      "value": "マインドマップが共有されました。アクセスするにはログインしてください。"
     }
   ],
   "login.signin": [
@@ -3357,6 +3373,16 @@
       "value": "姓"
     }
   ],
+  "registration.oidc.button": [
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": " で登録"
+    }
+  ],
   "registration.page-title": [
     {
       "type": 0,
@@ -3677,26 +3703,6 @@
     {
       "type": 0,
       "value": "タイトルは必須です"
-    }
-  ],
-  "login.oidc.button": [
-    {
-      "type": 1,
-      "value": "provider"
-    },
-    {
-      "type": 0,
-      "value": " でサインイン"
-    }
-  ],
-  "registration.oidc.button": [
-    {
-      "type": 1,
-      "value": "provider"
-    },
-    {
-      "type": 0,
-      "value": " で登録"
     }
   ]
 }

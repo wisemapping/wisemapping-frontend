@@ -308,6 +308,9 @@
   "login.shared-map-notice": {
     "defaultMessage": "Une carte mentale a été partagée avec vous. Veuillez vous connecter pour y accéder. Vous n'avez pas de compte ? Inscrivez-vous gratuitement ou utilisez votre compte Google/Facebook."
   },
+  "login.shared-map-notice.signin-only": {
+    "defaultMessage": "Une carte mentale a été partagée avec vous. Veuillez vous connecter pour y accéder."
+  },
   "map.creator": {
     "defaultMessage": "Créateur"
   },

@@ -186,6 +186,17 @@ describe('LoginPage', () => {
     setup('/c/login?redirect=%2Fc%2Fmaps%2F3%2Fedit%3Fshared%3Dtrue');
 
     expect(await screen.findByText(/A mind map has been shared with you/)).toBeTruthy();
+    expect(screen.getByText(/Sign up for free/)).toBeTruthy();
+  });
+
+  test('the shared-map notice suggests no sign-up while local login is off', async () => {
+    stubConfig({ localLoginEnabled: false });
+    setup('/c/login?redirect=%2Fc%2Fmaps%2F3%2Fedit%3Fshared%3Dtrue');
+
+    expect(
+      await screen.findByText('A mind map has been shared with you. Please log in to access it.'),
+    ).toBeTruthy();
+    expect(screen.queryByText(/Sign up for free/)).toBeNull();
   });
 
   test.each([

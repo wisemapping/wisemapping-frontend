@@ -356,6 +356,9 @@
   "login.shared-map-notice": {
     "defaultMessage": "Um mapa mental foi compartilhado com você. Por favor, faça login para acessá-lo. Não tem uma conta? Registre-se gratuitamente ou use sua conta do Google/Facebook."
   },
+  "login.shared-map-notice.signin-only": {
+    "defaultMessage": "Um mapa mental foi compartilhado com você. Por favor, faça login para acessá-lo."
+  },
   "map.creator": {
     "defaultMessage": "Criador"
   },

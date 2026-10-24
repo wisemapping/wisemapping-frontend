@@ -2861,6 +2861,16 @@
       "value": "Falló la autenticación OAuth. Inténtalo de nuevo o usa otro método de inicio de sesión."
     }
   ],
+  "login.oidc.button": [
+    {
+      "type": 0,
+      "value": "Iniciar sesión con "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    }
+  ],
   "login.page-title": [
     {
       "type": 0,
@@ -2883,6 +2893,12 @@
     {
       "type": 0,
       "value": "Un mapa mental ha sido compartido contigo. Por favor inicia sesión para acceder a él. ¿No tienes cuenta? Regístrate gratis o usa tu cuenta de Google/Facebook."
+    }
+  ],
+  "login.shared-map-notice.signin-only": [
+    {
+      "type": 0,
+      "value": "Un mapa mental ha sido compartido contigo. Por favor inicia sesión para acceder a él."
     }
   ],
   "login.signin": [
@@ -3399,6 +3415,16 @@
       "value": "Apellido"
     }
   ],
+  "registration.oidc.button": [
+    {
+      "type": 0,
+      "value": "Registrarse con "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    }
+  ],
   "registration.page-title": [
     {
       "type": 0,
@@ -3719,26 +3745,6 @@
     {
       "type": 0,
       "value": "El título es obligatorio"
-    }
-  ],
-  "login.oidc.button": [
-    {
-      "type": 0,
-      "value": "Iniciar sesión con "
-    },
-    {
-      "type": 1,
-      "value": "provider"
-    }
-  ],
-  "registration.oidc.button": [
-    {
-      "type": 0,
-      "value": "Registrarse con "
-    },
-    {
-      "type": 1,
-      "value": "provider"
     }
   ]
 }

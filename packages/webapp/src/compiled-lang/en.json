@@ -2853,6 +2853,16 @@
       "value": "OAuth authentication failed. Please try again or use a different sign-in method."
     }
   ],
+  "login.oidc.button": [
+    {
+      "type": 0,
+      "value": "Sign in with "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    }
+  ],
   "login.page-title": [
     {
       "type": 0,
@@ -2875,6 +2885,12 @@
     {
       "type": 0,
       "value": "A mind map has been shared with you. Please log in to access it. Don't have an account? Sign up for free or use your Google/Facebook account."
+    }
+  ],
+  "login.shared-map-notice.signin-only": [
+    {
+      "type": 0,
+      "value": "A mind map has been shared with you. Please log in to access it."
     }
   ],
   "login.signin": [
@@ -3391,6 +3407,16 @@
       "value": "Last Name"
     }
   ],
+  "registration.oidc.button": [
+    {
+      "type": 0,
+      "value": "Sign up with "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    }
+  ],
   "registration.page-title": [
     {
       "type": 0,
@@ -3711,26 +3737,6 @@
     {
       "type": 0,
       "value": "Title is required"
-    }
-  ],
-  "login.oidc.button": [
-    {
-      "type": 0,
-      "value": "Sign in with "
-    },
-    {
-      "type": 1,
-      "value": "provider"
-    }
-  ],
-  "registration.oidc.button": [
-    {
-      "type": 0,
-      "value": "Sign up with "
-    },
-    {
-      "type": 1,
-      "value": "provider"
     }
   ]
 }
