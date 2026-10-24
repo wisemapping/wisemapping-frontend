@@ -255,6 +255,8 @@ describe('LoginPage', () => {
     expect(screen.queryByRole('form', { name: 'Login form' })).toBeNull();
     expect(screen.queryByRole('link', { name: 'Forgot Password ?' })).toBeNull();
     expect(screen.queryByText('or')).toBeNull();
+    // Accounts are created on their first OIDC login, so there is no sign-up either.
+    expect(screen.queryByRole('link', { name: 'Sign Up' })).toBeNull();
   });
 
   test('the social buttons send the user to the provider', async () => {

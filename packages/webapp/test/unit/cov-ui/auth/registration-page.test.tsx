@@ -183,6 +183,15 @@ describe('RegistrationPage', () => {
     expect(screen.queryByRole('form')).toBeNull();
   });
 
+  test('sends the user to login when local login is off, even with registration open', () => {
+    stubConfig({ localLoginEnabled: false, oidcOauth2Enabled: true });
+    setup();
+
+    expect(routerState.navigate).toHaveBeenCalledWith('/c/login');
+    expect(screen.queryByRole('form')).toBeNull();
+    expect(screen.queryByRole('button', { name: /^Sign up with/ })).toBeNull();
+  });
+
   test('links back to login for existing users', () => {
     setup();
     const links = screen.getAllByRole('link', { name: 'Already have an account?' });

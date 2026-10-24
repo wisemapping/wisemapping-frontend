@@ -186,9 +186,11 @@ class AppConfig {
     return config.analyticsAccount;
   }
 
+  // Sign-up goes with local login: without it, accounts are created on their first OpenID
+  // Connect login instead.
   static isRegistrationEnabled(): boolean {
     const config = this.fetchOrGetConfig();
-    return config.registrationEnabled;
+    return config.registrationEnabled && this.isLocalLoginEnabled();
   }
 
   static getGoogleOauth2Url(): string | undefined {

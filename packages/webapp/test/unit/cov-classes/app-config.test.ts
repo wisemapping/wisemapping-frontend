@@ -158,6 +158,12 @@ describe('AppConfig settings', () => {
     expect(AppConfig.isLocalLoginEnabled()).toBe(false);
   });
 
+  it('closes registration while local login is off', async () => {
+    await initAppConfig({ registrationEnabled: true, localLoginEnabled: false });
+
+    expect(AppConfig.isRegistrationEnabled()).toBe(false);
+  });
+
   it('requires the JWT expiration and the API base url', async () => {
     await initAppConfig({ jwtExpirationMin: 0, apiBaseUrl: '' });
 

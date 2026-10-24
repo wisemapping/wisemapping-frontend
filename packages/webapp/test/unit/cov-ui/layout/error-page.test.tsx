@@ -31,6 +31,7 @@ import { trackPageView } from '../../../../src/utils/analytics';
 import { renderWithProviders } from '../../helpers/render';
 import { resetRouter, routeErrorResponse, routerState, setLocation } from '../router-mock';
 import { defined } from '../../defined';
+import { initAppConfig, stubConfig } from '../helpers';
 
 const showError = (error: unknown) => {
   routerState.routeError = error;
@@ -40,6 +41,10 @@ const showError = (error: unknown) => {
 const heading = (): string => screen.getByRole('heading', { level: 1 }).textContent ?? '';
 
 describe('ErrorPage', () => {
+  beforeAll(async () => {
+    await initAppConfig();
+  });
+
   beforeEach(() => {
     resetRouter();
     setLocation('/c/broken');
@@ -60,6 +65,18 @@ describe('ErrorPage', () => {
     expect(routerState.navigate).toHaveBeenLastCalledWith('/c/maps/');
     fireEvent.click(screen.getByRole('button', { name: 'Go Back' }));
     expect(routerState.navigate).toHaveBeenLastCalledWith(-1);
+  });
+
+  test('offers sign-up in the header only while registration is open', () => {
+    const { unmount } = showError(undefined);
+    expect(screen.getByRole('link', { name: 'Sign Up' }).getAttribute('href')).toBe(
+      '/c/registration',
+    );
+    unmount();
+
+    stubConfig({ localLoginEnabled: false });
+    showError(undefined);
+    expect(screen.queryByRole('link', { name: 'Sign Up' })).toBeNull();
   });
 
   test('a 404 response is a page not found', () => {
