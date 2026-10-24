@@ -74,6 +74,7 @@ export type TestConfig = {
   oidcOauth2Enabled?: boolean;
   oidcOauth2Url?: string | undefined;
   oidcOauth2Label?: string;
+  localLoginEnabled?: boolean;
 };
 
 /** Loads a static application configuration, as the bootstrap script does. */
@@ -131,6 +132,9 @@ export const stubConfig = (config: TestConfig): void => {
   }
   if (config.oidcOauth2Label !== undefined) {
     spy('getOidcOauth2Label', config.oidcOauth2Label);
+  }
+  if (config.localLoginEnabled !== undefined) {
+    spy('isLocalLoginEnabled', config.localLoginEnabled);
   }
 };
 

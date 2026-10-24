@@ -39,7 +39,10 @@ type OidcButtonProps = {
   onClick: React.MouseEventHandler<HTMLButtonElement>;
 };
 
-const OidcButton: React.FunctionComponent<OidcButtonProps> = ({ text, onClick }: OidcButtonProps) => {
+const OidcButton: React.FunctionComponent<OidcButtonProps> = ({
+  text,
+  onClick,
+}: OidcButtonProps) => {
   return (
     <StyledOidcButton variant="outlined" startIcon={<VpnKeyOutlinedIcon />} onClick={onClick}>
       {text}

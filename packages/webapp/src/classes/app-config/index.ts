@@ -42,6 +42,7 @@ type Config = {
   oidcOauth2Url?: string;
   oidcOauth2Enabled?: boolean;
   oidcOauth2Label?: string;
+  localLoginEnabled?: boolean;
   jwtExpirationMin: number;
 };
 
@@ -224,6 +225,13 @@ class AppConfig {
   static getOidcOauth2Label(): string {
     const config = this.fetchOrGetConfig();
     return config.oidcOauth2Label || 'Single Sign-On';
+  }
+
+  // Email/password login. The backend turns it off once OpenID Connect is configured; older
+  // backends do not send the flag, and keep it on.
+  static isLocalLoginEnabled(): boolean {
+    const config = this.fetchOrGetConfig();
+    return config.localLoginEnabled ?? true;
   }
 
   static getClient(): Client {

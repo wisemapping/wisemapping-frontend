@@ -179,6 +179,12 @@ const LoginPage = (): React.ReactElement => {
     return <AuthProgress />;
   }
 
+  const localLoginEnabled = AppConfig.isLocalLoginEnabled();
+  const oauthEnabled =
+    AppConfig.isGoogleOauth2Enabled() ||
+    AppConfig.isFacebookOauth2Enabled() ||
+    AppConfig.isOidcOauth2Enabled();
+
   return (
     <>
       <SEOHead
@@ -264,65 +270,70 @@ const LoginPage = (): React.ReactElement => {
 
           <LoginError error={loginError} />
 
-          <main>
-            <FormControl>
-              <form
-                onSubmit={handleOnSubmit}
-                role="form"
-                aria-label={intl.formatMessage({
-                  id: 'common.login-form',
-                  defaultMessage: 'Login form',
-                })}
-              >
-                <fieldset>
-                  <Input
-                    onChange={handleOnChange}
-                    name="email"
-                    type="email"
-                    label={intl.formatMessage({
-                      id: 'login.email',
-                      defaultMessage: 'Email',
-                    })}
-                    required
-                    autoComplete="email"
-                  />
-                  <Input
-                    onChange={handleOnChange}
-                    name="password"
-                    type="password"
-                    label={intl.formatMessage({
-                      id: 'login.password',
-                      defaultMessage: 'Password',
-                    })}
-                    required
-                    autoComplete="current-password"
-                    maxLength={39}
-                  />
-                  <SubmitButton
-                    value={intl.formatMessage({
-                      id: 'login.signin',
-                      defaultMessage: 'Sign In',
-                    })}
-                    isLoading={mutation.isPending}
-                  />
-                </fieldset>
-              </form>
-            </FormControl>
-          </main>
-          <Link component={RouterLink} to="/c/forgot-password">
-            <FormattedMessage id="login.forgotpwd" defaultMessage="Forgot Password ?" />
-          </Link>
-          {(AppConfig.isGoogleOauth2Enabled() ||
-            AppConfig.isFacebookOauth2Enabled() ||
-            AppConfig.isOidcOauth2Enabled()) && (
+          {/* Without local login (OpenID Connect configured) the providers are the only way in. */}
+          {localLoginEnabled && (
             <>
-              <Separator
-                responsive={false}
-                text={intl.formatMessage({
-                  id: 'login.division',
-                  defaultMessage: 'or',
-                })}
-              />
+              <main>
+                <FormControl>
+                  <form
+                    onSubmit={handleOnSubmit}
+                    role="form"
+                    aria-label={intl.formatMessage({
+                      id: 'common.login-form',
+                      defaultMessage: 'Login form',
+                    })}
+                  >
+                    <fieldset>
+                      <Input
+                        onChange={handleOnChange}
+                        name="email"
+                        type="email"
+                        label={intl.formatMessage({
+                          id: 'login.email',
+                          defaultMessage: 'Email',
+                        })}
+                        required
+                        autoComplete="email"
+                      />
+                      <Input
+                        onChange={handleOnChange}
+                        name="password"
+                        type="password"
+                        label={intl.formatMessage({
+                          id: 'login.password',
+                          defaultMessage: 'Password',
+                        })}
+                        required
+                        autoComplete="current-password"
+                        maxLength={39}
+                      />
+                      <SubmitButton
+                        value={intl.formatMessage({
+                          id: 'login.signin',
+                          defaultMessage: 'Sign In',
+                        })}
+                        isLoading={mutation.isPending}
+                      />
+                    </fieldset>
+                  </form>
+                </FormControl>
+              </main>
+              <Link component={RouterLink} to="/c/forgot-password">
+                <FormattedMessage id="login.forgotpwd" defaultMessage="Forgot Password ?" />
+              </Link>
+            </>
+          )}
+          {oauthEnabled && (
+            <>
+              {localLoginEnabled && (
+                <Separator
+                  responsive={false}
+                  text={intl.formatMessage({
+                    id: 'login.division',
+                    defaultMessage: 'or',
+                  })}
+                />
+              )}
               <SocialButtons>
                 {AppConfig.isOidcOauth2Enabled() && (
                   <OidcButton

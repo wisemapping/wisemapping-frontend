@@ -242,6 +242,21 @@ describe('LoginPage', () => {
     expect(screen.queryByRole('button', { name: 'Sign in with Google' })).toBeNull();
   });
 
+  test('without local login only the providers are offered', async () => {
+    stubConfig({
+      localLoginEnabled: false,
+      oidcOauth2Enabled: true,
+      oidcOauth2Url: 'https://wm.example.com/oauth2/authorization/oidc',
+      oidcOauth2Label: 'Authentik',
+    });
+    setup();
+
+    expect(await screen.findByRole('button', { name: 'Sign in with Authentik' })).toBeTruthy();
+    expect(screen.queryByRole('form', { name: 'Login form' })).toBeNull();
+    expect(screen.queryByRole('link', { name: 'Forgot Password ?' })).toBeNull();
+    expect(screen.queryByText('or')).toBeNull();
+  });
+
   test('the social buttons send the user to the provider', async () => {
     stubConfig({
       googleOauth2Enabled: true,
