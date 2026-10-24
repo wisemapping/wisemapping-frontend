@@ -11,12 +11,14 @@ All notable changes to the Wisemapping Frontend project are documented in this f
 - **Paste Under a Topic**: `Ctrl/⌘ + Shift + V` pastes copied topics as children of the selected one. Plain `Ctrl/⌘ + V` keeps pasting onto the canvas exactly as before.
 - **Rearrange Topics by Keyboard**: `Alt + Shift + ↑/↓` moves a topic up or down among its siblings, and `Alt + Shift + ←/→` outdents or indents it — the bindings outline editors use. Rearranging a map previously needed the mouse. Each move is a single undo step, just like a drag.
 - **Trackpad Navigation**: A two-finger swipe now pans the canvas instead of zooming it, matching other diagramming tools. Zooming moves to the wheel with `Ctrl`, `⌘` or `Alt` held.
+- **Single Sign-On with OpenID Connect**: Self-hosted instances that connect their own identity provider (Keycloak, Authentik, Okta, Entra ID…) get a "Sign in with …" button on the login page, named after that provider. Once it is set up, it is the way in: the email/password form, "Forgot Password" and every sign-up link are hidden, and accounts are created on each user's first sign-in through the provider. Instances without it are unchanged.
 
 ### 🐛 Bug Fixes
 
 - **Dialog and Menu Styling**: Fixed a styling helper that silently discarded theme-dependent rules, so dialogs and the selected item in the map list now render with their intended borders and colours in both light and dark mode.
 - **Selection Events**: Selecting a single topic no longer fires both "focus" and "blur" at once, and multi-selection now reports focus correctly.
 - **Toolbar Stability**: Topic property controls no longer throw when nothing is selected, the zoom readout keeps updating after a map loads, and the duplicated zoom shortcut that jumped two steps per keypress is gone.
+- **Sign-Up Where There Is None**: Where sign-up is closed, people who open a shared map are no longer invited to sign up, and the error page no longer shows a "Sign Up" button.
 
 ### 🔧 Technical Improvements
 
