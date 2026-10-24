@@ -38,6 +38,7 @@ import AppConfig from '../../classes/app-config';
 import { trackPageView } from '../../utils/analytics';
 import Separator from '../common/separator';
 import GoogleButton from '../common/google-button';
+import OidcButton from '../common/oidc-button';
 import FacebookButton from '../common/facebook-button';
 import { Link as RouterLink } from 'react-router';
 import { RecaptchaBox, SocialButtons } from './styled';
@@ -196,6 +197,20 @@ const RegistrationForm = ({ onCaptchaReset }: { onCaptchaReset?: () => void }) =
             </Typography>
           </header>
           <SocialButtons>
+            {AppConfig.isOidcOauth2Enabled() && (
+              <OidcButton
+                text={intl.formatMessage(
+                  {
+                    id: 'registration.oidc.button',
+                    defaultMessage: 'Sign up with {provider}',
+                  },
+                  { provider: AppConfig.getOidcOauth2Label() },
+                )}
+                onClick={() =>
+                  handleOAuthRegister(AppConfig.getOidcOauth2Url(), AppConfig.getOidcOauth2Label())
+                }
+              />
+            )}
             {AppConfig.isFacebookOauth2Enabled() && (
               <FacebookButton
                 text={intl.formatMessage({

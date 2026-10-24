@@ -335,6 +335,9 @@
   "login.google.button": {
     "defaultMessage": "Entrar com Google"
   },
+  "login.oidc.button": {
+    "defaultMessage": "Entrar com {provider}"
+  },
   "login.page-title": {
     "defaultMessage": "Entrar | WiseMapping"
   },
@@ -352,6 +355,9 @@
   },
   "login.shared-map-notice": {
     "defaultMessage": "Um mapa mental foi compartilhado com você. Por favor, faça login para acessá-lo. Não tem uma conta? Registre-se gratuitamente ou use sua conta do Google/Facebook."
+  },
+  "login.shared-map-notice.signin-only": {
+    "defaultMessage": "Um mapa mental foi compartilhado com você. Por favor, faça login para acessá-lo."
   },
   "map.creator": {
     "defaultMessage": "Criador"
@@ -532,6 +538,9 @@
   },
   "registration.google.button": {
     "defaultMessage": "Cadastrar com Google"
+  },
+  "registration.oidc.button": {
+    "defaultMessage": "Cadastrar-se com {provider}"
   },
   "registration.lastname": {
     "defaultMessage": "Sobrenome"

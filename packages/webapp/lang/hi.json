@@ -335,6 +335,9 @@
   "login.google.button": {
     "defaultMessage": "Google के साथ साइन इन करें"
   },
+  "login.oidc.button": {
+    "defaultMessage": "{provider} से साइन इन करें"
+  },
   "login.page-title": {
     "defaultMessage": "लॉगिन | WiseMapping"
   },
@@ -352,6 +355,9 @@
   },
   "login.shared-map-notice": {
     "defaultMessage": "एक माइंडमैप आपके साथ साझा किया गया है। कृपया इसे एक्सेस करने के लिए लॉग इन करें। खाता नहीं है? मुफ़्त में साइन अप करें या अपना Google/Facebook खाता उपयोग करें।"
+  },
+  "login.shared-map-notice.signin-only": {
+    "defaultMessage": "एक माइंडमैप आपके साथ साझा किया गया है। कृपया इसे एक्सेस करने के लिए लॉग इन करें।"
   },
   "map.creator": {
     "defaultMessage": "निर्माता"
@@ -532,6 +538,9 @@
   },
   "registration.google.button": {
     "defaultMessage": "Google के साथ साइन अप करें"
+  },
+  "registration.oidc.button": {
+    "defaultMessage": "{provider} से साइन अप करें"
   },
   "registration.lastname": {
     "defaultMessage": "अंतिम नाम"

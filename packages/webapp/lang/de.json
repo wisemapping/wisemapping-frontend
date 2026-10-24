@@ -305,6 +305,9 @@
   "login.shared-map-notice": {
     "defaultMessage": "Eine Mindmap wurde mit dir geteilt. Bitte melde dich an, um darauf zuzugreifen. Noch kein Konto? Registriere dich kostenlos oder nutze dein Google- oder Facebook-Konto."
   },
+  "login.shared-map-notice.signin-only": {
+    "defaultMessage": "Eine Mindmap wurde mit dir geteilt. Bitte melde dich an, um darauf zuzugreifen."
+  },
   "map.creator": {
     "defaultMessage": "Ersteller"
   },
@@ -530,8 +533,14 @@
   "registration.google.button": {
     "defaultMessage": "Mit Google registrieren"
   },
+  "registration.oidc.button": {
+    "defaultMessage": "Mit {provider} registrieren"
+  },
   "login.google.button": {
     "defaultMessage": "Mit Google anmelden"
+  },
+  "login.oidc.button": {
+    "defaultMessage": "Mit {provider} anmelden"
   },
   "registration.division": {
     "defaultMessage": "oder"

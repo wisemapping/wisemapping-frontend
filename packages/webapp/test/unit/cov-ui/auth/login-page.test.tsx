@@ -186,6 +186,17 @@ describe('LoginPage', () => {
     setup('/c/login?redirect=%2Fc%2Fmaps%2F3%2Fedit%3Fshared%3Dtrue');
 
     expect(await screen.findByText(/A mind map has been shared with you/)).toBeTruthy();
+    expect(screen.getByText(/Sign up for free/)).toBeTruthy();
+  });
+
+  test('the shared-map notice suggests no sign-up while local login is off', async () => {
+    stubConfig({ localLoginEnabled: false });
+    setup('/c/login?redirect=%2Fc%2Fmaps%2F3%2Fedit%3Fshared%3Dtrue');
+
+    expect(
+      await screen.findByText('A mind map has been shared with you. Please log in to access it.'),
+    ).toBeTruthy();
+    expect(screen.queryByText(/Sign up for free/)).toBeNull();
   });
 
   test.each([
@@ -220,6 +231,43 @@ describe('LoginPage', () => {
     await screen.findByRole('form', { name: 'Login form' });
     expect(screen.queryByRole('button', { name: 'Sign in with Google' })).toBeNull();
     expect(screen.queryByRole('button', { name: 'Sign in with Facebook' })).toBeNull();
+    expect(screen.queryByRole('button', { name: /^Sign in with Single Sign-On$/ })).toBeNull();
+  });
+
+  test('the generic OIDC button carries the configured name and sends the user to the provider', async () => {
+    stubConfig({
+      oidcOauth2Enabled: true,
+      oidcOauth2Url: 'https://wm.example.com/oauth2/authorization/oidc',
+      oidcOauth2Label: 'Authentik',
+    });
+    const log = jest.spyOn(appLogger, 'warn').mockImplementation(() => undefined);
+    setup('/c/login?redirect=%2Fc%2Fmaps%2F3');
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Sign in with Authentik' }));
+
+    expect(log).not.toHaveBeenCalled();
+    expect(leaveTo).toHaveBeenCalledWith(
+      'https://wm.example.com/oauth2/authorization/oidc?state=%2Fc%2Fmaps%2F3',
+    );
+    // Only the configured providers are offered.
+    expect(screen.queryByRole('button', { name: 'Sign in with Google' })).toBeNull();
+  });
+
+  test('without local login only the providers are offered', async () => {
+    stubConfig({
+      localLoginEnabled: false,
+      oidcOauth2Enabled: true,
+      oidcOauth2Url: 'https://wm.example.com/oauth2/authorization/oidc',
+      oidcOauth2Label: 'Authentik',
+    });
+    setup();
+
+    expect(await screen.findByRole('button', { name: 'Sign in with Authentik' })).toBeTruthy();
+    expect(screen.queryByRole('form', { name: 'Login form' })).toBeNull();
+    expect(screen.queryByRole('link', { name: 'Forgot Password ?' })).toBeNull();
+    expect(screen.queryByText('or')).toBeNull();
+    // Accounts are created on their first OIDC login, so there is no sign-up either.
+    expect(screen.queryByRole('link', { name: 'Sign Up' })).toBeNull();
   });
 
   test('the social buttons send the user to the provider', async () => {

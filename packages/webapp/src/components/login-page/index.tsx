@@ -30,6 +30,7 @@ import Link from '@mui/material/Link';
 import Alert from '@mui/material/Alert';
 import Separator from '../common/separator';
 import GoogleButton from '../common/google-button';
+import OidcButton from '../common/oidc-button';
 import FacebookButton from '../common/facebook-button';
 import AppConfig from '../../classes/app-config';
 import { useMutation } from '@tanstack/react-query';
@@ -178,6 +179,12 @@ const LoginPage = (): React.ReactElement => {
     return <AuthProgress />;
   }
 
+  const localLoginEnabled = AppConfig.isLocalLoginEnabled();
+  const oauthEnabled =
+    AppConfig.isGoogleOauth2Enabled() ||
+    AppConfig.isFacebookOauth2Enabled() ||
+    AppConfig.isOidcOauth2Enabled();
+
   return (
     <>
       <SEOHead
@@ -231,10 +238,18 @@ const LoginPage = (): React.ReactElement => {
 
           {isSharedLink && (
             <Alert severity="info" sx={{ mb: 2 }}>
-              <FormattedMessage
-                id="login.shared-map-notice"
-                defaultMessage="A mind map has been shared with you. Please log in to access it. Don't have an account? Sign up for free or use your Google/Facebook account."
-              />
+              {/* Sign-up is only suggested where there is one (see isRegistrationEnabled). */}
+              {AppConfig.isRegistrationEnabled() ? (
+                <FormattedMessage
+                  id="login.shared-map-notice"
+                  defaultMessage="A mind map has been shared with you. Please log in to access it. Don't have an account? Sign up for free or use your Google/Facebook account."
+                />
+              ) : (
+                <FormattedMessage
+                  id="login.shared-map-notice.signin-only"
+                  defaultMessage="A mind map has been shared with you. Please log in to access it."
+                />
+              )}
             </Alert>
           )}
 
@@ -263,64 +278,85 @@ const LoginPage = (): React.ReactElement => {
 
           <LoginError error={loginError} />
 
-          <main>
-            <FormControl>
-              <form
-                onSubmit={handleOnSubmit}
-                role="form"
-                aria-label={intl.formatMessage({
-                  id: 'common.login-form',
-                  defaultMessage: 'Login form',
-                })}
-              >
-                <fieldset>
-                  <Input
-                    onChange={handleOnChange}
-                    name="email"
-                    type="email"
-                    label={intl.formatMessage({
-                      id: 'login.email',
-                      defaultMessage: 'Email',
-                    })}
-                    required
-                    autoComplete="email"
-                  />
-                  <Input
-                    onChange={handleOnChange}
-                    name="password"
-                    type="password"
-                    label={intl.formatMessage({
-                      id: 'login.password',
-                      defaultMessage: 'Password',
-                    })}
-                    required
-                    autoComplete="current-password"
-                    maxLength={39}
-                  />
-                  <SubmitButton
-                    value={intl.formatMessage({
-                      id: 'login.signin',
-                      defaultMessage: 'Sign In',
-                    })}
-                    isLoading={mutation.isPending}
-                  />
-                </fieldset>
-              </form>
-            </FormControl>
-          </main>
-          <Link component={RouterLink} to="/c/forgot-password">
-            <FormattedMessage id="login.forgotpwd" defaultMessage="Forgot Password ?" />
-          </Link>
-          {(AppConfig.isGoogleOauth2Enabled() || AppConfig.isFacebookOauth2Enabled()) && (
+          {/* Without local login (OpenID Connect configured) the providers are the only way in. */}
+          {localLoginEnabled && (
             <>
-              <Separator
-                responsive={false}
-                text={intl.formatMessage({
-                  id: 'login.division',
-                  defaultMessage: 'or',
-                })}
-              />
+              <main>
+                <FormControl>
+                  <form
+                    onSubmit={handleOnSubmit}
+                    role="form"
+                    aria-label={intl.formatMessage({
+                      id: 'common.login-form',
+                      defaultMessage: 'Login form',
+                    })}
+                  >
+                    <fieldset>
+                      <Input
+                        onChange={handleOnChange}
+                        name="email"
+                        type="email"
+                        label={intl.formatMessage({
+                          id: 'login.email',
+                          defaultMessage: 'Email',
+                        })}
+                        required
+                        autoComplete="email"
+                      />
+                      <Input
+                        onChange={handleOnChange}
+                        name="password"
+                        type="password"
+                        label={intl.formatMessage({
+                          id: 'login.password',
+                          defaultMessage: 'Password',
+                        })}
+                        required
+                        autoComplete="current-password"
+                        maxLength={39}
+                      />
+                      <SubmitButton
+                        value={intl.formatMessage({
+                          id: 'login.signin',
+                          defaultMessage: 'Sign In',
+                        })}
+                        isLoading={mutation.isPending}
+                      />
+                    </fieldset>
+                  </form>
+                </FormControl>
+              </main>
+              <Link component={RouterLink} to="/c/forgot-password">
+                <FormattedMessage id="login.forgotpwd" defaultMessage="Forgot Password ?" />
+              </Link>
+            </>
+          )}
+          {oauthEnabled && (
+            <>
+              {localLoginEnabled && (
+                <Separator
+                  responsive={false}
+                  text={intl.formatMessage({
+                    id: 'login.division',
+                    defaultMessage: 'or',
+                  })}
+                />
+              )}
               <SocialButtons>
+                {AppConfig.isOidcOauth2Enabled() && (
+                  <OidcButton
+                    text={intl.formatMessage(
+                      {
+                        id: 'login.oidc.button',
+                        defaultMessage: 'Sign in with {provider}',
+                      },
+                      { provider: AppConfig.getOidcOauth2Label() },
+                    )}
+                    onClick={() =>
+                      handleOAuthLogin(AppConfig.getOidcOauth2Url(), AppConfig.getOidcOauth2Label())
+                    }
+                  />
+                )}
                 {AppConfig.isGoogleOauth2Enabled() && (
                   <GoogleButton
                     text={intl.formatMessage({

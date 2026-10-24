@@ -71,6 +71,10 @@ export type TestConfig = {
   googleOauth2Url?: string | undefined;
   facebookOauth2Enabled?: boolean;
   facebookOauth2Url?: string | undefined;
+  oidcOauth2Enabled?: boolean;
+  oidcOauth2Url?: string | undefined;
+  oidcOauth2Label?: string;
+  localLoginEnabled?: boolean;
 };
 
 /** Loads a static application configuration, as the bootstrap script does. */
@@ -119,6 +123,18 @@ export const stubConfig = (config: TestConfig): void => {
   }
   if ('facebookOauth2Url' in config) {
     spy('getFacebookOauth2Url', config.facebookOauth2Url);
+  }
+  if (config.oidcOauth2Enabled !== undefined) {
+    spy('isOidcOauth2Enabled', config.oidcOauth2Enabled);
+  }
+  if ('oidcOauth2Url' in config) {
+    spy('getOidcOauth2Url', config.oidcOauth2Url);
+  }
+  if (config.oidcOauth2Label !== undefined) {
+    spy('getOidcOauth2Label', config.oidcOauth2Label);
+  }
+  if (config.localLoginEnabled !== undefined) {
+    spy('isLocalLoginEnabled', config.localLoginEnabled);
   }
 };
 

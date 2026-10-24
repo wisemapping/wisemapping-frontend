@@ -1271,6 +1271,9 @@
   "login.google.button": {
     "defaultMessage": "Sign in with Google"
   },
+  "login.oidc.button": {
+    "defaultMessage": "Sign in with {provider}"
+  },
   "login.oauth-error": {
     "defaultMessage": "OAuth authentication failed. Please try again or use a different sign-in method."
   },
@@ -1285,6 +1288,9 @@
   },
   "login.shared-map-notice": {
     "defaultMessage": "A mind map has been shared with you. Please log in to access it. Don't have an account? Sign up for free or use your Google/Facebook account."
+  },
+  "login.shared-map-notice.signin-only": {
+    "defaultMessage": "A mind map has been shared with you. Please log in to access it."
   },
   "login.signin": {
     "defaultMessage": "Sign In"
@@ -1513,6 +1519,9 @@
   },
   "registration.google.button": {
     "defaultMessage": "Sign up with Google"
+  },
+  "registration.oidc.button": {
+    "defaultMessage": "Sign up with {provider}"
   },
   "registration.lastname": {
     "defaultMessage": "Last Name"

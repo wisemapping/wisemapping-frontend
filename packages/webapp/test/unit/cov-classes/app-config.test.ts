@@ -150,6 +150,20 @@ describe('AppConfig settings', () => {
     expect(AppConfig.isFacebookOauth2Enabled()).toBe(false);
   });
 
+  it('keeps local login on unless the backend turns it off', async () => {
+    await initAppConfig();
+    expect(AppConfig.isLocalLoginEnabled()).toBe(true);
+
+    await initAppConfig({ localLoginEnabled: false });
+    expect(AppConfig.isLocalLoginEnabled()).toBe(false);
+  });
+
+  it('closes registration while local login is off', async () => {
+    await initAppConfig({ registrationEnabled: true, localLoginEnabled: false });
+
+    expect(AppConfig.isRegistrationEnabled()).toBe(false);
+  });
+
   it('requires the JWT expiration and the API base url', async () => {
     await initAppConfig({ jwtExpirationMin: 0, apiBaseUrl: '' });
 

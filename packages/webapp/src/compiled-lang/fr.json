@@ -2853,6 +2853,16 @@
       "value": "Échec de l'authentification OAuth. Veuillez réessayer ou utiliser une autre méthode de connexion."
     }
   ],
+  "login.oidc.button": [
+    {
+      "type": 0,
+      "value": "Se connecter avec "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    }
+  ],
   "login.page-title": [
     {
       "type": 0,
@@ -2875,6 +2885,12 @@
     {
       "type": 0,
       "value": "Une carte mentale a été partagée avec vous. Veuillez vous connecter pour y accéder. Vous n'avez pas de compte ? Inscrivez-vous gratuitement ou utilisez votre compte Google/Facebook."
+    }
+  ],
+  "login.shared-map-notice.signin-only": [
+    {
+      "type": 0,
+      "value": "Une carte mentale a été partagée avec vous. Veuillez vous connecter pour y accéder."
     }
   ],
   "login.signin": [
@@ -3389,6 +3405,16 @@
     {
       "type": 0,
       "value": "Nom de famille"
+    }
+  ],
+  "registration.oidc.button": [
+    {
+      "type": 0,
+      "value": "S'inscrire avec "
+    },
+    {
+      "type": 1,
+      "value": "provider"
     }
   ],
   "registration.page-title": [

@@ -39,6 +39,10 @@ type Config = {
   googleOauth2Enabled: boolean;
   facebookOauth2Url: string;
   facebookOauth2Enabled: boolean;
+  oidcOauth2Url?: string;
+  oidcOauth2Enabled?: boolean;
+  oidcOauth2Label?: string;
+  localLoginEnabled?: boolean;
   jwtExpirationMin: number;
 };
 
@@ -182,9 +186,11 @@ class AppConfig {
     return config.analyticsAccount;
   }
 
+  // Sign-up goes with local login: without it, accounts are created on their first OpenID
+  // Connect login instead.
   static isRegistrationEnabled(): boolean {
     const config = this.fetchOrGetConfig();
-    return config.registrationEnabled;
+    return config.registrationEnabled && this.isLocalLoginEnabled();
   }
 
   static getGoogleOauth2Url(): string | undefined {
@@ -205,6 +211,29 @@ class AppConfig {
   static isFacebookOauth2Enabled(): boolean {
     const config = this.fetchOrGetConfig();
     return config.facebookOauth2Enabled || false;
+  }
+
+  static getOidcOauth2Url(): string | undefined {
+    const config = this.fetchOrGetConfig();
+    return config.oidcOauth2Url;
+  }
+
+  static isOidcOauth2Enabled(): boolean {
+    const config = this.fetchOrGetConfig();
+    return config.oidcOauth2Enabled || false;
+  }
+
+  // Name of the instance's own identity provider, shown on its sign-in button.
+  static getOidcOauth2Label(): string {
+    const config = this.fetchOrGetConfig();
+    return config.oidcOauth2Label || 'Single Sign-On';
+  }
+
+  // Email/password login. The backend turns it off once OpenID Connect is configured; older
+  // backends do not send the flag, and keep it on.
+  static isLocalLoginEnabled(): boolean {
+    const config = this.fetchOrGetConfig();
+    return config.localLoginEnabled ?? true;
   }
 
   static getClient(): Client {

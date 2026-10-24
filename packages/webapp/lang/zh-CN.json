@@ -335,6 +335,9 @@
   "login.google.button": {
     "defaultMessage": "使用Google登录"
   },
+  "login.oidc.button": {
+    "defaultMessage": "使用 {provider} 登录"
+  },
   "login.page-title": {
     "defaultMessage": "登录 | WiseMapping"
   },
@@ -352,6 +355,9 @@
   },
   "login.shared-map-notice": {
     "defaultMessage": "有人与您分享了一张思维导图。请登录以访问。还没有账户？免费注册或使用您的Google/Facebook账户。"
+  },
+  "login.shared-map-notice.signin-only": {
+    "defaultMessage": "有人与您分享了一张思维导图。请登录以访问。"
   },
   "map.creator": {
     "defaultMessage": "创建者"
@@ -532,6 +538,9 @@
   },
   "registration.google.button": {
     "defaultMessage": "使用Google注册"
+  },
+  "registration.oidc.button": {
+    "defaultMessage": "使用 {provider} 注册"
   },
   "registration.lastname": {
     "defaultMessage": "姓氏"

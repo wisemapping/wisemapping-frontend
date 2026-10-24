@@ -30,6 +30,7 @@ export type TestConfig = {
   googleOauth2Enabled: boolean;
   facebookOauth2Url: string;
   facebookOauth2Enabled: boolean;
+  localLoginEnabled?: boolean;
   jwtExpirationMin: number;
 };
 
