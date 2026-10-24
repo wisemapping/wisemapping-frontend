@@ -335,6 +335,9 @@
   "login.google.button": {
     "defaultMessage": "Googleでサインイン"
   },
+  "login.oidc.button": {
+    "defaultMessage": "{provider} でサインイン"
+  },
   "login.page-title": {
     "defaultMessage": "ログイン | WiseMapping"
   },
@@ -352,6 +355,9 @@
   },
   "login.shared-map-notice": {
     "defaultMessage": "マインドマップが共有されました。アクセスするにはログインしてください。アカウントをお持ちでない方は、無料で登録するか、Google/Facebookアカウントをご利用ください。"
+  },
+  "login.shared-map-notice.signin-only": {
+    "defaultMessage": "マインドマップが共有されました。アクセスするにはログインしてください。"
   },
   "map.creator": {
     "defaultMessage": "作成者"
@@ -532,6 +538,9 @@
   },
   "registration.google.button": {
     "defaultMessage": "Googleでサインアップ"
+  },
+  "registration.oidc.button": {
+    "defaultMessage": "{provider} で登録"
   },
   "registration.lastname": {
     "defaultMessage": "姓"

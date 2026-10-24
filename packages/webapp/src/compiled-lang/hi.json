@@ -2853,6 +2853,16 @@
       "value": "OAuth प्रमाणीकरण विफल रहा। कृपया फिर से प्रयास करें या साइन इन का कोई अन्य तरीका उपयोग करें।"
     }
   ],
+  "login.oidc.button": [
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": " से साइन इन करें"
+    }
+  ],
   "login.page-title": [
     {
       "type": 0,
@@ -2875,6 +2885,12 @@
     {
       "type": 0,
       "value": "एक माइंडमैप आपके साथ साझा किया गया है। कृपया इसे एक्सेस करने के लिए लॉग इन करें। खाता नहीं है? मुफ़्त में साइन अप करें या अपना Google/Facebook खाता उपयोग करें।"
+    }
+  ],
+  "login.shared-map-notice.signin-only": [
+    {
+      "type": 0,
+      "value": "एक माइंडमैप आपके साथ साझा किया गया है। कृपया इसे एक्सेस करने के लिए लॉग इन करें।"
     }
   ],
   "login.signin": [
@@ -3389,6 +3405,16 @@
     {
       "type": 0,
       "value": "अंतिम नाम"
+    }
+  ],
+  "registration.oidc.button": [
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": " से साइन अप करें"
     }
   ],
   "registration.page-title": [

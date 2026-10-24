@@ -2950,6 +2950,16 @@
       "value": "فشلت مصادقة OAuth. يرجى المحاولة مرة أخرى أو استخدام طريقة تسجيل دخول مختلفة."
     }
   ],
+  "login.oidc.button": [
+    {
+      "type": 0,
+      "value": "سجّل الدخول باستخدام "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    }
+  ],
   "login.page-title": [
     {
       "type": 0,
@@ -2972,6 +2982,12 @@
     {
       "type": 0,
       "value": "تمت مشاركة خريطة ذهنية معك. يرجى تسجيل الدخول للوصول إليها. ليس لديك حساب؟ سجّل مجانًا أو استخدم حساب Google/Facebook الخاص بك."
+    }
+  ],
+  "login.shared-map-notice.signin-only": [
+    {
+      "type": 0,
+      "value": "تمت مشاركة خريطة ذهنية معك. يرجى تسجيل الدخول للوصول إليها."
     }
   ],
   "login.signin": [
@@ -3486,6 +3502,16 @@
     {
       "type": 0,
       "value": "اسم العائلة"
+    }
+  ],
+  "registration.oidc.button": [
+    {
+      "type": 0,
+      "value": "أنشئ حسابًا باستخدام "
+    },
+    {
+      "type": 1,
+      "value": "provider"
     }
   ],
   "registration.page-title": [

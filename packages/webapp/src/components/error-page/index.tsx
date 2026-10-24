@@ -29,6 +29,7 @@ import { isRouteErrorResponse, useRouteError, useNavigate, useLocation } from 'r
 import { Link as RouterLink } from 'react-router';
 import { ErrorInfo } from '../../classes/client';
 import { logCriticalError } from '../../utils';
+import AppConfig from '../../classes/app-config';
 
 export type ErrorPageType = {
   isSecurity: boolean;
@@ -213,7 +214,7 @@ const ErrorPage = (): React.ReactElement => {
 
   return (
     <div>
-      <Header type="only-signup" />
+      <Header type={AppConfig.isRegistrationEnabled() ? 'only-signup' : 'none'} />
 
       <ErrorBody>
         <ErrorContent>

@@ -305,6 +305,9 @@
   "login.shared-map-notice": {
     "defaultMessage": "С вами поделились майнд-картой. Пожалуйста, войдите в систему, чтобы получить доступ. Нет аккаунта? Зарегистрируйтесь бесплатно или используйте свой аккаунт Google/Facebook."
   },
+  "login.shared-map-notice.signin-only": {
+    "defaultMessage": "С вами поделились майнд-картой. Пожалуйста, войдите в систему, чтобы получить доступ."
+  },
   "map.creator": {
     "defaultMessage": "Создатель"
   },
@@ -503,8 +506,14 @@
   "registration.google.button": {
     "defaultMessage": "Зарегистрируйтесь в Google"
   },
+  "registration.oidc.button": {
+    "defaultMessage": "Зарегистрироваться через {provider}"
+  },
   "login.google.button": {
     "defaultMessage": "Войти через Google"
+  },
+  "login.oidc.button": {
+    "defaultMessage": "Войти через {provider}"
   },
   "registration.division": {
     "defaultMessage": "или же"

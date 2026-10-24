@@ -335,6 +335,9 @@
   "login.google.button": {
     "defaultMessage": "تسجيل الدخول باستخدام Google"
   },
+  "login.oidc.button": {
+    "defaultMessage": "سجّل الدخول باستخدام {provider}"
+  },
   "login.facebook.button": {
     "defaultMessage": "تسجيل الدخول باستخدام Facebook"
   },
@@ -355,6 +358,9 @@
   },
   "login.shared-map-notice": {
     "defaultMessage": "تمت مشاركة خريطة ذهنية معك. يرجى تسجيل الدخول للوصول إليها. ليس لديك حساب؟ سجّل مجانًا أو استخدم حساب Google/Facebook الخاص بك."
+  },
+  "login.shared-map-notice.signin-only": {
+    "defaultMessage": "تمت مشاركة خريطة ذهنية معك. يرجى تسجيل الدخول للوصول إليها."
   },
   "map.creator": {
     "defaultMessage": "المُنشئ"
@@ -535,6 +541,9 @@
   },
   "registration.google.button": {
     "defaultMessage": "التسجيل باستخدام Google"
+  },
+  "registration.oidc.button": {
+    "defaultMessage": "أنشئ حسابًا باستخدام {provider}"
   },
   "registration.facebook.button": {
     "defaultMessage": "التسجيل باستخدام Facebook"

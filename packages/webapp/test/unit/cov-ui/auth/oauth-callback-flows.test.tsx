@@ -39,7 +39,7 @@ import { logCriticalError } from '../../../../src/utils';
 import { setAnalyticsUserEmail } from '../../../../src/utils/analytics';
 import { leaveTo } from '../../../../src/utils/redirect';
 import { startOAuthFlow } from '../../../../src/utils/oauth-flow';
-import { installMatchMedia, renderPage } from '../helpers';
+import { installMatchMedia, renderPage, stubConfig } from '../helpers';
 import { resetRouter, routerState, setLocation } from '../router-mock';
 import { defined } from '../../defined';
 
@@ -164,6 +164,26 @@ describe('OAuthCallbackPage flows', () => {
       ),
     );
     await waitFor(() => expect(localStorage.getItem('themeMode')).toBe('dark'));
+  });
+
+  test('an account link is confirmed for the provider named by the backend', async () => {
+    jest.spyOn(JwtTokenConfig, 'storeToken').mockImplementation(() => undefined);
+    stubConfig({ oidcOauth2Label: 'Authentik' });
+    const client = setup(
+      `/c/oauth-callback?jwtToken=${ANA}&email=ana%40wisemapping.com&oauthSync=false&syncCode=code-9&provider=oidc`,
+    );
+
+    expect(await screen.findByText(/link your Authentik account/)).toBeTruthy();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Sync account' }));
+
+    await waitFor(() =>
+      expect(client.confirmAccountSync).toHaveBeenCalledWith(
+        'ana@wisemapping.com',
+        'code-9',
+        'oidc',
+      ),
+    );
   });
 
   test('a Google code is exchanged with the Google callback', async () => {

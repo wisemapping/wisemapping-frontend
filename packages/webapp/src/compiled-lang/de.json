@@ -2861,6 +2861,20 @@
       "value": "Die OAuth-Authentifizierung ist fehlgeschlagen. Bitte versuche es erneut oder verwende eine andere Anmeldemethode."
     }
   ],
+  "login.oidc.button": [
+    {
+      "type": 0,
+      "value": "Mit "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": " anmelden"
+    }
+  ],
   "login.page-title": [
     {
       "type": 0,
@@ -2883,6 +2897,12 @@
     {
       "type": 0,
       "value": "Eine Mindmap wurde mit dir geteilt. Bitte melde dich an, um darauf zuzugreifen. Noch kein Konto? Registriere dich kostenlos oder nutze dein Google- oder Facebook-Konto."
+    }
+  ],
+  "login.shared-map-notice.signin-only": [
+    {
+      "type": 0,
+      "value": "Eine Mindmap wurde mit dir geteilt. Bitte melde dich an, um darauf zuzugreifen."
     }
   ],
   "login.signin": [
@@ -3397,6 +3417,20 @@
     {
       "type": 0,
       "value": "Nachname"
+    }
+  ],
+  "registration.oidc.button": [
+    {
+      "type": 0,
+      "value": "Mit "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": " registrieren"
     }
   ],
   "registration.page-title": [

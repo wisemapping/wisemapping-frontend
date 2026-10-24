@@ -2857,6 +2857,16 @@
       "value": "Autenticazione OAuth non riuscita. Riprova o usa un altro metodo di accesso."
     }
   ],
+  "login.oidc.button": [
+    {
+      "type": 0,
+      "value": "Accedi con "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    }
+  ],
   "login.page-title": [
     {
       "type": 0,
@@ -2879,6 +2889,12 @@
     {
       "type": 0,
       "value": "Una mappa mentale è stata condivisa con te. Effettua il login per accedervi. Non hai un account? Registrati gratuitamente o usa il tuo account Google/Facebook."
+    }
+  ],
+  "login.shared-map-notice.signin-only": [
+    {
+      "type": 0,
+      "value": "Una mappa mentale è stata condivisa con te. Effettua il login per accedervi."
     }
   ],
   "login.signin": [
@@ -3393,6 +3409,16 @@
     {
       "type": 0,
       "value": "Cognome"
+    }
+  ],
+  "registration.oidc.button": [
+    {
+      "type": 0,
+      "value": "Registrati con "
+    },
+    {
+      "type": 1,
+      "value": "provider"
     }
   ],
   "registration.page-title": [

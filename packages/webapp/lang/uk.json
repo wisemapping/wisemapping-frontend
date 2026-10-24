@@ -335,6 +335,9 @@
   "login.google.button": {
     "defaultMessage": "Увійти через Google"
   },
+  "login.oidc.button": {
+    "defaultMessage": "Увійти через {provider}"
+  },
   "login.facebook.button": {
     "defaultMessage": "Увійти через Facebook"
   },
@@ -355,6 +358,9 @@
   },
   "login.shared-map-notice": {
     "defaultMessage": "З вами поділилися картою розуму. Будь ласка, увійдіть, щоб отримати доступ. Немає акаунта? Зареєструйтеся безкоштовно або використовуйте свій акаунт Google чи Facebook."
+  },
+  "login.shared-map-notice.signin-only": {
+    "defaultMessage": "З вами поділилися картою розуму. Будь ласка, увійдіть, щоб отримати доступ."
   },
   "map.creator": {
     "defaultMessage": "Створювач"
@@ -535,6 +541,9 @@
   },
   "registration.google.button": {
     "defaultMessage": "Зареєструватися через Google"
+  },
+  "registration.oidc.button": {
+    "defaultMessage": "Зареєструватися через {provider}"
   },
   "registration.facebook.button": {
     "defaultMessage": "Зареєструватися через Facebook"
