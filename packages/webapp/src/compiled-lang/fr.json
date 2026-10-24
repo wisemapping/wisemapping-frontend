@@ -3712,5 +3712,25 @@
       "type": 0,
       "value": "Le titre est requis"
     }
+  ],
+  "login.oidc.button": [
+    {
+      "type": 0,
+      "value": "Se connecter avec "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    }
+  ],
+  "registration.oidc.button": [
+    {
+      "type": 0,
+      "value": "S'inscrire avec "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    }
   ]
 }

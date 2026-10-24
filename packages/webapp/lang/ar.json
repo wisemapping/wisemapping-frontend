@@ -335,6 +335,9 @@
   "login.google.button": {
     "defaultMessage": "تسجيل الدخول باستخدام Google"
   },
+  "login.oidc.button": {
+    "defaultMessage": "سجّل الدخول باستخدام {provider}"
+  },
   "login.facebook.button": {
     "defaultMessage": "تسجيل الدخول باستخدام Facebook"
   },
@@ -535,6 +538,9 @@
   },
   "registration.google.button": {
     "defaultMessage": "التسجيل باستخدام Google"
+  },
+  "registration.oidc.button": {
+    "defaultMessage": "أنشئ حسابًا باستخدام {provider}"
   },
   "registration.facebook.button": {
     "defaultMessage": "التسجيل باستخدام Facebook"

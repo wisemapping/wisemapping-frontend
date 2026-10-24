@@ -1271,6 +1271,9 @@
   "login.google.button": {
     "defaultMessage": "Sign in with Google"
   },
+  "login.oidc.button": {
+    "defaultMessage": "Sign in with {provider}"
+  },
   "login.oauth-error": {
     "defaultMessage": "OAuth authentication failed. Please try again or use a different sign-in method."
   },
@@ -1513,6 +1516,9 @@
   },
   "registration.google.button": {
     "defaultMessage": "Sign up with Google"
+  },
+  "registration.oidc.button": {
+    "defaultMessage": "Sign up with {provider}"
   },
   "registration.lastname": {
     "defaultMessage": "Last Name"

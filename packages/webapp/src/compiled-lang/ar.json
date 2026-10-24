@@ -3809,5 +3809,25 @@
       "type": 0,
       "value": "العنوان مطلوب"
     }
+  ],
+  "login.oidc.button": [
+    {
+      "type": 0,
+      "value": "سجّل الدخول باستخدام "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    }
+  ],
+  "registration.oidc.button": [
+    {
+      "type": 0,
+      "value": "أنشئ حسابًا باستخدام "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    }
   ]
 }

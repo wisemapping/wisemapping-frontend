@@ -3712,5 +3712,25 @@
       "type": 0,
       "value": "शीर्षक आवश्यक है"
     }
+  ],
+  "login.oidc.button": [
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": " से साइन इन करें"
+    }
+  ],
+  "registration.oidc.button": [
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": " से साइन अप करें"
+    }
   ]
 }

@@ -335,6 +335,9 @@
   "login.google.button": {
     "defaultMessage": "Accedi con Google"
   },
+  "login.oidc.button": {
+    "defaultMessage": "Accedi con {provider}"
+  },
   "login.page-title": {
     "defaultMessage": "Login | WiseMapping"
   },
@@ -532,6 +535,9 @@
   },
   "registration.google.button": {
     "defaultMessage": "Registrati con Google"
+  },
+  "registration.oidc.button": {
+    "defaultMessage": "Registrati con {provider}"
   },
   "registration.lastname": {
     "defaultMessage": "Cognome"

@@ -335,6 +335,9 @@
   "login.google.button": {
     "defaultMessage": "使用Google登录"
   },
+  "login.oidc.button": {
+    "defaultMessage": "使用 {provider} 登录"
+  },
   "login.page-title": {
     "defaultMessage": "登录 | WiseMapping"
   },
@@ -532,6 +535,9 @@
   },
   "registration.google.button": {
     "defaultMessage": "使用Google注册"
+  },
+  "registration.oidc.button": {
+    "defaultMessage": "使用 {provider} 注册"
   },
   "registration.lastname": {
     "defaultMessage": "姓氏"

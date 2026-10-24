@@ -533,8 +533,14 @@
   "registration.google.button": {
     "defaultMessage": "S'inscrire avec Google"
   },
+  "registration.oidc.button": {
+    "defaultMessage": "S'inscrire avec {provider}"
+  },
   "login.google.button": {
     "defaultMessage": "Se connecter avec Google"
+  },
+  "login.oidc.button": {
+    "defaultMessage": "Se connecter avec {provider}"
   },
   "registration.division": {
     "defaultMessage": "ou"
