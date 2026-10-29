@@ -71,7 +71,7 @@ describe('AppConfig.initialize', () => {
     expect(AppConfig.getUiBaseUrl()).toBe('http://remote.ui');
     expect(fetchSpy).toHaveBeenCalledTimes(1);
     expect(fetchSpy).toHaveBeenCalledWith('http://cfg.test/config.json', {
-      credentials: 'omit',
+      credentials: 'same-origin',
       cache: 'no-store',
     });
   });
