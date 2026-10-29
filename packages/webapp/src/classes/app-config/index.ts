@@ -129,8 +129,12 @@ class AppConfig {
       throw new Error(`Fetching remote config from ${extConfig.url} can not be empty`);
     }
 
+    // 'same-origin': a deployment behind a proxy that authenticates the whole site (HTTP Basic,
+    // or a cookie) needs the credentials on this request too. A config on another origin
+    // (app. fetching from api.wisemapping.com) still goes without them, as 'include' would
+    // need Access-Control-Allow-Credentials there.
     const response = await fetch(extConfig.url, {
-      credentials: 'omit',
+      credentials: 'same-origin',
       cache: 'no-store',
     });
 
